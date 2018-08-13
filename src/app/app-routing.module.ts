@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PublicGuard, ProtectedGuard } from 'ngx-auth';
 import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { MainComponent } from './components/main/main.component';
 
 const routes: Routes = [
   {
@@ -11,9 +12,16 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'dashboard',
+    path: '',
     canActivate: [ ProtectedGuard ],
-    component: DashboardComponent
+    component: MainComponent,
+    children: [
+      {
+        path: 'dashboard',
+        canActivate: [ ProtectedGuard ],
+        component: DashboardComponent
+      },
+    ]
   },
   {
     path: '',

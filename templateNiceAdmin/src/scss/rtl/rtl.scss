@@ -1,4 +1,4 @@
-// this is bootstrap overwrite 
+// this is bootstrap overwrite
 html[dir="rtl"] {
 
     @import 'rtl-padding-margin';
@@ -20,7 +20,7 @@ html[dir="rtl"] {
 
     .custom-select {
         padding: .375rem .75rem .375rem 1.75rem;
-        background: url(../../assets/images/custom-select.png) left 0.35rem center no-repeat $white;
+        background: url(../assets/images/custom-select.png) left 0.35rem center no-repeat $white;
     }
 
     .custom-control {

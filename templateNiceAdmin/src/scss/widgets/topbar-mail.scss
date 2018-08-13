@@ -5,14 +5,14 @@ Author: Wrappixel
 File: scss
 */
 $mailbox-width:300px;
-$mailbox-height:317px; 
-$droptitle-bg: url(../../assets/images/background/img5.png) no-repeat;
+$mailbox-height:317px;
+$droptitle-bg: url(../assets/images/background/img5.png) no-repeat;
 
 /*******************
 /*User mail widgets*/
 /*******************/
 .mailbox {
-    
+
         .drop-title {
             font-weight: $font-weight-medium;
             padding: 11px 20px 15px;
@@ -35,7 +35,7 @@ $droptitle-bg: url(../../assets/images/background/img5.png) no-repeat;
             padding-top: 15px;
             color:$body-color;
         }
-    
+
     .message-center {
         height:$mailbox-height;
         overflow: auto;
@@ -97,7 +97,7 @@ $droptitle-bg: url(../../assets/images/background/img5.png) no-repeat;
                     margin: 1px 0;
                     text-overflow: ellipsis;
                     overflow: hidden;
-                    color: $text-muted; 
+                    color: $text-muted;
                     white-space: nowrap;
                 }
             }

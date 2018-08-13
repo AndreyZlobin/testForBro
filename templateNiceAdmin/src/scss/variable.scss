@@ -42,7 +42,7 @@ $shadow:1px 0px 20px rgba(0, 0, 0, 0.08);
 $transitions:0.2s ease-in;
 /*Dark transparent bg*/
 
-$transparent-dark-bg:rgba(0, 0, 0, 0.03); 
+$transparent-dark-bg:rgba(0, 0, 0, 0.03);
 $lft:left;
 $rgt:right;
 $card-alt:#e4e9ef;
@@ -192,7 +192,7 @@ $input-group-addon-border-color: $gray-200;
 $input-btn-focus-color: rgba(0, 0, 0, .25) !default;
 $input-focus-border-color: rgba(0, 0, 0, 0.25) !default;
 $custom-control-indicator-active-bg: rgba(0, 0, 0, 35%) !default;
-$custom-select-indicator: url(../../assets/images/custom-select.png) !default;
+$custom-select-indicator: url(../assets/images/custom-select.png) !default;
 $input-btn-focus-box-shadow: transparent !default;
 $custom-select-focus-box-shadow: transparent !default;
 $custom-select-indicator: str-replace(url(""),
