@@ -1,14 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PublicGuard, AuthGuard } from 'ngx-auth';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { MainComponent } from './components/main/main.component';
-
-
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { SignupLinkComponent } from './pages/auth/signup-link/signup-link.component';
 import { SignupDetailedComponent } from './pages/auth/signup-detailed/signup-detailed.component';
@@ -27,15 +21,37 @@ import { AuthGuard } from './shared/auth-guard';
 
 const routes: Routes = [
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'auth',
+    component: MainComponent,
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'sign-up-link',
+        component: SignupLinkComponent
+      },
+      {
+        path: 'sign-up',
+        component: SignupDetailedComponent
+      },
+      {
+        path: 'terms',
+        component: TermsComponent
+      },
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent
+      },
+    ]
   },
   {
     path: '',
     component: MainComponent,
     children: [
       {
-        path: 'home',
+        path: '',
         component: LandingComponent
       },
     ]

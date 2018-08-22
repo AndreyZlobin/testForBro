@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import decode from 'jwt-decode';
+import {tokenNotExpired} from 'angular2-jwt';
 
 @Injectable()
 export class UsersService {
@@ -10,6 +12,13 @@ export class UsersService {
     private http: HttpClient
   ) { }
 
+  isAuthenticated(): boolean {
+    // get the token
+    const token = this.getToken();
+    // return a boolean reflecting
+    // whether or not the token is expired
+    return tokenNotExpired(null, token);
+  }
   getToken(): string {
     const user = this.getUserLocal();
     return user && user.token;
@@ -53,6 +62,13 @@ export class UsersService {
   getUser(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/getUser`,
+      params
+    );
+  }
+
+  forgotPassword(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/forgotPassword`,
       params
     );
   }

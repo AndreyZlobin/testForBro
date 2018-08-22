@@ -24,6 +24,7 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
   meta: any;
   constructor(
     private router: Router,
+    private usersService: UsersService,
   ) {
   }
 
@@ -31,16 +32,28 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
     const url: string = request.url;
     const method: string = request.method;
     const urlWithParams: string = request.urlWithParams;
-    const token = UsersService.getToken();
-    const apikey = UsersService.getApiKey();
-    const newRequest = token
+    const token = this.usersService.getToken();
+    const apikey = this.usersService.getApiKey();
+    const newRequest = token && apikey
       ? request.clone({ setHeaders: {
         'Authorization': token,
         'x-api-key': apikey
       } })
       : request;
-
+console.log(newRequest);
     return next
-      .handle(newRequest);
+      .handle(newRequest).do((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          // do stuff with response if you want
+        }
+      }, (err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 401) {
+            // redirect to the login route
+            // or show a modal
+            this.router.navigateByUrl('/');
+          }
+        }
+      });
   }
 }
