@@ -31,6 +31,8 @@ import {UsersService} from './services/users.service';
 import { AuthService } from './services/auth.service';
 import { RequestsHttpInterceptor } from './shared/requests-http.interceptor';
 import { LandingComponent } from './pages/landing/landing.component';
+import { AdminDashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { AuthGuard } from './shared/auth-guard';
 
 @NgModule({
   imports: [
@@ -59,8 +61,10 @@ import { LandingComponent } from './pages/landing/landing.component';
     FilesListComponent,
     FileResultsComponent,
     LandingComponent,
+    AdminDashboardComponent,
   ],
   providers: [
+    AuthGuard,
     DataService,
     UsersService,
     FilesService,

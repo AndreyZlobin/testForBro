@@ -1,36 +1,100 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PublicGuard, ProtectedGuard } from 'ngx-auth';
-import { LoginComponent } from './pages/login/login.component';
+import { PublicGuard, AuthGuard } from 'ngx-auth';
+import { LoginComponent } from './pages/auth/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { MainComponent } from './components/main/main.component';
+
+
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
+import { SignupLinkComponent } from './pages/auth/signup-link/signup-link.component';
+import { SignupDetailedComponent } from './pages/auth/signup-detailed/signup-detailed.component';
+import { TermsComponent } from './pages/auth/terms/terms.component';
+import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
+
+import { UserDetailsComponent } from './pages/admin/user-details/user-details.component';
+import { QuickTestComponent } from './pages/guest/quick-test/quick-test.component';
+import { ResultsComponent } from './pages/guest/results/results.component';
+import { AccountDetailsComponent } from './pages/user/account-details/account-details.component';
+import { FilesListComponent } from './pages/user/files-list/files-list.component';
+import { FileResultsComponent } from './pages/user/file-results/file-results.component';
+import { LandingComponent } from './pages/landing/landing.component';
+import { AdminDashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { AuthGuard } from './shared/auth-guard';
 
 const routes: Routes = [
   {
     path: 'login',
-    canActivate: [ PublicGuard ],
     component: LoginComponent
   },
   {
     path: '',
-    canActivate: [ ProtectedGuard ],
     component: MainComponent,
     children: [
       {
-        path: 'dashboard',
-        canActivate: [ ProtectedGuard ],
-        component: DashboardComponent
+        path: 'home',
+        component: LandingComponent
       },
     ]
   },
   {
     path: '',
-    redirectTo: 'dashboard',
+    canActivate: [ AuthGuard ],
+    component: MainComponent,
+    children: [
+      {
+        path: 'admin',
+        canActivate: [ AuthGuard ],
+        component: AdminDashboardComponent
+      },
+      {
+        path: 'admin/user/:id',
+        canActivate: [ AuthGuard ],
+        component: UserDetailsComponent
+      },
+      {
+        path: 'user/details',
+        canActivate: [ AuthGuard ],
+        component: AccountDetailsComponent
+      },
+      {
+        path: 'user/files',
+        canActivate: [ AuthGuard ],
+        component: FilesListComponent
+      },
+      {
+        path: 'user/result',
+        canActivate: [ AuthGuard ],
+        component: FileResultsComponent
+      },
+      {
+        path: 'user/result/:id',
+        canActivate: [ AuthGuard ],
+        component: FileResultsComponent
+      },
+      {
+        path: 'guest/results',
+        canActivate: [ AuthGuard ],
+        component: ResultsComponent
+      },
+      {
+        path: 'guest/quicktest',
+        canActivate: [ AuthGuard ],
+        component: QuickTestComponent
+      },
+    ]
+  },
+  {
+    path: '',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];
