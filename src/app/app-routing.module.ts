@@ -18,6 +18,7 @@ import { FileResultsComponent } from './pages/user/file-results/file-results.com
 import { LandingComponent } from './pages/landing/landing.component';
 import { AdminDashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { AuthGuard } from './shared/auth-guard';
+import { AboutComponent } from './pages/about/about.component';
 
 const routes: Routes = [
   {
@@ -52,7 +53,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: LandingComponent
+        component: QuickTestComponent
       },
     ]
   },
@@ -61,6 +62,11 @@ const routes: Routes = [
     canActivate: [ AuthGuard ],
     component: MainComponent,
     children: [
+      {
+        path: 'about',
+        canActivate: [ AuthGuard ],
+        component: AboutComponent
+      },
       {
         path: 'admin',
         canActivate: [ AuthGuard ],

@@ -34,6 +34,7 @@ import { RequestsHttpInterceptor } from './shared/requests-http.interceptor';
 import { LandingComponent } from './pages/landing/landing.component';
 import { AdminDashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { AuthGuard } from './shared/auth-guard';
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   imports: [
@@ -65,6 +66,7 @@ import { AuthGuard } from './shared/auth-guard';
     FileResultsComponent,
     LandingComponent,
     AdminDashboardComponent,
+    AboutComponent,
   ],
   providers: [
     AuthGuard,

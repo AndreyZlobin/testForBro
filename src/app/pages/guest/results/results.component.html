@@ -1,3 +1,29 @@
-<p>
-  results works!
-</p>
+<div class="container">
+  <h3>Your record analysis:</h3>
+  <div class="row">
+    <div class="col-6">
+      Chart
+    </div>
+    <div class="col-6">
+      <div>
+        60 % happiness
+      </div>
+      <div>
+        <input type="range" />
+      </div>
+      <div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'male'}">Male</button>
+            <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'female'}">Female</button>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h4>Are you agree with the result?</h4>
+    <a class="btn btn-success">Yes</a>
+    <a class="btn btn-danger">No</a>
+  </div>
+  <div>Click <a href="#">here</a> to subscribe for a FREE trial packeage and get more</div>
+  <a routerLink="/guest/quicktest">Check another record</a>
+</div>
