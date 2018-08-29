@@ -27,8 +27,9 @@ import { AccountDetailsComponent } from './pages/user/account-details/account-de
 import { FilesListComponent } from './pages/user/files-list/files-list.component';
 import { FileResultsComponent } from './pages/user/file-results/file-results.component';
 
-import {FilesService} from './services/files.service';
-import {UsersService} from './services/users.service';
+import { FilesService } from './services/files.service';
+import { MediaRecorderService } from './services/media-recorder.service';
+import { UsersService } from './services/users.service';
 import { AuthService } from './services/auth.service';
 import { RequestsHttpInterceptor } from './shared/requests-http.interceptor';
 import { LandingComponent } from './pages/landing/landing.component';
@@ -47,7 +48,7 @@ import { AboutComponent } from './pages/about/about.component';
     CommonModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot(),
+    ModalModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -66,22 +67,21 @@ import { AboutComponent } from './pages/about/about.component';
     FileResultsComponent,
     LandingComponent,
     AdminDashboardComponent,
-    AboutComponent,
+    AboutComponent
   ],
   providers: [
     AuthGuard,
     DataService,
     UsersService,
     FilesService,
+    MediaRecorderService,
     AuthService,
     {
-        provide: HTTP_INTERCEPTORS,
-        useClass: RequestsHttpInterceptor,
-        multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestsHttpInterceptor,
+      multi: true
     }
   ],
-  bootstrap: [
-    AppComponent
-  ]
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
