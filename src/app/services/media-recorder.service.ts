@@ -32,19 +32,10 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
     this.upload$.pipe(map(value => ({ name: 'upload', value })))
   );
   public start(): void {
-    console.log('record');
-    const self = this;
     this.isRecording = true;
     this.ticker = timer(1000, 1000);
     this.timerSub = this.ticker.subscribe(t => this.tickerFunc(t));
     this.mediaRecorder.start();
-    this.mediaRecorder.addEventListener('dataavailable', event => {
-      self.audioChunks.push(event.data);
-    });
-    this.mediaRecorder.addEventListener('stop', () => {
-      const audioBlob = new Blob(self.audioChunks);
-      this.upload(audioBlob);
-    });
     this.start$.next();
   }
   public stop(): void {
@@ -53,24 +44,29 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
     this.timerSub.unsubscribe();
     this.stop$.next();
   }
-  public initialize(): MediaRecorderService {
-    navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then(stream => {
-        this.mediaRecorder = new MediaRecorder(stream);
-        this.initialize$.next();
-      })
-      .catch(err => {
-        this.initialize$.error('No mic for you!');
-      });
-    return this;
+  public initialize(): void {
   }
   public upload(blob: Blob): void {
     this.upload$.next();
   }
   tickerFunc(tick) {
-    console.log('tick');
     this.ticks = tick;
   }
-  constructor() {}
+  constructor() {
+    const onSuccess = stream => {
+      this.mediaRecorder = new MediaRecorder(stream);
+      this.mediaRecorder.onstop = e => {
+        const audio = new Audio();
+        const blob = new Blob(this.audioChunks, { 'type': 'audio/wav' });
+        this.audioChunks.length = 0;
+        audio.src = window.URL.createObjectURL(blob);
+        audio.load();
+        audio.play();
+      };
+      this.mediaRecorder.ondataavailable = e => this.audioChunks.push(e.data);
+      this.initialize$.next();
+    };
+
+    navigator.getUserMedia({ audio: true }, onSuccess, e => console.log(e));
+  }
 }

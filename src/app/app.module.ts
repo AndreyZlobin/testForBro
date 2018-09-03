@@ -36,6 +36,7 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { AdminDashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { AuthGuard } from './shared/auth-guard';
 import { AboutComponent } from './pages/about/about.component';
+import { MinutesSecondsPipe } from './minutes-seconds.pipe';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { AboutComponent } from './pages/about/about.component';
     FileResultsComponent,
     LandingComponent,
     AdminDashboardComponent,
-    AboutComponent
+    AboutComponent,
+    MinutesSecondsPipe
   ],
   providers: [
     AuthGuard,
