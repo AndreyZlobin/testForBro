@@ -40,7 +40,8 @@ export class QuickTestComponent implements OnInit {
   }
 
   record() {
-    this.mediaRecorderService.initialize().start();
+    this.mediaRecorderService.initialize();
+    this.mediaRecorderService.start();
   }
 
   stop() {

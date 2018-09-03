@@ -90,7 +90,7 @@
                 <circle class="pulse" cx="50%" cy="50%" r="80px"></circle>
               </svg>
             </a>
-            <h1 class="time">{{mediaRecorderService.ticks}}</h1>
+            <h1 class="time">{{mediaRecorderService.ticks | minutesSeconds}}</h1>
           </ng-container>
 
           <div class="timer">
