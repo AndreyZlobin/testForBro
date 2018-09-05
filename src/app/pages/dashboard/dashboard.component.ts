@@ -1,32 +1,88 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import {Component, OnDestroy} from '@angular/core';
+import { NbThemeService } from '@nebular/theme';
+import { takeWhile } from 'rxjs/operators/takeWhile' ;
 
-import { DataService, AuthenticationService } from '../../shared';
+interface CardSettings {
+  title: string;
+  iconClass: string;
+  type: string;
+}
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html'
+  selector: 'ngx-dashboard',
+  styleUrls: ['./dashboard.component.scss'],
+  templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnDestroy {
 
-  public users$: Observable<any>;
-  public data$: Observable<any>;
+  private alive = true;
 
-  constructor(
-    private router: Router,
-    private dataService: DataService,
-    private authService: AuthenticationService
-  ) { }
+  lightCard: CardSettings = {
+    title: 'Light',
+    iconClass: 'nb-lightbulb',
+    type: 'primary',
+  };
+  rollerShadesCard: CardSettings = {
+    title: 'Roller Shades',
+    iconClass: 'nb-roller-shades',
+    type: 'success',
+  };
+  wirelessAudioCard: CardSettings = {
+    title: 'Wireless Audio',
+    iconClass: 'nb-audio',
+    type: 'info',
+  };
+  coffeeMakerCard: CardSettings = {
+    title: 'Coffee Maker',
+    iconClass: 'nb-coffee-maker',
+    type: 'warning',
+  };
 
-  public loadData() {
-    this.users$ = this.dataService.getUsers();
-    this.data$ = this.dataService.getData();
+  statusCards: string;
+
+  commonStatusCardsSet: CardSettings[] = [
+    this.lightCard,
+    this.rollerShadesCard,
+    this.wirelessAudioCard,
+    this.coffeeMakerCard,
+  ];
+
+  statusCardsByThemes: {
+    default: CardSettings[];
+    cosmic: CardSettings[];
+    corporate: CardSettings[];
+  } = {
+    default: this.commonStatusCardsSet,
+    cosmic: this.commonStatusCardsSet,
+    corporate: [
+      {
+        ...this.lightCard,
+        type: 'warning',
+      },
+      {
+        ...this.rollerShadesCard,
+        type: 'primary',
+      },
+      {
+        ...this.wirelessAudioCard,
+        type: 'danger',
+      },
+      {
+        ...this.coffeeMakerCard,
+        type: 'secondary',
+      },
+    ],
+  };
+
+  constructor(private themeService: NbThemeService) {
+    this.themeService.getJsTheme()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(theme => {
+        this.statusCards = this.statusCardsByThemes[theme.name];
+    });
   }
 
-  public logout() {
-    this.authService.logout();
-    this.router.navigateByUrl('/');
+  ngOnDestroy() {
+    this.alive = false;
   }
-
 }

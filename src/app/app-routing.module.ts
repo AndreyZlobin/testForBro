@@ -1,62 +1,38 @@
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { MainComponent } from './components/main/main.component';
+import {
+  NbAuthComponent,
+  NbLoginComponent,
+  NbLogoutComponent,
+  NbRegisterComponent,
+  NbRequestPasswordComponent,
+  NbResetPasswordComponent,
+} from '@nebular/auth';
 
-import { SignupLinkComponent } from './pages/auth/signup-link/signup-link.component';
-import { SignupDetailedComponent } from './pages/auth/signup-detailed/signup-detailed.component';
-import { TermsComponent } from './pages/auth/terms/terms.component';
-import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
+import { LoginComponent } from './neosound/pages/auth/login/login.component';
+import { DashboardComponent } from './neosound/pages/dashboard/dashboard.component';
+import { MainComponent } from './neosound/components/main/main.component';
 
-import { UserDetailsComponent } from './pages/admin/user-details/user-details.component';
-import { QuickTestComponent } from './pages/guest/quick-test/quick-test.component';
-import { ResultsComponent } from './pages/guest/results/results.component';
-import { AccountDetailsComponent } from './pages/user/account-details/account-details.component';
-import { FilesListComponent } from './pages/user/files-list/files-list.component';
-import { FileResultsComponent } from './pages/user/file-results/file-results.component';
-import { LandingComponent } from './pages/landing/landing.component';
-import { AdminDashboardComponent } from './pages/admin/dashboard/dashboard.component';
-import { AuthGuard } from './shared/auth-guard';
-import { AboutComponent } from './pages/about/about.component';
+import { SignupLinkComponent } from './neosound/pages/auth/signup-link/signup-link.component';
+import { SignupDetailedComponent } from './neosound/pages/auth/signup-detailed/signup-detailed.component';
+import { TermsComponent } from './neosound/pages/auth/terms/terms.component';
+import { ForgotPasswordComponent } from './neosound/pages/auth/forgot-password/forgot-password.component';
+
+import { UserDetailsComponent } from './neosound/pages/admin/user-details/user-details.component';
+import { QuickTestComponent } from './neosound/pages/guest/quick-test/quick-test.component';
+import { ResultsComponent } from './neosound/pages/guest/results/results.component';
+import { AccountDetailsComponent } from './neosound/pages/user/account-details/account-details.component';
+import { FilesListComponent } from './neosound/pages/user/files-list/files-list.component';
+import { FileResultsComponent } from './neosound/pages/user/file-results/file-results.component';
+import { LandingComponent } from './neosound/pages/landing/landing.component';
+import { AdminDashboardComponent } from './neosound/pages/admin/dashboard/dashboard.component';
+import { AuthGuard } from './neosound/shared/auth-guard';
+import { AboutComponent } from './neosound/pages/about/about.component';
+
+import {PagesComponent} from './pages/pages.component';
 
 const routes: Routes = [
-  {
-    path: 'auth',
-    component: MainComponent,
-    children: [
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'sign-up-link',
-        component: SignupLinkComponent
-      },
-      {
-        path: 'sign-up',
-        component: SignupDetailedComponent
-      },
-      {
-        path: 'terms',
-        component: TermsComponent
-      },
-      {
-        path: 'forgot-password',
-        component: ForgotPasswordComponent
-      },
-    ]
-  },
-  {
-    path: '',
-    component: MainComponent,
-    children: [
-      {
-        path: '',
-        component: QuickTestComponent
-      },
-    ]
-  },
+  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
   {
     path: '',
     canActivate: [ AuthGuard ],
@@ -110,19 +86,62 @@ const routes: Routes = [
     ]
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'auth',
+    component: NbAuthComponent,
+    children: [
+      {
+        path: '',
+        component: LoginComponent,
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+      {
+        path: 'sign-up-link',
+        component: SignupLinkComponent
+      },
+      {
+        path: 'sign-up',
+        component: SignupDetailedComponent
+      },
+      {
+        path: 'terms',
+        component: TermsComponent
+      },
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent
+      },
+      {
+        path: 'register',
+        component: NbRegisterComponent,
+      },
+      {
+        path: 'logout',
+        component: NbLogoutComponent,
+      },
+      {
+        path: 'request-password',
+        component: NbRequestPasswordComponent,
+      },
+      {
+        path: 'reset-password',
+        component: NbResetPasswordComponent,
+      },
+    ],
   },
-  {
-    path: '**',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  }
+  { path: '', redirectTo: 'guest/quicktest', pathMatch: 'full' },
+  { path: '**', redirectTo: 'pages' },
 ];
 
+const config: ExtraOptions = {
+  useHash: false,
+};
+
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes, config)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
