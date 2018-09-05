@@ -11,12 +11,12 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/retry';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/retryWhen';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/observable/throw';
+
+
+
+
+
+
 import { UsersService } from '../services/users.service';
 
 @Injectable()

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject ,  timer ,  Subscription } from 'rxjs';
 import { merge, map } from 'rxjs/operators';
-import { timer } from 'rxjs/observable/timer';
-import { Subscription } from 'rxjs/Subscription';
 
 // Typescript hack.
 declare var MediaRecorder: any;

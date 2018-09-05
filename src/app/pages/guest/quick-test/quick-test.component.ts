@@ -4,8 +4,7 @@ import { UsersService } from '../../../services/users.service';
 import { MediaRecorderService } from '../../../services/media-recorder.service';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import { timer } from 'rxjs/observable/timer';
-import { Subscription } from 'rxjs/Subscription';
+import { timer ,  Subscription } from 'rxjs';
 
 // Typesccript hack.
 declare var MediaRecorder: any;
