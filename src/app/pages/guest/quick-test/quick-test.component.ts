@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsersService } from '../../../services/users.service';
+import { FilesService } from '../../../services/files.service';
 import { MediaRecorderService } from '../../../services/media-recorder.service';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import { timer ,  Subscription } from 'rxjs';
+import { timer, Subscription } from 'rxjs';
 
-// Typesccript hack.
-declare var MediaRecorder: any;
+function makeid() {
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < 5; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
 
 @Component({
   selector: 'app-quick-test',
@@ -30,8 +38,10 @@ export class QuickTestComponent implements OnInit {
     private userService: UsersService,
     private router: Router,
     private modalService: BsModalService,
-    private mediaRecorderService: MediaRecorderService
+    private mediaRecorderService: MediaRecorderService,
+    private filesService: FilesService
   ) {
+    this.sub = this.mediaRecorderService.stop$.subscribe(record => this.upload(record));
   }
 
   ngOnInit() {
@@ -46,7 +56,16 @@ export class QuickTestComponent implements OnInit {
   stop() {
     this.mediaRecorderService.stop();
   }
-  upload(ref) {}
+  upload(record) {
+    const params = {
+      batchid: '1',
+      filename: `${makeid()}.wav`,
+      base64string: window.URL.createObjectURL(record)
+    };
+    this.filesService.uploadFile(params).subscribe(res => {
+      debugger;
+    });
+  }
 
   gotoResults() {
     this.router.navigateByUrl('/guest/results');
