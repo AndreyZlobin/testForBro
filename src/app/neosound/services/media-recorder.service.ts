@@ -17,17 +17,16 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
   private isRecording = false;
   private timerSub: Subscription;
   private audioChunks: any[] = [];
+  private blob: Blob;
   private ticker;
   public ticks = 0;
   public initialize$: Subject<T[]> = new Subject();
   public start$: Subject<T[]> = new Subject();
-  public stop$: Subject<T[]> = new Subject();
-  public upload$: Subject<T[]> = new Subject();
+  public stop$: Subject<Blob> = new Subject();
   public events$: any = merge(
     this.initialize$.pipe(map(value => ({ name: 'initialize', value }))),
     this.start$.pipe(map(value => ({ name: 'start', value }))),
-    this.stop$.pipe(map(value => ({ name: 'stop', value }))),
-    this.upload$.pipe(map(value => ({ name: 'upload', value })))
+    this.stop$.pipe(map(value => ({ name: 'stop', value })))
   );
   public start(): void {
     this.isRecording = true;
@@ -40,12 +39,8 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
     this.mediaRecorder.stop();
     this.isRecording = false;
     this.timerSub.unsubscribe();
-    this.stop$.next();
   }
   public initialize(): void {
-  }
-  public upload(blob: Blob): void {
-    this.upload$.next();
   }
   tickerFunc(tick) {
     this.ticks = tick;
@@ -57,9 +52,7 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
         const audio = new Audio();
         const blob = new Blob(this.audioChunks, { 'type': 'audio/wav' });
         this.audioChunks.length = 0;
-        audio.src = window.URL.createObjectURL(blob);
-        audio.load();
-        audio.play();
+        this.stop$.next(blob);
       };
       this.mediaRecorder.ondataavailable = e => this.audioChunks.push(e.data);
       this.initialize$.next();
