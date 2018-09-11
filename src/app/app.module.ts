@@ -2,8 +2,27 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// nebular and ngx-admin
+import { NbThemeModule } from '@nebular/theme';
+import { NbSidebarModule, NbLayoutModule, NbSidebarService } from '@nebular/theme';
+import {
+  NbAlertModule,
+  NbButtonModule,
+  NbCardModule,
+  NbCheckboxModule,
+  NbInputModule,
+} from '@nebular/theme';
+import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
+import {
+  NbAuthComponent,
+  NbLoginComponent,
+  NbRegisterComponent,
+  NbLogoutComponent,
+  NbRequestPasswordComponent,
+  NbResetPasswordComponent,
+  NbAuthBlockComponent,
+} from '@nebular/auth';
 
-import { AuthenticationModule } from './shared';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
@@ -44,12 +63,22 @@ import { MinutesSecondsPipe } from './minutes-seconds.pipe';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AuthenticationModule,
-    AppRoutingModule,
     CommonModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    // nebular and ngx-admin
+    NbThemeModule.forRoot({ name: 'default' }),
+    NbLayoutModule,
+    NbSidebarModule,
+    NbAlertModule,
+    NbButtonModule,
+    NbCardModule,
+    NbCheckboxModule,
+    NbInputModule,
+    // NbAuthModule,
+    // nebular and ngx-admin
+    AppRoutingModule,
   ],
   declarations: [
     AppComponent,
@@ -69,7 +98,10 @@ import { MinutesSecondsPipe } from './minutes-seconds.pipe';
     LandingComponent,
     AdminDashboardComponent,
     AboutComponent,
-    MinutesSecondsPipe
+    MinutesSecondsPipe,
+    // nebular and ngx-admin
+    NbAuthBlockComponent,
+    // nebular and ngx-admin
   ],
   providers: [
     AuthGuard,
@@ -77,6 +109,7 @@ import { MinutesSecondsPipe } from './minutes-seconds.pipe';
     UsersService,
     FilesService,
     MediaRecorderService,
+    NbSidebarService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,

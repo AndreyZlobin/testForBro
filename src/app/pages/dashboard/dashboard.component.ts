@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
-import { DataService, AuthenticationService } from '../../shared';
+import { DataService } from '../../shared';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,8 +15,7 @@ export class DashboardComponent {
 
   constructor(
     private router: Router,
-    private dataService: DataService,
-    private authService: AuthenticationService
+    private dataService: DataService
   ) { }
 
   public loadData() {
@@ -25,7 +24,6 @@ export class DashboardComponent {
   }
 
   public logout() {
-    this.authService.logout();
     this.router.navigateByUrl('/');
   }
 

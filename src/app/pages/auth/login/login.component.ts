@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../../../shared';
 import { UsersService } from '../../../services/users.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +11,11 @@ import { UsersService } from '../../../services/users.service';
 export class LoginComponent {
   username: string;
   password: string;
+  form = new FormGroup({});
+  showMessages;
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService,
     private userService: UsersService,
   ) { }
 
