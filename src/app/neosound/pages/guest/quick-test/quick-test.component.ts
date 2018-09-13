@@ -6,6 +6,7 @@ import { MediaRecorderService } from '../../../services/media-recorder.service';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { timer, Subscription } from 'rxjs';
+import { UploadEvent, UploadFile } from 'ngx-file-drop';
 
 function makeid() {
   let text = '';
@@ -33,13 +34,16 @@ export class QuickTestComponent implements OnInit {
   private audioChunks: any[] = [];
   private ticker;
   private sub: Subscription;
+  public files: UploadFile[] = [];
+  currentFileParams;
+  successMessage = '';
 
   constructor(
     private userService: UsersService,
     private router: Router,
     private modalService: BsModalService,
     private mediaRecorderService: MediaRecorderService,
-    private filesService: FilesService
+    private filesService: FilesService,
   ) {
     this.sub = this.mediaRecorderService.stop$.subscribe(record => this.upload(record));
   }
@@ -109,5 +113,38 @@ export class QuickTestComponent implements OnInit {
         gender: false
       });
     }
+  }
+
+  public dropped(event: UploadEvent) {
+    this.files = event.files;
+    for (const file of event.files) {
+      file.fileEntry.file(info => {
+        const reader = new FileReader();
+        reader.readAsDataURL(info);
+        reader.onload = () => {
+          const params = {
+            batchid: '1',
+            filename: info.name,
+            base64string: reader.result,
+          };
+          this.currentFileParams = params;
+          this.filesService.uploadFile(params).subscribe(res => {
+            this.successMessage = 'Successfully uploaded to the server: ' + this.currentFileParams.filename;
+          });
+        };
+        reader.onerror = (error) => {
+          console.log('Error: ', error);
+          this.successMessage = '';
+        };
+      });
+    }
+  }
+
+  public fileOver(event){
+    // console.log(event);
+  }
+
+  public fileLeave(event){
+    // console.log(event);
   }
 }
