@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UsersService } from '../../../services/users.service';
-import { FilesService } from '../../../services/files.service';
-import { MediaRecorderService } from '../../../services/media-recorder.service';
-import { Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import { timer, Subscription } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { UsersService } from "../../../services/users.service";
+import { FilesService } from "../../../services/files.service";
+import { MediaRecorderService } from "../../../services/media-recorder.service";
+import { Router } from "@angular/router";
+import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { timer, Subscription } from "rxjs";
 
 function makeid() {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let text = "";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   for (let i = 0; i < 5; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -18,15 +19,15 @@ function makeid() {
 }
 
 @Component({
-  selector: 'app-quick-test',
-  templateUrl: './quick-test.component.html',
-  styleUrls: ['./quick-test.component.scss']
+  selector: "app-quick-test",
+  templateUrl: "./quick-test.component.html",
+  styleUrls: ["./quick-test.component.scss"]
 })
 export class QuickTestComponent implements OnInit {
   form: FormGroup;
-  error = '';
+  error = "";
   modalRef: BsModalRef;
-  modalType: string = 'upload';
+  modalType: string = "upload";
   ticks = 0;
   private isRecording: boolean = false;
   private mediaRecorder: any;
@@ -41,7 +42,9 @@ export class QuickTestComponent implements OnInit {
     private mediaRecorderService: MediaRecorderService,
     private filesService: FilesService
   ) {
-    this.sub = this.mediaRecorderService.stop$.subscribe(record => this.upload(record));
+    this.sub = this.mediaRecorderService.stop$.subscribe(record =>
+      this.upload(record)
+    );
   }
 
   ngOnInit() {
@@ -58,9 +61,9 @@ export class QuickTestComponent implements OnInit {
   }
   upload(record) {
     const params = {
-      batchid: '1',
+      batchid: '1111',
       filename: `${makeid()}.wav`,
-      base64string: window.URL.createObjectURL(record)
+      base64string: record
     };
     this.filesService.uploadFile(params).subscribe(res => {
       debugger;
@@ -68,12 +71,12 @@ export class QuickTestComponent implements OnInit {
   }
 
   gotoResults() {
-    this.router.navigateByUrl('/guest/results');
+    this.router.navigateByUrl("/guest/results");
   }
 
   showModal(ref, modalType) {
     this.modalType = modalType;
-    this.modalRef = this.modalService.show(ref, { class: 'modal-lg modal-xl' });
+    this.modalRef = this.modalService.show(ref, { class: "modal-lg modal-xl" });
   }
 
   hideModal() {
@@ -82,21 +85,23 @@ export class QuickTestComponent implements OnInit {
 
   submit() {
     // todo: do something with form data
-    this.error = '';
+    this.error = "";
     const params = {
       username: this.form.value.username,
       firstname: this.form.value.firstname,
       lastname: this.form.value.lastname,
       email: this.form.value.email
     };
-    this.userService.createUser(params).subscribe(() => this.router.navigateByUrl('/'));
+    this.userService
+      .createUser(params)
+      .subscribe(() => this.router.navigateByUrl("/"));
   }
 
   private createForm() {
     this.form = new FormGroup({
-      emotion: new FormControl({ value: '' }, Validators.required),
-      age: new FormControl({ value: '' }),
-      gender: new FormControl({ value: '' })
+      emotion: new FormControl({ value: "" }, Validators.required),
+      age: new FormControl({ value: "" }),
+      gender: new FormControl({ value: "" })
     });
     this.patchForm();
   }
@@ -104,7 +109,7 @@ export class QuickTestComponent implements OnInit {
   patchForm() {
     if (this.form) {
       this.form.setValue({
-        emotion: 'anger',
+        emotion: "anger",
         age: false,
         gender: false
       });
