@@ -117,7 +117,8 @@ export class QuickTestComponent implements OnInit {
 
   public dropped(event: UploadEvent) {
     this.files = event.files;
-    for (const file of event.files) {
+    for (const item of event.files) {
+      const file = item as any;
       file.fileEntry.file(info => {
         const reader = new FileReader();
         reader.readAsDataURL(info);
@@ -128,6 +129,7 @@ export class QuickTestComponent implements OnInit {
             base64string: reader.result,
           };
           this.currentFileParams = params;
+          console.log(this.currentFileParams);
           this.filesService.uploadFile(params).subscribe(res => {
             this.successMessage = 'Successfully uploaded to the server: ' + this.currentFileParams.filename;
           });
