@@ -43,9 +43,7 @@ export class FilesService {
       'filename': '1.mp3',
       'base64string': ''
     };
-    return this.http.post(`${environment.api}/uploadFile`,
-      params
-    );
+    return this.http.post(`${environment.api}/uploadFile`, params);
   }
 
   listFileResults(params): Observable<any> {

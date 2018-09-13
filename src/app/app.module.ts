@@ -68,6 +68,8 @@ const formSetting: any = {
   },
 };
 
+import { FileDropModule } from 'ngx-file-drop';
+
 @NgModule({
   declarations: [
       AppComponent,
@@ -153,6 +155,8 @@ const formSetting: any = {
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
+
+    FileDropModule,
   ],
   bootstrap: [AppComponent],
   providers: [
