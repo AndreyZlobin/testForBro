@@ -12,11 +12,6 @@ import {
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 
-
-
-
-
-
 import { UsersService } from '../services/users.service';
 
 @Injectable()
@@ -37,7 +32,7 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
     const newRequest = token && apikey
       ? request.clone({ setHeaders: {
         'Authorization': token,
-        'x-api-key': apikey
+        'x-api-key': apikey.replace(/\"/g, ''),
       } })
       : request;
 console.log(newRequest);

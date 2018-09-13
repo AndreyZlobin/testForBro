@@ -83,6 +83,11 @@ const routes: Routes = [
         canActivate: [ AuthGuard ],
         component: QuickTestComponent
       },
+      {
+        path: '',
+        canActivate: [ AuthGuard ],
+        component: QuickTestComponent
+      },
     ]
   },
   {

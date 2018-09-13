@@ -163,7 +163,7 @@ const formSetting: any = {
       {
         provide: HTTP_INTERCEPTORS,
         useClass: RequestsHttpInterceptor,
-        multi: true
+        multi: true,
       }
   ],
 })

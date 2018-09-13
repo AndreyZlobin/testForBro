@@ -23,11 +23,12 @@ export class UsersService {
   }
   getToken(): string {
     const user = this.getUserLocal();
-    return user && user.token;
+    return user && user.token
+      || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZyb250dHJ1c3QiLCJhcGlrZXkiOiJHUUJpOFFGTFZQYUlQcnJNbUNwRE5CV3F3UGZNWWRNMnRlUFRpcFNoIiwiaWF0IjoxNTM2NTE1ODQ5Njg2LCJleHAiOiIyMDIzLTA5LTA4VDE3OjU3OjI5LjY4NloifQ.rfygroLBG_7p_R-EiPUL8nsc3wDUcGE2cfNiCHv1uDA';
   }
   getApiKey(): string {
-    const user = this.getUserLocal();
-    return user && user.apikey;
+    const apikey = localStorage.getItem('apikey');
+    return apikey || 'GQBi8QFLVPaIPrrMmCpDNBWqwPfMYdM2tePTipSh';
   }
   getUserLocal() {
     const user = localStorage.getItem('user');
@@ -35,14 +36,13 @@ export class UsersService {
   }
 
   loginUser(params): Observable<any> {
-    params = params || {
-      'username': 'mathematica',
-      'password': 'mathematica'
-    };
     return this.http.post(`${environment.api}/loginUser`,
       params
-    ).map(user => {
+    ).map((user: any) => {
       localStorage.setItem('user', JSON.stringify(user));
+      const helper = new JwtHelperService();
+      const token = helper.decodeToken(user.token);
+      token && localStorage.setItem('apikey', JSON.stringify(token.apikey));
     });
     // .flatMap((response: any) => {
     //   return Observable.of(response);
