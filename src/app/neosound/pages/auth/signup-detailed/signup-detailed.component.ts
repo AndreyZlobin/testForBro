@@ -46,7 +46,7 @@ export class SignupDetailedComponent implements OnInit {
       email: new FormControl({ value: ''}, Validators.required),
       // password: new FormControl({ value: ''}, Validators.required),
       // passwordConfirm: new FormControl({ value: ''}, Validators.required),
-      agree: new FormControl({ value: ''}, Validators.required),
+      agree: new FormControl({ value: ''}),
     });
     this.patchForm();
   }

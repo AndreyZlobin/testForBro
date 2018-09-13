@@ -5,6 +5,7 @@ import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { LayoutService } from '../../../@core/data/layout.service';
 import { Router } from '@angular/router';
+import { UsersService } from '../../../neosound/services/users.service';
 
 @Component({
   selector: 'ngx-header',
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit {
               private analyticsService: AnalyticsService,
               private layoutService: LayoutService,
               private router: Router,
+              private userServ: UsersService
             ) {
   }
 
@@ -58,4 +60,17 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl(url);
     return false;
   }
+
+  logout() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('apikey');
+    this.navigate('/');
+    return false;
+  }
+
+  isLoggedIn() {
+    return !!localStorage.getItem('user');
+    // return this.userServ.isAuthenticated();
+  }
+
 }

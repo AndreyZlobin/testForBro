@@ -73,15 +73,22 @@ export class QuickTestComponent implements OnInit {
 
   gotoResults() {
     this.router.navigateByUrl('/guest/results');
+    return false;
   }
 
-  showModal(ref, modalType) {
+  showModal(ref, modalType, newModal = true) {
+    this.successMessage = '';
     this.modalType = modalType;
-    this.modalRef = this.modalService.show(ref, { class: 'modal-lg modal-xl' });
+    if (newModal) {
+      this.hideModal();
+      this.modalRef = this.modalService.show(ref, { class: 'modal-lg modal-xl' });
+    }
   }
 
   hideModal() {
-    this.modalRef.hide();
+    if (this.modalRef) {
+      this.modalRef.hide();
+    }
   }
 
   submit() {

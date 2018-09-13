@@ -95,8 +95,8 @@
   </div>
   <div class="modal-body">
     <div class="btn-group" role="group">
-      <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'upload'}" (click)="modalType = 'upload' && successMessage = ''">Upload</button>
-      <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'record'}" (click)="modalType = 'record' && successMessage = ''">Record</button>
+      <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'upload'}" (click)="showModal(templateModal, 'upload', false)">Upload</button>
+      <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'record'}" (click)="showModal(templateModal, 'record', false)">Record</button>
     </div>
     <div class="mt-3">
       <div class="alert alert-success" *ngIf="successMessage">
