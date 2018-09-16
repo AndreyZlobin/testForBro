@@ -24,7 +24,7 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
   public ticks = 0;
   public initialize$: Subject<T[]> = new Subject();
   public start$: Subject<T[]> = new Subject();
-  public stop$: Subject<string> = new Subject();
+  public stop$: Subject<File> = new Subject();
   public events$: any = merge(
     this.initialize$.pipe(map(value => ({ name: "initialize", value }))),
     this.start$.pipe(map(value => ({ name: "start", value }))),
@@ -47,11 +47,7 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
       this.isRecording = false;
       this.timerSub.unsubscribe();
       const data = this.mediaRecorder.getBlob();
-      const reader = new FileReader();
-      reader.readAsDataURL(data);
-      reader.onloadend = () => {
-        this.stop$.next(reader.result);
-      };
+      this.stop$.next(data);
     });
   }
   public initialize(): void {}

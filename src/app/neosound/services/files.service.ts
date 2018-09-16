@@ -38,12 +38,7 @@ export class FilesService {
   }
 
   uploadFile(params): Observable<any> {
-    params = params || {
-      'batchid': '1234',
-      'filename': '1.mp3',
-      'base64string': ''
-    };
-    return this.http.post(`${environment.api}/uploadFile`, params);
+    return this.http.post('https://neosound.eu/server/api/uploadFileMP.php', params);
   }
 
   listFileResults(params): Observable<any> {
