@@ -25,6 +25,7 @@ const makeId = () => {
   styleUrls: ["./quick-test.component.scss"]
 })
 export class QuickTestComponent implements OnInit {
+  batchid = '1';
   form: FormGroup;
   error = "";
   modalRef: BsModalRef;
@@ -37,10 +38,11 @@ export class QuickTestComponent implements OnInit {
   private sub: Subscription;
   public files: UploadFile[] = [];
   currentFileParams;
-  successMessage = "";
+  successMessage = '';
   isPlaying = false;
   fileBlob;
   audio: any;
+  attached = false;
 
   constructor(
     private userService: UsersService,
@@ -52,10 +54,31 @@ export class QuickTestComponent implements OnInit {
     this.sub = this.mediaRecorderService.stop$.subscribe(record => {
       // this.upload(record);
       this.fileBlob = record;
+      const name = `${this.getFormattedTime()}.wav`;
+      const file = new File([record], name, {
+        type: `audio/wav`,
+      });
+      this.currentFileParams = {
+        batchid: this.batchid,
+        name,
+        file,
+      };
     });
   }
 
+  getFormattedTime() {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = today.getMonth() + 1;
+    const d = today.getDate();
+    const h = today.getHours();
+    const mi = today.getMinutes();
+    const s = today.getSeconds();
+    return y + '-' + m + '-' + d + '_' + h + ':' + mi + ':' + s;
+}
+
   ngOnInit() {
+    this.discard();
     this.createForm();
   }
 
@@ -79,7 +102,7 @@ export class QuickTestComponent implements OnInit {
   }
 
   stopPlaying() {
-    this.audio.pause();
+    this.audio && this.audio.pause();
     this.isPlaying = false;
   }
 
@@ -90,39 +113,46 @@ export class QuickTestComponent implements OnInit {
   discard() {
     this.mediaRecorderService.reset();
     this.currentFileParams = undefined;
+    this.files = [];
+    this.attached = false;
   }
 
   attach() {
+    this.stopPlaying();
     this.upload(this.fileBlob);
     this.hideModal();
+    this.attached = true;
   }
 
   upload(record) {
     const uploadFile = new FormData();
-    const name = `${makeId()}.wav`;
-    const file = new File([record], name, {
-      type: `audio/wav`,
-    });
-    this.currentFileParams = {
-      batchid: 1,
-      name,
-      file,
-    };
-    console.log(name);
-    uploadFile.append("batchid", "1");
-    uploadFile.append("username", "fronttrust");
-    uploadFile.append("file", file);
+
+    console.log(this.currentFileParams);
+    uploadFile.append('batchid', this.batchid);
+    uploadFile.append('username', 'fronttrust');
+    uploadFile.append('file', this.currentFileParams.file);
     this.filesService.uploadFile(uploadFile).subscribe(res => {
+      this.successMessage =
+              'Successfully uploaded to the server: ' +
+              this.currentFileParams.name;
     });
   }
 
   gotoResults() {
-    this.router.navigateByUrl("/guest/results");
+    this.stopPlaying();
+    const params = {
+      'batchid': this.batchid,
+      'filename': this.currentFileParams.name,
+    };
+    this.filesService.setQuickFileParams(params);
+    this.filesService.processFile(params).subscribe(v => {
+      this.router.navigateByUrl('/guest/results');
+    });
     return false;
   }
 
   showModal(ref, modalType, newModal = true) {
-    this.successMessage = "";
+    this.successMessage = '';
     this.modalType = modalType;
     if (newModal) {
       this.hideModal();
@@ -172,39 +202,50 @@ export class QuickTestComponent implements OnInit {
   }
 
   public dropped(event: UploadEvent) {
-    this.files = event.files[0];
-    const uploadFile = new FormData();
-    uploadFile.append("batchid", "1");
-    uploadFile.append("username", "fronttrust");
-    uploadFile.append("file", event.files[0]);
+    this.files = event.files;
+    // const uploadFile = new FormData();
+    // uploadFile.append("batchid", "1");
+    // uploadFile.append("username", "fronttrust");
+    // uploadFile.append("file", event.files[0]);
 
-    this.filesService.uploadFile(uploadFile).subscribe(res => {
-    });
-    // for (const item of event.files) {
-    //   const file = item as any;
-    //   file.fileEntry.file(info => {
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(info);
-    //     reader.onload = () => {
-    //       const params = {
-    //         batchid: "1",
-    //         filename: info.name,
-    //         base64string: reader.result
-    //       };
-    //       this.currentFileParams = params;
-    //       console.log(this.currentFileParams);
-    //       this.filesService.uploadFile(params).subscribe(res => {
-    //         this.successMessage =
-    //           "Successfully uploaded to the server: " +
-    //           this.currentFileParams.filename;
-    //       });
-    //     };
-    //     reader.onerror = error => {
-    //       console.log("Error: ", error);
-    //       this.successMessage = "";
-    //     };
-    //   });
-    // }
+    // this.filesService.uploadFile(uploadFile).subscribe(res => {
+    // });
+    for (const item of event.files) {
+      const file = item as any;
+      file.fileEntry.file(currentFile => {
+        const reader = new FileReader();
+        reader.readAsDataURL(currentFile);
+        reader.onload = () => {
+          const params = {
+            batchid: this.batchid,
+            name: currentFile.name,
+            file: currentFile, // reader.result,
+          };
+          // this.fileBlob = reader.result;
+          this.currentFileParams = params;
+          // const uploadFile = new FormData();
+          // uploadFile.append("batchid", "1");
+          // uploadFile.append("username", "fronttrust");
+          // uploadFile.append("file", currentFile);
+          this.fileBlob = currentFile;
+          // this.filesService.uploadFile(uploadFile).subscribe(res => {
+          //   this.successMessage =
+          //     'Successfully uploaded to the server: ' +
+          //     this.currentFileParams.name;
+          // });
+          // console.log(this.currentFileParams, currentFile);
+          // this.filesService.uploadFile(params).subscribe(res => {
+          //   this.successMessage =
+          //     "Successfully uploaded to the server: " +
+          //     this.currentFileParams.filename;
+          // });
+        };
+        reader.onerror = error => {
+          console.log('Error: ', error);
+          this.successMessage = '';
+        };
+      });
+    }
   }
 
   public fileOver(event) {

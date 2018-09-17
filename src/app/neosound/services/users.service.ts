@@ -61,6 +61,16 @@ export class UsersService {
     );
   }
 
+  registerUser(params): Observable<any> {
+    params = params || {
+      'username': '',
+      'firstname': '',
+      'lastname': '',
+      'email': '',
+    };
+    return this.http.post(`${environment.api}/registerUser`, params);
+  }
+
   getUser(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/getUser`,

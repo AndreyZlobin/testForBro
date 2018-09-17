@@ -30,10 +30,11 @@ export class SignupDetailedComponent implements OnInit {
       'username': this.form.value.username,
       'firstname': this.form.value.firstname,
       'lastname': this.form.value.lastname,
-      'email': this.form.value.email
+      'email': this.form.value.email,
+      'password': this.form.value.password,
     };
     this.userService
-      .createUser(params)
+      .registerUser(params)
       .subscribe(() => this.router.navigateByUrl('/'));
 
   }
@@ -44,9 +45,9 @@ export class SignupDetailedComponent implements OnInit {
       firstname: new FormControl({ value: ''}, Validators.required),
       lastname: new FormControl({ value: ''}, Validators.required),
       email: new FormControl({ value: ''}, Validators.required),
-      // password: new FormControl({ value: ''}, Validators.required),
+      password: new FormControl({ value: ''}, Validators.required),
       // passwordConfirm: new FormControl({ value: ''}, Validators.required),
-      agree: new FormControl({ value: ''}),
+      agree: new FormControl({ value: true}),
     });
     this.patchForm();
   }
@@ -58,9 +59,9 @@ export class SignupDetailedComponent implements OnInit {
         firstname: '',
         lastname: '',
         email: '',
-        // password: '',
+        password: '',
         // passwordConfirm: '',
-        agree: '',
+        agree: true,
       });
     }
   }

@@ -5,10 +5,19 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class FilesService {
+  private currentFileParams;
 
   constructor(
     private http: HttpClient
   ) { }
+
+  setQuickFileParams(params) {
+    this.currentFileParams = params;
+  }
+
+  getQuickFileParams() {
+    return this.currentFileParams;
+  }
 
   getFile(params): Observable<any> {
     params = params || {
@@ -44,9 +53,16 @@ export class FilesService {
   listFileResults(params): Observable<any> {
     params = params || {
       'batchid': '1234',
-      'filename': '1.mp3'
+      'filename': '1.mp3',
     };
-    return this.http.post(`${environment.api}/listFileResults`,
+    return this.http.post(`${environment.api}/listFileResults`, params);
+  }
+
+  getFileResultJson(params): Observable<any> {
+    params = params || {
+      'uri': '1234',
+    };
+    return this.http.post(`${environment.api}/getFileResultJson`,
       params
     );
   }

@@ -1,19 +1,19 @@
 <div class="container">
   <form [formGroup]="form">
-    <div class="form-group mt-3" *ngIf="!currentFileParams">
+    <div class="form-group mt-3" *ngIf="!attached">
         <h3 class="mb-3">Step 1. Tap to make a trial record or upload a file</h3>
         <button class="btn btn-primary" (click)="showModal(templateModal, 'record')">Record</button>
         OR
         <button class="btn btn-primary" (click)="showModal(templateModal, 'upload')">Upload</button>
     </div>
-    <div class="form-group mt-3" *ngIf="currentFileParams">
+    <div class="form-group mt-3" *ngIf="attached">
       <h3 class="mb-3">Step 1. Tap to make a trial record or upload a file</h3>
       <div class="alert alert-success">
         Recording: {{currentFileParams.name}}
-        <a (click)="play()"  *ngIf="!isPlaying" class="" style="color: blue; text-decoration: underline;">
+        <a (click)="play()"  *ngIf="!isPlaying" class="ml-3 mr-3" style="color: blue; text-decoration: underline;">
           Play
         </a>
-        <a (click)="stopPlaying()" *ngIf="isPlaying" class="mr-3" style="color: blue; text-decoration: underline;">
+        <a (click)="stopPlaying()" *ngIf="isPlaying" class="ml-3 mr-3" style="color: blue; text-decoration: underline;">
           Stop
         </a>
         <a (click)="discard()" class="" style="color: blue; text-decoration: underline;">
@@ -119,7 +119,7 @@
       </div>
       <div *ngIf="modalType === 'upload'">
         <div class="center">
-          <file-drop headertext="Drop files here" (onFileDrop)="dropped($event)"
+          <file-drop *ngIf="!files.length" headertext="Drop file here" (onFileDrop)="dropped($event)"
             (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
               <span></span>
           </file-drop>
@@ -137,9 +137,9 @@
                   </tbody>
               </table>
           </div>
-          <div *ngIf="mediaRecorderService.isRecorded">
-            <button class="btn btn-link" (click)="discard()">Discard</button>
-            <button class="btn" (click)="attach()">Attach</button>
+          <div *ngIf="currentFileParams || files.length" class="text-right">
+              <button class="btn btn-link btn-secondary mr-3" (click)="discard()">Discard</button>
+              <button class="btn btn-primary" (click)="attach()">Attach</button>
           </div>
         </div>
       </div>

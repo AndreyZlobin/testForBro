@@ -1,29 +1,77 @@
 <div class="container">
   <h3>Your record analysis:</h3>
-  <div class="row">
-    <div class="col-6">
-      Chart
+  <div *ngIf="emotions">
+    {{emotions | json}}
+    <div class="row">
+      <div class="col-6">
+        Chart
+      </div>
+      <div class="col-6">
+        <div>
+          60 % happiness
+        </div>
+        <div>
+          <input type="range" />
+        </div>
+        <div>
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'male'}">Male</button>
+              <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'female'}">Female</button>
+            </div>
+        </div>
+      </div>
     </div>
-    <div class="col-6">
-      <div>
-        60 % happiness
-      </div>
-      <div>
-        <input type="range" />
-      </div>
-      <div>
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'male'}">Male</button>
-            <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'female'}">Female</button>
-          </div>
-      </div>
+    <div>
+      <h4>Are you agree with the result?</h4>
+      <a class="btn btn-success mr-3">Yes</a>
+      <a class="btn btn-danger">No</a>
     </div>
+    <div class="mt-3">Click <a href="#">here</a> to subscribe for a FREE trial packeage and get more</div>
+    <a class="mt-3" routerLink="/guest/quicktest">Check another record</a>
   </div>
-  <div>
-    <h4>Are you agree with the result?</h4>
-    <a class="btn btn-success mr-3">Yes</a>
-    <a class="btn btn-danger">No</a>
+  <div *ngIf="!emotions" class="center">
+    <div>
+      <h4>Proccessing...</h4>
+    </div>
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
   </div>
-  <div class="mt-3">Click <a href="#">here</a> to subscribe for a FREE trial packeage and get more</div>
-  <a class="mt-3" routerLink="/guest/quicktest">Check another record</a>
 </div>
+
+<style>
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid #cccccc;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #cccccc transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+</style>
