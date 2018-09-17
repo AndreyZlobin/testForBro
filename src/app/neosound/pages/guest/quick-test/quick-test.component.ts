@@ -38,17 +38,21 @@ export class QuickTestComponent implements OnInit {
   public files: UploadFile[] = [];
   currentFileParams;
   successMessage = "";
+  isPlaying = false;
+  fileBlob;
+  audio: any;
 
   constructor(
     private userService: UsersService,
     private router: Router,
     private modalService: BsModalService,
     private mediaRecorderService: MediaRecorderService,
-    private filesService: FilesService
+    private filesService: FilesService,
   ) {
-    this.sub = this.mediaRecorderService.stop$.subscribe(record =>
-      this.upload(record)
-    );
+    this.sub = this.mediaRecorderService.stop$.subscribe(record => {
+      // this.upload(record);
+      this.fileBlob = record;
+    });
   }
 
   ngOnInit() {
@@ -60,15 +64,50 @@ export class QuickTestComponent implements OnInit {
     this.mediaRecorderService.start();
   }
 
+  play() {
+    this.audio = new Audio();
+    this.audio.src = URL.createObjectURL(this.fileBlob);
+    this.audio.load();
+    this.audio.play();
+    this.audio.addEventListener('pause', () => {
+        this.isPlaying = false;
+    });
+    this.audio.addEventListener('ended', () => {
+        this.isPlaying = false;
+    });
+    this.isPlaying = true;
+  }
+
+  stopPlaying() {
+    this.audio.pause();
+    this.isPlaying = false;
+  }
+
   stop() {
     this.mediaRecorderService.stop();
   }
+
+  discard() {
+    this.mediaRecorderService.reset();
+    this.currentFileParams = undefined;
+  }
+
+  attach() {
+    this.upload(this.fileBlob);
+    this.hideModal();
+  }
+
   upload(record) {
     const uploadFile = new FormData();
     const name = `${makeId()}.wav`;
     const file = new File([record], name, {
       type: `audio/wav`,
     });
+    this.currentFileParams = {
+      batchid: 1,
+      name,
+      file,
+    };
     console.log(name);
     uploadFile.append("batchid", "1");
     uploadFile.append("username", "fronttrust");
@@ -138,7 +177,7 @@ export class QuickTestComponent implements OnInit {
     uploadFile.append("batchid", "1");
     uploadFile.append("username", "fronttrust");
     uploadFile.append("file", event.files[0]);
-    debugger;
+
     this.filesService.uploadFile(uploadFile).subscribe(res => {
     });
     // for (const item of event.files) {

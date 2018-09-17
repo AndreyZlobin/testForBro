@@ -1,10 +1,25 @@
 <div class="container">
   <form [formGroup]="form">
-    <div class="form-group mt-3">
+    <div class="form-group mt-3" *ngIf="!currentFileParams">
         <h3 class="mb-3">Step 1. Tap to make a trial record or upload a file</h3>
         <button class="btn btn-primary" (click)="showModal(templateModal, 'record')">Record</button>
         OR
         <button class="btn btn-primary" (click)="showModal(templateModal, 'upload')">Upload</button>
+    </div>
+    <div class="form-group mt-3" *ngIf="currentFileParams">
+      <h3 class="mb-3">Step 1. Tap to make a trial record or upload a file</h3>
+      <div class="alert alert-success">
+        Recording: {{currentFileParams.name}}
+        <a (click)="play()"  *ngIf="!isPlaying" class="" style="color: blue; text-decoration: underline;">
+          Play
+        </a>
+        <a (click)="stopPlaying()" *ngIf="isPlaying" class="mr-3" style="color: blue; text-decoration: underline;">
+          Stop
+        </a>
+        <a (click)="discard()" class="" style="color: blue; text-decoration: underline;">
+          Change
+        </a>
+      </div>
     </div>
 
     <h3>Step 2. Select emotions for analysing</h3>
@@ -105,7 +120,7 @@
       <div *ngIf="modalType === 'upload'">
         <div class="center">
           <file-drop headertext="Drop files here" (onFileDrop)="dropped($event)"
-          (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+            (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
               <span></span>
           </file-drop>
           <div class="upload-table">
@@ -122,26 +137,53 @@
                   </tbody>
               </table>
           </div>
-      </div>
+          <div *ngIf="mediaRecorderService.isRecorded">
+            <button class="btn btn-link" (click)="discard()">Discard</button>
+            <button class="btn" (click)="attach()">Attach</button>
+          </div>
+        </div>
       </div>
       <div *ngIf="modalType === 'record'">
-        <div class="d-flex">
-          <ng-container *ngIf="!mediaRecorderService.isRecording">
-            <a (click)="record()">
+        <div class="">
+          <ng-container *ngIf="!mediaRecorderService.isRecording && !mediaRecorderService.isRecorded">
+            <div class="w-100 text-center" style="height: 42px;">
+                <h1 class="time">00:00</h1>
+            </div>
+            <a (click)="record()" class="w-100 text-center" style="display:block;">
               <svg class="button" expanded="true" height="300px" width="300px">
                 <circle cx="50%" cy="50%" r="80px"></circle>
               </svg>
             </a>
-            <h1 class="time">00:00</h1>
           </ng-container>
-          <ng-container *ngIf="!!mediaRecorderService.isRecording">
-            <a (click)="stop()">
+          <ng-container *ngIf="!!mediaRecorderService.isRecording && !mediaRecorderService.isRecorded">
+            <div class="w-100 text-center" style="height: 42px;">
+              <h1 class="time">{{mediaRecorderService.ticks | minutesSeconds}}</h1>
+            </div>
+            <a (click)="stop()" class="w-100 text-center" style="display:block;">
               <svg class="button" expanded="true" height="300px" width="300px">
                 <circle cx="50%" cy="50%" r="80px"></circle>
                 <circle class="pulse" cx="50%" cy="50%" r="80px"></circle>
               </svg>
             </a>
-            <h1 class="time">{{mediaRecorderService.ticks | minutesSeconds}}</h1>
+          </ng-container>
+          <ng-container *ngIf="mediaRecorderService.isRecorded">
+            <div class="w-100 text-center" style="height: 42px;">
+                <h1 class="time">{{mediaRecorderService.ticks | minutesSeconds}}</h1>
+            </div>
+            <!-- <audio id="audio" controls style="display: none">
+                <source id="source" [attr.src]="fileBlob" type="audio/ogg"/>
+            </audio> -->
+            <a (click)="play()" *ngIf="!isPlaying" class="w-100 text-center mt-5" style="display:block;">
+              <i class="fa fa-play" style="width: 300px; height: 200px; color: #f44247; font-size: 100px;"></i>
+            </a>
+            <a (click)="stopPlaying()" *ngIf="isPlaying" class="w-100 text-center mt-5" style="display:block;">
+              <i class="fa fa-stop" style="width: 300px; height: 200px; color: #f44247; font-size: 100px;"></i>
+            </a>
+
+            <div class="text-right">
+              <button class="btn btn-link btn-secondary mr-3" (click)="discard()">Discard</button>
+              <button class="btn btn-primary" (click)="attach()">Attach</button>
+            </div>
           </ng-container>
 
           <div class="timer">

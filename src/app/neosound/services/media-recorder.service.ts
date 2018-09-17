@@ -17,6 +17,7 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
   private mediaRecorder: any;
   private mediaStream: any;
   private isRecording = false;
+  private isRecorded = false;
   private timerSub: Subscription;
   private audioChunks: any[] = [];
   private blob: Blob;
@@ -45,10 +46,15 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
   public stop(): void {
     this.mediaRecorder.stopRecording(audioUrl => {
       this.isRecording = false;
+      this.isRecorded = true;
       this.timerSub.unsubscribe();
       const data = this.mediaRecorder.getBlob();
       this.stop$.next(data);
     });
+  }
+  public reset() {
+    this.isRecording = false;
+    this.isRecorded = false;
   }
   public initialize(): void {}
   tickerFunc(tick) {
