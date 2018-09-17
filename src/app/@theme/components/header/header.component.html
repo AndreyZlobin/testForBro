@@ -9,6 +9,7 @@
       <nb-action class="control-item" ><a href="#" (click)="navigate('/guest/quicktest')">Try</a></nb-action>
       <nb-action class="control-item"  *ngIf="!isLoggedIn()"><a href="#"  (click)="navigate('/auth/sign-up')">Sign up</a></nb-action>
       <nb-action class="control-item"  *ngIf="!isLoggedIn()"><a href="#"  (click)="navigate('/auth/login')">Login</a></nb-action>
+      <nb-action class="control-item"  *ngIf="isLoggedIn()"><a href="#"  (click)="navigate('/user/files')">Files list</a></nb-action>
       <nb-action class="control-item" ><a href="#"  (click)="navigate('/about')">About</a></nb-action>
   </nb-actions>
   <!-- <ngx-theme-switcher></ngx-theme-switcher> -->

@@ -29,9 +29,9 @@ export class FilesService {
     );
   }
 
-  listUserFiles(params): Observable<any> {
+  listFiles(params): Observable<any> {
     params = params || {};
-    return this.http.post(`${environment.api}/listUserFiles`,
+    return this.http.post(`${environment.api}/listFiles`,
       params
     );
   }

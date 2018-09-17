@@ -1,3 +1,22 @@
-<p>
-  files-list works!
-</p>
+<h1>Files list</h1>
+<div *ngIf="files" class="mt-5">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+          <th>Batch Id</th>
+          <th>Name</th>
+          <th>Upladed</th>
+          <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of files">
+        <td>{{ item.batchid}}</td>
+        <td>{{ item.filename}}</td>
+        <td>{{item.uploaddate | date}}</td>
+        <td><a [routerLink]="getLink(item)">File details</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
+</div>

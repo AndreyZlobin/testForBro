@@ -43,6 +43,7 @@ export class QuickTestComponent implements OnInit {
   fileBlob;
   audio: any;
   attached = false;
+  uploaded = false;
 
   constructor(
     private userService: UsersService,
@@ -115,6 +116,7 @@ export class QuickTestComponent implements OnInit {
     this.currentFileParams = undefined;
     this.files = [];
     this.attached = false;
+    this.uploaded = false;
   }
 
   attach() {
@@ -132,6 +134,7 @@ export class QuickTestComponent implements OnInit {
     uploadFile.append('username', 'fronttrust');
     uploadFile.append('file', this.currentFileParams.file);
     this.filesService.uploadFile(uploadFile).subscribe(res => {
+      this.uploaded = true;
       this.successMessage =
               'Successfully uploaded to the server: ' +
               this.currentFileParams.name;

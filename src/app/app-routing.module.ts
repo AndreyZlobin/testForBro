@@ -65,6 +65,11 @@ const routes: Routes = [
         component: FilesListComponent
       },
       {
+        path: 'file/:batchid/:filename',
+        canActivate: [ AuthGuard ],
+        component: PlayerDetailsComponent
+      },
+      {
         path: 'user/result',
         canActivate: [ AuthGuard ],
         component: FileResultsComponent

@@ -26,7 +26,7 @@ export class LoginComponent {
     };
     this.userService
       .loginUser(params)
-      .subscribe(() => this.router.navigateByUrl('/'));
+      .subscribe(() => this.router.navigateByUrl('/user/files'));
   }
 
 }
