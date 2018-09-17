@@ -1,15 +1,13 @@
 <div class="container">
   <h3>Your record analysis:</h3>
-  {{analysisResult | json}}
-  <div *ngIf="emotions">
-    {{emotions | json}}
+  <div *ngIf="analysisResult">
     <div class="row">
       <div class="col-6">
         <ngx-pie-chart *ngIf="chartData" [data]="chartData"></ngx-pie-chart>
       </div>
       <div class="col-6">
         <div>
-          {{100 - analysisResult[0] && analysisResult[0].angervol }} % happiness
+          {{analysisResult[0] && analysisResult[0].data && analysisResult[0].data.angervol }} % happiness
         </div>
         <div>
           <input type="range" />

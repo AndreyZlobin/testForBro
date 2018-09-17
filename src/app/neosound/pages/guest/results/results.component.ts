@@ -32,13 +32,14 @@ export class ResultsComponent implements OnInit, OnDestroy {
         if (this.results.results.length || count < 0) {
           clearInterval(this.intervalRef);
         }
+        console.log(this.results);
         if (this.results.results && this.results.results[0]) {
           this.analysisResult = this.results.results;
           this.setChartData();
           this.filesService.getFileResultJson({
             uri: this.results.results[0].identity.uri,
           }).subscribe(jsonData => {
-            this.emotions = jsonData.emosp;
+            this.emotions = jsonData.json.emosp;
           });
         }
     });
@@ -49,12 +50,12 @@ export class ResultsComponent implements OnInit, OnDestroy {
   setChartData() {
     this.chartData = [
       {
-        name: this.analysisResult[0].angervol.toFixed(2),
-        value: this.analysisResult[0].angervol.toFixed(2),
+        name: this.analysisResult[0].data.angervol, //.toFixed(2),
+        value: this.analysisResult[0].data.angervol, //.toFixed(2),
       },
       {
-        name: (100 - this.analysisResult[0].angervol).toFixed(2),
-        value: (100 - this.analysisResult[0].angervol).toFixed(2),
+        name: (100 - this.analysisResult[0].data.angervol), //.toFixed(2),
+        value: (100 - this.analysisResult[0].data.angervol), //.toFixed(2),
       },
     ];
   }
