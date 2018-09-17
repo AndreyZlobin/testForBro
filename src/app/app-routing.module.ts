@@ -30,6 +30,7 @@ import { AuthGuard } from './neosound/shared/auth-guard';
 import { AboutComponent } from './neosound/pages/about/about.component';
 
 import {PagesComponent} from './pages/pages.component';
+import { PlayerDetailsComponent } from './neosound/pages/guest/player-details/player-details.component';
 
 const routes: Routes = [
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
@@ -82,6 +83,11 @@ const routes: Routes = [
         path: 'guest/quicktest',
         canActivate: [ AuthGuard ],
         component: QuickTestComponent
+      },
+      {
+        path: 'guest/player-details',
+        canActivate: [ AuthGuard ],
+        component: PlayerDetailsComponent
       },
       {
         path: '',

@@ -1,14 +1,15 @@
 <div class="container">
   <h3>Your record analysis:</h3>
+  {{analysisResult | json}}
   <div *ngIf="emotions">
     {{emotions | json}}
     <div class="row">
       <div class="col-6">
-        Chart
+        <ngx-pie-chart *ngIf="chartData" [data]="chartData"></ngx-pie-chart>
       </div>
       <div class="col-6">
         <div>
-          60 % happiness
+          {{100 - analysisResult[0] && analysisResult[0].angervol }} % happiness
         </div>
         <div>
           <input type="range" />
@@ -26,9 +27,10 @@
       <a class="btn btn-success mr-3">Yes</a>
       <a class="btn btn-danger">No</a>
     </div>
-    <div class="mt-3">Click <a href="#">here</a> to subscribe for a FREE trial packeage and get more</div>
+    <div class="mt-3">See details <a routerLink="guest/player-details">here</a></div>
     <a class="mt-3" routerLink="/guest/quicktest">Check another record</a>
   </div>
+
   <div *ngIf="!emotions" class="center">
     <div>
       <h4>Proccessing...</h4>

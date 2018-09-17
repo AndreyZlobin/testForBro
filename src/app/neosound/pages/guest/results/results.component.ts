@@ -13,6 +13,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
   results;
   emotions: any[];
   intervalRef;
+  analysisResult;
+  chartData;
 
   constructor(private filesService: FilesService, private router: Router) {
     this.fileParams = this.filesService.getQuickFileParams();
@@ -31,6 +33,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
           clearInterval(this.intervalRef);
         }
         if (this.results.results && this.results.results[0]) {
+          this.analysisResult = this.results.results;
+          this.setChartData();
           this.filesService.getFileResultJson({
             uri: this.results.results[0].identity.uri,
           }).subscribe(jsonData => {
@@ -40,6 +44,19 @@ export class ResultsComponent implements OnInit, OnDestroy {
     });
     }, 20000);
 
+  }
+
+  setChartData() {
+    this.chartData = [
+      {
+        name: this.analysisResult[0].angervol.toFixed(2),
+        value: this.analysisResult[0].angervol.toFixed(2),
+      },
+      {
+        name: (100 - this.analysisResult[0].angervol).toFixed(2),
+        value: (100 - this.analysisResult[0].angervol).toFixed(2),
+      },
+    ];
   }
 
   ngOnDestroy() {

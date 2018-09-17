@@ -47,6 +47,7 @@ import { UsersService } from './neosound/services/users.service';
 import { RequestsHttpInterceptor } from './neosound/shared/requests-http.interceptor';
 import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {
   NbAuthComponent,
   NbLoginComponent,
@@ -69,6 +70,8 @@ const formSetting: any = {
 };
 
 import { FileDropModule } from 'ngx-file-drop';
+import { PlayerDetailsComponent } from './neosound/pages/guest/player-details/player-details.component';
+import { PieChartComponent } from './neosound/components/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +95,8 @@ import { FileDropModule } from 'ngx-file-drop';
       AdminDashboardComponent,
       AboutComponent,
       MinutesSecondsPipe,
+      PlayerDetailsComponent,
+      PieChartComponent,
 
       //ngx-admin
     //   NbAlertComponent,
@@ -157,6 +162,7 @@ import { FileDropModule } from 'ngx-file-drop';
     CoreModule.forRoot(),
 
     FileDropModule,
+    NgxChartsModule,
   ],
   bootstrap: [AppComponent],
   providers: [
