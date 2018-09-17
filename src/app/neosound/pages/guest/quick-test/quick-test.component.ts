@@ -248,6 +248,17 @@ export class QuickTestComponent implements OnInit {
     }
   }
 
+  public handleFileInput(files: FileList) {
+    const params = {
+      batchid: this.batchid,
+      name: files.item(0).name,
+      file: files.item(0),
+    };
+    this.currentFileParams = params;
+    this.fileBlob = files.item(0);
+    this.files.push(files.item(0) as any);
+  }
+
   public fileOver(event) {
     // console.log(event);
   }

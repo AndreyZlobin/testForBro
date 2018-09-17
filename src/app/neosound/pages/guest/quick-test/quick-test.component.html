@@ -122,6 +122,10 @@
           <file-drop *ngIf="!files.length" headertext="Drop file here" (onFileDrop)="dropped($event)"
             (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
               <span></span>
+              <input type="file"
+               id="file"
+               (change)="handleFileInput($event.target.files)"
+               >
           </file-drop>
           <div class="upload-table">
               <table class="table">
@@ -132,7 +136,7 @@
                   </thead>
                   <tbody class="upload-name-style">
                       <tr *ngFor="let item of files; let i=index">
-                          <td><strong>{{ item.relativePath }}</strong></td>
+                          <td><strong>{{ item.relativePath || item.name }}</strong></td>
                       </tr>
                   </tbody>
               </table>
