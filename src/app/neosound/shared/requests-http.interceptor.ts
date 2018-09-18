@@ -31,11 +31,11 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
     const apikey = this.usersService.getApiKey();
     const newRequest = token && apikey
       ? request.clone({ setHeaders: {
-        'Authorization': token,
+        'authorization': token,
         'x-api-key': apikey.replace(/\"/g, ''),
       } })
       : request;
-console.log(newRequest);
+// console.log(newRequest);
     return next
       .handle(newRequest).do((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
