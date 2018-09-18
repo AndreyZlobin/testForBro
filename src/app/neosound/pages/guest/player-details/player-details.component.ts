@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FilesService } from '../../../services/files.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as WaveSurfer from 'wavesurfer.js';
+import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
+import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,13 +20,14 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   chartData;
   fileUrl;
   wavesurfer;
+  wavesurferReady = false;
   attempsCount = 20;
   subRoute: Subscription;
 
   constructor(private filesService: FilesService, private router: Router, private route: ActivatedRoute) {
     this.fileParams = this.filesService.getQuickFileParams();
     // test file
-    this.fileParams = {batchid: 1, filename: '2018-9-18_0:1:11.wav'};
+    // this.fileParams = {batchid: 1, filename: '2018-9-18_0:1:11.wav'};
 
     this.subRoute = this.route.params.subscribe(params => {
       this.fileParams = {
@@ -53,18 +56,34 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
       this.wavesurfer = WaveSurfer.create({
         container: '#myWavesurferContainer',
         waveColor: 'violet',
-        progressColor: 'purple'
+        progressColor: 'purple',
+        plugins: [
+          RegionsPlugin.create({
+            // plugin options ...
+          }),
+          TimelinePlugin.create({
+            container: '#timelineContainer',
+            timeInterval: 0.1,
+          }),
+        ],
       });
       this.loadAudio();
-      this.wavesurfer.on('ready', function () {
+      this.wavesurfer.on('ready', () => {
         // http://wavesurfer-js.org/plugins/regions.html
-        // const timeline = Object.create(WaveSurfer.Timeline);
+        // const timeline = Object.create(TimelinePlugin); // WaveSurfer.Timeline);
 
         // timeline.init({
-        //     wavesurfer: wavesurfer,
-        //     container: "#wave-timeline"
+        //     wavesurfer: this.wavesurfer,
+        //     container: '#myWavesurferContainer',
         // });
-    });
+
+        this.wavesurferReady = true;
+        // this.emotions = [
+        //   ["4.75", "5.5", "anger", "80.8"],
+        //   ["100.75", "305.5", "anger", "55.8"],
+        // ];
+        this.setRegions();
+      });
     });
   }
 
@@ -101,6 +120,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
           uri: this.results.results[0].identity.uri,
         }).subscribe(jsonData => {
           this.emotions = jsonData.json.emosp;
+          this.setRegions();
         });
       }
   });
@@ -110,6 +130,24 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
     const d = new Date(1, 1, 1);
     d.setSeconds(parseInt(val, 10));
     return d;
+  }
+
+  setRegions() {
+    if (!this.wavesurferReady || !this.emotions) return;
+    for (let index = 0; index < this.emotions.length; index++) {
+      const element = this.emotions[index];
+      this.wavesurfer.addRegion({
+        start: element[0],
+        end: element[1],
+        color: this.getColor(element[3]),
+      });
+    }
+  }
+
+  getColor(val) {
+    if (val > 80) return 'rgba(255,0,0, 0.1)';
+    if (val > 70) return 'rgba(255, 165, 0, 0.1)';
+    if (val > 50) return 'rgba(255, 255, 0, 0.1)';
   }
 
   ngOnDestroy() {
