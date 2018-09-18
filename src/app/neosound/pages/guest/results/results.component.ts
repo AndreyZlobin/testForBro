@@ -50,12 +50,12 @@ export class ResultsComponent implements OnInit, OnDestroy {
   setChartData() {
     this.chartData = [
       {
-        name: this.analysisResult[0].data.angervol, //.toFixed(2),
-        value: this.analysisResult[0].data.angervol, //.toFixed(2),
+        name: this.analysisResult[0].data.spangervol + 'Anger', //.toFixed(2),
+        value: this.analysisResult[0].data.spangervol, //.toFixed(2),
       },
       {
-        name: (100 - this.analysisResult[0].data.angervol), //.toFixed(2),
-        value: (100 - this.analysisResult[0].data.angervol), //.toFixed(2),
+        name: (100 - this.analysisResult[0].data.spangervol) + 'Calm', //.toFixed(2),
+        value: (100 - this.analysisResult[0].data.spangervol), //.toFixed(2),
       },
     ];
   }

@@ -21,6 +21,7 @@ export class PieChartComponent implements OnInit {
   isLegend = true;
   inProgress = true;
   animations = false;
+  showLabels = true;
 
   constructor() { }
 

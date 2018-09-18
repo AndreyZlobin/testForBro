@@ -78,6 +78,11 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
         //     wavesurfer: this.wavesurfer,
         //     container: '#myWavesurferContainer',
         // });
+        const self = this;
+        const zoom: any = document.querySelector('#slider');
+        zoom.oninput = function () {
+          self.wavesurfer.zoom(Number(this.value));
+        };
 
         this.wavesurferReady = true;
         // this.emotions = [
