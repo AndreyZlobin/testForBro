@@ -60,6 +60,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
     ];
   }
 
+  getHappiness(val) {
+    return 100 - val;
+  }
+
   ngOnDestroy() {
     clearInterval(this.intervalRef);
   }

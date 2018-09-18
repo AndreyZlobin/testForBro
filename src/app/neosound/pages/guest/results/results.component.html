@@ -7,7 +7,7 @@
       </div>
       <div class="col-6">
         <div>
-          {{analysisResult[0] && analysisResult[0].data && analysisResult[0].data.angervol }} % happiness
+          {{getHappiness(analysisResult[0] && analysisResult[0].data && analysisResult[0].data.angervol)}} % happiness
         </div>
         <div>
           <input type="range" />

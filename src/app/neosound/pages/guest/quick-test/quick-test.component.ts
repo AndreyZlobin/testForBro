@@ -128,10 +128,12 @@ export class QuickTestComponent implements OnInit {
 
   upload(record) {
     const uploadFile = new FormData();
+    const user = this.userService.getUserLocal();
+    const username = user && user.username || 'fronttrust';
 
     console.log(this.currentFileParams);
     uploadFile.append('batchid', this.batchid);
-    uploadFile.append('username', 'fronttrust');
+    uploadFile.append('username', username);
     uploadFile.append('file', this.currentFileParams.file);
     this.filesService.uploadFile(uploadFile).subscribe(res => {
       this.uploaded = true;

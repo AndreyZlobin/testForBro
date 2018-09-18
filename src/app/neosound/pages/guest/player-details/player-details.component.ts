@@ -30,14 +30,16 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
     // this.fileParams = {batchid: 1, filename: '2018-9-18_0:1:11.wav'};
 
     this.subRoute = this.route.params.subscribe(params => {
-      this.fileParams = {
-        filename: decodeURIComponent(params.filename),
-        batchid: decodeURIComponent(params.batchid),
-      };
-      this.filesService.getFile(this.fileParams).subscribe(res => {
-        this.fileUrl = res.url;
-        this.loadAudio();
-      });
+      if (params && params.filename && params.batchid) {
+        this.fileParams = {
+          filename: decodeURIComponent(params.filename),
+          batchid: decodeURIComponent(params.batchid),
+        };
+        this.filesService.getFile(this.fileParams).subscribe(res => {
+          this.fileUrl = res.url;
+          this.loadAudio();
+        });
+      }
     });
 
     if (!this.fileParams) {
