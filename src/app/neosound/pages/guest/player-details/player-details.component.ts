@@ -1,17 +1,18 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { FilesService } from '../../../services/files.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import * as WaveSurfer from 'wavesurfer.js';
-import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js';
-import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
+import { FilesService } from "../../../services/files.service";
+import { Router, ActivatedRoute } from "@angular/router";
+import * as WaveSurfer from "wavesurfer.js";
+import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
+import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions.min.js";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'ngx-player-details',
-  templateUrl: './player-details.component.html',
-  styleUrls: ['./player-details.component.scss']
+  selector: "ngx-player-details",
+  templateUrl: "./player-details.component.html",
+  styleUrls: ["./player-details.component.scss"]
 })
-export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PlayerDetailsComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   fileParams;
   results;
   emotions: any[];
@@ -23,8 +24,13 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   wavesurferReady = false;
   attempsCount = 20;
   subRoute: Subscription;
+  zoomLevel = 20;
 
-  constructor(private filesService: FilesService, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private filesService: FilesService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.fileParams = this.filesService.getQuickFileParams();
     // test file
     // this.fileParams = {batchid: 1, filename: '2018-9-18_0:1:11.wav'};
@@ -33,7 +39,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
       if (params && params.filename && params.batchid) {
         this.fileParams = {
           filename: decodeURIComponent(params.filename),
-          batchid: decodeURIComponent(params.batchid),
+          batchid: decodeURIComponent(params.batchid)
         };
         this.filesService.getFile(this.fileParams).subscribe(res => {
           this.fileUrl = res.url;
@@ -56,21 +62,22 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   ngAfterViewInit() {
     requestAnimationFrame(() => {
       this.wavesurfer = WaveSurfer.create({
-        container: '#myWavesurferContainer',
-        waveColor: 'violet',
-        progressColor: 'purple',
+        container: "#myWavesurferContainer",
+        waveColor: "violet",
+        progressColor: "purple",
+        scrollParent: true,
         plugins: [
           RegionsPlugin.create({
             // plugin options ...
           }),
           TimelinePlugin.create({
-            container: '#timelineContainer',
-            timeInterval: 0.1,
-          }),
-        ],
+            container: "#timelineContainer",
+            timeInterval: 0.1
+          })
+        ]
       });
       this.loadAudio();
-      this.wavesurfer.on('ready', () => {
+      this.wavesurfer.on("ready", () => {
         // http://wavesurfer-js.org/plugins/regions.html
         // const timeline = Object.create(TimelinePlugin); // WaveSurfer.Timeline);
 
@@ -79,10 +86,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
         //     container: '#myWavesurferContainer',
         // });
         const self = this;
-        const zoom: any = document.querySelector('#slider');
-        zoom.oninput = function () {
-          self.wavesurfer.zoom(Number(this.value));
-        };
+        const zoom: any = document.querySelector("#slider");
 
         this.wavesurferReady = true;
         // this.emotions = [
@@ -123,14 +127,16 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
       if (this.results.results && this.results.results[0]) {
         this.analysisResult = this.results.results;
 
-        this.filesService.getFileResultJson({
-          uri: this.results.results[0].identity.uri,
-        }).subscribe(jsonData => {
-          this.emotions = jsonData.json.emosp;
-          this.setRegions();
-        });
+        this.filesService
+          .getFileResultJson({
+            uri: this.results.results[0].identity.uri
+          })
+          .subscribe(jsonData => {
+            this.emotions = jsonData.json.emosp;
+            this.setRegions();
+          });
       }
-  });
+    });
   }
 
   getDateVal(val) {
@@ -146,19 +152,25 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
       this.wavesurfer.addRegion({
         start: element[0],
         end: element[1],
-        color: this.getColor(element[3]),
+        color: this.getColor(element[3])
       });
     }
   }
-
+  zoomIn() {
+    this.zoomLevel = this.zoomLevel * 10;
+    this.wavesurfer.zoom(this.zoomLevel);
+  }
+  zoomOut() {
+    this.zoomLevel = this.zoomLevel / 10;
+    this.wavesurfer.zoom(this.zoomLevel);
+  }
   getColor(val) {
-    if (val > 80) return 'rgba(255,0,0, 0.1)';
-    if (val > 70) return 'rgba(255, 165, 0, 0.1)';
-    if (val > 50) return 'rgba(255, 255, 0, 0.1)';
+    if (val > 80) return "rgba(255,0,0, 0.1)";
+    if (val > 70) return "rgba(255, 165, 0, 0.1)";
+    if (val > 50) return "rgba(255, 255, 0, 0.1)";
   }
 
   ngOnDestroy() {
     this.subRoute.unsubscribe();
   }
-
 }
