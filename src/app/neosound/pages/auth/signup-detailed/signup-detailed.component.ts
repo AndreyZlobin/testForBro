@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class SignupDetailedComponent implements OnInit {
   form: FormGroup;
   error = '';
+  message;
 
   constructor(
     private userService: UsersService,
@@ -35,7 +36,10 @@ export class SignupDetailedComponent implements OnInit {
     };
     this.userService
       .registerUser(params)
-      .subscribe(() => this.router.navigateByUrl('/'));
+      .subscribe(
+        () => this.router.navigateByUrl('/'),
+        (e) => this.error = e.error.message,
+      );
 
   }
 
@@ -47,7 +51,8 @@ export class SignupDetailedComponent implements OnInit {
       email: new FormControl({ value: ''}, Validators.required),
       password: new FormControl({ value: ''}, Validators.required),
       // passwordConfirm: new FormControl({ value: ''}, Validators.required),
-      agree: new FormControl({ value: true}),
+      agree: new FormControl({ value: false}),
+      agreeTerms: new FormControl({ value: false}),
     });
     this.patchForm();
   }
@@ -61,7 +66,8 @@ export class SignupDetailedComponent implements OnInit {
         email: '',
         password: '',
         // passwordConfirm: '',
-        agree: true,
+        agree: false,
+        agreeTerms: false,
       });
     }
   }

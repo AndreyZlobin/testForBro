@@ -53,6 +53,10 @@
       @include nb-rtl(border-right, 1px solid nb-theme(separator));
       white-space: nowrap;
 
+      img {
+        width: 158px;
+      }
+
       span {
         font-weight: nb-theme(font-weight-normal);
       }

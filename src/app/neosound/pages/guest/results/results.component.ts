@@ -15,6 +15,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   intervalRef;
   analysisResult;
   chartData;
+  count = 20;
 
   constructor(private filesService: FilesService, private router: Router) {
     this.fileParams = this.filesService.getQuickFileParams();
@@ -24,12 +25,33 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let count = 20;
+    this.getInfo();
     this.intervalRef = setInterval(() => {
-      count--;
-      this.filesService.listFileResults(this.fileParams).subscribe(res => {
-        this.results = res;
-        if (this.results.results.length || count < 0) {
+      // this.count--;
+      // this.filesService.listFileResults(this.fileParams).subscribe(res => {
+      //   this.results = res;
+      //   if (this.results.results.length || this.count < 0) {
+      //     clearInterval(this.intervalRef);
+      //   }
+      //   console.log(this.results);
+      //   if (this.results.results && this.results.results[0]) {
+      //     this.analysisResult = this.results.results;
+      //     this.setChartData();
+      //     this.filesService.getFileResultJson({
+      //       uri: this.results.results[0].identity.uri,
+      //     }).subscribe(jsonData => {
+      //       this.emotions = jsonData.json.emosp;
+      //     });
+      //   }
+    // });
+      this.getInfo();
+    }, 20000);
+  }
+
+  getInfo() {
+    this.filesService.listFileResults(this.fileParams).subscribe(res => {
+      this.results = res;
+        if (this.results.results.length || this.count < 0) {
           clearInterval(this.intervalRef);
         }
         console.log(this.results);
@@ -43,21 +65,23 @@ export class ResultsComponent implements OnInit, OnDestroy {
           });
         }
     });
-    }, 20000);
-
   }
 
   setChartData() {
     this.chartData = [
       {
-        name: this.analysisResult[0].data.spangervol + 'Anger', //.toFixed(2),
+        name: Math.round(this.analysisResult[0].data.spangervol) + '% Anger', //.toFixed(2),
         value: this.analysisResult[0].data.spangervol, //.toFixed(2),
       },
       {
-        name: (100 - this.analysisResult[0].data.spangervol) + 'Calm', //.toFixed(2),
+        name: Math.round((100 - this.analysisResult[0].data.spangervol)) + '% Calm', //.toFixed(2),
         value: (100 - this.analysisResult[0].data.spangervol), //.toFixed(2),
       },
     ];
+  }
+
+  getEmotionImg() {
+    return (this.analysisResult[0].data.spangervol > 50) ? 'angry' : 'neutral';
   }
 
   getHappiness(val) {

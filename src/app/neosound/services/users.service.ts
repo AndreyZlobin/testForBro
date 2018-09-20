@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import decode from 'jwt-decode';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import 'rxjs/add/operator/map';
@@ -19,7 +19,7 @@ export class UsersService {
     // return a boolean reflecting
     // whether or not the token is expired
     const helper = new JwtHelperService();
-    return helper.isTokenExpired(token);
+    return this.getUserLocal(); // && !helper.isTokenExpired(token);
   }
   getToken(): string {
     const user = this.getUserLocal();

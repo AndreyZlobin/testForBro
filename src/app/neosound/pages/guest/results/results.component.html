@@ -1,37 +1,44 @@
 <div class="container">
-  <h3>Your record analysis:</h3>
-  <div *ngIf="analysisResult">
-    <div class="row">
-      <div class="col-6">
-        <ngx-pie-chart *ngIf="chartData" [data]="chartData"></ngx-pie-chart>
+  <div class="col-12 center text-center">
+    <h3>Your record analysis:</h3>
+    <div *ngIf="analysisResult">
+      <div class="row">
+        <div class="col-6">
+          <ngx-pie-chart *ngIf="chartData" [data]="chartData"></ngx-pie-chart>
+        </div>
+        <div class="col-6">
+          <div>
+            {{analysisResult[0] && analysisResult[0].data && analysisResult[0].data.spangervol}} % Anger
+          </div>
+          <div>
+            <input type="range" />
+          </div>
+          <div class="mt-5">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'male'}">Male</button>
+                <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'female'}">Female</button>
+              </div>
+          </div>
+          <div class="mt-5">
+            <img src="../../assets/images/emotions/{{getEmotionImg()}}.png" style="width: 100px;" />
+          </div>
+        </div>
       </div>
-      <div class="col-6">
-        <div>
-          {{analysisResult[0] && analysisResult[0].data && analysisResult[0].data.spangervol}} % Anger
+      <div class="center text-center">
+        <div class="center text-center">
+          <h6>Are you agree with the result?</h6>
+          <a class="btn btn-success mr-3">Yes</a>
+          <a class="btn btn-danger">No</a>
         </div>
-        <div>
-          <input type="range" />
-        </div>
-        <div>
-            <div class="btn-group" role="group">
-              <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'male'}">Male</button>
-              <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'female'}">Female</button>
-            </div>
-        </div>
+        <div class="mt-5">See details <a routerLink="/guest/player-details">here</a></div>
+        <a class="mt-5 mb-5" routerLink="/guest/quicktest">Check another record</a>
       </div>
     </div>
-    <div>
-      <h4>Are you agree with the result?</h4>
-      <a class="btn btn-success mr-3">Yes</a>
-      <a class="btn btn-danger">No</a>
-    </div>
-    <div class="mt-3">See details <a routerLink="/guest/player-details">here</a></div>
-    <a class="mt-3" routerLink="/guest/quicktest">Check another record</a>
   </div>
 
   <div *ngIf="!emotions" class="center">
     <div>
-      <h4>Proccessing...</h4>
+      <h4>Loading...</h4>
     </div>
     <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
   </div>

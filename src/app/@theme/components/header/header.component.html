@@ -3,14 +3,17 @@
      [class.right]="position === 'inverse'">
   <div class="logo-containter">
     <!-- <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a> -->
-    <div class="logo" routerLink="/">Neo<span>Sound</span></div>
+    <a class="logo" routerLink="/" href="/">
+      <!-- Neo<span>Sound</span> -->
+      <img src="https://neosound.eu/content/img/logo.jpg" />
+    </a>
   </div>
   <nb-actions>
       <nb-action class="control-item" ><a href="#" (click)="navigate('/guest/quicktest')">Try</a></nb-action>
       <nb-action class="control-item"  *ngIf="!isLoggedIn()"><a href="#"  (click)="navigate('/auth/sign-up')">Sign up</a></nb-action>
       <nb-action class="control-item"  *ngIf="!isLoggedIn()"><a href="#"  (click)="navigate('/auth/login')">Login</a></nb-action>
       <nb-action class="control-item"  *ngIf="isLoggedIn()"><a href="#"  (click)="navigate('/user/files')">Files list</a></nb-action>
-      <nb-action class="control-item" ><a href="#"  (click)="navigate('/about')">About</a></nb-action>
+      <nb-action class="control-item" ><a href="https://neosound.eu/" target="_blank">About</a></nb-action>
   </nb-actions>
   <!-- <ngx-theme-switcher></ngx-theme-switcher> -->
 </div>

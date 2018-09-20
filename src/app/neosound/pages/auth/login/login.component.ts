@@ -13,6 +13,7 @@ export class LoginComponent {
   password: string;
   form = new FormGroup({});
   showMessages;
+  message;
 
   constructor(
     private router: Router,
@@ -26,7 +27,10 @@ export class LoginComponent {
     };
     this.userService
       .loginUser(params)
-      .subscribe(() => this.router.navigateByUrl('/user/files'));
+      .subscribe(
+        () => this.router.navigateByUrl('/user/files'),
+        (e) => this.message = e.error.message,
+      );
   }
 
 }
