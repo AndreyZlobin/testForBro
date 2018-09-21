@@ -29,7 +29,7 @@ export class QuickTestComponent implements OnInit {
   form: FormGroup;
   error = "";
   modalRef: BsModalRef;
-  modalType: string = "upload";
+  modalType: string = "record";
   ticks = 0;
   private isRecording: boolean = false;
   private mediaRecorder: any;
@@ -44,6 +44,9 @@ export class QuickTestComponent implements OnInit {
   audio: any;
   attached = false;
   uploaded = false;
+  proccessed = false;
+  count = 20;
+  intervalRef;
 
   constructor(
     private userService: UsersService,
@@ -140,19 +143,24 @@ export class QuickTestComponent implements OnInit {
       this.successMessage =
               'Successfully uploaded to the server: ' +
               this.currentFileParams.name;
+      this.filesService.processFile(this.getFileParams()).subscribe(v => {
+        this.getInfo();
+      });
     });
+  }
+
+  getFileParams() {
+    return {
+      'batchid': this.batchid,
+      'filename': this.currentFileParams.name,
+    };
   }
 
   gotoResults() {
     this.stopPlaying();
-    const params = {
-      'batchid': this.batchid,
-      'filename': this.currentFileParams.name,
-    };
+    const params = this.getFileParams();
     this.filesService.setQuickFileParams(params);
-    this.filesService.processFile(params).subscribe(v => {
-      this.router.navigateByUrl('/guest/results');
-    });
+    this.router.navigateByUrl('/guest/results');
     return false;
   }
 
@@ -270,5 +278,26 @@ export class QuickTestComponent implements OnInit {
 
   public fileLeave(event) {
     // console.log(event);
+  }
+
+  getInfo() {
+    const params = this.getFileParams();
+    this.filesService.listFileResults(params).subscribe(res => {
+      // this.results = res;
+        if (res.results.length || this.count < 0) {
+          this.proccessed = true;
+          clearInterval(this.intervalRef);
+        }
+        // console.log(this.results);
+        // if (this.results.results && this.results.results[0]) {
+        //   this.analysisResult = this.results.results;
+        //   this.setChartData();
+        //   this.filesService.getFileResultJson({
+        //     uri: this.results.results[0].identity.uri,
+        //   }).subscribe(jsonData => {
+        //     this.emotions = jsonData.json.emosp;
+        //   });
+        // }
+    });
   }
 }

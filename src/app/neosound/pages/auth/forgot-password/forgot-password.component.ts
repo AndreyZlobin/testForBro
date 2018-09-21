@@ -11,6 +11,7 @@ import { FormGroup } from '@angular/forms';
 export class ForgotPasswordComponent implements OnInit {
   email: string;
   form = new FormGroup({});
+  message;
 
   constructor(
     private userService: UsersService,
@@ -26,7 +27,10 @@ export class ForgotPasswordComponent implements OnInit {
     };
     this.userService
       .forgotPassword(params)
-      .subscribe(() => this.router.navigateByUrl('/'));
+      .subscribe(
+        () => this.router.navigateByUrl('/'),
+        (e) => this.message = e.error.message,
+      );
   }
 
 }

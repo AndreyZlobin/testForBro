@@ -36,12 +36,11 @@ const routes: Routes = [
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
   {
     path: '',
-    canActivate: [ AuthGuard ],
+    // canActivate: [ AuthGuard ],
     component: MainComponent,
     children: [
       {
         path: 'about',
-        canActivate: [ AuthGuard ],
         component: AboutComponent
       },
       {
@@ -95,6 +94,10 @@ const routes: Routes = [
         component: PlayerDetailsComponent
       },
       {
+        path: 'terms',
+        component: TermsComponent
+      },
+      {
         path: '',
         canActivate: [ AuthGuard ],
         component: QuickTestComponent
@@ -120,10 +123,6 @@ const routes: Routes = [
       {
         path: 'sign-up',
         component: SignupDetailedComponent
-      },
-      {
-        path: 'terms',
-        component: TermsComponent
       },
       {
         path: 'forgot-password',

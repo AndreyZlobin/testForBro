@@ -1,5 +1,28 @@
 <div class="container">
-  <form [formGroup]="form">
+  <div class="col-12 center text-center">
+    <h3 class="mb-3">Make a trial record or upload a file</h3>
+    <button class="btn btn-primary btn-lg" *ngIf="!attached" (click)="showModal(templateModal, 'record')">Start</button>
+    <div class="form-group mt-3" *ngIf="attached">
+      <div class="alert alert-success">
+        Recording: {{currentFileParams.name}}
+        <a (click)="play()"  *ngIf="!isPlaying" class="ml-3 mr-3" style="color: blue; text-decoration: underline;">
+          Play
+        </a>
+        <a (click)="stopPlaying()" *ngIf="isPlaying" class="ml-3 mr-3" style="color: blue; text-decoration: underline;">
+          Stop
+        </a>
+        <a (click)="discard()" class="" style="color: blue; text-decoration: underline;">
+          Change
+        </a>
+      </div>
+    </div>
+    <ng-container  *ngIf="attached">
+      <h3 class="mb-3 mt-3">Results</h3>
+      <div class="lds-ring" *ngIf="!uploaded || !proccessed"><div></div><div></div><div></div><div></div></div>
+      <button href="#" *ngIf="uploaded && proccessed" [disabled]="!uploaded" (click)="gotoResults()" class="btn btn-primary">To Results</button>
+    </ng-container>
+  </div>
+  <!-- <form [formGroup]="form">
     <div class="form-group mt-3" *ngIf="!attached">
         <h3 class="mb-3">Step 1. Tap to make a trial record or upload a file</h3>
         <button class="btn btn-primary" (click)="showModal(templateModal, 'record')">Record</button>
@@ -20,10 +43,10 @@
           Change
         </a>
       </div>
-    </div>
+    </div> -->
 
-    <h3>Step 2. Select emotions for analysing</h3>
-    <div class="row mt-3">
+    <!-- <h3>Step 2. Select emotions for analysing</h3> -->
+    <!-- <div class="row mt-3">
       <div class="col-6">
         <div class="form-group row">
           <div class="col-sm-9">
@@ -50,8 +73,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-6">
+      </div> -->
+      <!-- <div class="col-6">
           <div class="form-group row">
               <div class="col-sm-9">
                 <div class="form-check">
@@ -78,9 +101,9 @@
               </div>
             </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="form-group mt-3">
+    <!-- <div class="form-group mt-3">
       <h3>Step 3. Select additional parameters for analysing</h3>
       <div class="form-group">
         <label class="col-sm-2 col-form-label">
@@ -94,11 +117,11 @@
           Detect gender
         </label>
       </div>
-    </div>
-    <div class="form-group mt-3">
+    </div> -->
+    <!-- <div class="form-group mt-3">
       <button href="#" [disabled]="!uploaded" (click)="gotoResults()" class="btn btn-lg btn-primary">To Results</button>
-    </div>
-  </form>
+    </div> -->
+  <!-- </form> -->
 </div>
 
 
@@ -119,7 +142,7 @@
       </div>
       <div *ngIf="modalType === 'upload'">
         <div class="center">
-          <file-drop *ngIf="!files.length" headertext="Drop file here" (onFileDrop)="dropped($event)"
+          <file-drop *ngIf="!files.length" headertext="Drop file here or click to browse" (onFileDrop)="dropped($event)"
             (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
               <span></span>
               <input type="file"
