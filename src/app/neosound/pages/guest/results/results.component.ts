@@ -16,6 +16,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
   analysisResult;
   chartData;
   count = 20;
+  showThanks = false;
+  errorMessage = '';
 
   constructor(private filesService: FilesService, private router: Router) {
     this.fileParams = this.filesService.getQuickFileParams();
@@ -49,6 +51,9 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   getInfo() {
+    // this.emotions = [['0','0','a','60']];
+    // this.analysisResult = [];
+    // this.analysisResult.push({data: {spangervol: 60}});
     this.filesService.listFileResults(this.fileParams).subscribe(res => {
       this.results = res;
         if (this.results.results.length || this.count < 0) {
@@ -62,9 +67,13 @@ export class ResultsComponent implements OnInit, OnDestroy {
             uri: this.results.results[0].identity.uri,
           }).subscribe(jsonData => {
             this.emotions = jsonData.json.emosp;
-          });
+          },
+          (e) => this.errorMessage = e.error.message,
+          );
         }
-    });
+    },
+    (e) => this.errorMessage = e.error.message,
+    );
   }
 
   setChartData() {

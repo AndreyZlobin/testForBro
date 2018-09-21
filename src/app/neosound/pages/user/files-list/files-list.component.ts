@@ -8,6 +8,7 @@ import { FilesService } from '../../../services/files.service';
 })
 export class FilesListComponent implements OnInit {
   files;
+  errorMessage = '';
 
   constructor(private filesService: FilesService) { }
 
@@ -20,7 +21,9 @@ export class FilesListComponent implements OnInit {
   refresh() {
     this.filesService.listFiles({}).subscribe(res => {
       this.files = res.files;
-    });
+    },
+    (e) => this.errorMessage = e.error.message,
+    );
   }
 
   getLink(item) {

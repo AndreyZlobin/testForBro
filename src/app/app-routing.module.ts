@@ -8,6 +8,10 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
+import { registerLocaleData } from '@angular/common';
+import localGermany from '@angular/common/locales/de';
+import localGermanyExtra from '@angular/common/locales/extra/de';
+registerLocaleData(localGermany, localGermanyExtra);
 
 import { LoginComponent } from './neosound/pages/auth/login/login.component';
 import { DashboardComponent } from './neosound/pages/dashboard/dashboard.component';

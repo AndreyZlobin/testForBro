@@ -1,28 +1,26 @@
 <div>
   <h1>Details</h1>
+  <div class="alert alert-danger" *ngIf="errorMessage">Error: {{errorMessage}}</div>
   <div id="myWavesurferContainer"></div>
   <div id="timelineContainer"></div>
-  <div>
-    <i class="fa fa-zoom-in"></i>
-    <input id="zoom" data-action="zoom" type="range" min="0" max="200" value="0" style="width: 100%">
-    <i class="fa fa-zoom-out"></i>
-  </div>
   <button class="mt-3 btn btn-primary" (click)="play()">
     <i class="fa fa-play"></i>/<i class="fa fa-pause"></i> Play/Pause
   </button>
-  <button class="mt-3 btn btn-primary" (click)="zoomIn()">
+  <button class="mt-3 btn btn-primary ml-3" (click)="zoomIn()">
     <i class="fas fa-search-plus"></i>
   </button>
-  <button class="mt-3 btn btn-primary" (click)="zoomOut()">
+  <button class="mt-3 btn btn-primary ml-3" (click)="zoomOut()">
     <i class="fas fa-search-minus"></i>
   </button>
   <div *ngIf="emotions" class="mt-5">
-    <table class="table table-striped" style="max-height: 30vh;overflow-x:auto">
-      <tr *ngFor="let item of emotions">
-        <td>{{ getDateVal(item[0]) | date:'mm:ss'}} - {{ getDateVal(item[1]) | date:'mm:ss'}}</td>
-        <td>{{item[2]}}</td>
-        <td>{{item[3]}}</td>
-      </tr>
-    </table>
+    <div class="scrollable-list">
+      <table class="table table-striped" style="max-height: 30vh;overflow-x:auto">
+        <tr *ngFor="let item of emotions" (click)="gotoPosition(item[0])">
+          <td>{{ getDateVal(item[0]) | date:'mm:ss.SSS'}} - {{ getDateVal(item[1]) | date:'mm:ss.SSS'}}</td>
+          <td>{{item[2]}}</td>
+          <td>{{item[3] | currency: '%': 'symbol':'1.2-2'}}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
