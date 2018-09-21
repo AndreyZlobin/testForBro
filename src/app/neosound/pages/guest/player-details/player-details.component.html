@@ -17,7 +17,7 @@
     <i class="fas fa-search-minus"></i>
   </button>
   <div *ngIf="emotions" class="mt-5">
-    <table class="table table-striped">
+    <table class="table table-striped" style="max-height: 30vh;overflow-x:auto">
       <tr *ngFor="let item of emotions">
         <td>{{ getDateVal(item[0]) | date:'mm:ss'}} - {{ getDateVal(item[1]) | date:'mm:ss'}}</td>
         <td>{{item[2]}}</td>

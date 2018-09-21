@@ -123,7 +123,6 @@ export class PlayerDetailsComponent
       if (this.results.results.length || this.attempsCount < 0) {
         clearInterval(this.intervalRef);
       }
-      console.log(this.results);
       if (this.results.results && this.results.results[0]) {
         this.analysisResult = this.results.results;
 
