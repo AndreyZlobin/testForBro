@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsersService } from "../../../services/users.service";
 import { FilesService } from "../../../services/files.service";
@@ -24,7 +24,7 @@ const makeId = () => {
   templateUrl: "./quick-test.component.html",
   styleUrls: ["./quick-test.component.scss"]
 })
-export class QuickTestComponent implements OnInit {
+export class QuickTestComponent implements OnInit, OnDestroy {
   batchid = '1';
   form: FormGroup;
   error = "";
@@ -39,6 +39,7 @@ export class QuickTestComponent implements OnInit {
   public files: UploadFile[] = [];
   currentFileParams;
   successMessage = '';
+  errorMessage = '';
   isPlaying = false;
   fileBlob;
   audio: any;
@@ -145,8 +146,12 @@ export class QuickTestComponent implements OnInit {
               this.currentFileParams.name;
       this.filesService.processFile(this.getFileParams()).subscribe(v => {
         this.getInfo();
-      });
-    });
+      },
+      (e) => this.errorMessage = e.error.message,
+      );
+    },
+    (e) => this.errorMessage = e.error.message,
+    );
   }
 
   getFileParams() {
@@ -298,6 +303,12 @@ export class QuickTestComponent implements OnInit {
         //     this.emotions = jsonData.json.emosp;
         //   });
         // }
-    });
+    },
+    (e) => this.errorMessage = e.error.message,
+    );
+  }
+
+  ngOnDestroy() {
+    this.stopPlaying();
   }
 }

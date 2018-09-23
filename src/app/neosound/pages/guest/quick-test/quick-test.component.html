@@ -122,6 +122,7 @@
       <button href="#" [disabled]="!uploaded" (click)="gotoResults()" class="btn btn-lg btn-primary">To Results</button>
     </div> -->
   <!-- </form> -->
+  <div class="alert alert-danger" *ngIf="errorMessage">Error: {{errorMessage}}</div>
 </div>
 
 
@@ -142,14 +143,16 @@
       </div>
       <div *ngIf="modalType === 'upload'">
         <div class="center">
-          <file-drop *ngIf="!files.length" headertext="Drop file here or click to browse" (onFileDrop)="dropped($event)"
-            (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-              <span></span>
-              <input type="file"
-               id="file"
-               (change)="handleFileInput($event.target.files)"
-               >
-          </file-drop>
+          <div class="drop-zone-wrap">
+            <file-drop *ngIf="!files.length" headertext="Drop file here or click to browse" (onFileDrop)="dropped($event)"
+              (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+                <span></span>
+                <input type="file"
+                id="file"
+                (change)="handleFileInput($event.target.files)"
+                >
+            </file-drop>
+          </div>
           <div class="upload-table">
               <table class="table">
                   <thead>
@@ -187,9 +190,10 @@
               <h1 class="time">{{mediaRecorderService.ticks | minutesSeconds}}</h1>
             </div>
             <a (click)="stop()" class="w-100 text-center" style="display:block;">
+              <h4>Recording...</h4>
               <svg class="button" expanded="true" height="300px" width="300px">
-                <circle cx="50%" cy="50%" r="80px"></circle>
-                <circle class="pulse" cx="50%" cy="50%" r="80px"></circle>
+                <rect x="70px" y="38px" height="160px" width="160px" rx="10" ry="10"></rect>
+                <rect class="pulse" x="50%" y="50%"></rect>
               </svg>
             </a>
           </ng-container>
@@ -201,10 +205,10 @@
                 <source id="source" [attr.src]="fileBlob" type="audio/ogg"/>
             </audio> -->
             <a (click)="play()" *ngIf="!isPlaying" class="w-100 text-center mt-5" style="display:block;">
-              <i class="fa fa-play" style="width: 300px; height: 200px; color: #f44247; font-size: 100px;"></i>
+              <i class="fa fa-play" style="width: 300px; height: 200px; color: #f44247; font-size: 150px;"></i>
             </a>
             <a (click)="stopPlaying()" *ngIf="isPlaying" class="w-100 text-center mt-5" style="display:block;">
-              <i class="fa fa-stop" style="width: 300px; height: 200px; color: #f44247; font-size: 100px;"></i>
+              <i class="fa fa-stop" style="width: 300px; height: 200px; color: #f44247; font-size: 150px;"></i>
             </a>
 
             <div class="text-right">

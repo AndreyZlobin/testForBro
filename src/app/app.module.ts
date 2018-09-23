@@ -6,7 +6,7 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -166,6 +166,10 @@ import { PieChartComponent } from './neosound/components/pie-chart/pie-chart.com
   ],
   bootstrap: [AppComponent],
   providers: [
+      {
+        provide: LOCALE_ID,
+        useValue: 'de-de',
+      },
       AuthGuard,
       UsersService,
       FilesService,

@@ -1,5 +1,6 @@
 <div class="container">
-  <div class="col-12 center text-center">
+  <div class="col-12 center text-center center-results">
+    <div class="alert alert-danger" *ngIf="errorMessage">Error: {{errorMessage}}</div>
     <h3>Your record analysis:</h3>
     <div *ngIf="analysisResult">
       <div class="row">
@@ -11,13 +12,25 @@
             {{analysisResult[0] && analysisResult[0].data && analysisResult[0].data.spangervol}} % Anger
           </div>
           <div>
-            <input type="range" />
+            <input class="mt-1" type="range" disabled value="{{analysisResult[0] && analysisResult[0].data && analysisResult[0].data.spangervol}}" />
           </div>
           <div class="mt-5">
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'male'}">Male</button>
                 <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'female'}">Female</button>
               </div>
+          </div>
+          <div class="mt-5 range-wrap">
+              <div class="range">
+                <input type="range" min="1" max="4" steps="1" value="3">
+              </div>
+
+              <ul class="range-labels">
+                <li>Child</li>
+                <li>Teen</li>
+                <li class="active selected">Adult</li>
+                <li>Senior</li>
+              </ul>
           </div>
           <div class="mt-5">
             <img src="../../assets/images/emotions/{{getEmotionImg()}}.png" style="width: 100px;" />
@@ -27,11 +40,14 @@
       <div class="center text-center">
         <div class="center text-center">
           <h6>Are you agree with the result?</h6>
-          <a class="btn btn-success mr-3">Yes</a>
-          <a class="btn btn-danger">No</a>
+          <a class="btn btn-success mr-3" (click)="showThanks = true">Yes</a>
+          <a class="btn btn-danger" (click)="showThanks = true">No</a>
+          <div class="alert alert-info" *ngIf="showThanks">Thank you for reply!</div>
         </div>
-        <div class="mt-5">See details <a routerLink="/guest/player-details">here</a></div>
-        <a class="mt-5 mb-5" routerLink="/guest/quicktest">Check another record</a>
+        <div class="result-links">
+          <div class="mt-5">See details <a routerLink="/guest/player-details">here</a></div>
+          <a class="mt-5 mb-5" routerLink="/guest/quicktest">Check another record</a>
+        </div>
       </div>
     </div>
   </div>

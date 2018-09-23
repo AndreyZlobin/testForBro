@@ -24,7 +24,8 @@ export class PlayerDetailsComponent
   wavesurferReady = false;
   attempsCount = 20;
   subRoute: Subscription;
-  zoomLevel = 20;
+  zoomLevel = 200;
+  errorMessage = '';
 
   constructor(
     private filesService: FilesService,
@@ -44,9 +45,13 @@ export class PlayerDetailsComponent
         this.filesService.getFile(this.fileParams).subscribe(res => {
           this.fileUrl = res.url;
           this.loadAudio();
-        });
+        },
+        (e) => this.errorMessage = e.error.message,
+        );
       }
-    });
+    },
+    (e) => this.errorMessage = e.error.message,
+    );
 
     if (!this.fileParams) {
       // this.router.navigateByUrl('/');
@@ -55,7 +60,9 @@ export class PlayerDetailsComponent
       this.filesService.getFile(this.fileParams).subscribe(res => {
         this.fileUrl = res.url;
         this.loadAudio();
-      });
+      },
+      (e) => this.errorMessage = e.error.message,
+      );
     }
   }
 
@@ -138,14 +145,18 @@ export class PlayerDetailsComponent
           .subscribe(jsonData => {
             this.emotions = jsonData.json.emosp;
             this.setRegions();
-          });
+          },
+          (e) => this.errorMessage = e.error.message,
+          );
       }
-    });
+    },
+    (e) => this.errorMessage = e.error.message,
+    );
   }
 
   getDateVal(val) {
     const d = new Date(1, 1, 1);
-    d.setSeconds(parseInt(val, 10));
+    d.setMilliseconds(val * 1000);
     return d;
   }
 
@@ -161,10 +172,12 @@ export class PlayerDetailsComponent
     }
   }
   zoomIn() {
+    if (this.zoomLevel > 20000) return this.zoomLevel;
     this.zoomLevel = this.zoomLevel * 10;
     this.wavesurfer.zoom(this.zoomLevel);
   }
   zoomOut() {
+    if (this.zoomLevel < 200) return this.zoomLevel;
     this.zoomLevel = this.zoomLevel / 10;
     this.wavesurfer.zoom(this.zoomLevel);
   }
@@ -172,6 +185,12 @@ export class PlayerDetailsComponent
     if (val > 80) return "rgba(255,0,0, 0.1)";
     if (val > 70) return "rgba(255, 165, 0, 0.1)";
     if (val > 50) return "rgba(255, 255, 0, 0.1)";
+  }
+
+  gotoPosition(ms) {
+    console.log(ms, this.wavesurfer.getDuration());
+    // console.log(ms / this.wavesurfer.getDuration());
+    this.wavesurfer.seekTo(ms / this.wavesurfer.getDuration());
   }
 
   ngOnDestroy() {
