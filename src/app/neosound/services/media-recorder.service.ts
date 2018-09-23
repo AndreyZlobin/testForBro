@@ -38,7 +38,8 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
     this.start$.next();
     const options = {
       recorderType: RecordRTC.StereoAudioRecorder,
-      mimeType: "audio/wav"
+      numberOfAudioChannels: 1,
+      mimeType: 'audio/wav',
     };
     this.mediaRecorder = RecordRTC(this.mediaStream, options);
     this.mediaRecorder.startRecording();
