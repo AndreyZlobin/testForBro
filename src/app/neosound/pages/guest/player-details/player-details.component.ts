@@ -70,8 +70,8 @@ export class PlayerDetailsComponent
     requestAnimationFrame(() => {
       this.wavesurfer = WaveSurfer.create({
         container: "#myWavesurferContainer",
-        waveColor: "violet",
-        progressColor: "purple",
+        waveColor: "#3399CC",
+        progressColor: "#1CACE3",
         scrollParent: true,
         plugins: [
           RegionsPlugin.create({
