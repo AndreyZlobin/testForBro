@@ -146,6 +146,9 @@ export class QuickTestComponent implements OnInit, OnDestroy {
               this.currentFileParams.name;
       this.filesService.processFile(this.getFileParams()).subscribe(v => {
         this.getInfo();
+        this.intervalRef = setInterval(() => {
+          this.getInfo();
+        }, 20000);
       },
       (e) => this.errorMessage = e.error.message,
       );
