@@ -121,6 +121,7 @@ export class QuickTestComponent implements OnInit, OnDestroy {
     this.files = [];
     this.attached = false;
     this.uploaded = false;
+    this.proccessed = false;
   }
 
   attach() {
@@ -145,10 +146,15 @@ export class QuickTestComponent implements OnInit, OnDestroy {
               'Successfully uploaded to the server: ' +
               this.currentFileParams.name;
       this.filesService.processFile(this.getFileParams()).subscribe(v => {
-        this.getInfo();
-        this.intervalRef = setInterval(() => {
-          this.getInfo();
-        }, 20000);
+
+        this.proccessed = true;
+        const params = this.getFileParams();
+        this.filesService.setQuickFileParams(params);
+
+        // this.getInfo();
+        // this.intervalRef = setInterval(() => {
+        //   this.getInfo();
+        // }, 20000);
       },
       (e) => this.errorMessage = e.error.message,
       );

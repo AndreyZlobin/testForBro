@@ -19,7 +19,8 @@
     <ng-container  *ngIf="attached">
       <h3 class="mb-3 mt-3">Results</h3>
       <div class="lds-ring" *ngIf="!uploaded || !proccessed"><div></div><div></div><div></div><div></div></div>
-      <button href="#" *ngIf="uploaded && proccessed" [disabled]="!uploaded" (click)="gotoResults()" class="btn btn-primary">To Results</button>
+      <!-- <button href="#" *ngIf="uploaded && proccessed" [disabled]="!uploaded" (click)="gotoResults()" class="btn btn-primary">To Results</button> -->
+      <app-results *ngIf="uploaded && proccessed" (refresh)="discard()"></app-results>
     </ng-container>
   </div>
   <!-- <form [formGroup]="form">

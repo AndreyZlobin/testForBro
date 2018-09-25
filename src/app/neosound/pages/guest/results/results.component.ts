@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { FilesService } from '../../../services/files.service';
 import { Router } from '@angular/router';
 
@@ -18,6 +18,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   count = 20;
   showThanks = false;
   errorMessage = '';
+  @Output() refresh = new EventEmitter<boolean>();
 
   constructor(private filesService: FilesService, private router: Router) {
     this.fileParams = this.filesService.getQuickFileParams();
@@ -95,6 +96,11 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   getHappiness(val) {
     return 100 - val;
+  }
+
+  discard() {
+    this.refresh.emit(true);
+    return false;
   }
 
   ngOnDestroy() {

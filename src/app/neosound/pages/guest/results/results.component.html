@@ -1,7 +1,7 @@
 <div class="container">
   <div class="col-12 center text-center center-results">
     <div class="alert alert-danger" *ngIf="errorMessage">Error: {{errorMessage}}</div>
-    <h3>Your record analysis:</h3>
+    <!-- <h3>Your record analysis:</h3> -->
     <div *ngIf="analysisResult">
       <div class="row">
         <div class="col-6">
@@ -46,7 +46,7 @@
         </div>
         <div class="result-links">
           <div class="mt-5">See details <a routerLink="/guest/player-details">here</a></div>
-          <a class="mt-5 mb-5" routerLink="/guest/quicktest">Check another record</a>
+          <a class="mt-5 mb-5" routerLink="/guest/quicktest" (click)="discard()">Check another record</a>
         </div>
       </div>
     </div>
