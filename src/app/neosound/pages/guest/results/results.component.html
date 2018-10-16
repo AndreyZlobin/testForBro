@@ -9,7 +9,7 @@
         </div>
         <div class="col-6">
           <div>
-            {{analysisResult[0] && analysisResult[0].data && analysisResult[0].data.spangervol}} % Anger
+            {{getEmotionValue()}} % {{getEmotionName()}}
           </div>
           <div>
             <input class="mt-1" type="range" disabled value="{{analysisResult[0] && analysisResult[0].data && analysisResult[0].data.spangervol}}" />

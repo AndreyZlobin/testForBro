@@ -140,7 +140,7 @@ export class PlayerDetailsComponent
 
         this.filesService
           .getFileResultJson({
-            uri: this.results.results[0].identity.uri
+            uri: this.results.results.fourclass.latest.identity.uri,
           })
           .subscribe(jsonData => {
             this.emotions = jsonData.json.emosp;

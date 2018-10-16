@@ -36,10 +36,14 @@ export class FilesService {
     );
   }
 
-  processFile(params): Observable<any> {
+  processFile(params, mlid = 9): Observable<any> {
     params = params || {
       'batchid': '1234',
-      'filename': '1.mp3'
+      'filename': '1.mp3',
+    };
+    params = {
+      ...params,
+      mlid: '' + mlid,
     };
     return this.http.post(`${environment.api}/processFile`,
       params

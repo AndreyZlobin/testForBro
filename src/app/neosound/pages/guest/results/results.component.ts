@@ -57,15 +57,22 @@ export class ResultsComponent implements OnInit, OnDestroy {
     // this.analysisResult.push({data: {spangervol: 60}});
     this.filesService.listFileResults(this.fileParams).subscribe(res => {
       this.results = res;
-        if (this.results.results.length || this.count < 0) {
+      if (res.results
+        && res.results.fourclass
+        && res.results.fourclass.latest
+        && res.results.fourclass.latest.data
+        && res.results.fourclass.latest.data.top || this.count < 0) {
           clearInterval(this.intervalRef);
         }
         console.log(this.results);
-        if (this.results.results && this.results.results[0]) {
+        if (res.results
+          && res.results.fourclass
+          && res.results.fourclass.latest
+          && res.results.fourclass.latest.data) {
           this.analysisResult = this.results.results;
           this.setChartData();
           this.filesService.getFileResultJson({
-            uri: this.results.results[0].identity.uri,
+            uri: this.results.fourclass.latest.identity.uri,
           }).subscribe(jsonData => {
             this.emotions = jsonData.json.emosp;
           },
@@ -91,7 +98,21 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   getEmotionImg() {
-    return (this.analysisResult[0].data.spangervol > 50) ? 'angry' : 'neutral';
+    if (!this.analysisResult || !this.analysisResult.fourclass) return;
+    const img = (('' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0]).toLowerCase());
+    return img ? img : 'neutral';
+  }
+
+  getEmotionName() {
+    const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
+    return name ? name : 'Neutral';
+  }
+
+  getEmotionValue() {
+    const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
+    return this.analysisResult.fourclass.latest.data.top[name] ?
+            this.analysisResult.fourclass.latest.data.top[name]
+            : 0;
   }
 
   getHappiness(val) {
