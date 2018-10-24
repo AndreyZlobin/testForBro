@@ -12,7 +12,7 @@
             {{getEmotionValue()}} % {{getEmotionName()}}
           </div>
           <div>
-            <input class="mt-1" type="range" disabled value="{{analysisResult[0] && analysisResult[0].data && analysisResult[0].data.spangervol}}" />
+            <input class="mt-1" type="range" disabled value="{{analysisResult[getEmotionName()]}}" />
           </div>
           <div class="mt-5">
               <div class="btn-group" role="group">
@@ -26,10 +26,10 @@
               </div>
 
               <ul class="range-labels">
-                <li>Child</li>
-                <li>Teen</li>
-                <li class="active selected">Adult</li>
-                <li>Senior</li>
+                <li [ngClass]="{'active selected': getAge('child')}"></li>
+                <li [ngClass]="{'active selected': getAge('young')}">Teen</li>
+                <li [ngClass]="{'active selected': getAge('mid')}">Adult</li>
+                <li [ngClass]="{'active selected': getAge('old')}">Senior</li>
               </ul>
           </div>
           <div class="mt-5">

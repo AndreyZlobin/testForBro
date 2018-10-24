@@ -30,7 +30,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getInfo();
     this.intervalRef = setInterval(() => {
-      // this.count--;
+      this.count--;
       // this.filesService.listFileResults(this.fileParams).subscribe(res => {
       //   this.results = res;
       //   if (this.results.results.length || this.count < 0) {
@@ -57,27 +57,47 @@ export class ResultsComponent implements OnInit, OnDestroy {
     // this.analysisResult.push({data: {spangervol: 60}});
     this.filesService.listFileResults(this.fileParams).subscribe(res => {
       this.results = res;
-      if (res.results
-        && res.results.fourclass
-        && res.results.fourclass.latest
-        && res.results.fourclass.latest.data
-        && res.results.fourclass.latest.data.top || this.count < 0) {
+      if (
+        // res.result
+        // && (
+        //   res.result.Anger
+        //   || res.result.Happy
+        //   || res.result.Neutral
+        //   || res.result.Sadness
+        //   || res.result.emotional
+        //   || res.result.female
+        //   || res.result.male
+        //   || res.result.mid
+        //   || res.result.old
+        //   || res.result.young)
+        this.count <= 0
+       ) {
           clearInterval(this.intervalRef);
         }
         console.log(this.results);
-        if (res.results
-          && res.results.fourclass
-          && res.results.fourclass.latest
-          && res.results.fourclass.latest.data) {
-          this.analysisResult = this.results.results;
+        if (res.result
+          && (
+            res.result.Anger
+            || res.result.Happy
+            || res.result.Neutral
+            || res.result.Sadness
+            || res.result.emotional
+            || res.result.female
+            || res.result.male
+            || res.result.mid
+            || res.result.old
+            || res.result.young)
+         ) {
+          this.analysisResult = this.results.result;
           this.setChartData();
-          this.filesService.getFileResultJson({
-            uri: this.results.fourclass.latest.identity.uri,
-          }).subscribe(jsonData => {
-            this.emotions = jsonData.json.emosp;
-          },
-          (e) => this.errorMessage = e.error.message,
-          );
+          this.gender = res.result.male > res.result.female ? 'male' : 'female';
+          // this.filesService.getFileResultJson({
+          //   uri: this.results.fourclass.latest.identity.uri,
+          // }).subscribe(jsonData => {
+          //   this.emotions = jsonData.json.emosp;
+          // },
+          // (e) => this.errorMessage = e.error.message,
+          // );
         }
     },
     (e) => this.errorMessage = e.error.message,
@@ -87,32 +107,111 @@ export class ResultsComponent implements OnInit, OnDestroy {
   setChartData() {
     this.chartData = [
       {
-        name: Math.round(this.analysisResult[0].data.spangervol) + '% Anger', //.toFixed(2),
-        value: this.analysisResult[0].data.spangervol, //.toFixed(2),
+        name: Math.round(this.analysisResult.Anger) + '% Anger', //.toFixed(2),
+        value: this.analysisResult.Anger, //.toFixed(2),
       },
       {
-        name: Math.round((100 - this.analysisResult[0].data.spangervol)) + '% Calm', //.toFixed(2),
-        value: (100 - this.analysisResult[0].data.spangervol), //.toFixed(2),
+        name: Math.round(this.analysisResult.Sadness) + '% Sad', //.toFixed(2),
+        value: this.analysisResult.Sadness, //.toFixed(2),
+      },
+      {
+        name: Math.round(this.analysisResult.Neutral) + '% Neutral', //.toFixed(2),
+        value: this.analysisResult.Neutral, //.toFixed(2),
+      },
+      {
+        name: Math.round(this.analysisResult.Happy) + '% Happy', //.toFixed(2),
+        value: this.analysisResult.Happy, //.toFixed(2),
       },
     ];
   }
 
   getEmotionImg() {
-    if (!this.analysisResult || !this.analysisResult.fourclass) return;
-    const img = (('' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0]).toLowerCase());
+    if (!this.analysisResult) return;
+    let max = 0;
+    let img = '';
+    if (this.analysisResult.Anger > max) {
+      max = this.analysisResult.Anger;
+      img = 'angry';
+    }
+    if (this.analysisResult.Happy > max) {
+      max = this.analysisResult.Happy;
+      img = 'happy';
+    }
+    if (this.analysisResult.Neutral > max) {
+      max = this.analysisResult.Neutral;
+      img = 'neutral';
+    }
+    if (this.analysisResult.Sadness > max) {
+      max = this.analysisResult.Sadness;
+      img = 'sad';
+    }
+    // const img = (('' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0]).toLowerCase());
     return img ? img : 'neutral';
   }
 
   getEmotionName() {
-    const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
+    let max = 0;
+    let name = '';
+    if (this.analysisResult.Anger > max) {
+      max = this.analysisResult.Anger;
+      name = 'Anger';
+    }
+    if (this.analysisResult.Happy > max) {
+      max = this.analysisResult.Happy;
+      name = 'Happy';
+    }
+    if (this.analysisResult.Neutral > max) {
+      max = this.analysisResult.Neutral;
+      name = 'Neutral';
+    }
+    if (this.analysisResult.Sadness > max) {
+      max = this.analysisResult.Sadness;
+      name = 'Sadness';
+    }
+    // const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
     return name ? name : 'Neutral';
   }
 
   getEmotionValue() {
-    const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
-    return this.analysisResult.fourclass.latest.data.top[name] ?
-            this.analysisResult.fourclass.latest.data.top[name]
-            : 0;
+    let max = 0;
+    let name = '';
+    if (this.analysisResult.Anger > max) {
+      max = this.analysisResult.Anger;
+      name = 'Anger';
+    }
+    if (this.analysisResult.Happy > max) {
+      max = this.analysisResult.Happy;
+      name = 'Happy';
+    }
+    if (this.analysisResult.Neutral > max) {
+      max = this.analysisResult.Neutral;
+      name = 'Neutral';
+    }
+    if (this.analysisResult.Sadness > max) {
+      max = this.analysisResult.Sadness;
+      name = 'Sadness';
+    }
+    // const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
+    return max;
+  }
+
+  getAge(val) {
+    let max = 0;
+    let name = '';
+    if (this.analysisResult.mid > max) {
+      max = this.analysisResult.mid;
+      name = 'mid';
+    }
+    if (this.analysisResult.old > max) {
+      max = this.analysisResult.old;
+      name = 'old';
+    }
+    if (this.analysisResult.young > max) {
+      max = this.analysisResult.young;
+      name = 'young';
+    }
+    // const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
+    return val === name;
   }
 
   getHappiness(val) {

@@ -299,14 +299,25 @@ export class QuickTestComponent implements OnInit, OnDestroy {
   }
 
   getInfo() {
+    this.count--;
     const params = this.getFileParams();
     this.filesService.listFileResults(params).subscribe(res => {
       // this.results = res;
-        if (res.results
-          && res.results.fourclass
-          && res.results.fourclass.latest
-          && res.results.fourclass.latest.data
-          && res.results.fourclass.latest.data.top || this.count < 0) {
+        if (
+          // res.result
+          // && (
+          //   res.result.Anger
+          //   || res.results.Happy
+          //   || res.results.Neutral
+          //   || res.results.Sadness
+          //   || res.results.emotional
+          //   || res.results.female
+          //   || res.results.male
+          //   || res.results.mid
+          //   || res.results.old
+          //   || res.results.young)
+            this.count <= 0
+         ) {
           this.proccessed = true;
           clearInterval(this.intervalRef);
         }
