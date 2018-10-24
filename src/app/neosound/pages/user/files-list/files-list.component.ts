@@ -9,14 +9,87 @@ import { FilesService } from '../../../services/files.service';
 export class FilesListComponent implements OnInit {
   files;
   errorMessage = '';
+  filesResult = [];
 
   constructor(private filesService: FilesService) { }
 
   ngOnInit() {
     this.filesService.listFiles({}).subscribe(res => {
-      this.files = res.files;
+      this.files = res.files.sort((a, b) => {
+        const x = +new Date(a.uploaddate);
+        const y = +new Date(b.uploaddate);
+        return y - x;
+      });
     });
   }
+
+  getEmotionName(val) {
+    return val && Object.keys(val)[0];
+  }
+
+  getEmotionValue(val) {
+    return val && val[Object.keys(val)[0]];
+  }
+
+  // getFileResult(file) {
+  //   this.filesService.listFileResults({
+  //     'batchid': file.batchid,
+  //     'filename': file.fileid,
+  //     'date': file.uploaddate,
+  //   }).subscribe(res => {
+  //     if (res.result) {
+  //       this.filesResult.p
+  //     }
+  //   },
+  //   (e) => this.errorMessage = e.error.message,
+  //   );
+  // }
+
+  // getEmotionValue() {
+  //   let max = 0;
+  //   let name = '';
+  //   if (this.analysisResult.Anger > max) {
+  //     max = this.analysisResult.Anger;
+  //     name = 'Anger';
+  //   }
+  //   if (this.analysisResult.Happy > max) {
+  //     max = this.analysisResult.Happy;
+  //     name = 'Happy';
+  //   }
+  //   if (this.analysisResult.Neutral > max) {
+  //     max = this.analysisResult.Neutral;
+  //     name = 'Neutral';
+  //   }
+  //   if (this.analysisResult.Sadness > max) {
+  //     max = this.analysisResult.Sadness;
+  //     name = 'Sadness';
+  //   }
+  //   // const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
+  //   return max;
+  // }
+
+  // getEmotionName() {
+  //   let max = 0;
+  //   let name = '';
+  //   if (this.analysisResult.Anger > max) {
+  //     max = this.analysisResult.Anger;
+  //     name = 'Anger';
+  //   }
+  //   if (this.analysisResult.Happy > max) {
+  //     max = this.analysisResult.Happy;
+  //     name = 'Happy';
+  //   }
+  //   if (this.analysisResult.Neutral > max) {
+  //     max = this.analysisResult.Neutral;
+  //     name = 'Neutral';
+  //   }
+  //   if (this.analysisResult.Sadness > max) {
+  //     max = this.analysisResult.Sadness;
+  //     name = 'Sadness';
+  //   }
+  //   // const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
+  //   return name ? name : 'Neutral';
+  // }
 
   refresh() {
     this.filesService.listFiles({}).subscribe(res => {

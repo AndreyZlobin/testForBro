@@ -132,15 +132,15 @@ export class PlayerDetailsComponent
   getInfo() {
     this.filesService.listFileResults(this.fileParams).subscribe(res => {
       this.results = res;
-      if (this.results.results.length || this.attempsCount < 0) {
+      if (this.results.result || this.attempsCount < 0) {
         clearInterval(this.intervalRef);
       }
-      if (this.results.results && this.results.results[0]) {
-        this.analysisResult = this.results.results;
+      if (this.results.result) {
+        this.analysisResult = this.results.result;
 
         this.filesService
           .getFileResultJson({
-            uri: this.results.results.fourclass.latest.identity.uri,
+            uri: this.results.result.uri,
           })
           .subscribe(jsonData => {
             this.emotions = jsonData.json.emosp;

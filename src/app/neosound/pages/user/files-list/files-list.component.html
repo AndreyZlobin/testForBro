@@ -7,6 +7,9 @@
           <th>Batch Id</th>
           <th>Name</th>
           <th>Uploaded</th>
+          <th>Emotion</th>
+          <th>Beta - Anger, Happiness, Sad, Neutra</th>
+          <th>%</th>
           <th></th>
       </tr>
     </thead>
@@ -14,7 +17,10 @@
       <tr *ngFor="let item of files">
         <td>{{ item.batchid}}</td>
         <td>{{ item.filename}}</td>
-        <td>{{item.uploaddate | date}}</td>
+        <td>{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+        <td>{{item.angertop && item.angertop.anger}}</td>
+        <td>{{getEmotionName(item.fourclasstop)}}</td>
+        <td>{{getEmotionValue(item.fourclasstop)}}</td>
         <td><a [routerLink]="getLink(item)">File details</a></td>
       </tr>
     </tbody>
