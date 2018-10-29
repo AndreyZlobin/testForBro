@@ -29,6 +29,16 @@ export class FilesService {
     );
   }
 
+  deleteFile(params): Observable<any> {
+    params = params || {
+      'batchid': '1234',
+      'filename': '1.mp3'
+    };
+    return this.http.post(`${environment.api}/deleteFile`,
+      params
+    );
+  }
+
   listFiles(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/listFiles`,

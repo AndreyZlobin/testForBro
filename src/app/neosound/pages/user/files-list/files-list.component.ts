@@ -93,7 +93,22 @@ export class FilesListComponent implements OnInit {
 
   refresh() {
     this.filesService.listFiles({}).subscribe(res => {
-      this.files = res.files;
+      this.files = res.files.sort((a, b) => {
+        const x = +new Date(a.uploaddate);
+        const y = +new Date(b.uploaddate);
+        return y - x;
+      });
+    },
+    (e) => this.errorMessage = e.error.message,
+    );
+  }
+
+  delete(batchid, filename) {
+    this.filesService.deleteFile({
+      batchid,
+      filename,
+    }).subscribe(res => {
+      this.refresh();
     },
     (e) => this.errorMessage = e.error.message,
     );

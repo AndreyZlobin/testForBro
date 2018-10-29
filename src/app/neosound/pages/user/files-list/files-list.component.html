@@ -8,8 +8,9 @@
           <th>Name</th>
           <th>Uploaded</th>
           <th>Emotion</th>
-          <th>Beta - Anger, Happiness, Sad, Neutra</th>
+          <th>Beta - Anger, Happiness, Sad, Neutral</th>
           <th>%</th>
+          <th></th>
           <th></th>
       </tr>
     </thead>
@@ -22,6 +23,7 @@
         <td>{{getEmotionName(item.fourclasstop)}}</td>
         <td>{{getEmotionValue(item.fourclasstop)}}</td>
         <td><a [routerLink]="getLink(item)">File details</a></td>
+        <td><a style="cursor: pointer;" (click)="delete(item.batchid, item.filename)">Delete</a></td>
       </tr>
     </tbody>
   </table>

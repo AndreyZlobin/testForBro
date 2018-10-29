@@ -26,6 +26,12 @@ export class PlayerDetailsComponent
   subRoute: Subscription;
   zoomLevel = 200;
   errorMessage = '';
+  emotionsAnger;
+  emotionsAge;
+  emotionsFourclass;
+  emotionsGender;
+  currentTab = 'anger';
+  tabsDisabled = false;
 
   constructor(
     private filesService: FilesService,
@@ -140,14 +146,48 @@ export class PlayerDetailsComponent
 
         this.filesService
           .getFileResultJson({
-            uri: this.results.result.uri,
+            uri: this.results.result.uris.anger,
           })
           .subscribe(jsonData => {
-            this.emotions = jsonData.json.emosp;
+            this.emotionsAnger = jsonData.data.ints;
+            this.emotions = this.emotionsAnger;
             this.setRegions();
           },
           (e) => this.errorMessage = e.error.message,
           );
+
+        this.filesService
+          .getFileResultJson({
+            uri: this.results.result.uris.age,
+          })
+          .subscribe(jsonData => {
+            this.emotionsAge = jsonData.data.ints;
+            this.setRegions();
+          },
+          (e) => this.errorMessage = e.error.message,
+          );
+
+        this.filesService
+          .getFileResultJson({
+            uri: this.results.result.uris.fourclass,
+          })
+          .subscribe(jsonData => {
+            this.emotionsFourclass = jsonData.data.ints;
+            this.setRegions();
+          },
+          (e) => this.errorMessage = e.error.message,
+          );
+
+        this.filesService
+        .getFileResultJson({
+          uri: this.results.result.uris.gender,
+        })
+        .subscribe(jsonData => {
+          this.emotionsGender = jsonData.data.ints;
+          this.setRegions();
+        },
+        (e) => this.errorMessage = e.error.message,
+        );
       }
     },
     (e) => this.errorMessage = e.error.message,
@@ -162,12 +202,13 @@ export class PlayerDetailsComponent
 
   setRegions() {
     if (!this.wavesurferReady || !this.emotions) return;
+    this.wavesurfer.clearRegions();
     for (let index = 0; index < this.emotions.length; index++) {
       const element = this.emotions[index];
       this.wavesurfer.addRegion({
         start: element[0],
         end: element[1],
-        color: this.getColor(element[3])
+        color: this.getColor(element[3]),
       });
     }
   }
@@ -195,5 +236,29 @@ export class PlayerDetailsComponent
 
   ngOnDestroy() {
     this.subRoute.unsubscribe();
+  }
+
+  setTab(tab) {
+    this.currentTab = tab;
+    this.tabsDisabled = true;
+    setTimeout(() => this.tabsDisabled = false, 3000);
+    switch (tab) {
+      case 'anger':
+        this.emotions = this.emotionsAnger;
+        break;
+      case 'age':
+        this.emotions = this.emotionsAge;
+        break;
+      case 'gender':
+        this.emotions = this.emotionsGender;
+        break;
+      case 'beta':
+        this.emotions = this.emotionsFourclass;
+        break;
+
+      default:
+        break;
+    }
+    this.setRegions();
   }
 }
