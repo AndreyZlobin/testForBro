@@ -151,7 +151,7 @@ const routes: Routes = [
     ],
   },
   { path: '', redirectTo: 'guest/quicktest', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  { path: '**', redirectTo: 'guest/quicktest' },
 ];
 
 const config: ExtraOptions = {
