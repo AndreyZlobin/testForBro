@@ -21,6 +21,20 @@
   <button class="mt-3 btn btn-primary" (click)="play()">
     <i class="fa fa-play"></i>/<i class="fa fa-pause"></i>
   </button>
+  <div *ngIf="currentTab === 'age'" class="mt-3 mb-3">
+    <div style="background: red;" class="circle-i"></div> - Teen
+    <div style="background: green;" class="circle-i ml-3"></div> - Adult
+    <div style="background: blue;" class="circle-i ml-3"></div> - Senior
+  </div>
+  <div *ngIf="currentTab === 'gender'" class="mt-3 mb-3">
+      <div style="background: red;" class="circle-i"></div> - Female
+      <div style="background: blue;" class="circle-i ml-3"></div> - Male
+  </div>
+  <div *ngIf="currentTab === 'beta'" class="mt-3 mb-3">
+      <div style="background: red;" class="circle-i"></div> - Anger
+      <div style="background: green;" class="circle-i ml-3"></div> - Happiness
+      <div style="background: blue;" class="circle-i ml-3"></div> - Sadness
+  </div>
   <!-- <div class="btn-group float-right"><button class="mt-3 btn btn-primary" (click)="zoomIn()">
       <i class="fas fa-search-plus"></i>
     </button>

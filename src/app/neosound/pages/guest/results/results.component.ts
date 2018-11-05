@@ -19,6 +19,11 @@ export class ResultsComponent implements OnInit, OnDestroy {
   showThanks = false;
   errorMessage = '';
   @Output() refresh = new EventEmitter<boolean>();
+  chartScheme = {
+    domain: [
+      '#4abce2', '#ffa823', '#e54128', '#b2d11e', '#7e0d81',
+    ],
+  };
 
   constructor(private filesService: FilesService, private router: Router) {
     this.fileParams = this.filesService.getQuickFileParams();

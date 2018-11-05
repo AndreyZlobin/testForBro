@@ -208,7 +208,7 @@ export class PlayerDetailsComponent
       this.wavesurfer.addRegion({
         start: element[0],
         end: element[1],
-        color: this.getColor(element[3]),
+        color: this.getColor(element[3], element[2]),
       });
     }
   }
@@ -222,10 +222,30 @@ export class PlayerDetailsComponent
     this.zoomLevel = this.zoomLevel / 10;
     this.wavesurfer.zoom(this.zoomLevel);
   }
-  getColor(val) {
-    if (val > 80) return "rgba(255,0,0, 0.1)";
-    if (val > 70) return "rgba(255, 165, 0, 0.1)";
-    if (val > 50) return "rgba(255, 255, 0, 0.1)";
+
+  getColor(val: any, type?: string) {
+    switch (this.currentTab) {
+      case 'anger':
+        return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.1)';
+      case 'age':
+        if (type === 'young') return 'rgba(255,0,0, 0.1)';
+        if (type === 'mid') return 'rgba(0,255,0, 0.1)';
+        if (type === 'old') return 'rgba(0,0,255, 0.1)';
+        break;
+      case 'gender':
+        if (type === 'w') return 'rgba(255,0,0, 0.1)';
+        if (type === 'm') return 'rgba(0,0,255, 0.1)';
+        break;
+      case 'beta':
+        if (type === 'Anger') return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.1)';
+        if (type === 'Neutral') return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.1)';
+        if (type === 'Happy') return  'rgba(' + (255 - (val-50)*5) + ', 255, ' + (255 - (val-50)*5) + ', 0.1)';
+        if (type === 'Sadness') return 'rgba(' + (255 - (val-50)*5) + ', ' + (255 - (val-50)*5) + ', 255, 0.1)';
+        break;
+      default:
+        break;
+    }
+    return 'rgba(255,0,0, 0.1)';
   }
 
   gotoPosition(ms) {

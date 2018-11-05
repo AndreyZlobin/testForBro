@@ -1,6 +1,6 @@
 <h1>Files</h1>
 <div class="alert alert-danger" *ngIf="errorMessage">Error: {{errorMessage}}</div>
-<div *ngIf="files; else loading" class="mt-5">
+<div *ngIf="!isLoading; else loading" class="mt-5">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -8,7 +8,7 @@
           <th>Name</th>
           <th>Uploaded</th>
           <th>Emotion</th>
-          <th>Beta - Anger, Happiness, Sad, Neutral</th>
+          <th>Beta</th>
           <th>%</th>
           <th></th>
           <th></th>
@@ -29,6 +29,7 @@
   </table>
   <button class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
 </div>
+<div *ngIf="!isLoading && !files">0 Files</div>
 
 <ng-template #loading>
   Loading...

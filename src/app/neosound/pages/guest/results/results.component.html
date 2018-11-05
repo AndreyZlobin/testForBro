@@ -5,9 +5,14 @@
     <div *ngIf="analysisResult">
       <div class="row">
         <div class="col-6">
-          <ngx-pie-chart *ngIf="chartData" [data]="chartData"></ngx-pie-chart>
+          <ngx-pie-chart
+            *ngIf="chartData"
+            [data]="chartData"
+            ></ngx-pie-chart>
+            <!-- [scheme]="chartScheme" -->
         </div>
         <div class="col-6">
+          <h4>Dominant emotion detected</h4>
           <div>
             {{getEmotionValue()}} % {{getEmotionName()}}
           </div>
@@ -26,7 +31,6 @@
               </div>
 
               <ul class="range-labels">
-                <li [ngClass]="{'active selected': getAge('child')}">Child</li>
                 <li [ngClass]="{'active selected': getAge('young')}">Teen</li>
                 <li [ngClass]="{'active selected': getAge('mid')}">Adult</li>
                 <li [ngClass]="{'active selected': getAge('old')}">Senior</li>
@@ -52,7 +56,7 @@
     </div>
   </div>
 
-  <div *ngIf="!emotions" class="center">
+  <div *ngIf="analysisResult.message !== 'Success'" class="center">
     <div>
       <h4>Loading...</h4>
     </div>

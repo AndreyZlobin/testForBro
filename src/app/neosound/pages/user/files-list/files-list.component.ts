@@ -10,11 +10,13 @@ export class FilesListComponent implements OnInit {
   files;
   errorMessage = '';
   filesResult = [];
+  isLoading = true;
 
   constructor(private filesService: FilesService) { }
 
   ngOnInit() {
     this.filesService.listFiles({}).subscribe(res => {
+      if (res.files) this.isLoading = false;
       this.files = res.files.sort((a, b) => {
         const x = +new Date(a.uploaddate);
         const y = +new Date(b.uploaddate);
