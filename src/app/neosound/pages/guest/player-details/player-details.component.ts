@@ -226,21 +226,21 @@ export class PlayerDetailsComponent
   getColor(val: any, type?: string) {
     switch (this.currentTab) {
       case 'anger':
-        return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.1)';
+        return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.7)';
       case 'age':
-        if (type === 'young') return 'rgba(255,0,0, 0.1)';
-        if (type === 'mid') return 'rgba(0,255,0, 0.1)';
-        if (type === 'old') return 'rgba(0,0,255, 0.1)';
+        if (type === 'young') return 'rgba(255,0,0, 0.7)';
+        if (type === 'mid') return 'rgba(0,255,0, 0.7)';
+        if (type === 'old') return 'rgba(0,0,255, 0.7)';
         break;
       case 'gender':
-        if (type === 'w') return 'rgba(255,0,0, 0.1)';
-        if (type === 'm') return 'rgba(0,0,255, 0.1)';
+        if (type === 'w') return 'rgba(255,0,0, 0.7)';
+        if (type === 'm') return 'rgba(0,0,255, 0.7)';
         break;
       case 'beta':
-        if (type === 'Anger') return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.1)';
-        if (type === 'Neutral') return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.1)';
-        if (type === 'Happy') return  'rgba(' + (255 - (val-50)*5) + ', 255, ' + (255 - (val-50)*5) + ', 0.1)';
-        if (type === 'Sadness') return 'rgba(' + (255 - (val-50)*5) + ', ' + (255 - (val-50)*5) + ', 255, 0.1)';
+        if (type === 'Anger') return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.7)';
+        if (type === 'Neutral') return 'rgba(255, 255, 255, 0)';
+        if (type === 'Happy') return  'rgba(' + (255 - (val - 50) * 5) + ', 255, ' + (255 - (val - 50) * 5) + ', 0.7)';
+        if (type === 'Sadness') return 'rgba(' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 255, 0.7)';
         break;
       default:
         break;
