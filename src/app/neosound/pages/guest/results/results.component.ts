@@ -94,16 +94,16 @@ export class ResultsComponent implements OnInit, OnDestroy {
         console.log(this.results);
         if (res.result
           && (
-            res.result.Anger
-            || res.result.Happy
-            || res.result.Neutral
-            || res.result.Sadness
-            || res.result.emotional
-            || res.result.female
-            || res.result.male
-            || res.result.mid
-            || res.result.old
-            || res.result.young)
+            res.result.Anger !== ''
+            || res.result.Happy !== ''
+            || res.result.Neutral !== ''
+            || res.result.Sadness !== ''
+            || res.result.emotional !== ''
+            || res.result.female !== ''
+            || res.result.male !== ''
+            || res.result.mid !== ''
+            || res.result.old !== ''
+            || res.result.young !== '')
          ) {
           this.analysisResult = this.results.result;
           this.setChartData();
