@@ -48,6 +48,7 @@ export class QuickTestComponent implements OnInit, OnDestroy {
   proccessed = false;
   count = 20;
   intervalRef;
+  filename;
 
   constructor(
     private userService: UsersService,
@@ -59,7 +60,7 @@ export class QuickTestComponent implements OnInit, OnDestroy {
     this.sub = this.mediaRecorderService.stop$.subscribe(record => {
       // this.upload(record);
       this.fileBlob = record;
-      const name = `${this.getFormattedTime()}.wav`;
+      const name = this.filename = `${this.getFormattedTime()}.wav`;
       const file = new File([record], name, {
         type: `audio/wav`,
       });
@@ -126,6 +127,7 @@ export class QuickTestComponent implements OnInit, OnDestroy {
 
   attach() {
     this.stopPlaying();
+    this.currentFileParams.name = this.filename.replace('.wav', '') + '.wav';
     this.upload(this.fileBlob);
     this.hideModal();
     this.attached = true;

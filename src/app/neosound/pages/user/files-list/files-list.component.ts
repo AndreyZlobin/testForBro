@@ -141,7 +141,7 @@ export class FilesListComponent implements OnInit {
   }
 
   getEmotionImg(item) {
-    if (!item) return;
+    if (!item || !item.fourclasstop) return 'neutral';
     const emK = Object.keys(item.fourclasstop);
     const img = emK && emK[0];
     return img ? img.toLowerCase() : 'neutral';
