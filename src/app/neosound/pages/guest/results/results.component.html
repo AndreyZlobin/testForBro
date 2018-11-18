@@ -2,7 +2,7 @@
   <div class="col-12 center text-center center-results">
     <div class="alert alert-danger" *ngIf="errorMessage">Error: {{errorMessage}}</div>
     <!-- <h3>Your record analysis:</h3> -->
-    <div *ngIf="analysisResult">
+    <div *ngIf="analysisResult; else loading">
       <div class="row">
         <div class="col-6">
           <div style="width: 60%; height: 300px;">
@@ -35,18 +35,18 @@
           <div>
             <input class="mt-1" type="range" disabled value="{{analysisResult[getEmotionName()]}}" />
           </div>
-          <div class="mt-5">
-              <div class="btn-group" role="group" *ngIf="this.analysisResult.male !== ''">
+          <div class="mt-5" *ngIf="this.analysisResult.male !== ''">
+              <div class="btn-group" role="group">
                 <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'male'}">Male</button>
                 <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'female'}">Female</button>
               </div>
           </div>
-          <div class="mt-5 range-wrap">
+          <div class="mt-5 range-wrap" *ngIf="this.analysisResult.mid !== ''">
               <div class="range">
                 <input type="range" min="1" max="4" steps="1" value="3">
               </div>
 
-              <ul class="range-labels" *ngIf="this.analysisResult.mid !== ''">
+              <ul class="range-labels">
                 <li [ngClass]="{'active selected': getAge('young')}">Teen</li>
                 <li [ngClass]="{'active selected': getAge('mid')}">Adult</li>
                 <li [ngClass]="{'active selected': getAge('old')}">Senior</li>
@@ -79,3 +79,7 @@
     <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+</ng-template>
