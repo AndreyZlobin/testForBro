@@ -14,11 +14,14 @@ export class LoginComponent {
   form = new FormGroup({});
   showMessages;
   message;
+  messageSuccess;
 
   constructor(
     private router: Router,
     private userService: UsersService,
-  ) { }
+  ) {
+    this.messageSuccess = this.userService.getMessage();
+  }
 
   public login() {
     const params = {

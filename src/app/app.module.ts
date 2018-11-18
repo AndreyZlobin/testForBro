@@ -47,7 +47,7 @@ import { UsersService } from './neosound/services/users.service';
 import { RequestsHttpInterceptor } from './neosound/shared/requests-http.interceptor';
 import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxChartsModule, PieChartModule } from '@swimlane/ngx-charts';
 import {
   NbAuthComponent,
   NbLoginComponent,
@@ -72,6 +72,10 @@ const formSetting: any = {
 import { FileDropModule } from 'ngx-file-drop';
 import { PlayerDetailsComponent } from './neosound/pages/guest/player-details/player-details.component';
 import { PieChartComponent } from './neosound/components/pie-chart/pie-chart.component';
+import { ApiPageComponent } from './neosound/pages/user/api-page/api-page.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { ChartModule } from 'angular2-chartjs';
+// import { ForbiddenPasswordDirective } from './neosound/directives/forbidden-password.directive';
 
 @NgModule({
   declarations: [
@@ -97,6 +101,8 @@ import { PieChartComponent } from './neosound/components/pie-chart/pie-chart.com
       MinutesSecondsPipe,
       PlayerDetailsComponent,
       PieChartComponent,
+      ApiPageComponent,
+      // ForbiddenPasswordDirective,
 
       //ngx-admin
     //   NbAlertComponent,
@@ -106,48 +112,7 @@ import { PieChartComponent } from './neosound/components/pie-chart/pie-chart.com
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    // NbAuthModule.forRoot({
-    //   strategies: [
-    //     NbPasswordAuthStrategy.setup({
-    //       name: 'name',
-    //       baseEndpoint: 'https://oiwyrnx3ug.execute-api.eu-west-1.amazonaws.com/prod',
-    //       token: {
-    //         class: NbAuthJWTToken,
 
-    //         key: 'token', // this parameter tells where to look for the token
-    //       },
-    //       login: {
-    //         endpoint: '/loginUser',
-    //         method: 'post',
-    //       },
-    //       register: {
-    //         endpoint: '/auth/sign-up',
-    //         method: 'post',
-    //       },
-    //       logout: {
-    //         endpoint: '/auth/sign-out',
-    //         method: 'post',
-    //       },
-    //       requestPass: {
-    //         endpoint: '/auth/request-pass',
-    //         method: 'post',
-    //       },
-    //       resetPass: {
-    //         endpoint: '/auth/reset-pass',
-    //         method: 'post',
-    //       },
-    //     }),
-    //   ],
-    //   forms: {
-    //     login: formSetting,
-    //     register: formSetting,
-    //     requestPassword: formSetting,
-    //     resetPassword: formSetting,
-    //     logout: {
-    //       redirectDelay: 0,
-    //     },
-    //   },
-    // }),
     NbAlertModule,
     FormsModule,
     ReactiveFormsModule,
@@ -162,7 +127,11 @@ import { PieChartComponent } from './neosound/components/pie-chart/pie-chart.com
     CoreModule.forRoot(),
 
     FileDropModule,
+    // NgxChartsModule,
+    // NgxEchartsModule,
     NgxChartsModule,
+    // ChartModule,
+    // PieChartModule,
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -178,7 +147,7 @@ import { PieChartComponent } from './neosound/components/pie-chart/pie-chart.com
         provide: HTTP_INTERCEPTORS,
         useClass: RequestsHttpInterceptor,
         multi: true,
-      }
+      },
   ],
 })
 export class AppModule {

@@ -46,7 +46,7 @@ export class PlayerDetailsComponent
       if (params && params.filename && params.batchid) {
         this.fileParams = {
           filename: decodeURIComponent(params.filename),
-          batchid: decodeURIComponent(params.batchid)
+          batchid: decodeURIComponent(params.batchid),
         };
         this.filesService.getFile(this.fileParams).subscribe(res => {
           this.fileUrl = res.url;
@@ -54,6 +54,11 @@ export class PlayerDetailsComponent
         },
         (e) => this.errorMessage = e.error.message,
         );
+
+        this.filesService.setQuickFileParams({
+          'batchid': params.batchid,
+          'filename': params.filename,
+        });
       }
     },
     (e) => this.errorMessage = e.error.message,

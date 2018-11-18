@@ -18,12 +18,24 @@ export class ResultsComponent implements OnInit, OnDestroy {
   count = 20;
   showThanks = false;
   errorMessage = '';
+  tooltipDisabled = true;
+  view = [undefined, undefined];
   @Output() refresh = new EventEmitter<boolean>();
   chartScheme = {
     domain: [
       '#4abce2', '#ffa823', '#e54128', '#b2d11e', '#7e0d81',
     ],
   };
+  customColors: any[] = [
+    {
+      name: 'Anger',
+      value: '#e54128',
+    },
+    {
+      name: 'Neutral',
+      value: '#4abce2',
+    },
+  ];
 
   constructor(private filesService: FilesService, private router: Router) {
     this.fileParams = this.filesService.getQuickFileParams();
@@ -96,6 +108,22 @@ export class ResultsComponent implements OnInit, OnDestroy {
           this.analysisResult = this.results.result;
           this.setChartData();
           this.gender = res.result.male > res.result.female ? 'male' : 'female';
+
+          if (res.result
+            && (
+              res.result.Anger !== ''
+              && res.result.Happy !== ''
+              && res.result.Neutral !== ''
+              && res.result.Sadness !== ''
+              && res.result.emotional !== ''
+              && res.result.female !== ''
+              && res.result.male !== ''
+              && res.result.mid !== ''
+              && res.result.old !== ''
+              && res.result.young !== '')
+           ) {
+            clearInterval(this.intervalRef);
+           }
           // this.filesService.getFileResultJson({
           //   uri: this.results.fourclass.latest.identity.uri,
           // }).subscribe(jsonData => {
@@ -112,19 +140,19 @@ export class ResultsComponent implements OnInit, OnDestroy {
   setChartData() {
     this.chartData = [
       {
-        name: Math.round(this.analysisResult.Anger) + '% Anger', //.toFixed(2),
+        name: 'Anger', // Math.round(this.analysisResult.Anger) + '% Anger', //.toFixed(2),
         value: this.analysisResult.Anger, //.toFixed(2),
       },
       {
-        name: Math.round(this.analysisResult.Sadness) + '% Sad', //.toFixed(2),
+        name: 'Sad', // Math.round(this.analysisResult.Sadness) + '% Sad', //.toFixed(2),
         value: this.analysisResult.Sadness, //.toFixed(2),
       },
       {
-        name: Math.round(this.analysisResult.Neutral) + '% Neutral', //.toFixed(2),
+        name: 'Neutral', // Math.round(this.analysisResult.Neutral) + '% Neutral', //.toFixed(2),
         value: this.analysisResult.Neutral, //.toFixed(2),
       },
       {
-        name: Math.round(this.analysisResult.Happy) + '% Happy', //.toFixed(2),
+        name: 'Happy', // Math.round(this.analysisResult.Happy) + '% Happy', //.toFixed(2),
         value: this.analysisResult.Happy, //.toFixed(2),
       },
     ];

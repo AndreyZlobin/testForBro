@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UsersService {
+  message = '';
 
   constructor(
     private http: HttpClient
@@ -83,5 +84,15 @@ export class UsersService {
     return this.http.post(`${environment.api}/forgotPassword`,
       params
     );
+  }
+
+  addMessage(m) {
+    this.message = m;
+  }
+
+  getMessage() {
+    const m = this.message;
+    this.message = '';
+    return m;
   }
 }

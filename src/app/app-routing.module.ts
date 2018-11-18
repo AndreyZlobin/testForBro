@@ -35,6 +35,7 @@ import { AboutComponent } from './neosound/pages/about/about.component';
 
 import {PagesComponent} from './pages/pages.component';
 import { PlayerDetailsComponent } from './neosound/pages/guest/player-details/player-details.component';
+import { ApiPageComponent } from './neosound/pages/user/api-page/api-page.component';
 
 const routes: Routes = [
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
@@ -81,6 +82,11 @@ const routes: Routes = [
         path: 'user/result/:id',
         canActivate: [ AuthGuard ],
         component: FileResultsComponent
+      },
+      {
+        path: 'user/api',
+        canActivate: [ AuthGuard ],
+        component: ApiPageComponent
       },
       {
         path: 'guest/results',

@@ -11,12 +11,18 @@ export class FilesListComponent implements OnInit {
   errorMessage = '';
   filesResult = [];
   isLoading = true;
+  proccessing = false;
 
   constructor(private filesService: FilesService) { }
 
   ngOnInit() {
     this.filesService.listFiles({}).subscribe(res => {
       if (res.files) this.isLoading = false;
+      if (res.count == 0) {
+        this.isLoading = false;
+        this.files = [];
+        return;
+      }
       this.files = res.files.sort((a, b) => {
         const x = +new Date(a.uploaddate);
         const y = +new Date(b.uploaddate);
@@ -118,6 +124,27 @@ export class FilesListComponent implements OnInit {
 
   getLink(item) {
     return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(item.filename)}`;
+  }
+
+  proccessFile(item) {
+    const params = item;
+    this.proccessing = true;
+    this.filesService.processFile(params).subscribe(v => {
+
+      this.filesService.processFile(params, 3).subscribe(v => {});
+      this.filesService.processFile(params, 5).subscribe(v => {});
+      this.filesService.processFile(params, 7).subscribe(v => {});
+      this.proccessing = false;
+    },
+    (e) => this.errorMessage = e.error.message,
+    );
+  }
+
+  getEmotionImg(item) {
+    if (!item) return;
+    const emK = Object.keys(item.fourclasstop);
+    const img = emK && emK[0];
+    return img ? img.toLowerCase() : 'neutral';
   }
 
 }

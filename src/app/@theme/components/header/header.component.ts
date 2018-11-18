@@ -73,4 +73,10 @@ export class HeaderComponent implements OnInit {
     // return this.userServ.isAuthenticated();
   }
 
+  username() {
+    const data = localStorage.getItem('user');
+    const user = data && JSON.parse(data);
+    return data && user && user.username;
+  }
+
 }

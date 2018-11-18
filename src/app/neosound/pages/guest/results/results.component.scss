@@ -43,7 +43,22 @@
 	line-height: 2rem;
 }
 
-
+.chart-legend .legend-wrap {
+	width: 100% !important;
+}
+.chart-legend {
+	display: block;
+	padding: 0;
+	width: 100% !important;
+	& div, & ul{
+		width: 100% !important;
+		background: none;
+	}
+	.legend-labels {
+		background: none;
+	}
+	margin-bottom: 1rem;
+}
 
 
 @mixin rangeThumb {
@@ -163,8 +178,8 @@
   .range-wrap {
 		width: 285px;
 		margin: 5rem auto;
-	  position: relative;
+		position: relative;
 	  ul {
 		  padding-left: 0;
 	  }
-  }
+	}

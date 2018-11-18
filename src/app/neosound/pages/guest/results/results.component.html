@@ -5,11 +5,27 @@
     <div *ngIf="analysisResult">
       <div class="row">
         <div class="col-6">
-          <ngx-pie-chart
-            *ngIf="chartData"
-            [data]="chartData"
-            ></ngx-pie-chart>
-            <!-- [scheme]="chartScheme" -->
+          <div style="width: 60%; height: 300px;">
+            <ngx-charts-pie-chart
+              *ngIf="chartData"
+              [results]="chartData"
+              [tooltipDisabled]="false"
+              [customColors]="customColors"
+              [legend]="true"
+              [legendTitle]="''"
+              ></ngx-charts-pie-chart>
+              <!-- [legend]="true"
+              [legendTitle]="''"
+              [legendPosition]="'below'" -->
+              <!-- [tooltipDisabled]="true"
+              [legend]="true" -->
+              <!-- [tooltipDisabled]="true"
+              [legend]="true"
+              [legendTitle]="''"
+              legendPosition="below"
+              [scheme]="chartScheme" -->
+              <!-- <ngx-echarts-pie></ngx-echarts-pie> -->
+          </div>
         </div>
         <div class="col-6">
           <h4>Dominant emotion detected</h4>
@@ -20,7 +36,7 @@
             <input class="mt-1" type="range" disabled value="{{analysisResult[getEmotionName()]}}" />
           </div>
           <div class="mt-5">
-              <div class="btn-group" role="group">
+              <div class="btn-group" role="group" *ngIf="this.analysisResult.male !== ''">
                 <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'male'}">Male</button>
                 <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'female'}">Female</button>
               </div>
@@ -30,13 +46,13 @@
                 <input type="range" min="1" max="4" steps="1" value="3">
               </div>
 
-              <ul class="range-labels">
+              <ul class="range-labels" *ngIf="this.analysisResult.mid !== ''">
                 <li [ngClass]="{'active selected': getAge('young')}">Teen</li>
                 <li [ngClass]="{'active selected': getAge('mid')}">Adult</li>
                 <li [ngClass]="{'active selected': getAge('old')}">Senior</li>
               </ul>
           </div>
-          <div class="mt-5">
+          <div class="mt-5" *ngIf="this.analysisResult.Anger !== ''">
             <img src="../../assets/images/emotions/{{getEmotionImg()}}.png" style="width: 100px;" />
           </div>
         </div>
@@ -56,7 +72,7 @@
     </div>
   </div>
 
-  <div *ngIf="analysisResult.message !== 'Success'" class="center">
+  <div *ngIf="analysisResult && analysisResult.message" class="center">
     <div>
       <h4>Loading...</h4>
     </div>

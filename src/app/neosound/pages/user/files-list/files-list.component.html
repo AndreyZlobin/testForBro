@@ -12,6 +12,7 @@
           <th>%</th>
           <th></th>
           <th></th>
+          <th></th>
       </tr>
     </thead>
     <tbody>
@@ -20,16 +21,20 @@
         <td>{{ item.filename}}</td>
         <td>{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
         <td>{{item.angertop && item.angertop.anger}}</td>
-        <td>{{getEmotionName(item.fourclasstop)}}</td>
+        <td>
+            {{getEmotionName(item.fourclasstop)}}
+            <img src="../../assets/images/emotions/{{getEmotionImg(item)}}.png" style="width: 30px;" />
+        </td>
         <td>{{getEmotionValue(item.fourclasstop)}}</td>
-        <td><a [routerLink]="getLink(item)">File details</a></td>
-        <td><a style="cursor: pointer;" (click)="delete(item.batchid, item.filename)">Delete</a></td>
+        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" [routerLink]="getLink(item)">File details</button></td>
+        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="proccessFile(item)">Refresh{{proccessing ? '...' : ''}}</button></td>
+        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="delete(item.batchid, item.filename)">Delete</button></td>
       </tr>
     </tbody>
   </table>
+  <div *ngIf="!isLoading && !files.length">0 Files</div>
   <button class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
 </div>
-<div *ngIf="!isLoading && !files">0 Files</div>
 
 <ng-template #loading>
   Loading...

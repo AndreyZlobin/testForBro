@@ -1,3 +1,20 @@
 .nb-arrow-thin-left {
 	display: none;
 }
+
+.chart-legend .legend-wrap {
+	width: 100% !important;
+}
+.chart-legend {
+	display: block;
+	padding: 0;
+	width: 100% !important;
+	& div, & ul {
+		width: 100% !important;
+		background: none;
+	}
+	.legend-labels {
+		background: none;
+	}
+	margin-bottom: 1rem;
+}
