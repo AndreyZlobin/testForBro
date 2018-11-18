@@ -132,54 +132,79 @@
 	  color: transparent;
 	}
   }
-
-  // Labels below slider
-  .range-labels {
-	margin: 18px -41px 0;
-	padding: 0;
-	list-style: none;
-
-	li {
-	  position: relative;
-	  float: left;
-	  width: 90.25px;
-	  text-align: center;
-	  color: #b2b2b2;
-	  font-size: 14px;
-	  cursor: pointer;
-
-	  &::before {
-		position: absolute;
-		top: -25px;
-		right: 0;
-		left: 0;
-		content: "";
-		margin: 0 auto;
-		width: 9px;
-		height: 9px;
-		background: #b2b2b2;
-		border-radius: 50%;
-	  }
+	$brand-primary: #4ABCE2;
+	$white: #fff;
+	$grey-light: #ededed;
+	%remain-steps{
+		&:before {
+			content: " ";
+			font-family: inherit;
+			font-weight: 700;
+		}
+		&:after{
+			background-color: $grey-light;
+		}
 	}
-
-	.active {
-	  color: #37adbf;
-	}
-
-	.selected::before {
-	  background: #37adbf;
-	}
-
-	.active.selected::before {
-	  display: none;
-	}
-  }
-
-  .range-wrap {
-		width: 285px;
-		margin: 5rem auto;
-		position: relative;
-	  ul {
-		  padding-left: 0;
-	  }
+	.multi-steps{
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+		> li{
+			counter-increment: stepNum;
+			text-align: center;
+			display: table-cell;
+			position: relative;
+			color: $brand-primary;
+			z-index: 5;
+	
+			&:before{
+				content: ' ';
+				display: block;
+				margin: 0 auto 4px;
+				background-color: $white;
+				width: 36px;
+				height: 36px;
+				line-height: 32px;
+				text-align: center;
+				font-weight: bold;
+				border:{
+					width: 2px;
+					style: solid;
+					color: $brand-primary;
+					radius: 50%;
+				}
+			}
+			&:after{
+				content: '';
+				height: 2px;
+				width: 100%;
+				background-color: $brand-primary;
+				position: absolute;
+				top: 16px;
+				left: 50%;
+				z-index: -1;
+			}
+			&:last-child{
+				&:after{
+					display: none;
+				}
+			}
+	
+			&.is-active{
+				@extend %remain-steps;
+				&:before{
+					background-color: $brand-primary;
+					border-color: $brand-primary;
+				}
+	
+				~ li{
+					color: #808080;
+					@extend %remain-steps;
+					&:before{
+						background-color: $grey-light;
+						border-color: $grey-light;
+					}
+				}
+			}
+		}
 	}
