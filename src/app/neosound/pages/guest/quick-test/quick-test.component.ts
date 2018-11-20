@@ -127,7 +127,7 @@ export class QuickTestComponent implements OnInit, OnDestroy {
 
   attach() {
     this.stopPlaying();
-    this.currentFileParams.name = this.filename.replace('.wav', '') + '.wav';
+    this.filename && (this.currentFileParams.name = this.filename.replace('.wav', '') + '.wav');
     this.upload(this.fileBlob);
     this.hideModal();
     this.attached = true;

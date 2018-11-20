@@ -13,6 +13,7 @@
               [customColors]="customColors"
               [legend]="true"
               [legendTitle]="''"
+              [labelFormatting]="labelFormatting"
               ></ngx-charts-pie-chart>
               <!-- [legend]="true"
               [legendTitle]="''"
@@ -58,10 +59,10 @@
           <h6>Are you agree with the result?</h6>
           <a class="btn btn-success mr-3" (click)="showThanks = true">Yes</a>
           <a class="btn btn-danger" (click)="showThanks = true">No</a>
-          <div class="alert alert-info" *ngIf="showThanks">Thank you for reply!</div>
+          <div class="alert alert-info mt-2" *ngIf="showThanks">Thank you for reply!</div>
         </div>
         <div class="result-links">
-          <div class="mt-5">See details <a routerLink="/guest/player-details">here</a></div>
+          <div *ngIf="!hideAdditionalInfo" class="mt-5">See details <a routerLink="/guest/player-details">here</a></div>
           <a class="mt-5 mb-5" routerLink="/guest/quicktest" (click)="discard()">Check another record</a>
         </div>
       </div>

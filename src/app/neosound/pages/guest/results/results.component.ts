@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { FilesService } from '../../../services/files.service';
 import { Router } from '@angular/router';
 
@@ -21,6 +21,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   tooltipDisabled = true;
   view = [undefined, undefined];
   @Output() refresh = new EventEmitter<boolean>();
+  @Input() hideAdditionalInfo = false;
   chartScheme = {
     domain: [
       '#4abce2', '#ffa823', '#e54128', '#b2d11e', '#7e0d81',
@@ -138,24 +139,30 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   setChartData() {
+    this.customColors[0].name = Math.round(this.analysisResult.Anger) + '% Anger';
+    this.customColors[1].name = Math.round(this.analysisResult.Neutral) + '% Neutral';
     this.chartData = [
       {
-        name: 'Anger', // Math.round(this.analysisResult.Anger) + '% Anger', //.toFixed(2),
+        name: Math.round(this.analysisResult.Anger) + '% Anger', //.toFixed(2),
         value: this.analysisResult.Anger, //.toFixed(2),
       },
       {
-        name: 'Sad', // Math.round(this.analysisResult.Sadness) + '% Sad', //.toFixed(2),
+        name: Math.round(this.analysisResult.Sadness) + '% Sad', //.toFixed(2),
         value: this.analysisResult.Sadness, //.toFixed(2),
       },
       {
-        name: 'Neutral', // Math.round(this.analysisResult.Neutral) + '% Neutral', //.toFixed(2),
+        name: Math.round(this.analysisResult.Neutral) + '% Neutral', //.toFixed(2),
         value: this.analysisResult.Neutral, //.toFixed(2),
       },
       {
-        name: 'Happy', // Math.round(this.analysisResult.Happy) + '% Happy', //.toFixed(2),
+        name: Math.round(this.analysisResult.Happy) + '% Happy', //.toFixed(2),
         value: this.analysisResult.Happy, //.toFixed(2),
       },
     ];
+  }
+  labelFormatting(data) {
+    console.log(data);
+    return data;
   }
 
   getEmotionImg() {

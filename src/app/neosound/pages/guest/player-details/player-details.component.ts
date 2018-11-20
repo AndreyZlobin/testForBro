@@ -56,8 +56,8 @@ export class PlayerDetailsComponent
         );
 
         this.filesService.setQuickFileParams({
-          'batchid': params.batchid,
-          'filename': params.filename,
+          'batchid': decodeURIComponent(params.batchid),
+          'filename': decodeURIComponent(params.filename),
         });
       }
     },
@@ -90,7 +90,12 @@ export class PlayerDetailsComponent
           }),
           TimelinePlugin.create({
             container: "#timelineContainer",
-            timeInterval: 0.1
+            timeInterval: 1,
+            formatTimeCallback: (v) => {
+              const date = new Date(null);
+              date.setSeconds(Math.round(v));
+              return date.toISOString().substr(11, 8);
+            }
           })
         ]
       });
@@ -104,6 +109,7 @@ export class PlayerDetailsComponent
         //     container: '#myWavesurferContainer',
         // });
         const self = this;
+        console.log(this.wavesurfer.getDuration());
         // const zoom: any = document.querySelector("#slider");
         // const self = this;
         // const zoom: any = document.querySelector('#slider');

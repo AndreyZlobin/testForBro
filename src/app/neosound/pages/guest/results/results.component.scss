@@ -156,7 +156,7 @@
 			position: relative;
 			color: $brand-primary;
 			z-index: 5;
-	
+
 			&:before{
 				content: ' ';
 				display: block;
@@ -189,14 +189,14 @@
 					display: none;
 				}
 			}
-	
+
 			&.is-active{
 				@extend %remain-steps;
 				&:before{
 					background-color: $brand-primary;
 					border-color: $brand-primary;
 				}
-	
+
 				~ li{
 					color: #808080;
 					@extend %remain-steps;

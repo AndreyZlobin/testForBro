@@ -17,8 +17,8 @@ export class FilesListComponent implements OnInit {
 
   ngOnInit() {
     this.filesService.listFiles({}).subscribe(res => {
-      if (res.files) this.isLoading = false;
-      if (res.count == 0) {
+      if (res && res.files) this.isLoading = false;
+      if (!res || res.count == 0) {
         this.isLoading = false;
         this.files = [];
         return;
@@ -36,7 +36,7 @@ export class FilesListComponent implements OnInit {
   }
 
   getEmotionValue(val) {
-    return val && val[Object.keys(val)[0]];
+    return val && val[Object.keys(val)[0]] && val[Object.keys(val)[0]] + '%';
   }
 
   // getFileResult(file) {
@@ -131,17 +131,22 @@ export class FilesListComponent implements OnInit {
     this.proccessing = true;
     this.filesService.processFile(params).subscribe(v => {
 
-      this.filesService.processFile(params, 3).subscribe(v => {});
-      this.filesService.processFile(params, 5).subscribe(v => {});
-      this.filesService.processFile(params, 7).subscribe(v => {});
-      this.proccessing = false;
+      this.filesService.processFile(params, 3).subscribe(v => {
+        this.filesService.processFile(params, 5).subscribe(v => {
+          this.filesService.processFile(params, 7).subscribe(v => {
+            this.proccessing = false;
+            this.refresh();
+          });
+        });
+      });
+
     },
     (e) => this.errorMessage = e.error.message,
     );
   }
 
   getEmotionImg(item) {
-    if (!item || !item.fourclasstop) return 'neutral';
+    if (!item || !item.fourclasstop) return '';
     const emK = Object.keys(item.fourclasstop);
     const img = emK && emK[0];
     return img ? img.toLowerCase() : 'neutral';
