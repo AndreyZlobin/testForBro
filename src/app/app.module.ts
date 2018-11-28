@@ -75,6 +75,7 @@ import { PieChartComponent } from './neosound/components/pie-chart/pie-chart.com
 import { ApiPageComponent } from './neosound/pages/user/api-page/api-page.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ChartModule } from 'angular2-chartjs';
+import { PageNotFoundComponent } from './neosound/pages/page-not-found/page-not-found.component';
 // import { ForbiddenPasswordDirective } from './neosound/directives/forbidden-password.directive';
 
 @NgModule({
@@ -102,6 +103,7 @@ import { ChartModule } from 'angular2-chartjs';
       PlayerDetailsComponent,
       PieChartComponent,
       ApiPageComponent,
+      PageNotFoundComponent,
       // ForbiddenPasswordDirective,
 
       //ngx-admin

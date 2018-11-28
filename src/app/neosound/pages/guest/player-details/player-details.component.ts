@@ -32,6 +32,7 @@ export class PlayerDetailsComponent
   emotionsGender;
   currentTab = 'anger';
   tabsDisabled = false;
+  isScroll = false;
 
   constructor(
     private filesService: FilesService,
@@ -94,7 +95,7 @@ export class PlayerDetailsComponent
             formatTimeCallback: (v) => {
               const date = new Date(null);
               date.setSeconds(Math.round(v));
-              return date.toISOString().substr(11, 8);
+              return date.toISOString().substr(14, 8);
             }
           })
         ]
@@ -118,6 +119,8 @@ export class PlayerDetailsComponent
         // };
 
         this.wavesurferReady = true;
+
+
         // this.emotions = [
         //   ["4.75", "5.5", "anger", "80.8"],
         //   ["100.75", "305.5", "anger", "55.8"],
@@ -291,5 +294,9 @@ export class PlayerDetailsComponent
         break;
     }
     this.setRegions();
+  }
+
+  toggleScroll() {
+    this.wavesurfer.toggleScroll();
   }
 }

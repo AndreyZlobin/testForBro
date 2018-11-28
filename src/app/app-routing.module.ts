@@ -36,6 +36,7 @@ import { AboutComponent } from './neosound/pages/about/about.component';
 import {PagesComponent} from './pages/pages.component';
 import { PlayerDetailsComponent } from './neosound/pages/guest/player-details/player-details.component';
 import { ApiPageComponent } from './neosound/pages/user/api-page/api-page.component';
+import { PageNotFoundComponent } from './neosound/pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
@@ -154,10 +155,15 @@ const routes: Routes = [
         path: 'reset-password',
         component: NbResetPasswordComponent,
       },
+      {
+        path: '404',
+        component: PageNotFoundComponent,
+      },
     ],
   },
   { path: '', redirectTo: 'guest/quicktest', pathMatch: 'full' },
   { path: '**', redirectTo: 'guest/quicktest' },
+  { path: '', component: PageNotFoundComponent, data: { error: 404 }, canActivate: [AuthGuard] },
 ];
 
 const config: ExtraOptions = {
