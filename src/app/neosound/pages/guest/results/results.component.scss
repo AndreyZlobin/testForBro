@@ -142,7 +142,7 @@
 			font-weight: 700;
 		}
 		&:after{
-			background-color: $grey-light;
+			background-color: $brand-primary;
 		}
 	}
 	.multi-steps{
@@ -201,8 +201,8 @@
 					color: #808080;
 					@extend %remain-steps;
 					&:before{
-						background-color: $grey-light;
-						border-color: $grey-light;
+						background-color: $white;
+						border-color: $brand-primary;
 					}
 				}
 			}
