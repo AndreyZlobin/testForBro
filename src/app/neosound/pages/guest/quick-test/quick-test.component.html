@@ -135,8 +135,8 @@
     </div>
     <div class="modal-body">
       <div class="text-right">
-        <button class="btn btn-link btn-secondary mr-3" (click)="discard()">Interrupt</button>
-        <button class="btn btn-primary" (click)="attach()">Proceed</button>
+        <button class="btn btn-link btn-secondary mr-3" (click)="interrupt(templateModal)">Interrupt</button>
+        <button class="btn btn-primary" (click)="process(templateModal)">Proceed</button>
       </div>
     </div>
 </ng-template>
@@ -149,7 +149,7 @@
   </div>
   <div class="modal-body">
     <div class="btn-group" role="group">
-      <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'upload'}" (click)="showModal(templateModal, 'upload', false)">Upload</button>
+      <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'upload'}" (click)="mediaRecorderService.isRecording ? showModal(confirmModal, 'confirmModal', true) : showModal(templateModal, 'upload', false)">Upload</button>
       <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'record'}" (click)="showModal(templateModal, 'record', false)">Record</button>
     </div>
     <div class="mt-3">

@@ -16,7 +16,7 @@ export interface AudioMedia {
 export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
   private mediaRecorder: any;
   private mediaStream: any;
-  private isRecording = false;
+  public isRecording = false;
   private isRecorded = false;
   private timerSub: Subscription;
   private audioChunks: any[] = [];

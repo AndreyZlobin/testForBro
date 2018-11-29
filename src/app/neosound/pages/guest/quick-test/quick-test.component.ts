@@ -25,7 +25,7 @@ const makeId = () => {
   styleUrls: ["./quick-test.component.scss"]
 })
 export class QuickTestComponent implements OnInit, OnDestroy {
-  batchid = '1';
+  batchid = "1";
   form: FormGroup;
   error = "";
   modalRef: BsModalRef;
@@ -38,8 +38,8 @@ export class QuickTestComponent implements OnInit, OnDestroy {
   private sub: Subscription;
   public files: UploadFile[] = [];
   currentFileParams;
-  successMessage = '';
-  errorMessage = '';
+  successMessage = "";
+  errorMessage = "";
   isPlaying = false;
   fileBlob;
   audio: any;
@@ -55,19 +55,19 @@ export class QuickTestComponent implements OnInit, OnDestroy {
     private router: Router,
     private modalService: BsModalService,
     private mediaRecorderService: MediaRecorderService,
-    private filesService: FilesService,
+    private filesService: FilesService
   ) {
     this.sub = this.mediaRecorderService.stop$.subscribe(record => {
       // this.upload(record);
       this.fileBlob = record;
-      const name = this.filename = `${this.getFormattedTime()}.wav`;
+      const name = (this.filename = `${this.getFormattedTime()}.wav`);
       const file = new File([record], name, {
-        type: `audio/wav`,
+        type: `audio/wav`
       });
       this.currentFileParams = {
         batchid: this.batchid,
         name,
-        file,
+        file
       };
     });
   }
@@ -80,8 +80,8 @@ export class QuickTestComponent implements OnInit, OnDestroy {
     const h = today.getHours();
     const mi = today.getMinutes();
     const s = today.getSeconds();
-    return y + '-' + m + '-' + d + '_' + h + ':' + mi + ':' + s;
-}
+    return y + "-" + m + "-" + d + "_" + h + ":" + mi + ":" + s;
+  }
 
   ngOnInit() {
     this.discard();
@@ -98,11 +98,11 @@ export class QuickTestComponent implements OnInit, OnDestroy {
     this.audio.src = URL.createObjectURL(this.fileBlob);
     this.audio.load();
     this.audio.play();
-    this.audio.addEventListener('pause', () => {
-        this.isPlaying = false;
+    this.audio.addEventListener("pause", () => {
+      this.isPlaying = false;
     });
-    this.audio.addEventListener('ended', () => {
-        this.isPlaying = false;
+    this.audio.addEventListener("ended", () => {
+      this.isPlaying = false;
     });
     this.isPlaying = true;
   }
@@ -127,7 +127,9 @@ export class QuickTestComponent implements OnInit, OnDestroy {
 
   attach() {
     this.stopPlaying();
-    this.filename && (this.currentFileParams.name = this.filename.replace('.wav', '') + '.wav');
+    this.filename &&
+      (this.currentFileParams.name =
+        this.filename.replace(".wav", "") + ".wav");
     this.upload(this.fileBlob);
     this.hideModal();
     this.attached = true;
@@ -136,43 +138,49 @@ export class QuickTestComponent implements OnInit, OnDestroy {
   upload(record) {
     const uploadFile = new FormData();
     const user = this.userService.getUserLocal();
-    const username = user && user.username || 'fronttrust';
+    const username = (user && user.username) || "fronttrust";
 
     // console.log(this.currentFileParams);
-    uploadFile.append('batchid', this.batchid);
-    uploadFile.append('username', username);
-    uploadFile.append('file', this.currentFileParams.file);
-    this.filesService.uploadFile(uploadFile).subscribe(res => {
-      this.uploaded = true;
-      this.successMessage =
-              'Successfully uploaded to the server: ' +
-              this.currentFileParams.name;
-      this.filesService.processFile(this.getFileParams()).subscribe(v => {
+    uploadFile.append("batchid", this.batchid);
+    uploadFile.append("username", username);
+    uploadFile.append("file", this.currentFileParams.file);
+    this.filesService.uploadFile(uploadFile).subscribe(
+      res => {
+        this.uploaded = true;
+        this.successMessage =
+          "Successfully uploaded to the server: " + this.currentFileParams.name;
+        this.filesService.processFile(this.getFileParams()).subscribe(
+          v => {
+            this.filesService
+              .processFile(this.getFileParams(), 3)
+              .subscribe(v => {});
+            this.filesService
+              .processFile(this.getFileParams(), 5)
+              .subscribe(v => {});
+            this.filesService
+              .processFile(this.getFileParams(), 7)
+              .subscribe(v => {});
 
-        this.filesService.processFile(this.getFileParams(), 3).subscribe(v => {});
-        this.filesService.processFile(this.getFileParams(), 5).subscribe(v => {});
-        this.filesService.processFile(this.getFileParams(), 7).subscribe(v => {});
+            this.proccessed = true;
+            const params = this.getFileParams();
+            this.filesService.setQuickFileParams(params);
 
-        this.proccessed = true;
-        const params = this.getFileParams();
-        this.filesService.setQuickFileParams(params);
-
-        // this.getInfo();
-        // this.intervalRef = setInterval(() => {
-        //   this.getInfo();
-        // }, 20000);
+            // this.getInfo();
+            // this.intervalRef = setInterval(() => {
+            //   this.getInfo();
+            // }, 20000);
+          },
+          e => (this.errorMessage = e.error.message)
+        );
       },
-      (e) => this.errorMessage = e.error.message,
-      );
-    },
-    (e) => this.errorMessage = e.error.message,
+      e => (this.errorMessage = e.error.message)
     );
   }
 
   getFileParams() {
     return {
-      'batchid': this.batchid,
-      'filename': this.currentFileParams.name,
+      batchid: this.batchid,
+      filename: this.currentFileParams.name
     };
   }
 
@@ -180,12 +188,12 @@ export class QuickTestComponent implements OnInit, OnDestroy {
     this.stopPlaying();
     const params = this.getFileParams();
     this.filesService.setQuickFileParams(params);
-    this.router.navigateByUrl('/guest/results');
+    this.router.navigateByUrl("/guest/results");
     return false;
   }
 
   showModal(ref, modalType, newModal = true) {
-    this.successMessage = '';
+    this.successMessage = "";
     this.modalType = modalType;
     if (newModal) {
       this.hideModal();
@@ -252,7 +260,7 @@ export class QuickTestComponent implements OnInit, OnDestroy {
           const params = {
             batchid: this.batchid,
             name: currentFile.name,
-            file: currentFile, // reader.result,
+            file: currentFile // reader.result,
           };
           // this.fileBlob = reader.result;
           this.currentFileParams = params;
@@ -274,8 +282,8 @@ export class QuickTestComponent implements OnInit, OnDestroy {
           // });
         };
         reader.onerror = error => {
-          console.log('Error: ', error);
-          this.successMessage = '';
+          console.log("Error: ", error);
+          this.successMessage = "";
         };
       });
     }
@@ -285,7 +293,7 @@ export class QuickTestComponent implements OnInit, OnDestroy {
     const params = {
       batchid: this.batchid,
       name: files.item(0).name,
-      file: files.item(0),
+      file: files.item(0)
     };
     this.currentFileParams = params;
     this.fileBlob = files.item(0);
@@ -303,8 +311,9 @@ export class QuickTestComponent implements OnInit, OnDestroy {
   getInfo() {
     this.count--;
     const params = this.getFileParams();
-    this.filesService.listFileResults(params).subscribe(res => {
-      // this.results = res;
+    this.filesService.listFileResults(params).subscribe(
+      res => {
+        // this.results = res;
         if (
           // res.result
           // && (
@@ -318,8 +327,8 @@ export class QuickTestComponent implements OnInit, OnDestroy {
           //   || res.results.mid
           //   || res.results.old
           //   || res.results.young)
-            this.count <= 0
-         ) {
+          this.count <= 0
+        ) {
           this.proccessed = true;
           clearInterval(this.intervalRef);
         }
@@ -333,11 +342,19 @@ export class QuickTestComponent implements OnInit, OnDestroy {
         //     this.emotions = jsonData.json.emosp;
         //   });
         // }
-    },
-    (e) => this.errorMessage = e.error.message,
+      },
+      e => (this.errorMessage = e.error.message)
     );
   }
-
+  process(uploadModal) {
+    this.modalRef.hide();
+    this.discard();
+    this.showModal(uploadModal, "upload", true);
+  }
+  interrupt(uploadModal) {
+    this.modalRef.hide();
+    this.showModal(uploadModal, "record", true);
+  }
   ngOnDestroy() {
     this.stopPlaying();
   }
