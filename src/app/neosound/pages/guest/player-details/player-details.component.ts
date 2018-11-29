@@ -33,6 +33,7 @@ export class PlayerDetailsComponent
   currentTab = 'anger';
   tabsDisabled = false;
   isScroll = false;
+  duration = 0;
 
   constructor(
     private filesService: FilesService,
@@ -53,8 +54,10 @@ export class PlayerDetailsComponent
           this.fileUrl = res.url;
           this.loadAudio();
         },
-        (e) => this.errorMessage = e.error.message,
-        );
+        (e) => {
+          this.errorMessage = e.error.message;
+          if (e.status === 502 || e.status === 404 || e.status === 429) {this.router.navigateByUrl('/404');}
+        });
 
         this.filesService.setQuickFileParams({
           'batchid': decodeURIComponent(params.batchid),
@@ -62,8 +65,10 @@ export class PlayerDetailsComponent
         });
       }
     },
-    (e) => this.errorMessage = e.error.message,
-    );
+    (e) => {
+      if (e.status === 502 || e.status === 404 || e.status === 429) {this.router.navigateByUrl('/404');}
+      this.errorMessage = e.error.message;
+    });
 
     if (!this.fileParams) {
       // this.router.navigateByUrl('/');
@@ -73,13 +78,22 @@ export class PlayerDetailsComponent
         this.fileUrl = res.url;
         this.loadAudio();
       },
-      (e) => this.errorMessage = e.error.message,
-      );
+      (e) => {
+        if (e.status === 502 || e.status === 404 || e.status === 429) {this.router.navigateByUrl('/404');}
+        this.errorMessage = e.error.message;
+      });
     }
   }
 
   ngAfterViewInit() {
-    requestAnimationFrame(() => {
+    const vid: any = document.getElementById("audio1");
+    vid.onloadeddata = () => {
+        this.duration = vid.duration;
+        this.initWaveSurfer();
+    };
+  }
+
+  initWaveSurfer() {
       this.wavesurfer = WaveSurfer.create({
         container: "#myWavesurferContainer",
         waveColor: "#3399CC",
@@ -91,11 +105,14 @@ export class PlayerDetailsComponent
           }),
           TimelinePlugin.create({
             container: "#timelineContainer",
-            timeInterval: 1,
+            timeInterval: this.timeInterval,
             formatTimeCallback: (v) => {
               const date = new Date(null);
               date.setSeconds(Math.round(v));
-              return date.toISOString().substr(14, 8);
+              if (Math.round(v) > 3600) {
+                return date.toISOString().substr(12, 8);
+              }
+              return date.toISOString().substr(14, 5);
             }
           })
         ]
@@ -110,7 +127,31 @@ export class PlayerDetailsComponent
         //     container: '#myWavesurferContainer',
         // });
         const self = this;
-        console.log(this.wavesurfer.getDuration());
+        console.log(this.wavesurfer.getDuration(), this.wavesurfer );
+
+        // if (this.duration !== this.wavesurfer.getDuration()) {
+        this.wavesurfer.toggleScroll();
+        //   this.wavesurfer.timeline.params.timeInterval = 10;
+        // }
+        // this.duration = this.wavesurfer.getDuration();
+
+        // this.wavesurfer.destroy();
+        // this.loadAudio();
+        // this.wavesurfer.timeline.removeOldCanvases();
+        // this.wavesurfer.timeline.drawTimeCanvases();
+
+        // this.wavesurfer.addPlugin(TimelinePlugin.create({
+        //   container: "#timelineContainer",
+        //   timeInterval: 1,
+        //   formatTimeCallback: (v) => {
+        //     const date = new Date(null);
+        //     date.setSeconds(Math.round(v));
+        //     if (Math.round(v) > 3600) {
+        //       return date.toISOString().substr(12, 8);
+        //     }
+        //     return date.toISOString().substr(14, 5);
+        //   },
+        // })).initPlugin('timeline');
         // const zoom: any = document.querySelector("#slider");
         // const self = this;
         // const zoom: any = document.querySelector('#slider');
@@ -127,7 +168,13 @@ export class PlayerDetailsComponent
         // ];
         this.setRegions();
       });
-    });
+  }
+
+  get timeInterval() {
+    if (this.duration === 0) {
+      return 1;
+    }
+    return this.duration / 30;
   }
 
   loadAudio() {

@@ -1,6 +1,8 @@
 <div>
   <button class="btn btn-secondary pull-right" routerLink="/user/files" style="float: right">Back</button>
   <h1>Details</h1>
+  <h3>{{fileParams.filename}}</h3>
+  <audio id="audio1" [attr.src]="fileUrl" style="visibility: hidden;" ></audio>
   <ul class="nav nav-tabs mt-3 mb-3">
     <li class="nav-item">
       <a class="nav-link" [ngClass]="{'active': currentTab === 'anger', 'disabled': tabsDisabled}" (click)="setTab('anger')">Anger</a>
@@ -28,7 +30,7 @@
   </div>
   <div class="mt-3 mb-3">
     <label>
-      <input type="checkbox" (click)="toggleScroll()" />
+      <input type="checkbox" checked (click)="toggleScroll()" />
       Fit into window
     </label>
   </div>

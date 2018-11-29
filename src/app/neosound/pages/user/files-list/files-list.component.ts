@@ -12,10 +12,20 @@ export class FilesListComponent implements OnInit {
   filesResult = [];
   isLoading = true;
   proccessing = false;
+  pagesArr = [1];
+  totalCount = 0;
 
   constructor(private filesService: FilesService) { }
 
   ngOnInit() {
+    this.getPage();
+  }
+
+  getPage(page = 0) {
+    const params = {
+      itemsn: 50,
+      pagen: page,
+    };
     this.filesService.listFiles({}).subscribe(res => {
       if (res && res.files) this.isLoading = false;
       if (!res || res.count == 0) {
@@ -23,6 +33,9 @@ export class FilesListComponent implements OnInit {
         this.files = [];
         return;
       }
+      // const a = new Array(Math.round(res.count / 50));
+      this.totalCount = res.count;
+      this.pagesArr = Array.from({length: Math.round(res.count / 50) }, (v, k) => k+1);
       this.files = res.files.sort((a, b) => {
         const x = +new Date(a.uploaddate);
         const y = +new Date(b.uploaddate);

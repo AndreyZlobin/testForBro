@@ -161,9 +161,14 @@ const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'guest/quicktest', pathMatch: 'full' },
-  { path: '**', redirectTo: 'guest/quicktest' },
-  { path: '', component: PageNotFoundComponent, data: { error: 404 }, canActivate: [AuthGuard] },
+  // { path: '**', redirectTo: 'guest/quicktest' },
+  {
+    path: '**',
+    component: MainComponent,
+    children: [
+      { path: '', component: PageNotFoundComponent, data: { error: 404 }, canActivate: [AuthGuard] },
+    ],
+  },
 ];
 
 const config: ExtraOptions = {

@@ -33,6 +33,14 @@
       </tr>
     </tbody>
   </table>
+  <ul class="pagination mt-2 mb-2">
+    <li class="page-item" *ngFor="let i of pagesArr">
+      <a class="page-link" (click)="getPage(i - 1)">{{i}}</a>
+    </li>
+  </ul>
+  <div class="mt-1 mb-2">
+    <h6>Selected files total count: {{totalCount}} </h6>
+  </div>
   <div *ngIf="!isLoading && !files.length">0 Files</div>
   <button class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
 </div>
