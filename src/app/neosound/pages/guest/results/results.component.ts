@@ -191,46 +191,51 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   getEmotionName() {
     let max = 0;
-    let name = '';
-    if (this.analysisResult.Anger > max) {
-      max = this.analysisResult.Anger;
-      name = 'Anger';
-    }
-    if (this.analysisResult.Happy > max) {
-      max = this.analysisResult.Happy;
-      name = 'Happy';
-    }
-    if (this.analysisResult.Neutral > max) {
-      max = this.analysisResult.Neutral;
-      name = 'Neutral';
-    }
-    if (this.analysisResult.Sadness > max) {
-      max = this.analysisResult.Sadness;
-      name = 'Sadness';
-    }
+    let name = this.analysisResult.top.fourclass
+      && Object.keys(this.analysisResult.top.fourclass)
+      && Object.keys(this.analysisResult.top.fourclass)[0];
+    // if (this.analysisResult.Anger > max) {
+    //   max = this.analysisResult.Anger;
+    //   name = 'Anger';
+    // }
+    // if (this.analysisResult.Happy > max) {
+    //   max = this.analysisResult.Happy;
+    //   name = 'Happy';
+    // }
+    // if (this.analysisResult.Neutral > max) {
+    //   max = this.analysisResult.Neutral;
+    //   name = 'Neutral';
+    // }
+    // if (this.analysisResult.Sadness > max) {
+    //   max = this.analysisResult.Sadness;
+    //   name = 'Sadness';
+    // }
     // const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
     return name ? name : 'Neutral';
   }
 
   getEmotionValue() {
-    let max = 0;
-    let name = '';
-    if (this.analysisResult.Anger > max) {
-      max = this.analysisResult.Anger;
-      name = 'Anger';
-    }
-    if (this.analysisResult.Happy > max) {
-      max = this.analysisResult.Happy;
-      name = 'Happy';
-    }
-    if (this.analysisResult.Neutral > max) {
-      max = this.analysisResult.Neutral;
-      name = 'Neutral';
-    }
-    if (this.analysisResult.Sadness > max) {
-      max = this.analysisResult.Sadness;
-      name = 'Sadness';
-    }
+    const name = this.analysisResult.top.fourclass
+      && Object.keys(this.analysisResult.top.fourclass)
+      && Object.keys(this.analysisResult.top.fourclass)[0];
+    const max = name ? this.analysisResult.top.fourclass[name] : 0;
+    // let name = '';
+    // if (this.analysisResult.Anger > max) {
+    //   max = this.analysisResult.Anger;
+    //   name = 'Anger';
+    // }
+    // if (this.analysisResult.Happy > max) {
+    //   max = this.analysisResult.Happy;
+    //   name = 'Happy';
+    // }
+    // if (this.analysisResult.Neutral > max) {
+    //   max = this.analysisResult.Neutral;
+    //   name = 'Neutral';
+    // }
+    // if (this.analysisResult.Sadness > max) {
+    //   max = this.analysisResult.Sadness;
+    //   name = 'Sadness';
+    // }
     // const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
     return max;
   }
