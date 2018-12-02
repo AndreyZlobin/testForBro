@@ -36,7 +36,7 @@
           <div>
             <input class="mt-1" type="range" disabled value="{{analysisResult[getEmotionName()]}}" />
           </div>
-          <!-- <div class="mt-5" *ngIf="this.analysisResult.male !== ''">
+          <div class="mt-5" *ngIf="this.analysisResult.male !== ''">
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'male'}">Male</button>
                 <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'female'}">Female</button>
@@ -48,7 +48,7 @@
                 <li [ngClass]="{'is-active': getAge('mid')}">Adult</li>
                 <li [ngClass]="{'is-active': getAge('old')}">Senior</li>
               </ul>
-          </div> -->
+          </div>
           <div class="mt-5" *ngIf="this.analysisResult.Anger !== ''">
             <img src="../../assets/images/emotions/{{getEmotionImg()}}.png" style="width: 100px;" />
           </div>
