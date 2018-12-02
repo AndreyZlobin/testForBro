@@ -76,6 +76,8 @@ export class PlayerDetailsComponent
     if (this.fileParams) {
       this.filesService.getFile(this.fileParams).subscribe(res => {
         this.fileUrl = res.url;
+        this.duration = res.duration;
+        this.initWaveSurfer();
         this.loadAudio();
       },
       (e) => {
@@ -86,11 +88,11 @@ export class PlayerDetailsComponent
   }
 
   ngAfterViewInit() {
-    const vid: any = document.getElementById("audio1");
-    vid.onloadeddata = () => {
-        this.duration = vid.duration;
-        this.initWaveSurfer();
-    };
+    // const vid: any = document.getElementById("audio1");
+    // vid.onloadeddata = () => {
+    //     this.duration = vid.duration;
+    //     this.initWaveSurfer();
+    // };
   }
 
   initWaveSurfer() {
