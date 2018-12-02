@@ -176,11 +176,14 @@ export class FilesListComponent implements OnInit {
   }
 
   getOpacityLevelAnger(val) {
+    if (!val) {
+      return '';
+    }
     let result;
-    if (val < 1) {
+    if (val.anger < 1) {
       result = 0;
     }
-    result = val / 2 / 100;
+    result = val.anger / 2 / 100;
     return 'rgba(255, 5, 5, ' + result + ')';
   }
 

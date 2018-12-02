@@ -31,10 +31,8 @@
         <td>{{ item.filename}}</td>
         <td>{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
         <td>{{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</td>
-        <td >
-          <div *ngIf="item.angertop && item.angertop.anger"
-            [ngStyle]="{'background': getOpacityLevelAnger(item.angertop.anger)}"
-            style="padding: 5px;">
+        <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
+          <div *ngIf="item.angertop && item.angertop.anger">
             {{item.angertop && item.angertop.anger}}%
           </div>
         </td>
