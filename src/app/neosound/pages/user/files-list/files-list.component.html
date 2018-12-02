@@ -5,12 +5,21 @@
     <thead>
       <tr>
           <th>Batch Id</th>
-          <th>Name</th>
-          <th>Uploaded</th>
-          <th>Emotion</th>
+          <th><a (click)="sortTable('name')">Name
+            <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'name'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+          </th>
+          <th><a (click)="sortTable('uploaded')">Uploaded
+            <i *ngIf="sortBy === 'uploaded' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'uploaded' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'uploaded'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+          </th>
+          <th><a (click)="sortTable('duration')">Duration
+            <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+          </th>
+          <th><a (click)="sortTable('emotion')">Emotion
+            <i *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+          </th>
           <th>Beta</th>
           <th></th>
-          <th>%</th>
+          <!-- <th>%</th> -->
           <th></th>
           <th></th>
           <th></th>
@@ -21,27 +30,34 @@
         <td>{{ item.batchid}}</td>
         <td>{{ item.filename}}</td>
         <td>{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
-        <td>{{item.angertop && item.angertop.anger}}</td>
+        <td>{{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</td>
+        <td >
+          <div *ngIf="item.angertop && item.angertop.anger"
+            [ngStyle]="{'background': getOpacityLevelAnger(item.angertop.anger)}"
+            style="padding: 5px;">
+            {{item.angertop && item.angertop.anger}}%
+          </div>
+        </td>
         <td>
             {{getEmotionName(item.fourclasstop)}}
         </td>
         <td><img *ngIf="getEmotionImg(item) !== ''" src="../../assets/images/emotions/{{getEmotionImg(item)}}.png" style="width: 30px;" /></td>
-        <td>{{getEmotionValue(item.fourclasstop)}}</td>
+        <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
         <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" [routerLink]="getLink(item)">File details</button></td>
         <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="proccessFile(item)">Refresh{{proccessing ? '...' : ''}}</button></td>
         <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="delete(item.batchid, item.filename)">Delete</button></td>
       </tr>
     </tbody>
   </table>
-  <ul class="pagination mt-2 mb-2">
+  <div *ngIf="!isLoading && !files.length" class="mb-4">0 Files</div>
+  <ul class="pagination mt-2 mb-2" *ngIf="!!files.length">
     <li class="page-item" *ngFor="let i of pagesArr">
       <a class="page-link" (click)="getPage(i - 1)">{{i}}</a>
     </li>
   </ul>
-  <div class="mt-1 mb-2">
+  <div class="mt-3 mb-2">
     <h6>Selected files total count: {{totalCount}} </h6>
   </div>
-  <div *ngIf="!isLoading && !files.length">0 Files</div>
   <button class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
 </div>
 

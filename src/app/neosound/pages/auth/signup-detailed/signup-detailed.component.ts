@@ -13,6 +13,7 @@ export class SignupDetailedComponent implements OnInit {
   form: FormGroup;
   error = '';
   message;
+  enabledSubmit = true;
 
   constructor(
     private userService: UsersService,
@@ -28,6 +29,7 @@ export class SignupDetailedComponent implements OnInit {
     // if (this.form.value.password !== this.form.value.passwordConfirm) {
     //   this.error = 'Passwords not match';
     // }
+    this.enabledSubmit = false;
     const params = {
       'username': this.form.value.username,
       'firstname': this.form.value.firstname,
@@ -41,9 +43,13 @@ export class SignupDetailedComponent implements OnInit {
       .subscribe(
         () => {
           this.userService.addMessage('Signed up successfully');
-          this.router.navigateByUrl('/')
+          this.router.navigateByUrl('/');
+          this.enabledSubmit = true;
         },
-        (e) => this.error = e.error.message,
+        (e) => {
+          this.error = e.error.message;
+          this.enabledSubmit = true;
+        }
       );
 
   }

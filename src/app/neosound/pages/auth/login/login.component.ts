@@ -32,8 +32,13 @@ export class LoginComponent {
       .loginUser(params)
       .subscribe(
         () => this.router.navigateByUrl('/user/files'),
-        (e) => this.message = e.error.message,
-      );
+        (e) => {
+          if (e.error.message) {
+            this.message = e.error.message;
+          } else {
+            this.message = 'Wrong credentials';
+          }
+        });
   }
 
 }

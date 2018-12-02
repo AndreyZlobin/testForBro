@@ -157,6 +157,7 @@
           {{successMessage}}
       </div>
       <div *ngIf="modalType === 'upload'">
+        <div class="alert alert-info">You can upload only one file a time</div>
         <div class="center">
           <div class="drop-zone-wrap">
             <file-drop *ngIf="!files.length" headertext="Drop file here or click to browse" (onFileDrop)="dropped($event)"
@@ -206,6 +207,7 @@
             </div>
             <a (click)="stop()" class="w-100 text-center" style="display:block;">
               <h4>Recording...</h4>
+              <div id="siri-container"></div>
               <svg class="button" expanded="true" height="300px" width="300px">
                 <rect x="70px" y="38px" height="160px" width="160px" rx="10" ry="10"></rect>
                 <rect class="pulse" x="50%" y="50%"></rect>

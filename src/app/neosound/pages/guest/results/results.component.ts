@@ -169,23 +169,44 @@ export class ResultsComponent implements OnInit, OnDestroy {
     if (!this.analysisResult) return;
     let max = 0;
     let img = '';
-    if (this.analysisResult.Anger > max) {
-      max = this.analysisResult.Anger;
-      img = 'angry';
-    }
-    if (this.analysisResult.Happy > max) {
-      max = this.analysisResult.Happy;
-      img = 'happy';
-    }
-    if (this.analysisResult.Neutral > max) {
-      max = this.analysisResult.Neutral;
-      img = 'neutral';
-    }
-    if (this.analysisResult.Sadness > max) {
-      max = this.analysisResult.Sadness;
-      img = 'sad';
-    }
+    let name = this.analysisResult.top.fourclass
+      && Object.keys(this.analysisResult.top.fourclass)
+      && Object.keys(this.analysisResult.top.fourclass)[0];
+    // if (this.analysisResult.Anger > max) {
+    //   max = this.analysisResult.Anger;
+    //   img = 'angry';
+    // }
+    // if (this.analysisResult.Happy > max) {
+    //   max = this.analysisResult.Happy;
+    //   img = 'happy';
+    // }
+    // if (this.analysisResult.Neutral > max) {
+    //   max = this.analysisResult.Neutral;
+    //   img = 'neutral';
+    // }
+    // if (this.analysisResult.Sadness > max) {
+    //   max = this.analysisResult.Sadness;
+    //   img = 'sad';
+    // }
     // const img = (('' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0]).toLowerCase());
+    switch (name) {
+      case 'Anger':
+        img = 'angry';
+        break;
+      case 'Happy':
+        img = 'happy';
+        break;
+      case 'Sadness':
+        img = 'sad';
+        break;
+      case 'Neutral':
+        img = 'neutral';
+        break;
+
+      default:
+        img = 'neutral';
+        break;
+    }
     return img ? img : 'neutral';
   }
 

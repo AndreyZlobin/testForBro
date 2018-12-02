@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { timer, Subscription } from "rxjs";
 import { UploadEvent, UploadFile } from "ngx-file-drop";
+// import { SiriWave } from 'siriwave';
 
 const makeId = () => {
   let text = "";
@@ -91,6 +92,13 @@ export class QuickTestComponent implements OnInit, OnDestroy {
   record() {
     this.mediaRecorderService.initialize();
     this.mediaRecorderService.start();
+
+    // const siriWave = new SiriWave({
+    //   container: document.getElementById('siri-container'),
+    //   width: 300,
+    //   height: 50,
+    //   style: 'ios9',
+    // });
   }
 
   play() {
