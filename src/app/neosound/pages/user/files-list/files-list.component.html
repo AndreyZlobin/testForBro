@@ -18,7 +18,7 @@
             <i *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
           </th>
           <th>Beta</th>
-          <th></th>
+          <!-- <th></th> -->
           <!-- <th>%</th> -->
           <th></th>
           <th></th>
@@ -38,8 +38,9 @@
         </td>
         <td style="background: #f7f7f7;">
             {{getEmotionName(item.fourclasstop)}}
+            <img *ngIf="getEmotionImg(item) !== ''" src="../../assets/images/emotions/{{getEmotionImg(item)}}.png" style="width: 30px;" />
         </td>
-        <td><img *ngIf="getEmotionImg(item) !== ''" src="../../assets/images/emotions/{{getEmotionImg(item)}}.png" style="width: 30px;" /></td>
+        <!-- <td></td> -->
         <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
         <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" [routerLink]="getLink(item)">File details</button></td>
         <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="proccessFile(item)">Refresh{{proccessing ? '...' : ''}}</button></td>
