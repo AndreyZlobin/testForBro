@@ -52,7 +52,7 @@ export class PlayerDetailsComponent
         };
         this.filesService.getFile(this.fileParams).subscribe(res => {
           this.fileUrl = res.url;
-          this.getInfo();
+          this.loadAudio();
         },
         (e) => {
           this.errorMessage = e.error.message;
@@ -76,6 +76,8 @@ export class PlayerDetailsComponent
     if (this.fileParams) {
       this.filesService.getFile(this.fileParams).subscribe(res => {
         this.fileUrl = res.url;
+        // this.duration = res.duration;
+        // this.initWaveSurfer();
         this.loadAudio();
       },
       (e) => {
@@ -199,7 +201,9 @@ export class PlayerDetailsComponent
   getInfo() {
     this.filesService.listFileResults(this.fileParams).subscribe(res => {
       this.results = res;
-      this.duration = res.duration;
+console.log(res);
+
+      this.duration = res.result.duration;
       this.initWaveSurfer();
       this.loadAudio();
       if (this.results.result || this.attempsCount < 0) {
