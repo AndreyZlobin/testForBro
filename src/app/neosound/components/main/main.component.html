@@ -78,7 +78,7 @@
       </nb-sidebar> -->
 
       <nb-layout-column class="main-content">
-				<div class="alert alert-info" style="background-color: #fffaf3;">We support only Chrome browser at the moment</div>
+					<div class="alert alert-info" *ngIf="!isChrome()" style="background-color: #fffaf3;">We support only Chrome browser at the moment</div>
 					<nb-card>
 						<!-- <nb-card-header>Horizontal form</nb-card-header> -->
 						<nb-card-body>
