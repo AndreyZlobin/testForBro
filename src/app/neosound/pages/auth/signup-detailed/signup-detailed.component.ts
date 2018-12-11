@@ -60,7 +60,7 @@ export class SignupDetailedComponent implements OnInit {
       firstname: new FormControl({ value: ''}, Validators.required),
       lastname: new FormControl({ value: ''}, Validators.required),
       email: new FormControl({ value: ''}, Validators.required),
-      apikey: new FormControl({ value: ''}),
+      apikey: new FormControl({ value: ''}, Validators.required),
       password: new FormControl({ value: ''}, [
         Validators.required,
         Validators.pattern(/^[a-zA-Z0-9.,]+$/),
