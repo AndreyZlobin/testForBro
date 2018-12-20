@@ -18,6 +18,9 @@
 	}
 	margin-bottom: 1rem;
 }
-.ngx-datepicker-container {
+.nb-theme-default nb-layout.window-mode .layout nb-layout-header nav {
 	z-index: 9999;
+}
+.ngx-datepicker-container {
+	z-index: 9;
 }

@@ -32,11 +32,11 @@ export class FilesListComponent implements OnInit {
     dayNamesFormat: 'dd',
     firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
     locale: frLocale,
-    minDate: new Date(Date.now()), // Minimal selectable date
-    maxDate: new Date(Date.now()),  // Maximal selectable date
+    // minDate: new Date(Date.now()), // Minimal selectable date
+    // maxDate: new Date(Date.now()),  // Maximal selectable date
     barTitleIfEmpty: 'Click to select a date',
     placeholder: 'Click to select a date', // HTML input placeholder attribute (default: '')
-    addClass: 'form-control', // Optional, value to pass on to [ngClass] on the input field
+    addClass: 'form-control form-control-lg', // Optional, value to pass on to [ngClass] on the input field
     addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
     fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
     useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
@@ -64,11 +64,12 @@ export class FilesListComponent implements OnInit {
       // const a = new Array(Math.round(res.count / 50));
       this.totalCount = res.count;
       this.pagesArr = Array.from({length: Math.ceil(res.totalcount / 100) }, (v, k) => k+1);
-      this.files = res.files.sort((a, b) => {
-        const x = +new Date(a.uploaddate);
-        const y = +new Date(b.uploaddate);
-        return y - x;
-      });
+      this.files = res.files;
+      // .sort((a, b) => {
+      //   const x = +new Date(a.uploaddate);
+      //   const y = +new Date(b.uploaddate);
+      //   return y - x;
+      // });
     });
   }
 
@@ -233,7 +234,7 @@ export class FilesListComponent implements OnInit {
         sortName = 'Name';
         break;
       case 'uploaded':
-        sortName = 'Datefrom';
+        sortName = 'Uploaded';
         break;
       case 'duration':
         sortName = 'Duration';
@@ -302,6 +303,10 @@ export class FilesListComponent implements OnInit {
   }
 
   resetFilter() {
+    this.datefrom = new Date();
+    this.dateto = new Date();
+    this.angerfrom = 0;
+    this.angerto = 0;
     this.filter = {
       'itemsn': '100',
       'pagen': '1',
@@ -337,8 +342,8 @@ export class FilesListComponent implements OnInit {
       ...this.filter,
       'datetimefrom': this.datefrom,
       'datetimeto': this.dateto,
-      'angervolfrom': this.angerfrom,
-      'angervolto': this.angerto,
+      'angervolfrom': '' + this.angerfrom,
+      'angervolto': '' + (this.angerfrom > this.angerto ? 100 : this.angerto),
     };
     this.getPage(0, this.filter);
   }
