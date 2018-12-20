@@ -252,51 +252,51 @@ export class FilesListComponent implements OnInit {
     };
     this.getPage(0, this.filter);
     return;
-    if (sortBy !== this.sortBy) {
-      this.sort = 'up';
-    } else {
-      this.sort = this.sort === 'up' ? 'down' : 'up';
-    }
-    this.sortBy = sortBy;
-    switch (sortBy) {
-      case 'name':
-        this.files = this.files.sort((a, b) => {
-          return this.sort === 'up' ? a.filename.localeCompare(b.filename) : b.filename.localeCompare(a.filename);
-        });
-        break;
-      case 'uploaded':
-        this.files = this.files.sort((a, b) => {
-          const x = +new Date(a.uploaddate);
-          const y = +new Date(b.uploaddate);
-          return this.sort === 'up' ? y - x : x - y;
-        });
-        break;
-      case 'duration':
-        this.files = this.files.sort((a, b) => {
-          return this.sort === 'up' ? a.duration - b.duration : b.duration - a.duration;
-        });
-        break;
-      case 'emotion':
-        this.files = this.files.sort((a, b) => {
-          let x;
-          let y;
-          if (!a.angertop || !a.angertop.anger) {
-            x = 0;
-          } else {
-            x = a.angertop.anger;
-          }
-          if (!b.angertop || !b.angertop.anger) {
-            y = 0;
-          } else {
-            y = b.angertop.anger;
-          }
-          return this.sort === 'up' ? y - x : x - y;
-        });
-        break;
+    // if (sortBy !== this.sortBy) {
+    //   this.sort = 'up';
+    // } else {
+    //   this.sort = this.sort === 'up' ? 'down' : 'up';
+    // }
+    // this.sortBy = sortBy;
+    // switch (sortBy) {
+    //   case 'name':
+    //     this.files = this.files.sort((a, b) => {
+    //       return this.sort === 'up' ? a.filename.localeCompare(b.filename) : b.filename.localeCompare(a.filename);
+    //     });
+    //     break;
+    //   case 'uploaded':
+    //     this.files = this.files.sort((a, b) => {
+    //       const x = +new Date(a.uploaddate);
+    //       const y = +new Date(b.uploaddate);
+    //       return this.sort === 'up' ? y - x : x - y;
+    //     });
+    //     break;
+    //   case 'duration':
+    //     this.files = this.files.sort((a, b) => {
+    //       return this.sort === 'up' ? a.duration - b.duration : b.duration - a.duration;
+    //     });
+    //     break;
+    //   case 'emotion':
+    //     this.files = this.files.sort((a, b) => {
+    //       let x;
+    //       let y;
+    //       if (!a.angertop || !a.angertop.anger) {
+    //         x = 0;
+    //       } else {
+    //         x = a.angertop.anger;
+    //       }
+    //       if (!b.angertop || !b.angertop.anger) {
+    //         y = 0;
+    //       } else {
+    //         y = b.angertop.anger;
+    //       }
+    //       return this.sort === 'up' ? y - x : x - y;
+    //     });
+    //     break;
 
-      default:
-        break;
-    }
+    //   default:
+    //     break;
+    // }
 
 
   }
