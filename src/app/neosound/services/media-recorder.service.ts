@@ -54,6 +54,8 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
     });
   }
   public reset() {
+    this.ticks = 0;
+    this.stop();
     this.isRecording = false;
     this.isRecorded = false;
   }

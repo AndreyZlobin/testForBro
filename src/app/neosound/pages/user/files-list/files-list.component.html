@@ -1,7 +1,37 @@
 <h1>Files</h1>
 <div class="alert alert-danger" *ngIf="errorMessage">Error: {{errorMessage}}</div>
 <div *ngIf="!isLoading; else loading" class="mt-5">
-  <table class="table">
+  <div class="row mb-3">
+    <div class="col">
+      <button class="btn btn-secondary ml-1 pull-right" (click)="exportCSV()">Export to CSV</button>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <div class="mb-2">Date from:</div>
+      <ng-datepicker [(ngModel)]="datefrom" [options]="datePickerOptions" class="form-control-bak form-control-lg-bak"></ng-datepicker>
+    </div>
+    <div class="col">
+      <div class="mb-2">Date to:</div>
+      <ng-datepicker [(ngModel)]="dateto" [options]="datePickerOptions" class="form-control-bak form-control-lg-bak"></ng-datepicker>
+    </div>
+    <div class="col">
+      <div class="mb-2">Anger from:</div>
+      <input [(ngModel)]="angerfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg-bak" placeholder="0">
+    </div>
+    <div class="col">
+      <div class="mb-2">Anger to:</div>
+      <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg-bak" placeholder="0">
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col">
+        <button class="btn btn-primary" (click)="filterIt()">Filter</button>
+        <button class="btn btn-secondary ml-3" (click)="resetFilter()">Reset Filter</button>
+    </div>
+  </div>
+  <table class="table mt-3">
     <thead>
       <tr>
           <th>Batch Id</th>

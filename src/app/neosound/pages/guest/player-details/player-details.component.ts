@@ -317,13 +317,15 @@ console.log(res);
   }
 
   gotoPosition(ms) {
-    console.log(ms, this.wavesurfer.getDuration());
+    // console.log(ms, this.wavesurfer.getDuration());
     // console.log(ms / this.wavesurfer.getDuration());
     this.wavesurfer.seekTo(ms / this.wavesurfer.getDuration());
   }
 
   ngOnDestroy() {
     this.subRoute.unsubscribe();
+    this.play();
+    this.wavesurfer.destroy();
   }
 
   setTab(tab) {

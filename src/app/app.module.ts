@@ -61,6 +61,8 @@ import {
   NbAlertModule,
   NbInputModule,
 } from '@nebular/theme';
+import { ToastrModule } from 'ngx-toastr';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 const formSetting: any = {
   redirectDelay: 0,
@@ -134,6 +136,8 @@ import { PageNotFoundComponent } from './neosound/pages/page-not-found/page-not-
     NgxChartsModule,
     // ChartModule,
     // PieChartModule,
+    ToastrModule.forRoot(),
+    NgDatepickerModule,
   ],
   bootstrap: [AppComponent],
   providers: [

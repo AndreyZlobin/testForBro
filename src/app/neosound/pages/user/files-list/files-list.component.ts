@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilesService } from '../../../services/files.service';
+import { DatepickerOptions } from 'ng2-datepicker';
+import { frLocale } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-files-list',
@@ -16,28 +18,52 @@ export class FilesListComponent implements OnInit {
   totalCount = 0;
   sortBy = 'uploaded';
   sort = 'up';
+  filter;
+  datefrom = new Date();
+  dateto = new Date();
+  angerfrom = 0;
+  angerto = 0;
+
+  datePickerOptions: DatepickerOptions = {
+    minYear: 1970,
+    maxYear: 2030,
+    displayFormat: 'MMM D[,] YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    dayNamesFormat: 'dd',
+    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+    locale: frLocale,
+    minDate: new Date(Date.now()), // Minimal selectable date
+    maxDate: new Date(Date.now()),  // Maximal selectable date
+    barTitleIfEmpty: 'Click to select a date',
+    placeholder: 'Click to select a date', // HTML input placeholder attribute (default: '')
+    addClass: 'form-control', // Optional, value to pass on to [ngClass] on the input field
+    addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+  };
 
   constructor(private filesService: FilesService) { }
 
   ngOnInit() {
-    this.getPage();
+    this.resetFilter();
   }
 
-  getPage(page = 0) {
-    const params = {
-      itemsn: 50,
-      pagen: page,
+  getPage(page = 0, parameters = this.filter) {
+    const params = this.filter = {
+      'itemsn': '100',
+      'pagen': '' + (page + 1),
+      ...parameters,
     };
-    this.filesService.listFiles({}).subscribe(res => {
+    this.filesService.listFilesPage(params).subscribe(res => {
       if (res && res.files) this.isLoading = false;
-      if (!res || res.count == 0) {
+      if (!res || res.totalcount == 0) {
         this.isLoading = false;
         this.files = [];
         return;
       }
       // const a = new Array(Math.round(res.count / 50));
       this.totalCount = res.count;
-      this.pagesArr = Array.from({length: Math.ceil(res.count / 50) }, (v, k) => k+1);
+      this.pagesArr = Array.from({length: Math.ceil(res.totalcount / 100) }, (v, k) => k+1);
       this.files = res.files.sort((a, b) => {
         const x = +new Date(a.uploaddate);
         const y = +new Date(b.uploaddate);
@@ -201,6 +227,37 @@ export class FilesListComponent implements OnInit {
     }
     this.sortBy = sortBy;
 
+    let sortName = '';
+    switch (sortBy) {
+      case 'name':
+        sortName = 'Name';
+        break;
+      case 'uploaded':
+        sortName = 'Datefrom';
+        break;
+      case 'duration':
+        sortName = 'Duration';
+        break;
+      case 'emotion':
+        sortName = 'Emotion';
+        break;
+
+      default:
+        break;
+    }
+    this.filter = {
+      ...this.filter,
+      'sortby': sortName,
+      'sortorder': this.sort === 'up' ? 'desc' : 'asc',
+    };
+    this.getPage(0, this.filter);
+    return;
+    if (sortBy !== this.sortBy) {
+      this.sort = 'up';
+    } else {
+      this.sort = this.sort === 'up' ? 'down' : 'up';
+    }
+    this.sortBy = sortBy;
     switch (sortBy) {
       case 'name':
         this.files = this.files.sort((a, b) => {
@@ -242,6 +299,48 @@ export class FilesListComponent implements OnInit {
     }
 
 
+  }
+
+  resetFilter() {
+    this.filter = {
+      'itemsn': '100',
+      'pagen': '1',
+      'batchid': '1',
+      // 'datetimefrom': '',
+      // 'datetimeto': '',
+      // 'angervolfrom': '',
+      // 'angervolto': '',
+      // 'sortby': '',
+      // 'sortorder': 'asc',
+      // 'export': '',
+    };
+    this.getPage(0, this.filter);
+  }
+
+  exportCSV() {
+    const params = {
+      ...this.filter,
+      export: 'csv',
+    };
+    this.filesService.listFilesPage(params).subscribe(data => this.downloadFile(data)),
+      error => console.log('Error downloading the file.'),
+      () => console.info('OK');
+  }
+  downloadFile(data: Response) {
+    const blob = new Blob([data], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
+  }
+
+  filterIt() {
+    this.filter = {
+      ...this.filter,
+      'datetimefrom': this.datefrom,
+      'datetimeto': this.dateto,
+      'angervolfrom': this.angerfrom,
+      'angervolto': this.angerto,
+    };
+    this.getPage(0, this.filter);
   }
 
 }

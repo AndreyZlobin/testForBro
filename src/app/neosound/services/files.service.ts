@@ -46,6 +46,13 @@ export class FilesService {
     );
   }
 
+  listFilesPage(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/listFilesPage`,
+      params
+    );
+  }
+
   processFile(params, mlid = 9): Observable<any> {
     params = params || {
       'batchid': '1234',

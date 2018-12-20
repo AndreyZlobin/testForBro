@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 
 import { UsersService } from '../services/users.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class RequestsHttpInterceptor implements HttpInterceptor {
@@ -20,6 +21,7 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
     private usersService: UsersService,
+    private toastrService: ToastrService,
   ) {
   }
 
@@ -48,6 +50,11 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
             // or show a modal
             this.router.navigateByUrl('/auth/login');
           }
+          let msg = err.error.message ? err.error.message : 'Server Error';
+          msg = err.message ? err.message : msg;
+          this.toastrService.error(msg, 'Error', {
+            timeOut: 3000,
+          });
         }
       });
   }
