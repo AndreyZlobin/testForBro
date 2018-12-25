@@ -79,4 +79,17 @@ export class HeaderComponent implements OnInit {
     return data && user && user.username;
   }
 
+  getLanguage(ln) {
+    const lang = localStorage.getItem('lang');
+    return lang && (lang === ln) || !lang && ln === 'en';
+  }
+
+  english() {
+    localStorage.setItem('lang', 'en');
+  }
+
+  spanish() {
+    localStorage.setItem('lang', 'sp');
+  }
+
 }

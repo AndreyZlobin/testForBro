@@ -4,3 +4,6 @@ td {
 .ngx-datepicker-container {
 	z-index: 9999;
 }
+.form-control:disabled {
+	background-color: #e9ecef!important;
+}

@@ -23,6 +23,14 @@ export class FilesListComponent implements OnInit {
   dateto = new Date();
   angerfrom = 0;
   angerto = 0;
+  page = 0;
+  batchid = 1;
+  batchidAll = false;
+  datefromAll = false;
+  datetoAll = false;
+  angerfromAll = false;
+  angertoAll = false;
+  filename = '';
 
   datePickerOptions: DatepickerOptions = {
     minYear: 1970,
@@ -54,6 +62,7 @@ export class FilesListComponent implements OnInit {
       'pagen': '' + (page + 1),
       ...parameters,
     };
+    this.page = page;
     this.filesService.listFilesPage(params).subscribe(res => {
       if (res && res.files) this.isLoading = false;
       if (!res || res.totalcount == 0) {
@@ -142,23 +151,24 @@ export class FilesListComponent implements OnInit {
   // }
 
   refresh() {
-    this.filesService.listFiles({}).subscribe(res => {
-      if (!res) {
-        this.files = [];
-        this.totalCount = 0;
-        this.pagesArr = [1];
-        return;
-      }
-      this.totalCount = res.count;
-      this.pagesArr = Array.from({length: Math.ceil(res.count / 50) }, (v, k) => k+1);
-      this.files = res.files.sort((a, b) => {
-        const x = +new Date(a.uploaddate);
-        const y = +new Date(b.uploaddate);
-        return y - x;
-      });
-    },
-    (e) => this.errorMessage = e.error.message,
-    );
+    this.getPage(this.page);
+    // this.filesService.listFiles({}).subscribe(res => {
+    //   if (!res) {
+    //     this.files = [];
+    //     this.totalCount = 0;
+    //     this.pagesArr = [1];
+    //     return;
+    //   }
+    //   this.totalCount = res.count;
+    //   this.pagesArr = Array.from({length: Math.ceil(res.count / 50) }, (v, k) => k+1);
+    //   this.files = res.files.sort((a, b) => {
+    //     const x = +new Date(a.uploaddate);
+    //     const y = +new Date(b.uploaddate);
+    //     return y - x;
+    //   });
+    // },
+    // (e) => this.errorMessage = e.error.message,
+    // );
   }
 
   delete(batchid, filename) {
@@ -307,10 +317,18 @@ export class FilesListComponent implements OnInit {
     this.dateto = new Date();
     this.angerfrom = 0;
     this.angerto = 0;
+    this.page = 0;
+    this.batchid = 1;
+    this.batchidAll = false;
+    this.datefromAll = false;
+    this.datetoAll = false;
+    this.angerfromAll = false;
+    this.angertoAll = false;
+    this.filename = '';
     this.filter = {
       'itemsn': '100',
       'pagen': '1',
-      'batchid': '1',
+      // 'batchid': '1',
       // 'datetimefrom': '',
       // 'datetimeto': '',
       // 'angervolfrom': '',
@@ -327,7 +345,10 @@ export class FilesListComponent implements OnInit {
       ...this.filter,
       export: 'csv',
     };
-    this.filesService.listFilesPage(params).subscribe(data => this.downloadFile(data)),
+    this.filesService.listFilesPage(params).subscribe(data =>
+      // this.downloadFile(data)
+      (window.location.href = data.url)
+      ),
       error => console.log('Error downloading the file.'),
       () => console.info('OK');
   }
@@ -340,11 +361,14 @@ export class FilesListComponent implements OnInit {
   filterIt() {
     this.filter = {
       ...this.filter,
-      'datetimefrom': this.datefrom,
-      'datetimeto': this.dateto,
-      'angervolfrom': '' + this.angerfrom,
-      'angervolto': '' + (this.angerfrom > this.angerto ? 100 : this.angerto),
+      'datetimefrom': !this.datefromAll ? this.datefrom : '',
+      'datetimeto': !this.datetoAll ? this.dateto : '',
+      'angervolfrom': !this.angerfromAll ? '' + this.angerfrom : '',
+      'angervolto': !this.angertoAll ? '' + (this.angerfrom > this.angerto ? 100 : this.angerto) : '',
+      'batchid': !this.batchidAll ? '' + this.batchid : '',
+      'filename': this.filename,
     };
+    Object.keys(this.filter).forEach((key) => (this.filter[key] === '') && delete this.filter[key]);
     this.getPage(0, this.filter);
   }
 

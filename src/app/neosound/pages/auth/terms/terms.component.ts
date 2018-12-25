@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-terms',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TermsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private lang: LanguageService,
+  ) { }
 
   ngOnInit() {
   }
 
+  isEnglish() {
+    return this.lang.checkLanguage('en');
+  }
 }
