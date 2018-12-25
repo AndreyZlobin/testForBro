@@ -29,6 +29,7 @@ export class PlayerDetailsComponent
   emotionsAnger;
   emotionsAge;
   emotionsFourclass;
+  emotionsSounds;
   emotionsGender;
   currentTab = 'anger';
   tabsDisabled = false;
@@ -235,7 +236,7 @@ console.log(res);
           (e) => this.errorMessage = e.error.message,
           );
 
-        this.filesService
+          this.filesService
           .getFileResultJson({
             uri: this.results.result.uris.fourclass,
           })
@@ -245,6 +246,17 @@ console.log(res);
           },
           (e) => this.errorMessage = e.error.message,
           );
+
+          this.filesService
+            .getFileResultJson({
+              uri: this.results.result.uris.sounds,
+            })
+            .subscribe(jsonData => {
+              this.emotionsSounds = jsonData.data.ints;
+              this.setRegions();
+            },
+            (e) => this.errorMessage = e.error.message,
+            );
 
         this.filesService
         .getFileResultJson({
@@ -344,6 +356,9 @@ console.log(res);
         break;
       case 'beta':
         this.emotions = this.emotionsFourclass;
+        break;
+      case 'sounds':
+        this.emotions = this.emotionsSounds;
         break;
 
       default:

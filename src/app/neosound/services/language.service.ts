@@ -31,8 +31,8 @@ export class LanguageService {
       switch (text) {
         case 'Sign in': return 'Conéctese';
         case 'Username': return 'Nombre de usuario';
-        // case '': return '';
-        // case '': return '';
+        case 'Password': return 'Contraseña';
+        case 'Remember me': return 'Recuérdeme';
         // case '': return '';
         // case '': return '';
         // case '': return '';

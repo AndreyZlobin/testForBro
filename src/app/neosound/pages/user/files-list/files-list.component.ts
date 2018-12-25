@@ -25,11 +25,11 @@ export class FilesListComponent implements OnInit {
   angerto = 0;
   page = 0;
   batchid = 1;
-  batchidAll = false;
-  datefromAll = false;
-  datetoAll = false;
-  angerfromAll = false;
-  angertoAll = false;
+  batchidAll = true;
+  datefromAll = true;
+  datetoAll = true;
+  angerfromAll = true;
+  angertoAll = true;
   filename = '';
 
   datePickerOptions: DatepickerOptions = {
@@ -319,11 +319,11 @@ export class FilesListComponent implements OnInit {
     this.angerto = 0;
     this.page = 0;
     this.batchid = 1;
-    this.batchidAll = false;
-    this.datefromAll = false;
-    this.datetoAll = false;
-    this.angerfromAll = false;
-    this.angertoAll = false;
+    this.batchidAll = true;
+    this.datefromAll = true;
+    this.datetoAll = true;
+    this.angerfromAll = true;
+    this.angertoAll = true;
     this.filename = '';
     this.filter = {
       'itemsn': '100',
