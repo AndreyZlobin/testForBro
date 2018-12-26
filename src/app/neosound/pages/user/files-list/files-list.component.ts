@@ -58,20 +58,20 @@ export class FilesListComponent implements OnInit {
 
   getPage(page = 0, parameters = this.filter) {
     const params = this.filter = {
+      ...parameters,
       'itemsn': '100',
       'pagen': '' + (page + 1),
-      ...parameters,
     };
     this.page = page;
     this.filesService.listFilesPage(params).subscribe(res => {
       if (res && res.files) this.isLoading = false;
-      if (!res || res.totalcount == 0) {
+      if (!res || res.totalcount === 0) {
         this.isLoading = false;
         this.files = [];
         return;
       }
       // const a = new Array(Math.round(res.count / 50));
-      this.totalCount = res.count;
+      this.totalCount = res.totalcount;
       this.pagesArr = Array.from({length: Math.ceil(res.totalcount / 100) }, (v, k) => k+1);
       this.files = res.files;
       // .sort((a, b) => {
