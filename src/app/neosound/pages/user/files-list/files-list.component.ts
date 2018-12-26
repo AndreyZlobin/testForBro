@@ -22,7 +22,9 @@ export class FilesListComponent implements OnInit {
   datefrom = new Date();
   dateto = new Date();
   angerfrom = 0;
-  angerto = 0;
+  angerto = 100;
+  pausefrom = 0;
+  pauseto = 10000;
   page = 0;
   batchid = 1;
   batchidAll = true;
@@ -30,6 +32,8 @@ export class FilesListComponent implements OnInit {
   datetoAll = true;
   angerfromAll = true;
   angertoAll = true;
+  pausefromAll = true;
+  pausetoAll = true;
   filename = '';
 
   datePickerOptions: DatepickerOptions = {
@@ -45,7 +49,7 @@ export class FilesListComponent implements OnInit {
     barTitleIfEmpty: 'Click to select a date',
     placeholder: 'Click to select a date', // HTML input placeholder attribute (default: '')
     addClass: 'form-control form-control-lg', // Optional, value to pass on to [ngClass] on the input field
-    addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
+    addStyle: {'width': '100%'}, // Optional, value to pass to [ngStyle] on the input field
     fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
     useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
   };
@@ -252,6 +256,9 @@ export class FilesListComponent implements OnInit {
       case 'emotion':
         sortName = 'Emotion';
         break;
+      case 'avgpause':
+        sortName = 'AvgPause';
+        break;
 
       default:
         break;
@@ -316,7 +323,9 @@ export class FilesListComponent implements OnInit {
     this.datefrom = new Date();
     this.dateto = new Date();
     this.angerfrom = 0;
-    this.angerto = 0;
+    this.angerto = 100;
+    this.pausefrom = 0;
+    this.pauseto = 10000;
     this.page = 0;
     this.batchid = 1;
     this.batchidAll = true;
@@ -324,6 +333,8 @@ export class FilesListComponent implements OnInit {
     this.datetoAll = true;
     this.angerfromAll = true;
     this.angertoAll = true;
+    this.pausefromAll = true;
+    this.pausetoAll = true;
     this.filename = '';
     this.filter = {
       'itemsn': '100',
@@ -365,6 +376,8 @@ export class FilesListComponent implements OnInit {
       'datetimeto': !this.datetoAll ? this.dateto : '',
       'angervolfrom': !this.angerfromAll ? '' + this.angerfrom : '',
       'angervolto': !this.angertoAll ? '' + (this.angerfrom > this.angerto ? 100 : this.angerto) : '',
+      'pausefrom': !this.pausefromAll ? '' + this.pausefrom : '',
+      'pauseto': !this.pausetoAll ? '' + (this.pausefrom > this.pauseto ? 10000 : this.pauseto) : '',
       'batchid': !this.batchidAll ? '' + this.batchid : '',
       'filename': this.filename,
     };

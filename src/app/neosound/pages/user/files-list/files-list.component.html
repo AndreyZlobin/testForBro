@@ -1,7 +1,23 @@
-<h1>Files</h1>
+<!--<h1>Files</h1>-->
+
+<div class="row mb-1">
+  <div class="col">
+    <h1>Files</h1>
+  </div>
+  <div class="col">
+    <div class="row mb-1">
+      <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div>
+      <div class="col text-left pl-0">
+        <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="Filename" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;display: inline;"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="alert alert-danger" *ngIf="errorMessage">Error: {{errorMessage}}</div>
 <div *ngIf="!isLoading; else loading" class="">
-  <div class="row mb-3">
+  <!--<div class="row mb-3">
     <div class="col-12">
         <div class="row mb-2">
           <div class="col-1 pr-0" style="line-height: 31px;">Filename:</div>
@@ -10,7 +26,7 @@
           </div>
         </div>
     </div>
-  </div>
+  </div>-->
   <div class="row mb-3">
     <div class="col">
       <div class="mb-2">Batch id:</div>
@@ -24,7 +40,7 @@
     </div>
     <div class="col">
       <div class="mb-2">Date from:</div>
-      <ng-datepicker [(ngModel)]="datefrom" [options]="datePickerOptions" class="form-control-bak form-control-lg-bak"></ng-datepicker>
+      <ng-datepicker [(ngModel)]="datefrom" [options]="datePickerOptions" class="form-control-bak form-control-lg-bak" style="width: 100%; padding-right: 0px"></ng-datepicker>
       <div class="mt-1">
         <label>
             <input [(ngModel)]="datefromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
@@ -33,8 +49,8 @@
       </div>
     </div>
     <div class="col">
-      <div class="mb-2">Date to:</div>
-      <ng-datepicker [(ngModel)]="dateto" [options]="datePickerOptions" class="form-control-bak form-control-lg-bak"></ng-datepicker>
+      <div class="mb-2">to:</div>
+      <ng-datepicker [(ngModel)]="dateto" [options]="datePickerOptions" class="form-control-bak form-control-lg-bak" style="width: 100%"></ng-datepicker>
       <div class="mt-1">
         <label>
             <input [(ngModel)]="datetoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
@@ -42,9 +58,9 @@
         </label>
       </div>
     </div>
-    <div class="col">
+    <div class="col" style="padding-right: 0px">
       <div class="mb-2">Anger from:</div>
-      <input [(ngModel)]="angerfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; width: 80px;" placeholder="0" [disabled]="angerfromAll">
+      <input [(ngModel)]="angerfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="0" [disabled]="angerfromAll">
       <div class="mt-1">
         <label>
             <input [(ngModel)]="angerfromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
@@ -53,12 +69,32 @@
       </div>
     </div>
     <div class="col">
-      <div class="mb-2">Anger to:</div>
-      <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; width: 80px;" placeholder="100" [disabled]="angertoAll">
+      <div class="mb-2">to:</div>
+      <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; " placeholder="100" [disabled]="angertoAll">
       <div class="mt-1">
         <label>
             <input [(ngModel)]="angertoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
             All
+        </label>
+      </div>
+    </div>
+    <div class="col" style="padding-right: 0px">
+      <div class="mb-2">Avg.Pause from:</div>
+      <input [(ngModel)]="pausefrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="0" [disabled]="pausefromAll">
+      <div class="mt-1">
+        <label>
+          <input [(ngModel)]="pausefromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
+          All
+        </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-2">to:</div>
+      <input [(ngModel)]="pauseto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="100" [disabled]="pausetoAll">
+      <div class="mt-1">
+        <label>
+          <input [(ngModel)]="pausetoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
+          All
         </label>
       </div>
     </div>
@@ -91,10 +127,12 @@
           <th><a (click)="sortTable('emotion')">Emotion
             <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
           </th>
+          <th><a (click)="sortTable('avgpause')">Avg.Pause
+            <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+          </th>
           <!-- <th>Beta</th> -->
           <!-- <th></th> -->
           <!-- <th>%</th> -->
-          <th>Pauses</th>
           <th></th>
           <th></th>
           <th></th>
