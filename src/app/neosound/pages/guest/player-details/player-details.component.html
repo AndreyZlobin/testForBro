@@ -17,7 +17,7 @@
       <a class="nav-link" [ngClass]="{'active': currentTab === 'beta', 'disabled': tabsDisabled}" (click)="setTab('beta')">Beta</a>
     </li> -->
     <li class="nav-item">
-      <a class="nav-link" [ngClass]="{'active': currentTab === 'sounds', 'disabled': tabsDisabled}" (click)="setTab('sounds')">Sounds</a>
+      <a class="nav-link" [ngClass]="{'active': currentTab === 'sounds', 'disabled': tabsDisabled}" (click)="setTab('sounds')">Music</a>
     </li>
     <!-- <li class="nav-item">
       <a class="nav-link" [ngClass]="{'active': currentTab === 'results', 'disabled': tabsDisabled}" (click)="setTab('results')" >Summary (beta)</a>
@@ -65,10 +65,10 @@
       <div style="background: green;" class="circle-i ml-3"></div> - Happiness
       <div style="background: blue;" class="circle-i ml-3"></div> - Sadness
   </div>
-  <div *ngIf="currentTab === 'sounds'" class="mt-3 mb-3">
-      <!--<div style="background: red;" class="circle-i"></div> - emotions-->
-      <div style="background: green;" class="circle-i ml-3"></div> - music
-  </div>
+  <!--<div *ngIf="currentTab === 'sounds'" class="mt-3 mb-3">-->
+      <!--&lt;!&ndash;<div style="background: red;" class="circle-i"></div> - emotions&ndash;&gt;-->
+      <!--&lt;!&ndash;<div style="background: green;" class="circle-i ml-3"></div> - music&ndash;&gt;-->
+  <!--</div>-->
   <div *ngIf="currentTab === 'results'" class="mt-3 mb-3">
     <app-results (refresh)="void" [hideAdditionalInfo]="true"></app-results>
   </div>
