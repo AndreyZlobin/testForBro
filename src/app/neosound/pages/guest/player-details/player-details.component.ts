@@ -213,19 +213,21 @@ console.log(res);
       if (this.results.result) {
         this.analysisResult = this.results.result;
 
-        this.filesService
-          .getFileResultJson({
-            uri: this.results.result.uris.anger,
-          })
-          .subscribe(jsonData => {
-            this.emotionsAnger = jsonData.data.ints;
-            this.emotions = this.emotionsAnger;
-            this.setRegions();
-          },
-          (e) => this.errorMessage = e.error.message,
-          );
-
-        this.filesService
+        if (this.results.result.uris.anger) {
+          this.filesService
+            .getFileResultJson({
+              uri: this.results.result.uris.anger,
+            })
+            .subscribe(jsonData => {
+                this.emotionsAnger = jsonData.data.ints;
+                this.emotionsSounds = jsonData.data.music;
+                this.emotions = this.emotionsAnger;
+                this.setRegions();
+              },
+              (e) => this.errorMessage = e.error.message,
+            );
+        }
+        /*this.filesService
           .getFileResultJson({
             uri: this.results.result.uris.age,
           })
@@ -234,9 +236,9 @@ console.log(res);
             this.setRegions();
           },
           (e) => this.errorMessage = e.error.message,
-          );
+          );*/
 
-          this.filesService
+          /*this.filesService
           .getFileResultJson({
             uri: this.results.result.uris.fourclass,
           })
@@ -245,9 +247,9 @@ console.log(res);
             this.setRegions();
           },
           (e) => this.errorMessage = e.error.message,
-          );
+          );*/
 
-          this.filesService
+          /*this.filesService
             .getFileResultJson({
               uri: this.results.result.uris.sounds,
             })
@@ -256,9 +258,9 @@ console.log(res);
               this.setRegions();
             },
             (e) => this.errorMessage = e.error.message,
-            );
+            );*/
 
-        this.filesService
+        /*this.filesService
         .getFileResultJson({
           uri: this.results.result.uris.gender,
         })
@@ -267,7 +269,7 @@ console.log(res);
           this.setRegions();
         },
         (e) => this.errorMessage = e.error.message,
-        );
+        );*/
       }
     },
     (e) => this.errorMessage = e.error.message,
@@ -322,6 +324,8 @@ console.log(res);
         if (type === 'Happy') return  'rgba(' + (255 - (val - 50) * 5) + ', 255, ' + (255 - (val - 50) * 5) + ', 0.7)';
         if (type === 'Sadness') return 'rgba(' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 255, 0.7)';
         break;
+      case 'sounds':
+        return 'rgba(0,255,0, 0.7)';
       default:
         break;
     }
