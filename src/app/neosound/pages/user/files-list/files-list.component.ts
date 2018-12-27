@@ -26,7 +26,7 @@ export class FilesListComponent implements OnInit {
   pausefrom; //  = 0;
   pauseto; //  = 10000;
   page; //  = 0;
-  batchid = 1;
+  batchid; // = 1;
   batchidAll = true;
   datefromAll = true;
   datetoAll = true;
@@ -346,7 +346,7 @@ export class FilesListComponent implements OnInit {
     this.pausefrom = null;
     this.pauseto = null;
     this.page = null;
-    this.batchid = 1;
+    this.batchid = null;
     this.batchidAll = true;
     this.datefromAll = true;
     this.datetoAll = true;
