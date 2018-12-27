@@ -19,13 +19,13 @@ export class FilesListComponent implements OnInit {
   sortBy = 'uploaded';
   sort = 'up';
   filter;
-  datefrom = new Date();
-  dateto = new Date();
-  angerfrom = 0;
-  angerto = 100;
-  pausefrom = 0;
-  pauseto = 10000;
-  page = 0;
+  datefrom; // = new Date();
+  dateto; //  = new Date();
+  angerfrom ; // = 0;
+  angerto; //  = 100;
+  pausefrom; //  = 0;
+  pauseto; //  = 10000;
+  page; //  = 0;
   batchid = 1;
   batchidAll = true;
   datefromAll = true;
@@ -57,7 +57,8 @@ export class FilesListComponent implements OnInit {
   constructor(private filesService: FilesService) { }
 
   ngOnInit() {
-    this.resetFilter();
+    // this.resetFilter();
+    this.getPage(0, {});
   }
 
   getPage(page = 0, parameters = this.filter) {
@@ -381,7 +382,7 @@ export class FilesListComponent implements OnInit {
       'batchid': !this.batchidAll ? '' + this.batchid : '',
       'filename': this.filename,
     };
-    Object.keys(this.filter).forEach((key) => (this.filter[key] === '') && delete this.filter[key]);
+    Object.keys(this.filter).forEach((key) => (this.filter[key] === '' || this.filter[key] === undefined || this.filter[key] === null) && delete this.filter[key]);
     this.getPage(0, this.filter);
   }
 
