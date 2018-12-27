@@ -36,7 +36,7 @@ export class FilesListComponent implements OnInit {
   pausetoAll = true;
   filename = '';
 
-  datePickerOptions: DatepickerOptions = {
+  datePickerFromOptions: DatepickerOptions = {
     minYear: 1970,
     maxYear: 2030,
     displayFormat: 'MMM D[,] YYYY',
@@ -47,7 +47,25 @@ export class FilesListComponent implements OnInit {
     // minDate: new Date(Date.now()), // Minimal selectable date
     // maxDate: new Date(Date.now()),  // Maximal selectable date
     barTitleIfEmpty: 'Click to select a date',
-    placeholder: 'Click to select a date', // HTML input placeholder attribute (default: '')
+    placeholder: 'from', // HTML input placeholder attribute (default: '')
+    addClass: 'form-control form-control-lg', // Optional, value to pass on to [ngClass] on the input field
+    addStyle: {'width': '100%'}, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+  };
+
+  datePickerToOptions: DatepickerOptions = {
+    minYear: 1970,
+    maxYear: 2030,
+    displayFormat: 'MMM D[,] YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    dayNamesFormat: 'dd',
+    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+    locale: frLocale,
+    // minDate: new Date(Date.now()), // Minimal selectable date
+    // maxDate: new Date(Date.now()),  // Maximal selectable date
+    barTitleIfEmpty: 'Click to select a date',
+    placeholder: 'to', // HTML input placeholder attribute (default: '')
     addClass: 'form-control form-control-lg', // Optional, value to pass on to [ngClass] on the input field
     addStyle: {'width': '100%'}, // Optional, value to pass to [ngStyle] on the input field
     fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
@@ -321,13 +339,13 @@ export class FilesListComponent implements OnInit {
   }
 
   resetFilter() {
-    this.datefrom = new Date();
-    this.dateto = new Date();
-    this.angerfrom = 0;
-    this.angerto = 100;
-    this.pausefrom = 0;
-    this.pauseto = 10000;
-    this.page = 0;
+    this.datefrom = '';
+    this.dateto = '';
+    this.angerfrom = null;
+    this.angerto = null;
+    this.pausefrom = null;
+    this.pauseto = null;
+    this.page = null;
     this.batchid = 1;
     this.batchidAll = true;
     this.datefromAll = true;
