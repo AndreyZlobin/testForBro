@@ -5,5 +5,5 @@
  */
 export const environment = {
   production: true,
-  api: 'https://oiwyrnx3ug.execute-api.eu-west-1.amazonaws.com/prod',
+  api: 'https://mf5qi1mp2j.execute-api.eu-west-1.amazonaws.com/prod',
 };

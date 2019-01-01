@@ -68,7 +68,8 @@ export class FilesService {
   }
 
   uploadFile(params): Observable<any> {
-    return this.http.post('https://neosound.eu/server/api/uploadFileMP.php', params);
+    // return this.http.post('https://neosound.eu/server/api/uploadFileMP.php', params);
+    return this.http.post(`${environment.api}/uploadFile`, params);
   }
 
   listFileResults(params): Observable<any> {
