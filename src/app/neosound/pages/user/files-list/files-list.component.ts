@@ -214,14 +214,14 @@ export class FilesListComponent implements OnInit {
     this.proccessing = true;
     this.filesService.processFile(params).subscribe(v => {
 
-      this.filesService.processFile(params, 3).subscribe(v => {
-        this.filesService.processFile(params, 5).subscribe(v => {
-          this.filesService.processFile(params, 7).subscribe(v => {
+      // this.filesService.processFile(params, 3).subscribe(v => {
+      //   this.filesService.processFile(params, 5).subscribe(v => {
+      //     this.filesService.processFile(params, 7).subscribe(v => {
             this.proccessing = false;
             this.refresh();
-          });
-        });
-      });
+      //     });
+      //   });
+      // });
 
     },
     (e) => this.errorMessage = e.error.message,

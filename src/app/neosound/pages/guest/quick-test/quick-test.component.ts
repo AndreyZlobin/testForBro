@@ -159,15 +159,15 @@ export class QuickTestComponent implements OnInit, OnDestroy {
           "Successfully uploaded to the server: " + this.currentFileParams.name;
         this.filesService.processFile(this.getFileParams()).subscribe(
           v => {
-            this.filesService
-              .processFile(this.getFileParams(), 3)
-              .subscribe(v => {});
-            this.filesService
-              .processFile(this.getFileParams(), 5)
-              .subscribe(v => {});
-            this.filesService
-              .processFile(this.getFileParams(), 7)
-              .subscribe(v => {});
+            // this.filesService
+            //   .processFile(this.getFileParams(), 3)
+            //   .subscribe(v => {});
+            // this.filesService
+            //   .processFile(this.getFileParams(), 5)
+            //   .subscribe(v => {});
+            // this.filesService
+            //   .processFile(this.getFileParams(), 7)
+            //   .subscribe(v => {});
 
             this.proccessed = true;
             const params = this.getFileParams();

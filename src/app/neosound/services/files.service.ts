@@ -53,14 +53,14 @@ export class FilesService {
     );
   }
 
-  processFile(params, mlid = 9): Observable<any> {
+  processFile(params/*, mlid = 9*/): Observable<any> {
     params = params || {
       'batchid': '1234',
       'filename': '1.mp3',
     };
     params = {
       ...params,
-      mlid: '' + mlid,
+      // mlid: '' + mlid,
     };
     return this.http.post(`${environment.api}/processFile`,
       params
@@ -68,7 +68,6 @@ export class FilesService {
   }
 
   uploadFile(params): Observable<any> {
-    // return this.http.post('https://neosound.eu/server/api/uploadFileMP.php', params);
     return this.http.post(`${environment.api}/uploadFile`, params);
   }
 

@@ -10,5 +10,6 @@
 
 export const environment = {
   production: false,
-  api: 'https://mf5qi1mp2j.execute-api.eu-west-1.amazonaws.com/prod',
+  // api: 'https://mf5qi1mp2j.execute-api.eu-west-1.amazonaws.com/prod',
+  api: 'https://api.neosound.eu/prod',
 };
