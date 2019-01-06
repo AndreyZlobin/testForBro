@@ -210,7 +210,11 @@ export class FilesListComponent implements OnInit {
   }
 
   proccessFile(item) {
-    const params = item;
+    // const params = item;
+    const params = {
+      'batchid': item.batchid,
+      'filename': item.filename,
+    };
     this.proccessing = true;
     this.filesService.processFile(params).subscribe(v => {
 
