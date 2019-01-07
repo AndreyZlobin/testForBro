@@ -31,6 +31,8 @@ export class PlayerDetailsComponent
   emotionsFourclass;
   emotionsSounds;
   emotionsGender;
+  sttfulltext;
+  mergedangerstt;
   currentTab = 'anger';
   tabsDisabled = false;
   isScroll = false;
@@ -130,7 +132,7 @@ export class PlayerDetailsComponent
         //     container: '#myWavesurferContainer',
         // });
         const self = this;
-        console.log(this.wavesurfer.getDuration(), this.wavesurfer );
+        // console.log(this.wavesurfer.getDuration(), this.wavesurfer );
 
         // if (this.duration !== this.wavesurfer.getDuration()) {
         this.wavesurfer.toggleScroll();
@@ -200,11 +202,12 @@ export class PlayerDetailsComponent
   }
 
   getInfo() {
-    this.filesService.listFileResults(this.fileParams).subscribe(res => {
+    // this.filesService.listFileResults(this.fileParams).subscribe(res => {
+    this.filesService.getFileResultDetails(this.fileParams).subscribe(res => {
       this.results = res;
-console.log(res);
+      console.log(res);
 
-      this.duration = res.result.duration;
+      this.duration = res.result.duration ? res.result.duration : '0';
       this.initWaveSurfer();
       this.loadAudio();
       if (this.results.result || this.attempsCount < 0) {
@@ -213,7 +216,28 @@ console.log(res);
       if (this.results.result) {
         this.analysisResult = this.results.result;
 
-        if (this.results.result.uris.anger) {
+        if (this.results.result.anger) {
+          if (this.results.result.anger.ints) {
+            this.emotionsAnger = this.results.result.anger.ints;
+            this.emotions = this.emotionsAnger;
+          }
+          if (this.results.result.anger.music) {
+            this.emotionsSounds = this.results.result.anger.music;
+          }
+        }
+        if (this.results.result.stt) {
+          if (this.results.result.stt.fulltext) {
+            this.sttfulltext = this.results.result.stt.fulltext;
+          }
+        }
+        if (this.results.result.merged) {
+          if (this.results.result.merged.ints) {
+            this.mergedangerstt = this.results.result.merged.ints;
+          }
+        }
+        this.setRegions();
+
+/*        if (this.results.result.uris.anger) {
           this.filesService
             .getFileResultJson({
               uri: this.results.result.uris.anger,
@@ -226,7 +250,7 @@ console.log(res);
               },
               (e) => this.errorMessage = e.error.message,
             );
-        }
+        }*/
         /*this.filesService
           .getFileResultJson({
             uri: this.results.result.uris.age,
@@ -326,6 +350,8 @@ console.log(res);
         break;
       case 'sounds':
         return 'rgba(0,255,0, 0.7)';
+      case 'mergedangerstt':
+        return 'rgba(0,128,128, 0.3)';
       default:
         break;
     }
@@ -363,6 +389,9 @@ console.log(res);
         break;
       case 'sounds':
         this.emotions = this.emotionsSounds;
+        break;
+      case 'mergedangerstt':
+        this.emotions = this.mergedangerstt;
         break;
 
       default:

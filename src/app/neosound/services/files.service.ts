@@ -88,4 +88,13 @@ export class FilesService {
     );
   }
 
+  getFileResultDetails(params): Observable<any> {
+    params = params || {
+      'batchid': '1',
+      'filename': '1.mp3',
+    };
+    return this.http.post(`${environment.api}/getFileResultDetails`,
+      params
+    );
+  }
 }
