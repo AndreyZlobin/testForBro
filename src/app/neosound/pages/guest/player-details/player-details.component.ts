@@ -76,18 +76,18 @@ export class PlayerDetailsComponent
     if (!this.fileParams) {
       // this.router.navigateByUrl('/');
     }
-    if (this.fileParams) {
-      this.filesService.getFile(this.fileParams).subscribe(res => {
-        this.fileUrl = res.url;
-        // this.duration = res.duration;
-        // this.initWaveSurfer();
-        this.loadAudio();
-      },
-      (e) => {
-        if (e.status === 502 || e.status === 404 || e.status === 429) {this.router.navigateByUrl('/404');}
-        this.errorMessage = e.error.message;
-      });
-    }
+    // if (this.fileParams) {
+    //   this.filesService.getFile(this.fileParams).subscribe(res => {
+    //     this.fileUrl = res.url;
+    //     // this.duration = res.duration;
+    //     // this.initWaveSurfer();
+    //     this.loadAudio();
+    //   },
+    //   (e) => {
+    //     if (e.status === 502 || e.status === 404 || e.status === 429) {this.router.navigateByUrl('/404');}
+    //     this.errorMessage = e.error.message;
+    //   });
+    // }
   }
 
   ngAfterViewInit() {
@@ -202,24 +202,24 @@ export class PlayerDetailsComponent
   }
 
   getInfo() {
-    // this.filesService.listFileResults(this.fileParams).subscribe(res => {
     this.filesService.getFileResultDetails(this.fileParams).subscribe(res => {
       this.results = res;
       console.log(res);
 
-      this.duration = res.result.duration ? res.result.duration : '0';
+      this.duration = res.result.duration;
       this.initWaveSurfer();
       this.loadAudio();
       if (this.results.result || this.attempsCount < 0) {
         clearInterval(this.intervalRef);
       }
       if (this.results.result) {
-        this.analysisResult = this.results.result;
+        // this.analysisResult = this.results.result;
 
         if (this.results.result.anger) {
           if (this.results.result.anger.ints) {
             this.emotionsAnger = this.results.result.anger.ints;
             this.emotions = this.emotionsAnger;
+            this.setRegions();
           }
           if (this.results.result.anger.music) {
             this.emotionsSounds = this.results.result.anger.music;
@@ -235,65 +235,6 @@ export class PlayerDetailsComponent
             this.mergedangerstt = this.results.result.merged.ints;
           }
         }
-        this.setRegions();
-
-/*        if (this.results.result.uris.anger) {
-          this.filesService
-            .getFileResultJson({
-              uri: this.results.result.uris.anger,
-            })
-            .subscribe(jsonData => {
-                this.emotionsAnger = jsonData.data.ints;
-                this.emotionsSounds = jsonData.data.music;
-                this.emotions = this.emotionsAnger;
-                this.setRegions();
-              },
-              (e) => this.errorMessage = e.error.message,
-            );
-        }*/
-        /*this.filesService
-          .getFileResultJson({
-            uri: this.results.result.uris.age,
-          })
-          .subscribe(jsonData => {
-            this.emotionsAge = jsonData.data.ints;
-            this.setRegions();
-          },
-          (e) => this.errorMessage = e.error.message,
-          );*/
-
-          /*this.filesService
-          .getFileResultJson({
-            uri: this.results.result.uris.fourclass,
-          })
-          .subscribe(jsonData => {
-            this.emotionsFourclass = jsonData.data.ints;
-            this.setRegions();
-          },
-          (e) => this.errorMessage = e.error.message,
-          );*/
-
-          /*this.filesService
-            .getFileResultJson({
-              uri: this.results.result.uris.sounds,
-            })
-            .subscribe(jsonData => {
-              this.emotionsSounds = jsonData.data.ints;
-              this.setRegions();
-            },
-            (e) => this.errorMessage = e.error.message,
-            );*/
-
-        /*this.filesService
-        .getFileResultJson({
-          uri: this.results.result.uris.gender,
-        })
-        .subscribe(jsonData => {
-          this.emotionsGender = jsonData.data.ints;
-          this.setRegions();
-        },
-        (e) => this.errorMessage = e.error.message,
-        );*/
       }
     },
     (e) => this.errorMessage = e.error.message,
