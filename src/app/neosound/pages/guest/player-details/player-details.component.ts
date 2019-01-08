@@ -33,6 +33,7 @@ export class PlayerDetailsComponent
   emotionsGender;
   sttfulltext;
   mergedangerstt;
+  emotionsSttAnger;
   currentTab = 'anger';
   tabsDisabled = false;
   isScroll = false;
@@ -234,6 +235,9 @@ export class PlayerDetailsComponent
           if (this.results.result.merged.ints) {
             this.mergedangerstt = this.results.result.merged.ints;
           }
+          if (this.results.result.merged.intprobs) {
+            this.emotionsSttAnger = this.results.result.merged.intprobs;
+          }
         }
       }
     },
@@ -293,6 +297,8 @@ export class PlayerDetailsComponent
         return 'rgba(0,255,0, 0.7)';
       case 'mergedangerstt':
         return 'rgba(0,128,128, 0.3)';
+      case 'sttanger':
+        return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.3)';
       default:
         break;
     }
@@ -333,6 +339,9 @@ export class PlayerDetailsComponent
         break;
       case 'mergedangerstt':
         this.emotions = this.mergedangerstt;
+        break;
+      case 'sttanger':
+        this.emotions = this.emotionsSttAnger;
         break;
 
       default:
