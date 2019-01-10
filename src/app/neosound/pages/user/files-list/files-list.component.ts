@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FilesService } from '../../../services/files.service';
 import { DatepickerOptions } from 'ng2-datepicker';
 import { frLocale } from 'ngx-bootstrap';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-files-list',
@@ -406,6 +407,10 @@ export class FilesListComponent implements OnInit {
     };
     Object.keys(this.filter).forEach((key) => (this.filter[key] === '' || this.filter[key] === undefined || this.filter[key] === null) && delete this.filter[key]);
     this.getPage(0, this.filter);
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 
 }

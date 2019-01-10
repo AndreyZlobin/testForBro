@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../../services/users.service';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -21,6 +22,10 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit() {
   }
 
+  t(v) {
+    return LanguageService.t(v);
+  }
+
   submit() {
     const params = {
       'email': this.email,
@@ -29,7 +34,7 @@ export class ForgotPasswordComponent implements OnInit {
       .forgotPassword(params)
       .subscribe(
         () => this.router.navigateByUrl('/'),
-        (e) => this.message = e.error.message,
+        (e) => this.message = LanguageService.t(e.error.message),
       );
   }
 

@@ -2,20 +2,20 @@
 
 <div class="row mb-1">
   <div class="col">
-    <h1>Files</h1>
+    <h1>{{t('Files')}}</h1>
   </div>
   <div class="col">
     <div class="row mb-1">
       <!-- <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div> -->
       <div class="col text-left pl-0">
-        <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="Search" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;display: inline;"/>
+        <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="{{t('Search')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;display: inline;"/>
       </div>
     </div>
   </div>
 </div>
 
 
-<div class="alert alert-danger" *ngIf="errorMessage">Error: {{errorMessage}}</div>
+<div class="alert alert-danger" *ngIf="errorMessage">{{t('Error:')}}' {{errorMessage}}</div>
 <div *ngIf="!isLoading; else loading" class="">
   <!--<div class="row mb-3">
     <div class="col-12">
@@ -29,22 +29,22 @@
   </div>-->
   <div class="row mb-3">
     <div class="col pr-0">
-      <div class="mb-2">Batch id</div>
+      <div class="mb-2">{{t('Batch id')}}</div>
       <input [(ngModel)]="batchid" [ngModelOptions]="{standalone: true}" type="text" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="" [disabled]="batchidAll">
       <div class="mt-1">
         <label>
             <input [(ngModel)]="batchidAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-            All
+            {{t('All')}}
         </label>
       </div>
     </div>
     <div class="col pr-0">
-      <div class="mb-2">Date</div>
+      <div class="mb-2">{{t('Date')}}</div>
       <ng-datepicker [(ngModel)]="datefrom" [options]="datePickerFromOptions" class="form-control-bak form-control-lg-bak" style="width: 100%; padding-right: 0px"></ng-datepicker>
       <div class="mt-1">
         <label>
             <input [(ngModel)]="datefromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-            All
+            {{t('All')}}
         </label>
       </div>
     </div>
@@ -54,58 +54,58 @@
       <div class="mt-1">
         <label>
             <input [(ngModel)]="datetoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-            All
+            {{t('All')}}
         </label>
       </div>
     </div>
     <div class="col pr-0">
-      <div class="mb-2">Emotion</div>
-      <input [(ngModel)]="angerfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="from" [disabled]="angerfromAll">
+      <div class="mb-2">{{t('Emotion')}}</div>
+      <input [(ngModel)]="angerfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}" [disabled]="angerfromAll">
       <div class="mt-1">
         <label>
             <input [(ngModel)]="angerfromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-            All
+            {{t('All')}}
         </label>
       </div>
     </div>
     <div class="col pr-0">
       <div class="mb-2">&nbsp;</div>
-      <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; " placeholder="to" [disabled]="angertoAll">
+      <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; " placeholder="{{t('to')}}" [disabled]="angertoAll">
       <div class="mt-1">
         <label>
             <input [(ngModel)]="angertoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-            All
+            {{t('All')}}
         </label>
       </div>
     </div>
     <div class="col pr-0">
-      <div class="mb-2">Avg.Pause</div>
-      <input [(ngModel)]="pausefrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="from" [disabled]="pausefromAll">
+      <div class="mb-2">{{t('Avg.Pause')}}</div>
+      <input [(ngModel)]="pausefrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}" [disabled]="pausefromAll">
       <div class="mt-1">
         <label>
           <input [(ngModel)]="pausefromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-          All
+          {{t('All')}}
         </label>
       </div>
     </div>
     <div class="col pr-0">
       <div class="mb-2">&nbsp;</div>
-      <input [(ngModel)]="pauseto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="to" [disabled]="pausetoAll">
+      <input [(ngModel)]="pauseto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('to')}}" [disabled]="pausetoAll">
       <div class="mt-1">
         <label>
           <input [(ngModel)]="pausetoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-          All
+          {{t('All')}}
         </label>
       </div>
     </div>
     <div class="col text-right pr-0">
-      <button class="btn btn-primary mt-4 btn-sm" (click)="filterIt()">Filter</button>
+      <button class="btn btn-primary mt-4 btn-sm" (click)="filterIt()">{{t('Filter')}}</button>
     </div>
     <div class="col">
-      <button class="btn btn-secondary mt-4 btn-sm" (click)="resetFilter()">Reset Filter</button>
+      <button class="btn btn-secondary mt-4 btn-sm" (click)="resetFilter()">{{t('Reset Filter')}}</button>
     </div>
     <div class="col text-right">
-      <button class="btn btn-info ml-5 pull-right mt-4 btn-sm" (click)="exportCSV()">Export to CSV</button>
+      <button class="btn btn-info ml-5 pull-right mt-4 btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
     </div>
   </div>
   <!-- <div class="row mb-3">
@@ -114,20 +114,20 @@
   <table class="table mt-5">
     <thead>
       <tr>
-          <th>Batch Id</th>
-          <th><a (click)="sortTable('name')">Name
+          <th>{{t('Batch Id')}}</th>
+          <th><a (click)="sortTable('name')">{{t('Name')}}
             <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'name'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
           </th>
-          <th><a (click)="sortTable('uploaded')">Uploaded
+          <th><a (click)="sortTable('uploaded')">{{t('Uploaded')}}
             <i *ngIf="sortBy === 'uploaded' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'uploaded' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'uploaded'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
           </th>
-          <th><a (click)="sortTable('duration')">Duration
+          <th><a (click)="sortTable('duration')">{{t('Duration')}}
             <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
           </th>
-          <th><a (click)="sortTable('emotion')">Emotion
+          <th><a (click)="sortTable('emotion')">{{t('Emotion')}}
             <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
           </th>
-          <th><a (click)="sortTable('avgpause')">Avg.Pause
+          <th><a (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
             <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
           </th>
           <!-- <th>Beta</th> -->
@@ -156,24 +156,24 @@
         <!-- <td></td> -->
         <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
         <td>{{ item.pauses }}</td>
-        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" [routerLink]="getLink(item)">File details</button></td>
-        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="proccessFile(item)">Refresh{{proccessing ? '...' : ''}}</button></td>
-        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="delete(item.batchid, item.filename)">Delete</button></td>
+        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" [routerLink]="getLink(item)">{{t('File details')}}</button></td>
+        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="proccessFile(item)">{{t('Refresh')}}{{proccessing ? '...' : ''}}</button></td>
+        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="delete(item.batchid, item.filename)">{{t('Delete')}}</button></td>
       </tr>
     </tbody>
   </table>
-  <div *ngIf="!isLoading && !files.length" class="mb-4">0 Files</div>
+  <div *ngIf="!isLoading && !files.length" class="mb-4">{{t('0 Files')}}</div>
   <ul class="pagination mt-2 mb-2" *ngIf="!!files.length">
     <li class="page-item" *ngFor="let i of pagesArr">
       <a class="page-link" (click)="getPage(i - 1)">{{i}}</a>
     </li>
   </ul>
   <div class="mt-3 mb-2">
-    <h6>Selected files total count: {{totalCount}} </h6>
+    <h6>{{t('Selected files total count')}}: {{totalCount}} </h6>
   </div>
-  <button class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
+  <button class="btn mt-3 btn-secondary" (click)="refresh()">{{t('Refresh')}}</button>
 </div>
 
 <ng-template #loading>
-  Loading...
+  {{t('Loading...')}}
 </ng-template>

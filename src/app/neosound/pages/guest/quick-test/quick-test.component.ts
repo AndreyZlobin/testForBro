@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { timer, Subscription } from "rxjs";
 import { UploadEvent, UploadFile } from "ngx-file-drop";
+import { LanguageService } from "../../../services/language.service";
 // import { SiriWave } from 'siriwave';
 
 const makeId = () => {
@@ -365,5 +366,9 @@ export class QuickTestComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.stopPlaying();
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 }

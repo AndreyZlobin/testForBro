@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsersService } from '../../../services/users.service';
 import { Router } from '@angular/router';
 import { forbiddenNameValidator } from '../../../directives/forbidden-password.directive';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-signup-detailed',
@@ -42,12 +43,12 @@ export class SignupDetailedComponent implements OnInit {
       .registerUser(params)
       .subscribe(
         () => {
-          this.userService.addMessage('Signed up successfully');
+          this.userService.addMessage(LanguageService.t('Signed up successfully'));
           this.router.navigateByUrl('/');
           this.enabledSubmit = true;
         },
         (e) => {
-          this.error = e.error.message;
+          this.error = LanguageService.t(e.error.message);
           this.enabledSubmit = true;
         }
       );
@@ -87,6 +88,10 @@ export class SignupDetailedComponent implements OnInit {
         agreeTerms: false,
       });
     }
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 
 }

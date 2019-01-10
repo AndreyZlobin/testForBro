@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { FilesService } from '../../../services/files.service';
 import { Router } from '@angular/router';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-results',
@@ -287,6 +288,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
   discard() {
     this.refresh.emit(true);
     return false;
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 
   ngOnDestroy() {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'ngx-page-not-found',
@@ -10,6 +11,10 @@ export class PageNotFoundComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 
 }

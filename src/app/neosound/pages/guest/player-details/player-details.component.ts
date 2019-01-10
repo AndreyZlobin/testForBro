@@ -5,6 +5,7 @@ import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
 import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions.min.js";
 import { Subscription } from "rxjs";
+import { LanguageService } from "../../../services/language.service";
 
 @Component({
   selector: "ngx-player-details",
@@ -352,5 +353,9 @@ export class PlayerDetailsComponent
 
   toggleScroll() {
     this.wavesurfer.toggleScroll();
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 }

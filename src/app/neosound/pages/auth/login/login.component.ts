@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { UsersService } from '../../../services/users.service';
 import { FormGroup } from '@angular/forms';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-login',
@@ -34,11 +35,15 @@ export class LoginComponent {
         () => this.router.navigateByUrl('/user/files'),
         (e) => {
           if (e.error.message) {
-            this.message = e.error.message;
+            this.message = LanguageService.t(e.error.message);
           } else {
-            this.message = 'Wrong credentials';
+            this.message = LanguageService.t('Wrong credentials');
           }
         });
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 
 }

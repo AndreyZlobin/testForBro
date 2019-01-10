@@ -67,44 +67,44 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2>Sign Up</h2>
+        <h2>{{t('Sign Up')}}</h2>
         <form [formGroup]="form">
             <div class="form-group row">
-                <label for="inputEmail1" class="col-sm-3 col-form-label">Username</label>
+                <label for="inputEmail1" class="col-sm-3 col-form-label">{{t('Username')}}</label>
                 <div class="col-sm-9">
-                        <input formControlName="username" class="form-control form-control-lg" type="text" required=" " placeholder="Username">
+                        <input formControlName="username" class="form-control form-control-lg" type="text" required=" " placeholder="{{t('Username')}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputPassword2" class="col-sm-3 col-form-label">First name</label>
+                <label for="inputPassword2" class="col-sm-3 col-form-label">{{t('First name')}}</label>
                 <div class="col-sm-9">
-                    <input formControlName="firstname" class="form-control form-control-lg" type="text" required=" " placeholder="First name">
+                    <input formControlName="firstname" class="form-control form-control-lg" type="text" required=" " placeholder="{{t('First name')}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputPassword2" class="col-sm-3 col-form-label">Last name</label>
+                <label for="inputPassword2" class="col-sm-3 col-form-label">{{t('Last name')}}</label>
                 <div class="col-sm-9">
-                    <input formControlName="lastname" class="form-control form-control-lg" type="text" required=" " placeholder="Last name">
+                    <input formControlName="lastname" class="form-control form-control-lg" type="text" required=" " placeholder="{{t('Last name')}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputPassword2" class="col-sm-3 col-form-label">Email</label>
+                <label for="inputPassword2" class="col-sm-3 col-form-label">{{t('Email')}}</label>
                 <div class="col-sm-9">
-                    <input  formControlName="email" class="form-control form-control-lg" type="text" required=" " placeholder="Email">
+                    <input  formControlName="email" class="form-control form-control-lg" type="text" required=" " placeholder="{{t('Email')}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="apikey" class="col-sm-3 col-form-label">Access Code</label>
+                <label for="apikey" class="col-sm-3 col-form-label">{{t('Access Code')}}</label>
                 <div class="col-sm-9">
-                    <input formControlName="apikey" class="form-control form-control-lg" type="text" placeholder="Access Code">
+                    <input formControlName="apikey" class="form-control form-control-lg" type="text" placeholder="{{t('Access Code')}}">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputPassword2" class="col-sm-3 col-form-label">Password</label>
+                <label for="inputPassword2" class="col-sm-3 col-form-label">{{t('Password')}}</label>
                 <div class="col-sm-9">
-                    <input formControlName="password" class="form-control form-control-lg" type="password" required=" " placeholder="Password" id="password">
+                    <input formControlName="password" class="form-control form-control-lg" type="password" required=" " placeholder="{{t('Password')}}" id="password">
                     <div *ngIf="form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)" class="alert mt-1 mb-1 alert-danger">
-                        Special symbols are not allowed. Try again.
+                        {{t('Special symbols are not allowed. Try again.')}}
                     </div>
                 </div>
             </div>
@@ -114,8 +114,8 @@
                     <div class="">
                         <label class="" for="customCheck1">
                             <input formControlName="agreeTerms" type="checkbox" checked id="customCheck1">
-                            I have read the terms and conditions and privacy policy and agree to them
-                            <a routerLink="/terms">them</a>
+                            {{t('I have read the terms and conditions and privacy policy and agree to them')}}
+                            <a routerLink="/terms">{{t('terms')}}</a>
                         </label>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                     <div class="">
                         <label class="" for="customCheck2">
                             <input formControlName="agree" type="checkbox" checked id="customCheck2">
-                            I agree that my data is used, saved and processed by the NeoSound OU for the utilization of my account.
+                            {{t('I agree that my data is used, saved and processed by the NeoSound OU for the utilization of my account.')}}
                         </label>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
 
             <div class="form-group row">
                 <div class="offset-sm-3 col-sm-9">
-                <button type="submit" class="btn btn-primary" [disabled]="form.invalid || !form.value.agree || !form.value.agreeTerms || !enabledSubmit" type="submit" (click)="submit()">SIGN UP</button>
+                <button type="submit" class="btn btn-primary" [disabled]="form.invalid || !form.value.agree || !form.value.agreeTerms || !enabledSubmit" type="submit" (click)="submit()">{{t('SIGN UP')}}</button>
                 </div>
             </div>
 
@@ -148,7 +148,7 @@
 
             <div class="form-group m-b-0 m-t-10 ">
                 <div class="col-sm-12 text-center ">
-                    Already have an account? <a routerLink="/auth/login" class="text-info m-l-5 "><b>Login</b></a>
+                    {{t('Already have an account?')}} <a routerLink="/auth/login" class="text-info m-l-5 "><b>{{t('Login')}}</b></a>
                 </div>
             </div>
         </form>

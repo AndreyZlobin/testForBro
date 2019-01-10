@@ -45,7 +45,7 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
     this.mediaRecorder.startRecording();
   }
   public stop(): void {
-    this.mediaRecorder.stopRecording(audioUrl => {
+    this.mediaRecorder && this.mediaRecorder.stopRecording(audioUrl => {
       this.isRecording = false;
       this.isRecorded = true;
       this.timerSub.unsubscribe();

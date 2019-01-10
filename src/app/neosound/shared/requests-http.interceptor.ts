@@ -14,6 +14,7 @@ import 'rxjs/add/operator/do';
 
 import { UsersService } from '../services/users.service';
 import { ToastrService } from 'ngx-toastr';
+import { LanguageService } from '../services/language.service';
 
 @Injectable()
 export class RequestsHttpInterceptor implements HttpInterceptor {
@@ -52,7 +53,7 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
           }
           let msg = err.error.message ? err.error.message : 'Server Error';
           msg = err.message ? err.message : msg;
-          this.toastrService.error(msg, 'Error', {
+          this.toastrService.error(LanguageService.t(msg), LanguageService.t('Error'), {
             timeOut: 3000,
           });
         }

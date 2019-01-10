@@ -6,6 +6,7 @@ import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { LayoutService } from '../../../@core/data/layout.service';
 import { Router } from '@angular/router';
 import { UsersService } from '../../../neosound/services/users.service';
+import { LanguageService } from '../../../neosound/services/language.service';
 
 @Component({
   selector: 'ngx-header',
@@ -90,6 +91,10 @@ export class HeaderComponent implements OnInit {
 
   spanish() {
     localStorage.setItem('lang', 'sp');
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 
 }
