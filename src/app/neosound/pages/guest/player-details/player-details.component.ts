@@ -33,7 +33,6 @@ export class PlayerDetailsComponent
   emotionsSounds;
   emotionsGender;
   sttfulltext;
-  mergedangerstt;
   emotionsSttAnger;
   currentTab = 'anger';
   tabsDisabled = false;
@@ -233,9 +232,6 @@ export class PlayerDetailsComponent
           }
         }
         if (this.results.result.merged) {
-          if (this.results.result.merged.ints) {
-            this.mergedangerstt = this.results.result.merged.ints;
-          }
           if (this.results.result.merged.intprobs) {
             this.emotionsSttAnger = this.results.result.merged.intprobs;
           }
@@ -252,6 +248,7 @@ export class PlayerDetailsComponent
     return d;
   }
 
+  // @ts-ignore
   setRegions() {
     if (!this.wavesurferReady || !this.emotions) return;
     this.wavesurfer.clearRegions();
@@ -262,6 +259,17 @@ export class PlayerDetailsComponent
         end: element[1],
         color: this.getColor(element[3], element[2]),
       });
+    }
+
+    if (this.currentTab === 'text' && this.emotionsAnger) {
+      for (let index = 0; index < this.emotionsAnger.length; index++) {
+        const element = this.emotionsAnger[index];
+        this.wavesurfer.addRegion({
+          start: element[0],
+          end: element[1],
+          color: this.getColor(element[3], element[2]),
+        });
+      }
     }
   }
   zoomIn() {
@@ -296,10 +304,9 @@ export class PlayerDetailsComponent
         break;
       case 'sounds':
         return 'rgba(0,255,0, 0.7)';
-      case 'mergedangerstt':
-        return 'rgba(0,128,128, 0.3)';
-      case 'sttanger':
-        return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.3)';
+      case 'text':
+        const x = val / 2 + 50;
+        return 'rgba(255, ' + (255 - (x - 50) * 5) + ', ' + (255 - (x - 50) * 5) + ', 0.7)';
       default:
         break;
     }
@@ -338,10 +345,7 @@ export class PlayerDetailsComponent
       case 'sounds':
         this.emotions = this.emotionsSounds;
         break;
-      case 'mergedangerstt':
-        this.emotions = this.mergedangerstt;
-        break;
-      case 'sttanger':
+      case 'text':
         this.emotions = this.emotionsSttAnger;
         break;
 

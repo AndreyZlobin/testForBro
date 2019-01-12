@@ -85,6 +85,7 @@ const translations = {
   'Music': 'Música',
   'Merged': 'Fusionado',
   'Probs test': 'Problemas test',
+  'Text': 'Texto',
 };
 
 @Injectable()
