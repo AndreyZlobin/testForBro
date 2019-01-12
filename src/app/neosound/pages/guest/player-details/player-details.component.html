@@ -22,12 +22,12 @@
     <!-- <li class="nav-item">
       <a class="nav-link" [ngClass]="{'active': currentTab === 'results', 'disabled': tabsDisabled}" (click)="setTab('results')" >Summary (beta)</a>
     </li> -->
-    <li class="nav-item">
+    <!--<li class="nav-item">
       <a class="nav-link" [ngClass]="{'active': currentTab === 'mergedangerstt', 'disabled': tabsDisabled}" (click)="setTab('mergedangerstt')">{{t('Merged')}}</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" [ngClass]="{'active': currentTab === 'sttanger', 'disabled': tabsDisabled}" (click)="setTab('sttanger')">{{t('Probs test')}}</a>
-    </li>
+    </li>-->
   </ul>
   <div class="alert alert-danger" *ngIf="errorMessage">{{t('Error:')}} {{t(errorMessage)}}</div>
   <div [ngClass]="{'d-none': currentTab === 'results'}">
