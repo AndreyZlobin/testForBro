@@ -85,7 +85,7 @@
     "socicon": "3.0.5",
     "tinymce": "4.5.7",
     "typeface-exo": "0.0.22",
-    "wavesurfer.js": "^2.0.6",
+    "wavesurfer.js": "^2.1.1",
     "web-animations-js": "2.2.5",
     "zone.js": "^0.8.26"
   },
