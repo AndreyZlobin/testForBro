@@ -125,53 +125,8 @@ export class PlayerDetailsComponent
       });
       this.loadAudio();
       this.wavesurfer.on("ready", () => {
-        // http://wavesurfer-js.org/plugins/regions.html
-        // const timeline = Object.create(TimelinePlugin); // WaveSurfer.Timeline);
-
-        // timeline.init({
-        //     wavesurfer: this.wavesurfer,
-        //     container: '#myWavesurferContainer',
-        // });
-        const self = this;
-        // console.log(this.wavesurfer.getDuration(), this.wavesurfer );
-
-        // if (this.duration !== this.wavesurfer.getDuration()) {
         this.wavesurfer.toggleScroll();
-        //   this.wavesurfer.timeline.params.timeInterval = 10;
-        // }
-        // this.duration = this.wavesurfer.getDuration();
-
-        // this.wavesurfer.destroy();
-        // this.loadAudio();
-        // this.wavesurfer.timeline.removeOldCanvases();
-        // this.wavesurfer.timeline.drawTimeCanvases();
-
-        // this.wavesurfer.addPlugin(TimelinePlugin.create({
-        //   container: "#timelineContainer",
-        //   timeInterval: 1,
-        //   formatTimeCallback: (v) => {
-        //     const date = new Date(null);
-        //     date.setSeconds(Math.round(v));
-        //     if (Math.round(v) > 3600) {
-        //       return date.toISOString().substr(12, 8);
-        //     }
-        //     return date.toISOString().substr(14, 5);
-        //   },
-        // })).initPlugin('timeline');
-        // const zoom: any = document.querySelector("#slider");
-        // const self = this;
-        // const zoom: any = document.querySelector('#slider');
-        // zoom.oninput = function () {
-        //   self.wavesurfer.zoom(Number(this.value));
-        // };
-
         this.wavesurferReady = true;
-
-
-        // this.emotions = [
-        //   ["4.75", "5.5", "anger", "80.8"],
-        //   ["100.75", "305.5", "anger", "55.8"],
-        // ];
         this.setRegions();
       });
   }
@@ -361,5 +316,8 @@ export class PlayerDetailsComponent
 
   t(v) {
     return LanguageService.t(v);
+  }
+  zoom($event) {
+    this.wavesurfer.zoom(Number($event.target.value));
   }
 }
