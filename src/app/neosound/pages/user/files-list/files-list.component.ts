@@ -420,4 +420,8 @@ export class FilesListComponent implements OnInit {
     return LanguageService.t(v);
   }
 
+  getFilesOnPageLabel() {
+    return ((this.page + 1) * 100 < this.files.length) ? (this.page + 1) * 100 : this.files.length;
+  }
+
 }
