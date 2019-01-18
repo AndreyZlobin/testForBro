@@ -79,6 +79,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { ChartModule } from 'angular2-chartjs';
 import { PageNotFoundComponent } from './neosound/pages/page-not-found/page-not-found.component';
 import { LanguageService } from './neosound/services/language.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 // import { ForbiddenPasswordDirective } from './neosound/directives/forbidden-password.directive';
 
 @NgModule({
@@ -139,6 +140,7 @@ import { LanguageService } from './neosound/services/language.service';
     // PieChartModule,
     ToastrModule.forRoot(),
     NgDatepickerModule,
+    NgxPaginationModule,
   ],
   bootstrap: [AppComponent],
   providers: [

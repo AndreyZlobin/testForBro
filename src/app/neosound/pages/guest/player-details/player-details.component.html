@@ -109,7 +109,7 @@
       <table class="table table-striped" style="max-height: 30vh;overflow-x:auto">
         <tr *ngFor="let item of emotions" (click)="gotoPosition(item[0])">
           <td>{{ getDateVal(item[0]) | date:'mm:ss.SSS'}} - {{ getDateVal(item[1]) | date:'mm:ss.SSS'}}</td>
-          <td>{{item[2]}}</td>
+          <td>{{t(item[2])}}</td>
           <td>{{item[3] | currency: '%': 'symbol':'1.2-2'}}</td>
         </tr>
       </table>

@@ -17,6 +17,7 @@ const translations = {
   'from': 'desde',
   'to': 'hasta',
   'Anger': 'Enfado',
+  'anger': 'enfado',
   'Filter': 'Filtro',
   'Reset Filter': 'Reiniciar filtro',
   'Export to CSV': 'Exportar a CSV',
@@ -85,6 +86,14 @@ const translations = {
   'Music': 'Música',
   'Merged': 'Fusionado',
   'Probs test': 'Problemas test',
+  'See details': 'Ver detalles',
+  'here': 'aquí',
+  'Sad': 'Triste',
+  'Happy': 'Feliz',
+  'Total files on page': 'Total de archivos en la página',
+  'out of': 'de',
+  'previous': 'anterior',
+  'next': 'siguiente',
 };
 
 @Injectable()

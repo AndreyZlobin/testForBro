@@ -38,12 +38,14 @@ export class ResultsComponent implements OnInit, OnDestroy {
       value: '#4abce2',
     },
   ];
+  routerFileName = '';
 
   constructor(private filesService: FilesService, private router: Router) {
     this.fileParams = this.filesService.getQuickFileParams();
     if (!this.fileParams) {
       this.router.navigateByUrl('/');
     }
+    this.routerFileName = `/file/${this.fileParams.batchid}/${this.fileParams.filename}`;
   }
 
   ngOnInit() {
@@ -144,19 +146,19 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.customColors[1].name = Math.round(this.analysisResult.Neutral) + '% Neutral';
     this.chartData = [
       {
-        name: Math.round(this.analysisResult.Anger) + '% Anger', //.toFixed(2),
+        name: Math.round(this.analysisResult.Anger) + '% ' + this.t('Anger'), //.toFixed(2),
         value: this.analysisResult.Anger, //.toFixed(2),
       },
       {
-        name: Math.round(this.analysisResult.Sadness) + '% Sad', //.toFixed(2),
+        name: Math.round(this.analysisResult.Sadness) + '% ' + this.t('Sad'), //.toFixed(2),
         value: this.analysisResult.Sadness, //.toFixed(2),
       },
       {
-        name: Math.round(this.analysisResult.Neutral) + '% Neutral', //.toFixed(2),
+        name: Math.round(this.analysisResult.Neutral) + '% ' + this.t('Neutral'), //.toFixed(2),
         value: this.analysisResult.Neutral, //.toFixed(2),
       },
       {
-        name: Math.round(this.analysisResult.Happy) + '% Happy', //.toFixed(2),
+        name: Math.round(this.analysisResult.Happy) + '% ' + this.t('Happy'), //.toFixed(2),
         value: this.analysisResult.Happy, //.toFixed(2),
       },
     ];
