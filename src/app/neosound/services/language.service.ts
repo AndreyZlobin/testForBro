@@ -17,6 +17,7 @@ const translations = {
   'from': 'desde',
   'to': 'hasta',
   'Anger': 'Enfado',
+  'anger': 'enfado',
   'Filter': 'Filtro',
   'Reset Filter': 'Reiniciar filtro',
   'Export to CSV': 'Exportar a CSV',
@@ -25,6 +26,7 @@ const translations = {
   'Uploaded': 'Cargado',
   'Duration': 'Duración',
   'Emotion': 'Emoción',
+  'emotion': 'emoción',
   'Beta': 'Beta',
   'File details': 'Detalles de fichero',
   'Refresh': 'Refrescar',
@@ -86,6 +88,14 @@ const translations = {
   'Merged': 'Fusionado',
   'Probs test': 'Problemas test',
   'Text': 'Texto',
+  'See details': 'Ver detalles',
+  'here': 'aquí',
+  'Sad': 'Triste',
+  'Happy': 'Feliz',
+  'Total files on page': 'Total de archivos en la página',
+  'out of': 'de',
+  'previous': 'anterior',
+  'next': 'siguiente',
 };
 
 @Injectable()

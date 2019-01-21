@@ -87,7 +87,8 @@
     "typeface-exo": "0.0.22",
     "wavesurfer.js": "^2.0.6",
     "web-animations-js": "2.2.5",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "ngx-pagination": "^3.2.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.0",

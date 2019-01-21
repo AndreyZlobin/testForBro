@@ -77,7 +77,10 @@ export class FilesListComponent implements OnInit {
 
   ngOnInit() {
     // this.resetFilter();
-    this.getPage(0, {});
+    this.filter = this.filesService.getFilter();
+    this.sortBy = this.filter.sortby;
+    this.sort = this.filter.sortorder;
+    this.getPage(0, this.filter);
   }
 
   getPage(page = 0, parameters = this.filter) {
@@ -293,6 +296,9 @@ export class FilesListComponent implements OnInit {
       'sortorder': this.sort === 'up' ? 'desc' : 'asc',
     };
     this.getPage(0, this.filter);
+
+    this.filesService.setFilter(this.filter);
+
     return;
     // if (sortBy !== this.sortBy) {
     //   this.sort = 'up';
@@ -373,6 +379,7 @@ export class FilesListComponent implements OnInit {
       // 'export': '',
     };
     this.getPage(0, this.filter);
+    this.filesService.setFilter(this.filter);
   }
 
   exportCSV() {
@@ -411,6 +418,10 @@ export class FilesListComponent implements OnInit {
 
   t(v) {
     return LanguageService.t(v);
+  }
+
+  getFilesOnPageLabel() {
+    return ((this.page + 1) * 100 < this.files.length) ? (this.page + 1) * 100 : this.files.length;
   }
 
 }

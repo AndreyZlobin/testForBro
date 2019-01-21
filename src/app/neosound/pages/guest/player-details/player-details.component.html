@@ -101,7 +101,19 @@
       <i class="fas fa-search-minus"></i>
     </button>
   </div> -->
-  <div *ngIf="emotions && currentTab !== 'results'" class="mt-5">
+  <div *ngIf="emotions && currentTab !== 'results' && currentTab !== 'sttanger'" class="mt-5">
+    <div class="scrollable-list">
+      <table class="table table-striped" style="max-height: 30vh;overflow-x:auto">
+        <tr *ngFor="let item of emotions" (click)="gotoPosition(item[0])">
+          <td>{{ getDateVal(item[0]) | date:'mm:ss.SSS'}} - {{ getDateVal(item[1]) | date:'mm:ss.SSS'}}</td>
+          <td>{{t(item[2])}}</td>
+          <td>{{item[3] | currency: '%': 'symbol':'1.2-2'}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  
+  <div *ngIf="emotions && currentTab === 'sttanger'" class="mt-5">
     <div class="scrollable-list">
       <table class="table table-striped" style="max-height: 30vh;overflow-x:auto">
         <tr *ngFor="let item of emotions" (click)="gotoPosition(item[0])">

@@ -6,10 +6,19 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class FilesService {
   private currentFileParams;
+  private savedFilter = {};
 
   constructor(
     private http: HttpClient
   ) { }
+
+  setFilter(params) {
+    this.savedFilter = params;
+  }
+
+  getFilter() {
+    return this.savedFilter;
+  }
 
   setQuickFileParams(params) {
     this.currentFileParams = params;

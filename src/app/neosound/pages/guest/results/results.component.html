@@ -62,7 +62,7 @@
           <div class="alert alert-info mt-2" *ngIf="showThanks">{{t('Thank you for reply!')}}</div>
         </div>
         <div class="result-links">
-          <div *ngIf="!hideAdditionalInfo" class="mt-5">{{t('See details')}} <a routerLink="/guest/player-details">{{t('here')}}</a></div>
+          <div *ngIf="!hideAdditionalInfo" class="mt-5">{{t('See details')}} <a routerLink="{{routerFileName}}">{{t('here')}}</a></div>
           <a class="mt-5 mb-5" routerLink="/guest/quicktest" (click)="discard()">{{t('Check another record')}}</a>
         </div>
       </div>
