@@ -36,6 +36,7 @@ export class FilesListComponent implements OnInit {
   pausefromAll = true;
   pausetoAll = true;
   filename = '';
+  paginationNum = 100;
 
   datePickerFromOptions: DatepickerOptions = {
     minYear: 1970,
@@ -84,9 +85,10 @@ export class FilesListComponent implements OnInit {
   }
 
   getPage(page = 0, parameters = this.filter) {
+    this.isLoading = true;
     const params = this.filter = {
       ...parameters,
-      'itemsn': '100',
+      'itemsn': `${this.paginationNum}`,
       'pagen': '' + (page + 1),
     };
     this.page = page;
@@ -99,14 +101,22 @@ export class FilesListComponent implements OnInit {
       }
       // const a = new Array(Math.round(res.count / 50));
       this.totalCount = res.totalcount;
-      this.pagesArr = Array.from({length: Math.ceil(res.totalcount / 100) }, (v, k) => k+1);
+      this.pagesArr = Array.from({length: Math.ceil(res.totalcount / 100) }, (v, k) => k + 1);
       this.files = res.files;
+      this.isLoading = false;
       // .sort((a, b) => {
       //   const x = +new Date(a.uploaddate);
       //   const y = +new Date(b.uploaddate);
       //   return y - x;
       // });
     });
+  }
+
+  getPages() {
+    if (this.files && (Math.ceil(this.files.length / this.paginationNum) > 1)) {
+      return Array.from({length: Math.ceil(this.files.length / this.paginationNum) }, (v, k) => k+1);
+    }
+    return [];
   }
 
   getEmotionName(val) {

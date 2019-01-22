@@ -144,13 +144,13 @@
             {{ getDateVal(item[0]) | date: "mm:ss.SSS" }} -
             {{ getDateVal(item[1]) | date: "mm:ss.SSS" }}
           </td>
-          <td>{{ t(item[2]) }}</td>
+          <td>{{ t(item[2] == 'anger' ? 'emotion' : item[2]) }}</td>
           <td>{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
         </tr>
       </table>
     </div>
   </div>
-  
+
   <div *ngIf="emotions && currentTab === 'text'" class="mt-5">
     <div class="scrollable-list">
       <table
@@ -159,7 +159,7 @@
       >
         <tr *ngFor="let item of emotions" (click)="gotoPosition(item[0])">
           <td>{{ getDateVal(item[0]) | date:'mm:ss.SSS'}} - {{ getDateVal(item[1]) | date:'mm:ss.SSS'}}</td>
-          <td>{{item[2]}}</td>
+          <td>{{t(item[2] == 'anger' ? 'emotion' : item[2])}}</td>
           <td>{{item[3] | currency: '%': 'symbol':'1.2-2'}}</td>
         </tr>
       </table>

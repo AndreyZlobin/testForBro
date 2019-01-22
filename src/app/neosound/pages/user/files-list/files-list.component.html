@@ -168,11 +168,11 @@
       <a class="page-link" (click)="getPage(i - 1)">{{i}}</a>
     </li>
   </ul> -->
-  <div class="btn-toolbar mb-3 mt-3" *ngIf="!!files.length">
+  <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
     <div class="btn-group mr-2 mb-2">
-        <div *ngFor="let pageItem of pagesArr | paginate: { itemsPerPage: 100, currentPage: (page+1), totalItems: files.length }"></div>
+        <div *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }"></div>
         <pagination-controls
-          (pageChange)="page = $event"
+          (pageChange)="getPage($event - 1)"
           previousLabel="{{t('previous')}}"
           nextLabel="{{t('next')}}"></pagination-controls>
     </div>
