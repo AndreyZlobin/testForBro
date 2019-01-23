@@ -85,7 +85,7 @@ export class FilesListComponent implements OnInit {
   }
 
   getPage(page = 0, parameters = this.filter) {
-    this.isLoading = true;
+    // this.isLoading = true;
     const params = this.filter = {
       ...parameters,
       'itemsn': `${this.paginationNum}`,
@@ -103,7 +103,7 @@ export class FilesListComponent implements OnInit {
       this.totalCount = res.totalcount;
       this.pagesArr = Array.from({length: Math.ceil(res.totalcount / 100) }, (v, k) => k + 1);
       this.files = res.files;
-      this.isLoading = false;
+      // this.isLoading = false;
       // .sort((a, b) => {
       //   const x = +new Date(a.uploaddate);
       //   const y = +new Date(b.uploaddate);
