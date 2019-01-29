@@ -1,5 +1,6 @@
 .scrollable-list {
-	max-height: 300px;
+	max-height: calc(100vh - 490px);
+	min-height: 300px;
 	overflow-y: scroll;
 	tr {
 		cursor: pointer;

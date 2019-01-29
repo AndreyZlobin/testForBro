@@ -96,6 +96,7 @@ const translations = {
   'out of': 'de',
   'previous': 'anterior',
   'next': 'siguiente',
+  'On-hold': 'En espera',
 };
 
 @Injectable()

@@ -134,12 +134,12 @@
           <!-- <th></th> -->
           <!-- <th>%</th> -->
           <th></th>
-          <th></th>
+          <th style="min-width: 110px;"></th>
           <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of files">
+      <tr *ngFor="let item of files; let i = index">
         <td>{{ item.batchid}}</td>
         <td>{{ item.filename}}</td>
         <td>{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
@@ -155,9 +155,9 @@
         </td> -->
         <!-- <td></td> -->
         <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
-        <td>{{ item.pauses }}</td>
+        <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
         <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" [routerLink]="getLink(item)">{{t('File details')}}</button></td>
-        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="proccessFile(item)">{{t('Refresh')}}{{proccessing ? '...' : ''}}</button></td>
+        <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="proccessFile(item, i)">{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}</button></td>
         <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="delete(item.batchid, item.filename)">{{t('Delete')}}</button></td>
       </tr>
     </tbody>

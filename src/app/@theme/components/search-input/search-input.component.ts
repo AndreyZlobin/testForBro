@@ -30,6 +30,7 @@ export class SearchInputComponent {
   }
 
   onInput(val: string) {
+    console.log(val);
     this.search.emit(val);
   }
 }

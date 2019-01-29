@@ -14,7 +14,7 @@ export class FilesListComponent implements OnInit {
   errorMessage = '';
   filesResult = [];
   isLoading = true;
-  proccessing = false;
+  proccessing = {};
   pagesArr = [1];
   totalCount = 0;
   sortBy = 'uploaded';
@@ -223,19 +223,19 @@ export class FilesListComponent implements OnInit {
     return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(item.filename)}`;
   }
 
-  proccessFile(item) {
+  proccessFile(item, i) {
     // const params = item;
     const params = {
       'batchid': item.batchid,
       'filename': item.filename,
     };
-    this.proccessing = true;
+    this.proccessing[i] = true;
     this.filesService.processFile(params).subscribe(v => {
 
       // this.filesService.processFile(params, 3).subscribe(v => {
       //   this.filesService.processFile(params, 5).subscribe(v => {
       //     this.filesService.processFile(params, 7).subscribe(v => {
-            this.proccessing = false;
+            this.proccessing[i] = false;
             this.refresh();
       //     });
       //   });
@@ -263,6 +263,18 @@ export class FilesListComponent implements OnInit {
     }
     result = val.anger / 2 / 100;
     return 'rgba(255, 5, 5, ' + result + ')';
+  }
+
+  getOpacityLevelPause(val) {
+    if (!val) {
+      return '';
+    }
+    let result;
+    if (val < 1) {
+      result = 0;
+    }
+    result = val / 20;
+    return 'rgba(5, 5, 255, ' + result + ')';
   }
 
   getDateVal(val) {
