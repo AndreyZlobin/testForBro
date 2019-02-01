@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  HostListener
+} from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import * as WaveSurfer from "wavesurfer.js";
@@ -26,7 +32,7 @@ export class PlayerDetailsComponent
   attempsCount = 20;
   subRoute: Subscription;
   zoomLevel = 200;
-  errorMessage = '';
+  errorMessage = "";
   emotionsAnger;
   emotionsAge;
   emotionsFourclass;
@@ -34,11 +40,17 @@ export class PlayerDetailsComponent
   emotionsGender;
   sttfulltext;
   emotionsSttAnger;
-  currentTab = 'anger';
+  currentTab = "anger";
   tabsDisabled = false;
   isScroll = false;
   duration = 0;
-
+  @HostListener("document:keyup", ["$event"])
+  public handleKeyboardEvent(event: KeyboardEvent): void {
+    if (event.code === "Space") {
+      this.play();
+      event.stopPropagation();
+    }
+  }
   constructor(
     private filesService: FilesService,
     private router: Router,
@@ -48,31 +60,39 @@ export class PlayerDetailsComponent
     // test file
     // this.fileParams = {batchid: 1, filename: '2018-9-18_0:1:11.wav'};
 
-    this.subRoute = this.route.params.subscribe(params => {
-      if (params && params.filename && params.batchid) {
-        this.fileParams = {
-          filename: decodeURIComponent(params.filename),
-          batchid: decodeURIComponent(params.batchid),
-        };
-        this.filesService.getFile(this.fileParams).subscribe(res => {
-          this.fileUrl = res.url;
-          this.loadAudio();
-        },
-        (e) => {
-          this.errorMessage = e.error.message;
-          if (e.status === 502 || e.status === 404 || e.status === 429) {this.router.navigateByUrl('/404');}
-        });
+    this.subRoute = this.route.params.subscribe(
+      params => {
+        if (params && params.filename && params.batchid) {
+          this.fileParams = {
+            filename: decodeURIComponent(params.filename),
+            batchid: decodeURIComponent(params.batchid)
+          };
+          this.filesService.getFile(this.fileParams).subscribe(
+            res => {
+              this.fileUrl = res.url;
+              this.loadAudio();
+            },
+            e => {
+              this.errorMessage = e.error.message;
+              if (e.status === 502 || e.status === 404 || e.status === 429) {
+                this.router.navigateByUrl("/404");
+              }
+            }
+          );
 
-        this.filesService.setQuickFileParams({
-          'batchid': decodeURIComponent(params.batchid),
-          'filename': decodeURIComponent(params.filename),
-        });
+          this.filesService.setQuickFileParams({
+            batchid: decodeURIComponent(params.batchid),
+            filename: decodeURIComponent(params.filename)
+          });
+        }
+      },
+      e => {
+        if (e.status === 502 || e.status === 404 || e.status === 429) {
+          this.router.navigateByUrl("/404");
+        }
+        this.errorMessage = e.error.message;
       }
-    },
-    (e) => {
-      if (e.status === 502 || e.status === 404 || e.status === 429) {this.router.navigateByUrl('/404');}
-      this.errorMessage = e.error.message;
-    });
+    );
 
     if (!this.fileParams) {
       // this.router.navigateByUrl('/');
@@ -100,42 +120,111 @@ export class PlayerDetailsComponent
   }
 
   initWaveSurfer() {
-      this.wavesurfer = WaveSurfer.create({
-        container: "#myWavesurferContainer",
-        waveColor: "#3399CC",
-        progressColor: "#1CACE3",
-        scrollParent: true,
-        plugins: [
-          RegionsPlugin.create({
-            // plugin options ...
-          }),
-          TimelinePlugin.create({
-            container: "#timelineContainer",
-            timeInterval: this.timeInterval,
-            formatTimeCallback: (v) => {
-              const date = new Date(null);
-              date.setSeconds(Math.round(v));
-              if (Math.round(v) > 3600) {
-                return date.toISOString().substr(12, 8);
-              }
-              return date.toISOString().substr(14, 5);
+    this.wavesurfer = WaveSurfer.create({
+      container: "#myWavesurferContainer",
+      waveColor: "#3399CC",
+      progressColor: "#1CACE3",
+      scrollParent: true,
+      plugins: [
+        RegionsPlugin.create({
+          // plugin options ...
+        }),
+        TimelinePlugin.create({
+          container: "#timelineContainer",
+          timeInterval: pxPerSec => {
+            let retval = 1;
+            if (pxPerSec >= 25 * 100) {
+              retval = 0.01;
+            } else if (pxPerSec >= 25 * 40) {
+              retval = 0.025;
+            } else if (pxPerSec >= 25 * 10) {
+              retval = 0.1;
+            } else if (pxPerSec >= 25 * 4) {
+              retval = 0.25;
+            } else if (pxPerSec >= 25) {
+              retval = 1;
+            } else if (pxPerSec * 5 >= 25) {
+              retval = 5;
+            } else if (pxPerSec * 15 >= 25) {
+              retval = 15;
+            } else {
+              retval = Math.ceil(0.5 / pxPerSec) * 60;
             }
-          })
-        ]
-      });
-      this.loadAudio();
-      this.wavesurfer.on("ready", () => {
-        this.wavesurfer.toggleScroll();
-        this.wavesurferReady = true;
-        this.setRegions();
-      });
+            return retval;
+          },
+          primaryLabelInterval: pxPerSec => {
+            let retval = 1;
+            if (pxPerSec >= 25 * 100) {
+              retval = 15;
+            } else if (pxPerSec >= 25 * 40) {
+              retval = 10;
+            } else if (pxPerSec >= 25 * 10) {
+              retval = 15;
+            } else if (pxPerSec >= 25 * 4) {
+              retval = 10;
+            } else if (pxPerSec >= 25) {
+              retval = 5;
+            } else if (pxPerSec * 5 >= 25) {
+              retval = 10;
+            } else if (pxPerSec * 15 >= 25) {
+              retval = 18;
+            } else {
+              retval = Math.ceil(0.5 / pxPerSec) * 60;
+            }
+            return retval;
+          },
+          secondaryLabelInterval: pxPerSec => {
+            return Math.floor(10 / this.timeInterval(pxPerSec));
+          },
+          formatTimeCallback: (seconds, pxPerSec) => {
+            seconds = Number(seconds);
+            const minutes = Math.floor(seconds / 60);
+            seconds = seconds % 60;
+            let secondsStr = Math.round(seconds).toString();
+            if (pxPerSec >= 25 * 10) {
+              secondsStr = seconds.toFixed(0);
+            } else if (pxPerSec >= 25 * 1) {
+              secondsStr = seconds.toFixed(0);
+            }
+            if (minutes > 0) {
+              if (seconds < 10) {
+                secondsStr = "0" + secondsStr;
+              }
+              return `${minutes}:${secondsStr}`;
+            }
+            return "00:" + secondsStr;
+          }
+        })
+      ]
+    });
+    this.loadAudio();
+    this.wavesurfer.on("ready", () => {
+      this.wavesurfer.toggleScroll();
+      this.wavesurferReady = true;
+      this.setRegions();
+    });
   }
 
-  get timeInterval() {
-    if (this.duration === 0) {
-      return 1;
+  timeInterval(pxPerSec) {
+    let retval = 1;
+    if (pxPerSec >= 25 * 100) {
+      retval = 0.01;
+    } else if (pxPerSec >= 25 * 40) {
+      retval = 0.025;
+    } else if (pxPerSec >= 25 * 10) {
+      retval = 0.1;
+    } else if (pxPerSec >= 25 * 4) {
+      retval = 0.25;
+    } else if (pxPerSec >= 25) {
+      retval = 1;
+    } else if (pxPerSec * 5 >= 25) {
+      retval = 5;
+    } else if (pxPerSec * 15 >= 25) {
+      retval = 15;
+    } else {
+      retval = Math.ceil(0.5 / pxPerSec) * 60;
     }
-    return this.duration / 30;
+    return retval;
   }
 
   loadAudio() {
@@ -147,7 +236,9 @@ export class PlayerDetailsComponent
   play() {
     this.wavesurfer.playPause();
   }
-
+  trackElement(index: number, element: any) {
+    return element ? element.guid : null;
+  }
   ngOnInit() {
     this.getInfo();
     this.attempsCount = 20;
@@ -158,42 +249,42 @@ export class PlayerDetailsComponent
   }
 
   getInfo() {
-    this.filesService.getFileResultDetails(this.fileParams).subscribe(res => {
-      this.results = res;
-      console.log(res);
+    this.filesService.getFileResultDetails(this.fileParams).subscribe(
+      res => {
+        this.results = res;
 
-      this.duration = res.result.duration;
-      this.initWaveSurfer();
-      this.loadAudio();
-      if (this.results.result || this.attempsCount < 0) {
-        clearInterval(this.intervalRef);
-      }
-      if (this.results.result) {
-        // this.analysisResult = this.results.result;
+        this.duration = res.result.duration;
+        this.initWaveSurfer();
+        this.loadAudio();
+        if (this.results.result || this.attempsCount < 0) {
+          clearInterval(this.intervalRef);
+        }
+        if (this.results.result) {
+          // this.analysisResult = this.results.result;
 
-        if (this.results.result.anger) {
-          if (this.results.result.anger.ints) {
-            this.emotionsAnger = this.results.result.anger.ints;
-            this.emotions = this.emotionsAnger;
-            this.setRegions();
+          if (this.results.result.anger) {
+            if (this.results.result.anger.ints) {
+              this.emotionsAnger = this.results.result.anger.ints;
+              this.emotions = this.emotionsAnger;
+              this.setRegions();
+            }
+            if (this.results.result.anger.music) {
+              this.emotionsSounds = this.results.result.anger.music;
+            }
           }
-          if (this.results.result.anger.music) {
-            this.emotionsSounds = this.results.result.anger.music;
+          if (this.results.result.stt) {
+            if (this.results.result.stt.fulltext) {
+              this.sttfulltext = this.results.result.stt.fulltext;
+            }
+          }
+          if (this.results.result.merged) {
+            if (this.results.result.merged.intprobs) {
+              this.emotionsSttAnger = this.results.result.merged.intprobs;
+            }
           }
         }
-        if (this.results.result.stt) {
-          if (this.results.result.stt.fulltext) {
-            this.sttfulltext = this.results.result.stt.fulltext;
-          }
-        }
-        if (this.results.result.merged) {
-          if (this.results.result.merged.intprobs) {
-            this.emotionsSttAnger = this.results.result.merged.intprobs;
-          }
-        }
-      }
-    },
-    (e) => this.errorMessage = e.error.message,
+      },
+      e => (this.errorMessage = e.error.message)
     );
   }
 
@@ -212,17 +303,17 @@ export class PlayerDetailsComponent
       this.wavesurfer.addRegion({
         start: element[0],
         end: element[1],
-        color: this.getColor(element[3], element[2]),
+        color: this.getColor(element[3], element[2])
       });
     }
 
-    if (this.currentTab === 'text' && this.emotionsAnger) {
+    if (this.currentTab === "text" && this.emotionsAnger) {
       for (let index = 0; index < this.emotionsAnger.length; index++) {
         const element = this.emotionsAnger[index];
         this.wavesurfer.addRegion({
           start: element[0],
           end: element[1],
-          color: this.getColor(element[3], element[2]),
+          color: this.getColor(element[3], element[2])
         });
       }
     }
@@ -240,32 +331,65 @@ export class PlayerDetailsComponent
 
   getColor(val: any, type?: string) {
     switch (this.currentTab) {
-      case 'anger':
-        return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.7)';
-      case 'age':
-        if (type === 'young') return 'rgba(255,0,0, 0.7)';
-        if (type === 'mid') return 'rgba(0,255,0, 0.7)';
-        if (type === 'old') return 'rgba(0,0,255, 0.7)';
+      case "anger":
+        return (
+          "rgba(255, " +
+          (255 - (val - 50) * 5) +
+          ", " +
+          (255 - (val - 50) * 5) +
+          ", 0.7)"
+        );
+      case "age":
+        if (type === "young") return "rgba(255,0,0, 0.7)";
+        if (type === "mid") return "rgba(0,255,0, 0.7)";
+        if (type === "old") return "rgba(0,0,255, 0.7)";
         break;
-      case 'gender':
-        if (type === 'w') return 'rgba(255,0,0, 0.7)';
-        if (type === 'm') return 'rgba(0,0,255, 0.7)';
+      case "gender":
+        if (type === "w") return "rgba(255,0,0, 0.7)";
+        if (type === "m") return "rgba(0,0,255, 0.7)";
         break;
-      case 'beta':
-        if (type === 'Anger') return 'rgba(255, ' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 0.7)';
-        if (type === 'Neutral') return 'rgba(255, 255, 255, 0)';
-        if (type === 'Happy') return  'rgba(' + (255 - (val - 50) * 5) + ', 255, ' + (255 - (val - 50) * 5) + ', 0.7)';
-        if (type === 'Sadness') return 'rgba(' + (255 - (val - 50) * 5) + ', ' + (255 - (val - 50) * 5) + ', 255, 0.7)';
+      case "beta":
+        if (type === "Anger")
+          return (
+            "rgba(255, " +
+            (255 - (val - 50) * 5) +
+            ", " +
+            (255 - (val - 50) * 5) +
+            ", 0.7)"
+          );
+        if (type === "Neutral") return "rgba(255, 255, 255, 0)";
+        if (type === "Happy")
+          return (
+            "rgba(" +
+            (255 - (val - 50) * 5) +
+            ", 255, " +
+            (255 - (val - 50) * 5) +
+            ", 0.7)"
+          );
+        if (type === "Sadness")
+          return (
+            "rgba(" +
+            (255 - (val - 50) * 5) +
+            ", " +
+            (255 - (val - 50) * 5) +
+            ", 255, 0.7)"
+          );
         break;
-      case 'sounds':
-        return 'rgba(0,255,0, 0.7)';
-      case 'text':
+      case "sounds":
+        return "rgba(0,255,0, 0.7)";
+      case "text":
         const x = val / 2 + 50;
-        return 'rgba(255, ' + (255 - (x - 50) * 5) + ', ' + (255 - (x - 50) * 5) + ', 0.7)';
+        return (
+          "rgba(255, " +
+          (255 - (x - 50) * 5) +
+          ", " +
+          (255 - (x - 50) * 5) +
+          ", 0.7)"
+        );
       default:
         break;
     }
-    return 'rgba(255,0,0, 0.1)';
+    return "rgba(255,0,0, 0.1)";
   }
 
   gotoPosition(ms) {
@@ -283,24 +407,24 @@ export class PlayerDetailsComponent
   setTab(tab) {
     this.currentTab = tab;
     this.tabsDisabled = true;
-    setTimeout(() => this.tabsDisabled = false, 3000);
+    setTimeout(() => (this.tabsDisabled = false), 3000);
     switch (tab) {
-      case 'anger':
+      case "anger":
         this.emotions = this.emotionsAnger;
         break;
-      case 'age':
+      case "age":
         this.emotions = this.emotionsAge;
         break;
-      case 'gender':
+      case "gender":
         this.emotions = this.emotionsGender;
         break;
-      case 'beta':
+      case "beta":
         this.emotions = this.emotionsFourclass;
         break;
-      case 'sounds':
+      case "sounds":
         this.emotions = this.emotionsSounds;
         break;
-      case 'text':
+      case "text":
         this.emotions = this.emotionsSttAnger;
         break;
 

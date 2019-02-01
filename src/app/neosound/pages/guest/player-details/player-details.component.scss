@@ -1,19 +1,23 @@
 .scrollable-list {
-	max-height: calc(100vh - 490px);
-	min-height: 300px;
-	overflow-y: scroll;
-	tr {
-		cursor: pointer;
-	}
+  max-height: calc(100vh - calc(50em -128px));
+  min-height: calc(100vh - calc(50em - 128px));
+  overflow-y: scroll;
+  tr {
+    cursor: pointer;
+  }
 }
 .circle-i {
-	width: 10px;
-	height: 10px;
-	border-radius: 5px;
-	display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  display: inline-block;
 }
 
 .grad1 {
-    height: 14px;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.7), rgba(255, 5, 5, 0.7));
+  height: 14px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 5, 5, 0.7)
+  );
 }
