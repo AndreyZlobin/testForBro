@@ -42,6 +42,7 @@ import { AboutComponent } from './neosound/pages/about/about.component';
 import { MinutesSecondsPipe } from './neosound/minutes-seconds.pipe';
 
 import { FilesService } from './neosound/services/files.service';
+import { PlayerService } from './neosound/services/player.service';
 import { MediaRecorderService } from './neosound/services/media-recorder.service';
 import { UsersService } from './neosound/services/users.service';
 import { RequestsHttpInterceptor } from './neosound/shared/requests-http.interceptor';
@@ -81,6 +82,7 @@ import { PageNotFoundComponent } from './neosound/pages/page-not-found/page-not-
 import { LanguageService } from './neosound/services/language.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 // import { ForbiddenPasswordDirective } from './neosound/directives/forbidden-password.directive';
+import { IntervalDirective } from './neosound/directives/interval.detective';
 
 @NgModule({
   declarations: [
@@ -108,6 +110,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
       PieChartComponent,
       ApiPageComponent,
       PageNotFoundComponent,
+      IntervalDirective,
       // ForbiddenPasswordDirective,
 
       //ngx-admin
@@ -151,6 +154,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
       AuthGuard,
       UsersService,
       FilesService,
+      PlayerService,
       MediaRecorderService,
       {
         provide: HTTP_INTERCEPTORS,

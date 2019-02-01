@@ -6,6 +6,7 @@ import {
   HostListener
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
+import { PlayerService } from "../../../services/player.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
@@ -54,7 +55,8 @@ export class PlayerDetailsComponent
   constructor(
     private filesService: FilesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private playerService: PlayerService
   ) {
     this.fileParams = this.filesService.getQuickFileParams();
     // test file
@@ -202,6 +204,9 @@ export class PlayerDetailsComponent
       this.wavesurfer.toggleScroll();
       this.wavesurferReady = true;
       this.setRegions();
+    });
+    this.wavesurfer.on("audioprocess", (time) => {
+      this.playerService.setActtive(time);
     });
   }
 
@@ -393,8 +398,6 @@ export class PlayerDetailsComponent
   }
 
   gotoPosition(ms) {
-    // console.log(ms, this.wavesurfer.getDuration());
-    // console.log(ms / this.wavesurfer.getDuration());
     this.wavesurfer.seekTo(ms / this.wavesurfer.getDuration());
   }
 

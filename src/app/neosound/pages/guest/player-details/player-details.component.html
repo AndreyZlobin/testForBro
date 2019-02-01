@@ -78,36 +78,34 @@
     class="mt-2"
   >
     <div class="scrollable-list">
-      <table
-        class="table table-striped"
-        style="overflow-x:auto"
-      >
-        <tr *ngFor="let item of emotions;" (click)="gotoPosition(item[0])">
-          <td>
-            {{ getDateVal(item[0]) | date: "mm:ss.SSS" }} -
-            {{ getDateVal(item[1]) | date: "mm:ss.SSS" }}
-          </td>
-          <td>{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-          <td>{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
-        </tr>
+      <table class="table table-striped" style="overflow-x:auto">
+        <ng-container *ngFor="let item of emotions">
+          <tr (click)="gotoPosition(item[0])">
+            <td>
+              {{ getDateVal(item[0]) | date: "mm:ss.SSS" }} -
+              {{ getDateVal(item[1]) | date: "mm:ss.SSS" }}
+            </td>
+            <td>{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
+            <td>{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
+          </tr></ng-container
+        >
       </table>
     </div>
   </div>
 
   <div *ngIf="emotions && currentTab === 'text'" class="mt-5">
     <div class="scrollable-list">
-      <table
-        class="table table-striped"
-        style="overflow-x:auto"
-      >
-        <tr *ngFor="let item of emotions;" (click)="gotoPosition(item[0])">
-          <td>
-            {{ getDateVal(item[0]) | date: "mm:ss.SSS" }} -
-            {{ getDateVal(item[1]) | date: "mm:ss.SSS" }}
-          </td>
-          <td>{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-          <td>{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
-        </tr>
+      <table class="table table-striped" style="overflow-x:auto">
+        <ng-container *ngFor="let item of emotions">
+          <tr (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]">
+            <td>
+              {{ getDateVal(item[0]) | date: "mm:ss.SSS" }} -
+              {{ getDateVal(item[1]) | date: "mm:ss.SSS" }}
+            </td>
+            <td>{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
+            <td>{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
+          </tr>
+        </ng-container>
       </table>
     </div>
   </div>
