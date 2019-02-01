@@ -6,10 +6,10 @@
   >
     Back
   </button>
-  <h1>
+  <h2>
     {{ t("Details") }} <span>{{ fileParams.filename }}</span>
-  </h1>
-  <ul class="nav nav-tabs mt-3 mb-3">
+  </h2>
+  <ul class="nav nav-tabs mt-2 mb-2">
     <li class="nav-item">
       <a
         class="nav-link"
@@ -52,11 +52,11 @@
       >
         <i class="fa fa-play"></i>/<i class="fa fa-pause"></i>
       </button>
-      <div class="d-flex justify-content-start ml-auto mr-4">
-        <span class="font-weight-bold purple-text mr-3 mt-2"
+      <div class="d-flex justify-content-start ml-auto">
+        <span class="font-weight-bold purple-text mr-3 mt-1"
           ><i class="fa fa-search-plus"></i
         ></span>
-        <form class="range-field mt-2 float-right">
+        <form class="range-field mt-1 float-right">
           <input
             data-action="zoom"
             type="range"
@@ -67,16 +67,9 @@
             (input)="zoom($event)"
           />
         </form>
-        <span class="font-weight-bold purple-text ml-2 mt-2"
+        <span class="font-weight-bold purple-text ml-2 mt-1"
           ><i class="fa fa-search-minus"></i
         ></span>
-      </div>
-
-      <div class="my-4" *ngIf="currentTab !== 'results'">
-        <label>
-          <input type="checkbox" checked (click)="toggleScroll()" />
-          {{ t("Fit into window") }}
-        </label>
       </div>
     </div>
   </div>
@@ -109,7 +102,7 @@
   <!--&lt;!&ndash;<div style="background: green;" class="circle-i ml-3"></div> - music&ndash;&gt;-->
   <!--</div>-->
 
-  <div *ngIf="currentTab === 'text'" class="mt-3 mb-3">
+  <div *ngIf="currentTab === 'text'" class="mt-2 mb-2">
     <!--<h6 class="text-center">{{ t("Anger level") }}</h6>
     <div class="row">
       <div class="col-1 text-right">0%</div>

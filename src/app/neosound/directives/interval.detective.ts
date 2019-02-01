@@ -16,9 +16,9 @@ export class IntervalDirective implements OnInit {
     this.playerService.tick$.subscribe((time: any) => {
       if (time > this.start && time < this.end) {
         this.el.nativeElement.scrollIntoView();
-        this.el.nativeElement.style.border = "4px solid green";
+        this.el.nativeElement.style.color = "#009ad2";
       } else {
-        this.el.nativeElement.style.border = "";
+        this.el.nativeElement.style.color = "#4b4b4b";
       }
     });
   }
