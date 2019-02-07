@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MainComponent } from './neosound/components/main/main.component';
 import { LoginComponent } from './neosound/pages/auth/login/login.component';
 import { DashboardComponent } from './neosound/pages/dashboard/dashboard.component';
@@ -130,6 +130,7 @@ import { IntervalDirective } from './neosound/directives/interval.detective';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
+    ButtonsModule.forRoot(),
 
     NgbModule.forRoot(),
     ThemeModule.forRoot(),

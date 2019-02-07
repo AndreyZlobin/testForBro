@@ -13,6 +13,7 @@ import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js
 import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions.min.js";
 import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-player-details",
@@ -21,6 +22,7 @@ import { LanguageService } from "../../../services/language.service";
 })
 export class PlayerDetailsComponent
   implements OnInit, AfterViewInit, OnDestroy {
+  isLoading: boolean = true;
   fileParams;
   results;
   emotions: any[];
@@ -45,6 +47,7 @@ export class PlayerDetailsComponent
   tabsDisabled = false;
   isScroll = false;
   duration = 0;
+  radioModel = "Log";
   @HostListener("document:keyup", ["$event"])
   public handleKeyboardEvent(event: KeyboardEvent): void {
     if (event.code === "Space") {
@@ -56,7 +59,8 @@ export class PlayerDetailsComponent
     private filesService: FilesService,
     private router: Router,
     private route: ActivatedRoute,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private toastrService: ToastrService
   ) {
     this.fileParams = this.filesService.getQuickFileParams();
     // test file
@@ -163,11 +167,11 @@ export class PlayerDetailsComponent
             } else if (pxPerSec >= 25 * 10) {
               retval = 15;
             } else if (pxPerSec >= 25 * 4) {
-              retval = 10;
+              retval = 15;
             } else if (pxPerSec >= 25) {
-              retval = 5;
+              retval = 15;
             } else if (pxPerSec * 5 >= 25) {
-              retval = 10;
+              retval = 15;
             } else if (pxPerSec * 15 >= 25) {
               retval = 18;
             } else {
@@ -203,9 +207,10 @@ export class PlayerDetailsComponent
     this.wavesurfer.on("ready", () => {
       this.wavesurfer.toggleScroll();
       this.wavesurferReady = true;
+      this.isLoading = false;
       this.setRegions();
     });
-    this.wavesurfer.on("audioprocess", (time) => {
+    this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActtive(time);
     });
   }
@@ -221,7 +226,7 @@ export class PlayerDetailsComponent
     } else if (pxPerSec >= 25 * 4) {
       retval = 0.25;
     } else if (pxPerSec >= 25) {
-      retval = 1;
+      retval = 0.01;
     } else if (pxPerSec * 5 >= 25) {
       retval = 5;
     } else if (pxPerSec * 15 >= 25) {
@@ -253,6 +258,20 @@ export class PlayerDetailsComponent
     }, 20000);
   }
 
+  copyToClipboard(text: string): void {
+    const selBox = document.createElement("textarea");
+    selBox.style.position = "fixed";
+    selBox.style.left = "0";
+    selBox.style.top = "0";
+    selBox.style.opacity = "0";
+    selBox.value = text;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand("copy");
+    document.body.removeChild(selBox);
+    this.toastrService.info("Copied!");
+  }
   getInfo() {
     this.filesService.getFileResultDetails(this.fileParams).subscribe(
       res => {
