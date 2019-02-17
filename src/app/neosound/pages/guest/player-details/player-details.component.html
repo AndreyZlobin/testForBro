@@ -43,9 +43,7 @@
   </div>
   <div [ngClass]="{ 'd-none': currentTab === 'results' }">
     <div id="myWavesurferContainer">
-      <ng-template *ngIf="isLoading">
-        {{ t("Loading...") }}
-      </ng-template>
+      <div class="load-container load1" *ngIf="isLoading"><div class="loader">{{ t("Loading...") }}</div></div>
     </div>
     <div id="timelineContainer"></div>
     <div

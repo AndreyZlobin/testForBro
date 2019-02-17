@@ -196,6 +196,9 @@ export class PlayerDetailsComponent
               if (seconds < 10) {
                 secondsStr = "0" + secondsStr;
               }
+              if (minutes < 10) {
+                return `0${minutes}:${secondsStr}`;
+              }
               return `${minutes}:${secondsStr}`;
             }
             return "00:" + secondsStr;
@@ -203,13 +206,13 @@ export class PlayerDetailsComponent
         })
       ]
     });
-    this.loadAudio();
     this.wavesurfer.on("ready", () => {
       this.wavesurfer.toggleScroll();
       this.wavesurferReady = true;
       this.isLoading = false;
       this.setRegions();
     });
+    this.loadAudio();
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActtive(time);
     });
@@ -239,6 +242,7 @@ export class PlayerDetailsComponent
 
   loadAudio() {
     if (this.wavesurfer && this.fileUrl) {
+      this.isLoading = true;
       this.wavesurfer.load(this.fileUrl);
     }
   }
