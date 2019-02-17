@@ -3,7 +3,8 @@ import {
   OnInit,
   AfterViewInit,
   OnDestroy,
-  HostListener
+  HostListener,
+  ChangeDetectorRef
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { PlayerService } from "../../../services/player.service";
@@ -60,7 +61,8 @@ export class PlayerDetailsComponent
     private router: Router,
     private route: ActivatedRoute,
     private playerService: PlayerService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.fileParams = this.filesService.getQuickFileParams();
     // test file
@@ -206,13 +208,13 @@ export class PlayerDetailsComponent
         })
       ]
     });
+    this.loadAudio();
     this.wavesurfer.on("ready", () => {
       this.wavesurfer.toggleScroll();
-      this.wavesurferReady = true;
-      this.isLoading = false;
       this.setRegions();
+      this.isLoading = false;
+      this.cdRef.detectChanges();
     });
-    this.loadAudio();
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActtive(time);
     });
@@ -242,7 +244,6 @@ export class PlayerDetailsComponent
 
   loadAudio() {
     if (this.wavesurfer && this.fileUrl) {
-      this.isLoading = true;
       this.wavesurfer.load(this.fileUrl);
     }
   }
