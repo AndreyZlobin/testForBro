@@ -100,16 +100,16 @@
     *ngIf="emotions && currentTab !== 'results' && currentTab !== 'text'"
     class="mt-2"
   >
-    <div class="scrollable-list">
+    <div class="scrollable-list table-responsive">
       <table class="table table-striped" style="overflow-x:auto">
         <ng-container *ngFor="let item of emotions">
-          <tr (click)="gotoPosition(item[0])">
-            <td>
-              {{ getDateVal(item[0]) | date: "mm:ss.SSS" }} -
-              {{ getDateVal(item[1]) | date: "mm:ss.SSS" }}
+          <tr (click)="gotoPosition(item[0])"  class="d-flex">
+            <td class="col-1">
+              {{ getDateVal(item[0]) | date: "mm:ss" }} -
+              {{ getDateVal(item[1]) | date: "mm:ss" }}
             </td>
-            <td>{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-            <td>{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
+            <td class="col-3">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
+            <td class="col-8">{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
           </tr></ng-container
         >
       </table>
@@ -117,21 +117,22 @@
   </div>
 
   <div *ngIf="emotions && currentTab === 'text'" class="mt-2">
-    <div class="scrollable-list">
+    <div class="scrollable-list table-responsive">
       <ng-container *ngIf="radioModel === 'Log'">
         <table class="table table-striped" style="overflow-x:auto">
           <ng-container *ngFor="let item of emotions">
             <tr
+              class="d-flex"
               (click)="gotoPosition(item[0])"
               interval
               [timeInterval]="[item[0], item[1]]"
             >
-              <td>
-                {{ getDateVal(item[0]) | date: "mm:ss.SSS" }} -
-                {{ getDateVal(item[1]) | date: "mm:ss.SSS" }}
+              <td class="col-1">
+                {{ getDateVal(item[0]) | date: "mm:ss" }} -
+                {{ getDateVal(item[1]) | date: "mm:ss" }}
               </td>
-              <td>{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-              <td>
+              <td class="col-2">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
+              <td class="col-8">
                 {{
                   item[3] | currency: "%":"symbol":"1.2-2"
                 }}
