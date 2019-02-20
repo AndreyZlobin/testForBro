@@ -211,9 +211,10 @@ export class PlayerDetailsComponent
     this.loadAudio();
     this.wavesurfer.on("ready", () => {
       this.wavesurfer.toggleScroll();
-      this.setRegions();
+      this.wavesurferReady = true;
       this.isLoading = false;
       this.cdRef.detectChanges();
+      this.setRegions();
     });
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActtive(time);
