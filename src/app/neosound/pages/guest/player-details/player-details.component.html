@@ -7,7 +7,7 @@
     Back
   </button>
   <h2>
-    {{ t("Details") }} <span>{{ fileParams.filename }} {{isLoading}}</span>
+    {{ t("Details") }} <span>{{ fileParams.filename }}</span>
   </h2>
   <ul class="nav nav-tabs mt-2 mb-2">
     <li class="nav-item">
@@ -108,8 +108,8 @@
               {{ getDateVal(item[0]) | date: "mm:ss" }} -
               {{ getDateVal(item[1]) | date: "mm:ss" }}
             </td>
-            <td class="col-3">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-            <td class="col-8">{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
+            <td class="col-10">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
+            <td class="col-1">{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
           </tr></ng-container
         >
       </table>
@@ -131,8 +131,8 @@
                 {{ getDateVal(item[0]) | date: "mm:ss" }} -
                 {{ getDateVal(item[1]) | date: "mm:ss" }}
               </td>
-              <td class="col-2">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-              <td class="col-8">
+              <td class="col-10">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
+              <td class="col-1">
                 {{
                   item[3] | currency: "%":"symbol":"1.2-2"
                 }}
