@@ -13,6 +13,7 @@
       <nb-action class="control-item"  *ngIf="!isLoggedIn()"><a href="/auth/sign-up"  (click)="navigate('/auth/sign-up')">{{t('Sign up')}}</a></nb-action>
       <nb-action class="control-item"  *ngIf="!isLoggedIn()"><a href="/auth/login"  (click)="navigate('/auth/login')">{{t('Login')}}</a></nb-action>
       <nb-action class="control-item"  *ngIf="isLoggedIn()"><a href="/user/files"  (click)="navigate('/user/files')">{{t('Files')}}</a></nb-action>
+      <!-- <nb-action class="control-item"  *ngIf="isLoggedIn()"><a href="/user/batch"  (click)="navigate('/user/batch')">{{t('Batches')}}</a></nb-action> -->
       <nb-action class="control-item"  *ngIf="isLoggedIn()"><a href="/user/api" target="_blank" (click)="navigate('/user/api')">{{t('API')}}</a></nb-action>
       <nb-action class="control-item" ><a href="https://neosound.eu/" target="_blank">{{t('About')}}</a></nb-action>
   </nb-actions>

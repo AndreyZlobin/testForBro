@@ -22,6 +22,7 @@ const translationsSp = {
   'Reset Filter': 'Reiniciar filtro',
   'Export to CSV': 'Exportar a CSV',
   'Batch Id': 'Id de lote',
+  'Batches': 'De lote',
   'Name': 'Nombre',
   'Uploaded': 'Cargado',
   'Duration': 'Duración',
@@ -98,6 +99,15 @@ const translationsSp = {
   'next': 'siguiente',
   'On-hold': 'En espera',
   'Wrong credentials': 'Credenciales incorrectas',
+  'Batch': 'De lote',
+  'Total number of cells': 'Número total de celdas',
+  'Cells with pauses higher than threshold': 'Celdas con pausas superiores al umbral.',
+  'FILES': 'ARCHIVOS',
+  'DETAILS': 'DETALLES',
+  'Min.': 'Min.',
+  'Max.': 'Max.',
+  'Avg.': 'promedio',
+  'Med.': 'Medio',
 };
 const translationsRu = {
   'Error:': 'Ошибка:',
@@ -118,6 +128,7 @@ const translationsRu = {
   'Reset Filter': 'Сбросить фильтр',
   'Export to CSV': 'Экспорт в CSV',
   'Batch Id': 'Батч (агент)',
+  'Batches': 'Батчи (агенты)',
   'Name': 'Имя',
   'Uploaded': 'Загружено',
   'Duration': 'Длительность',
@@ -194,6 +205,15 @@ const translationsRu = {
   'next': 'след.',
   'On-hold': 'В ожидании',
   'Wrong credentials': 'Неправильные учетные данные',
+  'Batch': 'Батч (агент)',
+  'Total number of cells': 'Общее количество записей',
+  'Cells with pauses higher than threshold': 'Записи с паузами выше порога',
+  'FILES': 'ФАЙЛЫ',
+  'DETAILS': 'ПОДРОБНОСТИ',
+  'Min.': 'Mин.',
+  'Max.': 'Mакс.',
+  'Avg.': 'Средн.',
+  'Med.': 'Медиана',
 };
 
 @Injectable()

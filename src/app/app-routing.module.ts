@@ -37,6 +37,8 @@ import {PagesComponent} from './pages/pages.component';
 import { PlayerDetailsComponent } from './neosound/pages/guest/player-details/player-details.component';
 import { ApiPageComponent } from './neosound/pages/user/api-page/api-page.component';
 import { PageNotFoundComponent } from './neosound/pages/page-not-found/page-not-found.component';
+import { BatchListComponent } from './neosound/pages/user/batch-list/batch-list.component';
+import { BatchDetailsComponent } from './neosound/pages/user/batch-details/batch-details.component';
 
 const routes: Routes = [
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
@@ -83,6 +85,16 @@ const routes: Routes = [
         path: 'user/result/:id',
         canActivate: [ AuthGuard ],
         component: FileResultsComponent
+      },
+      {
+        path: 'user/batch',
+        canActivate: [ AuthGuard ],
+        component: BatchListComponent,
+      },
+      {
+        path: 'user/batch/:id',
+        canActivate: [ AuthGuard ],
+        component: BatchDetailsComponent,
       },
       {
         path: 'user/api',

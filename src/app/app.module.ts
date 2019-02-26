@@ -83,6 +83,8 @@ import { LanguageService } from './neosound/services/language.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 // import { ForbiddenPasswordDirective } from './neosound/directives/forbidden-password.directive';
 import { IntervalDirective } from './neosound/directives/interval.detective';
+import { BatchListComponent } from './neosound/pages/user/batch-list/batch-list.component';
+import { BatchDetailsComponent } from './neosound/pages/user/batch-details/batch-details.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +113,8 @@ import { IntervalDirective } from './neosound/directives/interval.detective';
       ApiPageComponent,
       PageNotFoundComponent,
       IntervalDirective,
+      BatchListComponent,
+      BatchDetailsComponent,
       // ForbiddenPasswordDirective,
 
       //ngx-admin
