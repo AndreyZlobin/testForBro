@@ -85,12 +85,23 @@ export class HeaderComponent implements OnInit {
     return lang && (lang === ln) || !lang && ln === 'en';
   }
 
-  english() {
-    localStorage.setItem('lang', 'en');
+  setLanguage(val = 'en') {
+    localStorage.setItem('lang', val);
   }
 
-  spanish() {
-    localStorage.setItem('lang', 'sp');
+  getCurrentLanguageName() {
+    const lang = localStorage.getItem('lang');
+    const current = lang || 'en';
+    switch (current) {
+      case 'en':
+        return 'English';
+      case 'sp':
+        return 'Español';
+      case 'ru':
+        return 'Русский';
+      default:
+        return 'English';
+    }
   }
 
   t(v) {

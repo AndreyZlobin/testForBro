@@ -52,13 +52,28 @@
     <nb-action class="control-item">
       <nb-search type="rotate-layout" (click)="startSearch()"></nb-search>
     </nb-action> -->
-    <nb-action class="control-item" style="line-height: 2.25rem; cursor: pointer;">
-      <a type="rotate-layout mr-3" (click)="english()" [ngClass]="{'font-weight-bold': getLanguage('en')}">
+    <!-- <nb-action class="control-item" style="line-height: 2.25rem; cursor: pointer;">
+      <a type="rotate-layout mr-3" (click)="setLanguage('en')" [ngClass]="{'font-weight-bold': getLanguage('en')}">
         English
       </a>
-      <a type="rotate-layout" (click)="spanish()" [ngClass]="{'font-weight-bold': getLanguage('sp')}">
+      <a type="rotate-layout" (click)="setLanguage('sp')" [ngClass]="{'font-weight-bold': getLanguage('sp')}">
         Español
       </a>
+      <a type="rotate-layout" (click)="setLanguage('ru')" [ngClass]="{'font-weight-bold': getLanguage('ru')}">
+        Русский
+      </a>
+    </nb-action> -->
+    <nb-action class="control-item" style="z-index: 1; line-height: 2.25rem; cursor: pointer;">
+      <div class="dropdown ghost-dropdown" ngbDropdown>
+        <button type="button" class="btn btn-sm" ngbDropdownToggle>
+          {{ getCurrentLanguageName() }}
+        </button>
+        <ul ngbDropdownMenu class="dropdown-menu">
+          <li class="dropdown-item" (click)="setLanguage('en')">English</li>
+          <li class="dropdown-item" (click)="setLanguage('sp')">Español</li>
+          <li class="dropdown-item" (click)="setLanguage('ru')">Русский</li>
+        </ul>
+      </div>
     </nb-action>
 
     <!-- <nb-action class="control-item" ><a href="#" routerLink="/guest/quicktest">Try</a></nb-action>
