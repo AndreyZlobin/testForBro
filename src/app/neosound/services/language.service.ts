@@ -108,6 +108,7 @@ const translationsSp = {
   'Max.': 'Max.',
   'Avg.': 'promedio',
   'Med.': 'Medio',
+  'Keywords': 'Keywords'
 };
 const translationsRu = {
   'Error:': 'Ошибка:',
@@ -214,6 +215,7 @@ const translationsRu = {
   'Max.': 'Mакс.',
   'Avg.': 'Средн.',
   'Med.': 'Медиана',
+  'Keywords': 'Ключевые слова'
 };
 
 @Injectable()

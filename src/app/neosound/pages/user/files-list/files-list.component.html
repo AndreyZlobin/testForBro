@@ -130,6 +130,7 @@
           <th><a (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
             <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
           </th>
+          <th>{{t('Keywords')}}</th>
           <!-- <th>Beta</th> -->
           <!-- <th></th> -->
           <!-- <th>%</th> -->
@@ -156,6 +157,11 @@
         <!-- <td></td> -->
         <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
         <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
+        <td>
+          <div *ngIf="item.keywords">
+            {{item.keywords}}
+          </div>
+        </td>
         <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" [routerLink]="getLink(item)">{{t('File details')}}</button></td>
         <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="proccessFile(item, i)">{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}</button></td>
         <td><button class="btn p-2 btn-secondary" style="cursor: pointer;" (click)="delete(item.batchid, item.filename)">{{t('Delete')}}</button></td>
