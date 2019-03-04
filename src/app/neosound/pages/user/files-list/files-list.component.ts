@@ -35,6 +35,7 @@ export class FilesListComponent implements OnInit {
   angertoAll = true;
   pausefromAll = true;
   pausetoAll = true;
+  keywordsOnly = false;
   filename = '';
   paginationNum = 100;
 
@@ -387,6 +388,7 @@ export class FilesListComponent implements OnInit {
     this.angertoAll = true;
     this.pausefromAll = true;
     this.pausetoAll = true;
+    this.keywordsOnly = false;
     this.filename = '';
     this.filter = {
       'itemsn': '100',
@@ -433,6 +435,7 @@ export class FilesListComponent implements OnInit {
       'pauseto': !this.pausetoAll ? '' + (this.pausefrom > this.pauseto ? 10000 : this.pauseto) : '',
       'batchid': !this.batchidAll ? '' + this.batchid : '',
       'filename': this.filename,
+      'keywordsOnly': this.keywordsOnly,
     };
     Object.keys(this.filter).forEach((key) => (this.filter[key] === '' || this.filter[key] === undefined || this.filter[key] === null) && delete this.filter[key]);
     this.getPage(0, this.filter);

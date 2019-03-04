@@ -108,7 +108,8 @@ const translationsSp = {
   'Max.': 'Max.',
   'Avg.': 'promedio',
   'Med.': 'Medio',
-  'Keywords': 'Keywords'
+  'Keywords': 'Keywords',
+  'show only keywods': 'mostrar solo palabras clave',
 };
 const translationsRu = {
   'Error:': 'Ошибка:',
@@ -215,7 +216,8 @@ const translationsRu = {
   'Max.': 'Mакс.',
   'Avg.': 'Средн.',
   'Med.': 'Медиана',
-  'Keywords': 'Ключевые слова'
+  'Keywords': 'Ключевые слова',
+  'show only keywods': 'Показать только ключевые слова',
 };
 
 @Injectable()
