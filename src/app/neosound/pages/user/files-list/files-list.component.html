@@ -32,10 +32,11 @@
 
   </div> -->
   <div class="row">
-    <div class="col col-md-3">
+    <div class="col col-md-2">
         <div class="row">
           <div class="col-12">
-              <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="{{t('Search')}}" class="form-control form-control-lg"  style="border: 1px solid #dfe3e9;display: inline;"/>
+              <div class="mb-2">{{t('File')}}</div>
+              <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="{{t('Search')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/>
           </div>
           <div class="col-12 pt-3">
             <div class="mb-2">{{t('Batch Id')}}</div>
@@ -124,15 +125,15 @@
               </label>
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-12">
             <button class="btn btn-primary mt-4 w-100" (click)="filterIt()">{{t('Filter')}}</button>
           </div>
-          <div class="col-6">
+          <div class="col-12">
             <button class="btn btn-secondary mt-4 w-100" (click)="resetFilter()">{{t('Reset Filter')}}</button>
           </div>
         </div>
     </div>
-    <div class="col col-md-9 pl-2">
+    <div class="col col-md-10 pl-2">
       <table class="table">
         <thead>
           <tr>
