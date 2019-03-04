@@ -35,8 +35,8 @@
     <div class="col col-md-2">
         <div class="row">
           <div class="col-12">
-              <div class="mb-2">{{t('File')}}</div>
-              <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="{{t('Search')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/>
+              <div class="mb-2">{{t('Name')}}</div>
+              <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/>
           </div>
           <div class="col-12 pt-3">
             <div class="mb-2">{{t('Batch Id')}}</div>
@@ -49,7 +49,7 @@
             </div> -->
           </div>
           <div class="col-12 pt-3">
-            <div class="mb-2">{{t('Date')}}</div>
+            <div class="mb-2">{{t('Uploaded')}}</div>
             <div class="input-group">
               <ng-datepicker *ngIf="dateVisible" [(ngModel)]="datefrom" [options]="datePickerFromOptions" class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;"></ng-datepicker>
               <ng-datepicker *ngIf="dateVisible" [(ngModel)]="dateto" [options]="datePickerToOptions" class="form-control-bak form-control-lg-bak form-gr-last" style=""></ng-datepicker>
@@ -121,7 +121,7 @@
             <div class="mt-3">
               <label>
                 <input [(ngModel)]="keywordsOnly" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-                {{t('show only keywods')}}
+                {{t('show only keywords')}}
               </label>
             </div>
           </div>

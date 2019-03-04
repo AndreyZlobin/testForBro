@@ -110,7 +110,7 @@ const translationsSp = {
   'Avg.': 'promedio',
   'Med.': 'Medio',
   'Keywords': 'Keywords',
-  'show only keywods': 'mostrar solo palabras clave',
+  'show only keywords': 'mostrar solo palabras clave',
 };
 const translationsRu = {
   'Error:': 'Ошибка:',
@@ -219,7 +219,7 @@ const translationsRu = {
   'Avg.': 'Средн.',
   'Med.': 'Медиана',
   'Keywords': 'Ключевые слова',
-  'show only keywods': 'Показать только ключевые слова',
+  'show only keywords': 'Показать только ключевые слова',
 };
 
 @Injectable()
