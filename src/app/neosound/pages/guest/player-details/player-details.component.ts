@@ -250,7 +250,7 @@ export class PlayerDetailsComponent
   }
 
   play() {
-    this.wavesurfer.playPause();
+    this.wavesurfer && this.wavesurfer.playPause();
   }
   trackElement(index: number, element: any) {
     return element ? element.guid : null;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FilesService } from '../../../services/files.service';
 import { DatepickerOptions } from 'ng2-datepicker';
 import { frLocale } from 'ngx-bootstrap';
@@ -38,6 +38,7 @@ export class FilesListComponent implements OnInit {
   keywordsOnly = false;
   filename = '';
   paginationNum = 100;
+  dateVisible = true;
 
   datePickerFromOptions: DatepickerOptions = {
     minYear: 1970,
@@ -51,7 +52,7 @@ export class FilesListComponent implements OnInit {
     // maxDate: new Date(Date.now()),  // Maximal selectable date
     barTitleIfEmpty: 'Click to select a date',
     placeholder: 'from', // HTML input placeholder attribute (default: '')
-    addClass: 'form-control form-control-lg', // Optional, value to pass on to [ngClass] on the input field
+    addClass: 'form-control form-control-lg form-gr-first', // Optional, value to pass on to [ngClass] on the input field
     addStyle: {'width': '100%'}, // Optional, value to pass to [ngStyle] on the input field
     fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
     useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
@@ -69,13 +70,16 @@ export class FilesListComponent implements OnInit {
     // maxDate: new Date(Date.now()),  // Maximal selectable date
     barTitleIfEmpty: 'Click to select a date',
     placeholder: 'to', // HTML input placeholder attribute (default: '')
-    addClass: 'form-control form-control-lg', // Optional, value to pass on to [ngClass] on the input field
+    addClass: 'form-control form-control-lg form-gr-last', // Optional, value to pass on to [ngClass] on the input field
     addStyle: {'width': '100%'}, // Optional, value to pass to [ngStyle] on the input field
     fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
     useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
   };
 
-  constructor(private filesService: FilesService) { }
+  constructor(
+    private filesService: FilesService,
+    private cd: ChangeDetectorRef,
+    ) { }
 
   ngOnInit() {
     // this.resetFilter();
@@ -373,8 +377,10 @@ export class FilesListComponent implements OnInit {
   }
 
   resetFilter() {
-    this.datefrom = '';
-    this.dateto = '';
+    this.dateVisible = false;
+    this.datefrom = undefined;
+    this.dateto = undefined;
+    setTimeout(() => this.dateVisible = true, 0);
     this.angerfrom = null;
     this.angerto = null;
     this.pausefrom = null;
@@ -404,6 +410,7 @@ export class FilesListComponent implements OnInit {
     };
     this.getPage(0, this.filter);
     this.filesService.setFilter(this.filter);
+    this.cd.detectChanges();
   }
 
   exportCSV() {
@@ -427,13 +434,13 @@ export class FilesListComponent implements OnInit {
   filterIt() {
     this.filter = {
       ...this.filter,
-      'datetimefrom': !this.datefromAll ? this.datefrom : '',
-      'datetimeto': !this.datetoAll ? this.dateto : '',
-      'angervolfrom': !this.angerfromAll ? '' + this.angerfrom : '',
-      'angervolto': !this.angertoAll ? '' + (this.angerfrom > this.angerto ? 100 : this.angerto) : '',
-      'pausefrom': !this.pausefromAll ? '' + this.pausefrom : '',
-      'pauseto': !this.pausetoAll ? '' + (this.pausefrom > this.pauseto ? 10000 : this.pauseto) : '',
-      'batchid': !this.batchidAll ? '' + this.batchid : '',
+      'datetimefrom': this.datefrom || '',
+      'datetimeto': this.dateto || '',
+      'angervolfrom': this.angerfrom && '' + this.angerfrom || '',
+      'angervolto': (this.angerfrom || this.angerto) ? '' + (this.angerfrom > this.angerto ? 100 : this.angerto) : '',
+      'pausefrom': this.pausefrom && '' + this.pausefrom || '',
+      'pauseto': (this.pausefrom || this.pauseto) ? '' + (this.pausefrom > this.pauseto ? 10000 : this.pauseto) : '',
+      'batchid': this.batchid && '' + this.batchid || '',
       'filename': this.filename,
       'keywordsOnly': this.keywordsOnly,
     };

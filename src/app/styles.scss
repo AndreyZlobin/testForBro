@@ -24,3 +24,16 @@
 .ngx-datepicker-container {
 	z-index: 9;
 }
+.input-group .form-gr-first {
+	border-top-left-radius: 0.375rem;
+	border-bottom-left-radius: 0.375rem;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+.input-group .form-gr-last {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 0.375rem;
+	border-bottom-right-radius: 0.375rem;
+	margin-left: -1px;
+}

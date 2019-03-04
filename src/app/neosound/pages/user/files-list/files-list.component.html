@@ -34,79 +34,88 @@
   <div class="row">
     <div class="col col-md-3">
         <div class="row">
-          <div class="col-12 mb-3 ">
+          <div class="col-12">
               <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="{{t('Search')}}" class="form-control form-control-lg"  style="border: 1px solid #dfe3e9;display: inline;"/>
           </div>
-          <div class="col-12">
+          <div class="col-12 pt-3">
             <div class="mb-2">{{t('Batch Id')}}</div>
-            <input [(ngModel)]="batchid" [ngModelOptions]="{standalone: true}" type="text" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="" [disabled]="batchidAll">
-            <div class="mt-1">
+            <input [(ngModel)]="batchid" [ngModelOptions]="{standalone: true}" type="text" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="">
+            <!-- <div class="mt-1">
               <label>
                   <input [(ngModel)]="batchidAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
                   {{t('All')}}
               </label>
-            </div>
+            </div> -->
           </div>
-          <div class="col-6">
+          <div class="col-12 pt-3">
             <div class="mb-2">{{t('Date')}}</div>
-            <ng-datepicker [(ngModel)]="datefrom" [options]="datePickerFromOptions" class="form-control-bak form-control-lg-bak" style="width: 100%; padding-right: 0px"></ng-datepicker>
-            <div class="mt-1">
+            <div class="input-group">
+              <ng-datepicker *ngIf="dateVisible" [(ngModel)]="datefrom" [options]="datePickerFromOptions" class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;"></ng-datepicker>
+              <ng-datepicker *ngIf="dateVisible" [(ngModel)]="dateto" [options]="datePickerToOptions" class="form-control-bak form-control-lg-bak form-gr-last" style=""></ng-datepicker>
+            </div>
+            <!-- <div class="mt-1">
               <label>
                   <input [(ngModel)]="datefromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
                   {{t('All')}}
               </label>
-            </div>
+            </div> -->
           </div>
-          <div class="col-6">
+          <!-- <div class="col-6">
             <div class="mb-2">&nbsp;</div>
-            <ng-datepicker [(ngModel)]="dateto" [options]="datePickerToOptions" class="form-control-bak form-control-lg-bak" style="width: 100%"></ng-datepicker>
+            <ng-datepicker [(ngModel)]="dateto" [options]="datePickerToOptions" class="form-control form-control-bak form-control-lg-bak" style="width: 100%"></ng-datepicker>
             <div class="mt-1">
               <label>
                   <input [(ngModel)]="datetoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
                   {{t('All')}}
               </label>
             </div>
-          </div>
-          <div class="col-6">
+          </div> -->
+          <div class="col-12 pt-3">
             <div class="mb-2">{{t('Emotion')}}</div>
-            <input [(ngModel)]="angerfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}" [disabled]="angerfromAll">
-            <div class="mt-1">
+            <div class="input-group">
+              <input [(ngModel)]="angerfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}">
+              <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; " placeholder="{{t('to')}}">
+            </div>
+            <!-- <div class="mt-1">
               <label>
                   <input [(ngModel)]="angerfromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
                   {{t('All')}}
               </label>
-            </div>
+            </div> -->
           </div>
-          <div class="col-6">
+          <!-- <div class="col-6">
             <div class="mb-2">&nbsp;</div>
-            <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; " placeholder="{{t('to')}}" [disabled]="angertoAll">
+            <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; " placeholder="{{t('to')}}">
             <div class="mt-1">
               <label>
                   <input [(ngModel)]="angertoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
                   {{t('All')}}
               </label>
             </div>
-          </div>
-          <div class="col-6">
+          </div> -->
+          <div class="col-12 pt-3">
             <div class="mb-2">{{t('Avg.Pause')}}</div>
-            <input [(ngModel)]="pausefrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}" [disabled]="pausefromAll">
-            <div class="mt-1">
+            <div class="input-group">
+              <input [(ngModel)]="pausefrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}">
+              <input [(ngModel)]="pauseto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('to')}}">
+            </div>
+            <!-- <div class="mt-1">
               <label>
                 <input [(ngModel)]="pausefromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
                 {{t('All')}}
               </label>
-            </div>
+            </div> -->
           </div>
-          <div class="col-6">
+          <!-- <div class="col-6">
             <div class="mb-2">&nbsp;</div>
-            <input [(ngModel)]="pauseto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('to')}}" [disabled]="pausetoAll">
+            <input [(ngModel)]="pauseto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('to')}}">
             <div class="mt-1">
               <label>
                 <input [(ngModel)]="pausetoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
                 {{t('All')}}
               </label>
             </div>
-          </div>
+          </div> -->
           <div class="col-12">
             <div class="mt-3">
               <label>
