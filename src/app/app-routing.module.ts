@@ -52,6 +52,10 @@ const routes: Routes = [
         component: AboutComponent
       },
       {
+        path: 'home',
+        component: DashboardComponent
+      },
+      {
         path: 'admin',
         canActivate: [ AuthGuard ],
         component: AdminDashboardComponent

@@ -1,25 +1,55 @@
-<p>
-  This is protected area!
-</p>
-
-<h4>Users:</h4>
-<ul>
-  <li *ngFor="let user of users$ | async">
-    {{ user.name }}
-  </li>
-</ul>
-
-<h4>Data:</h4>
-<ul>
-  <li *ngFor="let user of data$ | async">
-    {{ user.name }}
-  </li>
-</ul>
-
-<button (click)="loadData()">
-  LoadData
-</button>
-
-<button (click)="logout()">
-  Logout
-</button>
+<div class="row">
+  <div class="col-12"><h1>Stats</h1></div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <ngx-charts-bar-horizontal-2d
+          [results]="data"
+          animations="true"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [legendTitle]="legendTitle"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [tooltipDisabled]="tooltipDisabled"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          [showGridLines]="showGridLines"
+          [barPadding]="barPadding"
+          [roundDomains]="roundDomains"
+          [roundEdges]="roundEdges"
+          [xScaleMax]="xScaleMax"
+        >
+        </ngx-charts-bar-horizontal-2d>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <ngx-charts-bar-horizontal-2d
+          [results]="data"
+          animations="true"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [legendTitle]="legendTitle"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [tooltipDisabled]="tooltipDisabled"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          [showGridLines]="showGridLines"
+          [barPadding]="barPadding"
+          [roundDomains]="roundDomains"
+          [roundEdges]="roundEdges"
+          [xScaleMax]="xScaleMax"
+        >
+        </ngx-charts-bar-horizontal-2d>
+      </div>
+    </div>
+  </div>
+</div>
