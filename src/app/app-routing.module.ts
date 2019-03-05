@@ -48,12 +48,13 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {
-        path: 'about',
-        component: AboutComponent
+        path: 'home',
+        canActivate: [ AuthGuard ],
+        component: DashboardComponent
       },
       {
-        path: 'home',
-        component: DashboardComponent
+        path: 'about',
+        component: AboutComponent
       },
       {
         path: 'admin',
@@ -127,7 +128,7 @@ const routes: Routes = [
       {
         path: '',
         canActivate: [ AuthGuard ],
-        component: QuickTestComponent
+        component: DashboardComponent,
       },
     ]
   },

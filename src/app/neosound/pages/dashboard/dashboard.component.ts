@@ -108,6 +108,24 @@ export class DashboardComponent {
   trimYAxisTicks = true;
   maxXAxisTickLength = 16;
   maxYAxisTickLength = 16;
+  colorScheme = {
+    name: "custom",
+    selectable: true,
+    group: "custom",
+    domain: [
+      "#009AD2",
+      "#E36B68",
+      "#00A576",
+      "#8661B3",
+      "#9C4995",
+      "#A72F71",
+      "#E86765",
+      "#EB9A28",
+      "#EB9A28",
+      "#F9F871",
+      "#6677C7"
+    ]
+  };
 
   constructor(private router: Router) {}
 
