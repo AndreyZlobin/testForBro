@@ -4,7 +4,7 @@
     <div class="card">
       <div class="card-body">
         <ngx-charts-bar-horizontal-2d
-          [results]="data"
+          [results]="data_1"
           animations="true"
           [scheme]="colorScheme"
           [gradient]="gradient"
@@ -26,7 +26,7 @@
         </ngx-charts-bar-horizontal-2d>
       </div>
       <div class="card-footer">
-        Total: 222
+        Total: {{getTotal(data_1)}}
       </div>
     </div>
   </div>
@@ -34,7 +34,7 @@
     <div class="card">
       <div class="card-body">
         <ngx-charts-bar-horizontal-2d
-          [results]="data"
+          [results]="data_2"
           animations="true"
           [scheme]="colorScheme"
           [gradient]="gradient"
@@ -56,7 +56,7 @@
         </ngx-charts-bar-horizontal-2d>
       </div>
       <div class="card-footer">
-        Total: 222
+        Total: {{getTotal(data_2)}}
       </div>
     </div>
   </div>

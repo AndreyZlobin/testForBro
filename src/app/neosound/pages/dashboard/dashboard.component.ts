@@ -8,72 +8,78 @@ import { Observable } from "rxjs";
 })
 export class DashboardComponent {
   public users$: Observable<any>;
-  public data = [
+  public data_1 = [
     {
-      name: "operaor 1",
+      name: "Operator 1",
       series: [
         {
-          name: "2010",
-          value: 40632
-        },
-        {
-          name: "2000",
-          value: 36953
-        },
-        {
-          name: "1990",
-          value: 31476
+          name: "Calls",
+          value: 1521
         }
       ]
     },
     {
-      name: "operaor 2",
+      name: "Operator 2",
       series: [
         {
-          name: "2010",
-          value: 49737
-        },
-        {
-          name: "2000",
-          value: 45986
-        },
-        {
-          name: "1990",
-          value: 37060
+          name: "Calls",
+          value: 1612
         }
       ]
     },
     {
-      name: "operaor 3",
+      name: "Operator 3",
       series: [
         {
-          name: "2010",
-          value: 36745
-        },
-        {
-          name: "2000",
-          value: 34774
-        },
-        {
-          name: "1990",
-          value: 29476
+          name: "Calls",
+          value: 1326
         }
       ]
     },
     {
-      name: "operaor 4",
+      name: "Operator 4",
       series: [
         {
-          name: "2010",
-          value: 36240
-        },
+          name: "Calls",
+          value: 2800
+        }
+      ]
+    }
+  ];
+  public data_2 = [
+    {
+      name: "Operator 1",
+      series: [
         {
-          name: "2000",
-          value: 32543
-        },
+          name: "Minutes",
+          value: 4560
+        }
+      ]
+    },
+    {
+      name: "Operator 2",
+      series: [
         {
-          name: "1990",
-          value: 26424
+          name: "Minutes",
+          value: 4856
+        }
+      ]
+    },
+    {
+      name: "Operator 3",
+      series: [
+        {
+          name: "Minutes",
+          value: 3924
+        }
+      ]
+    },
+    {
+      name: "Operator 4",
+      series: [
+        {
+          name: "Minutes",
+          value: 3624
         }
       ]
     }
@@ -82,12 +88,12 @@ export class DashboardComponent {
   showXAxis = true;
   showYAxis = true;
   gradient = false;
-  showLegend = true;
+  showLegend = false;
   legendTitle = "Legend";
   showXAxisLabel = true;
   tooltipDisabled = false;
   xAxisLabel = "Operator";
-  showYAxisLabel = true;
+  showYAxisLabel = false;
   yAxisLabel = "Number Of Calls";
   showGridLines = true;
   innerPadding = "10%";
@@ -108,6 +114,7 @@ export class DashboardComponent {
   trimYAxisTicks = true;
   maxXAxisTickLength = 16;
   maxYAxisTickLength = 16;
+  legendPosition = "below";
   colorScheme = {
     name: "custom",
     selectable: true,
@@ -133,5 +140,15 @@ export class DashboardComponent {
 
   public logout() {
     this.router.navigateByUrl("/");
+  }
+  public getTotal(data: any[]): number {
+    return data.reduce((accumulator, currentValue) => {
+      return (
+        accumulator +
+        currentValue.series.reduce((acc, cur) => {
+          return acc + cur.value;
+        }, 0)
+      );
+    }, 0);
   }
 }
