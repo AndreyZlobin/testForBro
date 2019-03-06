@@ -75,6 +75,7 @@ export class FilesListComponent implements OnInit {
     fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
     useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
   };
+  private sideFilterHasClass = false;
 
   constructor(
     private filesService: FilesService,
@@ -87,6 +88,18 @@ export class FilesListComponent implements OnInit {
     this.sortBy = this.filter.sortby;
     this.sort = this.filter.sortorder;
     this.getPage(0, this.filter);
+
+    // const els = document.getElementsByClassName('scrollable-container');
+    // const el = els[0];
+    // el && el.addEventListener('scroll', (e) => {
+    //   if (el.scrollTop > 75 && !this.sideFilterHasClass) {
+    //     document.getElementById('side-filter').classList.add('scrolled');
+    //     this.sideFilterHasClass = true;
+    //   } else if (el.scrollTop < 75 && this.sideFilterHasClass) {
+    //     document.getElementById('side-filter').classList.remove('scrolled');
+    //     this.sideFilterHasClass = false;
+    //   }
+    // });
   }
 
   getPage(page = 0, parameters = this.filter) {

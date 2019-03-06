@@ -44,3 +44,8 @@ td {
     width: 1%;
     margin-bottom: 0;
 }
+#side-filter {
+	&.scrolled {
+		// top: 75px;
+	}
+}

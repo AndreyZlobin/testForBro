@@ -1,19 +1,5 @@
 <!--<h1>Files</h1>-->
 
-<div class="row mb-1">
-  <div class="col">
-    <h1>{{t('Files')}}</h1>
-  </div>
-  <div class="col">
-    <div class="row mb-1">
-      <!-- <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div> -->
-      <div class="col text-right pl-0" *ngIf="!isLoading">
-          <button class="btn btn-info ml-5 pull-right mt-1 btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <div class="alert alert-danger" *ngIf="errorMessage">{{t('Error:')}}' {{errorMessage}}</div>
 <div *ngIf="!isLoading; else loading" class="">
@@ -31,9 +17,10 @@
   <!-- <div class="row mb-3">
 
   </div> -->
+
   <div class="row">
     <div class="col col-md-2">
-        <div class="row">
+        <div class="row pl-2 position-fixed col col-md-2" id="side-filter">
           <div class="col-12">
               <div class="mb-2">{{t('Name')}}</div>
               <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/>
@@ -129,11 +116,24 @@
             <button class="btn btn-primary mt-4 w-100" (click)="filterIt()">{{t('Filter')}}</button>
           </div>
           <div class="col-12">
-            <button class="btn btn-secondary mt-4 w-100" (click)="resetFilter()">{{t('Reset Filter')}}</button>
+            <button class="btn btn-secondary mt-2 w-100" (click)="resetFilter()">{{t('Reset Filter')}}</button>
           </div>
         </div>
     </div>
-    <div class="col col-md-10 pl-2">
+    <div class="col col-md-10 pl-4 border-left">
+      <div class="row mb-1">
+        <div class="col">
+          <h1>{{t('Files')}}</h1>
+        </div>
+        <div class="col">
+          <div class="row mb-1">
+            <!-- <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div> -->
+            <div class="col text-right pl-0" *ngIf="!isLoading">
+                <button class="btn btn-info ml-5 pull-right mt-1 btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <table class="table">
         <thead>
           <tr>
@@ -185,9 +185,9 @@
                 {{item.keywords}}
               </div>
             </td>
-            <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" title="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td>
-            <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)" title="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}"><i class="fa fa-sync"></i></button></td>
-            <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="delete(item.batchid, item.filename)" title="{{t('Delete')}}"><i class="fa fa-trash-alt"></i></button></td>
+            <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td>
+            <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)" tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}"><i class="fa fa-sync"></i></button></td>
+            <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="delete(item.batchid, item.filename)" tooltip="{{t('Delete')}}"><i class="fa fa-trash-alt"></i></button></td>
           </tr>
         </tbody>
       </table>
