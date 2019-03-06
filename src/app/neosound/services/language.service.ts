@@ -21,6 +21,7 @@ const translationsSp = {
   'anger': 'enfado',
   'Filter': 'Filtro',
   'Reset Filter': 'Reiniciar filtro',
+  'Reset': 'Reiniciar',
   'Export to CSV': 'Exportar a CSV',
   'Batch Id': 'Id de lote',
   'Batches': 'De lote',
@@ -111,6 +112,7 @@ const translationsSp = {
   'Med.': 'Medio',
   'Keywords': 'Palabras Clave',
   'Show only keywords': 'Mostrar solo palabras clave',
+  'Apply': 'Aplicar'
 };
 const translationsRu = {
   'Error:': 'Ошибка:',
@@ -130,6 +132,7 @@ const translationsRu = {
   'anger': 'агрессия',
   'Filter': 'Фильтр',
   'Reset Filter': 'Сбросить фильтр',
+  'Reset': 'Сбросить',
   'Export to CSV': 'Экспорт в CSV',
   'Batch Id': 'Батч (агент)',
   'Batches': 'Батчи (агенты)',
@@ -220,6 +223,7 @@ const translationsRu = {
   'Med.': 'Медиана',
   'Keywords': 'Ключевые слова',
   'Show only keywords': 'Показать только ключевые слова',
+  'Apply': 'Применить',
 };
 
 @Injectable()
