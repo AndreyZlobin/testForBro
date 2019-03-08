@@ -1,63 +1,55 @@
-<div class="row">
-  <div class="col-12"><h1>Stats</h1></div>
-  <div class="col-6">
-    <div class="card">
-      <div class="card-body">
-        <ngx-charts-bar-horizontal-2d
-          [results]="data_1"
-          animations="true"
-          [scheme]="colorScheme"
-          [gradient]="gradient"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis"
-          [legend]="showLegend"
-          [legendTitle]="legendTitle"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
-          [tooltipDisabled]="tooltipDisabled"
-          [yAxisLabel]="'Operator'"
-          [xAxisLabel]="'Number Of Calls'"
-          [showGridLines]="showGridLines"
-          [barPadding]="barPadding"
-          [roundDomains]="roundDomains"
-          [roundEdges]="roundEdges"
-          [xScaleMax]="xScaleMax"
-        >
-        </ngx-charts-bar-horizontal-2d>
-      </div>
-      <div class="card-footer">
-        Total: {{getTotal(data_1)}}
-      </div>
-    </div>
+<div class="row" *ngIf="barches.length; else empty">
+  <div class="col-12">
+    <h1>Stats</h1>
   </div>
-  <div class="col-6">
+  <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <ngx-charts-bar-horizontal-2d
-          [results]="data_2"
-          animations="true"
-          [scheme]="colorScheme"
-          [gradient]="gradient"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis"
-          [legend]="showLegend"
-          [legendTitle]="legendTitle"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
-          [tooltipDisabled]="tooltipDisabled"
-          [yAxisLabel]="'Operator'"
-          [xAxisLabel]="'Minutes'"
-          [showGridLines]="showGridLines"
-          [barPadding]="barPadding"
-          [roundDomains]="roundDomains"
-          [roundEdges]="roundEdges"
-          [xScaleMax]="xScaleMax"
-        >
-        </ngx-charts-bar-horizontal-2d>
+        <div style="display:flex">
+          <ngx-charts-bar-horizontal-2d
+            [results]="barches"
+            animations="true"
+            [scheme]="colorScheme"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [legendTitle]="legendTitle"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [tooltipDisabled]="tooltipDisabled"
+            [yAxisLabel]="'Operator'"
+            [xAxisLabel]="'Number Of Calls'"
+            [showGridLines]="showGridLines"
+            [barPadding]="barPadding"
+            [roundDomains]="roundDomains"
+            [roundEdges]="roundEdges"
+            [xScaleMax]="xScaleMax"
+          >
+          </ngx-charts-bar-horizontal-2d>
+        </div>
       </div>
       <div class="card-footer">
-        Total: {{getTotal(data_2)}}
+        <p class="card-text">Batch count: {{ totals.batchcount }}</p>
+        <p class="card-text">{{ totals.allcallscount }} Calls</p>
+        <p class="card-text">{{ totals.silentcallscount }} Silent Calls</p>
       </div>
     </div>
   </div>
 </div>
+<ng-template #empty>
+  <div class="row">
+    <div class="col-12">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Some Text to eplore this app</h5>
+          <p class="card-text">
+            With supporting text below as a natural lead-in to additional
+            content.
+          </p>
+          <a routerLink="/guest/quicktest" class="btn btn-primary">Go To Try</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

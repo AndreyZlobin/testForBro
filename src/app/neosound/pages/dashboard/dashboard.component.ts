@@ -1,89 +1,18 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
+
+import { FilesService } from "../../services/files.service";
 
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html"
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   public users$: Observable<any>;
-  public data_1 = [
-    {
-      name: "Operator 1",
-      series: [
-        {
-          name: "Calls",
-          value: 1521
-        }
-      ]
-    },
-    {
-      name: "Operator 2",
-      series: [
-        {
-          name: "Calls",
-          value: 1612
-        }
-      ]
-    },
-    {
-      name: "Operator 3",
-      series: [
-        {
-          name: "Calls",
-          value: 1326
-        }
-      ]
-    },
-    {
-      name: "Operator 4",
-      series: [
-        {
-          name: "Calls",
-          value: 2800
-        }
-      ]
-    }
-  ];
-  public data_2 = [
-    {
-      name: "Operator 1",
-      series: [
-        {
-          name: "Minutes",
-          value: 4560
-        }
-      ]
-    },
-    {
-      name: "Operator 2",
-      series: [
-        {
-          name: "Minutes",
-          value: 4856
-        }
-      ]
-    },
-    {
-      name: "Operator 3",
-      series: [
-        {
-          name: "Minutes",
-          value: 3924
-        }
-      ]
-    },
-    {
-      name: "Operator 4",
-      series: [
-        {
-          name: "Minutes",
-          value: 3624
-        }
-      ]
-    }
-  ];
+  public barches = [];
+  public totals = {};
+  public data_2 = [];
   // options
   showXAxis = true;
   showYAxis = true;
@@ -103,7 +32,7 @@ export class DashboardComponent {
   maxRadius = 10;
   minRadius = 3;
   showSeriesOnHover = true;
-  roundEdges: boolean = false;
+  roundEdges: boolean = true;
   animations: boolean = true;
   xScaleMin: any;
   xScaleMax: any;
@@ -134,7 +63,36 @@ export class DashboardComponent {
     ]
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private filesService: FilesService) {}
+  ngOnInit() {
+    this.filesService.getFileStats({}).subscribe(data => {
+      console.log(data);
+      const batches = Object.keys(data.batches);
+      if (batches) {
+        const chartData = batches.map(batchName => {
+          return {
+            name: batchName,
+            series: [
+              {
+                name: "All Calls",
+                value: data.batches[batchName].allCallsN
+              },
+              {
+                name: "Anger Calls",
+                value: data.batches[batchName].angerCallsN
+              },
+              {
+                name: "Silent Calls",
+                value: data.batches[batchName].silentCallsN
+              }
+            ]
+          };
+        });
+        this.barches = chartData;
+        this.totals = data.totals;
+      }
+    });
+  }
 
   public loadData() {}
 

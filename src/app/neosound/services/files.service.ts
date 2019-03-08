@@ -27,13 +27,20 @@ export class FilesService {
   getQuickFileParams() {
     return this.currentFileParams;
   }
-
+  
   getFile(params): Observable<any> {
     params = params || {
       'batchid': '1234',
       'filename': '1.mp3'
     };
     return this.http.post(`${environment.api}/getFile`,
+      params
+    );
+  }
+  getFileStats(params): Observable<any> {
+    params = params || {
+    };
+    return this.http.post(`${environment.api}/fileStats`,
       params
     );
   }
