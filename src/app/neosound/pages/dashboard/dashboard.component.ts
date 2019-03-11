@@ -89,8 +89,8 @@ export class DashboardComponent implements OnInit {
             ]
           };
         });
-        // this.barches = chartData;
-        // this.totals = data.totals;
+        this.barches = chartData;
+        this.totals = data.totals;
       }
     });
   }
