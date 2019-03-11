@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, TimeoutError } from "rxjs";
 
 import { FilesService } from "../../services/files.service";
 
@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   public barches = [];
   public totals = {};
   public data_2 = [];
+  public loading = true;
   // options
   showXAxis = true;
   showYAxis = true;
@@ -66,7 +67,7 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router, private filesService: FilesService) {}
   ngOnInit() {
     this.filesService.getFileStats({}).subscribe(data => {
-      console.log(data);
+      this.loading = false;
       const batches = Object.keys(data.batches);
       if (batches) {
         const chartData = batches.map(batchName => {
@@ -88,8 +89,8 @@ export class DashboardComponent implements OnInit {
             ]
           };
         });
-        this.barches = chartData;
-        this.totals = data.totals;
+        // this.barches = chartData;
+        // this.totals = data.totals;
       }
     });
   }
