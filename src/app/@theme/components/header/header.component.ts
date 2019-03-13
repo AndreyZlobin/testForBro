@@ -7,6 +7,7 @@ import { LayoutService } from '../../../@core/data/layout.service';
 import { Router } from '@angular/router';
 import { UsersService } from '../../../neosound/services/users.service';
 import { LanguageService } from '../../../neosound/services/language.service';
+import { DataService } from '../../../neosound/shared';
 
 @Component({
   selector: 'ngx-header',
@@ -14,6 +15,7 @@ import { LanguageService } from '../../../neosound/services/language.service';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
+  config = {};
 
   @Input() position = 'normal';
 
@@ -34,6 +36,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.userService.getUsers()
       .subscribe((users: any) => this.user = users.nick);
+    this.config = DataService.config;
   }
 
   toggleSidebar(): boolean {
