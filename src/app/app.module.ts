@@ -86,6 +86,7 @@ import { NgxPaginationModule } from "ngx-pagination";
 import { IntervalDirective } from "./neosound/directives/interval.detective";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
+import { DataService } from "./neosound/shared";
 
 @NgModule({
   declarations: [
@@ -168,7 +169,8 @@ import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch
       useClass: RequestsHttpInterceptor,
       multi: true
     },
-    LanguageService
+    LanguageService,
+    DataService,
   ]
 })
 export class AppModule {}

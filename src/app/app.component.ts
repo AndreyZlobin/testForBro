@@ -16,17 +16,18 @@ export class AppComponent implements OnInit {
 
   constructor(
     private analytics: AnalyticsService,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private dataService: DataService) {
+      this.http.get('assets/config/config.json').subscribe((data: any) => {
+        this.dataService.config = data;
+        if (data.title) {
+          document.title = data.title;
+        }
+      });
   }
 
   ngOnInit(): void {
     this.analytics.trackPageViews();
 
-    this.http.get('assets/config/config.json').subscribe((data: any) => {
-      DataService.config = data;
-      if (data.title) {
-        document.title = data.title;
-      }
-    });
   }
 }

@@ -14,7 +14,7 @@ export class DataService {
         return this.http.get('http://localhost:3000/data');
     }
 
-    public static config = {
+    public config = {
         "title": "NeoSound - Turn emotions into data!",
         "metaDescription": "NeoSound - Turn emotions into data!",
         "footer": {

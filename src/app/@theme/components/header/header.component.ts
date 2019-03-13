@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { UsersService } from '../../../neosound/services/users.service';
 import { LanguageService } from '../../../neosound/services/language.service';
 import { DataService } from '../../../neosound/shared';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-header',
@@ -16,6 +17,7 @@ import { DataService } from '../../../neosound/shared';
 })
 export class HeaderComponent implements OnInit {
   config = {};
+  isLoaded = false;
 
   @Input() position = 'normal';
 
@@ -29,14 +31,19 @@ export class HeaderComponent implements OnInit {
               private analyticsService: AnalyticsService,
               private layoutService: LayoutService,
               private router: Router,
-              private userServ: UsersService
+              private userServ: UsersService,
+              private dataService: DataService,
+              private http: HttpClient,
             ) {
   }
 
   ngOnInit() {
     this.userService.getUsers()
       .subscribe((users: any) => this.user = users.nick);
-    this.config = DataService.config;
+    this.http.get('assets/config/config.json').subscribe((data: any) => {
+      this.config = this.dataService.config = data;
+      this.isLoaded = true;
+    });
   }
 
   toggleSidebar(): boolean {

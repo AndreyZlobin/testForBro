@@ -1,3 +1,4 @@
+<ng-container *ngIf="isLoaded">
 <div class="header-container"
      [class.left]="position === 'normal'"
      [class.right]="position === 'inverse'">
@@ -14,8 +15,8 @@
       <nb-action class="control-item"  *ngIf="!isLoggedIn()"><a href="/auth/login"  (click)="navigate('/auth/login')">{{t('Login')}}</a></nb-action>
       <nb-action class="control-item"  *ngIf="isLoggedIn()"><a href="/user/files"  (click)="navigate('/user/files')">{{t('Files')}}</a></nb-action>
       <!-- <nb-action class="control-item"  *ngIf="isLoggedIn()"><a href="/user/batch"  (click)="navigate('/user/batch')">{{t('Batches')}}</a></nb-action> -->
-      <nb-action *ngIf="isLoggedIn() && config.header.api.show" class="control-item"><a href="/user/api" target="_blank" (click)="navigate(config.header.api.link)">{{t(config.header.api.text)}}</a></nb-action>
-      <nb-action *ngIf="config.header.about.show" class="control-item" ><a href="config.header.about.link" target="_blank">{{t(config.header.about.text)}}</a></nb-action>
+      <nb-action *ngIf="isLoggedIn() && config.header.api.show" class="control-item"><a href="{{config.header.api.link}}" target="_blank" (click)="navigate(config.header.api.link)">{{t(config.header.api.text)}}</a></nb-action>
+      <nb-action *ngIf="config.header.about.show" class="control-item" ><a href="{{config.header.about.link}}" target="_blank">{{t(config.header.about.text)}}</a></nb-action>
   </nb-actions>
   <!-- <ngx-theme-switcher></ngx-theme-switcher> -->
 </div>
@@ -83,3 +84,4 @@
     <nb-action class="control-item" ><a  routerLink="/about">About</a></nb-action> -->
   </nb-actions>
 </div>
+</ng-container>
