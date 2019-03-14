@@ -17,6 +17,7 @@ export class DataService {
     public config = {
         "title": "NeoSound - Turn emotions into data!",
         "metaDescription": "NeoSound - Turn emotions into data!",
+        "logofilename": "logo.jpg",
         "footer": {
             "title": {
                 "show": true,
