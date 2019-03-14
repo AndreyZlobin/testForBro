@@ -69,8 +69,8 @@ import { NgDatepickerModule } from "ng2-datepicker";
 const formSetting: any = {
   redirectDelay: 0,
   showMessages: {
-    success: true
-  }
+    success: true,
+  },
 };
 
 import { FileDropModule } from "ngx-file-drop";
@@ -109,14 +109,13 @@ import { DataService } from "./neosound/shared";
     LandingComponent,
     AdminDashboardComponent,
     AboutComponent,
-    MinutesSecondsPipe,
     PlayerDetailsComponent,
     PieChartComponent,
     ApiPageComponent,
     PageNotFoundComponent,
     IntervalDirective,
     BatchListComponent,
-    BatchDetailsComponent
+    BatchDetailsComponent,
     // ForbiddenPasswordDirective,
 
     //ngx-admin
@@ -151,13 +150,13 @@ import { DataService } from "./neosound/shared";
     BarChartModule,
     ToastrModule.forRoot(),
     NgDatepickerModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   bootstrap: [AppComponent],
   providers: [
     {
       provide: LOCALE_ID,
-      useValue: "de-de"
+      useValue: 'de-de',
     },
     AuthGuard,
     UsersService,
@@ -167,10 +166,10 @@ import { DataService } from "./neosound/shared";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestsHttpInterceptor,
-      multi: true
+      multi: true,
     },
     LanguageService,
     DataService,
-  ]
+  ],
 })
 export class AppModule {}

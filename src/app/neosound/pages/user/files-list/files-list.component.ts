@@ -1,15 +1,18 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FilesService } from '../../../services/files.service';
 import { DatepickerOptions } from 'ng2-datepicker';
 import { frLocale } from 'ngx-bootstrap';
 import { LanguageService } from '../../../services/language.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-files-list',
   templateUrl: './files-list.component.html',
   styleUrls: ['./files-list.component.scss']
 })
-export class FilesListComponent implements OnInit {
+export class FilesListComponent implements OnInit, OnDestroy {
+  sub: Subscription;
   files;
   errorMessage = '';
   filesResult = [];
@@ -80,9 +83,15 @@ export class FilesListComponent implements OnInit {
   constructor(
     private filesService: FilesService,
     private cd: ChangeDetectorRef,
+    private router: Router,
+    private route: ActivatedRoute,
     ) { }
 
   ngOnInit() {
+    this.sub = this.route.data
+      .subscribe(v => {
+        this.router.navigateByUrl('/user/files');
+      });
     // this.resetFilter();
     this.filter = this.filesService.getFilter();
     this.sortBy = this.filter.sortby;
@@ -467,6 +476,10 @@ export class FilesListComponent implements OnInit {
 
   getFilesOnPageLabel() {
     return ((this.page + 1) * 100 < this.files.length) ? (this.page + 1) * 100 : this.files.length;
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }

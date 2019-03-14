@@ -18,6 +18,7 @@ import { HttpClient } from '@angular/common/http';
 export class HeaderComponent implements OnInit {
   config = {};
   isLoaded = false;
+  showUploadDialog = false;
 
   @Input() position = 'normal';
 

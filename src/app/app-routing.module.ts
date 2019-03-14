@@ -77,6 +77,12 @@ const routes: Routes = [
         component: FilesListComponent
       },
       {
+        path: 'user/files/reload',
+        data: { reload: true },
+        canActivate: [ AuthGuard ],
+        component: FilesListComponent
+      },
+      {
         path: 'file/:batchid/:filename',
         canActivate: [ AuthGuard ],
         component: PlayerDetailsComponent

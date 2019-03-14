@@ -18,7 +18,7 @@
 
   </div> -->
 
-  <div class="row min-h-100">
+  <div class="row min-h-filter">
     <div class="col col-md-2">
         <div class="row pl-2 position-fixed col col-md-2" id="side-filter">
           <div class="col-12">
@@ -165,7 +165,7 @@
         <tbody>
           <tr *ngFor="let item of files; let i = index">
             <td>{{ item.batchid}}</td>
-            <td>{{ item.filename}}</td>
+            <td><a [routerLink]="getLink(item)" style="cursor: pointer;">{{ item.filename}}</a></td>
             <td>{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
             <td>{{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</td>
             <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
@@ -185,7 +185,7 @@
                 {{item.keywords}}
               </div>
             </td>
-            <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td>
+            <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
             <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)" tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}"><i class="fa fa-sync"></i></button></td>
             <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="delete(item.batchid, item.filename)" tooltip="{{t('Delete')}}"><i class="fa fa-trash-alt"></i></button></td>
           </tr>

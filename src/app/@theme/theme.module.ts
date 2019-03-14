@@ -49,8 +49,11 @@ import {
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
+import { UploadDialogComponent } from '../neosound/pages/user/upload-dialog/upload-dialog.component';
+import { FileDropModule } from 'ngx-file-drop';
+import { MinutesSecondsPipe } from '../neosound/minutes-seconds.pipe';
 
-const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
+const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, FileDropModule];
 
 const NB_MODULES = [
   NbCardModule,
@@ -84,6 +87,7 @@ const COMPONENTS = [
   SampleLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  UploadDialogComponent,
 ];
 
 const ENTRY_COMPONENTS = [
@@ -96,6 +100,7 @@ const PIPES = [
   RoundPipe,
   TimingPipe,
   NumberWithCommasPipe,
+  MinutesSecondsPipe,
 ];
 
 const NB_THEME_PROVIDERS = [
