@@ -22,7 +22,7 @@
   <!-- <ngx-theme-switcher></ngx-theme-switcher> -->
 </div>
 
-<ngx-upload-dialog [showDialog]="showUploadDialog"></ngx-upload-dialog>
+<ngx-upload-dialog [showDialog]="showUploadDialog" (modalOpened)="showUploadDialog = $event"></ngx-upload-dialog>
 
 <div class="header-container">
 

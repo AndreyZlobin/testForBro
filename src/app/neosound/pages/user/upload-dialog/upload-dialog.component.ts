@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsersService } from '../../../services/users.service';
 import { FilesService } from '../../../services/files.service';
@@ -61,6 +61,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
       this.discard();
     }
   }
+  @Output() modalOpened: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private userService: UsersService,
@@ -201,6 +202,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
 
   hideModal() {
     if (this.modalRef) {
+      this.modalOpened.emit(false);
       this.modalRef.hide();
     }
   }
