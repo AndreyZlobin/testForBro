@@ -76,7 +76,7 @@ export class HeaderComponent implements OnInit {
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('apikey');
-    this.navigate('/');
+    this.navigate('/auth/login');
     return false;
   }
 
