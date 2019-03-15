@@ -247,7 +247,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
   }
 
   getLink(item) {
-    return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(item.filename)}`;
+    return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(item.fileid)}`;
   }
 
   proccessFile(item, i) {
