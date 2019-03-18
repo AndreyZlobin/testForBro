@@ -18,15 +18,15 @@ export class TermsComponent implements OnInit {
   }
 
   get legalName() {
-    return this.dataService.config && this.dataService.config.legalName || 'NeoSound';
+    return this.dataService.config && (this.dataService.config as any).legalName || 'NeoSound';
   }
 
   get legalNameFull() {
-    return this.dataService.config && this.dataService.config.legalNameFull || 'NeoSound Intelligence B.V.';
+    return this.dataService.config && (this.dataService.config as any).legalNameFull || 'NeoSound Intelligence B.V.';
   }
 
   get companyUrl() {
-    return this.dataService.config && this.dataService.config.companyMainUrl || 'https://NeoSound.eu';
+    return this.dataService.config && (this.dataService.config as any).companyMainUrl || 'https://NeoSound.eu';
   }
 
   isEnglish() {
