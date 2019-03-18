@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="col-12 center text-center center-results">
+    <div class="alert alert-danger" *ngIf="errorMessage">{{t('Error:')}} {{t(errorMessage)}}</div>
+    <!-- <h3>Your record analysis:</h3> -->
+    <div *ngIf="analysisResult; else loading">
+      <div class="row">
+        <div class="col-6">
+          <div style="width: 60%; height: 300px;">
+            <ngx-charts-pie-chart
+              *ngIf="chartData"
+              [results]="chartData"
+              [tooltipDisabled]="false"
+              [customColors]="customColors"
+              [legend]="true"
+              [legendTitle]="''"
+              [labelFormatting]="labelFormatting"
+              ></ngx-charts-pie-chart>
+              <!-- [legend]="true"
+              [legendTitle]="''"
+              [legendPosition]="'below'" -->
+              <!-- [tooltipDisabled]="true"
+              [legend]="true" -->
+              <!-- [tooltipDisabled]="true"
+              [legend]="true"
+              [legendTitle]="''"
+              legendPosition="below"
+              [scheme]="chartScheme" -->
+              <!-- <ngx-echarts-pie></ngx-echarts-pie> -->
+          </div>
+        </div>
+        <div class="col-6">
+          <h4>{{t('Dominant emotion detected')}}</h4>
+          <div>
+            {{getEmotionValue()}} % {{t(getEmotionName())}}
+          </div>
+          <div>
+            <input class="mt-1" type="range" disabled value="{{analysisResult[getEmotionName()]}}" />
+          </div>
+          <div class="mt-5" *ngIf="this.analysisResult.male !== ''">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'male'}">{{t('Male')}}</button>
+                <button type="button" class="btn btn-secondary" [ngClass]="{'active': gender === 'female'}">{{t('Female')}}</button>
+              </div>
+          </div>
+          <div class="mt-5" *ngIf="this.analysisResult.mid !== ''">
+              <ul class="list-unstyled multi-steps">
+                <li [ngClass]="{'is-active': getAge('young')}">{{t('Teen')}}</li>
+                <li [ngClass]="{'is-active': getAge('mid')}">{{t('Adult')}}</li>
+                <li [ngClass]="{'is-active': getAge('old')}">{{t('Senior')}}</li>
+              </ul>
+          </div>
+          <div class="mt-5" *ngIf="this.analysisResult.Anger !== ''">
+            <img src="../../assets/images/emotions/{{getEmotionImg()}}.png" style="width: 100px;" />
+          </div>
+        </div>
+      </div>
+      <div class="center text-center">
+        <div class="center text-center">
+          <h6>{{t('Are you agree with the result?')}}</h6>
+          <a class="btn btn-success mr-3" (click)="showThanks = true">{{t('Yes')}}</a>
+          <a class="btn btn-danger" (click)="showThanks = true">{{t('No')}}</a>
+          <div class="alert alert-info mt-2" *ngIf="showThanks">{{t('Thank you for reply!')}}</div>
+        </div>
+        <div class="result-links">
+          <div *ngIf="!hideAdditionalInfo" class="mt-5">{{t('See details')}} <a routerLink="{{routerFileName}}">{{t('here')}}</a></div>
+          <a class="mt-5 mb-5" routerLink="/guest/quicktest" (click)="discard()">{{t('Check another record')}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="analysisResult && analysisResult.message" class="center">
+    <div>
+      <h4>{{t('Loading...')}}</h4>
+    </div>
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+</ng-template>

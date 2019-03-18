@@ -1,0 +1,63 @@
+<div class="row mb-1">
+  <div class="col">
+    <h1>{{t('Batches')}}</h1>
+  </div>
+</div>
+
+
+<div class="alert alert-danger" *ngIf="errorMessage">{{t('Error:')}}' {{errorMessage}}</div>
+<div *ngIf="!isLoading; else loading" class="">
+  <div class="row mb-3">
+    <div class="col text-right">
+      <button class="btn btn-primary mr-3 pull-right mt-4 btn-sm" routerLink="/user/files">{{t('Files')}}</button>
+      <button class="btn btn-info pull-right mt-4 btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
+    </div>
+  </div>
+
+  <table class="table mt-5">
+    <thead>
+      <tr>
+          <th>{{t('Name')}}</th>
+          <th><a (click)="sortTable('name')">{{t('Min.')}}
+            <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'name'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+          </th>
+          <th><a (click)="sortTable('uploaded')">{{t('Max.')}}
+            <i *ngIf="sortBy === 'uploaded' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'uploaded' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'uploaded'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+          </th>
+          <th><a (click)="sortTable('duration')">{{t('Avg.')}}
+            <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+          </th>
+          <th><a (click)="sortTable('duration')">{{t('Med.')}}
+            <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+          </th>
+          <th></th>
+          <th style="min-width: 110px;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of files; let i = index">
+        <td>{{ item.batchid}}</td>
+        <td>{{ item.filename}}</td>
+        <td>{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+        <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
+        <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
+        <td><button class="btn p-2 btn-info" style="cursor: pointer;" [routerLink]="getLink(item)">{{t('FILES')}}</button></td>
+        <td><button class="btn p-2 btn-info" style="cursor: pointer;" (click)="proccessFile(item, i)">{{t('DETAILS')}}</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!isLoading && !files.length" class="mb-4">{{t('0 Files')}}</div>
+  <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
+    <div class="btn-group mr-2 mb-2">
+        <div *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }"></div>
+        <pagination-controls
+          (pageChange)="getPage($event - 1)"
+          previousLabel="{{t('previous')}}"
+          nextLabel="{{t('next')}}"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  {{t('Loading...')}}
+</ng-template>
