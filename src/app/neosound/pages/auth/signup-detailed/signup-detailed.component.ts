@@ -4,6 +4,7 @@ import { UsersService } from '../../../services/users.service';
 import { Router } from '@angular/router';
 import { forbiddenNameValidator } from '../../../directives/forbidden-password.directive';
 import { LanguageService } from '../../../services/language.service';
+import { DataService } from '../../../shared';
 
 @Component({
   selector: 'app-signup-detailed',
@@ -19,6 +20,7 @@ export class SignupDetailedComponent implements OnInit {
   constructor(
     private userService: UsersService,
     private router: Router,
+    private dataService: DataService,
   ) { }
 
   ngOnInit() {
@@ -88,6 +90,10 @@ export class SignupDetailedComponent implements OnInit {
         agreeTerms: false,
       });
     }
+  }
+
+  get legalNameFull() {
+    return this.dataService.config && (this.dataService.config as any).legalNameFull || 'NeoSound Intelligence B.V.';
   }
 
   t(v) {
