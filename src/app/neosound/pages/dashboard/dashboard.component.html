@@ -1,4 +1,4 @@
-<div class="row" *ngIf="barches.length || loading; else empty">
+<div class="row" *ngIf="loading; else loading">
   <div class="col-8 mb-3">
     <div class="card h-100">
       <div class="card-header">Calls</div>
@@ -33,14 +33,18 @@
     <div class="card h-100">
       <div class="card-body" *ngIf="totals">
         <div class="title">Total calls</div>
-        <div class="value">{{totals.allcallscount}}</div>
+        <div class="value">{{ totals.allcallscount }}</div>
         <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
         <div class="title mt-4">Emotional calls</div>
-        <div class="value">{{totals.angercallscount}}</div>
-        <nb-progress-bar [value]="(totals.angercallscount / totals.allcallscount) * 100"></nb-progress-bar>
+        <div class="value">{{ totals.angercallscount }}</div>
+        <nb-progress-bar
+          [value]="(totals.angercallscount / totals.allcallscount) * 100"
+        ></nb-progress-bar>
         <div class="title mt-4">Silent calls</div>
-        <div class="value">{{totals.silentcallscount}}</div>
-        <nb-progress-bar [value]="(totals.angercallscount / totals.allcallscount)  * 100"></nb-progress-bar>
+        <div class="value">{{ totals.silentcallscount }}</div>
+        <nb-progress-bar
+          [value]="(totals.angercallscount / totals.allcallscount) * 100"
+        ></nb-progress-bar>
       </div>
     </div>
   </div>
@@ -94,3 +98,6 @@
     </div>
   </ng-template>
 </div>
+<ng-template #loading>
+  {{ t("Loading...") }}
+</ng-template>

@@ -43,6 +43,7 @@ export class PlayerDetailsComponent
   emotionsSounds;
   emotionsGender;
   sttfulltext;
+  keywords;
   emotionsSttAnger;
   currentTab = "anger";
   tabsDisabled = false;
@@ -305,6 +306,11 @@ export class PlayerDetailsComponent
           if (this.results.result.stt) {
             if (this.results.result.stt.fulltext) {
               this.sttfulltext = this.results.result.stt.fulltext;
+            }
+          }
+          if (this.results.result.stt) {
+            if (this.results.result.stt.keywords) {
+              this.keywords = this.results.result.stt.keywords;
             }
           }
           if (this.results.result.merged) {

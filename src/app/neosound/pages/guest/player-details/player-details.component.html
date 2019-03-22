@@ -74,6 +74,14 @@
               role="button"
               >Text</label
             >
+            <label
+              class="btn btn-secondary"
+              [(ngModel)]="radioModel"
+              btnRadio="KeyWords"
+              tabindex="0"
+              role="button"
+              >Key Words</label
+            >
           </div>
       <div class="d-flex justify-content-start ml-auto">
         <span class="font-weight-bold purple-text mr-3 mt-1"
@@ -154,6 +162,13 @@
           {{ sttfulltext }}
         </div>
       </ng-container>
+      <ng-container *ngIf="radioModel === 'KeyWords'">
+          <div class="mt-2">
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let keyword of keywords">{{keyword}}</li>
+            </ul>
+          </div>
+        </ng-container>
     </div>
   </div>
   <ng-template #loading>
