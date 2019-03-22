@@ -1,11 +1,9 @@
 <div class="row" *ngIf="barches.length || loading; else empty">
-  <div class="col-12">
-    <h1>Stats</h1>
-  </div>
-  <div class="col-12">
-    <div class="card">
+  <div class="col-8 mb-3">
+    <div class="card h-100">
+      <div class="card-header">Calls</div>
       <div class="card-body">
-        <div style="display:flex">
+        <div style="display:flex; height: 280px;">
           <ngx-charts-bar-horizontal-2d
             [results]="barches"
             animations="true"
@@ -29,27 +27,70 @@
           </ngx-charts-bar-horizontal-2d>
         </div>
       </div>
-      <div class="card-footer">
-        <p class="card-text">Batch count: {{ totals.batchcount }}</p>
-        <p class="card-text">{{ totals.allcallscount }} Calls</p>
-        <p class="card-text">{{ totals.silentcallscount }} Silent Calls</p>
+    </div>
+  </div>
+  <div class="col-4 mb-3">
+    <div class="card h-100">
+      <div class="card-body" *ngIf="this.totals">
+        <div class="title">Total calls</div>
+        <div class="value">{{totals.allcallscount}}</div>
+        <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
+        <div class="title mt-4">Emotional calls</div>
+        <div class="value">{{totals.angercallscount}}</div>
+        <nb-progress-bar [value]="totals.angercallscount / totals.allcallscount"></nb-progress-bar>
+        <div class="title mt-4">Silent calls</div>
+        <div class="value">{{totals.silentcallscount}}</div>
+        <nb-progress-bar [value]="totals.angercallscount / totals.silentcallscount"></nb-progress-bar>
       </div>
     </div>
   </div>
-</div>
-<ng-template #empty>
-  <div class="row">
-    <div class="col-12">
-      <div class="card text-center">
-        <div class="card-body">
-          <h5 class="card-title">Some Text to eplore this app</h5>
-          <p class="card-text">
-            With supporting text below as a natural lead-in to additional
-            content.
-          </p>
-          <a routerLink="/guest/quicktest" class="btn btn-primary">Go To Try</a>
+  <!-- <div class="col-4  mb-3">
+    <div class="card">
+      <div class="card-header">Totals By Minutes:</div>
+      <div class="card-body">
+        <div class="value">Total minutes</div>
+        <nb-progress-bar value="20"></nb-progress-bar>
+        <div class="description">111</div>
+        <div class="value">Speech</div>
+        <nb-progress-bar value="20"></nb-progress-bar>
+        <div class="description">111</div>
+        <div class="value">On-holde</div>
+        <nb-progress-bar value="20"></nb-progress-bar>
+        <div class="description">111</div>
+        <div class="value">Silence</div>
+        <nb-progress-bar value="20"></nb-progress-bar>
+        <div class="description">111</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4  mb-3">
+    <div class="card">
+      <div class="card-header">Totals by queries:</div>
+      <div class="card-body"></div>
+    </div>
+  </div>
+  <div class="col-4  mb-3">
+    <div class="card">
+      <div class="card-header">Totals</div>
+      <div class="card-body"></div>
+    </div>
+  </div> -->
+  <ng-template #empty>
+    <div class="row">
+      <div class="col-8">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Some Text to eplore this app</h5>
+            <p class="card-text">
+              With supporting text below as a natural lead-in to additional
+              content.
+            </p>
+            <a routerLink="/guest/quicktest" class="btn btn-primary"
+              >Go To Try</a
+            >
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</ng-template>
+  </ng-template>
+</div>
