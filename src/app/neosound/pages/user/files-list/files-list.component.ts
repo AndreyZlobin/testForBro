@@ -478,6 +478,12 @@ export class FilesListComponent implements OnInit, OnDestroy {
     return ((this.page + 1) * 100 < this.files.length) ? (this.page + 1) * 100 : this.files.length;
   }
 
+  getKeywords(item) {
+    return item.keywords && item.keywords.length
+      ? item.keywords.join(', ')
+      : '';
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

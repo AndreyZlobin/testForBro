@@ -181,7 +181,7 @@
             <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
             <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
             <td>
-              <div *ngIf="item.keywordcount">
+              <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.keywordcount" tooltip="{{getKeywords(item)}}">
                 {{item.keywordcount}}
               </div>
             </td>
