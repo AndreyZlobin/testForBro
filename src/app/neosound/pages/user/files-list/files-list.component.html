@@ -181,8 +181,8 @@
             <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
             <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
             <td>
-              <div *ngIf="item.keywords">
-                {{item.keywords}}
+              <div *ngIf="item.keywordcount">
+                {{item.keywordcount}}
               </div>
             </td>
             <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
