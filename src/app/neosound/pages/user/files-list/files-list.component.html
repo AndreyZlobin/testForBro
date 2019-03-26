@@ -138,22 +138,22 @@
         <thead>
           <tr>
               <th>{{t('Batch Id')}}</th>
-              <th><a (click)="sortTable('name')">{{t('Name')}}
+              <th class="text-one-line"><a (click)="sortTable('name')">{{t('Name')}}
                 <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'name'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
               </th>
-              <th><a (click)="sortTable('uploaded')">{{t('Uploaded')}}
+              <th class="text-one-line"><a (click)="sortTable('uploaded')">{{t('Uploaded')}}
                 <i *ngIf="sortBy === 'uploaded' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'uploaded' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'uploaded'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
               </th>
-              <th><a (click)="sortTable('duration')">{{t('Duration')}}
+              <th class="text-one-line"><a (click)="sortTable('duration')">{{t('Duration')}}
                 <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
               </th>
-              <th><a (click)="sortTable('emotion')">{{t('Emotion')}}
+              <th class="text-one-line"><a (click)="sortTable('emotion')">{{t('Emotion')}}
                 <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
               </th>
-              <th><a (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
+              <th class="text-one-line"><a (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
                 <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
               </th>
-              <th>{{t('Keywords')}}</th>
+              <th class="text-one-line">{{t('Keywords')}}</th>
               <!-- <th>Beta</th> -->
               <!-- <th></th> -->
               <!-- <th>%</th> -->
@@ -165,9 +165,9 @@
         <tbody>
           <tr *ngFor="let item of files; let i = index">
             <td>{{ item.batchid}}</td>
-            <td><a [routerLink]="getLink(item)" style="cursor: pointer;">{{ item.filename}}</a></td>
-            <td>{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
-            <td>{{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</td>
+            <td><a [routerLink]="getLink(item)" style="cursor: pointer;"><div class="text-wrap" tooltip="{{item.filename}}">{{item.filename}}</div></a></td>
+            <td><div class="text-wrap" tooltip="{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}">{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</div></td>
+            <td><div class="text-wrap" tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">{{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</div></td>
             <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
               <div *ngIf="item.angertop && item.angertop.anger">
                 {{item.angertop && item.angertop.anger}}%
