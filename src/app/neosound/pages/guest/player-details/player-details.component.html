@@ -9,7 +9,7 @@
   <h2>
     {{ t("Details") }} <span>{{ fileParams.filename }}</span>
   </h2>
-  <ul class="nav nav-tabs mt-2 mb-2">
+  <!-- <ul class="nav nav-tabs mt-2 mb-2">
     <li class="nav-item">
       <a
         class="nav-link"
@@ -37,7 +37,7 @@
         >{{ t("Text") }}</a
       >
     </li>
-  </ul>
+  </ul> -->
   <div class="alert alert-danger" *ngIf="errorMessage">
     {{ t("Error:") }} {{ t(errorMessage) }}
   </div>
@@ -57,7 +57,8 @@
       >
         <i class="fa fa-play"></i>/<i class="fa fa-pause"></i>
       </button>
-          <div class="btn-group mt-2" *ngIf="emotions && currentTab === 'text'">
+          <div class="btn-group mt-2" *ngIf="emotions">
+              <!-- && currentTab === 'text' -->
             <label
               class="btn btn-secondary"
               [(ngModel)]="radioModel"
@@ -104,8 +105,7 @@
       </div>
     </div>
   </div>
-  <div
-    *ngIf="emotions && currentTab !== 'results' && currentTab !== 'text'"
+  <div *ngIf="emotions && currentTab !== 'results' && currentTab !== 'text'"
     class="mt-2"
   >
     <div class="scrollable-list table-responsive">
