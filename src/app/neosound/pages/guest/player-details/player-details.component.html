@@ -57,8 +57,7 @@
       >
         <i class="fa fa-play"></i>/<i class="fa fa-pause"></i>
       </button>
-          <div class="btn-group mt-2" *ngIf="emotions">
-              <!-- && currentTab === 'text' -->
+          <div class="btn-group mt-2" *ngIf="emotions && currentTab === 'text'">
             <label
               class="btn btn-secondary"
               [(ngModel)]="radioModel"
@@ -117,7 +116,7 @@
               {{ getDateVal(item[1]) | date: "mm:ss" }}
             </td>
             <td class="col-10">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-            <td class="col-1">{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
+            <td class="col-1"><span *ngIf="item[3]">{{ item[3] | currency: "%":"symbol":"1.2-2" }}</span></td>
           </tr></ng-container
         >
       </table>
@@ -141,9 +140,9 @@
               </td>
               <td class="col-10">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
               <td class="col-1">
-                {{
-                  item[3] | currency: "%":"symbol":"1.2-2"
-                }}
+                <span *ngIf="item[3]">
+                  {{ item[3] | currency: "%":"symbol":"1.2-2" }}
+                </span>
               </td>
             </tr>
           </ng-container>

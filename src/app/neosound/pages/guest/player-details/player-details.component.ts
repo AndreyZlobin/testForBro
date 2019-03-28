@@ -299,7 +299,8 @@ export class PlayerDetailsComponent
               this.emotionsAnger = this.results.result.anger.ints;
               this.emotions = this.emotionsAnger;
               // this.onhold = this.results.result.anger.ints;
-              this.setRegions();
+              this.setTab('anger');
+              // this.setRegions();
             }
             if (this.results.result.anger.music) {
               this.emotionsSounds = this.results.result.anger.music;
@@ -319,12 +320,13 @@ export class PlayerDetailsComponent
           if (this.results.result.merged) {
             if (this.results.result.merged.intprobs) {
               this.emotionsSttAnger = this.results.result.merged.intprobs;
-              this.emotions = this.results.result.merged.ints;
+              this.emotions = this.emotionsSttAnger;
+              this.setTab('text');
             }
           }
         }
       },
-      e => (this.errorMessage = e.error.message)
+      e => (this.errorMessage = e.error.message),
     );
   }
 
