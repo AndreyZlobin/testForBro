@@ -6,7 +6,8 @@ import { FilesService } from "../../services/files.service";
 
 @Component({
   selector: "app-dashboard",
-  templateUrl: "./dashboard.component.html"
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   public users$: Observable<any>;
@@ -18,7 +19,7 @@ export class DashboardComponent implements OnInit {
   showXAxis = true;
   showYAxis = true;
   gradient = false;
-  showLegend = false;
+  showLegend = true;
   legendTitle = "Legend";
   showXAxisLabel = true;
   tooltipDisabled = false;
@@ -29,11 +30,11 @@ export class DashboardComponent implements OnInit {
   innerPadding = "10%";
   barPadding = 8;
   groupPadding = 16;
-  roundDomains = false;
+  roundDomains = true;
   maxRadius = 10;
   minRadius = 3;
   showSeriesOnHover = true;
-  roundEdges: boolean = true;
+  roundEdges: false
   animations: boolean = true;
   xScaleMin: any;
   xScaleMax: any;
@@ -44,7 +45,7 @@ export class DashboardComponent implements OnInit {
   trimYAxisTicks = true;
   maxXAxisTickLength = 16;
   maxYAxisTickLength = 16;
-  legendPosition = "below";
+  legendPosition = "left";
   colorScheme = {
     name: "custom",
     selectable: true,
@@ -68,7 +69,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.filesService.getFileStats({}).subscribe(data => {
       this.loading = false;
-      const batches = Object.keys(data.batches);
+      const batches = Object.keys(data.batches).slice(0, 3);
       if (batches) {
         const chartData = batches.map(batchName => {
           return {
