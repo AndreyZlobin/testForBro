@@ -48,6 +48,7 @@ import { UsersService } from "./neosound/services/users.service";
 import { RequestsHttpInterceptor } from "./neosound/shared/requests-http.interceptor";
 import { NbPasswordAuthStrategy, NbAuthModule } from "@nebular/auth";
 import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
+import { TagCloudModule } from 'angular-tag-cloud-module';
 import {
   NgxChartsModule,
   PieChartModule,
@@ -131,6 +132,8 @@ import { DataService } from "./neosound/shared";
     FormsModule,
     ReactiveFormsModule,
     NbInputModule,
+    NgxEchartsModule,
+    TagCloudModule,
 
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),

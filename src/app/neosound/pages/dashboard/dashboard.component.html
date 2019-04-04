@@ -1,103 +1,89 @@
-<div class="row" *ngIf="loading; else loading">
-  <div class="col-8 mb-3">
-    <div class="card h-100">
-      <div class="card-header">Calls</div>
-      <div class="card-body">
-        <div style="display:flex; height: 280px;">
-          <ngx-charts-bar-horizontal-2d
-            [results]="barches"
-            animations="true"
-            [scheme]="colorScheme"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [legend]="showLegend"
-            [legendTitle]="legendTitle"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [tooltipDisabled]="tooltipDisabled"
-            [yAxisLabel]="'Operator'"
-            [xAxisLabel]="'Number Of Calls'"
-            [showGridLines]="showGridLines"
-            [barPadding]="barPadding"
-            [roundDomains]="true"
-            [roundEdges]="true"
-            [xScaleMax]="xScaleMax"
-          >
-          </ngx-charts-bar-horizontal-2d>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-4 mb-3">
-    <div class="card h-100">
-      <div class="card-body" *ngIf="totals">
-        <div class="title">Total calls</div>
-        <div class="value">{{ totals.allcallscount }}</div>
-        <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
-        <div class="title mt-4">Emotional calls</div>
-        <div class="value">{{ totals.angercallscount }}</div>
-        <nb-progress-bar
-          [value]="(totals.angercallscount / totals.allcallscount) * 100"
-        ></nb-progress-bar>
-        <div class="title mt-4">Silent calls</div>
-        <div class="value">{{ totals.silentcallscount }}</div>
-        <nb-progress-bar
-          [value]="(totals.angercallscount / totals.allcallscount) * 100"
-        ></nb-progress-bar>
-      </div>
-    </div>
-  </div>
-  <!-- <div class="col-4  mb-3">
-    <div class="card">
-      <div class="card-header">Totals By Minutes:</div>
-      <div class="card-body">
-        <div class="value">Total minutes</div>
-        <nb-progress-bar value="20"></nb-progress-bar>
-        <div class="description">111</div>
-        <div class="value">Speech</div>
-        <nb-progress-bar value="20"></nb-progress-bar>
-        <div class="description">111</div>
-        <div class="value">On-holde</div>
-        <nb-progress-bar value="20"></nb-progress-bar>
-        <div class="description">111</div>
-        <div class="value">Silence</div>
-        <nb-progress-bar value="20"></nb-progress-bar>
-        <div class="description">111</div>
-      </div>
-    </div>
-  </div>
-  <div class="col-4  mb-3">
-    <div class="card">
-      <div class="card-header">Totals by queries:</div>
-      <div class="card-body"></div>
-    </div>
-  </div>
-  <div class="col-4  mb-3">
-    <div class="card">
-      <div class="card-header">Totals</div>
-      <div class="card-body"></div>
-    </div>
-  </div> -->
-  <ng-template #empty>
-    <div class="row">
-      <div class="col-8">
-        <div class="card text-center">
-          <div class="card-body">
-            <h5 class="card-title">Some Text to eplore this app</h5>
-            <p class="card-text">
-              With supporting text below as a natural lead-in to additional
-              content.
-            </p>
-            <a routerLink="/guest/quicktest" class="btn btn-primary"
-              >Go To Try</a
+<div *ngIf="!loading; else loadingTemplate">
+  <div class="row">
+    <div class="col-8 mb-3">
+      <div class="card h-100">
+        <div class="card-header">Number of Calls by top 4 Batches</div>
+        <div class="card-body">
+          <div style="display:flex; height: 280px;">
+            <ngx-charts-bar-horizontal-2d
+              [results]="barches"
+              [animations]="true"
+              [scheme]="colorScheme"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="true"
+              [legendTitle]="legendTitle"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [tooltipDisabled]="tooltipDisabled"
+              [yAxisLabel]="'Operator'"
+              [xAxisLabel]="'Number Of Calls'"
+              [showGridLines]="showGridLines"
+              [barPadding]="barPadding"
+              [xScaleMax]="xScaleMax"
+              [roundDomains]="true"
+              [barPadding]="8"
+              [groupPadding]="16"
+              [xScaleMax]="3"
             >
+            </ngx-charts-bar-horizontal-2d>
           </div>
         </div>
       </div>
     </div>
+    <div class="col-4 mb-3">
+      <div class="card h-100">
+        <div class="card-body" *ngIf="totals">
+          <div class="title">Total calls</div>
+          <div class="value">{{ totals.allcallscount }}</div>
+          <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
+          <div class="title mt-4">Emotional calls</div>
+          <div class="value">{{ totals.angercallscount }}</div>
+          <nb-progress-bar
+            [value]="(totals.angercallscount / totals.allcallscount) * 100"
+          ></nb-progress-bar>
+          <div class="title mt-4">Silent calls</div>
+          <div class="value">{{ totals.silentcallscount }}</div>
+          <nb-progress-bar
+            [value]="(totals.angercallscount / totals.allcallscount) * 100"
+          ></nb-progress-bar>
+        </div>
+      </div>
+    </div>
+    <ng-template #empty>
+      <div class="row">
+        <div class="col-8">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Some Text to eplore this app</h5>
+              <p class="card-text">
+                With supporting text below as a natural lead-in to additional
+                content.
+              </p>
+              <a routerLink="/guest/quicktest" class="btn btn-primary"
+                >Go To Try</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <div class="row">
+      <div class="col-4 mb-3">
+        <div class="card">
+          <div class="card-body" *ngIf="keywords">
+            <angular-tag-cloud
+              [data]="keywords"
+              width="400"
+              height="300"
+            ></angular-tag-cloud>
+          </div>
+        </div>
+      </div>
+    </div>
+  <ng-template #loadingTemplate>
+    {{ t("Loading...") }}
   </ng-template>
 </div>
-<ng-template #loading>
-  {{ t("Loading...") }}
-</ng-template>
