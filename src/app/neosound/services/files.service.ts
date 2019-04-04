@@ -44,6 +44,13 @@ export class FilesService {
       params
     );
   }
+  getTagClowd(params): Observable<any> {
+    params = params || {
+    };
+    return this.http.post(`${environment.api}/tagCloud `,
+      params
+    );
+  }
 
   deleteFile(params): Observable<any> {
     params = params || {

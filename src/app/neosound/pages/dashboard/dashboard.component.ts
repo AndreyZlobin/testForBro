@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   public barches = [];
   public totals = {};
   public data_2 = [];
+  public keywords = [];
   public loading = true;
   // options
   showXAxis = true;
@@ -69,7 +70,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.filesService.getFileStats({}).subscribe(data => {
       this.loading = false;
-      const batches = Object.keys(data.batches).slice(0, 3);
+      const batches = Object.keys(data.batches).slice(0, 4);
       if (batches) {
         const chartData = batches.map(batchName => {
           return {
@@ -93,6 +94,13 @@ export class DashboardComponent implements OnInit {
         this.barches = chartData;
         this.totals = data.totals;
       }
+    });
+    this.filesService.getTagClowd({}).subscribe(data => {
+      this.keywords = Object.keys(data.keywords).map((key) => {
+        return {
+          text: key, weight: data.keywords[key],
+        }
+      });
     });
   }
 
