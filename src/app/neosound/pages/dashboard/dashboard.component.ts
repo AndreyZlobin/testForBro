@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Observable, TimeoutError } from "rxjs";
 
 import { FilesService } from "../../services/files.service";
+import { comonKeywords } from "./data";
 
 @Component({
   selector: "app-dashboard",
@@ -15,6 +16,7 @@ export class DashboardComponent implements OnInit {
   public totals = {};
   public data_2 = [];
   public keywords = [];
+  public keywords2 = []
   public loading = true;
   // options
   showXAxis = true;
@@ -96,10 +98,12 @@ export class DashboardComponent implements OnInit {
       }
     });
     this.filesService.getTagClowd({}).subscribe(data => {
+      this.keywords2 = comonKeywords;
       this.keywords = Object.keys(data.keywords).map((key) => {
         return {
           text: key, weight: data.keywords[key],
         }
+        
       });
     });
   }
