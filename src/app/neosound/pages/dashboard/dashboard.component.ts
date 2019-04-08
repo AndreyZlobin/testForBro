@@ -8,15 +8,16 @@ import { comonKeywords } from "./data";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ["./dashboard.component.scss"]
 })
 export class DashboardComponent implements OnInit {
+  options: any = {};
   public users$: Observable<any>;
   public barches = [];
   public totals = {};
   public data_2 = [];
   public keywords = [];
-  public keywords2 = []
+  public keywords2 = [];
   public loading = true;
   // options
   showXAxis = true;
@@ -37,7 +38,7 @@ export class DashboardComponent implements OnInit {
   maxRadius = 10;
   minRadius = 3;
   showSeriesOnHover = true;
-  roundEdges: false
+  roundEdges: false;
   animations: boolean = true;
   xScaleMin: any;
   xScaleMax: any;
@@ -93,17 +94,77 @@ export class DashboardComponent implements OnInit {
             ]
           };
         });
+        const buble1 = [];
+        const buble2 = [];
+        const buble3 = [];
+        const buble = batches.map((batchName, index) => {
+          return {
+            name: batchName,
+            data: [
+              data.batches[batchName].angerCallsN,
+              data.batches[batchName].angerCallsN,
+              data.batches[batchName].allCallsN,
+              batchName,
+              batchName
+            ],
+            type: "scatter",
+            symbolSize: function(data) {
+              return data / 5;
+            },
+            label: {
+              emphasis: {
+                show: true,
+                formatter: function(param) {
+                  return param.data[3];
+                },
+                position: "top"
+              }
+            },
+            itemStyle: {
+              normal: {
+                shadowBlur: 10,
+                shadowColor: "rgba(120, 36, 50, 0.5)",
+                shadowOffsetY: 5,
+                color: this.colorScheme.domain[index]
+              }
+            }
+          };
+        });
+
         this.barches = chartData;
         this.totals = data.totals;
+        this.options = {
+          backgroundColor: "#fff",
+          legend: {
+            right: 10,
+            data: batches
+          },
+          xAxis: {
+            splitLine: {
+              lineStyle: {
+                type: "dashed"
+              }
+            }
+          },
+          yAxis: {
+            splitLine: {
+              lineStyle: {
+                type: "dashed"
+              }
+            },
+            scale: true
+          },
+          series: buble
+        };
       }
     });
     this.filesService.getTagClowd({}).subscribe(data => {
       this.keywords2 = comonKeywords;
-      this.keywords = Object.keys(data.keywords).map((key) => {
+      this.keywords = Object.keys(data.keywords).map(key => {
         return {
-          text: key, weight: data.keywords[key],
-        }
-        
+          text: key,
+          weight: data.keywords[key]
+        };
       });
     });
   }
@@ -122,5 +183,10 @@ export class DashboardComponent implements OnInit {
         }, 0)
       );
     }, 0);
+  }
+  username() {
+    const data = localStorage.getItem('user');
+    const user = data && JSON.parse(data);
+    return data && user && user.username;
   }
 }

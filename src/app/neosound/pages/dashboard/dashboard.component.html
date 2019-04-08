@@ -72,7 +72,7 @@
   </div>
   <div class="row">
     <div class="col-6 mb-3">
-      <div class="card  card-block d-flex">
+      <div class="card  card-block d-flex h-100">
         <div class="card-header">Keywords</div>
         <div
           class="card-body align-items-center d-flex justify-content-center"
@@ -87,7 +87,13 @@
       </div>
     </div>
     <div class="col-6 mb-3">
-      <div class="card  card-block d-flex">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">Emotionals</div>
+        <div echarts [options]="options"></div>
+      </div>
+    </div>
+    <div class="col-6 mb-3" *ngIf="username() === 'demo.independer.thijs'">
+      <div class="card  card-block d-flex h-100">
         <div class="card-header">Common Keywords</div>
         <div
           class="card-body align-items-center d-flex justify-content-center"
