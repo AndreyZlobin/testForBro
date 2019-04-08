@@ -130,7 +130,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
 
   discard() {
     this.mediaRecorderService.reset();
-    this.currentFileParams = undefined;
+    // this.currentFileParams = undefined;
     this.files = [];
     this.attached = false;
     this.uploaded = false;
@@ -160,7 +160,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
       res => {
         this.uploaded = true;
         this.successMessage =
-          'Successfully uploaded to the server: ' + this.currentFileParams.name;
+          'Successfully uploaded to the server: ' + this.currentFileParams && this.currentFileParams.name;
         this.filesService.processFile(this.getFileParams()).subscribe(
           v => {
             this.proccessed = true;

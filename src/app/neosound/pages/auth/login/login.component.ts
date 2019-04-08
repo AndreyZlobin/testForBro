@@ -57,6 +57,10 @@ export class LoginComponent implements OnInit {
       },
       "language": {
           "show": true
+      },
+      "colors": {
+          "primary": "rgb(0, 154, 210)",
+          "secondary": "rgb(0, 154, 210)"
       }
     }
   };

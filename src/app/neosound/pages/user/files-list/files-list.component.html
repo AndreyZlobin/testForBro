@@ -113,7 +113,7 @@
             </div>
           </div>
           <div class="col-12">
-            <button class="btn btn-primary mt-4 w-100" (click)="filterIt()">{{t('Apply')}}</button>
+            <button class="btn btn-primary mt-4 w-100" (click)="filterIt()" [ngStyle]="{'background-color': secondaryColor}">{{t('Apply')}}</button>
           </div>
           <div class="col-12">
             <button class="btn btn-secondary mt-2 w-100" (click)="resetFilter()">{{t('Reset')}}</button>
@@ -124,6 +124,17 @@
       <div class="row mb-1">
         <div class="col">
           <h1>{{t('Files')}}</h1>
+        </div>
+        <div class="col">
+          <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
+            <div class="btn-group mr-2 mb-2">
+                <div *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }"></div>
+                <pagination-controls
+                  (pageChange)="getPage($event - 1)"
+                  previousLabel="{{t('previous')}}"
+                  nextLabel="{{t('next')}}"></pagination-controls>
+            </div>
+          </div>
         </div>
         <div class="col">
           <div class="row mb-1">
@@ -165,7 +176,7 @@
         <tbody>
           <tr *ngFor="let item of files; let i = index">
             <td>{{ item.batchid}}</td>
-            <td><a [routerLink]="getLink(item)" style="cursor: pointer;"><div class="text-wrap" tooltip="{{item.filename}}">{{item.filename}}</div></a></td>
+            <td><a [routerLink]="getLink(item)" style="cursor: pointer;" [ngStyle]="{'color': primaryColor}"><div class="text-wrap" tooltip="{{item.filename}}">{{item.filename}}</div></a></td>
             <td><div class="text-wrap" tooltip="{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}">{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</div></td>
             <td><div class="text-wrap" tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">{{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</div></td>
             <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">

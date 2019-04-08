@@ -15,6 +15,7 @@ import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions.min.js";
 import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
 import { ToastrService } from "ngx-toastr";
+import { DataService } from "../../../shared";
 
 @Component({
   selector: "ngx-player-details",
@@ -64,7 +65,8 @@ export class PlayerDetailsComponent
     private route: ActivatedRoute,
     private playerService: PlayerService,
     private toastrService: ToastrService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private dataService: DataService,
   ) {
     this.fileParams = this.filesService.getQuickFileParams();
     // test file
@@ -487,7 +489,12 @@ export class PlayerDetailsComponent
   t(v) {
     return LanguageService.t(v);
   }
+
   zoom($event) {
     this.wavesurfer.zoom(Number($event.target.value));
+  }
+
+  get secondaryColor() {
+    return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.secondary || 'rgb(0, 154, 210)';
   }
 }

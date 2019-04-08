@@ -5,6 +5,7 @@ import { frLocale } from 'ngx-bootstrap';
 import { LanguageService } from '../../../services/language.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DataService } from '../../../shared';
 
 @Component({
   selector: 'app-files-list',
@@ -85,6 +86,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
+    private dataService: DataService,
     ) { }
 
   ngOnInit() {
@@ -482,6 +484,14 @@ export class FilesListComponent implements OnInit, OnDestroy {
     return item.keywords && item.keywords.length
       ? item.keywords.join(', ')
       : '';
+  }
+
+  get primaryColor() {
+    return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.primary || 'rgb(0, 154, 210)';
+  }
+
+  get secondaryColor() {
+    return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.secondary || 'rgb(0, 154, 210)';
   }
 
   ngOnDestroy() {
