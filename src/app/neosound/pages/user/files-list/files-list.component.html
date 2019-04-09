@@ -104,14 +104,24 @@
               </label>
             </div>
           </div> -->
-          <div class="col-12">
+          <div class="col-12 pt-3">
+            <div class="mb-2">{{t('Keywords')}}</div>
+            <select [ngModel]="isKeywordsContain" (ngModelChange)="onChangeKeywords($event)" name="sel2" class="form-control form-control-lg"  style="padding: 5px 10px;border: 1px solid #dfe3e9;font-size: 1rem;height: calc(2rem + 10px);margin-bottom: 1rem;">
+              <option [value]="true">{{t('Contains')}}</option>
+              <option [value]="false">{{t('Does not contain')}}</option>
+            </select>
+            <label>
+              <input [(ngModel)]="keywordsContain" [ngModelOptions]="{standalone: true}" type="text" placeholder="{{t('Keywords')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/>
+            </label>
+          </div>
+          <!-- <div class="col-12">
             <div class="mt-3">
               <label>
                 <input [(ngModel)]="keywordsOnly" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
                 {{t('Show only keywords')}}
               </label>
             </div>
-          </div>
+          </div> -->
           <div class="col-12">
             <button class="btn btn-primary mt-4 w-100" (click)="filterIt()" [ngStyle]="{'background-color': secondaryColor}">{{t('Apply')}}</button>
           </div>
@@ -140,7 +150,7 @@
           <div class="row mb-1">
             <!-- <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div> -->
             <div class="col text-right pl-0" *ngIf="!isLoading">
-                <button class="btn btn-info ml-5 pull-right mt-1 btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
+                <button class="btn btn-info ml-5 pull-right mt-1 btn-sm" (click)="exportCSV()"  [ngStyle]="{'background-color': secondaryColor}">{{t('Export to CSV')}}</button>
             </div>
           </div>
         </div>

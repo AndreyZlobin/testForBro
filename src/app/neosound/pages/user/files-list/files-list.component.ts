@@ -43,6 +43,8 @@ export class FilesListComponent implements OnInit, OnDestroy {
   filename = '';
   paginationNum = 100;
   dateVisible = true;
+  keywordsContain = '';
+  isKeywordsContain = true;
 
   datePickerFromOptions: DatepickerOptions = {
     minYear: 1970,
@@ -408,6 +410,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
     this.angerfrom = null;
     this.angerto = null;
     this.pausefrom = null;
+    this.keywordsContain = '';
     this.pauseto = null;
     this.page = null;
     this.batchid = null;
@@ -466,8 +469,16 @@ export class FilesListComponent implements OnInit, OnDestroy {
       'pauseto': (this.pausefrom || this.pauseto) ? '' + (this.pausefrom > this.pauseto ? 10000 : this.pauseto) : '',
       'batchid': this.batchid && '' + this.batchid || '',
       'filename': this.filename,
-      'keywordsOnly': this.keywordsOnly,
     };
+    if (this.keywordsContain) {
+      if (this.isKeywordsContain) {
+        delete this.filter['keywordsNotContain'];
+        this.filter['keywordsContain'] = this.keywordsContain;
+      } else {
+        delete this.filter['keywordsContain'];
+        this.filter['keywordsNotContain'] = this.keywordsContain;
+      }
+    }
     Object.keys(this.filter).forEach((key) => (this.filter[key] === '' || this.filter[key] === undefined || this.filter[key] === null) && delete this.filter[key]);
     this.getPage(0, this.filter);
   }
@@ -492,6 +503,10 @@ export class FilesListComponent implements OnInit, OnDestroy {
 
   get secondaryColor() {
     return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.secondary || 'rgb(0, 154, 210)';
+  }
+
+  onChangeKeywords(value) {
+    this.isKeywordsContain = value;
   }
 
   ngOnDestroy() {
