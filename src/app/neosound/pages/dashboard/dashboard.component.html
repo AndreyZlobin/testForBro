@@ -86,21 +86,24 @@
     </div>
     <div class="col-4 mb-3">
       <div class="card h-100">
-        <div class="card-header">Total calls</div>
+        <div class="card-header">Processed calls</div>
         <div class="card-body" *ngIf="totals">
           <div class="title">Calls</div>
           <div class="value">{{ totals.allcallscount }}</div>
           <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
+          <div class="description">Total number of calls</div>
           <div class="title mt-4">Emotional calls</div>
           <div class="value">{{ totals.angercallscount }}</div>
           <nb-progress-bar
             [value]="(totals.angercallscount / totals.allcallscount) * 100"
           ></nb-progress-bar>
+          <div class="description">Number of calls with the emotion level above a threshold</div>
           <div class="title mt-4">Silent calls</div>
           <div class="value">{{ totals.silentcallscount }}</div>
           <nb-progress-bar
             [value]="(totals.angercallscount / totals.allcallscount) * 100"
           ></nb-progress-bar>
+          <div class="description">Number of calls with the average pause longer than a threshold</div>
         </div>
       </div>
     </div>
