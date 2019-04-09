@@ -4,6 +4,7 @@
   "logofilename": "logo.jpg",
   "legalName": "NeoSound",
   "legalNameFull": "NeoSound Intelligence B.V.",
+  "sFtpHost": "sftp://NeoSound.eu",
   "companyMainUrl": "https://NeoSound.eu",
 	"footer": {
 		"title": {

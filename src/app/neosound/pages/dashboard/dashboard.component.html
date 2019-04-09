@@ -1,8 +1,60 @@
 <div *ngIf="!loading; else loadingTemplate">
   <div class="row">
+    <ng-container *ngIf="!hasData">
+      <div class="col-12">
+        <div class="card mb-5">
+          <div class="card-header">Welcom on board</div>
+          <div class="card-body">
+            <h4 class="card-text" style="line-height: 2.0;">How to upload files</h4>
+            <p class="card-text" style="line-height: 2.0;">
+              To upload multiple the files please use any SFTP client
+              application and the following credentials
+            </p>
+            <ul style="line-height: 2.0;">
+              <li>Host: {{config.sFtpHost}}</li>
+              <li>Use your username and password.</li>
+              <li>
+                Once connected, please open folder files, and create/upload the
+                separate subfolders inside the folder ‘/files’, e.g.
+                '/files/batch_agent_X’. Then upload the recordings inside the
+                newly created subfolder.
+              </li>
+              <li>
+                Please, keep in mind, we support only the audio files in .wav
+                and .mp3 formats at the moment. The files of any other formats
+                will not be processed.
+              </li>
+              <li>
+                <strong>ATTENTION:</strong> the files uploaded to the root of
+                ‘/files’ folder will not be processed. Make sure that they
+                uploaded inside another subfolder, e.g. '/files/batch_agent_X’.
+                A batch name is required for successful processing. This way you
+                will be able to filter on UI them as separate batches per
+                agents.
+              </li>
+              <li>The files will start processing soon after uploading.</li>
+              <li>
+                Once the files are processed they will appear on the UI and
+                disappear from the files folder on SFTP.
+              </li>
+            </ul>
+            <p class="card-text" style="line-height: 2.0;">
+              <strong>To upload the files one by one,</strong> please use
+              ‘Upload’ link in the top menu. When a file is uploaded you will be
+              redirected to the list of files. However, it will take a few
+              minutes before the file is being processed and the data is
+              available. The processing time depends on the audio file duration.
+              To see the text, please go to file details by clicking the file
+              name, then go the ‘Text' tab. For demo purposes, we suggest using
+              files maximum of 4 minutes with human-friendly short file names.
+            </p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
     <div class="col-8 mb-3">
       <div class="card h-100">
-        <div class="card-header">Number of Calls by top 4 Batches</div>
+        <div class="card-header">Number of calls by top 4 batches</div>
         <div class="card-body">
           <div style="display:flex; height: 280px;">
             <ngx-charts-bar-horizontal-2d
@@ -34,8 +86,9 @@
     </div>
     <div class="col-4 mb-3">
       <div class="card h-100">
+        <div class="card-header">Total calls</div>
         <div class="card-body" *ngIf="totals">
-          <div class="title">Total calls</div>
+          <div class="title">Calls</div>
           <div class="value">{{ totals.allcallscount }}</div>
           <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
           <div class="title mt-4">Emotional calls</div>
@@ -51,24 +104,6 @@
         </div>
       </div>
     </div>
-    <ng-template #empty>
-      <div class="row">
-        <div class="col-8">
-          <div class="card text-center">
-            <div class="card-body">
-              <h5 class="card-title">Some Text to eplore this app</h5>
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-              <a routerLink="/guest/quicktest" class="btn btn-primary"
-                >Go To Try</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-template>
   </div>
   <div class="row">
     <div class="col-6 mb-3">
@@ -88,13 +123,13 @@
     </div>
     <div class="col-6 mb-3">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Emotionals</div>
+        <div class="card-header">Performance by agent</div>
         <div echarts [options]="options"></div>
       </div>
     </div>
     <div class="col-6 mb-3" *ngIf="username() === 'demo.independer.thijs'">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Common Keywords</div>
+        <div class="card-header">Common keywords</div>
         <div
           class="card-body align-items-center d-flex justify-content-center"
           *ngIf="keywords2"

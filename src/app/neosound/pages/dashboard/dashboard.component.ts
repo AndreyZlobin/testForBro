@@ -4,6 +4,7 @@ import { Observable, TimeoutError } from "rxjs";
 
 import { FilesService } from "../../services/files.service";
 import { comonKeywords } from "./data";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: "app-dashboard",
@@ -11,6 +12,8 @@ import { comonKeywords } from "./data";
   styleUrls: ["./dashboard.component.scss"]
 })
 export class DashboardComponent implements OnInit {
+  hasData: boolean = false;
+  config = {};
   options: any = {};
   public users$: Observable<any>;
   public barches = [];
@@ -69,13 +72,18 @@ export class DashboardComponent implements OnInit {
     ]
   };
 
-  constructor(private router: Router, private filesService: FilesService) {}
+  constructor(private router: Router, private filesService: FilesService, private http: HttpClient) {
+    this.http.get('assets/config/config.json').subscribe((data: any) => {
+      this.config =  data;
+    });
+  }
   ngOnInit() {
     this.filesService.getFileStats({}).subscribe(data => {
       this.loading = false;
-      const batches = Object.keys(data.batches).slice(0, 4);
+      const batches = Object.keys(data.batches);
       if (batches) {
-        const chartData = batches.map(batchName => {
+        this.hasData = true;
+        const chartData = batches.slice(0, 4).map(batchName => {
           return {
             name: batchName,
             series: [
@@ -94,28 +102,32 @@ export class DashboardComponent implements OnInit {
             ]
           };
         });
-        const buble1 = [];
-        const buble2 = [];
-        const buble3 = [];
+        let maxX = 0;
+        let maxY = 0;
         const buble = batches.map((batchName, index) => {
+          if(maxX < data.batches[batchName].angerCallsN) {
+            maxX = data.batches[batchName].angerCallsN
+          }
+          if(maxY < data.batches[batchName].silentCallsN) {
+            maxY = data.batches[batchName].silentCallsN
+          }
           return {
             name: batchName,
-            data: [
+            data: [ [
               data.batches[batchName].angerCallsN,
               data.batches[batchName].silentCallsN,
               data.batches[batchName].allCallsN,
-              batchName,
-              batchName
+              batchName,]
             ],
             type: "scatter",
             symbolSize: function(data) {
-              return data / 5;
+              return data[2];
             },
             label: {
               emphasis: {
                 show: true,
                 formatter: function(param) {
-                  return param.data[3];
+                  return `${param.data[3]} - Calls: ${param.data[2]}, Emotional: ${param.data[1]}, Silence: ${param.data[0]},`;
                 },
                 position: "top"
               }
@@ -130,13 +142,16 @@ export class DashboardComponent implements OnInit {
             }
           };
         });
-
         this.barches = chartData;
         this.totals = data.totals;
         this.options = {
           backgroundColor: "#fff",
           legend: {
+            type: 'scroll',
+            orient: 'vertical',
             right: 10,
+            top: 20,
+            bottom: 20,
             data: batches
           },
           xAxis: {
@@ -144,7 +159,16 @@ export class DashboardComponent implements OnInit {
               lineStyle: {
                 type: "dashed"
               }
-            }
+            },
+            type: "value",
+            name: "Silence Calls",
+            nameLocation: 'middle',
+            nameGap: 35,
+            axisLabel: {
+              formatter: "{value}",
+            },
+            min: 0,
+            max: Math.round(maxX * 1.5)
           },
           yAxis: {
             splitLine: {
@@ -152,10 +176,19 @@ export class DashboardComponent implements OnInit {
                 type: "dashed"
               }
             },
-            scale: true
+            scale: true,
+            type: "value",
+            name: "Emotional Calls",
+            axisLabel: {
+              formatter: "{value}",
+            },
+            min: 0,
+            max: Math.round(maxY * 1.5)
           },
           series: buble
         };
+      } else {
+        this.hasData = false;
       }
     });
     this.filesService.getTagClowd({}).subscribe(data => {
@@ -185,7 +218,7 @@ export class DashboardComponent implements OnInit {
     }, 0);
   }
   username() {
-    const data = localStorage.getItem('user');
+    const data = localStorage.getItem("user");
     const user = data && JSON.parse(data);
     return data && user && user.username;
   }
