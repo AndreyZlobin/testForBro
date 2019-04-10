@@ -4,7 +4,7 @@ import { Observable, TimeoutError } from "rxjs";
 
 import { FilesService } from "../../services/files.service";
 import { comonKeywords } from "./data";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-dashboard",
@@ -53,6 +53,9 @@ export class DashboardComponent implements OnInit {
   maxXAxisTickLength = 16;
   maxYAxisTickLength = 16;
   legendPosition = "left";
+  hasSankey = false;
+  sankey1: any;
+  sankey2: any;
   colorScheme = {
     name: "custom",
     selectable: true,
@@ -72,9 +75,13 @@ export class DashboardComponent implements OnInit {
     ]
   };
 
-  constructor(private router: Router, private filesService: FilesService, private http: HttpClient) {
-    this.http.get('assets/config/config.json').subscribe((data: any) => {
-      this.config =  data;
+  constructor(
+    private router: Router,
+    private filesService: FilesService,
+    private http: HttpClient
+  ) {
+    this.http.get("assets/config/config.json").subscribe((data: any) => {
+      this.config = data;
     });
   }
   ngOnInit() {
@@ -104,30 +111,42 @@ export class DashboardComponent implements OnInit {
         });
         let maxX = 0;
         let maxY = 0;
+        let maxR = 0;
+        let minR = 1;
         const buble = batches.map((batchName, index) => {
-          if(maxX < data.batches[batchName].angerCallsN) {
-            maxX = data.batches[batchName].angerCallsN
+          if (maxX < data.batches[batchName].angerCallsN) {
+            maxX = data.batches[batchName].angerCallsN;
           }
-          if(maxY < data.batches[batchName].silentCallsN) {
-            maxY = data.batches[batchName].silentCallsN
+          if (maxY < data.batches[batchName].silentCallsN) {
+            maxY = data.batches[batchName].silentCallsN;
+          }
+          if (maxR < data.batches[batchName].allCallsN) {
+            maxR = data.batches[batchName].allCallsN;
+          }
+          if (data.batches[batchName].allCallsN < minR) {
+            minR = data.batches[batchName].allCallsN;
           }
           return {
             name: batchName,
-            data: [ [
-              data.batches[batchName].angerCallsN,
-              data.batches[batchName].silentCallsN,
-              data.batches[batchName].allCallsN,
-              batchName,]
+            data: [
+              [
+                data.batches[batchName].angerCallsN,
+                data.batches[batchName].silentCallsN,
+                data.batches[batchName].allCallsN,
+                batchName
+              ]
             ],
             type: "scatter",
-            symbolSize: function(data) {
-              return data[2];
+            symbolSize: data => {
+              return this.getRadius(data[2], minR, maxR);
             },
             label: {
               emphasis: {
                 show: true,
                 formatter: function(param) {
-                  return `${param.data[3]} - Calls: ${param.data[2]}, Emotional: ${param.data[1]}, Silence: ${param.data[0]},`;
+                  return `${param.data[3]} - Calls: ${
+                    param.data[2]
+                  }, Emotional: ${param.data[1]}, Silence: ${param.data[0]},`;
                 },
                 position: "top"
               }
@@ -147,8 +166,8 @@ export class DashboardComponent implements OnInit {
         this.options = {
           backgroundColor: "#fff",
           legend: {
-            type: 'scroll',
-            orient: 'vertical',
+            type: "scroll",
+            orient: "vertical",
             right: 10,
             top: 20,
             bottom: 20,
@@ -157,15 +176,16 @@ export class DashboardComponent implements OnInit {
           xAxis: {
             splitLine: {
               lineStyle: {
-                type: "dashed"
+                type: "none",
+                opacity: 0
               }
             },
             type: "value",
             name: "Silence Calls",
-            nameLocation: 'middle',
+            nameLocation: "middle",
             nameGap: 35,
             axisLabel: {
-              formatter: "{value}",
+              formatter: "{value}"
             },
             min: 0,
             max: Math.round(maxX * 1.5)
@@ -173,14 +193,15 @@ export class DashboardComponent implements OnInit {
           yAxis: {
             splitLine: {
               lineStyle: {
-                type: "dashed"
+                type: "none",
+                opacity: 0
               }
             },
             scale: true,
             type: "value",
             name: "Emotional Calls",
             axisLabel: {
-              formatter: "{value}",
+              formatter: "{value}"
             },
             min: 0,
             max: Math.round(maxY * 1.5)
@@ -200,10 +221,119 @@ export class DashboardComponent implements OnInit {
         };
       });
     });
+    this.filesService.getEchartData({}).subscribe(data => {
+      if (data && data.nouns && data.words) {
+        this.hasSankey = true;
+        this.sankey1 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: [
+            "#c12e34",
+            "#e6b600",
+            "#0098d9",
+            "#2b821d",
+            "#005eaa",
+            "#339ca8",
+            "#cda819",
+            "#32a487"
+          ],
+          graph: {
+            color: [
+              "#c12e34",
+              "#e6b600",
+              "#0098d9",
+              "#2b821d",
+              "#005eaa",
+              "#339ca8",
+              "#cda819",
+              "#32a487"
+            ]
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.nouns.nodes,
+              links: data.nouns.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+        this.sankey2 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: [
+            "#c12e34",
+            "#e6b600",
+            "#0098d9",
+            "#2b821d",
+            "#005eaa",
+            "#339ca8",
+            "#cda819",
+            "#32a487"
+          ],
+          graph: {
+            color: [
+              "#c12e34",
+              "#e6b600",
+              "#0098d9",
+              "#2b821d",
+              "#005eaa",
+              "#339ca8",
+              "#cda819",
+              "#32a487"
+            ]
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.words.nodes,
+              links: data.words.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+      }
+    });
   }
 
   public loadData() {}
-
+  private getRadius(r, minR, maxR) {
+    if (r === minR) {
+      return 20;
+    } else if (r === maxR) {
+      return 40;
+    } else {
+      return Math.round(20 + (40 * r) / maxR);
+    }
+  }
   public logout() {
     this.router.navigateByUrl("/");
   }
