@@ -44,6 +44,13 @@ export class FilesService {
       params
     );
   }
+  getEchartData(params): Observable<any> {
+    params = params || {
+    };
+    return this.http.post(`${environment.api}/getEchartData`,
+      params
+    );
+  }
   getTagClowd(params): Observable<any> {
     params = params || {
     };
