@@ -104,12 +104,20 @@ export class DashboardComponent implements OnInit {
         });
         let maxX = 0;
         let maxY = 0;
+        let maxR = 0;
+        let minR = 1;
         const buble = batches.map((batchName, index) => {
           if(maxX < data.batches[batchName].angerCallsN) {
             maxX = data.batches[batchName].angerCallsN
           }
           if(maxY < data.batches[batchName].silentCallsN) {
             maxY = data.batches[batchName].silentCallsN
+          }
+          if(maxR < data.batches[batchName].allCallsN) {
+            maxR = data.batches[batchName].allCallsN
+          }
+          if(data.batches[batchName].allCallsN < minR) {
+            minR = data.batches[batchName].allCallsN
           }
           return {
             name: batchName,
@@ -120,8 +128,8 @@ export class DashboardComponent implements OnInit {
               batchName,]
             ],
             type: "scatter",
-            symbolSize: function(data) {
-              return data[2];
+            symbolSize: (data) => {
+              return this.getRadius(data[2], minR, maxR);
             },
             label: {
               emphasis: {
@@ -157,7 +165,8 @@ export class DashboardComponent implements OnInit {
           xAxis: {
             splitLine: {
               lineStyle: {
-                type: "dashed"
+                type: "none",
+                opacity: 0,
               }
             },
             type: "value",
@@ -173,7 +182,8 @@ export class DashboardComponent implements OnInit {
           yAxis: {
             splitLine: {
               lineStyle: {
-                type: "dashed"
+                type: "none",
+                opacity: 0,
               }
             },
             scale: true,
@@ -203,7 +213,15 @@ export class DashboardComponent implements OnInit {
   }
 
   public loadData() {}
-
+  private getRadius(r, minR, maxR) {
+    if(r === minR) {
+      return 20;
+    } else if(r === maxR) {
+      return 40;
+    } else {
+      return Math.round(20 + (40 * r) / maxR);
+    }
+  }
   public logout() {
     this.router.navigateByUrl("/");
   }
