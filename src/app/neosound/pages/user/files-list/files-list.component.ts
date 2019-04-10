@@ -5,6 +5,7 @@ import { frLocale } from 'ngx-bootstrap';
 import { LanguageService } from '../../../services/language.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DataService } from '../../../shared';
 
 @Component({
   selector: 'app-files-list',
@@ -42,6 +43,8 @@ export class FilesListComponent implements OnInit, OnDestroy {
   filename = '';
   paginationNum = 100;
   dateVisible = true;
+  keywordsContain = '';
+  isKeywordsContain = true;
 
   datePickerFromOptions: DatepickerOptions = {
     minYear: 1970,
@@ -85,6 +88,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
+    private dataService: DataService,
     ) { }
 
   ngOnInit() {
@@ -406,6 +410,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
     this.angerfrom = null;
     this.angerto = null;
     this.pausefrom = null;
+    this.keywordsContain = '';
     this.pauseto = null;
     this.page = null;
     this.batchid = null;
@@ -464,8 +469,16 @@ export class FilesListComponent implements OnInit, OnDestroy {
       'pauseto': (this.pausefrom || this.pauseto) ? '' + (this.pausefrom > this.pauseto ? 10000 : this.pauseto) : '',
       'batchid': this.batchid && '' + this.batchid || '',
       'filename': this.filename,
-      'keywordsOnly': this.keywordsOnly,
     };
+    if (this.keywordsContain) {
+      if (this.isKeywordsContain) {
+        delete this.filter['keywordsNotContain'];
+        this.filter['keywordsContain'] = this.keywordsContain;
+      } else {
+        delete this.filter['keywordsContain'];
+        this.filter['keywordsNotContain'] = this.keywordsContain;
+      }
+    }
     Object.keys(this.filter).forEach((key) => (this.filter[key] === '' || this.filter[key] === undefined || this.filter[key] === null) && delete this.filter[key]);
     this.getPage(0, this.filter);
   }
@@ -476,6 +489,24 @@ export class FilesListComponent implements OnInit, OnDestroy {
 
   getFilesOnPageLabel() {
     return ((this.page + 1) * 100 < this.files.length) ? (this.page + 1) * 100 : this.files.length;
+  }
+
+  getKeywords(item) {
+    return item.keywords && item.keywords.length
+      ? item.keywords.join(', ')
+      : '';
+  }
+
+  get primaryColor() {
+    return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.primary || 'rgb(0, 154, 210)';
+  }
+
+  get secondaryColor() {
+    return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.secondary || 'rgb(0, 154, 210)';
+  }
+
+  onChangeKeywords(value) {
+    this.isKeywordsContain = value;
   }
 
   ngOnDestroy() {

@@ -1,15 +1,18 @@
-<div>
-  <button
-    class="btn btn-secondary pull-right"
-    routerLink="/user/files"
-    style="float: right"
-  >
-    Back
-  </button>
-  <h2>
-    {{ t("Details") }} <span>{{ fileParams.filename }}</span>
-  </h2>
-  <ul class="nav nav-tabs mt-2 mb-2">
+<div class="player-details">
+  <div>
+    <button
+      class="btn btn-secondary pull-right"
+      routerLink="/user/files"
+      style="float: right"
+    >
+      Back
+    </button>
+    <h2>
+      {{ t("Details") }} <span>{{ fileParams.filename }}</span>
+    </h2>
+  </div>
+  <div class="clearfix"></div>
+  <!-- <ul class="nav nav-tabs mt-2 mb-2">
     <li class="nav-item">
       <a
         class="nav-link"
@@ -37,7 +40,7 @@
         >{{ t("Text") }}</a
       >
     </li>
-  </ul>
+  </ul> -->
   <div class="alert alert-danger" *ngIf="errorMessage">
     {{ t("Error:") }} {{ t(errorMessage) }}
   </div>
@@ -104,8 +107,7 @@
       </div>
     </div>
   </div>
-  <div
-    *ngIf="emotions && currentTab !== 'results' && currentTab !== 'text'"
+  <div *ngIf="emotions && currentTab !== 'results' && currentTab !== 'text'"
     class="mt-2"
   >
     <div class="scrollable-list table-responsive">
@@ -117,7 +119,7 @@
               {{ getDateVal(item[1]) | date: "mm:ss" }}
             </td>
             <td class="col-10">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-            <td class="col-1">{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
+            <td class="col-1"><span *ngIf="item[3]">{{ item[3] | currency: "%":"symbol":"1.2-2" }}</span></td>
           </tr></ng-container
         >
       </table>
@@ -139,11 +141,11 @@
                 {{ getDateVal(item[0]) | date: "mm:ss" }} -
                 {{ getDateVal(item[1]) | date: "mm:ss" }}
               </td>
-              <td class="col-10">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
+              <td class="col-10"><span [innerHTML]=t(item[2])></span></td>
               <td class="col-1">
-                {{
-                  item[3] | currency: "%":"symbol":"1.2-2"
-                }}
+                <span *ngIf="item[3]">
+                  {{ item[3] | currency: "%":"symbol":"1.2-2" }}
+                </span>
               </td>
             </tr>
           </ng-container>
@@ -159,7 +161,7 @@
           >
             Copy
           </button>
-          {{ sttfulltext }}
+          <span [innerHTML]=sttfulltext></span>
         </div>
       </ng-container>
       <ng-container *ngIf="radioModel === 'KeyWords'">

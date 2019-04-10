@@ -23,6 +23,9 @@ export class LoginComponent implements OnInit {
     "title": "NeoSound - Turn emotions into data!",
     "metaDescription": "NeoSound - Turn emotions into data!",
     "logofilename": "logo.jpg",
+    "legalName": "NeoSound",
+    "legalNameFull": "NeoSound Intelligence B.V.",
+    "companyMainUrl": "https://NeoSound.eu",
     "footer": {
         "title": {
             "show": true,
@@ -54,6 +57,10 @@ export class LoginComponent implements OnInit {
       },
       "language": {
           "show": true
+      },
+      "colors": {
+          "primary": "rgb(0, 154, 210)",
+          "secondary": "rgb(0, 154, 210)"
       }
     }
   };

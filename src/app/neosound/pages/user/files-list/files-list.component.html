@@ -104,16 +104,26 @@
               </label>
             </div>
           </div> -->
-          <div class="col-12">
+          <div class="col-12 pt-3">
+            <div class="mb-2">{{t('Keywords')}}</div>
+            <select [ngModel]="isKeywordsContain" (ngModelChange)="onChangeKeywords($event)" name="sel2" class="form-control form-control-lg"  style="padding: 5px 10px;border: 1px solid #dfe3e9;font-size: 1rem;height: calc(2rem + 10px);margin-bottom: 1rem;">
+              <option [value]="true">{{t('Contains')}}</option>
+              <option [value]="false">{{t('Does not contain')}}</option>
+            </select>
+            <label>
+              <input [(ngModel)]="keywordsContain" [ngModelOptions]="{standalone: true}" type="text" placeholder="{{t('Keywords')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/>
+            </label>
+          </div>
+          <!-- <div class="col-12">
             <div class="mt-3">
               <label>
                 <input [(ngModel)]="keywordsOnly" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
                 {{t('Show only keywords')}}
               </label>
             </div>
-          </div>
+          </div> -->
           <div class="col-12">
-            <button class="btn btn-primary mt-4 w-100" (click)="filterIt()">{{t('Apply')}}</button>
+            <button class="btn btn-primary mt-4 w-100" (click)="filterIt()" [ngStyle]="{'background-color': secondaryColor}">{{t('Apply')}}</button>
           </div>
           <div class="col-12">
             <button class="btn btn-secondary mt-2 w-100" (click)="resetFilter()">{{t('Reset')}}</button>
@@ -126,10 +136,21 @@
           <h1>{{t('Files')}}</h1>
         </div>
         <div class="col">
+          <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
+            <div class="btn-group mr-2 mb-2">
+                <div *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }"></div>
+                <pagination-controls
+                  (pageChange)="getPage($event - 1)"
+                  previousLabel="{{t('previous')}}"
+                  nextLabel="{{t('next')}}"></pagination-controls>
+            </div>
+          </div>
+        </div>
+        <div class="col">
           <div class="row mb-1">
             <!-- <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div> -->
             <div class="col text-right pl-0" *ngIf="!isLoading">
-                <button class="btn btn-info ml-5 pull-right mt-1 btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
+                <button class="btn btn-info ml-5 pull-right mt-1 btn-sm" (click)="exportCSV()"  [ngStyle]="{'background-color': secondaryColor}">{{t('Export to CSV')}}</button>
             </div>
           </div>
         </div>
@@ -137,23 +158,23 @@
       <table class="table">
         <thead>
           <tr>
-              <th>{{t('Batch Id')}}</th>
-              <th><a (click)="sortTable('name')">{{t('Name')}}
+              <th class="text-one-line">{{t('Batch Id')}}</th>
+              <th class="text-one-line"><a (click)="sortTable('name')">{{t('Name')}}
                 <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'name'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
               </th>
-              <th><a (click)="sortTable('uploaded')">{{t('Uploaded')}}
+              <th class="text-one-line"><a (click)="sortTable('uploaded')">{{t('Uploaded')}}
                 <i *ngIf="sortBy === 'uploaded' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'uploaded' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'uploaded'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
               </th>
-              <th><a (click)="sortTable('duration')">{{t('Duration')}}
+              <th class="text-one-line"><a (click)="sortTable('duration')">{{t('Duration')}}
                 <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
               </th>
-              <th><a (click)="sortTable('emotion')">{{t('Emotion')}}
+              <th class="text-one-line"><a (click)="sortTable('emotion')">{{t('Emotion')}}
                 <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
               </th>
-              <th><a (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
+              <th class="text-one-line"><a (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
                 <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
               </th>
-              <th>{{t('Keywords')}}</th>
+              <th class="text-one-line">{{t('Keywords')}}</th>
               <!-- <th>Beta</th> -->
               <!-- <th></th> -->
               <!-- <th>%</th> -->
@@ -165,9 +186,9 @@
         <tbody>
           <tr *ngFor="let item of files; let i = index">
             <td>{{ item.batchid}}</td>
-            <td><a [routerLink]="getLink(item)" style="cursor: pointer;">{{ item.filename}}</a></td>
-            <td>{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
-            <td>{{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</td>
+            <td><a [routerLink]="getLink(item)" style="cursor: pointer;" [ngStyle]="{'color': primaryColor}"><div class="text-wrap" tooltip="{{item.filename}}">{{item.filename}}</div></a></td>
+            <td><div class="text-wrap" tooltip="{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}">{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</div></td>
+            <td><div class="text-wrap" tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">{{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</div></td>
             <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
               <div *ngIf="item.angertop && item.angertop.anger">
                 {{item.angertop && item.angertop.anger}}%
@@ -181,7 +202,7 @@
             <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
             <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
             <td>
-              <div *ngIf="item.keywordcount">
+              <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.keywordcount" tooltip="{{getKeywords(item)}}">
                 {{item.keywordcount}}
               </div>
             </td>

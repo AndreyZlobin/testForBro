@@ -92,7 +92,7 @@ export class DashboardComponent implements OnInit {
                 value: data.batches[batchName].allCallsN
               },
               {
-                name: "Anger Calls",
+                name: "Emotional Calls",
                 value: data.batches[batchName].angerCallsN
               },
               {

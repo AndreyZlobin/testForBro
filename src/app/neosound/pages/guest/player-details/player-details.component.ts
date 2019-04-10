@@ -15,6 +15,7 @@ import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions.min.js";
 import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
 import { ToastrService } from "ngx-toastr";
+import { DataService } from "../../../shared";
 
 @Component({
   selector: "ngx-player-details",
@@ -45,11 +46,12 @@ export class PlayerDetailsComponent
   sttfulltext;
   keywords;
   emotionsSttAnger;
-  currentTab = "anger";
+  currentTab = "text";
   tabsDisabled = false;
   isScroll = false;
   duration = 0;
   radioModel = "Log";
+  onhold;
   @HostListener("document:keyup", ["$event"])
   public handleKeyboardEvent(event: KeyboardEvent): void {
     if (event.code === "Space") {
@@ -63,7 +65,8 @@ export class PlayerDetailsComponent
     private route: ActivatedRoute,
     private playerService: PlayerService,
     private toastrService: ToastrService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private dataService: DataService,
   ) {
     this.fileParams = this.filesService.getQuickFileParams();
     // test file
@@ -297,10 +300,13 @@ export class PlayerDetailsComponent
             if (this.results.result.anger.ints) {
               this.emotionsAnger = this.results.result.anger.ints;
               this.emotions = this.emotionsAnger;
-              this.setRegions();
+              // this.onhold = this.results.result.anger.ints;
+              this.setTab('anger');
+              // this.setRegions();
             }
             if (this.results.result.anger.music) {
               this.emotionsSounds = this.results.result.anger.music;
+              this.setRegions();
             }
           }
           if (this.results.result.stt) {
@@ -316,11 +322,13 @@ export class PlayerDetailsComponent
           if (this.results.result.merged) {
             if (this.results.result.merged.intprobs) {
               this.emotionsSttAnger = this.results.result.merged.intprobs;
+              this.emotions = this.emotionsSttAnger;
+              this.setTab('text');
             }
           }
         }
       },
-      e => (this.errorMessage = e.error.message)
+      e => (this.errorMessage = e.error.message),
     );
   }
 
@@ -332,24 +340,27 @@ export class PlayerDetailsComponent
 
   // @ts-ignore
   setRegions() {
+    const inputData = this.emotionsSounds ? this.emotions.concat(this.emotionsSounds) : this.emotions;
     if (!this.wavesurferReady || !this.emotions) return;
     this.wavesurfer.clearRegions();
-    for (let index = 0; index < this.emotions.length; index++) {
-      const element = this.emotions[index];
+    const data = inputData || this.emotions;
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index];
       this.wavesurfer.addRegion({
         start: element[0],
         end: element[1],
-        color: this.getColor(element[3], element[2])
+        color: this.getColor(element[3], element[2], !element[2]),
       });
     }
 
-    if (this.currentTab === "text" && this.emotionsAnger) {
+    // if (this.currentTab === "text" && this.emotionsAnger) {
+    if (this.emotionsAnger) {
       for (let index = 0; index < this.emotionsAnger.length; index++) {
         const element = this.emotionsAnger[index];
         this.wavesurfer.addRegion({
           start: element[0],
           end: element[1],
-          color: this.getColor(element[3], element[2])
+          color: this.getColor(element[3], element[2], !element[2]),
         });
       }
     }
@@ -365,7 +376,10 @@ export class PlayerDetailsComponent
     this.wavesurfer.zoom(this.zoomLevel);
   }
 
-  getColor(val: any, type?: string) {
+  getColor(val: any, type?: string, isMusic = false) {
+    if (isMusic) {
+      return "rgba(0,255,0, 0.7)";
+    }
     switch (this.currentTab) {
       case "anger":
         return (
@@ -475,7 +489,12 @@ export class PlayerDetailsComponent
   t(v) {
     return LanguageService.t(v);
   }
+
   zoom($event) {
     this.wavesurfer.zoom(Number($event.target.value));
+  }
+
+  get secondaryColor() {
+    return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.secondary || 'rgb(0, 154, 210)';
   }
 }

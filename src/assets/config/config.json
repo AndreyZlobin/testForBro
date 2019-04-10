@@ -1,6 +1,6 @@
 {
-	"title": "NeoSound - Turn emotions into data!",
-	"metaDescription": "NeoSound - Turn emotions into data!",
+  "title": "NeoSound - Turn emotions into data!",
+  "metaDescription": "NeoSound - Turn emotions into data!",
   "logofilename": "logo.jpg",
   "legalName": "NeoSound",
   "legalNameFull": "NeoSound Intelligence B.V.",
@@ -38,5 +38,9 @@
 		"language": {
 			"show": true
 		}
-	}
+    },
+    "colors": {
+        "primary": "rgb(0, 154, 210)",
+        "secondary": "rgb(0, 154, 210)"
+    }
 }

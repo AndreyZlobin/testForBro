@@ -41,3 +41,19 @@
 	width: 200px;
 	max-height: 90px;
 }
+.nb-theme-default nb-card {
+	margin-bottom: 0;
+}
+.nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {
+    padding: 0.75rem 2.25rem 0.75rem;
+}
+.nb-theme-default nb-card-body {
+    min-height: calc(100vh - 147px);
+}
+.nb-theme-default {
+	.player-details {
+		.btn {
+			padding: 5px 1.5rem;
+		}
+	}
+}

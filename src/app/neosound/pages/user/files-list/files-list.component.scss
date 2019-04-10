@@ -52,3 +52,12 @@ td {
 .min-h-filter {
 	min-height: 500px;
 }
+.text-wrap {
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 300px;
+    overflow: hidden;
+}
+.text-one-line {
+    white-space: nowrap;
+}

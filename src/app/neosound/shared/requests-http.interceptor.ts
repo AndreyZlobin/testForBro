@@ -46,10 +46,11 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
         }
       }, (err: any) => {
         if (err instanceof HttpErrorResponse) {
-          if (err.status === 401) {
+          if (err.status === 401 || err.status === 403) {
             // redirect to the login route
             // or show a modal
             this.router.navigateByUrl('/auth/login');
+            return;
           }
           let msg = err.error.message ? err.error.message : 'Server Error';
           msg = err.message ? err.message : msg;
