@@ -56,6 +56,9 @@ export class DashboardComponent implements OnInit {
   hasSankey = false;
   sankey1: any;
   sankey2: any;
+  sankey3: any;
+  sankey4: any;
+  sankey5: any;
   colorScheme = {
     name: "custom",
     selectable: true,
@@ -222,9 +225,57 @@ export class DashboardComponent implements OnInit {
       });
     });
     this.filesService.getEchartData({}).subscribe(data => {
-      if (data && data.nouns && data.words) {
+      if (data && data.nouns && data.words && data.adjs && data.verbs && data.wordsParts) {
         this.hasSankey = true;
         this.sankey1 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: [
+            "#c12e34",
+            "#e6b600",
+            "#0098d9",
+            "#2b821d",
+            "#005eaa",
+            "#339ca8",
+            "#cda819",
+            "#32a487"
+          ],
+          graph: {
+            color: [
+              "#c12e34",
+              "#e6b600",
+              "#0098d9",
+              "#2b821d",
+              "#005eaa",
+              "#339ca8",
+              "#cda819",
+              "#32a487"
+            ]
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.words.nodes,
+              links: data.words.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+        this.sankey2 = {
           tooltip: {
             trigger: "item",
             triggerOn: "mousemove"
@@ -272,7 +323,7 @@ export class DashboardComponent implements OnInit {
             }
           ]
         };
-        this.sankey2 = {
+        this.sankey3 = {
           tooltip: {
             trigger: "item",
             triggerOn: "mousemove"
@@ -302,8 +353,104 @@ export class DashboardComponent implements OnInit {
           series: [
             {
               type: "sankey",
-              data: data.words.nodes,
-              links: data.words.links,
+              data: data.adjs.nodes,
+              links: data.adjs.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+        this.sankey4 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: [
+            "#c12e34",
+            "#e6b600",
+            "#0098d9",
+            "#2b821d",
+            "#005eaa",
+            "#339ca8",
+            "#cda819",
+            "#32a487"
+          ],
+          graph: {
+            color: [
+              "#c12e34",
+              "#e6b600",
+              "#0098d9",
+              "#2b821d",
+              "#005eaa",
+              "#339ca8",
+              "#cda819",
+              "#32a487"
+            ]
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.verbs.nodes,
+              links: data.verbs.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+        this.sankey5 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: [
+            "#c12e34",
+            "#e6b600",
+            "#0098d9",
+            "#2b821d",
+            "#005eaa",
+            "#339ca8",
+            "#cda819",
+            "#32a487"
+          ],
+          graph: {
+            color: [
+              "#c12e34",
+              "#e6b600",
+              "#0098d9",
+              "#2b821d",
+              "#005eaa",
+              "#339ca8",
+              "#cda819",
+              "#32a487"
+            ]
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.wordsParts.nodes,
+              links: data.wordsParts.links,
               focusNodeAdjacency: "allEdges",
               itemStyle: {
                 normal: {

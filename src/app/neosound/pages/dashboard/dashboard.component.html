@@ -132,14 +132,32 @@
     </div>
     <div class="col-6 mb-3" *ngIf="hasSankey">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Popular Nouns</div>
+        <div class="card-header">Popular Words</div>
         <div echarts [options]="sankey1"></div>
       </div>
     </div>
     <div class="col-6 mb-3" *ngIf="hasSankey">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Popular Words</div>
+        <div class="card-header">Popular Nouns</div>
         <div echarts [options]="sankey2"></div>
+      </div>
+    </div>
+    <div class="col-6 mb-3" *ngIf="hasSankey">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">Popular Adjectives</div>
+        <div echarts [options]="sankey3"></div>
+      </div>
+    </div>
+    <div class="col-6 mb-3" *ngIf="hasSankey">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">Popular Verbs</div>
+        <div echarts [options]="sankey4"></div>
+      </div>
+    </div>
+    <div class="col-6 mb-3" *ngIf="hasSankey">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">Popular Words 2</div>
+        <div echarts [options]="sankey5"></div>
       </div>
     </div>
   </div>
