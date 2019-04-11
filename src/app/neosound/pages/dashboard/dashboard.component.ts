@@ -59,6 +59,7 @@ export class DashboardComponent implements OnInit {
   sankey3: any;
   sankey4: any;
   sankey5: any;
+  sankey6: any;
   colorScheme = {
     name: "custom",
     selectable: true,
@@ -451,6 +452,54 @@ export class DashboardComponent implements OnInit {
               type: "sankey",
               data: data.wordsParts.nodes,
               links: data.wordsParts.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+        this.sankey6 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: [
+            "#c12e34",
+            "#e6b600",
+            "#0098d9",
+            "#2b821d",
+            "#005eaa",
+            "#339ca8",
+            "#cda819",
+            "#32a487"
+          ],
+          graph: {
+            color: [
+              "#c12e34",
+              "#e6b600",
+              "#0098d9",
+              "#2b821d",
+              "#005eaa",
+              "#339ca8",
+              "#cda819",
+              "#32a487"
+            ]
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.wordsSent.nodes,
+              links: data.wordsSent.links,
               focusNodeAdjacency: "allEdges",
               itemStyle: {
                 normal: {
