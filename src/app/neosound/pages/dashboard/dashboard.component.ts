@@ -60,6 +60,8 @@ export class DashboardComponent implements OnInit {
   sankey3: any;
   sankey4: any;
   sankey5: any;
+  sankey6: any;
+  sankey7: any;
   colorScheme = {
     name: "custom",
     selectable: true,
@@ -226,8 +228,10 @@ export class DashboardComponent implements OnInit {
       });
     });
     this.filesService.getEchartData({}).subscribe(data => {
-      if (data && data.nouns && data.words && data.adjs && data.verbs && data.wordsParts) {
+      if (data) {
         this.hasSankey = true;
+      }
+      if (data.nouns) {
         this.sankey1 = {
           tooltip: {
             trigger: "item",
@@ -276,6 +280,8 @@ export class DashboardComponent implements OnInit {
             }
           ]
         };
+      }
+      if (data.words) {
         this.sankey2 = {
           tooltip: {
             trigger: "item",
@@ -324,6 +330,8 @@ export class DashboardComponent implements OnInit {
             }
           ]
         };
+      }
+      if (data.adjs) {
         this.sankey3 = {
           tooltip: {
             trigger: "item",
@@ -372,6 +380,8 @@ export class DashboardComponent implements OnInit {
             }
           ]
         };
+      }
+      if (data.verbs) {
         this.sankey4 = {
           tooltip: {
             trigger: "item",
@@ -420,6 +430,8 @@ export class DashboardComponent implements OnInit {
             }
           ]
         };
+      }
+      if (data.wordsParts) {
         this.sankey5 = {
           tooltip: {
             trigger: "item",
@@ -452,6 +464,106 @@ export class DashboardComponent implements OnInit {
               type: "sankey",
               data: data.wordsParts.nodes,
               links: data.wordsParts.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+      }
+      if (data.wordsSent) {
+        this.sankey6 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: [
+            "#c12e34",
+            "#e6b600",
+            "#0098d9",
+            "#2b821d",
+            "#005eaa",
+            "#339ca8",
+            "#cda819",
+            "#32a487"
+          ],
+          graph: {
+            color: [
+              "#c12e34",
+              "#e6b600",
+              "#0098d9",
+              "#2b821d",
+              "#005eaa",
+              "#339ca8",
+              "#cda819",
+              "#32a487"
+            ]
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.wordsSent.nodes,
+              links: data.wordsSent.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+      }
+      if (data.adjsSent) {
+        this.sankey7 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: [
+            "#c12e34",
+            "#e6b600",
+            "#0098d9",
+            "#2b821d",
+            "#005eaa",
+            "#339ca8",
+            "#cda819",
+            "#32a487"
+          ],
+          graph: {
+            color: [
+              "#c12e34",
+              "#e6b600",
+              "#0098d9",
+              "#2b821d",
+              "#005eaa",
+              "#339ca8",
+              "#cda819",
+              "#32a487"
+            ]
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.adjsSent.nodes,
+              links: data.adjsSent.links,
               focusNodeAdjacency: "allEdges",
               itemStyle: {
                 normal: {

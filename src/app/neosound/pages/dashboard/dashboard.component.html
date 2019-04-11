@@ -141,6 +141,18 @@
         <div echarts [options]="sankey5"></div>
       </div>
     </div>
+    <div class="col-6 mb-3" *ngIf="hasSankey">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">Popular Words Sentiment</div>
+        <div echarts [options]="sankey6"></div>
+      </div>
+    </div>
+    <div class="col-6 mb-3" *ngIf="hasSankey">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">Popular Adjectives Sentiment</div>
+        <div echarts [options]="sankey7"></div>
+      </div>
+    </div>
   </div>
   <div class="col-6 mb-3" *ngIf="username() === 'demo.independer.thijs'">
     <div class="card  card-block d-flex h-100">
