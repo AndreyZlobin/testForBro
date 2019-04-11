@@ -35,7 +35,7 @@ const translationsSp = {
   'Refresh': 'Refrescar',
   'Delete': 'Borrar',
   'Details': 'Detalles',
-  'Back': 'Atrás',
+  // 'Back': 'Atrás',
   'Fit into window': 'Ajustar a la ventana',
   'Happiness': 'Alegría',
   'Sadness': 'Tristeza',
@@ -114,7 +114,61 @@ const translationsSp = {
   'Med.': 'Medio',
   'Keywords': 'Palabras Clave',
   'Show only keywords': 'Mostrar solo palabras clave',
-  'Apply': 'Aplicar'
+  'Apply': 'Aplicar',
+  'Show only calls with keywords': 'Mostrar solo llamadas con palabras clave',
+  'Missing keywords': 'Palabras clave que faltan',
+  'Containing keywords': 'Que contienen palabras clave',
+  'Call Duration': 'Duración de la llamada',
+  'Log': 'Registro',
+  'Back': 'Volver',
+
+  // dashboard start
+  'Welcome on board': "Bienvenido a bordo",
+  'How to upload files': `Como subir archivos`,
+  'Number of calls by top 4 batches': `Número de llamadas por top 4 lotes`,
+  'Processed calls': `Llamadas procesadas`,
+  'Calls': `Llamadas`,
+  'Total number of calls': `Número total de llamadas`,
+  'Emotional calls': `Llamadas emocionales`,
+  'Number of calls with the emotion level above a threshold': `Número de llamadas con el nivel de emoción por encima de un umbral`,
+  'Silent calls': `Llamadas silenciosas`,
+  'Number of calls with the average pause longer than a threshold': `Número de llamadas con la pausa promedio más larga que un umbral`,
+  'Performance by agent': "Rendimiento por agente",
+  'Popular Words': "Palabras Populares",
+  'Popular Nouns': `Nombres populares`,
+  'Popular Adjectives': "Adjetivos populares",
+  'Popular Verbs': `Verbos populares`,
+  'Popular Words 2': `Palabras Populares 2`,
+  'Common keywords': 'Palabras clave comunes',
+  'Use your username and password.': 'Usa tu nombre de usuario y contraseña.',
+  'Number Of Calls': 'Número de llamadas',
+
+'To upload multiple the files please use any SFTP client application and the following credentials': `Para subir varios archivos, por favor use cualquier cliente SFTP
+              Solicitud y las siguientes credenciales.`,
+'Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.': `Una vez conectado, abra los archivos de la carpeta y cree / cargue subcarpetas separadas dentro de la carpeta ‘/ archivos", por ejemplo, "/ files / batch_agent_X". Luego sube las grabaciones dentro de la subcarpeta de nueva creación.`,
+'Please, keep in mind, we support only the audio files in .wav and .mp3 formats at the moment. The files of any other formats will not be processed.': `Por favor, tenga en cuenta que solo admitimos los archivos de audio en .wav
+                y formatos .mp3 en este momento. Los archivos de cualquier otro formato.
+                no será procesado`,
+'ATTENTION': 'ATENCIÓN',
+'the files uploaded to the root of "/files" folder will not be processed. Make sure that they uploaded inside another subfolder, e.g. "/files/batch_agent_X". A batch name is required for successful processing. This way you will be able to filter on UI them as separate batches per agents.': `los archivos subidos a la raíz de
+                La carpeta ‘/ files" no se procesará. Asegúrese de que
+                cargado dentro de otra subcarpeta, por ejemplo, '/ files / batch_agent_X'.
+                Se requiere un nombre de lote para un procesamiento exitoso. De esta manera usted
+                será capaz de filtrarlos en la interfaz de usuario como lotes separados por
+                agentes`,
+'The files will start processing soon after uploading.': `Los archivos comenzarán a procesarse poco después de la carga.`,
+'Once the files are processed they will appear on the UI and disappear from the files folder on SFTP.': `Una vez procesados los archivos, aparecerán en la interfaz de usuario y
+                desaparecer de la carpeta de archivos en SFTP.`,
+'To upload the files one by one,': `Para subir los archivos uno por uno,`,
+'please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.': `por favor use
+                "Enlace" en el menú superior. Cuando un archivo es subido usted será
+                Redirigido a la lista de archivos. Sin embargo, tomará unos pocos
+                Minutos antes de que el archivo se esté procesando y los datos estén
+                disponible. El tiempo de procesamiento depende de la duración del archivo de audio.
+                Para ver el texto, vaya a los detalles del archivo haciendo clic en el archivo
+                nombre, a continuación, vaya a la pestaña "Texto". Para fines de demostración, sugerimos utilizar
+                archivos máximo de 4 minutos con nombres cortos de archivos amigables para el usuario.`,
+  // dashboard end
 };
 const translationsRu = {
   'Error:': 'Ошибка:',
@@ -228,6 +282,62 @@ const translationsRu = {
   'Keywords': 'Ключевые слова',
   'Show only keywords': 'Показать только ключевые слова',
   'Apply': 'Применить',
+  'Show only calls with keywords': 'Только звонки с ключ.словами',
+  'Missing keywords': 'Не содержат ключ.слова',
+  'Containing keywords': 'Содержат ключ.слова',
+  'Call Duration': 'Продолжительность звонка',
+  'Log': 'Журнал',
+  'Number Of Calls': 'Кол-во звонков',
+
+  // dashboard start
+  'Welcome on board': "Добро пожаловать на борт",
+  'How to upload files': `Как загружать файлы`,
+  'Number of calls by top 4 batches': `Количество вызовов по четырем лучшим партиям`,
+  'Processed calls': `Обработанные звонки`,
+  'Calls': 'Звонки',
+  'Total number of calls': `Общее количество звонков`,
+  'Emotional calls': `Эмоциональные звонки`,
+  'Number of calls with the emotion level above a threshold': `Количество вызовов с уровнем эмоций выше порога`,
+  'Silent calls': `Тихие звонки`,
+  'Number of calls with the average pause longer than a threshold': `Количество вызовов со средней паузой, превышающей порог`,
+  'Performance by agent': "Производительность по агенту",
+  'Popular Words': "Популярные слова",
+  'Popular Nouns': `Популярные существительные`,
+  'Popular Adjectives': "Популярные прилагательные",
+  'Popular Verbs': `Популярные глаголы`,
+  'Popular Words 2': `Популярные слова 2`,
+  'Common keywords': 'Общие ключевые слова',
+  'Use your username and password.': 'Введите имя пользователя и пароль',
+
+  'To upload multiple the files please use any SFTP client application and the following credentials': `Чтобы загрузить несколько файлов, пожалуйста, используйте любой SFTP-клиент
+    приложение и следующие полномочия`,
+'Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.': `После подключения, пожалуйста, откройте папку с файлами и создайте / загрузите
+                  отдельные подпапки внутри папки «/ files», например
+                  «/ Файлы / batch_agent_X». Затем загрузите записи внутри
+                  недавно созданная подпапка.`,
+  'Please, keep in mind, we support only the audio files in .wav and .mp3 formats at the moment. The files of any other formats will not be processed.': `Пожалуйста, имейте в виду, мы поддерживаем только аудио файлы в .wav
+                  и форматы .mp3 на данный момент. Файлы любых других форматов
+                  не будет обработан.`,
+  'ATTENTION': 'ВНИМАНИЕ',
+  'the files uploaded to the root of "/files" folder will not be processed. Make sure that they uploaded inside another subfolder, e.g. "/files/batch_agent_X". A batch name is required for successful processing. This way you will be able to filter on UI them as separate batches per agents.': `файлы загружены в корень
+                 Папка «/ files» не будет обработана. Убедитесь, что они
+                  загружены в другую подпапку, например, «/ Файлы / batch_agent_X».
+                  Имя партии требуется для успешной обработки. Таким образом, вы
+                  сможет фильтровать их по интерфейсу как отдельные
+                  агенты.`,
+  'The files will start processing soon after uploading.': `Файлы начнут обрабатываться вскоре после загрузки.`,
+  'Once the files are processed they will appear on the UI and disappear from the files folder on SFTP.': `После обработки файлов они появятся в интерфейсе пользователя и
+                  исчезнуть из папки с файлами на SFTP.`,
+  'To upload the files one by one,': `Чтобы загрузить файлы по одному,`,
+  'please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.': `пожалуйста, используйте
+                Ссылка «Загрузить» в верхнем меню. Когда файл загружен, вы будете
+                перенаправлен в список файлов. Тем не менее, это займет несколько
+                минут, прежде чем файл обрабатывается и данные
+                имеется в наличии. Время обработки зависит от продолжительности аудио файла.
+                Чтобы увидеть текст, пожалуйста, перейдите к деталям файла, нажав на файл
+                имя, затем перейдите на вкладку «Текст». В демонстрационных целях мы предлагаем использовать
+                максимум 4 минуты с понятными для человека короткими именами файлов.`,
+    // dashboard end
 };
 
 @Injectable()

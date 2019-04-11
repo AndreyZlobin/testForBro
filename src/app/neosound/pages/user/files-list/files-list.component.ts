@@ -30,6 +30,8 @@ export class FilesListComponent implements OnInit, OnDestroy {
   angerto; //  = 100;
   pausefrom; //  = 0;
   pauseto; //  = 10000;
+  callfrom;
+  callto;
   page; //  = 0;
   batchid; // = 1;
   batchidAll = true;
@@ -43,7 +45,8 @@ export class FilesListComponent implements OnInit, OnDestroy {
   filename = '';
   paginationNum = 100;
   dateVisible = true;
-  keywordsContain = '';
+  keywordsContain = [];
+  keywordsNotContain = [];
   isKeywordsContain = true;
 
   datePickerFromOptions: DatepickerOptions = {
@@ -409,9 +412,12 @@ export class FilesListComponent implements OnInit, OnDestroy {
     setTimeout(() => this.dateVisible = true, 0);
     this.angerfrom = null;
     this.angerto = null;
+    this.keywordsContain = [];
+    this.keywordsNotContain = [];
     this.pausefrom = null;
-    this.keywordsContain = '';
     this.pauseto = null;
+    this.callfrom = null;
+    this.callto = null;
     this.page = null;
     this.batchid = null;
     this.batchidAll = true;
@@ -469,15 +475,14 @@ export class FilesListComponent implements OnInit, OnDestroy {
       'pauseto': (this.pausefrom || this.pauseto) ? '' + (this.pausefrom > this.pauseto ? 10000 : this.pauseto) : '',
       'batchid': this.batchid && '' + this.batchid || '',
       'filename': this.filename,
+      'minutesfrom': this.callfrom && '' + this.callfrom || '',
+      'minutesto': (this.callfrom || this.callto) ? '' + (this.callfrom > this.callto ? 10000 : this.callto) : '',
     };
-    if (this.keywordsContain) {
-      if (this.isKeywordsContain) {
-        delete this.filter['keywordsNotContain'];
-        this.filter['keywordsContain'] = this.keywordsContain;
-      } else {
-        delete this.filter['keywordsContain'];
-        this.filter['keywordsNotContain'] = this.keywordsContain;
-      }
+    if (this.keywordsContain && this.keywordsContain.length) {
+        this.filter['keywordsContain'] = this.keywordsContain.join(',');
+    }
+    if (this.keywordsNotContain && this.keywordsNotContain.length) {
+        this.filter['keywordsNotContain'] = this.keywordsNotContain.join(',');
     }
     Object.keys(this.filter).forEach((key) => (this.filter[key] === '' || this.filter[key] === undefined || this.filter[key] === null) && delete this.filter[key]);
     this.getPage(0, this.filter);

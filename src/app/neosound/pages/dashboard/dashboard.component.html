@@ -3,50 +3,31 @@
     <ng-container>
       <div class="col-12">
         <div class="card mb-5">
-          <div class="card-header">Welcom on board</div>
+          <div class="card-header">{{t('Welcome on board')}}</div>
           <div class="card-body">
-            <h4 class="card-text" style="line-height: 2.0;">How to upload files</h4>
+            <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4>
             <p class="card-text" style="line-height: 2.0;">
-              To upload multiple the files please use any SFTP client
-              application and the following credentials
+              {{t('To upload multiple the files please use any SFTP client application and the following credentials')}}
             </p>
             <ul style="line-height: 2.0;">
               <li>Host: {{config.sFtpHost}}</li>
-              <li>Use your username and password.</li>
+              <li>{{t('Use your username and password.')}}</li>
               <li>
-                Once connected, please open folder files, and create/upload the
-                separate subfolders inside the folder ‘/files’, e.g.
-                '/files/batch_agent_X’. Then upload the recordings inside the
-                newly created subfolder.
+                  {{t('Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.')}}
               </li>
               <li>
-                Please, keep in mind, we support only the audio files in .wav
-                and .mp3 formats at the moment. The files of any other formats
-                will not be processed.
+                  {{t('Please, keep in mind, we support only the audio files in .wav and .mp3 formats at the moment. The files of any other formats will not be processed.')}}
               </li>
               <li>
-                <strong>ATTENTION:</strong> the files uploaded to the root of
-                ‘/files’ folder will not be processed. Make sure that they
-                uploaded inside another subfolder, e.g. '/files/batch_agent_X’.
-                A batch name is required for successful processing. This way you
-                will be able to filter on UI them as separate batches per
-                agents.
+                <strong>{{t('ATTENTION')}}:</strong> {{t('the files uploaded to the root of "/files" folder will not be processed. Make sure that they uploaded inside another subfolder, e.g. "/files/batch_agent_X". A batch name is required for successful processing. This way you will be able to filter on UI them as separate batches per agents.')}}
               </li>
-              <li>The files will start processing soon after uploading.</li>
+              <li>{{t('The files will start processing soon after uploading.')}}</li>
               <li>
-                Once the files are processed they will appear on the UI and
-                disappear from the files folder on SFTP.
+                  {{t('Once the files are processed they will appear on the UI and disappear from the files folder on SFTP.')}}
               </li>
             </ul>
             <p class="card-text" style="line-height: 2.0;">
-              <strong>To upload the files one by one,</strong> please use
-              ‘Upload’ link in the top menu. When a file is uploaded you will be
-              redirected to the list of files. However, it will take a few
-              minutes before the file is being processed and the data is
-              available. The processing time depends on the audio file duration.
-              To see the text, please go to file details by clicking the file
-              name, then go the ‘Text' tab. For demo purposes, we suggest using
-              files maximum of 4 minutes with human-friendly short file names.
+              <strong>{{t('To upload the files one by one,')}}</strong> {{t('please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.')}}
             </p>
           </div>
         </div>
@@ -54,7 +35,7 @@
     </ng-container>
     <div class="col-8 mb-3">
       <div class="card h-100">
-        <div class="card-header">Number of calls by top 4 batches</div>
+        <div class="card-header">{{t('Number of calls by top 4 batches')}}</div>
         <div class="card-body">
           <div style="display:flex; height: 280px;">
             <ngx-charts-bar-horizontal-2d
@@ -70,7 +51,7 @@
               [showYAxisLabel]="showYAxisLabel"
               [tooltipDisabled]="tooltipDisabled"
               [yAxisLabel]="'Operator'"
-              [xAxisLabel]="'Number Of Calls'"
+              [xAxisLabel]="t('Number Of Calls')"
               [showGridLines]="showGridLines"
               [barPadding]="barPadding"
               [xScaleMax]="xScaleMax"
@@ -86,24 +67,24 @@
     </div>
     <div class="col-4 mb-3">
       <div class="card h-100">
-        <div class="card-header">Processed calls</div>
+        <div class="card-header">{{t('Processed calls')}}</div>
         <div class="card-body" *ngIf="totals">
-          <div class="title">Calls</div>
+          <div class="title">{{t('Calls')}}</div>
           <div class="value">{{ totals.allcallscount }}</div>
           <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
-          <div class="description">Total number of calls</div>
-          <div class="title mt-4">Emotional calls</div>
+          <div class="description">{{t('Total number of calls')}}</div>
+          <div class="title mt-4">{{t('Emotional calls')}}</div>
           <div class="value">{{ totals.angercallscount }}</div>
           <nb-progress-bar
             [value]="(totals.angercallscount / totals.allcallscount) * 100"
           ></nb-progress-bar>
-          <div class="description">Number of calls with the emotion level above a threshold</div>
-          <div class="title mt-4">Silent calls</div>
+          <div class="description">{{t('Number of calls with the emotion level above a threshold')}}</div>
+          <div class="title mt-4">{{t('Silent calls')}}</div>
           <div class="value">{{ totals.silentcallscount }}</div>
           <nb-progress-bar
             [value]="(totals.angercallscount / totals.allcallscount) * 100"
           ></nb-progress-bar>
-          <div class="description">Number of calls with the average pause longer than a threshold</div>
+          <div class="description">{{t('Number of calls with the average pause longer than a threshold')}}</div>
         </div>
       </div>
     </div>
@@ -111,7 +92,7 @@
   <div class="row">
     <div class="col-6 mb-3">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Keywords</div>
+        <div class="card-header">{{t('Keywords')}}</div>
         <div
           class="card-body align-items-center d-flex justify-content-center"
           *ngIf="keywords"
@@ -126,44 +107,44 @@
     </div>
     <div class="col-6 mb-3">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Performance by agent</div>
+        <div class="card-header">{{t('Performance by agent')}}</div>
         <div echarts [options]="options"></div>
       </div>
     </div>
     <div class="col-6 mb-3" *ngIf="hasSankey">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Popular Words</div>
+        <div class="card-header">{{t('Popular Words')}}</div>
         <div echarts [options]="sankey1"></div>
       </div>
     </div>
     <div class="col-6 mb-3" *ngIf="hasSankey">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Popular Nouns</div>
+        <div class="card-header">{{t('Popular Nouns')}}</div>
         <div echarts [options]="sankey2"></div>
       </div>
     </div>
     <div class="col-6 mb-3" *ngIf="hasSankey">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Popular Adjectives</div>
+        <div class="card-header">{{t('Popular Adjectives')}}</div>
         <div echarts [options]="sankey3"></div>
       </div>
     </div>
     <div class="col-6 mb-3" *ngIf="hasSankey">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Popular Verbs</div>
+        <div class="card-header">{{t('Popular Verbs')}}</div>
         <div echarts [options]="sankey4"></div>
       </div>
     </div>
     <div class="col-6 mb-3" *ngIf="hasSankey">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">Popular Words 2</div>
+        <div class="card-header">{{t('Popular Words 2')}}</div>
         <div echarts [options]="sankey5"></div>
       </div>
     </div>
   </div>
   <div class="col-6 mb-3" *ngIf="username() === 'demo.independer.thijs'">
     <div class="card  card-block d-flex h-100">
-      <div class="card-header">Common keywords</div>
+      <div class="card-header">{{t('Common keywords')}}</div>
       <div
         class="card-body align-items-center d-flex justify-content-center"
         *ngIf="keywords2"

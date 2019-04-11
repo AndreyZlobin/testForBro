@@ -66,6 +66,7 @@ import {
 import { NbAlertModule, NbInputModule } from "@nebular/theme";
 import { ToastrModule } from "ngx-toastr";
 import { NgDatepickerModule } from "ng2-datepicker";
+import { TagInputModule } from 'ngx-chips';
 
 const formSetting: any = {
   redirectDelay: 0,
@@ -154,6 +155,7 @@ import { DataService } from "./neosound/shared";
     ToastrModule.forRoot(),
     NgDatepickerModule,
     NgxPaginationModule,
+    TagInputModule,
   ],
   bootstrap: [AppComponent],
   providers: [

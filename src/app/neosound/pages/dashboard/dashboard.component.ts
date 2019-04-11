@@ -5,6 +5,7 @@ import { Observable, TimeoutError } from "rxjs";
 import { FilesService } from "../../services/files.service";
 import { comonKeywords } from "./data";
 import { HttpClient } from "@angular/common/http";
+import { LanguageService } from "../../services/language.service";
 
 @Component({
   selector: "app-dashboard",
@@ -498,5 +499,9 @@ export class DashboardComponent implements OnInit {
     const data = localStorage.getItem("user");
     const user = data && JSON.parse(data);
     return data && user && user.username;
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 }
