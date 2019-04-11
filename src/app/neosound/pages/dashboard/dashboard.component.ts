@@ -117,11 +117,11 @@ export class DashboardComponent implements OnInit {
         let maxR = 0;
         let minR = 1;
         const buble = batches.map((batchName, index) => {
-          if (maxX < data.batches[batchName].angerCallsN) {
-            maxX = data.batches[batchName].angerCallsN;
+          if (maxX < data.batches[batchName].silentCallsN) {
+            maxX = data.batches[batchName].silentCallsN;
           }
-          if (maxY < data.batches[batchName].silentCallsN) {
-            maxY = data.batches[batchName].silentCallsN;
+          if (maxY < data.batches[batchName].angerCallsN) {
+            maxY = data.batches[batchName].angerCallsN;
           }
           if (maxR < data.batches[batchName].allCallsN) {
             maxR = data.batches[batchName].allCallsN;
@@ -133,8 +133,8 @@ export class DashboardComponent implements OnInit {
             name: batchName,
             data: [
               [
-                data.batches[batchName].angerCallsN,
                 data.batches[batchName].silentCallsN,
+                data.batches[batchName].angerCallsN,
                 data.batches[batchName].allCallsN,
                 batchName
               ]
@@ -149,7 +149,7 @@ export class DashboardComponent implements OnInit {
                 formatter: function(param) {
                   return `${param.data[3]} - Calls: ${
                     param.data[2]
-                  }, Emotional: ${param.data[1]}, Silence: ${param.data[0]},`;
+                  }, Silent: ${param.data[0]}, Emotional: ${param.data[1]},`;
                 },
                 position: "top"
               }
@@ -184,7 +184,7 @@ export class DashboardComponent implements OnInit {
               }
             },
             type: "value",
-            name: "Silence Calls",
+            name: "Silent Calls",
             nameLocation: "middle",
             nameGap: 35,
             axisLabel: {
