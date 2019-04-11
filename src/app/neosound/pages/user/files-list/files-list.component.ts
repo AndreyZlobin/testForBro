@@ -4,7 +4,7 @@ import { DatepickerOptions } from 'ng2-datepicker';
 import { frLocale } from 'ngx-bootstrap';
 import { LanguageService } from '../../../services/language.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { DataService } from '../../../shared';
 
 @Component({
@@ -60,7 +60,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
     // minDate: new Date(Date.now()), // Minimal selectable date
     // maxDate: new Date(Date.now()),  // Maximal selectable date
     barTitleIfEmpty: 'Click to select a date',
-    placeholder: 'from', // HTML input placeholder attribute (default: '')
+    placeholder: this.t('from'), // HTML input placeholder attribute (default: '')
     addClass: 'form-control form-control-lg form-gr-first', // Optional, value to pass on to [ngClass] on the input field
     addStyle: {'width': '100%'}, // Optional, value to pass to [ngStyle] on the input field
     fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
@@ -78,7 +78,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
     // minDate: new Date(Date.now()), // Minimal selectable date
     // maxDate: new Date(Date.now()),  // Maximal selectable date
     barTitleIfEmpty: 'Click to select a date',
-    placeholder: 'to', // HTML input placeholder attribute (default: '')
+    placeholder: this.t('to'), // HTML input placeholder attribute (default: '')
     addClass: 'form-control form-control-lg form-gr-last', // Optional, value to pass on to [ngClass] on the input field
     addStyle: {'width': '100%'}, // Optional, value to pass to [ngStyle] on the input field
     fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
@@ -477,12 +477,15 @@ export class FilesListComponent implements OnInit, OnDestroy {
       'filename': this.filename,
       'minutesfrom': this.callfrom && '' + this.callfrom || '',
       'minutesto': (this.callfrom || this.callto) ? '' + (this.callfrom > this.callto ? 10000 : this.callto) : '',
+      'keywordsOnly': this.keywordsOnly,
     };
     if (this.keywordsContain && this.keywordsContain.length) {
-        this.filter['keywordsContain'] = this.keywordsContain.join(',');
+        this.filter['keywordsContain'] = this.keywordsContain
+          .map(v => v.value.split(',').map(v => v.trim()).join(',')).join(',');
     }
     if (this.keywordsNotContain && this.keywordsNotContain.length) {
-        this.filter['keywordsNotContain'] = this.keywordsNotContain.join(',');
+        this.filter['keywordsNotContain'] = this.keywordsNotContain
+          .map(v => v.value.split(',').map(v => v.trim()).join(',')).join(',');
     }
     Object.keys(this.filter).forEach((key) => (this.filter[key] === '' || this.filter[key] === undefined || this.filter[key] === null) && delete this.filter[key]);
     this.getPage(0, this.filter);
@@ -513,6 +516,26 @@ export class FilesListComponent implements OnInit, OnDestroy {
   onChangeKeywords(value) {
     this.isKeywordsContain = value;
   }
+
+  onItemAdd(tag: any, container) {
+    let c;
+    switch (container) {
+      case 'keywordsContain':
+        c = this.keywordsContain;
+        break;
+      case 'keywordsNotContain':
+        c = this.keywordsNotContain;
+        break;
+    }
+
+    const index = c.findIndex(el => el.value === tag.value);
+    c.splice(index, 1);
+    const val = tag.value.split(',').map(v => v.trim());
+    c = val.map(v => c.push({
+      value: v,
+      display: v,
+    }));
+}
 
   ngOnDestroy() {
     this.sub.unsubscribe();
