@@ -222,7 +222,7 @@
             </td>
             <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
             <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)" tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}"><i class="fa fa-sync"></i></button></td>
-            <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="delete(item.batchid, item.filename)" tooltip="{{t('Delete')}}"><i class="fa fa-trash-alt"></i></button></td>
+            <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="delete(item.batchid, item.fileid)" tooltip="{{t('Delete')}}"><i class="fa fa-trash-alt"></i></button></td>
           </tr>
         </tbody>
       </table>
