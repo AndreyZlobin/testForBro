@@ -118,13 +118,13 @@
                 <div class="mb-2">{{t('Containing keywords')}}</div>
                 <!-- <input [(ngModel)]="keywordsContain" [ngModelOptions]="{standalone: true}" type="text" placeholder="{{t('Keywords')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/> -->
                 <!-- <rl-tag-input [(ngModel)]="keywordsContain" placeholder="{{t('Keywords')}}"></rl-tag-input> -->
-                <tag-input [(ngModel)]="keywordsContain" [editable]="true" theme="minimal" (onAdd)="onItemAdd($event, 'keywordsContain')" placeholder="{{t('Keywords')}}" secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
+                <tag-input [(ngModel)]="keywordsContain" [editable]="true" theme="bootstrap3-info" (onAdd)="onItemAdd($event, 'keywordsContain')" placeholder="{{t('Keywords')}}" secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
               </div>
               <div class="col-12 pt-3">
                 <div class="mb-2">{{t('Missing keywords')}}</div>
                 <!-- <input [(ngModel)]="keywordsContain" [ngModelOptions]="{standalone: true}" type="text" placeholder="{{t('Keywords')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/> -->
                 <!-- <rl-tag-input [(ngModel)]="keywordsContain" placeholder="{{t('Keywords')}}"></rl-tag-input> -->
-                <tag-input [(ngModel)]="keywordsNotContain" [editable]="true" theme="minimal" (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Keywords')}}" secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
+                <tag-input [(ngModel)]="keywordsNotContain" [editable]="true" theme="bootstrap3-info" (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Keywords')}}" secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
               </div>
               <div class="col-12">
                 <div class="mt-3">
