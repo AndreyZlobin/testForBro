@@ -7,6 +7,22 @@ import { comonKeywords } from "./data";
 import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
 
+const colors = [
+  "#37A2DA",
+  "#32C5E9",
+  "#67E0E3",
+  "#9FE6B8",
+  "#FFDB5C",
+  "#ff9f7f",
+  "#fb7293",
+  "#E062AE",
+  "#E690D1",
+  "#e7bcf3",
+  "#9d96f5",
+  "#8378EA",
+  "#96BFFF"
+];
+
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -31,19 +47,6 @@ export class DashboardComponent implements OnInit {
   sankey5: any;
   sankey6: any;
   sankey7: any;
-  colors: [
-    "#009AD2",
-    "#E36B68",
-    "#00A576",
-    "#8661B3",
-    "#9C4995",
-    "#A72F71",
-    "#E86765",
-    "#EB9A28",
-    "#EB9A28",
-    "#F9F871",
-    "#6677C7"
-  ];
 
   constructor(
     private router: Router,
@@ -70,6 +73,11 @@ export class DashboardComponent implements OnInit {
         });
         const chartData = [
           {
+            name: "All",
+            type: "bar",
+            data: all
+          },
+          {
             name: "Emotional",
             type: "bar",
             data: anger
@@ -79,13 +87,9 @@ export class DashboardComponent implements OnInit {
             type: "bar",
             data: silence
           },
-          {
-            name: "All",
-            type: "bar",
-            data: all
-          }
         ];
         this.barChart = {
+          color: colors,
           tooltip: {
             trigger: "axis",
             axisPointer: {
@@ -93,7 +97,7 @@ export class DashboardComponent implements OnInit {
             }
           },
           legend: {
-            data: [ "Emotional", "Silence", "All"]
+            data: ["All", "Emotional", "Silence"]
           },
           yAxis: {
             type: "category",
@@ -148,18 +152,11 @@ export class DashboardComponent implements OnInit {
                 position: "top"
               }
             },
-            itemStyle: {
-              normal: {
-                shadowBlur: 10,
-                shadowColor: "rgba(120, 36, 50, 0.5)",
-                shadowOffsetY: 5,
-                color: this.colors
-              }
-            }
           };
         });
         this.totals = data.totals;
         this.options = {
+          color: colors,
           backgroundColor: "#fff",
           legend: {
             type: "scroll",
@@ -227,34 +224,65 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
-          graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+          lineStyle: {
+            normal: {
+                curveness: 0.5
+            }
           },
-          series: [
+          levels: [
             {
+              depth: 0,
+              itemStyle: {
+                color: "#fbb4ae"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            },
+            {
+              depth: 1,
+              itemStyle: {
+                color: "#b3cde3"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            },
+            {
+              depth: 2,
+              itemStyle: {
+                color: "#ccebc5"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            },
+            {
+              depth: 3,
+              itemStyle: {
+                color: "#decbe4"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            }
+          ],
+          color: colors,
+          graph: {
+            color: colors
+          },
+          series: {
               type: "sankey",
               data: data.words.nodes,
               links: data.words.links,
-              focusNodeAdjacency: "allEdges",
+              layout:'none',
+              focusNodeAdjacency: 'allEdges',
+              coordinateSystem: "view",
+              draggable: true,
               itemStyle: {
                 normal: {
                   borderWidth: 1,
@@ -268,7 +296,6 @@ export class DashboardComponent implements OnInit {
                 }
               }
             }
-          ]
         };
       }
       if (data.words) {
@@ -277,27 +304,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -327,27 +336,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -377,27 +368,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -427,27 +400,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -477,27 +432,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -527,27 +464,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {

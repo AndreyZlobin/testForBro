@@ -10,7 +10,7 @@
               {{t('To upload multiple the files please use any SFTP client application and the following credentials')}}
             </p>
             <ul style="line-height: 2.0;">
-              <li>Host: {{config.sFtpHost}}</li>
+              <li>Host: <strong>{{config.sFtpHost}}</strong></li>
               <li>{{t('Use your username and password.')}}</li>
               <li>
                   {{t('Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.')}}
@@ -58,7 +58,7 @@
           <div class="title mt-4">{{t('Silent calls')}}</div>
           <div class="value">{{ totals.silentcallscount }}</div>
           <nb-progress-bar
-            [value]="(totals.angercallscount / totals.allcallscount) * 100"
+            [value]="(totals.silentcallscount / totals.allcallscount) * 100"
           ></nb-progress-bar>
           <div class="description">{{t('Number of calls with the average pause longer than a threshold')}}</div>
         </div>
