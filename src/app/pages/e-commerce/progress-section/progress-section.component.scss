@@ -33,13 +33,13 @@ $shadow-green: #00977e;
     margin-top: 0.2rem;
 
     .progress-container {
-      height: 0.8rem;
+      height: 0.5rem;
       border-radius: 0;
     }
 
     .progress-value {
-      height: 0.6rem;
-      background: nb-theme(progress-bar-background);
+      height: 0.4rem;
+      background-color: #37A2DA;
 
       @include nb-for-theme(cosmic) {
         box-shadow: 0 0.2rem $shadow-green;

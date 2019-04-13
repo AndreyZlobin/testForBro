@@ -10,7 +10,7 @@
               {{t('To upload multiple the files please use any SFTP client application and the following credentials')}}
             </p>
             <ul style="line-height: 2.0;">
-              <li>Host: {{config.sFtpHost}}</li>
+              <li>Host: <strong>{{config.sFtpHost}}</strong></li>
               <li>{{t('Use your username and password.')}}</li>
               <li>
                   {{t('Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.')}}
@@ -34,34 +34,10 @@
       </div>
     </ng-container>
     <div class="col-8 mb-3">
-      <div class="card h-100">
+      <div class="card h-100" *ngIf="barChart">
         <div class="card-header">{{t('Number of calls by top 4 batches')}}</div>
         <div class="card-body">
-          <div style="display:flex; height: 280px;">
-            <ngx-charts-bar-horizontal-2d
-              [results]="barches"
-              [animations]="true"
-              [scheme]="colorScheme"
-              [gradient]="gradient"
-              [xAxis]="showXAxis"
-              [yAxis]="showYAxis"
-              [legend]="true"
-              [legendTitle]="legendTitle"
-              [showXAxisLabel]="showXAxisLabel"
-              [showYAxisLabel]="showYAxisLabel"
-              [tooltipDisabled]="tooltipDisabled"
-              [yAxisLabel]="'Operator'"
-              [xAxisLabel]="t('Number Of Calls')"
-              [showGridLines]="showGridLines"
-              [barPadding]="barPadding"
-              [xScaleMax]="xScaleMax"
-              [roundDomains]="true"
-              [barPadding]="8"
-              [groupPadding]="16"
-              [xScaleMax]="3"
-            >
-            </ngx-charts-bar-horizontal-2d>
-          </div>
+          <div echarts [options]="barChart"></div>
         </div>
       </div>
     </div>
@@ -82,7 +58,7 @@
           <div class="title mt-4">{{t('Silent calls')}}</div>
           <div class="value">{{ totals.silentcallscount }}</div>
           <nb-progress-bar
-            [value]="(totals.angercallscount / totals.allcallscount) * 100"
+            [value]="(totals.silentcallscount / totals.allcallscount) * 100"
           ></nb-progress-bar>
           <div class="description">{{t('Number of calls with the average pause longer than a threshold')}}</div>
         </div>

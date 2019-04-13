@@ -7,6 +7,22 @@ import { comonKeywords } from "./data";
 import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
 
+const colors = [
+  "#37A2DA",
+  "#32C5E9",
+  "#67E0E3",
+  "#9FE6B8",
+  "#FFDB5C",
+  "#ff9f7f",
+  "#fb7293",
+  "#E062AE",
+  "#E690D1",
+  "#e7bcf3",
+  "#9d96f5",
+  "#8378EA",
+  "#96BFFF"
+];
+
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -17,43 +33,12 @@ export class DashboardComponent implements OnInit {
   config = {};
   options: any = {};
   public users$: Observable<any>;
-  public barches = [];
+  public barChart: any;
   public totals = {};
   public data_2 = [];
   public keywords = [];
   public keywords2 = [];
   public loading = true;
-  // options
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = true;
-  legendTitle = "Legend";
-  showXAxisLabel = true;
-  tooltipDisabled = false;
-  xAxisLabel = "Operator";
-  showYAxisLabel = false;
-  yAxisLabel = "Number Of Calls";
-  showGridLines = true;
-  innerPadding = "10%";
-  barPadding = 8;
-  groupPadding = 16;
-  roundDomains = true;
-  maxRadius = 10;
-  minRadius = 3;
-  showSeriesOnHover = true;
-  roundEdges: false;
-  animations: boolean = true;
-  xScaleMin: any;
-  xScaleMax: any;
-  yScaleMin: number;
-  yScaleMax: number;
-  showDataLabel = false;
-  trimXAxisTicks = true;
-  trimYAxisTicks = true;
-  maxXAxisTickLength = 16;
-  maxYAxisTickLength = 16;
-  legendPosition = "left";
   hasSankey = false;
   sankey1: any;
   sankey2: any;
@@ -62,24 +47,6 @@ export class DashboardComponent implements OnInit {
   sankey5: any;
   sankey6: any;
   sankey7: any;
-  colorScheme = {
-    name: "custom",
-    selectable: true,
-    group: "custom",
-    domain: [
-      "#009AD2",
-      "#E36B68",
-      "#00A576",
-      "#8661B3",
-      "#9C4995",
-      "#A72F71",
-      "#E86765",
-      "#EB9A28",
-      "#EB9A28",
-      "#F9F871",
-      "#6677C7"
-    ]
-  };
 
   constructor(
     private router: Router,
@@ -96,25 +63,53 @@ export class DashboardComponent implements OnInit {
       const batches = Object.keys(data.batches);
       if (batches) {
         this.hasData = true;
-        const chartData = batches.slice(0, 4).map(batchName => {
-          return {
-            name: batchName,
-            series: [
-              {
-                name: "All Calls",
-                value: data.batches[batchName].allCallsN
-              },
-              {
-                name: "Emotional Calls",
-                value: data.batches[batchName].angerCallsN
-              },
-              {
-                name: "Silent Calls",
-                value: data.batches[batchName].silentCallsN
-              }
-            ]
-          };
+        const anger = [];
+        const all = [];
+        const silence = [];
+        batches.slice(0, 4).forEach(batchName => {
+          all.push(data.batches[batchName].allCallsN);
+          anger.push(data.batches[batchName].angerCallsN);
+          silence.push(data.batches[batchName].silentCallsN);
         });
+        const chartData = [
+          {
+            name: "All",
+            type: "bar",
+            data: all
+          },
+          {
+            name: "Emotional",
+            type: "bar",
+            data: anger
+          },
+          {
+            name: "Silence",
+            type: "bar",
+            data: silence
+          },
+        ];
+        this.barChart = {
+          color: colors,
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            }
+          },
+          legend: {
+            data: ["All", "Emotional", "Silence"]
+          },
+          yAxis: {
+            type: "category",
+            axisTick: { show: false },
+            data: batches.slice(0, 4)
+          },
+          xAxis: {
+            type: "value",
+            name: "Calls"
+          },
+          series: chartData
+        };
         let maxX = 0;
         let maxY = 0;
         let maxR = 0;
@@ -150,26 +145,18 @@ export class DashboardComponent implements OnInit {
               emphasis: {
                 show: true,
                 formatter: function(param) {
-                  return `${param.data[3]} - Calls: ${
-                    param.data[2]
-                  }, Silent: ${param.data[0]}, Emotional: ${param.data[1]},`;
+                  return `${param.data[3]} - Calls: ${param.data[2]}, Silent: ${
+                    param.data[0]
+                  }, Emotional: ${param.data[1]},`;
                 },
                 position: "top"
               }
             },
-            itemStyle: {
-              normal: {
-                shadowBlur: 10,
-                shadowColor: "rgba(120, 36, 50, 0.5)",
-                shadowOffsetY: 5,
-                color: this.colorScheme.domain[index]
-              }
-            }
           };
         });
-        this.barches = chartData;
         this.totals = data.totals;
         this.options = {
+          color: colors,
           backgroundColor: "#fff",
           legend: {
             type: "scroll",
@@ -237,34 +224,65 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
-          graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+          lineStyle: {
+            normal: {
+                curveness: 0.5
+            }
           },
-          series: [
+          levels: [
             {
+              depth: 0,
+              itemStyle: {
+                color: "#fbb4ae"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            },
+            {
+              depth: 1,
+              itemStyle: {
+                color: "#b3cde3"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            },
+            {
+              depth: 2,
+              itemStyle: {
+                color: "#ccebc5"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            },
+            {
+              depth: 3,
+              itemStyle: {
+                color: "#decbe4"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            }
+          ],
+          color: colors,
+          graph: {
+            color: colors
+          },
+          series: {
               type: "sankey",
               data: data.words.nodes,
               links: data.words.links,
-              focusNodeAdjacency: "allEdges",
+              layout:'none',
+              focusNodeAdjacency: 'allEdges',
+              coordinateSystem: "view",
+              draggable: true,
               itemStyle: {
                 normal: {
                   borderWidth: 1,
@@ -278,7 +296,6 @@ export class DashboardComponent implements OnInit {
                 }
               }
             }
-          ]
         };
       }
       if (data.words) {
@@ -287,27 +304,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -337,27 +336,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -387,27 +368,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -437,27 +400,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -487,27 +432,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -537,27 +464,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: [
-            "#c12e34",
-            "#e6b600",
-            "#0098d9",
-            "#2b821d",
-            "#005eaa",
-            "#339ca8",
-            "#cda819",
-            "#32a487"
-          ],
+          color: colors,
           graph: {
-            color: [
-              "#c12e34",
-              "#e6b600",
-              "#0098d9",
-              "#2b821d",
-              "#005eaa",
-              "#339ca8",
-              "#cda819",
-              "#32a487"
-            ]
+            color: colors
           },
           series: [
             {
@@ -591,7 +500,7 @@ export class DashboardComponent implements OnInit {
     } else if (r === maxR) {
       return 40;
     } else {
-      return Math.round(20 + (40 * r) / maxR);
+      return Math.floor(20 + (40 * r) / maxR);
     }
   }
   public logout() {
