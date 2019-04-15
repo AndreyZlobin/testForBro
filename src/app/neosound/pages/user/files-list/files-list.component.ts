@@ -1,32 +1,32 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { FilesService } from '../../../services/files.service';
-import { DatepickerOptions } from 'ng2-datepicker';
-import { frLocale } from 'ngx-bootstrap';
-import { LanguageService } from '../../../services/language.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
-import { DataService } from '../../../shared';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
+import { FilesService } from "../../../services/files.service";
+import { DatepickerOptions } from "ng2-datepicker";
+import { frLocale } from "ngx-bootstrap";
+import { LanguageService } from "../../../services/language.service";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Subscription, Observable } from "rxjs";
+import { DataService } from "../../../shared";
 
 @Component({
-  selector: 'app-files-list',
-  templateUrl: './files-list.component.html',
-  styleUrls: ['./files-list.component.scss']
+  selector: "app-files-list",
+  templateUrl: "./files-list.component.html",
+  styleUrls: ["./files-list.component.scss"]
 })
 export class FilesListComponent implements OnInit, OnDestroy {
   sub: Subscription;
   files;
-  errorMessage = '';
+  errorMessage = "";
   filesResult = [];
   isLoading = true;
   proccessing = {};
   pagesArr = [1];
   totalCount = 0;
-  sortBy = 'uploaded';
-  sort = 'up';
+  sortBy = "uploaded";
+  sort = "up";
   filter;
   datefrom; // = new Date();
   dateto; //  = new Date();
-  angerfrom ; // = 0;
+  angerfrom; // = 0;
   angerto; //  = 100;
   pausefrom; //  = 0;
   pauseto; //  = 10000;
@@ -42,7 +42,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
   pausefromAll = true;
   pausetoAll = true;
   keywordsOnly = false;
-  filename = '';
+  filename = "";
   paginationNum = 100;
   dateVisible = true;
   keywordsContain = [];
@@ -52,37 +52,37 @@ export class FilesListComponent implements OnInit, OnDestroy {
   datePickerFromOptions: DatepickerOptions = {
     minYear: 1970,
     maxYear: 2030,
-    displayFormat: 'MMM D[,] YYYY',
-    barTitleFormat: 'MMMM YYYY',
-    dayNamesFormat: 'dd',
+    displayFormat: "MMM D[,] YYYY",
+    barTitleFormat: "MMMM YYYY",
+    dayNamesFormat: "dd",
     firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
     locale: frLocale,
     // minDate: new Date(Date.now()), // Minimal selectable date
     // maxDate: new Date(Date.now()),  // Maximal selectable date
-    barTitleIfEmpty: 'Click to select a date',
-    placeholder: this.t('from'), // HTML input placeholder attribute (default: '')
-    addClass: 'form-control form-control-lg form-gr-first', // Optional, value to pass on to [ngClass] on the input field
-    addStyle: {'width': '100%'}, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+    barTitleIfEmpty: "Click to select a date",
+    placeholder: this.t("from"), // HTML input placeholder attribute (default: '')
+    addClass: "form-control form-control-lg form-gr-first", // Optional, value to pass on to [ngClass] on the input field
+    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
   };
 
   datePickerToOptions: DatepickerOptions = {
     minYear: 1970,
     maxYear: 2030,
-    displayFormat: 'MMM D[,] YYYY',
-    barTitleFormat: 'MMMM YYYY',
-    dayNamesFormat: 'dd',
+    displayFormat: "MMM D[,] YYYY",
+    barTitleFormat: "MMMM YYYY",
+    dayNamesFormat: "dd",
     firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
     locale: frLocale,
     // minDate: new Date(Date.now()), // Minimal selectable date
     // maxDate: new Date(Date.now()),  // Maximal selectable date
-    barTitleIfEmpty: 'Click to select a date',
-    placeholder: this.t('to'), // HTML input placeholder attribute (default: '')
-    addClass: 'form-control form-control-lg form-gr-last', // Optional, value to pass on to [ngClass] on the input field
-    addStyle: {'width': '100%'}, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: 'my-date-picker', // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+    barTitleIfEmpty: "Click to select a date",
+    placeholder: this.t("to"), // HTML input placeholder attribute (default: '')
+    addClass: "form-control form-control-lg form-gr-last", // Optional, value to pass on to [ngClass] on the input field
+    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
   };
   private sideFilterHasClass = false;
 
@@ -91,15 +91,17 @@ export class FilesListComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
-    private dataService: DataService,
-    ) { }
+    private dataService: DataService
+  ) {}
 
   ngOnInit() {
-    this.sub = this.route.data
-      .subscribe(v => {
-        this.router.navigateByUrl('/user/files');
-      });
+    this.sub = this.route.data.subscribe(v => {
+      this.router.navigateByUrl("/user/files");
+    });
     // this.resetFilter();
+    if (this.filesService.getKeyWord()) {
+      this.keywordsContain = [this.filesService.getKeyWord()];
+    }
     this.filter = this.filesService.getFilter();
     this.sortBy = this.filter.sortby;
     this.sort = this.filter.sortorder;
@@ -120,11 +122,11 @@ export class FilesListComponent implements OnInit, OnDestroy {
 
   getPage(page = 0, parameters = this.filter) {
     // this.isLoading = true;
-    const params = this.filter = {
+    const params = (this.filter = {
       ...parameters,
-      'itemsn': `${this.paginationNum}`,
-      'pagen': '' + (page + 1),
-    };
+      itemsn: `${this.paginationNum}`,
+      pagen: "" + (page + 1)
+    });
     this.page = page;
     this.filesService.listFilesPage(params).subscribe(res => {
       if (res && res.files) this.isLoading = false;
@@ -135,7 +137,10 @@ export class FilesListComponent implements OnInit, OnDestroy {
       }
       // const a = new Array(Math.round(res.count / 50));
       this.totalCount = res.totalcount;
-      this.pagesArr = Array.from({length: Math.ceil(res.totalcount / 100) }, (v, k) => k + 1);
+      this.pagesArr = Array.from(
+        { length: Math.ceil(res.totalcount / 100) },
+        (v, k) => k + 1
+      );
       this.files = res.files;
       // this.isLoading = false;
       // .sort((a, b) => {
@@ -147,8 +152,11 @@ export class FilesListComponent implements OnInit, OnDestroy {
   }
 
   getPages() {
-    if (this.files && (Math.ceil(this.files.length / this.paginationNum) > 1)) {
-      return Array.from({length: Math.ceil(this.files.length / this.paginationNum) }, (v, k) => k+1);
+    if (this.files && Math.ceil(this.files.length / this.paginationNum) > 1) {
+      return Array.from(
+        { length: Math.ceil(this.files.length / this.paginationNum) },
+        (v, k) => k + 1
+      );
     }
     return [];
   }
@@ -158,7 +166,7 @@ export class FilesListComponent implements OnInit, OnDestroy {
   }
 
   getEmotionValue(val) {
-    return val && val[Object.keys(val)[0]] && val[Object.keys(val)[0]] + '%';
+    return val && val[Object.keys(val)[0]] && val[Object.keys(val)[0]] + "%";
   }
 
   // getFileResult(file) {
@@ -243,72 +251,76 @@ export class FilesListComponent implements OnInit, OnDestroy {
   }
 
   delete(batchid, filename) {
-    this.filesService.deleteFile({
-      batchid,
-      filename,
-    }).subscribe(res => {
-      this.refresh();
-    },
-    (e) => this.errorMessage = e.error.message,
-    );
+    this.filesService
+      .deleteFile({
+        batchid,
+        filename
+      })
+      .subscribe(
+        res => {
+          this.refresh();
+        },
+        e => (this.errorMessage = e.error.message)
+      );
   }
 
   getLink(item) {
-    return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(item.fileid)}`;
+    return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
+      item.fileid
+    )}`;
   }
 
   proccessFile(item, i) {
     // const params = item;
     const params = {
-      'batchid': item.batchid,
-      'filename': item.filename,
+      batchid: item.batchid,
+      filename: item.filename
     };
     this.proccessing[i] = true;
-    this.filesService.processFile(params).subscribe(v => {
-
-      // this.filesService.processFile(params, 3).subscribe(v => {
-      //   this.filesService.processFile(params, 5).subscribe(v => {
-      //     this.filesService.processFile(params, 7).subscribe(v => {
-            this.proccessing[i] = false;
-            this.refresh();
-      //     });
-      //   });
-      // });
-
-    },
-    (e) => this.errorMessage = e.error.message,
+    this.filesService.processFile(params).subscribe(
+      v => {
+        // this.filesService.processFile(params, 3).subscribe(v => {
+        //   this.filesService.processFile(params, 5).subscribe(v => {
+        //     this.filesService.processFile(params, 7).subscribe(v => {
+        this.proccessing[i] = false;
+        this.refresh();
+        //     });
+        //   });
+        // });
+      },
+      e => (this.errorMessage = e.error.message)
     );
   }
 
   getEmotionImg(item) {
-    if (!item || !item.fourclasstop) return '';
+    if (!item || !item.fourclasstop) return "";
     const emK = Object.keys(item.fourclasstop);
     const img = emK && emK[0];
-    return img ? img.toLowerCase() : 'neutral';
+    return img ? img.toLowerCase() : "neutral";
   }
 
   getOpacityLevelAnger(val) {
     if (!val) {
-      return '';
+      return "";
     }
     let result;
     if (val.anger < 1) {
       result = 0;
     }
     result = val.anger / 2 / 100;
-    return 'rgba(255, 5, 5, ' + result + ')';
+    return "rgba(255, 5, 5, " + result + ")";
   }
 
   getOpacityLevelPause(val) {
     if (!val) {
-      return '';
+      return "";
     }
     let result;
     if (val < 1) {
       result = 0;
     }
     result = val / 20;
-    return 'rgba(5, 5, 255, ' + result + ')';
+    return "rgba(5, 5, 255, " + result + ")";
   }
 
   getDateVal(val) {
@@ -319,28 +331,28 @@ export class FilesListComponent implements OnInit, OnDestroy {
 
   sortTable(sortBy) {
     if (sortBy !== this.sortBy) {
-      this.sort = 'up';
+      this.sort = "up";
     } else {
-      this.sort = this.sort === 'up' ? 'down' : 'up';
+      this.sort = this.sort === "up" ? "down" : "up";
     }
     this.sortBy = sortBy;
 
-    let sortName = '';
+    let sortName = "";
     switch (sortBy) {
-      case 'name':
-        sortName = 'Name';
+      case "name":
+        sortName = "Name";
         break;
-      case 'uploaded':
-        sortName = 'Uploaded';
+      case "uploaded":
+        sortName = "Uploaded";
         break;
-      case 'duration':
-        sortName = 'Duration';
+      case "duration":
+        sortName = "Duration";
         break;
-      case 'emotion':
-        sortName = 'Emotion';
+      case "emotion":
+        sortName = "Emotion";
         break;
-      case 'avgpause':
-        sortName = 'AvgPause';
+      case "avgpause":
+        sortName = "AvgPause";
         break;
 
       default:
@@ -348,8 +360,8 @@ export class FilesListComponent implements OnInit, OnDestroy {
     }
     this.filter = {
       ...this.filter,
-      'sortby': sortName,
-      'sortorder': this.sort === 'up' ? 'desc' : 'asc',
+      sortby: sortName,
+      sortorder: this.sort === "up" ? "desc" : "asc"
     };
     this.getPage(0, this.filter);
 
@@ -401,15 +413,13 @@ export class FilesListComponent implements OnInit, OnDestroy {
     //   default:
     //     break;
     // }
-
-
   }
 
   resetFilter() {
     this.dateVisible = false;
     this.datefrom = undefined;
     this.dateto = undefined;
-    setTimeout(() => this.dateVisible = true, 0);
+    setTimeout(() => (this.dateVisible = true), 0);
     this.angerfrom = null;
     this.angerto = null;
     this.keywordsContain = [];
@@ -428,10 +438,10 @@ export class FilesListComponent implements OnInit, OnDestroy {
     this.pausefromAll = true;
     this.pausetoAll = true;
     this.keywordsOnly = false;
-    this.filename = '';
+    this.filename = "";
     this.filter = {
-      'itemsn': '100',
-      'pagen': '1',
+      itemsn: "100",
+      pagen: "1"
       // 'batchid': '1',
       // 'datetimefrom': '',
       // 'datetimeto': '',
@@ -449,17 +459,18 @@ export class FilesListComponent implements OnInit, OnDestroy {
   exportCSV() {
     const params = {
       ...this.filter,
-      export: 'csv',
+      export: "csv"
     };
-    this.filesService.listFilesPage(params).subscribe(data =>
-      // this.downloadFile(data)
-      (window.location.href = data.url)
-      ),
-      error => console.log('Error downloading the file.'),
-      () => console.info('OK');
+    this.filesService.listFilesPage(params).subscribe(
+      data =>
+        // this.downloadFile(data)
+        (window.location.href = data.url)
+    ),
+      error => console.log("Error downloading the file."),
+      () => console.info("OK");
   }
   downloadFile(data: Response) {
-    const blob = new Blob([data], { type: 'text/csv' });
+    const blob = new Blob([data], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
     window.open(url);
   }
@@ -467,27 +478,54 @@ export class FilesListComponent implements OnInit, OnDestroy {
   filterIt() {
     this.filter = {
       ...this.filter,
-      'datetimefrom': this.datefrom || '',
-      'datetimeto': this.dateto || '',
-      'angervolfrom': this.angerfrom && '' + this.angerfrom || '',
-      'angervolto': (this.angerfrom || this.angerto) ? '' + (this.angerfrom > this.angerto ? 100 : this.angerto) : '',
-      'pausefrom': this.pausefrom && '' + this.pausefrom || '',
-      'pauseto': (this.pausefrom || this.pauseto) ? '' + (this.pausefrom > this.pauseto ? 10000 : this.pauseto) : '',
-      'batchid': this.batchid && '' + this.batchid || '',
-      'filename': this.filename,
-      'minutesfrom': this.callfrom && '' + this.callfrom || '',
-      'minutesto': (this.callfrom || this.callto) ? '' + (this.callfrom > this.callto ? 10000 : this.callto) : '',
-      'keywordsOnly': this.keywordsOnly,
+      datetimefrom: this.datefrom || "",
+      datetimeto: this.dateto || "",
+      angervolfrom: (this.angerfrom && "" + this.angerfrom) || "",
+      angervolto:
+        this.angerfrom || this.angerto
+          ? "" + (this.angerfrom > this.angerto ? 100 : this.angerto)
+          : "",
+      pausefrom: (this.pausefrom && "" + this.pausefrom) || "",
+      pauseto:
+        this.pausefrom || this.pauseto
+          ? "" + (this.pausefrom > this.pauseto ? 10000 : this.pauseto)
+          : "",
+      batchid: (this.batchid && "" + this.batchid) || "",
+      filename: this.filename,
+      minutesfrom: (this.callfrom && "" + this.callfrom) || "",
+      minutesto:
+        this.callfrom || this.callto
+          ? "" + (this.callfrom > this.callto ? 10000 : this.callto)
+          : "",
+      keywordsOnly: this.keywordsOnly
     };
     if (this.keywordsContain && this.keywordsContain.length) {
-        this.filter['keywordsContain'] = this.keywordsContain
-          .map(v => v.value.split(',').map(v => v.trim()).join(',')).join(',');
+      this.filter["keywordsContain"] = this.keywordsContain
+        .map(v =>
+          v.value
+            .split(",")
+            .map(v => v.trim())
+            .join(",")
+        )
+        .join(",");
     }
     if (this.keywordsNotContain && this.keywordsNotContain.length) {
-        this.filter['keywordsNotContain'] = this.keywordsNotContain
-          .map(v => v.value.split(',').map(v => v.trim()).join(',')).join(',');
+      this.filter["keywordsNotContain"] = this.keywordsNotContain
+        .map(v =>
+          v.value
+            .split(",")
+            .map(v => v.trim())
+            .join(",")
+        )
+        .join(",");
     }
-    Object.keys(this.filter).forEach((key) => (this.filter[key] === '' || this.filter[key] === undefined || this.filter[key] === null) && delete this.filter[key]);
+    Object.keys(this.filter).forEach(
+      key =>
+        (this.filter[key] === "" ||
+          this.filter[key] === undefined ||
+          this.filter[key] === null) &&
+        delete this.filter[key]
+    );
     this.getPage(0, this.filter);
   }
 
@@ -496,21 +534,33 @@ export class FilesListComponent implements OnInit, OnDestroy {
   }
 
   getFilesOnPageLabel() {
-    return ((this.page + 1) * 100 < this.files.length) ? (this.page + 1) * 100 : this.files.length;
+    return (this.page + 1) * 100 < this.files.length
+      ? (this.page + 1) * 100
+      : this.files.length;
   }
 
   getKeywords(item) {
     return item.keywords && item.keywords.length
-      ? item.keywords.join(', ')
-      : '';
+      ? item.keywords.join(", ")
+      : "";
   }
 
   get primaryColor() {
-    return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.primary || 'rgb(0, 154, 210)';
+    return (
+      (this.dataService.config &&
+        (this.dataService.config as any).colors &&
+        (this.dataService.config as any).colors.primary) ||
+      "rgb(0, 154, 210)"
+    );
   }
 
   get secondaryColor() {
-    return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.secondary || 'rgb(0, 154, 210)';
+    return (
+      (this.dataService.config &&
+        (this.dataService.config as any).colors &&
+        (this.dataService.config as any).colors.secondary) ||
+      "rgb(0, 154, 210)"
+    );
   }
 
   onChangeKeywords(value) {
@@ -520,25 +570,26 @@ export class FilesListComponent implements OnInit, OnDestroy {
   onItemAdd(tag: any, container) {
     let c;
     switch (container) {
-      case 'keywordsContain':
+      case "keywordsContain":
         c = this.keywordsContain;
         break;
-      case 'keywordsNotContain':
+      case "keywordsNotContain":
         c = this.keywordsNotContain;
         break;
     }
 
     const index = c.findIndex(el => el.value === tag.value);
     c.splice(index, 1);
-    const val = tag.value.split(',').map(v => v.trim());
-    c = val.map(v => c.push({
-      value: v,
-      display: v,
-    }));
-}
+    const val = tag.value.split(",").map(v => v.trim());
+    c = val.map(v =>
+      c.push({
+        value: v,
+        display: v
+      })
+    );
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
 }

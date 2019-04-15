@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit {
     this.userService
       .loginUser(params)
       .subscribe(
-        () => this.router.navigateByUrl('/user/files'),
+        () => this.router.navigateByUrl('/'),
         (e) => {
           if (e.error.message) {
             this.message = LanguageService.t(e.error.message);
