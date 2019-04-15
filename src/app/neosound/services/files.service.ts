@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class FilesService {
   private currentFileParams;
   private savedFilter = {};
+  private keyWord = ''
 
   constructor(
     private http: HttpClient
@@ -14,6 +15,12 @@ export class FilesService {
 
   setFilter(params) {
     this.savedFilter = params;
+  }
+  setKeyWord(keyWord) {
+    this.keyWord = keyWord;
+  }
+  getKeyWord() {
+    return this.keyWord;
   }
 
   getFilter() {
