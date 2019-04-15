@@ -206,7 +206,7 @@ export class DashboardComponent implements OnInit {
       }
     });
     this.filesService.getTagClowd({}).subscribe(data => {
-      this.keywords2 = comonKeywords;
+      // this.keywords2 = comonKeywords;
       this.keywords = Object.keys(data.keywords).map(key => {
         return {
           text: key,
@@ -489,6 +489,9 @@ export class DashboardComponent implements OnInit {
             }
           ]
         };
+      }
+      if (data.popularWords) {
+        this.keywords2 = data.popularWords;
       }
     });
   }
