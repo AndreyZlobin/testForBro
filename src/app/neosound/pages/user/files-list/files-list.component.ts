@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { DatepickerOptions } from "ng2-datepicker";
 import { frLocale } from "ngx-bootstrap";
@@ -12,7 +12,7 @@ import { DataService } from "../../../shared";
   templateUrl: "./files-list.component.html",
   styleUrls: ["./files-list.component.scss"]
 })
-export class FilesListComponent implements OnInit, OnDestroy {
+export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   sub: Subscription;
   files;
   errorMessage = "";
@@ -99,8 +99,9 @@ export class FilesListComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl("/user/files");
     });
     // this.resetFilter();
-    if (this.filesService.getKeyWord()) {
-      this.keywordsContain = [this.filesService.getKeyWord()];
+    const key = this.filesService.getKeyWord();
+    if (key) {
+      this.keywordsContain = [{ value: key, display: key }];
     }
     this.filter = this.filesService.getFilter();
     this.sortBy = this.filter.sortby;
@@ -119,7 +120,9 @@ export class FilesListComponent implements OnInit, OnDestroy {
     //   }
     // });
   }
-
+  ngAfterViewInit() {
+    this.filterIt();
+  }
   getPage(page = 0, parameters = this.filter) {
     // this.isLoading = true;
     const params = (this.filter = {
