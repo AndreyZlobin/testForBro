@@ -58,6 +58,20 @@ export class FilesService {
       params
     );
   }
+  getApiCallsStats (params): Observable<any> {
+    params = params || {
+    };
+    return this.http.post(`${environment.api}/apiCallsStats`,
+      params
+    );
+  }
+  getMinutesStats (params): Observable<any> {
+    params = params || {
+    };
+    return this.http.post(`${environment.api}/minutesStats`,
+      params
+    );
+  }
   getTagClowd(params): Observable<any> {
     params = params || {
     };

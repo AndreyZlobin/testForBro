@@ -1,39 +1,156 @@
 <div *ngIf="!loading; else loadingTemplate">
   <div class="row">
-    <ng-container>
-      <div class="col-12">
-        <div class="card mb-5">
-          <div class="card-header">{{t('Welcome on board')}}</div>
-          <div class="card-body">
-            <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4>
-            <p class="card-text" style="line-height: 2.0;">
-              {{t('To upload multiple the files please use any SFTP client application and the following credentials')}}
-            </p>
-            <ul style="line-height: 2.0;">
-              <li>Host: <strong>{{config.sFtpHost}}</strong></li>
-              <li>{{t('Use your username and password.')}}</li>
-              <li>
-                  {{t('Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.')}}
-              </li>
-              <li>
-                  {{t('Please, keep in mind, we support only the audio files in .wav and .mp3 formats at the moment. The files of any other formats will not be processed.')}}
-              </li>
-              <li>
-                <strong>{{t('ATTENTION')}}:</strong> {{t('the files uploaded to the root of "/files" folder will not be processed. Make sure that they uploaded inside another subfolder, e.g. "/files/batch_agent_X". A batch name is required for successful processing. This way you will be able to filter on UI them as separate batches per agents.')}}
-              </li>
-              <li>{{t('The files will start processing soon after uploading.')}}</li>
-              <li>
-                  {{t('Once the files are processed they will appear on the UI and disappear from the files folder on SFTP.')}}
-              </li>
-            </ul>
-            <p class="card-text" style="line-height: 2.0;">
-              <strong>{{t('To upload the files one by one,')}}</strong> {{t('please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.')}}
-            </p>
+    <div class="col-8">
+      <div class="row">
+        <div class="col-3">
+          <div class="card mb-5 dasboard-card">
+            <div class="card-body">
+              <div class="d-flex align-items-center flex-row m-t-30">
+                <div>
+                  <i class="fa fa-phone-volume fa-3x"></i>
+                </div>
+                <div class="ml-auto">
+                  <h4>{{allCallsCount}}</h4>
+                  <h6>Calls processed</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="card mb-5 dasboard-card">
+            <div class="card-body">
+              <div class="d-flex align-items-center flex-row m-t-30">
+                <div>
+                  <i class="fa fa-clock fa-3x"></i>
+                </div>
+                <div class="ml-auto">
+                  <h4>{{totalMinutes}}</h4>
+                  <h6>Calls duration</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="card mb-5 dasboard-card">
+            <div class="card-body">
+              <div class="d-flex align-items-center flex-row m-t-30">
+                <div><i class="fa fa-users fa-3x"></i></div>
+                <div class="ml-auto">
+                  <h4>{{batchesUploaded}}</h4>
+                  <h6>Batches uploaded</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="card mb-5 dasboard-card">
+            <div class="card-body">
+              <div class="d-flex align-items-center flex-row m-t-30">
+                <div><i class="fa fa-cloud fa-3x"></i></div>
+                <div class="ml-auto">
+                  <h4>{{apiCallsCount}}</h4>
+                  <h6>API calls done</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <div class="card h-100">
+                <div class="card-header">{{t('Processed calls')}}</div>
+                <div class="card-body" *ngIf="totals">
+                  <div class="title">{{t('Calls')}}</div>
+                  <div class="value">{{ totals.allcallscount }}</div>
+                  <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
+                  <div class="description">{{t('Total number of calls')}}</div>
+                  <div class="title mt-4">{{t('Emotional calls')}}</div>
+                  <div class="value">{{ totals.angercallscount }}</div>
+                  <nb-progress-bar [value]="(totals.angercallscount / totals.allcallscount) * 100"></nb-progress-bar>
+                  <div class="description">{{t('Number of calls with the emotion level above a threshold')}}</div>
+                  <div class="title mt-4">{{t('Silent calls')}}</div>
+                  <div class="value">{{ totals.silentcallscount }}</div>
+                  <nb-progress-bar [value]="(totals.silentcallscount / totals.allcallscount) * 100"></nb-progress-bar>
+                  <div class="description">{{t('Number of calls with the average pause longer than a threshold')}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="card  card-block d-flex h-100">
+                <div class="card-header">{{t('Keywords')}}</div>
+                <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords">
+                  <angular-tag-cloud [data]="keywords" [zoomOnHover]="zoomOPtions" (clicked)="keywordClicked($event)">
+                  </angular-tag-cloud>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </ng-container>
-    <div class="col-8 mb-3">
+    </div>
+    <div class="col-4">
+      <div class="card mb-5">
+        <div class="card-header">{{t('Welcome on board')}}</div>
+        <div class="card-body" style="overflow-y: auto; max-height: 542px;">
+          <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4>
+          <p class="card-text" style="line-height: 2.0;">
+            {{t('To upload multiple the files please use any SFTP client application and the following credentials')}}
+          </p>
+          <ul style="line-height: 2.0;">
+            <li>Host: <strong>{{config.sFtpHost}}</strong></li>
+            <li>{{t('Use your username and password.')}}</li>
+            <li>
+              {{t('Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.')}}
+            </li>
+            <li>
+              {{t('Please, keep in mind, we support only the audio files in .wav and .mp3 formats at the moment. The files of any other formats will not be processed.')}}
+            </li>
+            <li>
+              <strong>{{t('ATTENTION')}}:</strong>
+              {{t('the files uploaded to the root of "/files" folder will not be processed. Make sure that they uploaded inside another subfolder, e.g. "/files/batch_agent_X". A batch name is required for successful processing. This way you will be able to filter on UI them as separate batches per agents.')}}
+            </li>
+            <li>{{t('The files will start processing soon after uploading.')}}</li>
+            <li>
+              {{t('Once the files are processed they will appear on the UI and disappear from the files folder on SFTP.')}}
+            </li>
+          </ul>
+          <p class="card-text" style="line-height: 2.0;">
+            <strong>{{t('To upload the files one by one,')}}</strong>
+            {{t('please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.')}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">{{t('Common keywords')}}</div>
+        <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
+          <angular-tag-cloud [data]="keywords2" [zoomOnHover]="zoomOPtions" (clicked)="keywordClicked($event)">
+          </angular-tag-cloud>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">{{t('Performance by agent')}}</div>
+        <div echarts [options]="options"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
+        <div class="card-header">{{t('Popular Words')}}</div>
+        <div echarts [options]="sankey1"></div>
+      </div>
+    </div>
+    <div class="col-6">
       <div class="card h-100" *ngIf="barChart">
         <div class="card-header">{{t('Number of calls by top 4 batches')}}</div>
         <div class="card-body">
@@ -41,111 +158,22 @@
         </div>
       </div>
     </div>
-    <div class="col-4 mb-3">
-      <div class="card h-100">
-        <div class="card-header">{{t('Processed calls')}}</div>
-        <div class="card-body" *ngIf="totals">
-          <div class="title">{{t('Calls')}}</div>
-          <div class="value">{{ totals.allcallscount }}</div>
-          <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
-          <div class="description">{{t('Total number of calls')}}</div>
-          <div class="title mt-4">{{t('Emotional calls')}}</div>
-          <div class="value">{{ totals.angercallscount }}</div>
-          <nb-progress-bar
-            [value]="(totals.angercallscount / totals.allcallscount) * 100"
-          ></nb-progress-bar>
-          <div class="description">{{t('Number of calls with the emotion level above a threshold')}}</div>
-          <div class="title mt-4">{{t('Silent calls')}}</div>
-          <div class="value">{{ totals.silentcallscount }}</div>
-          <nb-progress-bar
-            [value]="(totals.silentcallscount / totals.allcallscount) * 100"
-          ></nb-progress-bar>
-          <div class="description">{{t('Number of calls with the average pause longer than a threshold')}}</div>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="row">
-    <div class="col-6 mb-3">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Keywords')}}</div>
-        <div
-          class="card-body align-items-center d-flex justify-content-center"
-          *ngIf="keywords"
-        >
-          <angular-tag-cloud
-            [data]="keywords"
-            [zoomOnHover]="zoomOPtions"
-            (clicked)="keywordClicked($event)"
-          ></angular-tag-cloud>
-        </div>
-      </div>
-    </div>
-    <div class="col-6 mb-3">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Performance by agent')}}</div>
-        <div echarts [options]="options"></div>
-      </div>
-    </div>
-    <div class="col-6 mb-3" *ngIf="hasSankey">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Popular Words')}}</div>
-        <div echarts [options]="sankey1"></div>
-      </div>
-    </div>
-    <div class="col-6 mb-3" *ngIf="hasSankey">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Popular Nouns')}}</div>
-        <div echarts [options]="sankey2"></div>
-      </div>
-    </div>
-    <div class="col-6 mb-3" *ngIf="hasSankey">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Popular Adjectives')}}</div>
-        <div echarts [options]="sankey3"></div>
-      </div>
-    </div>
-    <div class="col-6 mb-3" *ngIf="hasSankey">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Popular Verbs')}}</div>
-        <div echarts [options]="sankey4"></div>
-      </div>
-    </div>
-    <div class="col-6 mb-3" *ngIf="hasSankey">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Popular Words 2')}}</div>
-        <div echarts [options]="sankey5"></div>
-      </div>
-    </div>
-    <div class="col-6 mb-3" *ngIf="hasSankey">
+    <div class="col-6">
       <div class="card  card-block d-flex h-100">
         <div class="card-header">Popular Words Sentiment</div>
         <div echarts [options]="sankey6"></div>
       </div>
     </div>
-    <div class="col-6 mb-3" *ngIf="hasSankey">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header">Popular Adjectives Sentiment</div>
-        <div echarts [options]="sankey7"></div>
+    <div class="col-6">
+      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
+        <div class="card-header">{{t('Popular Adjectives')}}</div>
+        <div echarts [options]="sankey3"></div>
       </div>
     </div>
   </div>
-  <div class="col-6 mb-3" *ngIf="keywords2">
-    <div class="card  card-block d-flex h-100">
-      <div class="card-header">{{t('Common keywords')}}</div>
-      <div
-        class="card-body align-items-center d-flex justify-content-center"
-        *ngIf="keywords2"
-      >
-        <angular-tag-cloud
-          [data]="keywords2"
-          [zoomOnHover]="zoomOPtions"
-          (clicked)="keywordClicked($event)"
-        ></angular-tag-cloud>
-      </div>
-    </div>
-  </div>
-  <ng-template #loadingTemplate>
-    {{ t("Loading...") }}
-  </ng-template>
 </div>
+<ng-template #loadingTemplate>
+  {{ t("Loading...") }}
+</ng-template>
