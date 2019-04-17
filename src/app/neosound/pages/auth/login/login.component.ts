@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsersService } from '../../../services/users.service';
@@ -7,63 +7,64 @@ import { LanguageService } from '../../../services/language.service';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../../../shared';
 
+export const schemeConfig = {
+  "title": "NeoSound - Turn emotions into data!",
+  "metaDescription": "NeoSound - Turn emotions into data!",
+  "logofilename": "logo.jpg",
+  "legalName": "NeoSound",
+  "legalNameFull": "NeoSound Intelligence B.V.",
+  "companyMainUrl": "https://NeoSound.eu",
+  "footer": {
+      "title": {
+          "show": true,
+          "text": "Created with ♥ by",
+          "link": "http://neosound.eu",
+          "name": "NeoSound"
+      },
+      "terms": {
+          "show": true,
+          "text": "Terms of Use",
+          "link": "/terms"
+      },
+      "about": {
+          "show": true,
+          "text": "About",
+          "link": "https://neosound.eu/"
+      }
+  },
+  "header": {
+    "api": {
+        "show": true,
+        "text": "API",
+        "link": "/user/api"
+    },
+    "about": {
+        "show": true,
+        "text": "About",
+        "link": "https://neosound.eu/"
+    },
+    "language": {
+        "show": true
+    },
+    "colors": {
+        "primary": "rgb(0, 154, 210)",
+        "secondary": "rgb(0, 154, 210)"
+    }
+  }
+};
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   username: string;
   password: string;
   form = new FormGroup({});
   showMessages;
   message;
   messageSuccess;
-
-  public config = {
-    "title": "NeoSound - Turn emotions into data!",
-    "metaDescription": "NeoSound - Turn emotions into data!",
-    "logofilename": "logo.jpg",
-    "legalName": "NeoSound",
-    "legalNameFull": "NeoSound Intelligence B.V.",
-    "companyMainUrl": "https://NeoSound.eu",
-    "footer": {
-        "title": {
-            "show": true,
-            "text": "Created with ♥ by",
-            "link": "http://neosound.eu",
-            "name": "NeoSound"
-        },
-        "terms": {
-            "show": true,
-            "text": "Terms of Use",
-            "link": "/terms"
-        },
-        "about": {
-            "show": true,
-            "text": "About",
-            "link": "https://neosound.eu/"
-        }
-    },
-    "header": {
-      "api": {
-          "show": true,
-          "text": "API",
-          "link": "/user/api"
-      },
-      "about": {
-          "show": true,
-          "text": "About",
-          "link": "https://neosound.eu/"
-      },
-      "language": {
-          "show": true
-      },
-      "colors": {
-          "primary": "rgb(0, 154, 210)",
-          "secondary": "rgb(0, 154, 210)"
-      }
-    }
-  };
+  config = schemeConfig;
 
   constructor(
     private router: Router,
@@ -83,9 +84,18 @@ export class LoginComponent implements OnInit {
         const logo = document.createElement('IMG');
         logo.setAttribute('src', `assets/config/${this.config.logofilename}`);
         logo.setAttribute('class', 'loginLogo');
+        logo.setAttribute('id', 'loginLogo');
         el[0].appendChild(logo);
       }
     });
+  }
+
+  ngOnDestroy() {
+    const el = document.getElementsByTagName('nb-card-header');
+    const logo = document.getElementById('loginLogo');
+    if (el && el[0] && logo) {
+      el[0].removeChild(logo);
+    }
   }
 
   public login() {

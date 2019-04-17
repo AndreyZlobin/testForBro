@@ -23,6 +23,13 @@ export class AppComponent implements OnInit {
         if (data.title) {
           document.title = data.title;
         }
+        const colorMap = {
+          'primary': '--color-primary',
+          'secondary': '--color-secondary',
+        };
+        Object.keys(colorMap).forEach(key => {
+          document.documentElement.style.setProperty(colorMap[key], data.colors[key]);
+        });
       });
   }
 

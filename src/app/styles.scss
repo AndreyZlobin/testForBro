@@ -117,6 +117,7 @@ angular-tag-cloud > span {
 	left: 0;
 }
 
+<<<<<<< HEAD
 .dasboard-card {
 	background-color: #37a2da;
 	color: #f8f9fa;
@@ -125,3 +126,38 @@ angular-tag-cloud > span {
 .dasboard-card h6, .dasboard-card h4 {
 	color: #f8f9fa;
 }
+=======
+.nb-theme-default .btn.btn-primary {
+  cursor: pointer;
+  background-color: var(--color-secondary);
+  &:active:focus,
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: var(--color-secondary);
+    opacity: 0.8;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+  &:active:focus,
+  &:active {
+    opacity: 0.9;
+  }
+}
+.nb-theme-default a {
+  color: var(--color-primary);
+  &:active,
+  &:focus,
+  &:hover {
+    color: var(--color-primary);
+    opacity: 0.8;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+}
+.nb-theme-default mark {
+  background-color: var(--color-secondary);
+}
+>>>>>>> 0abefaab9c44635cc364b1c7e8fa42ed335748fb
