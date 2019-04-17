@@ -116,3 +116,37 @@ angular-tag-cloud > span {
 	top: 2.3em;
 	left: 0;
 }
+
+.nb-theme-default .btn.btn-primary {
+  cursor: pointer;
+  background-color: var(--color-secondary);
+  &:active:focus,
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: var(--color-secondary);
+    opacity: 0.8;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+  &:active:focus,
+  &:active {
+    opacity: 0.9;
+  }
+}
+.nb-theme-default a {
+  color: var(--color-primary);
+  &:active,
+  &:focus,
+  &:hover {
+    color: var(--color-primary);
+    opacity: 0.8;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+}
+.nb-theme-default mark {
+  background-color: var(--color-secondary);
+}

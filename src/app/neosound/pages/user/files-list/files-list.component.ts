@@ -102,6 +102,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     const key = this.filesService.getKeyWord();
     if (key) {
       this.keywordsContain = [{ value: key, display: key }];
+      this.filterIt();
     }
     this.filter = this.filesService.getFilter();
     this.sortBy = this.filter.sortby;

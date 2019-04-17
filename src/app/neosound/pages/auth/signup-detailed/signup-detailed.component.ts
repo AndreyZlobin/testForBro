@@ -1,30 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsersService } from '../../../services/users.service';
 import { Router } from '@angular/router';
 import { forbiddenNameValidator } from '../../../directives/forbidden-password.directive';
 import { LanguageService } from '../../../services/language.service';
 import { DataService } from '../../../shared';
+import { HttpClient } from '@angular/common/http';
+import { schemeConfig } from '../login/login.component';
 
 @Component({
   selector: 'app-signup-detailed',
   templateUrl: './signup-detailed.component.html',
   styleUrls: ['./signup-detailed.component.scss']
 })
-export class SignupDetailedComponent implements OnInit {
+export class SignupDetailedComponent implements OnInit, OnDestroy {
   form: FormGroup;
   error = '';
   message;
   enabledSubmit = true;
+  config = schemeConfig;
 
   constructor(
     private userService: UsersService,
     private router: Router,
     private dataService: DataService,
+    private http: HttpClient,
   ) { }
 
   ngOnInit() {
     this.createForm();
+
+    const el = document.getElementsByTagName('nb-card-header');
+
+    this.http.get('assets/config/config.json').subscribe((data: any) => {
+      this.config = this.dataService.config = data;
+      if (el && el[0] && this.config.logofilename) {
+        const logo = document.createElement('IMG');
+        logo.setAttribute('src', `assets/config/${this.config.logofilename}`);
+        logo.setAttribute('class', 'loginLogo');
+        logo.setAttribute('id', 'loginLogo');
+        el[0].appendChild(logo);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    const el = document.getElementsByTagName('nb-card-header');
+    const logo = document.getElementById('loginLogo');
+    if (el && el[0] && logo) {
+      el[0].removeChild(logo);
+    }
   }
 
   submit() {
