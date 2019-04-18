@@ -129,25 +129,8 @@
   <div class="row">
     <div class="col-6">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Most frequently used words')}}</div>
-        <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
-          <angular-tag-cloud [data]="keywords2" [zoomOnHover]="zoomOPtions" (clicked)="keywordClicked($event)">
-          </angular-tag-cloud>
-        </div>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="card  card-block d-flex h-100">
         <div class="card-header">{{t('Performance by agent')}}</div>
         <div echarts [options]="options"></div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
-        <div class="card-header">{{t('Popular Words')}}</div>
-        <div echarts [options]="sankey1"></div>
       </div>
     </div>
     <div class="col-6">
@@ -160,13 +143,30 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-6">
+    <div class="col-6" *ngIf="keywords2.length > 0">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">{{t('Most frequently used words')}}</div>
+        <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
+          <angular-tag-cloud [data]="keywords2" [zoomOnHover]="zoomOPtions" (clicked)="keywordClicked($event)">
+          </angular-tag-cloud>
+        </div>
+      </div>
+    </div>
+    <div class="col-6" *ngIf="sankey1">
+      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
+        <div class="card-header">{{t('Popular Words')}}</div>
+        <div echarts [options]="sankey1"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6" *ngIf="sankey6">
       <div class="card  card-block d-flex h-100">
         <div class="card-header">Popular Words Sentiment</div>
         <div echarts [options]="sankey6"></div>
       </div>
     </div>
-    <div class="col-6">
+    <div class="col-6" *ngIf="sankey3">
       <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
         <div class="card-header">{{t('Popular Adjectives')}}</div>
         <div echarts [options]="sankey3"></div>
