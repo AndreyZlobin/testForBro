@@ -66,10 +66,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.filesService.getMinutesStats({}).subscribe(data => {
       this.fileCount = data.fileCount;
-      this.totalMinutes = data.totalMinutes;
+      this.totalMinutes = Math.round(data.totalMinutes);
     });
     this.filesService.getApiCallsStats({}).subscribe(data => {
-      this.apiCallsCount = data.apiCallsCount
+      this.apiCallsCount = data.apiCallsCount;
     });
     this.filesService.getFileStats({}).subscribe(data => {
       this.loading = false;

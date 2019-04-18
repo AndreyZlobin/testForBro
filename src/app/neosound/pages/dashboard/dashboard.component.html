@@ -26,7 +26,7 @@
                 </div>
                 <div class="ml-auto">
                   <h4>{{totalMinutes}}</h4>
-                  <h6>Calls duration</h6>
+                  <h6 style="font-size: 0.9rem;">{{t('Call duration, minutes')}}</h6>
                 </div>
               </div>
             </div>
@@ -66,7 +66,7 @@
                 <div class="card-body" *ngIf="totals">
                   <div class="title">{{t('Calls')}}</div>
                   <div class="value">{{ totals.allcallscount }}</div>
-                  <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
+                  <nb-progress-bar [value]="100"></nb-progress-bar>
                   <div class="description">{{t('Total number of calls')}}</div>
                   <div class="title mt-4">{{t('Emotional calls')}}</div>
                   <div class="value">{{ totals.angercallscount }}</div>
@@ -129,7 +129,7 @@
   <div class="row">
     <div class="col-6">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Common keywords')}}</div>
+        <div class="card-header">{{t('Most frequently used words')}}</div>
         <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
           <angular-tag-cloud [data]="keywords2" [zoomOnHover]="zoomOPtions" (clicked)="keywordClicked($event)">
           </angular-tag-cloud>

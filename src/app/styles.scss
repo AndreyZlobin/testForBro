@@ -158,3 +158,8 @@ angular-tag-cloud > span {
 .nb-theme-default mark {
   background-color: var(--color-secondary);
 }
+
+angular-tag-cloud {
+  overflow: auto!important;
+  position: initial;
+}

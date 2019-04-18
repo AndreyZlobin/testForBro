@@ -122,6 +122,7 @@ const translationsSp = {
   'Dashboard': 'Tablero',
   'Log': 'Registro',
   'Back': 'Volver',
+  'Most frequently used words': 'Las palabras más utilizadas',
 
   // dashboard start
   'Welcome on board': "Bienvenido a bordo",
@@ -290,6 +291,7 @@ const translationsRu = {
   'Dashboard': 'Метрики',
   'Log': 'Журнал',
   'Number Of Calls': 'Кол-во звонков',
+  'Most frequently used words': 'Наиболее часто используемые слова',
 
   // dashboard start
   'Welcome on board': "Добро пожаловать на борт",
