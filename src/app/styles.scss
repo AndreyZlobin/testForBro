@@ -159,7 +159,9 @@ angular-tag-cloud > span {
   background-color: var(--color-secondary);
 }
 
-angular-tag-cloud {
-  overflow: auto!important;
-  position: initial;
+.card-body {
+  angular-tag-cloud {
+    overflow: auto;
+    position: initial;
+  }
 }
