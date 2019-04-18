@@ -118,7 +118,8 @@ const translationsSp = {
   'Show only calls with keywords': 'Mostrar solo llamadas con palabras clave',
   'Missing keywords': 'Palabras clave que faltan',
   'Containing keywords': 'Que contienen palabras clave',
-  'Call Duration': 'Duración de la llamada',
+  'Call Duration, minutes': 'Duración de la llamada, minutos',
+  'Dashboard': 'Tablero',
   'Log': 'Registro',
   'Back': 'Volver',
 
@@ -285,7 +286,8 @@ const translationsRu = {
   'Show only calls with keywords': 'Только звонки с ключ.словами',
   'Missing keywords': 'Не содержат ключ.слова',
   'Containing keywords': 'Содержат ключ.слова',
-  'Call Duration': 'Продолжительность звонка',
+  'Call Duration, minutes': 'Продолжительность звонка, минут',
+  'Dashboard': 'Метрики',
   'Log': 'Журнал',
   'Number Of Calls': 'Кол-во звонков',
 
