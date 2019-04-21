@@ -473,11 +473,11 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       error => console.log("Error downloading the file."),
       () => console.info("OK");
   }
-  downloadFile(data: Response) {
-    const blob = new Blob([data], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    window.open(url);
-  }
+  // downloadFile(data: Response) {
+  //   const blob = new Blob([data], { type: "text/csv" });
+  //   const url = window.URL.createObjectURL(blob);
+  //   window.open(url);
+  // }
 
   filterIt() {
     this.filter = {

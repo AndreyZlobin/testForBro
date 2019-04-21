@@ -33,7 +33,7 @@
         <div class="alert alert-info">{{t('You can upload only one file a time')}}</div>
         <div class="center">
           <div class="drop-zone-wrap">
-            <file-drop *ngIf="!files.length" headertext="{{t('Drop file here or click to browse')}}" (onFileDrop)="dropped($event)"
+            <file-drop *ngIf="!files.length" dropZoneLabel="{{t('Drop file here or click to browse')}}" (onFileDrop)="dropped($event)"
               (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
                 <span></span>
                 <input type="file"
