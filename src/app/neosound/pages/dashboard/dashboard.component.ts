@@ -142,7 +142,9 @@ export class DashboardComponent implements OnInit {
                     param.data[0]
                   }, Emotional: ${param.data[1]},`;
                 },
-                position: "top"
+                position: "top",
+                fontStyle: 'normal',
+                color: '#37A2DA'
               }
             }
           };
