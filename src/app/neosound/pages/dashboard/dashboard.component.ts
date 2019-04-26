@@ -149,6 +149,7 @@ export class DashboardComponent implements OnInit {
             }
           };
         });
+
         this.barChart = {
           color: colors,
           tooltip: {
