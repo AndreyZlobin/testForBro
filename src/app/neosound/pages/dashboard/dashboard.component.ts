@@ -171,6 +171,7 @@ export class DashboardComponent implements OnInit {
           },
           series: chartData
         };
+
         this.totals = data.totals;
         this.options = {
           color: colors,
