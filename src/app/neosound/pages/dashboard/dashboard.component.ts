@@ -207,7 +207,8 @@ export class DashboardComponent implements OnInit {
           tooltip: {
             show: true,
             formatter: function(param) {
-              return `Calls: ${param.data[2]}<br> Silent: ${
+              console.log(param)
+              return `${param.data[3]}<br>Calls: ${param.data[2]}<br> Silent: ${
                 param.data[0]
               }<br> Emotional: ${param.data[1]}`;
             },
