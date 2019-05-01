@@ -139,6 +139,9 @@ export class DashboardComponent implements OnInit {
 
         this.barChart = {
           color: colors,
+          grid: {
+            left: 100
+          },
           tooltip: {
             trigger: "axis"
           },
