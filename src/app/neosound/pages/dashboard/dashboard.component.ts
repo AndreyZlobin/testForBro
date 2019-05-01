@@ -134,26 +134,13 @@ export class DashboardComponent implements OnInit {
             symbolSize: data => {
               return this.getRadius(data[2], minR, maxR);
             },
-            label: {
-              emphasis: {
-                show: true,
-                formatter: function(param) {
-                  return `${param.data[3]} - Calls: ${param.data[2]}, Silent: ${
-                    param.data[0]
-                  }, Emotional: ${param.data[1]},`;
-                },
-                position: "top",
-                fontStyle: 'normal',
-                color: '#37A2DA'
-              }
-            }
           };
         });
 
         this.barChart = {
           color: colors,
           tooltip: {
-            trigger: "axis",
+            trigger: "axis"
           },
           legend: {
             data: ["All", "Emotional", "Silence"]
@@ -217,6 +204,14 @@ export class DashboardComponent implements OnInit {
             min: 0,
             max: Math.round(maxY * 1.5)
           },
+          tooltip: {
+            show: true,
+            formatter: function(param) {
+              return `Calls: ${param.data[2]}<br> Silent: ${
+                param.data[0]
+              }<br> Emotional: ${param.data[1]}`;
+            },
+          },
           series: buble
         };
       } else {
@@ -244,7 +239,7 @@ export class DashboardComponent implements OnInit {
           },
           lineStyle: {
             normal: {
-                curveness: 0.5
+              curveness: 0.5
             }
           },
           levels: [
@@ -294,26 +289,26 @@ export class DashboardComponent implements OnInit {
             color: colors
           },
           series: {
-              type: "sankey",
-              data: data.words.nodes,
-              links: data.words.links,
-              layout:'none',
-              focusNodeAdjacency: 'allEdges',
-              coordinateSystem: "view",
-              draggable: true,
-              itemStyle: {
-                normal: {
-                  borderWidth: 1,
-                  borderColor: "#aaa"
-                }
-              },
-              lineStyle: {
-                normal: {
-                  color: "source",
-                  curveness: 0.5
-                }
+            type: "sankey",
+            data: data.words.nodes,
+            links: data.words.links,
+            layout: "none",
+            focusNodeAdjacency: "allEdges",
+            coordinateSystem: "view",
+            draggable: true,
+            itemStyle: {
+              normal: {
+                borderWidth: 1,
+                borderColor: "#aaa"
+              }
+            },
+            lineStyle: {
+              normal: {
+                color: "source",
+                curveness: 0.5
               }
             }
+          }
         };
       }
       if (data.words) {
@@ -549,7 +544,7 @@ export class DashboardComponent implements OnInit {
   };
   keywordClicked(clicked: CloudData) {
     this.filesService.setKeyWord(clicked.text);
-    this.router.navigateByUrl('/user/files');
+    this.router.navigateByUrl("/user/files");
   }
 
   t(v) {
