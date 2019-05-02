@@ -1,255 +1,238 @@
-<!--<h1>Files</h1>-->
+<nb-card>
+  <nb-card-body>
+    <div class="row">
+      <div class="col">
+        <div class="alert alert-danger" *ngIf="errorMessage">{{t('Error:')}}' {{errorMessage}}</div>
+        <div *ngIf="!isLoading; else loading" class="">
 
-
-<div class="alert alert-danger" *ngIf="errorMessage">{{t('Error:')}}' {{errorMessage}}</div>
-<div *ngIf="!isLoading; else loading" class="">
-  <!--<div class="row mb-3">
-    <div class="col-12">
-        <div class="row mb-2">
-          <div class="col-1 pr-0" style="line-height: 31px;">Filename:</div>
-          <div class="col text-left pl-0">
-            <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="Filename" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;display: inline;"/>
-          </div>
-        </div>
-    </div>
-  </div>-->
-
-  <!-- <div class="row mb-3">
-
-  </div> -->
-
-  <div class="row min-h-filter">
-    <div class="col col-md-2">
-        <div class="" id="side-filter">
-            <!-- pl-0 pr-4 position-fixed col col-md-2 -->
-          <div class="filter-wrap pr-3">
-            <div class="row">
-              <div class="col-12">
-                  <div class="mb-2">{{t('Name')}}</div>
-                  <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class="" placeholder="" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/>
-              </div>
-              <div class="col-12 pt-3">
-                <div class="mb-2">{{t('Batch Id')}}</div>
-                <input [(ngModel)]="batchid" [ngModelOptions]="{standalone: true}" type="text" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="">
-                <!-- <div class="mt-1">
-                  <label>
-                      <input [(ngModel)]="batchidAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-                      {{t('All')}}
-                  </label>
-                </div> -->
-              </div>
-              <div class="col-12 pt-3">
-                <div class="mb-2">{{t('Uploaded')}}</div>
-                <div class="input-group">
-                  <ng-datepicker *ngIf="dateVisible" [(ngModel)]="datefrom" [options]="datePickerFromOptions" class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;"></ng-datepicker>
-                  <ng-datepicker *ngIf="dateVisible" [(ngModel)]="dateto" [options]="datePickerToOptions" class="form-control-bak form-control-lg-bak form-gr-last" style=""></ng-datepicker>
+          <div class="row min-h-filter">
+            <div class="col col-md-2">
+              <div class="" id="side-filter">
+                <div class="filter-wrap pr-3">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="mb-2">{{t('Name')}}</div>
+                      <input [(ngModel)]="filename" [ngModelOptions]="{standalone: true}" type="text" class=""
+                        placeholder="" class="form-control form-control-lg"
+                        style="padding: 5px 10px; border: 1px solid #dfe3e9;" />
+                    </div>
+                    <div class="col-12 pt-3">
+                      <div class="mb-2">{{t('Batch Id')}}</div>
+                      <input [(ngModel)]="batchid" [ngModelOptions]="{standalone: true}" type="text" step="0.01"
+                        class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                        placeholder="">
+                    </div>
+                    <div class="col-12 pt-3">
+                      <div class="mb-2">{{t('Uploaded')}}</div>
+                      <div class="input-group">
+                        <ng-datepicker *ngIf="dateVisible" [(ngModel)]="datefrom" [options]="datePickerFromOptions"
+                          class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
+                        </ng-datepicker>
+                        <ng-datepicker *ngIf="dateVisible" [(ngModel)]="dateto" [options]="datePickerToOptions"
+                          class="form-control-bak form-control-lg-bak form-gr-last" style=""></ng-datepicker>
+                      </div>
+                    </div>
+                    <div class="col-12 pt-3">
+                      <div class="mb-2">{{t('Emotion')}}</div>
+                      <div class="input-group">
+                        <input [(ngModel)]="angerfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01"
+                          class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                          placeholder="{{t('from')}}">
+                        <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01"
+                          class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; "
+                          placeholder="{{t('to')}}">
+                      </div>
+                    </div>
+                    <div class="col-12 pt-3">
+                      <div class="mb-2">{{t('Avg.Pause')}}</div>
+                      <div class="input-group">
+                        <input [(ngModel)]="pausefrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01"
+                          class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                          placeholder="{{t('from')}}">
+                        <input [(ngModel)]="pauseto" [ngModelOptions]="{standalone: true}" type="number" step="0.01"
+                          class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                          placeholder="{{t('to')}}">
+                      </div>
+                    </div>
+                    <div class="col-12 pt-3">
+                      <div class="mb-2">{{t('Call Duration, minutes')}}</div>
+                      <div class="input-group">
+                        <input [(ngModel)]="callfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01"
+                          class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                          placeholder="{{t('from')}}">
+                        <input [(ngModel)]="callto" [ngModelOptions]="{standalone: true}" type="number" step="0.01"
+                          class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                          placeholder="{{t('to')}}">
+                      </div>
+                    </div>
+                    <div class="col-12 pt-3">
+                      <div class="mb-2">{{t('Containing keywords')}}</div>
+                      <!-- <input [(ngModel)]="keywordsContain" [ngModelOptions]="{standalone: true}" type="text" placeholder="{{t('Keywords')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/> -->
+                      <!-- <rl-tag-input [(ngModel)]="keywordsContain" placeholder="{{t('Keywords')}}"></rl-tag-input> -->
+                      <tag-input [(ngModel)]="keywordsContain" [editable]="true" theme="minimal"
+                        (onAdd)="onItemAdd($event, 'keywordsContain')" placeholder="{{t('Keywords')}}"
+                        secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
+                    </div>
+                    <div class="col-12 pt-3">
+                      <div class="mb-2">{{t('Missing keywords')}}</div>
+                      <!-- <input [(ngModel)]="keywordsContain" [ngModelOptions]="{standalone: true}" type="text" placeholder="{{t('Keywords')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/> -->
+                      <!-- <rl-tag-input [(ngModel)]="keywordsContain" placeholder="{{t('Keywords')}}"></rl-tag-input> -->
+                      <tag-input [(ngModel)]="keywordsNotContain" [editable]="true" theme="minimal"
+                        (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Keywords')}}"
+                        secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
+                    </div>
+                    <div class="col-12">
+                      <div class="mt-3">
+                        <label>
+                          <input [(ngModel)]="keywordsOnly" [ngModelOptions]="{standalone: true}" type="checkbox"
+                            class="" />
+                          {{t('Show only calls with keywords')}}
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-primary mt-4 w-100" (click)="filterIt()">{{t('Apply')}}</button>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-secondary mt-2 w-100" (click)="resetFilter()">{{t('Reset')}}</button>
+                    </div>
+                  </div>
                 </div>
-                <!-- <div class="mt-1">
-                  <label>
-                      <input [(ngModel)]="datefromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-                      {{t('All')}}
-                  </label>
-                </div> -->
-              </div>
-              <!-- <div class="col-6">
-                <div class="mb-2">&nbsp;</div>
-                <ng-datepicker [(ngModel)]="dateto" [options]="datePickerToOptions" class="form-control form-control-bak form-control-lg-bak" style="width: 100%"></ng-datepicker>
-                <div class="mt-1">
-                  <label>
-                      <input [(ngModel)]="datetoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-                      {{t('All')}}
-                  </label>
-                </div>
-              </div> -->
-              <div class="col-12 pt-3">
-                <div class="mb-2">{{t('Emotion')}}</div>
-                <div class="input-group">
-                  <input [(ngModel)]="angerfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}">
-                  <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; " placeholder="{{t('to')}}">
-                </div>
-                <!-- <div class="mt-1">
-                  <label>
-                      <input [(ngModel)]="angerfromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-                      {{t('All')}}
-                  </label>
-                </div> -->
-              </div>
-              <!-- <div class="col-6">
-                <div class="mb-2">&nbsp;</div>
-                <input [(ngModel)]="angerto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9; " placeholder="{{t('to')}}">
-                <div class="mt-1">
-                  <label>
-                      <input [(ngModel)]="angertoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-                      {{t('All')}}
-                  </label>
-                </div>
-              </div> -->
-              <div class="col-12 pt-3">
-                <div class="mb-2">{{t('Avg.Pause')}}</div>
-                <div class="input-group">
-                  <input [(ngModel)]="pausefrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}">
-                  <input [(ngModel)]="pauseto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('to')}}">
-                </div>
-                <!-- <div class="mt-1">
-                  <label>
-                    <input [(ngModel)]="pausefromAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-                    {{t('All')}}
-                  </label>
-                </div> -->
-              </div>
-              <div class="col-12 pt-3">
-                <div class="mb-2">{{t('Call Duration, minutes')}}</div>
-                <div class="input-group">
-                  <input [(ngModel)]="callfrom" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}">
-                  <input [(ngModel)]="callto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('to')}}">
-                </div>
-              </div>
-              <!-- <div class="col-6">
-                <div class="mb-2">&nbsp;</div>
-                <input [(ngModel)]="pauseto" [ngModelOptions]="{standalone: true}" type="number" step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('to')}}">
-                <div class="mt-1">
-                  <label>
-                    <input [(ngModel)]="pausetoAll" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-                    {{t('All')}}
-                  </label>
-                </div>
-              </div> -->
-              <div class="col-12 pt-3">
-                <div class="mb-2">{{t('Containing keywords')}}</div>
-                <!-- <input [(ngModel)]="keywordsContain" [ngModelOptions]="{standalone: true}" type="text" placeholder="{{t('Keywords')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/> -->
-                <!-- <rl-tag-input [(ngModel)]="keywordsContain" placeholder="{{t('Keywords')}}"></rl-tag-input> -->
-                <tag-input [(ngModel)]="keywordsContain" [editable]="true" theme="minimal" (onAdd)="onItemAdd($event, 'keywordsContain')" placeholder="{{t('Keywords')}}" secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
-              </div>
-              <div class="col-12 pt-3">
-                <div class="mb-2">{{t('Missing keywords')}}</div>
-                <!-- <input [(ngModel)]="keywordsContain" [ngModelOptions]="{standalone: true}" type="text" placeholder="{{t('Keywords')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/> -->
-                <!-- <rl-tag-input [(ngModel)]="keywordsContain" placeholder="{{t('Keywords')}}"></rl-tag-input> -->
-                <tag-input [(ngModel)]="keywordsNotContain" [editable]="true" theme="minimal" (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Keywords')}}" secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
-              </div>
-              <div class="col-12">
-                <div class="mt-3">
-                  <label>
-                    <input [(ngModel)]="keywordsOnly" [ngModelOptions]="{standalone: true}" type="checkbox" class="" />
-                    {{t('Show only calls with keywords')}}
-                  </label>
-                </div>
-              </div>
-              <div class="col-12">
-                <button class="btn btn-primary mt-4 w-100" (click)="filterIt()">{{t('Apply')}}</button>
-              </div>
-              <div class="col-12">
-                <button class="btn btn-secondary mt-2 w-100" (click)="resetFilter()">{{t('Reset')}}</button>
               </div>
             </div>
-        </div>
-      </div>
-    </div>
-    <div class="col col-md-10 pl-4 border-left">
-      <div class="row mb-1">
-        <div class="col">
-          <h1>{{t('Files')}}</h1>
-        </div>
-        <div class="col">
-          <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
-            <div class="btn-group mr-2 mb-2">
-                <div *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }"></div>
-                <pagination-controls
-                  (pageChange)="getPage($event - 1)"
-                  previousLabel="{{t('previous')}}"
-                  nextLabel="{{t('next')}}"></pagination-controls>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row mb-1">
-            <!-- <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div> -->
-            <div class="col text-right pl-0" *ngIf="!isLoading">
-                <button class="btn btn-primary ml-5 pull-right mt-1 btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <table class="table">
-        <thead>
-          <tr>
-              <th class="text-one-line">{{t('Batch Id')}}</th>
-              <th class="text-one-line"><a (click)="sortTable('name')">{{t('Name')}}
-                <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'name'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
-              </th>
-              <th class="text-one-line"><a (click)="sortTable('uploaded')">{{t('Uploaded')}}
-                <i *ngIf="sortBy === 'uploaded' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'uploaded' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'uploaded'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
-              </th>
-              <th class="text-one-line"><a (click)="sortTable('duration')">{{t('Duration')}}
-                <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
-              </th>
-              <th class="text-one-line"><a (click)="sortTable('emotion')">{{t('Emotion')}}
-                <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
-              </th>
-              <th class="text-one-line"><a (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
-                <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
-              </th>
-              <th class="text-one-line">{{t('Keywords')}}</th>
-              <!-- <th>Beta</th> -->
-              <!-- <th></th> -->
-              <!-- <th>%</th> -->
-              <th></th>
-              <th></th>
-              <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of files; let i = index">
-            <td>{{ item.batchid}}</td>
-            <td><a [routerLink]="getLink(item)" style="cursor: pointer;"><div class="text-wrap" tooltip="{{item.filename}}">{{item.filename}}</div></a></td>
-            <td><div class="text-wrap" tooltip="{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}">{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</div></td>
-            <td><div class="text-wrap" tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">{{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</div></td>
-            <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
-              <div *ngIf="item.angertop && item.angertop.anger">
-                {{item.angertop && item.angertop.anger}}%
+            <div class="col col-md-10 pl-4 border-left">
+              <div class="row mb-1">
+                <div class="col">
+                  <h1>{{t('Files')}}</h1>
+                </div>
+                <div class="col">
+                  <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
+                    <div class="btn-group mr-2 mb-2">
+                      <div
+                        *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }">
+                      </div>
+                      <pagination-controls (pageChange)="getPage($event - 1)" previousLabel="{{t('previous')}}"
+                        nextLabel="{{t('next')}}"></pagination-controls>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="row mb-1">
+                    <!-- <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div> -->
+                    <div class="col text-right pl-0" *ngIf="!isLoading">
+                      <button class="btn btn-primary ml-5 pull-right mt-1 btn-sm"
+                        (click)="exportCSV()">{{t('Export to CSV')}}</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </td>
-            <!-- <td style="background: #f7f7f7;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-one-line">{{t('Batch Id')}}</th>
+                    <th class="text-one-line"><a (click)="sortTable('name')">{{t('Name')}}
+                        <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i
+                          *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i
+                          *ngIf="sortBy !== 'name'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                    </th>
+                    <th class="text-one-line"><a (click)="sortTable('uploaded')">{{t('Uploaded')}}
+                        <i *ngIf="sortBy === 'uploaded' && sort ==='up'" class="fas fa-sort-up"></i><i
+                          *ngIf="sortBy === 'uploaded' && sort ==='down'" class="fas fa-sort-down"></i><i
+                          *ngIf="sortBy !== 'uploaded'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                    </th>
+                    <th class="text-one-line"><a (click)="sortTable('duration')">{{t('Duration')}}
+                        <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i
+                          *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i
+                          *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                    </th>
+                    <th class="text-one-line"><a (click)="sortTable('emotion')">{{t('Emotion')}}
+                        <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i
+                          *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i
+                          *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                    </th>
+                    <th class="text-one-line"><a (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
+                        <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i
+                          *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i
+                          *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                    </th>
+                    <th class="text-one-line">{{t('Keywords')}}</th>
+                    <!-- <th>Beta</th> -->
+                    <!-- <th></th> -->
+                    <!-- <th>%</th> -->
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of files; let i = index">
+                    <td>{{ item.batchid}}</td>
+                    <td><a [routerLink]="getLink(item)" style="cursor: pointer;">
+                        <div class="text-wrap" tooltip="{{item.filename}}">{{item.filename}}</div>
+                      </a></td>
+                    <td>
+                      <div class="text-wrap" tooltip="{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}">
+                        {{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</div>
+                    </td>
+                    <td>
+                      <div class="text-wrap" tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">
+                        {{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</div>
+                    </td>
+                    <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
+                      <div *ngIf="item.angertop && item.angertop.anger">
+                        {{item.angertop && item.angertop.anger}}%
+                      </div>
+                    </td>
+                    <!-- <td style="background: #f7f7f7;">
                 {{getEmotionName(item.fourclasstop)}}
                 <img *ngIf="getEmotionImg(item) !== ''" src="../../assets/images/emotions/{{getEmotionImg(item)}}.png" style="width: 30px;" />
             </td> -->
-            <!-- <td></td> -->
-            <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
-            <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
-            <td>
-              <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.keywordcount" tooltip="{{getKeywords(item)}}">
-                {{item.keywordcount}}
-              </div>
-            </td>
-            <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
-            <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)" tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}"><i class="fa fa-sync"></i></button></td>
-            <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="delete(item.batchid, item.fileid)" tooltip="{{t('Delete')}}"><i class="fa fa-trash-alt"></i></button></td>
-          </tr>
-        </tbody>
-      </table>
+                    <!-- <td></td> -->
+                    <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
+                    <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
+                    <td>
+                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.keywordcount"
+                        tooltip="{{getKeywords(item)}}">
+                        {{item.keywordcount}}
+                      </div>
+                    </td>
+                    <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
+                    <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)"
+                        tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}"><i class="fa fa-sync"></i></button>
+                    </td>
+                    <td><button class="btn p-2 c-normal" style="cursor: pointer;"
+                        (click)="delete(item.batchid, item.fileid)" tooltip="{{t('Delete')}}"><i
+                          class="fa fa-trash-alt"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
 
-      <div *ngIf="!isLoading && !files.length" class="mb-4">{{t('0 Files')}}</div>
-      <!-- <ul class="pagination mt-2 mb-2" *ngIf="!!files.length">
+              <div *ngIf="!isLoading && !files.length" class="mb-4">{{t('0 Files')}}</div>
+              <!-- <ul class="pagination mt-2 mb-2" *ngIf="!!files.length">
         <li class="page-item" *ngFor="let i of pagesArr">
           <a class="page-link" (click)="getPage(i - 1)">{{i}}</a>
         </li>
       </ul> -->
-      <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
-        <div class="btn-group mr-2 mb-2">
-            <div *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }"></div>
-            <pagination-controls
-              (pageChange)="getPage($event - 1)"
-              previousLabel="{{t('previous')}}"
-              nextLabel="{{t('next')}}"></pagination-controls>
+              <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
+                <div class="btn-group mr-2 mb-2">
+                  <div
+                    *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }">
+                  </div>
+                  <pagination-controls (pageChange)="getPage($event - 1)" previousLabel="{{t('previous')}}"
+                    nextLabel="{{t('next')}}"></pagination-controls>
+                </div>
+              </div>
+              <div class="mt-3 mb-2">
+                <h6>{{t('Total files on page')}} {{getFilesOnPageLabel()}} {{t('out of')}} {{totalCount}} </h6>
+              </div>
+              <button class="btn mt-3 btn-secondary" (click)="refresh()">{{t('Refresh')}}</button>
+            </div>
+          </div>
         </div>
+        <ng-template #loading>
+          {{t('Loading...')}}
+        </ng-template>
       </div>
-      <div class="mt-3 mb-2">
-        <h6>{{t('Total files on page')}} {{getFilesOnPageLabel()}} {{t('out of')}} {{totalCount}} </h6>
-      </div>
-      <button class="btn mt-3 btn-secondary" (click)="refresh()">{{t('Refresh')}}</button>
     </div>
-  </div>
-</div>
-
-<ng-template #loading>
-  {{t('Loading...')}}
-</ng-template>
+  </nb-card-body>
+</nb-card>

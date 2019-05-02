@@ -135,12 +135,12 @@ angular-tag-cloud > span {
 }
 
 .dasboard-card {
-	background-color: var(--color-secondary);
-	color: #f8f9fa;
+	color: var(--color-secondary);
+	background-color: #fff;
 }
 
 .dasboard-card h6, .dasboard-card h4 {
-	color: #f8f9fa;
+	color: var(--color-secondary);
 }
 .nb-theme-default .btn.btn-primary {
   cursor: pointer;

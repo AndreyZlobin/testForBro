@@ -79,12 +79,9 @@
 
       <nb-layout-column class="main-content">
 					<div class="alert alert-info" *ngIf="!isChrome()" style="background-color: #fffaf3;">We support only Chrome browser at the moment</div>
-					<nb-card>
+					
 						<!-- <nb-card-header>Horizontal form</nb-card-header> -->
-						<nb-card-body>
 							<router-outlet></router-outlet>
-						</nb-card-body>
-						</nb-card>
       </nb-layout-column>
 <!--
       <nb-layout-column start class="small" *ngIf="layout.id === 'two-column' || layout.id === 'three-column'">

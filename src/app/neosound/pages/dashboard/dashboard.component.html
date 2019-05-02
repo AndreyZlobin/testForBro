@@ -1,9 +1,9 @@
 <div *ngIf="!loading; else loadingTemplate">
   <div class="row">
     <div class="col-8">
-      <div class="row">
-        <div class="col-3">
-          <div class="card mb-5 dasboard-card">
+      <div class="row mb-3">
+        <div class="col-3 mb-3">
+          <div class="card dasboard-card">
             <div class="card-body">
               <div class="d-flex align-items-center flex-row m-t-30">
                 <div>
@@ -17,8 +17,8 @@
             </div>
           </div>
         </div>
-        <div class="col-3">
-          <div class="card mb-5 dasboard-card">
+        <div class="col-3 mb-3">
+          <div class="card dasboard-card">
             <div class="card-body">
               <div class="d-flex align-items-center flex-row m-t-30">
                 <div>
@@ -32,8 +32,8 @@
             </div>
           </div>
         </div>
-        <div class="col-3">
-          <div class="card mb-5 dasboard-card">
+        <div class="col-3 mb-3">
+          <div class="card dasboard-card">
             <div class="card-body">
               <div class="d-flex align-items-center flex-row m-t-30">
                 <div><i class="fa fa-users fa-3x"></i></div>
@@ -45,8 +45,8 @@
             </div>
           </div>
         </div>
-        <div class="col-3">
-          <div class="card mb-5 dasboard-card">
+        <div class="col-3 mb-3">
+          <div class="card dasboard-card">
             <div class="card-body">
               <div class="d-flex align-items-center flex-row m-t-30">
                 <div><i class="fa fa-cloud fa-3x"></i></div>
@@ -83,7 +83,8 @@
               <div class="card  card-block d-flex h-100">
                 <div class="card-header">{{t('Keywords')}}</div>
                 <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords">
-                  <angular-tag-cloud [data]="keywords" width="500" height="300" [zoomOnHover]="zoomOPtions" (clicked)="keywordClicked($event)">
+                  <angular-tag-cloud [data]="keywords" width="500" height="300" [zoomOnHover]="zoomOPtions"
+                    (clicked)="keywordClicked($event)">
                   </angular-tag-cloud>
                 </div>
               </div>
@@ -93,9 +94,9 @@
       </div>
     </div>
     <div class="col-4">
-      <div class="card mb-5">
+      <div class="card">
         <div class="card-header">{{t('Welcome on board')}}</div>
-        <div class="card-body" style="overflow-y: auto; max-height: 542px;">
+        <div class="card-body" style="overflow-y: auto; max-height: 474px;">
           <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4>
           <p class="card-text" style="line-height: 2.0;">
             {{t('To upload multiple the files please use any SFTP client application and the following credentials')}}
@@ -126,11 +127,13 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row mb-3">
     <div class="col-6">
       <div class="card  card-block d-flex h-100">
         <div class="card-header">{{t('Performance by agent')}}</div>
-        <div echarts [options]="options"></div>
+        <div class="card-body">
+          <div echarts [options]="options"></div>
+        </div>
       </div>
     </div>
     <div class="col-6">
@@ -142,12 +145,13 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row mb-3">
     <div class="col-6" *ngIf="keywords2.length > 0">
       <div class="card  card-block d-flex h-100">
         <div class="card-header">{{t('Most frequently used words')}}</div>
         <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
-          <angular-tag-cloud [data]="keywords2" width="500" height="300" [zoomOnHover]="zoomOPtions" (clicked)="keywordClicked($event)">
+          <angular-tag-cloud [data]="keywords2" width="500" height="300" [zoomOnHover]="zoomOPtions"
+            (clicked)="keywordClicked($event)">
           </angular-tag-cloud>
         </div>
       </div>
@@ -159,7 +163,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row mb-3">
     <div class="col-6" *ngIf="sankey6">
       <div class="card  card-block d-flex h-100">
         <div class="card-header">Popular Words Sentiment</div>
