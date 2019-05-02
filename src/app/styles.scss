@@ -90,10 +90,27 @@
 }
 
 .nb-theme-default .progress-value {
-  background-color: #37a2da;
+  background-color: var(--color-secondary);
 }
 angular-tag-cloud > span {
   cursor: pointer;
+  &.w11,
+  &.w12,
+  &.w13,
+  &.w10 {
+    color: var(--color-secondary) !important;
+  }
+  &.w1,
+  &.w2,
+  &.w3,
+  &.w4,
+  &.w5,
+  &.w6,
+  &.w7,
+  &.w8,
+  &.w9 {
+    color: var(--color-primary) !important;
+  }
 }
 
 .card {
@@ -108,7 +125,7 @@ angular-tag-cloud > span {
 
 .card-header:after {
     content:"";
-    background: linear-gradient(to right, #37a2da 0%, #67e0e3 100%);
+    background: linear-gradient(to right, var(--color-secondary) 0%, var(--color-primary) 100%);
 	display: block;
     height: 3px;
     width: 100%;
@@ -118,7 +135,7 @@ angular-tag-cloud > span {
 }
 
 .dasboard-card {
-	background-color: #37a2da;
+	background-color: var(--color-secondary);
 	color: #f8f9fa;
 }
 
