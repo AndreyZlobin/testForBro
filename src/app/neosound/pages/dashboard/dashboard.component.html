@@ -62,7 +62,7 @@
           <div class="row">
             <div class="col-6">
               <div class="card h-100">
-                <div class="card-header">{{t('Processed calls')}}</div>
+                <div class="card-header gradient-text">{{t('Processed calls')}}</div>
                 <div class="card-body" *ngIf="totals">
                   <div class="title">{{t('Calls')}}</div>
                   <div class="value">{{ totals.allcallscount }}</div>
@@ -81,7 +81,7 @@
             </div>
             <div class="col-6">
               <div class="card  card-block d-flex h-100">
-                <div class="card-header">{{t('Keywords')}}</div>
+                <div class="card-header gradient-text">{{t('Keywords')}}</div>
                 <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords">
                   <angular-tag-cloud [data]="keywords" width="500" height="300" [zoomOnHover]="zoomOPtions"
                     (clicked)="keywordClicked($event)">
@@ -95,7 +95,7 @@
     </div>
     <div class="col-4">
       <div class="card">
-        <div class="card-header">{{t('Welcome on board')}}</div>
+        <div class="card-header gradient-text">{{t('Welcome on board')}}</div>
         <div class="card-body" style="overflow-y: auto; max-height: 474px;">
           <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4>
           <p class="card-text" style="line-height: 2.0;">
