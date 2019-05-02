@@ -95,7 +95,7 @@
     <div class="col-4">
       <div class="card mb-5">
         <div class="card-header">{{t('Welcome on board')}}</div>
-        <div class="card-body" style="overflow-y: auto; max-height: 542px;">
+        <div class="card-body" style="overflow-y: auto; max-height: 500px;">
           <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4>
           <p class="card-text" style="line-height: 2.0;">
             {{t('To upload multiple the files please use any SFTP client application and the following credentials')}}
@@ -126,7 +126,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row mb-6">
     <div class="col-6">
       <div class="card  card-block d-flex h-100">
         <div class="card-header">{{t('Performance by agent')}}</div>
@@ -142,7 +142,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row mb-6">
     <div class="col-6" *ngIf="keywords2.length > 0">
       <div class="card  card-block d-flex h-100">
         <div class="card-header">{{t('Most frequently used words')}}</div>
@@ -159,7 +159,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row mb-6">
     <div class="col-6" *ngIf="sankey6">
       <div class="card  card-block d-flex h-100">
         <div class="card-header">Popular Words Sentiment</div>

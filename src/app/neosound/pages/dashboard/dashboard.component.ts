@@ -133,7 +133,7 @@ export class DashboardComponent implements OnInit {
             type: "scatter",
             symbolSize: data => {
               return this.getRadius(data[2], minR, maxR);
-            },
+            }
           };
         });
 
@@ -143,7 +143,10 @@ export class DashboardComponent implements OnInit {
             left: 100
           },
           tooltip: {
-            trigger: "axis"
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            }
           },
           legend: {
             data: ["All", "Emotional", "Silence"]
@@ -156,6 +159,8 @@ export class DashboardComponent implements OnInit {
           xAxis: {
             type: "value",
             name: "Calls",
+            nameLocation: "middle",
+            nameGap: 30,
             min: 0,
             max: Math.floor(maxR * 1.1)
           },
@@ -210,11 +215,11 @@ export class DashboardComponent implements OnInit {
           tooltip: {
             show: true,
             formatter: function(param) {
-              console.log(param)
+              console.log(param);
               return `${param.data[3]}<br>Calls: ${param.data[2]}<br> Silent: ${
                 param.data[0]
               }<br> Emotional: ${param.data[1]}`;
-            },
+            }
           },
           series: buble
         };
