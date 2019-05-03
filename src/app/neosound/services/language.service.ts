@@ -83,7 +83,7 @@ const translationsSp = {
   'SIGN UP': 'REGÍSTRESE',
   'Already have an account?': '¿Ya tiene una cuenta?',
   'Login': 'Inicie sesión',
-  'All': 'Todos',
+  // 'All': 'Todos',
   'Terms of Use': 'Términos de Uso',
   'Selected files total count': 'Cantidad total de archivos seleccionados',
   '0 Files': '0 archivos',
@@ -118,11 +118,11 @@ const translationsSp = {
   'Show only calls with keywords': 'Mostrar solo llamadas con palabras clave',
   'Missing keywords': 'Palabras clave que faltan',
   'Containing keywords': 'Que contienen palabras clave',
-  'Call Duration, minutes': 'Duración de la llamada, minutos',
+  'Call Duration, minutes': 'Duración de llamada, minutos',
   'Dashboard': 'Tablero',
   'Log': 'Registro',
   'Back': 'Volver',
-  'Most frequently used words': 'Las palabras más utilizadas',
+  'Most frequently used words': 'Palabras más utilizadas',
 
   // dashboard start
   'Welcome on board': "Bienvenido a bordo",
@@ -133,7 +133,7 @@ const translationsSp = {
   'Total number of calls': `Número total de llamadas`,
   'Emotional calls': `Llamadas emocionales`,
   'Number of calls with the emotion level above a threshold': `Número de llamadas con el nivel de emoción por encima de un umbral`,
-  'Silent calls': `Llamadas silenciosas`,
+  'Silent calls': `Llamadas con demasiados silencio`,
   'Number of calls with the average pause longer than a threshold': `Número de llamadas con la pausa promedio más larga que un umbral`,
   'Performance by agent': "Rendimiento por agente",
   'Popular Words': "Palabras Populares",
@@ -144,6 +144,17 @@ const translationsSp = {
   'Common keywords': 'Palabras clave comunes',
   'Use your username and password.': 'Usa tu nombre de usuario y contraseña.',
   'Number Of Calls': 'Número de llamadas',
+  'All': 'Todas',
+  'Emotional': 'Emocional',
+  'Silence': 'Silencio',
+  'Negative': 'Negativo',
+  'Positive': 'Positivo',
+  // 'Neutral': '',
+  'Calls processed': 'Llamadas procesadas',
+  'Batches uploaded': 'Lotes cargados',
+  'API calls done': 'Llamadas hechas a la API',
+  'Popular Words Sentiment': 'Emoción en palabras populares',
+
 
 'To upload multiple the files please use any SFTP client application and the following credentials': `Para subir varios archivos, por favor use cualquier cliente SFTP
               Solicitud y las siguientes credenciales.`,
@@ -341,6 +352,15 @@ const translationsRu = {
                 Чтобы увидеть текст, пожалуйста, перейдите к деталям файла, нажав на файл
                 имя, затем перейдите на вкладку «Текст». В демонстрационных целях мы предлагаем использовать
                 максимум 4 минуты с понятными для человека короткими именами файлов.`,
+    'Emotional': 'Эмоции',
+    'Silence': 'Тишина',
+    'Negative': 'Негатив',
+    'Positive': 'Положительные',
+    // 'Neutral': 'Нейтральные',
+    'Calls processed': 'Обработано звонков',
+    'Batches uploaded': 'Загружено агентов',
+    'API calls done': 'Звонков через API',
+    'Popular Words Sentiment': 'Популярные сочетания слов',
     // dashboard end
 };
 

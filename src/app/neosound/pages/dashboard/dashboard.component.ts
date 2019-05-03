@@ -57,7 +57,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private router: Router,
     private filesService: FilesService,
-    private http: HttpClient
+    private http: HttpClient,
+    private lang: LanguageService,
   ) {
     this.http.get("assets/config/config.json").subscribe((data: any) => {
       this.config = data;
@@ -88,17 +89,17 @@ export class DashboardComponent implements OnInit {
         });
         const chartData = [
           {
-            name: "All",
+            name: this.t("All"),
             type: "bar",
             data: all
           },
           {
-            name: "Emotional",
+            name: this.t("Emotional"),
             type: "bar",
             data: anger
           },
           {
-            name: "Silence",
+            name: this.t("Silence"),
             type: "bar",
             data: silence
           }
@@ -158,7 +159,7 @@ export class DashboardComponent implements OnInit {
           },
           xAxis: {
             type: "value",
-            name: "Calls",
+            name: this.t("Calls"),
             nameLocation: "middle",
             nameGap: 30,
             min: 0,
@@ -187,7 +188,7 @@ export class DashboardComponent implements OnInit {
               }
             },
             type: "value",
-            name: "Silent Calls",
+            name: this.t("Silent Calls"),
             nameLocation: "middle",
             nameGap: 35,
             axisLabel: {
@@ -205,7 +206,7 @@ export class DashboardComponent implements OnInit {
             },
             scale: true,
             type: "value",
-            name: "Emotional Calls",
+            name: this.t("Emotional Calls"),
             axisLabel: {
               formatter: "{value}"
             },
@@ -461,8 +462,14 @@ export class DashboardComponent implements OnInit {
           series: [
             {
               type: "sankey",
-              data: data.wordsSent.nodes,
-              links: data.wordsSent.links,
+              data: data.wordsSent.nodes
+                .map(v => ({
+                  ...v, name: this.t(v.name),
+                })),
+              links: data.wordsSent.links
+                .map(v => ({
+                  ...v, target: this.t(v.target),
+                })),
               focusNodeAdjacency: "allEdges",
               itemStyle: {
                 normal: {
@@ -558,5 +565,13 @@ export class DashboardComponent implements OnInit {
 
   t(v) {
     return LanguageService.t(v);
+  }
+
+  isEnglish() {
+    return this.lang.checkLanguage('en');
+  }
+
+  isSpanish() {
+    return this.lang.checkLanguage('sp');
   }
 }
