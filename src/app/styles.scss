@@ -135,7 +135,6 @@ angular-tag-cloud > span {
 }
 
 .gradient-text {
-  text-transform: uppercase;
   background: linear-gradient(to right, var(--color-secondary) 0%, var(--color-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
