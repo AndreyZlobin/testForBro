@@ -1,6 +1,6 @@
 <div *ngIf="!loading; else loadingTemplate">
   <div class="row">
-    <div class="col-8">
+    <div [ngClass]="{'col-8': barChart, 'col-12': !barChart}">
       <div class="row mb-3">
         <div class="col-3 mb-3">
           <div class="card dasboard-card">
@@ -93,8 +93,26 @@
         </div>
       </div>
     </div>
-    <div class="col-4">
-      <div class="card">
+    <div class="d-none" [ngClass]="{'col-4 d-block': barChart}" *ngIf="barChart">
+      <div class="card" style="min-height: 515px;">
+        <div class="card-header gradient-text">{{t('Number of calls by top 5 batches')}}</div>
+        <div class="card-body pl-0 pr-0">
+          <div echarts [options]="barChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-6">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header gradient-text">{{t('Performance by agent')}}</div>
+        <div class="card-body">
+          <div echarts [options]="options"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card h-100">
         <div class="card-header gradient-text">{{t('Welcome on board')}}</div>
         <div class="card-body" style="overflow-y: auto; max-height: 474px;">
           <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4>
@@ -123,24 +141,6 @@
             <strong>{{t('To upload the files one by one,')}}</strong>
             {{t('please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.')}}
           </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row mb-3">
-    <div class="col-6">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header gradient-text">{{t('Performance by agent')}}</div>
-        <div class="card-body">
-          <div echarts [options]="options"></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="card h-100" *ngIf="barChart">
-        <div class="card-header gradient-text">{{t('Number of calls by top 4 batches')}}</div>
-        <div class="card-body">
-          <div echarts [options]="barChart"></div>
         </div>
       </div>
     </div>

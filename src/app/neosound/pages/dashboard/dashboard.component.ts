@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
         const anger = [];
         const all = [];
         const silence = [];
-        batches.slice(0, 4).forEach(batchName => {
+        batches.slice(0, 5).forEach(batchName => {
           all.push(data.batches[batchName].allCallsN);
           anger.push(data.batches[batchName].angerCallsN);
           silence.push(data.batches[batchName].silentCallsN);
@@ -154,7 +154,7 @@ export class DashboardComponent implements OnInit {
           yAxis: {
             type: "category",
             axisTick: { show: false },
-            data: batches.slice(0, 4)
+            data: batches.slice(0, 5)
           },
           xAxis: {
             type: "value",
