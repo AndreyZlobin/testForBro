@@ -84,9 +84,14 @@ export class DashboardComponent implements OnInit {
         .substring(4, data.colors.secondary.length - 1)
         .replace(/ /g, "")
         .split(",");
-        const hex = fullColorHex(rgb[0], rgb[1], rgb[2]);
-        scheme.from_hex(hex).scheme('analogic').distance(1).variation('light');
-        this.colors = [`#${hex}`, ...scheme.colors().map((c)=> `#${c}`)];
+      const hex = fullColorHex(rgb[0], rgb[1], rgb[2]);
+
+      scheme
+        .from_hex(hex)
+        .scheme("analogic")
+        .distance(1)
+        .variation("light");
+      this.colors = [`#${hex}`, ...scheme.colors().map(c => `#${c}`)];
     });
   }
   ngOnInit() {
