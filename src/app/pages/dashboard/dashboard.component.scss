@@ -6,6 +6,7 @@
   .solar-card nb-card-header {
     border: none;
     padding-bottom: 0;
+    border-radius: 0px;
   }
 
   @include media-breakpoint-down(sm) {
