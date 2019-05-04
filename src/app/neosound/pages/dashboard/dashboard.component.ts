@@ -7,6 +7,7 @@ import { FilesService } from "../../services/files.service";
 import { comonKeywords } from "./data";
 import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
+import ColorScheme from "color-scheme";
 
 const colors = [
   "#37A2DA",
@@ -24,6 +25,21 @@ const colors = [
   "#96BFFF"
 ];
 
+const rgbToHex = rgb => {
+  let hex = Number(rgb).toString(16);
+  if (hex.length < 2) {
+    hex = "0" + hex;
+  }
+  return hex;
+};
+
+const fullColorHex = (r, g, b) => {
+  var red = rgbToHex(r);
+  var green = rgbToHex(g);
+  var blue = rgbToHex(b);
+  return red + green + blue;
+};
+
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -32,6 +48,7 @@ const colors = [
 export class DashboardComponent implements OnInit {
   hasData: boolean = false;
   config = {};
+  colors = [];
   options: any = {};
   public users$: Observable<any>;
   public barChart: any;
@@ -58,10 +75,18 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private filesService: FilesService,
     private http: HttpClient,
-    private lang: LanguageService,
+    private lang: LanguageService
   ) {
     this.http.get("assets/config/config.json").subscribe((data: any) => {
       this.config = data;
+      const scheme = new ColorScheme();
+      const rgb = data.colors.secondary
+        .substring(4, data.colors.secondary.length - 1)
+        .replace(/ /g, "")
+        .split(",");
+        const hex = fullColorHex(rgb[0], rgb[1], rgb[2]);
+        scheme.from_hex(hex).scheme('analogic').distance(1).variation('light');
+        this.colors = [`#${hex}`, ...scheme.colors().map((c)=> `#${c}`)];
     });
   }
   ngOnInit() {
@@ -139,7 +164,7 @@ export class DashboardComponent implements OnInit {
         });
 
         this.barChart = {
-          color: colors,
+          color: this.colors,
           grid: {
             left: 100
           },
@@ -170,7 +195,7 @@ export class DashboardComponent implements OnInit {
 
         this.totals = data.totals;
         this.options = {
-          color: colors,
+          color: this.colors,
           backgroundColor: "#fff",
           legend: {
             type: "scroll",
@@ -294,9 +319,9 @@ export class DashboardComponent implements OnInit {
               }
             }
           ],
-          color: colors,
+          color: this.colors,
           graph: {
-            color: colors
+            color: this.colors
           },
           series: {
             type: "sankey",
@@ -327,9 +352,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: colors,
+          color: this.colors,
           graph: {
-            color: colors
+            color: this.colors
           },
           series: [
             {
@@ -359,9 +384,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: colors,
+          color: this.colors,
           graph: {
-            color: colors
+            color: this.colors
           },
           series: [
             {
@@ -391,9 +416,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: colors,
+          color: this.colors,
           graph: {
-            color: colors
+            color: this.colors
           },
           series: [
             {
@@ -423,9 +448,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: colors,
+          color: this.colors,
           graph: {
-            color: colors
+            color: this.colors
           },
           series: [
             {
@@ -455,21 +480,21 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: colors,
+          color: this.colors,
           graph: {
-            color: colors
+            color: this.colors
           },
           series: [
             {
               type: "sankey",
-              data: data.wordsSent.nodes
-                .map(v => ({
-                  ...v, name: this.t(v.name),
-                })),
-              links: data.wordsSent.links
-                .map(v => ({
-                  ...v, target: this.t(v.target),
-                })),
+              data: data.wordsSent.nodes.map(v => ({
+                ...v,
+                name: this.t(v.name)
+              })),
+              links: data.wordsSent.links.map(v => ({
+                ...v,
+                target: this.t(v.target)
+              })),
               focusNodeAdjacency: "allEdges",
               itemStyle: {
                 normal: {
@@ -493,9 +518,9 @@ export class DashboardComponent implements OnInit {
             trigger: "item",
             triggerOn: "mousemove"
           },
-          color: colors,
+          color: this.colors,
           graph: {
-            color: colors
+            color: this.colors
           },
           series: [
             {
@@ -568,10 +593,10 @@ export class DashboardComponent implements OnInit {
   }
 
   isEnglish() {
-    return this.lang.checkLanguage('en');
+    return this.lang.checkLanguage("en");
   }
 
   isSpanish() {
-    return this.lang.checkLanguage('sp');
+    return this.lang.checkLanguage("sp");
   }
 }
