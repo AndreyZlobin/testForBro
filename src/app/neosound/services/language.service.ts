@@ -127,7 +127,7 @@ const translationsSp = {
   // dashboard start
   'Welcome on board': "Bienvenido a bordo",
   'How to upload files': `Como subir archivos`,
-  'Number of calls by top 5 batches': `Número de llamadas por top 5 lotes`,
+  'Number of calls by top 6 batches': `Número de llamadas por top 6 lotes`,
   'Processed calls': `Llamadas procesadas`,
   'Calls': `Llamadas`,
   'Total number of calls': `Número total de llamadas`,
@@ -307,7 +307,7 @@ const translationsRu = {
   // dashboard start
   'Welcome on board': "Добро пожаловать на борт",
   'How to upload files': `Как загружать файлы`,
-  'Number of calls by top 5 batches': `Количество вызовов по пяти лучшим партиям`,
+  'Number of calls by 6 batches': `Количество вызовов по шести лучшим партиям`,
   'Processed calls': `Обработанные звонки`,
   'Calls': 'Звонки',
   'Total number of calls': `Общее количество звонков`,
