@@ -307,7 +307,7 @@ const translationsRu = {
   // dashboard start
   'Welcome on board': "Добро пожаловать на борт",
   'How to upload files': `Как загружать файлы`,
-  'Number of calls by 6 batches': `Количество вызовов по шести лучшим партиям`,
+  'Number of calls by top 6 batches': `Количество вызовов по шести лучшим партиям`,
   'Processed calls': `Обработанные звонки`,
   'Calls': 'Звонки',
   'Total number of calls': `Общее количество звонков`,
