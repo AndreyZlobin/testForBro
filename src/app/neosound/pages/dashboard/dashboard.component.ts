@@ -114,8 +114,8 @@ export class DashboardComponent implements OnInit {
         const silence = [];
         batches
           .sort((a, b) =>
-            (data.batches[a].allCallsN + data.batches[a].angerCallsN + data.batches[a].silentCallsN)
-            - data.batches[b].allCallsN + data.batches[b].angerCallsN + data.batches[b].silentCallsN
+            data.batches[a].allCallsN + data.batches[a].angerCallsN + data.batches[a].silentCallsN
+            - (data.batches[b].allCallsN + data.batches[b].angerCallsN + data.batches[b].silentCallsN)
           )
           .slice(0, 6).forEach(batchName => {
           all.push(data.batches[batchName].allCallsN);
