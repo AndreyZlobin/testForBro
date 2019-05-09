@@ -189,3 +189,7 @@ angular-tag-cloud > span {
     // position: initial;
   }
 }
+
+.btn-group .ngx-pagination .current {
+  background-color: var(--color-secondary);
+}

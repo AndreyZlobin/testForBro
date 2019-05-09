@@ -114,61 +114,63 @@
     <div class="col-6">
       <div class="card h-100">
         <div class="card-header gradient-text">{{t('Welcome on board')}}</div>
-        <div class="card-body" style="overflow-y: auto; max-height: 474px;">
-          <div *ngIf="isEnglish()">
-            <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4>
-            <p class="card-text" style="line-height: 2.0;">
-              {{t('To upload multiple the files please use any SFTP client application and the following credentials')}}
-            </p>
-            <ul style="line-height: 2.0;">
-              <li>Host: <strong>{{config.sFtpHost}}</strong></li>
-              <li>{{t('Use your username and password.')}}</li>
-              <li>
-                {{t('Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.')}}
-              </li>
-              <li>
-                {{t('Please, keep in mind, we support only the audio files in .wav and .mp3 formats at the moment. The files of any other formats will not be processed.')}}
-              </li>
-              <li>
-                <strong>{{t('ATTENTION')}}:</strong>
-                {{t('the files uploaded to the root of "/files" folder will not be processed. Make sure that they uploaded inside another subfolder, e.g. "/files/batch_agent_X". A batch name is required for successful processing. This way you will be able to filter on UI them as separate batches per agents.')}}
-              </li>
-              <li>{{t('The files will start processing soon after uploading.')}}</li>
-              <li>
-                {{t('Once the files are processed they will appear on the UI and disappear from the files folder on SFTP.')}}
-              </li>
-            </ul>
-            <p class="card-text" style="line-height: 2.0;">
-              <strong>{{t('To upload the files one by one,')}}</strong>
-              {{t('please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.')}}
-            </p>
-          </div>
-          <div *ngIf="isSpanish()">
-            <!-- <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4> -->
-            <p class="card-text" style="line-height: 2.0;">
-                Para subir varios archivos, por favor use cualquier cliente SFTP y las siguientes indicaciones.
-            </p>
-            <ul style="line-height: 2.0;">
-              <li>Host: <strong>{{config.sFtpHost}}</strong></li>
-              <li>Use su nombre de usuario y contraseña.</li>
-              <li>
-                  Una vez conectado, abra los archivos de la carpeta y cree/cargue subcarpetas separadas dentro de la carpeta ‘/files", por ejemplo, "/files/lote_agente_X". Luego suba las grabaciones dentro de la subcarpeta de nueva creación.
-              </li>
-              <li>
-                  Por favor, tenga en cuenta que, de momento, solo se pueden procesar archivos de audio en formato GSM, WAV y MP3. No se podrá procesar cualquier otro formato.
-              </li>
-              <li>
-                <strong>ATENCIÓN:</strong>
-                los archivos subidos directamente a la carpeta ‘/files" no se procesarán. Asegúrese de que se carguen dentro de otra subcarpeta, por ejemplo, '/files/lote_agente_X'. Se requiere un nombre de lote para un procesamiento exitoso. Así usted podrá filtrarlos en la interfaz de usuario como lotes separados por agentes
-              </li>
-              <li>Los archivos comenzarán a procesarse poco después de la carga.</li>
-              <li>
-                  Una vez procesados los archivos, aparecerán en la interfaz de usuario y desaparecer de la carpeta de archivos en SFTP.
-              </li>
-            </ul>
-            <p class="card-text" style="line-height: 2.0;">
-                Para subir los archivos uno por uno, por favor haga clic sobre "Cargar" en el menú superior. Tras completarse la subida del archivo usted será redirigido a la lista de archivos. Sin embargo, tomará unos pocos minutos antes de que el archivo se esté procesando y los datos estén disponibles. El tiempo de procesamiento depende de la duración del archivo de audio. Para ver el texto, vaya a los detalles del archivo haciendo clic en el archivo nombre, a continuación, vaya a la pestaña "Texto". Para fines de demostración, sugerimos utilizar archivos con una duración máxima de 4 minutos con nombres cortos de archivos.
-            </p>
+        <div class="card-body">
+          <div class="" style="overflow-y: auto; max-height: 440px;">
+            <div *ngIf="isEnglish()">
+              <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4>
+              <p class="card-text" style="line-height: 2.0;">
+                {{t('To upload multiple the files please use any SFTP client application and the following credentials')}}
+              </p>
+              <ul style="line-height: 2.0;">
+                <li>Host: <strong>{{config.sFtpHost}}</strong></li>
+                <li>{{t('Use your username and password.')}}</li>
+                <li>
+                  {{t('Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.')}}
+                </li>
+                <li>
+                  {{t('Please, keep in mind, we support only the audio files in .wav and .mp3 formats at the moment. The files of any other formats will not be processed.')}}
+                </li>
+                <li>
+                  <strong>{{t('ATTENTION')}}:</strong>
+                  {{t('the files uploaded to the root of "/files" folder will not be processed. Make sure that they uploaded inside another subfolder, e.g. "/files/batch_agent_X". A batch name is required for successful processing. This way you will be able to filter on UI them as separate batches per agents.')}}
+                </li>
+                <li>{{t('The files will start processing soon after uploading.')}}</li>
+                <li>
+                  {{t('Once the files are processed they will appear on the UI and disappear from the files folder on SFTP.')}}
+                </li>
+              </ul>
+              <p class="card-text" style="line-height: 2.0;">
+                <strong>{{t('To upload the files one by one,')}}</strong>
+                {{t('please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.')}}
+              </p>
+            </div>
+            <div *ngIf="isSpanish()">
+              <!-- <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4> -->
+              <p class="card-text" style="line-height: 2.0;">
+                  Para subir varios archivos, por favor use cualquier cliente SFTP y las siguientes indicaciones.
+              </p>
+              <ul style="line-height: 2.0;">
+                <li>Host: <strong>{{config.sFtpHost}}</strong></li>
+                <li>Use su nombre de usuario y contraseña.</li>
+                <li>
+                    Una vez conectado, abra los archivos de la carpeta y cree/cargue subcarpetas separadas dentro de la carpeta ‘/files", por ejemplo, "/files/lote_agente_X". Luego suba las grabaciones dentro de la subcarpeta de nueva creación.
+                </li>
+                <li>
+                    Por favor, tenga en cuenta que, de momento, solo se pueden procesar archivos de audio en formato GSM, WAV y MP3. No se podrá procesar cualquier otro formato.
+                </li>
+                <li>
+                  <strong>ATENCIÓN:</strong>
+                  los archivos subidos directamente a la carpeta ‘/files" no se procesarán. Asegúrese de que se carguen dentro de otra subcarpeta, por ejemplo, '/files/lote_agente_X'. Se requiere un nombre de lote para un procesamiento exitoso. Así usted podrá filtrarlos en la interfaz de usuario como lotes separados por agentes
+                </li>
+                <li>Los archivos comenzarán a procesarse poco después de la carga.</li>
+                <li>
+                    Una vez procesados los archivos, aparecerán en la interfaz de usuario y desaparecer de la carpeta de archivos en SFTP.
+                </li>
+              </ul>
+              <p class="card-text" style="line-height: 2.0;">
+                  Para subir los archivos uno por uno, por favor haga clic sobre "Cargar" en el menú superior. Tras completarse la subida del archivo usted será redirigido a la lista de archivos. Sin embargo, tomará unos pocos minutos antes de que el archivo se esté procesando y los datos estén disponibles. El tiempo de procesamiento depende de la duración del archivo de audio. Para ver el texto, vaya a los detalles del archivo haciendo clic en el archivo nombre, a continuación, vaya a la pestaña "Texto". Para fines de demostración, sugerimos utilizar archivos con una duración máxima de 4 minutos con nombres cortos de archivos.
+              </p>
+            </div>
           </div>
         </div>
       </div>
