@@ -152,9 +152,11 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     const uploadFile = new FormData();
     const user = this.userService.getUserLocal();
     const username = (user && user.username) || 'fronttrust';
+    const companyid = (user && user.companyid) || '';
 
     uploadFile.append('batchid', this.batchid);
     uploadFile.append('username', username);
+    uploadFile.append('companyid', companyid);
     uploadFile.append('file', this.currentFileParams.file);
     this.filesService.uploadFile(uploadFile).subscribe(
       res => {
