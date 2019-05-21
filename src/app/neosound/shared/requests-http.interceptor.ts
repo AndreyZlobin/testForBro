@@ -54,7 +54,7 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
           }
           let msg = err.error.message ? err.error.message : 'Server Error';
           msg = err.message ? err.message : msg;
-          this.toastrService.error(LanguageService.t(msg), LanguageService.t('Error'), {
+          this.toastrService.error(LanguageService.t(msg), err.status + ' ' + LanguageService.t('Error'), {
             timeOut: 3000,
           });
         }

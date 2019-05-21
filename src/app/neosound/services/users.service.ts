@@ -5,13 +5,15 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import decode from 'jwt-decode';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import 'rxjs/add/operator/map';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class UsersService {
   message = '';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
   ) { }
 
   isAuthenticated(): boolean {
@@ -44,6 +46,11 @@ export class UsersService {
       const helper = new JwtHelperService();
       const token = helper.decodeToken(user.token);
       token && localStorage.setItem('apikey', JSON.stringify(token.apikey));
+      setTimeout(() => {
+        localStorage.removeItem('apikey');
+        localStorage.removeItem('user');
+        this.router.navigateByUrl('/auth/login');
+      }, 4 * 24 * 60 * 60 * 1000);
     });
     // .flatMap((response: any) => {
     //   return Observable.of(response);
