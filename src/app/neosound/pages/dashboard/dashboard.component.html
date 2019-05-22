@@ -84,6 +84,7 @@
                 <div class="card-header gradient-text">{{t('Keywords')}}</div>
                 <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords">
                   <angular-tag-cloud [data]="keywords" width="300" height="300" [zoomOnHover]="zoomOPtions"
+                    [overflow]="false"
                     (clicked)="keywordClicked($event)">
                   </angular-tag-cloud>
                 </div>
@@ -182,6 +183,7 @@
         <div class="card-header gradient-text">{{t('Most frequently used words')}}</div>
         <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
           <angular-tag-cloud [data]="keywords2" width="500" height="300" [zoomOnHover]="zoomOPtions"
+            [overflow]="false"
             (clicked)="keywordClicked($event)">
           </angular-tag-cloud>
         </div>
