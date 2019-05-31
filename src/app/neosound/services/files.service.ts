@@ -34,7 +34,7 @@ export class FilesService {
   getQuickFileParams() {
     return this.currentFileParams;
   }
-  
+
   getFile(params): Observable<any> {
     params = params || {
       'batchid': '1234',
@@ -146,6 +146,12 @@ export class FilesService {
     };
     return this.http.post(`${environment.api}/getFileResultDetails`,
       params
+    );
+  }
+
+  updateFileInfo(params): Observable<any> {
+    return this.http.post(`${environment.api}/updateFileInfo`,
+      params,
     );
   }
 }

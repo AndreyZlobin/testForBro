@@ -182,6 +182,17 @@ const translationsSp = {
                 nombre, a continuación, vaya a la pestaña "Texto". Para fines de demostración, sugerimos utilizar
                 archivos máximo de 4 minutos con nombres cortos de archivos amigables para el usuario.`,
   // dashboard end
+  'Stopwords': 'Para las palabras',
+  'Containing words': 'Contiene palabras',
+  'Missing words': 'Palabras que faltan',
+  'Show only calls with stopwords': 'Mostrar solo llamadas con palabras de parada',
+  'Words': 'Palabras',
+  'Show only calls with missing words': 'Mostrar solo llamadas con palabras faltantes',
+  'Show only favorite calls': 'Mostrar solo llamadas favoritas',
+  'Tags': 'Etiquetas',
+  'Close': 'Cerca',
+  'Save': 'Salvar',
+  'Add Tag': 'Añadir etiqueta',
 };
 const translationsRu = {
   'Error:': 'Ошибка:',
@@ -362,6 +373,18 @@ const translationsRu = {
     'API calls done': 'Звонков через API',
     'Popular Words Sentiment': 'Популярные сочетания слов',
     // dashboard end
+
+    'Stopwords': 'Стоп-слова',
+    'Containing words': 'Содержащие слова',
+    'Missing words': 'Недостающие слова',
+    'Show only calls with stopwords': 'Показывать только звонки со стоп-словами',
+    'Words': 'Слова',
+    'Show only calls with missing words': 'Показывать только звонки с пропущенными словами',
+    'Show only favorite calls': 'Показывать только любимые звонки',
+    'Tags': 'Метки',
+    'Close': 'Закрыть',
+    'Save': 'Сохранить',
+    'Add Tag': 'Добавить метку',
 };
 
 @Injectable()
