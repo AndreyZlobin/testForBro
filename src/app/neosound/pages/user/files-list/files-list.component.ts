@@ -562,6 +562,12 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       : "";
   }
 
+  getMisswords(item) {
+    return item.misswords && item.misswords.length
+    ? item.misswords.join(", ")
+    : "";
+  }
+
   get primaryColor() {
     return (
       (this.dataService.config &&
@@ -661,7 +667,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       'fileinfo': {
         'filename': item.filename,
         'comment': item.comment || '',
-        'pin': `${!item.pin}`,
+        'pin': `${!this.getBool(item.pin)}`,
         'tags': item.tags || [],
       },
     };

@@ -73,27 +73,27 @@
                         (onAdd)="onItemAdd($event, 'keywordsContain')" placeholder="{{t('Words')}}"
                         secondaryPlaceholder="{{t('Words')}}"></tag-input>
                     </div>
+                    <div class="col-12 pt-3">
+                      <div class="mb-2">{{t('Missing words')}}</div>
+                      <tag-input [(ngModel)]="keywordsNotContain" [editable]="true" theme="minimal"
+                        (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Missing words')}}"
+                        secondaryPlaceholder="{{t('Words')}}"></tag-input>
+                    </div>
                     <div class="col-12">
                       <div class="mt-3">
                         <label>
                           <input [(ngModel)]="keywordsOnly" [ngModelOptions]="{standalone: true}" type="checkbox"
                             class="" />
-                          {{t('Show only calls with keywords')}}
+                          {{t('Filter calls with stopwords')}}
                         </label>
                       </div>
-                    </div>
-                    <div class="col-12 pt-3">
-                      <div class="mb-2">{{t('Missing words')}}</div>
-                      <tag-input [(ngModel)]="keywordsNotContain" [editable]="true" theme="minimal"
-                        (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Missing words')}}"
-                        secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
                     </div>
                     <div class="col-12">
                       <div class="mt-3">
                         <label>
                           <input [(ngModel)]="missingOnly" [ngModelOptions]="{standalone: true}" type="checkbox"
                             class="" />
-                          {{t('Show only calls with missing words')}}
+                          {{t('Filter calls with missing words')}}
                         </label>
                       </div>
                     </div>
@@ -102,7 +102,7 @@
                         <label>
                           <input [(ngModel)]="favoriteOnly" [ngModelOptions]="{standalone: true}" type="checkbox"
                             class="" />
-                          {{t('Show only favorite calls')}}
+                          {{t('Filter favorite calls')}}
                         </label>
                       </div>
                     </div>
@@ -185,7 +185,7 @@
                 <tbody>
                   <tr *ngFor="let item of files; let i = index">
                     <td>
-                      <span (click)="markFavorite(item)">
+                      <span (click)="markFavorite(item)" style="cursor: pointer;">
                         <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
                         <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
                       </span>
@@ -196,11 +196,11 @@
                       </a></td>
                     <td>
                       <div class="text-wrap" tooltip="{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}">
-                        {{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</div>
+                        {{item.uploaddate | date: 'dd/MM/yyyy'}}</div>
                     </td>
                     <td>
                       <div class="text-wrap" tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">
-                        {{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</div>
+                        {{ getDateVal(item.duration) | date:'mm:ss'}}</div>
                     </td>
                     <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
                       <div *ngIf="item.angertop && item.angertop.anger">
@@ -221,9 +221,9 @@
                       </div>
                     </td>
                     <td>
-                      <div class="badge badge-secondary" style="cursor: pointer" *ngFor="let missword of item.misswords"
-                        tooltip="{{missword}}">
-                        {{missword}}
+                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.misswords"
+                        tooltip="{{getMisswords(item)}}">
+                        {{item.misswords.length}}
                       </div>
                     </td>
                     <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
@@ -287,8 +287,8 @@
       (onAdd)="onItemAdd($event, 'itemTags')" placeholder="{{t('Add Tag')}}"
       secondaryPlaceholder="{{t('Add Tag')}}"></tag-input>
     <div class="text-right">
-      <button class="btn btn-primary" (click)="saveTags()">{{t('Save')}}</button>
-      <button class="btn btn-link btn-secondary mr-3" (click)="hideModal()">{{t('Close')}}</button>
+      <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
+      <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>
     </div>
   </div>
 </ng-template>
