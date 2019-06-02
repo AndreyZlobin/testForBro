@@ -4,7 +4,6 @@
       <div class="col">
         <div class="alert alert-danger" *ngIf="errorMessage">{{t('Error:')}}' {{errorMessage}}</div>
         <div *ngIf="!isLoading; else loading" class="">
-
           <div class="row min-h-filter">
             <div class="col col-md-2">
               <div class="" id="side-filter">
@@ -115,6 +114,11 @@
                   </div>
                 </div>
               </div>
+              <ng-template #spinner>
+                <div class="load-container load1">
+                  <div class="loader">{{ t("Loading...") }}</div>
+                </div>
+              </ng-template>
             </div>
             <div class="col col-md-10 pl-4 border-left">
               <div class="row mb-1">
@@ -122,7 +126,7 @@
                   <h1>{{t('Files')}}</h1>
                 </div>
                 <div class="col-6">
-                  <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
+                  <div class="btn-toolbar mb-3 mt-3">
                     <div class="btn-group mr-2 mb-2">
                       <div
                         *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }">
@@ -132,6 +136,7 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="col-3">
                   <div class="row mb-1">
                     <!-- <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div> -->
@@ -142,7 +147,7 @@
                   </div>
                 </div>
               </div>
-              <table class="table">
+              <table class="table" *ngIf="!isLoadingTable; else spinner">
                 <thead>
                   <tr>
                     <th></th>
@@ -174,6 +179,7 @@
                     </th>
                     <th class="text-one-line">{{t('Stopwords')}}</th>
                     <th class="text-one-line">{{t('Missing')}}</th>
+                    <th class="text-one-line">{{t('Tags')}}</th>
                     <!-- <th>Beta</th> -->
                     <!-- <th></th> -->
                     <!-- <th>%</th> -->
@@ -226,6 +232,12 @@
                         {{item.misswords.length}}
                       </div>
                     </td>
+                    <td>
+                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.tags"
+                        tooltip="{{getTags(item)}}">
+                        {{item.tags.length > 0 ? item.tags.length : ""}}
+                      </div>
+                    </td>
                     <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
                     <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)"
                         tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}"><i class="fa fa-sync"></i></button>
@@ -235,10 +247,7 @@
                           class="fa fa-trash-alt"></i></button></td>
                     <td>
                       <span (click)="showModal(tagModal, item)">
-                          <div class="badge badge-secondary m-1" style="cursor: pointer;" *ngFor="let tag of item.tags">
-                            {{tag}}
-                          </div>
-                        <i class="fa fa-pencil-alt ml-2"></i>
+                        <i class="fa fa-pencil-alt float-rigth"></i>
                       </span>
                     </td>
                   </tr>
@@ -283,9 +292,8 @@
     </button>
   </div>
   <div class="modal-body tagsModal">
-    <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal"
-      (onAdd)="onItemAdd($event, 'itemTags')" placeholder="{{t('Add Tag')}}"
-      secondaryPlaceholder="{{t('Add Tag')}}"></tag-input>
+    <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal" (onAdd)="onItemAdd($event, 'itemTags')"
+      placeholder="{{t('Add Tag')}}" secondaryPlaceholder="{{t('Add Tag')}}"></tag-input>
     <div class="text-right">
       <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
       <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>
