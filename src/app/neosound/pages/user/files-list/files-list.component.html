@@ -66,27 +66,43 @@
                       </div>
                     </div>
                     <div class="col-12 pt-3">
-                      <div class="mb-2">{{t('Containing keywords')}}</div>
+                      <div class="mb-2">{{t('Containing words')}}</div>
                       <!-- <input [(ngModel)]="keywordsContain" [ngModelOptions]="{standalone: true}" type="text" placeholder="{{t('Keywords')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/> -->
                       <!-- <rl-tag-input [(ngModel)]="keywordsContain" placeholder="{{t('Keywords')}}"></rl-tag-input> -->
                       <tag-input [(ngModel)]="keywordsContain" [editable]="true" theme="minimal"
-                        (onAdd)="onItemAdd($event, 'keywordsContain')" placeholder="{{t('Keywords')}}"
-                        secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
+                        (onAdd)="onItemAdd($event, 'keywordsContain')" placeholder="{{t('Words')}}"
+                        secondaryPlaceholder="{{t('Words')}}"></tag-input>
                     </div>
                     <div class="col-12 pt-3">
-                      <div class="mb-2">{{t('Missing keywords')}}</div>
-                      <!-- <input [(ngModel)]="keywordsContain" [ngModelOptions]="{standalone: true}" type="text" placeholder="{{t('Keywords')}}" class="form-control form-control-lg"  style="padding: 5px 10px; border: 1px solid #dfe3e9;"/> -->
-                      <!-- <rl-tag-input [(ngModel)]="keywordsContain" placeholder="{{t('Keywords')}}"></rl-tag-input> -->
+                      <div class="mb-2">{{t('Missing words')}}</div>
                       <tag-input [(ngModel)]="keywordsNotContain" [editable]="true" theme="minimal"
-                        (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Keywords')}}"
-                        secondaryPlaceholder="{{t('Keywords')}}"></tag-input>
+                        (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Missing words')}}"
+                        secondaryPlaceholder="{{t('Words')}}"></tag-input>
                     </div>
                     <div class="col-12">
                       <div class="mt-3">
                         <label>
                           <input [(ngModel)]="keywordsOnly" [ngModelOptions]="{standalone: true}" type="checkbox"
                             class="" />
-                          {{t('Show only calls with keywords')}}
+                          {{t('Filter calls with stopwords')}}
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="mt-3">
+                        <label>
+                          <input [(ngModel)]="missingOnly" [ngModelOptions]="{standalone: true}" type="checkbox"
+                            class="" />
+                          {{t('Filter calls with missing words')}}
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="mt-3">
+                        <label>
+                          <input [(ngModel)]="favoriteOnly" [ngModelOptions]="{standalone: true}" type="checkbox"
+                            class="" />
+                          {{t('Filter favorite calls')}}
                         </label>
                       </div>
                     </div>
@@ -102,10 +118,10 @@
             </div>
             <div class="col col-md-10 pl-4 border-left">
               <div class="row mb-1">
-                <div class="col">
+                <div class="col-3">
                   <h1>{{t('Files')}}</h1>
                 </div>
-                <div class="col">
+                <div class="col-6">
                   <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
                     <div class="btn-group mr-2 mb-2">
                       <div
@@ -116,7 +132,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-3">
                   <div class="row mb-1">
                     <!-- <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div> -->
                     <div class="col text-right pl-0" *ngIf="!isLoading">
@@ -129,6 +145,7 @@
               <table class="table">
                 <thead>
                   <tr>
+                    <th></th>
                     <th class="text-one-line">{{t('Batch Id')}}</th>
                     <th class="text-one-line"><a (click)="sortTable('name')">{{t('Name')}}
                         <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i
@@ -155,7 +172,8 @@
                           *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i
                           *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
                     </th>
-                    <th class="text-one-line">{{t('Keywords')}}</th>
+                    <th class="text-one-line">{{t('Stopwords')}}</th>
+                    <th class="text-one-line">{{t('Missing')}}</th>
                     <!-- <th>Beta</th> -->
                     <!-- <th></th> -->
                     <!-- <th>%</th> -->
@@ -166,17 +184,23 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of files; let i = index">
+                    <td>
+                      <span (click)="markFavorite(item)" style="cursor: pointer;">
+                        <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
+                        <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
+                      </span>
+                    </td>
                     <td>{{ item.batchid}}</td>
                     <td><a [routerLink]="getLink(item)" style="cursor: pointer;">
                         <div class="text-wrap" tooltip="{{item.filename}}">{{item.filename}}</div>
                       </a></td>
                     <td>
                       <div class="text-wrap" tooltip="{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}">
-                        {{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}</div>
+                        {{item.uploaddate | date: 'dd/MM/yyyy'}}</div>
                     </td>
                     <td>
                       <div class="text-wrap" tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">
-                        {{ getDateVal(item.duration) | date:'mm:ss.SSS'}}</div>
+                        {{ getDateVal(item.duration) | date:'mm:ss'}}</div>
                     </td>
                     <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
                       <div *ngIf="item.angertop && item.angertop.anger">
@@ -196,6 +220,12 @@
                         {{item.keywordcount}}
                       </div>
                     </td>
+                    <td>
+                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.misswords"
+                        tooltip="{{getMisswords(item)}}">
+                        {{item.misswords.length}}
+                      </div>
+                    </td>
                     <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
                     <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)"
                         tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}"><i class="fa fa-sync"></i></button>
@@ -203,6 +233,14 @@
                     <td><button class="btn p-2 c-normal" style="cursor: pointer;"
                         (click)="delete(item.batchid, item.fileid)" tooltip="{{t('Delete')}}"><i
                           class="fa fa-trash-alt"></i></button></td>
+                    <td>
+                      <span (click)="showModal(tagModal, item)">
+                          <div class="badge badge-secondary m-1" style="cursor: pointer;" *ngFor="let tag of item.tags">
+                            {{tag}}
+                          </div>
+                        <i class="fa fa-pencil-alt ml-2"></i>
+                      </span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -214,7 +252,7 @@
         </li>
       </ul> -->
               <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
-                <div class="btn-group mr-2 mb-2">
+                <div class="btn-group m-auto">
                   <div
                     *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }">
                   </div>
@@ -236,3 +274,21 @@
     </div>
   </nb-card-body>
 </nb-card>
+
+<ng-template #tagModal>
+  <div class="modal-header">
+    {{t('Tags')}}
+    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body tagsModal">
+    <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal"
+      (onAdd)="onItemAdd($event, 'itemTags')" placeholder="{{t('Add Tag')}}"
+      secondaryPlaceholder="{{t('Add Tag')}}"></tag-input>
+    <div class="text-right">
+      <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
+      <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>
+    </div>
+  </div>
+</ng-template>

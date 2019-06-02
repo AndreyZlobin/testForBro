@@ -112,7 +112,12 @@ export class DashboardComponent implements OnInit {
         const anger = [];
         const all = [];
         const silence = [];
-        batches.slice(0, 5).forEach(batchName => {
+        batches
+          .sort((a, b) =>
+            data.batches[b].allCallsN /*+ data.batches[a].angerCallsN + data.batches[a].silentCallsN*/
+            - (data.batches[a].allCallsN/* + data.batches[b].angerCallsN + data.batches[b].silentCallsN*/)
+          )
+          .slice(0, 6).reverse().forEach(batchName => {
           all.push(data.batches[batchName].allCallsN);
           anger.push(data.batches[batchName].angerCallsN);
           silence.push(data.batches[batchName].silentCallsN);
@@ -185,7 +190,7 @@ export class DashboardComponent implements OnInit {
           yAxis: {
             type: "category",
             axisTick: { show: false },
-            data: batches.slice(0, 5)
+            data: batches.slice(0, 6).reverse()
           },
           xAxis: {
             type: "value",

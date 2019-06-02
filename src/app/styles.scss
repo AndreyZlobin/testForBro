@@ -189,3 +189,14 @@ angular-tag-cloud > span {
     // position: initial;
   }
 }
+
+.btn-group .ngx-pagination .current {
+  background-color: var(--color-secondary);
+}
+
+.tagsModal .ng2-tag-input.minimal {
+	border: 1px solid #cccccc !important;
+  padding: 5px;
+  border-radius: 3px;
+  margin-bottom: 15px;
+}

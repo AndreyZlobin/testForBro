@@ -118,7 +118,7 @@ const translationsSp = {
   'Show only calls with keywords': 'Mostrar solo llamadas con palabras clave',
   'Missing keywords': 'Palabras clave que faltan',
   'Containing keywords': 'Que contienen palabras clave',
-  'Call Duration, minutes': 'Duración de llamada, minutos',
+  'Call duration, minutes': 'Duración de llamada, minutos',
   'Dashboard': 'Tablero',
   'Log': 'Registro',
   'Back': 'Volver',
@@ -127,7 +127,7 @@ const translationsSp = {
   // dashboard start
   'Welcome on board': "Bienvenido a bordo",
   'How to upload files': `Como subir archivos`,
-  'Number of calls by top 5 batches': `Número de llamadas por top 5 lotes`,
+  'Number of calls by top 6 batches': `Número de llamadas por top 6 lotes`,
   'Processed calls': `Llamadas procesadas`,
   'Calls': `Llamadas`,
   'Total number of calls': `Número total de llamadas`,
@@ -182,6 +182,17 @@ const translationsSp = {
                 nombre, a continuación, vaya a la pestaña "Texto". Para fines de demostración, sugerimos utilizar
                 archivos máximo de 4 minutos con nombres cortos de archivos amigables para el usuario.`,
   // dashboard end
+  'Stopwords': 'Para las palabras',
+  'Containing words': 'Contiene palabras',
+  'Missing words': 'Palabras que faltan',
+  'Filter calls with stopwords': 'Mostrar solo llamadas con palabras de parada',
+  'Words': 'Palabras',
+  'Filter calls with missing words': 'Mostrar solo llamadas con palabras faltantes',
+  'Filter favorite calls': 'Mostrar solo llamadas favoritas',
+  'Tags': 'Etiquetas',
+  'Close': 'Cerca',
+  'Save': 'Salvar',
+  'Add Tag': 'Añadir etiqueta',
 };
 const translationsRu = {
   'Error:': 'Ошибка:',
@@ -298,7 +309,7 @@ const translationsRu = {
   'Show only calls with keywords': 'Только звонки с ключ.словами',
   'Missing keywords': 'Не содержат ключ.слова',
   'Containing keywords': 'Содержат ключ.слова',
-  'Call Duration, minutes': 'Продолжительность звонка, минут',
+  'Call duration, minutes': 'Продолжительность звонка, минут',
   'Dashboard': 'Метрики',
   'Log': 'Журнал',
   'Number Of Calls': 'Кол-во звонков',
@@ -307,7 +318,7 @@ const translationsRu = {
   // dashboard start
   'Welcome on board': "Добро пожаловать на борт",
   'How to upload files': `Как загружать файлы`,
-  'Number of calls by top 5 batches': `Количество вызовов по пяти лучшим партиям`,
+  'Number of calls by top 6 batches': `Количество звонков по топ 6 агентам`,
   'Processed calls': `Обработанные звонки`,
   'Calls': 'Звонки',
   'Total number of calls': `Общее количество звонков`,
@@ -362,6 +373,18 @@ const translationsRu = {
     'API calls done': 'Звонков через API',
     'Popular Words Sentiment': 'Популярные сочетания слов',
     // dashboard end
+
+    'Stopwords': 'Стоп-слова',
+    'Containing words': 'Содержащие слова',
+    'Missing words': 'Недостающие слова',
+    'Filter calls with stopwords': 'Показывать только звонки со стоп-словами',
+    'Words': 'Слова',
+    'Filter calls with missing words': 'Показывать только звонки с пропущенными словами',
+    'Filter favorite calls': 'Показывать только любимые звонки',
+    'Tags': 'Метки',
+    'Close': 'Закрыть',
+    'Save': 'Сохранить',
+    'Add Tag': 'Добавить метку',
 };
 
 @Injectable()
