@@ -571,11 +571,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     ? item.misswords.join(", ")
     : "";
   }
-  getTags(item) {
-    return item.tags && item.tags.length
-    ? item.tags.join(", ")
-    : "";
-  }
 
   get primaryColor() {
     return (

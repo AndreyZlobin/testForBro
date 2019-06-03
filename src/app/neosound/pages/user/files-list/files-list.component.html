@@ -179,7 +179,6 @@
                     </th>
                     <th class="text-one-line">{{t('Stopwords')}}</th>
                     <th class="text-one-line">{{t('Missing')}}</th>
-                    <th class="text-one-line">{{t('Tags')}}</th>
                     <!-- <th>Beta</th> -->
                     <!-- <th></th> -->
                     <!-- <th>%</th> -->
@@ -230,12 +229,6 @@
                       <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.misswords"
                         tooltip="{{getMisswords(item)}}">
                         {{item.misswords.length}}
-                      </div>
-                    </td>
-                    <td>
-                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.tags"
-                        tooltip="{{getTags(item)}}">
-                        {{item.tags.length > 0 ? item.tags.length : ""}}
                       </div>
                     </td>
                     <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
