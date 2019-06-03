@@ -449,7 +449,10 @@ export class PlayerDetailsComponent
   ngOnDestroy() {
     this.subRoute.unsubscribe();
     this.play();
-    this.wavesurfer.destroy();
+    
+    if(this.wavesurfer) {
+      this.wavesurfer.destroy();
+    }
   }
 
   setTab(tab) {
