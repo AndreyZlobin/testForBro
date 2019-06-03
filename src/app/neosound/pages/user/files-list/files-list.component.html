@@ -79,6 +79,12 @@
                         (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Missing words')}}"
                         secondaryPlaceholder="{{t('Words')}}"></tag-input>
                     </div>
+                    <div class="col-12 pt-3">
+                      <div class="mb-2">{{t('Tags')}}</div>
+                      <tag-input [(ngModel)]="tagsContain" [editable]="true" theme="minimal"
+                        (onAdd)="onItemAdd($event, 'tagsContain')" placeholder="{{t('Tags')}}"
+                        secondaryPlaceholder="{{t('Tags')}}"></tag-input>
+                    </div>
                     <div class="col-12">
                       <div class="mt-3">
                         <label>
@@ -107,10 +113,10 @@
                       </div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary mt-4 w-100" (click)="filterIt()">{{t('Apply')}}</button>
+                      <button class="btn btn-primary mt-4 w-100" style="cursor: pointer;" (click)="filterIt()">{{t('Apply')}}</button>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-secondary mt-2 w-100" (click)="resetFilter()">{{t('Reset')}}</button>
+                      <button class="btn btn-secondary mt-2 w-100" style="cursor: pointer;" (click)="resetFilter()">{{t('Reset')}}</button>
                     </div>
                   </div>
                 </div>

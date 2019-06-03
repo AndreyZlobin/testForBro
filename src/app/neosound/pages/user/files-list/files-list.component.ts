@@ -50,6 +50,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   dateVisible = true;
   keywordsContain = [];
   keywordsNotContain = [];
+  tagsContain = [];
   isKeywordsContain = true;
   itemTags = [];
 
@@ -435,6 +436,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.angerto = null;
     this.keywordsContain = [];
     this.keywordsNotContain = [];
+    this.tagsContain = [];
     this.pausefrom = null;
     this.pauseto = null;
     this.callfrom = null;
@@ -536,6 +538,16 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
         )
         .join(",");
     }
+    if (this.tagsContain && this.tagsContain.length) {
+      this.filter["tagsContain"] = this.tagsContain
+        .map(v =>
+          v.value
+            .split(",")
+            .map(v => v.trim())
+            .join(",")
+        )
+        .join(",");
+    }
     Object.keys(this.filter).forEach(
       key =>
         (this.filter[key] === "" ||
@@ -600,6 +612,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
         c = this.keywordsNotContain;
         break;
       case "itemTags":
+        c = this.itemTags;
+        break;
+      case "tagsContain":
         c = this.itemTags;
         break;
     }
