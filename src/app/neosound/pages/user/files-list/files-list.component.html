@@ -227,7 +227,7 @@
                       </div>
                     </td>
                     <td>
-                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.misswords"
+                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.misswords && item.misswords.length"
                         tooltip="{{getMisswords(item)}}">
                         {{item.misswords.length}}
                       </div>
