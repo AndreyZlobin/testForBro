@@ -15,7 +15,6 @@ import { DataService } from "../../../shared";
 export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   sub: Subscription;
   files;
-  isLoadingTable = true;
   errorMessage = "";
   filesResult = [];
   isLoading = true;
@@ -135,7 +134,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getPage(page = 0, parameters = this.filter) {
     // this.isLoading = true;
-    this.isLoadingTable = true;
     const params = (this.filter = {
       ...parameters,
       itemsn: `${this.paginationNum}`,
@@ -143,9 +141,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.page = page;
     this.filesService.listFilesPage(params).subscribe(res => {
-      this.isLoadingTable = false;
       if (res && res.files) this.isLoading = false;
-      
       if (!res || res.totalcount === 0) {
         this.isLoading = false;
         this.files = [];
