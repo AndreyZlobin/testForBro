@@ -315,8 +315,10 @@ export class PlayerDetailsComponent
             }
           }
           if (this.results.result.stt) {
-            if (this.results.result.stt.keywords) {
+            if (this.results.result.stt.keywords && Array.isArray(this.results.result.stt.keywords)) {
               this.keywords = this.results.result.stt.keywords;
+            } else {
+              this.keywords = this.results.result.stt.keywords.stop.concat(this.results.result.stt.keywords.miss);
             }
           }
           if (this.results.result.merged) {
