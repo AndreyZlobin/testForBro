@@ -221,15 +221,15 @@
                     <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
                     <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
                     <td>
-                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.keywordcount"
-                        tooltip="{{getKeywords(item)}}">
-                        {{item.keywordcount}}
+                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.stopwordcount"
+                        tooltip="{{getStopwords(item)}}">
+                        {{item.stopwordcount}}
                       </div>
                     </td>
                     <td>
-                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.misswords && item.misswords.length"
+                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.misswordcount"
                         tooltip="{{getMisswords(item)}}">
-                        {{item.misswords.length}}
+                        {{item.misswordcount}}
                       </div>
                     </td>
                     <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->

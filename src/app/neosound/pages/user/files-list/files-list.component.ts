@@ -580,6 +580,12 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     : "";
   }
 
+  getStopwords(item) {
+    return item.stopwords && item.stopwords.length
+      ? item.stopwords.join(", ")
+      : "";
+  }
+
   get primaryColor() {
     return (
       (this.dataService.config &&
