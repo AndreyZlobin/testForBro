@@ -118,7 +118,7 @@ const translationsSp = {
   'Show only calls with keywords': 'Mostrar solo llamadas con palabras clave',
   'Missing keywords': 'Palabras clave que faltan',
   'Containing keywords': 'Que contienen palabras clave',
-  'Call duration, minutes': 'Duración de llamada, minutos',
+  'Call Duration, minutes': 'Duración de llamada, minutos',
   'Dashboard': 'Tablero',
   'Log': 'Registro',
   'Back': 'Volver',
@@ -182,7 +182,8 @@ const translationsSp = {
                 nombre, a continuación, vaya a la pestaña "Texto". Para fines de demostración, sugerimos utilizar
                 archivos máximo de 4 minutos con nombres cortos de archivos amigables para el usuario.`,
   // dashboard end
-  'Stopwords': 'Para las palabras',
+  'Stopwords': 'Palabras de parada',
+  'Missing': 'Faltan',
   'Containing words': 'Contiene palabras',
   'Missing words': 'Palabras que faltan',
   'Filter calls with stopwords': 'Mostrar solo llamadas con palabras de parada',
@@ -190,9 +191,10 @@ const translationsSp = {
   'Filter calls with missing words': 'Mostrar solo llamadas con palabras faltantes',
   'Filter favorite calls': 'Mostrar solo llamadas favoritas',
   'Tags': 'Etiquetas',
-  'Close': 'Cerca',
-  'Save': 'Salvar',
+  'Close': 'Cerrar',
+  'Save': 'Guardar',
   'Add Tag': 'Añadir etiqueta',
+  'Compliance': 'Conformidad',
 };
 const translationsRu = {
   'Error:': 'Ошибка:',
@@ -308,8 +310,9 @@ const translationsRu = {
   'Apply': 'Применить',
   'Show only calls with keywords': 'Только звонки с ключ.словами',
   'Missing keywords': 'Не содержат ключ.слова',
+  'Missing': 'Ключ.слова',
   'Containing keywords': 'Содержат ключ.слова',
-  'Call duration, minutes': 'Продолжительность звонка, минут',
+  'Call Duration, minutes': 'Продолжительность звонка, минут',
   'Dashboard': 'Метрики',
   'Log': 'Журнал',
   'Number Of Calls': 'Кол-во звонков',
@@ -385,6 +388,7 @@ const translationsRu = {
     'Close': 'Закрыть',
     'Save': 'Сохранить',
     'Add Tag': 'Добавить метку',
+    'Compliance': 'Соответствие',
 };
 
 @Injectable()

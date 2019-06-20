@@ -119,9 +119,25 @@
           </ng-container>
           <ng-container *ngIf="radioModel === 'KeyWords'">
             <div class="mt-2">
-              <ul class="list-group">
-                <li class="list-group-item" *ngFor="let keyword of keywords">{{keyword}}</li>
-              </ul>
+              <div class="row">
+                <div class="col">
+                    <h4 class="ml-4 mb-3">{{t("Stopwords")}}</h4>
+                    <ul class="list-group">
+                      <li class="list-group-item" *ngFor="let keyword of keywords">{{keyword}}</li>
+                    </ul>
+                </div>
+                <div class="col" *ngIf="misswordsNotFound.length || misswords.length">
+                    <h4 class="ml-4 mb-3">{{t("Compliance")}} {{getCompliancePercents()}}</h4>
+                    <ul class="list-group">
+                      <li class="list-group-item" *ngFor="let missword of misswordsNotFound">
+                          <i class="fa fa-times m-r-5 text-danger"></i> {{missword}}
+                      </li>
+                      <li class="list-group-item" *ngFor="let missword of misswords">
+                          <i class="fa fa-check m-r-5 text-success"></i> {{missword}}
+                      </li>
+                    </ul>
+                </div>
+              </div>
             </div>
           </ng-container>
         </div>

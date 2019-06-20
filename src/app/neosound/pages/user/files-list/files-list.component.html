@@ -179,7 +179,7 @@
                           *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
                     </th>
                     <th class="text-one-line">{{t('Stopwords')}}</th>
-                    <th class="text-one-line">{{t('Missing')}}</th>
+                    <th class="text-one-line">{{t('Compliance')}}</th>
                     <!-- <th>Beta</th> -->
                     <!-- <th></th> -->
                     <!-- <th>%</th> -->
@@ -221,7 +221,7 @@
                     <!-- <td>{{getEmotionValue(item.fourclasstop)}}</td> -->
                     <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
                     <td>
-                      <div class="badge badge-secondary" style="cursor: pointer" *ngIf="item.stopwordcount"
+                      <div class="badge badge-danger" style="cursor: pointer" *ngIf="item.stopwordcount"
                         tooltip="{{getStopwords(item)}}">
                         {{item.stopwordcount}}
                       </div>

@@ -45,6 +45,8 @@ export class PlayerDetailsComponent
   emotionsGender;
   sttfulltext;
   keywords;
+  misswords = [];
+  misswordsNotFound = [];
   emotionsSttAnger;
   currentTab = "text";
   tabsDisabled = false;
@@ -317,8 +319,11 @@ export class PlayerDetailsComponent
           if (this.results.result.stt) {
             if (this.results.result.stt.keywords && Array.isArray(this.results.result.stt.keywords)) {
               this.keywords = this.results.result.stt.keywords;
+              this.misswords = [];
             } else {
-              this.keywords = this.results.result.stt.keywords.stop.concat(this.results.result.stt.keywords.miss);
+              this.keywords = this.results.result.stt.keywords.stop;
+              this.misswords = this.results.result.stt.keywords.miss;
+              this.misswordsNotFound = this.results.result.stt.keywords.missmiss;
             }
           }
           if (this.results.result.merged) {
@@ -498,5 +503,13 @@ export class PlayerDetailsComponent
 
   get secondaryColor() {
     return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.secondary || 'rgb(0, 154, 210)';
+  }
+
+  getCompliancePercents() {
+    if (this.misswords.length || this.misswordsNotFound.length) {
+      const perc = this.misswords.length / this.misswords.length + this.misswordsNotFound.length;
+      return Math.round(perc) * 10 + '%';
+    }
+    return '';
   }
 }

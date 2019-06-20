@@ -22,7 +22,13 @@ export class UsersService {
     // return a boolean reflecting
     // whether or not the token is expired
     const helper = new JwtHelperService();
-    return this.getUserLocal(); // && !helper.isTokenExpired(token);
+    const user = this.getUserLocal();
+    if (user && (new Date().getTime() - user.time > 2 * 24 * 60 * 60 * 1000)) {
+      localStorage.removeItem('apikey');
+      localStorage.removeItem('user');
+      this.router.navigateByUrl('/auth/login');
+    }
+    return user; // && !helper.isTokenExpired(token);
   }
   getToken(): string {
     const user = this.getUserLocal();
@@ -42,6 +48,7 @@ export class UsersService {
     return this.http.post(`${environment.api}/loginUser`,
       params
     ).map((user: any) => {
+      user.time = new Date().getTime();
       localStorage.setItem('user', JSON.stringify(user));
       const helper = new JwtHelperService();
       const token = helper.decodeToken(user.token);
@@ -50,7 +57,7 @@ export class UsersService {
         localStorage.removeItem('apikey');
         localStorage.removeItem('user');
         this.router.navigateByUrl('/auth/login');
-      }, 4 * 24 * 60 * 60 * 1000);
+      }, 2 * 24 * 60 * 60 * 1000);
     });
     // .flatMap((response: any) => {
     //   return Observable.of(response);
