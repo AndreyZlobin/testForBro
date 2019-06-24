@@ -89,6 +89,7 @@ import { IntervalDirective } from "./neosound/directives/interval.detective";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
 import { DataService } from "./neosound/shared";
+import { ChartPageComponent } from './neosound/pages/charts/chart-page/chart-page.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { DataService } from "./neosound/shared";
     IntervalDirective,
     BatchListComponent,
     BatchDetailsComponent,
+    ChartPageComponent,
     // ForbiddenPasswordDirective,
 
     //ngx-admin

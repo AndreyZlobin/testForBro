@@ -39,6 +39,7 @@ import { ApiPageComponent } from './neosound/pages/user/api-page/api-page.compon
 import { PageNotFoundComponent } from './neosound/pages/page-not-found/page-not-found.component';
 import { BatchListComponent } from './neosound/pages/user/batch-list/batch-list.component';
 import { BatchDetailsComponent } from './neosound/pages/user/batch-details/batch-details.component';
+import { ChartPageComponent } from './neosound/pages/charts/chart-page/chart-page.component';
 
 const routes: Routes = [
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
@@ -130,6 +131,10 @@ const routes: Routes = [
       {
         path: 'terms',
         component: TermsComponent
+      },
+      {
+        path: 'charts',
+        component: ChartPageComponent
       },
       {
         path: '',

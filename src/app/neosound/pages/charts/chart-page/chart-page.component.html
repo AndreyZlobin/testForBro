@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-12 col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">
+        Sankey diagram
+      </div>
+      <div class="card-body">
+          <div echarts
+            [options]="option1"
+            class="echart"
+            (chartInit)="onChartInit1($event)">
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">
+          Количество разного типа (total, emo, silent) звонков по дням или периодам, 3 кривые
+      </div>
+      <div class="card-body">
+          <div echarts
+            [options]="option2"
+            class="echart"
+            (chartInit)="onChartInit2($event)">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">
+          Calls distributed by days and time
+      </div>
+      <div class="card-body">
+          <div echarts
+            [options]="option3"
+            class="echart"
+            (chartInit)="onChartInit3($event)">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">
+          Total minutes per day
+      </div>
+      <div class="card-body">
+          <div echarts
+            [options]="option4"
+            class="echart"
+            (chartInit)="onChartInit4($event)">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">
+          Totals by queries, карточка pie-chart
+      </div>
+      <div class="card-body">
+          <div echarts
+            [options]="option5"
+            class="echart"
+            (chartInit)="onChartInit5($event)">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">
+          Total minutes
+           - calm speech
+           - emotional speech
+           - silence
+      </div>
+      <div class="card-body">
+          <div echarts
+            [options]="option6"
+            class="echart"
+            (chartInit)="onChartInit6($event)">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">
+          Minutes = calm speech + emo speech + silence  - Разбивка minutes по каждому батчу
+      </div>
+      <div class="card-body">
+          <div echarts
+            [options]="option7"
+            class="echart"
+            (chartInit)="onChartInit7($event)">
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
