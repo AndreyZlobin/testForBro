@@ -182,7 +182,7 @@ const translationsSp = {
                 nombre, a continuación, vaya a la pestaña "Texto". Para fines de demostración, sugerimos utilizar
                 archivos máximo de 4 minutos con nombres cortos de archivos amigables para el usuario.`,
   // dashboard end
-  'Stopwords': 'Palabras de parada',
+  'Stopwords': 'Palabras prohibidas',
   'Missing': 'Faltan',
   'Containing words': 'Contiene palabras',
   'Missing words': 'Palabras que faltan',

@@ -46,7 +46,7 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
         }
       }, (err: any) => {
         if (err instanceof HttpErrorResponse) {
-          if (err.status === 401 || err.status === 403) {
+          if (err.status === 401 || err.status === 403 || err.status === 0) {
             // redirect to the login route
             // or show a modal
             this.router.navigateByUrl('/auth/login');

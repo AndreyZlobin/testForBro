@@ -53,6 +53,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   tagsContain = [];
   isKeywordsContain = true;
   itemTags = [];
+  isLoadingSpinner = false;
 
   datePickerFromOptions: DatepickerOptions = {
     minYear: 1970,
@@ -141,7 +142,10 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.page = page;
     this.filesService.listFilesPage(params).subscribe(res => {
-      if (res && res.files) this.isLoading = false;
+      this.isLoadingSpinner = false;
+      if (res && res.files) {
+        this.isLoading = false;
+      }
       if (!res || res.totalcount === 0) {
         this.isLoading = false;
         this.files = [];
@@ -323,6 +327,15 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     return "rgba(255, 5, 5, " + result + ")";
   }
 
+  getOpacityLevelCompliance(percent) {
+    const a = percent / 100;
+    const b = 100 * a;
+    const c = b + 0;
+
+    // Return a CSS HSL string
+    return 'hsl(' + c + ', 100%, 50%)';
+  }
+
   getOpacityLevelPause(val) {
     if (!val) {
       return "";
@@ -492,6 +505,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
 
   filterIt() {
+    this.isLoadingSpinner = true;
     this.filter = {
       ...this.filter,
       datetimefrom: this.datefrom || "",
