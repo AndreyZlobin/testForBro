@@ -113,10 +113,12 @@
                       </div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary mt-4 w-100" style="cursor: pointer;" (click)="filterIt()">{{t('Apply')}}</button>
+                      <button class="btn btn-primary mt-4 w-100" style="cursor: pointer;"
+                        (click)="filterIt()">{{t('Apply')}}</button>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-secondary mt-2 w-100" style="cursor: pointer;" (click)="resetFilter()">{{t('Reset')}}</button>
+                      <button class="btn btn-secondary mt-2 w-100" style="cursor: pointer;"
+                        (click)="resetFilter()">{{t('Reset')}}</button>
                     </div>
                   </div>
                 </div>
@@ -152,7 +154,11 @@
                 <thead>
                   <tr>
                     <th></th>
-                    <th class="text-one-line">{{t('Batch Id')}}</th>
+                    <th class="text-one-line"><a (click)="sortTable('batchId')">{{t('Batch Id')}}
+                        <i *ngIf="sortBy === 'batchId' && sort ==='up'" class="fas fa-sort-up"></i><i
+                          *ngIf="sortBy === 'batchId' && sort ==='down'" class="fas fa-sort-down"></i><i
+                          *ngIf="sortBy !== 'batchId'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                    </th>
                     <th class="text-one-line"><a (click)="sortTable('name')">{{t('Name')}}
                         <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i
                           *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i
@@ -178,8 +184,16 @@
                           *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i
                           *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
                     </th>
-                    <th class="text-one-line">{{t('Stopwords')}}</th>
-                    <th class="text-one-line">{{t('Compliance')}}</th>
+                    <th class="text-one-line"><a (click)="sortTable('stopWords')">{{t('Stopwords')}}
+                        <i *ngIf="sortBy === 'stopWords' && sort ==='down'" class="fas fa-sort-up"></i><i
+                          *ngIf="sortBy === 'stopWords' && sort ==='up'" class="fas fa-sort-down"></i><i
+                          *ngIf="sortBy !== 'stopWords'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                    </th>
+                    <th class="text-one-line"><a (click)="sortTable('compliance')">{{t('Compliance')}}
+                        <i *ngIf="sortBy === 'compliance' && sort ==='down'" class="fas fa-sort-up"></i><i
+                          *ngIf="sortBy === 'compliance' && sort ==='up'" class="fas fa-sort-down"></i><i
+                          *ngIf="sortBy !== 'compliance'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                    </th>
                     <!-- <th>Beta</th> -->
                     <!-- <th></th> -->
                     <!-- <th>%</th> -->
@@ -228,11 +242,11 @@
                       <span *ngIf="!item.stopwords">-</span>
                     </td>
                     <td class="text-center">
-                      <div class="" style="cursor: pointer"
-                        *ngIf="item.misswordcount"
+                      <div class="" style="cursor: pointer" *ngIf="item.misswordcount"
                         [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}"
                         tooltip="{{getMisswords(item)}}">
-                        {{item.compliancepercent}} <span *ngIf="item.compliancepercent !== undefined && item.compliancepercent !== null">%</span>
+                        {{item.compliancepercent}} <span
+                          *ngIf="item.compliancepercent !== undefined && item.compliancepercent !== null">%</span>
                       </div>
                     </td>
                     <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
@@ -244,9 +258,9 @@
                           class="fa fa-trash-alt"></i></button></td>
                     <td>
                       <span (click)="showModal(tagModal, item)">
-                          <div class="badge badge-secondary m-1" style="cursor: pointer;" *ngFor="let tag of item.tags">
-                            {{tag}}
-                          </div>
+                        <div class="badge badge-secondary m-1" style="cursor: pointer;" *ngFor="let tag of item.tags">
+                          {{tag}}
+                        </div>
                         <i class="fa fa-pencil-alt ml-2"></i>
                       </span>
                     </td>
@@ -294,9 +308,8 @@
     </button>
   </div>
   <div class="modal-body tagsModal">
-    <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal"
-      (onAdd)="onItemAdd($event, 'itemTags')" placeholder="{{t('Add Tag')}}"
-      secondaryPlaceholder="{{t('Add Tag')}}"></tag-input>
+    <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal" (onAdd)="onItemAdd($event, 'itemTags')"
+      placeholder="{{t('Add Tag')}}" secondaryPlaceholder="{{t('Add Tag')}}"></tag-input>
     <div class="text-right">
       <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
       <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>

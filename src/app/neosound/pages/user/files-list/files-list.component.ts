@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  OnDestroy
+} from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { DatepickerOptions } from "ng2-datepicker";
 import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
@@ -100,7 +106,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private dataService: DataService,
-    private modalService: BsModalService,
+    private modalService: BsModalService
   ) {}
 
   ngOnInit() {
@@ -333,7 +339,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     const c = b + 0;
 
     // Return a CSS HSL string
-    return 'hsl(' + c + ', 100%, 50%)';
+    return "hsl(" + c + ", 100%, 50%)";
   }
 
   getOpacityLevelPause(val) {
@@ -376,8 +382,14 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       case "emotion":
         sortName = "Emotion";
         break;
-      case "avgpause":
-        sortName = "AvgPause";
+      case "batchId":
+        sortName = "BatchId";
+        break;
+      case "stopWords":
+        sortName = "Stopwords";
+        break;
+      case "compliance":
+        sortName = "Compliance";
         break;
 
       default:
@@ -530,7 +542,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       keywordsOnly: this.keywordsOnly,
       tagsOnly: this.tagsOnly,
       missingOnly: this.missingOnly,
-      favoriteOnly: this.favoriteOnly,
+      favoriteOnly: this.favoriteOnly
     };
     if (this.keywordsContain && this.keywordsContain.length) {
       this.filter["keywordsContain"] = this.keywordsContain
@@ -590,8 +602,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getMisswords(item) {
     return item.misswords && item.misswords.length
-    ? item.misswords.join(", ")
-    : "";
+      ? item.misswords.join(", ")
+      : "";
   }
 
   getStopwords(item) {
@@ -652,13 +664,16 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   showModal(ref, item) {
     this.editedFileItem = item;
-    this.itemTags = item.tags && item.tags.map(v => ({
-      value: v,
-      display: v
-    })) || [];
+    this.itemTags =
+      (item.tags &&
+        item.tags.map(v => ({
+          value: v,
+          display: v
+        }))) ||
+      [];
     this.hideModal();
     this.modalRef = this.modalService.show(ref, {
-      class: 'modal-xl',
+      class: "modal-xl"
     });
   }
 
@@ -671,52 +686,50 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   saveTags() {
     const tags = this.itemTags.map(v => v.value);
     const params = {
-      'fileid': {
-        'batchid': this.editedFileItem.batchid,
-        'fileid': this.editedFileItem.fileid,
+      fileid: {
+        batchid: this.editedFileItem.batchid,
+        fileid: this.editedFileItem.fileid
       },
-      'fileinfo': {
-        'filename': this.editedFileItem.filename,
-        'comment': this.editedFileItem.comment || '',
-        'pin': this.editedFileItem.pin,
-        'tags': tags || [],
-      },
+      fileinfo: {
+        filename: this.editedFileItem.filename,
+        comment: this.editedFileItem.comment || "",
+        pin: this.editedFileItem.pin,
+        tags: tags || []
+      }
     };
-    this.filesService.updateFileInfo(params)
-      .subscribe(
-        res => {
-          this.refresh();
-        },
-        e => (this.errorMessage = e.error.message)
-      );
+    this.filesService.updateFileInfo(params).subscribe(
+      res => {
+        this.refresh();
+      },
+      e => (this.errorMessage = e.error.message)
+    );
     this.editedFileItem = null;
     this.hideModal();
   }
 
   markFavorite(item) {
     const params = {
-      'fileid': {
-        'batchid': item.batchid,
-        'fileid': item.fileid,
+      fileid: {
+        batchid: item.batchid,
+        fileid: item.fileid
       },
-      'fileinfo': {
-        'filename': item.filename,
-        'comment': item.comment || '',
-        'pin': `${!this.getBool(item.pin)}`,
-        'tags': item.tags || [],
-      },
+      fileinfo: {
+        filename: item.filename,
+        comment: item.comment || "",
+        pin: `${!this.getBool(item.pin)}`,
+        tags: item.tags || []
+      }
     };
-    this.filesService.updateFileInfo(params)
-      .subscribe(
-        res => {
-          this.refresh();
-        },
-        e => (this.errorMessage = e.error.message)
-      );
+    this.filesService.updateFileInfo(params).subscribe(
+      res => {
+        this.refresh();
+      },
+      e => (this.errorMessage = e.error.message)
+    );
   }
 
   getBool(v) {
-    return v === 'true';
+    return v === "true";
   }
 
   ngOnDestroy() {
