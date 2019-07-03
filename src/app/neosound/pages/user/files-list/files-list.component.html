@@ -242,11 +242,9 @@
                       <span *ngIf="!item.stopwords">-</span>
                     </td>
                     <td class="text-center">
-                      <div class="" style="cursor: pointer" *ngIf="item.misswordcount"
-                        [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}"
-                        tooltip="{{getMisswords(item)}}">
-                        {{item.compliancepercent}} <span
-                          *ngIf="item.compliancepercent !== undefined && item.compliancepercent !== null">%</span>
+                      <div class="" style="cursor: pointer"
+                        [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}">
+                        {{item.compliancepercent}}
                       </div>
                     </td>
                     <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
