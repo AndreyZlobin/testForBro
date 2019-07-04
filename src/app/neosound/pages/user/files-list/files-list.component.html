@@ -210,7 +210,11 @@
                         <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
                       </span>
                     </td>
-                    <td>{{ item.batchid}}</td>
+                    <td>
+                      <div class="text-wrap" tooltip="{{item.batchid}}" style="max-width: 150px;">
+                        {{ item.batchid}}
+                      </div>
+                    </td>
                     <td><a [routerLink]="getLink(item)" style="cursor: pointer;">
                         <div class="text-wrap" tooltip="{{item.filename}}">{{item.filename}}</div>
                       </a></td>

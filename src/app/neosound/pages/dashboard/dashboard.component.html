@@ -122,14 +122,14 @@
                 <li>Host: <strong>{{config.sFtpHost}}</strong></li>
                 <li>{{t('Username and password - your account credentials.')}}</li>
                 <li>
-                  {{t("Once connected, please go to folder ‘/files', and create or upload the separate sub-folders inside the folder ‘/files’,  per each agent, e.g. '/files/batch_agent_X’.")}}
+                  {{t("Once connected, please go to folder ‘/files', and create or upload the separate sub-folders inside the folder ‘/files’,  per each agent, e.g. '/files/’.")}}
                 </li>
                 <li>
-                  {{t("The recorded calls should be upload to an agent folder inside the folder ‘/files’, e.g. '/files/batch_agent_X’.")}}
-                  <p class="card-text" style="line-height: 2.0;">
-                    <strong>{{t('IMPORTANT')}}:</strong>
-                    {{t("the files uploaded to the root folder ‘/files’ folder will NOT be processed! So, please, make sure that the files are being uploaded inside sub-folder, e.g. '/files/batch_agent_X’. This is the only way to build statistics per agents.")}}
-                  </p>
+                  {{t("The recorded calls should be upload to an agent folder inside the folder ‘/files’, e.g. '/files/agent_name. ")}}
+                  <div class="card-text my-2" style="line-height: 2.0;">
+                    <h6>{{t('IMPORTANT')}}</h6>
+                    {{t("The files uploaded to the root folder ‘/files’ folder will NOT be processed! So, please, make sure that the files are being uploaded inside sub-folder, e.g. '/files/agent_name. This is the only way to build statistics per agents.")}}
+                  </div>
                 </li>
                 <li>{{t('The files will start processing soon after uploading.')}}</li>
                 <li>
@@ -137,9 +137,9 @@
                 </li>
               </ul>
               <h4 class="card-text" style="line-height: 2.0;">{{t('Audio format')}}</h4>
-              <ul>
-                <li>{{t('For best results, the audio source should be captured and transmitted using a lossless encoding (FLACor LINEAR16). The accuracy of the speech recognition can be reduced if lossy codecs are used to capture or transmit audio, particularly if background noise is present. Lossy codecs include MULAW, AMR, AMR_WB, OGG_OPUS, and SPEEX_WITH_HEADER_BYTE.')}}</li>
-              </ul>
+              <p class="card-text" style="line-height: 2.0;">
+                {{t('For best results, the audio source should be captured and transmitted using a lossless encoding (FLACor LINEAR16). The accuracy of the speech recognition can be reduced if lossy codecs are used to capture or transmit audio, particularly if background noise is present. Lossy codecs include MULAW, AMR, AMR_WB, OGG_OPUS, and SPEEX_WITH_HEADER_BYTE.')}}
+              </p>
             </div>
             <div *ngIf="isSpanish()">
               <!-- <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4> -->
