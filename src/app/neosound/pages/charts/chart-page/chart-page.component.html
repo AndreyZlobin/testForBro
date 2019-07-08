@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-12 col-lg-6">
+<div class="row" *ngIf="!isLoading; else spinner">
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
         Sankey diagram
@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <div class="col-12 col-lg-6">
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
           Количество разного типа (total, emo, silent) звонков по дням или периодам, 3 кривые
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div class="col-12 col-lg-6">
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
           Calls distributed by days and time
@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <div class="col-12 col-lg-6">
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
           Total minutes per day
@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <div class="col-12 col-lg-6">
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
           Totals by queries, карточка pie-chart
@@ -73,7 +73,7 @@
     </div>
   </div>
 
-  <div class="col-12 col-lg-6">
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
           Total minutes
@@ -91,7 +91,7 @@
     </div>
   </div>
 
-  <div class="col-12 col-lg-6">
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
           Minutes = calm speech + emo speech + silence  - Разбивка minutes по каждому батчу
@@ -106,3 +106,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #spinner>
+  <div class="load-container load1">
+    <div class="loader">{{ t("Loading...") }}</div>
+  </div>
+</ng-template>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { energy } from './mocks';
+import { FilesService } from '../../../services/files.service';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'ngx-chart-page',
@@ -22,9 +24,41 @@ export class ChartPageComponent implements OnInit {
   option7: any = {};
   echartsInstance7;
 
-  constructor() { }
+  isLoading = true;
+  fileStatLoaded = false;
+  minutesStatLoaded = false;
+  apiStatLoaded = false;
+
+  fileStat: any = {};
+  minutesStat: any = {};
+  apiStat: any = {};
+
+  constructor(private filesService: FilesService) { }
 
   ngOnInit() {
+    this.filesService.getFileStats({}).subscribe(data => {
+        this.fileStatLoaded = true;
+        this.fileStat = data;
+        this.initCharts();
+    });
+    this.filesService.getMinutesStats({}).subscribe(data => {
+        this.minutesStatLoaded = true;
+        this.minutesStat = data;
+        this.initCharts();
+    });
+    this.filesService.getApiCallsStats({}).subscribe(data => {
+        this.apiStatLoaded = true;
+        this.apiStat = data;
+        this.initCharts();
+    });
+    this.initCharts();
+  }
+
+  initCharts() {
+    if (!this.fileStatLoaded || !this.minutesStatLoaded || !this.apiStatLoaded) {
+        return;
+    }
+    this.isLoading = false;
     this.setSankey();
     this.setLine1();
     this.setWeekChart();
@@ -32,6 +66,10 @@ export class ChartPageComponent implements OnInit {
     this.setTotalQueries();
     this.setTotalMinutes();
     this.setMinutesCalm();
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 
   setSankey() {
@@ -72,31 +110,41 @@ export class ChartPageComponent implements OnInit {
 
 
   setLine1() {
+    const series = [];
+    this.fileStat.totals && this.fileStat.totals.countdata && this.fileStat.totals.countdata.series.map(v => {
+        series.push({
+            data: v,
+            type: 'line',
+            smooth: true,
+        });
+    });
     this.option2 = {
       xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.fileStat.totals && this.fileStat.totals.dates || [],
+          // ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       },
       yAxis: {
           type: 'value'
       },
-      series: [
-        {
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line',
-          smooth: true
-        },
-        {
-          data: [120, 232, 301, 434, 590, 1030, 1320],
-          type: 'line',
-          smooth: true
-        },
-        {
-          data: [20, 1332, 300, 400, 500, 900, 500],
-          type: 'line',
-          smooth: true
-        }
-      ]
+      series: series,
+    //   [
+    //     {
+    //       data: [820, 932, 901, 934, 1290, 1330, 1320],
+    //       type: 'line',
+    //       smooth: true
+    //     },
+    //     {
+    //       data: [120, 232, 301, 434, 590, 1030, 1320],
+    //       type: 'line',
+    //       smooth: true
+    //     },
+    //     {
+    //       data: [20, 1332, 300, 400, 500, 900, 500],
+    //       type: 'line',
+    //       smooth: true
+    //     }
+    //   ]
     };
   }
 
@@ -161,9 +209,24 @@ export class ChartPageComponent implements OnInit {
   }
 
   setMinutesPerDay() {
+    const series = [];
+    this.minutesStat.totals && this.minutesStat.totals.durdata && this.minutesStat.totals.durdata.series.map(v => {
+        series.push({
+            name:'Name',
+            type:'line',
+            stack: 'stack',
+            areaStyle: {},
+            data: v,
+        });
+    });
+    this.minutesStat.totals
+        && this.minutesStat.totals.legenddata.map((v,i) => {
+        series[i].name = v;
+    });
+
     this.option4 = {
       title: {
-          text: '堆叠区域图'
+          text: this.t('Total minutes per day'),
       },
       tooltip : {
           trigger: 'axis',
@@ -175,7 +238,7 @@ export class ChartPageComponent implements OnInit {
           }
       },
       legend: {
-          data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+          data: this.minutesStat.totals.legenddata, // ['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
       },
       toolbox: {
           feature: {
@@ -192,7 +255,7 @@ export class ChartPageComponent implements OnInit {
           {
               type : 'category',
               boundaryGap : false,
-              data : ['周一','周二','周三','周四','周五','周六','周日']
+              data : this.minutesStat.totals.dates, // ['周一','周二','周三','周四','周五','周六','周日']
           }
       ],
       yAxis : [
@@ -200,49 +263,50 @@ export class ChartPageComponent implements OnInit {
               type : 'value'
           }
       ],
-      series : [
-          {
-              name:'邮件营销',
-              type:'line',
-              stack: '总量',
-              areaStyle: {},
-              data:[120, 132, 101, 134, 90, 230, 210]
-          },
-          {
-              name:'联盟广告',
-              type:'line',
-              stack: '总量',
-              areaStyle: {},
-              data:[220, 182, 191, 234, 290, 330, 310]
-          },
-          {
-              name:'视频广告',
-              type:'line',
-              stack: '总量',
-              areaStyle: {},
-              data:[150, 232, 201, 154, 190, 330, 410]
-          },
-          {
-              name:'直接访问',
-              type:'line',
-              stack: '总量',
-              areaStyle: {normal: {}},
-              data:[320, 332, 301, 334, 390, 330, 320]
-          },
-          {
-              name:'搜索引擎',
-              type:'line',
-              stack: '总量',
-              label: {
-                  normal: {
-                      show: true,
-                      position: 'top'
-                  }
-              },
-              areaStyle: {normal: {}},
-              data:[820, 932, 901, 934, 1290, 1330, 1320]
-          }
-      ]
+      series : series,
+    //   [
+    //       {
+    //           name:'邮件营销',
+    //           type:'line',
+    //           stack: '总量',
+    //           areaStyle: {},
+    //           data:[120, 132, 101, 134, 90, 230, 210]
+    //       },
+    //       {
+    //           name:'联盟广告',
+    //           type:'line',
+    //           stack: '总量',
+    //           areaStyle: {},
+    //           data:[220, 182, 191, 234, 290, 330, 310]
+    //       },
+    //       {
+    //           name:'视频广告',
+    //           type:'line',
+    //           stack: '总量',
+    //           areaStyle: {},
+    //           data:[150, 232, 201, 154, 190, 330, 410]
+    //       },
+    //       {
+    //           name:'直接访问',
+    //           type:'line',
+    //           stack: '总量',
+    //           areaStyle: {normal: {}},
+    //           data:[320, 332, 301, 334, 390, 330, 320]
+    //       },
+    //       {
+    //           name:'搜索引擎',
+    //           type:'line',
+    //           stack: '总量',
+    //           label: {
+    //               normal: {
+    //                   show: true,
+    //                   position: 'top'
+    //               }
+    //           },
+    //           areaStyle: {normal: {}},
+    //           data:[820, 932, 901, 934, 1290, 1330, 1320]
+    //       }
+    //   ]
     };
   }
 
@@ -252,11 +316,11 @@ export class ChartPageComponent implements OnInit {
 
   setTotalQueries() {
     this.option5 = {
-          title : {
-              text: '南丁格尔玫瑰图',
-              subtext: '纯属虚构',
-              x:'center'
-          },
+        //   title : {
+        //       text: '南丁格尔玫瑰图',
+        //       subtext: '纯属虚构',
+        //       x:'center'
+        //   },
           tooltip : {
               trigger: 'item',
               formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -264,25 +328,25 @@ export class ChartPageComponent implements OnInit {
           legend: {
               x : 'center',
               y : 'bottom',
-              data:['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8']
+              data: this.apiStat.data.legend,
           },
-          toolbox: {
-              show : true,
-              feature : {
-                  mark : {show: true},
-                  dataView : {show: true, readOnly: false},
-                  magicType : {
-                      show: true,
-                      type: ['pie', 'funnel']
-                  },
-                  restore : {show: true},
-                  saveAsImage : {show: true}
-              }
-          },
+        //   toolbox: {
+        //       show : true,
+        //       feature : {
+        //           mark : {show: true},
+        //           dataView : {show: true, readOnly: false},
+        //           magicType : {
+        //               show: true,
+        //               type: ['pie', 'funnel']
+        //           },
+        //           restore : {show: true},
+        //           saveAsImage : {show: true}
+        //       }
+        //   },
           calculable : true,
           series : [
               {
-                  name:'半径模式',
+                  name: this.t('API Calls'),
                   type:'pie',
                   radius : [20, 110],
                   center : ['25%', '50%'],
@@ -303,34 +367,35 @@ export class ChartPageComponent implements OnInit {
                           show: true
                       }
                   },
-                  data:[
-                      {value:10, name:'rose1'},
-                      {value:5, name:'rose2'},
-                      {value:15, name:'rose3'},
-                      {value:25, name:'rose4'},
-                      {value:20, name:'rose5'},
-                      {value:35, name:'rose6'},
-                      {value:30, name:'rose7'},
-                      {value:40, name:'rose8'}
-                  ]
+                  data: this.apiStat.data.series,
+                //   [
+                //       {value:10, name:'rose1'},
+                //       {value:5, name:'rose2'},
+                //       {value:15, name:'rose3'},
+                //       {value:25, name:'rose4'},
+                //       {value:20, name:'rose5'},
+                //       {value:35, name:'rose6'},
+                //       {value:30, name:'rose7'},
+                //       {value:40, name:'rose8'}
+                //   ]
               },
-              {
-                  name:'面积模式',
-                  type:'pie',
-                  radius : [30, 110],
-                  center : ['75%', '50%'],
-                  roseType : 'area',
-                  data:[
-                      {value:10, name:'rose1'},
-                      {value:5, name:'rose2'},
-                      {value:15, name:'rose3'},
-                      {value:25, name:'rose4'},
-                      {value:20, name:'rose5'},
-                      {value:35, name:'rose6'},
-                      {value:30, name:'rose7'},
-                      {value:40, name:'rose8'}
-                  ]
-              }
+            //   {
+            //       name:'面积模式',
+            //       type:'pie',
+            //       radius : [30, 110],
+            //       center : ['75%', '50%'],
+            //       roseType : 'area',
+            //       data:[
+            //           {value:10, name:'rose1'},
+            //           {value:5, name:'rose2'},
+            //           {value:15, name:'rose3'},
+            //           {value:25, name:'rose4'},
+            //           {value:20, name:'rose5'},
+            //           {value:35, name:'rose6'},
+            //           {value:30, name:'rose7'},
+            //           {value:40, name:'rose8'}
+            //       ]
+            //   }
           ]
       };
   }
@@ -340,85 +405,106 @@ export class ChartPageComponent implements OnInit {
   }
 
   setTotalMinutes() {
-    var keyValue = 60;
-    var name = "中";
-    if (keyValue < 50) {
-        name = "低";
-    } else if (keyValue > 80) {
-        name = "高";
-    }
-    var serie = [600, -200, 300, 500];
-    var tital = '贡献度指数: ' + serie[0];
-    var serie1 = [6, 2, 8];
-    var serie2 = [0.3, 0.5, 0.2];
-    var colors = ['#5793f3', '#d48265', '#91c7ae'];
-    //var colors = ['orange', '#d14a61', '#1E90FF'];
-    var legend = ['分值', '权重'];
-    // 基于准备好的dom，初始化echarts实例
+    const series = [
+        {
+            name: this.minutesStat.totals && this.minutesStat.totals.legenddata[0],
+            type: 'bar',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            stack: '效益',
+            barCategoryGap: 0,
+            barGap: 0,
+            barWidth: 50,
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight',
+                },
+            },
+            data: [this.minutesStat.totals && this.minutesStat.totals.angerdur],
+        },
+        {
+            name: this.minutesStat.totals && this.minutesStat.totals.legenddata[1],
+            type: 'bar',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            stack: '效益',
+            barCategoryGap: 0,
+            barGap: 0,
+            barWidth: 50,
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight',
+                },
+            },
+            data: [this.minutesStat.totals && this.minutesStat.totals.calmdur],
+        },
+        {
+            name: this.minutesStat.totals && this.minutesStat.totals.legenddata[2],
+            type: 'bar',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            stack: '效益',
+            barCategoryGap: 0,
+            barGap: 0,
+            barWidth: 50,
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight',
+                },
+            },
+            data: [this.minutesStat.totals && this.minutesStat.totals.silentdur],
+        }
+];
+
+    // var keyValue = 60;
+    // var name = "中";
+    // if (keyValue < 50) {
+    //     name = "低";
+    // } else if (keyValue > 80) {
+    //     name = "高";
+    // }
+    // var serie = [600, -200, 300, 500];
+    // var tital = '贡献度指数: ' + serie[0];
+    // var serie1 = [6, 2, 8];
+    // var serie2 = [0.3, 0.5, 0.2];
+    // var colors = ['#5793f3', '#d48265', '#91c7ae'];
+    // var legend = ['分值', '权重'];
     this.option6 = null;
     this.option6 = {
         backgroundColor: '#ffffff',
         title: [{
-            text: tital,
+            text: this.t('Total minutes'),
             left: '50%',
             top: '5%',
             textAlign: 'center'
-        }, {
-            left: '28%',
-            top: '51%',
-            textAlign: 'center'
-        }, {
-            text: '',
-            left: '78%',
-            top: '51%',
-            textAlign: 'center'
-        }],
-        toolbox: {
-            feature: {
-                dataView: {
-                    show: true,
-                    optionToContent: (opt) => {
-                        var table = '';
-                        table += '<table style="width:100%;text-align:center"><tbody>';
-                        table += '<tr><td>贡献度指数</td><td>存款效益</td><td>贷款效益</td><td>贷款效益</td></tr>';
-                        table += '<tr>' + '<td>' + serie[0] + '</td>' + '<td>' + serie[1] + '</td>' + '<td>' + serie[2] + '</td>' + '<td>' + serie[3] + '</td>' + '</tr>';
-                        table += '</tbody></table>';
-                        table += '<hr/>';
-                        table += '<table style="width:100%;text-align:center"><tbody>';
-                        table += '<tr><td style="text-align:left;">忠诚度指数:' + keyValue + '</td></tr>';
-                        table += '</tbody></table>';
-                        table += '<hr/>';
-                        table += '<table style="width:100%;text-align:center"><tbody>';
-                        table += '<tr><td>忠诚度指数明细</td><td>存款</td><td>理财</td><td>基金</td></tr>';
-                        table += '<tr>' + '<td>分值</td>' + '<td>' + serie1[0] + '</td>' + '<td>' + serie1[1] + '</td>' + '<td>' + serie1[2] + '</td>' + '</tr>';
-                        table += '<tr>' + '<td>权重</td>' + '<td>' + serie2[1] + '</td>' + '<td>' + serie2[1] + '</td>' + '<td>' + serie2[2] + '</td>' + '</tr>';
-                        table += '</tbody></table>';
-                        return table;
-                    },
-                    readOnly: true
-                },
-                restore: {
-                    show: true
-                },
-                saveAsImage: {
-                    show: true
-                }
-            }
         },
-        /* tooltip: {
-        trigger: 'axis'
-        } ,*/
+        // , {
+        //     left: '28%',
+        //     top: '51%',
+        //     textAlign: 'center'
+        // }, {
+        //     text: '',
+        //     left: '78%',
+        //     top: '51%',
+        //     textAlign: 'center'
+        // }
+        ],
         tooltip: {
             trigger: 'axis',
-            axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+            axisPointer: {
+                type: 'shadow'
             },
-            fomatter: (obj) => {
-                return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' + tital + '</div>' +
-                    '<span>' + '存款效益' + '</span>' +
-                    ' : ' + serie[1] + '<br/>' +
-                    '<span>' + '中间业务效益' + '</span>' + ' : ' + serie[2] + '<span>' +
-                    '贷款效益' + '</span>' + ' : ' + serie[3]
+            fomatter: function(obj) {
+                console.log(obj);
+                return '';
+                // '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' + tital + '</div>' +
+                //     '<span>' + '' + '</span>' +
+                //     ' : ' + serie[1] + '<br/>' +
+                //     '<span>' + '' + '</span>' + ' : ' + serie[2] + '<span>' +
+                //     '' + '</span>' + ' : ' + serie[3]
             }
         },
         legend: {
@@ -426,7 +512,7 @@ export class ChartPageComponent implements OnInit {
             top: '35%',
             pageButtonGap: 10,
             pageButtonPosition: 'end',
-            data: ['存款效益', '中间业务效益', '贷款效益']
+            data: this.minutesStat.totals.legenddata,
         },
         grid: [{
             show: false,
@@ -435,34 +521,7 @@ export class ChartPageComponent implements OnInit {
             containLabel: true,
             width: '95%',
             height: '30%'
-        }, {
-            show: false,
-            left: '3%',
-            top: '48%',
-            containLabel: true,
-            width: '45%',
-            height: '50%'
-        }, {
-            show: false,
-            left: '53%',
-            top: '48%',
-            containLabel: true,
-            width: '42%',
-            height: '45%'
         }],
-        /* legend : [ {
-        type : 'plain',
-        top : '35%',
-        data : [ '存款效益', '中间业务效益', '贷款效益' ]
-        }, {
-        }, {
-        type : 'scroll',
-        top : '5%',
-        pageButtonGap : 10,
-        pageButtonPosition : 'end',
-        data : [ '暂降频次3', '暂降频次4' ],
-        x : 'right',
-        } ], */
         xAxis: [{
             gridIndex: 0,
             type: 'value',
@@ -470,27 +529,6 @@ export class ChartPageComponent implements OnInit {
             splitLine: {
                 show: false, //让X轴数据不显示
             }
-        }, {
-            gridIndex: 1,
-            show: false
-        }, {
-            gridIndex: 2,
-            type: 'category',
-            axisLabel: {
-                // interval:0,//横轴信息全部显示
-                rotate: -30 //-30度角倾斜显示
-            },
-            name: '忠诚度指数明细',
-            nameLocation: 'center',
-            nameGap: '30',
-            nameTextStyle: {
-                fontSize: 12
-            },
-            axisTick: {
-                // alignWithLabel: true
-            },
-            // boundaryGap: false,
-            data: ['存款', '理财', '基金']
         }],
         yAxis: [{
             gridIndex: 0,
@@ -507,192 +545,58 @@ export class ChartPageComponent implements OnInit {
             axisLine: {
                 show: false, //隐藏Y轴线段
             },
-            data: [tital]
-        }, {
-            gridIndex: 1,
-            position: 'left',
-            show: false
-        }, {
-            gridIndex: 2,
-            type: 'value',
-            name: '分值',
-            position: 'left',
-            axisLine: {
-                lineStyle: {
-                    color: colors[1]
-                }
-            },
-            axisLabel: {
-                formatter: '{value} '
-            },
-            axisTick: {
-                alignWithLabel: true
-            }
-        }, {
-            gridIndex: 2,
-            type: 'value',
-            name: '权重',
-            position: 'right',
-            axisLine: {
-                lineStyle: {
-                    color: colors[2]
-                }
-            },
-            axisLabel: {
-                formatter: '{value} '
-            },
-            axisTick: {
-                alignWithLabel: true
-            }
+            data: [this.t('Total minutes')]
         }],
-        series: [{
-            name: '存款效益',
-            type: 'bar',
-            xAxisIndex: 0,
-            yAxisIndex: 0,
-            stack: '效益',
-            barCategoryGap: 0,
-            barGap: 0,
-            barWidth: 50,
-            label: {
-                normal: {
-                    show: true,
-                    position: 'insideRight'
-                }
-            },
-            data: [serie[1]]
-        }, {
-            name: '中间业务效益',
-            type: 'bar',
-            xAxisIndex: 0,
-            yAxisIndex: 0,
-            stack: '效益',
-            barCategoryGap: 0,
-            barGap: 0,
-            barWidth: 50,
-            label: {
-                normal: {
-                    show: true,
-                    position: 'insideRight'
-                }
-            },
-            data: [serie[2]]
-        }, {
-            name: '贷款效益',
-            type: 'bar',
-            xAxisIndex: 0,
-            yAxisIndex: 0,
-            stack: '效益',
-            barCategoryGap: 0,
-            barGap: 0,
-            barWidth: 50,
-            label: {
-                normal: {
-                    show: true,
-                    position: 'insideRight'
-                }
-            },
-            data: [serie[3]]
-        }, {
-            name: '忠诚度指数',
-            xAxisIndex: 1,
-            yAxisIndex: 1,
-            type: 'gauge',
-            radius: '50%',
-            center: ['27%', '73%'],
-            min: 0,
-            max: 100,
-            axisLine: {
-                show: true,
-                lineStyle: {
-                    width: 30,
-                    shadowBlur: 0,
-                    color: [
-                        [0.3, '#C23531'],
-                        [0.6, '#63869e'],
-                        [0.8, '#bda29a'],
-                        [0.9, '#d48265'],
-                        [1, '#91c7ae']
-                    ]
-                }
-            },
-            axisLabel: {
-                formatter: (e) => {
-                    switch (e + "") {
-                        case "10":
-                            return "低";
-                        case "50":
-                            return "一般";
-                        case "70":
-                            return "良好";
-                        case "90":
-                            return "高";
-                        case "100":
-                            return "极好";
-                        default:
-                            return e;
-                    }
-                },
-                textStyle: {
-                    fontSize: 12,
-                    fontWeight: ""
-                }
-            },
-            detail: {
-                formatter: '{value}'
-            },
-            title: {
-                fontSize: 12
-            },
-            data: [{
-                value: keyValue,
-                name: '忠诚度指数'
-            }]
-        }, {
-            name: '分值',
-            type: 'bar',
-            smooth: true,
-            barWidth: 25,
-            xAxisIndex: 2,
-            yAxisIndex: 2,
-            symbolSize: 8, //拐点大小
-            label: {
-                normal: {
-                    show: true,
-                    position: 'top',
-                    color: colors[1],
-                }
-            },
-            lineStyle: {
-                normal: {
-                    width: 4,
-                    color: colors[1]
-                }
-            },
-            data: serie1
-        }, {
-            name: '权重',
-            type: 'bar',
-            smooth: true,
-            barWidth: 25,
-            xAxisIndex: 2,
-            yAxisIndex: 3,
-            symbolSize: 8, //拐点大小
-            label: {
-                normal: {
-                    show: true,
-                    position: 'top',
-                    color: colors[2],
-                }
-            },
-            lineStyle: {
-                normal: {
-                    width: 4,
-                    color: colors[2]
-                }
-            },
-            data: serie2
-        }]
+        series: series,
+        // [{
+        //     name: '存款效益',
+        //     type: 'bar',
+        //     xAxisIndex: 0,
+        //     yAxisIndex: 0,
+        //     stack: '效益',
+        //     barCategoryGap: 0,
+        //     barGap: 0,
+        //     barWidth: 50,
+        //     label: {
+        //         normal: {
+        //             show: true,
+        //             position: 'insideRight'
+        //         }
+        //     },
+        //     data: [serie[1]]
+        // }, {
+        //     name: '中间业务效益',
+        //     type: 'bar',
+        //     xAxisIndex: 0,
+        //     yAxisIndex: 0,
+        //     stack: '效益',
+        //     barCategoryGap: 0,
+        //     barGap: 0,
+        //     barWidth: 50,
+        //     label: {
+        //         normal: {
+        //             show: true,
+        //             position: 'insideRight'
+        //         }
+        //     },
+        //     data: [serie[2]]
+        // }, {
+        //     name: '贷款效益',
+        //     type: 'bar',
+        //     xAxisIndex: 0,
+        //     yAxisIndex: 0,
+        //     stack: '效益',
+        //     barCategoryGap: 0,
+        //     barGap: 0,
+        //     barWidth: 50,
+        //     label: {
+        //         normal: {
+        //             show: true,
+        //             position: 'insideRight'
+        //         }
+        //     },
+        //     data: [serie[3]]
+        // }]
     };
   }
 
