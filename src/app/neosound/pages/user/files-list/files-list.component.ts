@@ -12,6 +12,7 @@ import { LanguageService } from "../../../services/language.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription, Observable } from "rxjs";
 import { DataService } from "../../../shared";
+import { debug } from "util";
 
 @Component({
   selector: "app-files-list",
@@ -115,14 +116,15 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     // this.resetFilter();
     const key = this.filesService.getKeyWord();
-    if (key) {
+    if (key && key !== '') {
       this.keywordsContain = [{ value: key, display: key }];
       this.filterIt();
     }
     this.filter = this.filesService.getFilter();
+    this.setFilterOptions();
     this.sortBy = this.filter.sortby;
     this.sort = this.filter.sortorder;
-    this.getPage(0, this.filter);
+    // this.getPage((this.filter.pagen - 1) || 0, this.filter);
 
     // const els = document.getElementsByClassName('scrollable-container');
     // const el = els[0];
@@ -139,6 +141,30 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     this.filterIt();
   }
+
+  setFilterOptions() {
+    this.sortBy = this.filter.sortby;
+    this.sort = this.filter.sortorder === "desc" ? "up" : "down";
+    this.datefrom = this.filter.datetimefrom;
+    this.dateto = this.filter.datetimeto;
+    this.angerfrom = this.filter.angervolfrom;
+    this.angerto = this.filter.angervolto;
+    this.pausefrom = this.filter.pausefrom;
+    this.pauseto = this.filter.pauseto;
+    this.batchid = this.filter.batchid;
+    this.filename = this.filter.filename;
+    this.callfrom = this.filter.minutesfrom;
+    this.callto = this.filter.minutesto;
+    this.keywordsOnly = this.filter.keywordsOnly;
+    this.tagsOnly = this.filter.tagsOnly;
+    this.missingOnly = this.filter.missingOnly;
+    this.favoriteOnly = this.filter.favoriteOnly;
+    this.keywordsContain = !this.keywordsContain.length ? this.filter["keywordsContain"] && this.filter["keywordsContain"].split(',').map(v => ({value: v, display: v})) || [] : this.keywordsContain;
+    this.keywordsNotContain = this.filter["keywordsNotContain"] && this.filter["keywordsNotContain"].split(',').map(v => ({value: v, display: v})) || [];
+    this.tagsContain = this.filter["tagsContain"] && this.filter["tagsContain"].split(',').map(v => ({value: v, display: v})) || [];
+    this.paginationNum = this.filter.itemsn || 100;
+  }
+
   getPage(page = 0, parameters = this.filter) {
     // this.isLoading = true;
     const params = (this.filter = {
@@ -581,7 +607,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
           this.filter[key] === null) &&
         delete this.filter[key]
     );
-    this.getPage(0, this.filter);
+    Object.keys(this.filter).map(key => (this.filter[key] === undefined || this.filter[key] === "undefined") && delete this.filter[key]);
+    this.filesService.setFilter(this.filter);
+    this.getPage((this.filter.pagen - 1) || 0, this.filter);
   }
 
   t(v) {
