@@ -17,6 +17,8 @@ import { LanguageService } from "../../../services/language.service";
 import { ToastrService } from "ngx-toastr";
 import { DataService } from "../../../shared";
 
+import CanvasDrawer from "./player/canvasdrawer";
+
 @Component({
   selector: "ngx-player-details",
   templateUrl: "./player-details.component.html",
@@ -139,80 +141,10 @@ export class PlayerDetailsComponent
       waveColor: "#3399CC",
       progressColor: "#1CACE3",
       scrollParent: true,
-      plugins: [
-        RegionsPlugin.create({
-          // plugin options ...
-        }),
-        TimelinePlugin.create({
-          container: "#timelineContainer",
-          timeInterval: pxPerSec => {
-            let retval = 1;
-            if (pxPerSec >= 25 * 100) {
-              retval = 0.01;
-            } else if (pxPerSec >= 25 * 40) {
-              retval = 0.025;
-            } else if (pxPerSec >= 25 * 10) {
-              retval = 0.1;
-            } else if (pxPerSec >= 25 * 4) {
-              retval = 0.25;
-            } else if (pxPerSec >= 25) {
-              retval = 1;
-            } else if (pxPerSec * 5 >= 25) {
-              retval = 5;
-            } else if (pxPerSec * 15 >= 25) {
-              retval = 15;
-            } else {
-              retval = Math.ceil(0.5 / pxPerSec) * 60;
-            }
-            return retval;
-          },
-          primaryLabelInterval: pxPerSec => {
-            let retval = 1;
-            if (pxPerSec >= 25 * 100) {
-              retval = 15;
-            } else if (pxPerSec >= 25 * 40) {
-              retval = 10;
-            } else if (pxPerSec >= 25 * 10) {
-              retval = 15;
-            } else if (pxPerSec >= 25 * 4) {
-              retval = 15;
-            } else if (pxPerSec >= 25) {
-              retval = 15;
-            } else if (pxPerSec * 5 >= 25) {
-              retval = 15;
-            } else if (pxPerSec * 15 >= 25) {
-              retval = 18;
-            } else {
-              retval = Math.ceil(0.5 / pxPerSec) * 60;
-            }
-            return retval;
-          },
-          secondaryLabelInterval: pxPerSec => {
-            return Math.floor(10 / this.timeInterval(pxPerSec));
-          },
-          formatTimeCallback: (seconds, pxPerSec) => {
-            seconds = Number(seconds);
-            const minutes = Math.floor(seconds / 60);
-            seconds = seconds % 60;
-            let secondsStr = Math.round(seconds).toString();
-            if (pxPerSec >= 25 * 10) {
-              secondsStr = seconds.toFixed(0);
-            } else if (pxPerSec >= 25 * 1) {
-              secondsStr = seconds.toFixed(0);
-            }
-            if (minutes > 0) {
-              if (seconds < 10) {
-                secondsStr = "0" + secondsStr;
-              }
-              if (minutes < 10) {
-                return `0${minutes}:${secondsStr}`;
-              }
-              return `${minutes}:${secondsStr}`;
-            }
-            return "00:" + secondsStr;
-          }
-        })
-      ]
+      splitChannels: true,
+      height: 60,
+      renderer: CanvasDrawer,
+      plugins: [],
     });
     this.loadAudio();
     this.wavesurfer.on("ready", () => {
@@ -349,7 +281,6 @@ export class PlayerDetailsComponent
   setRegions() {
     const inputData = this.emotionsSounds ? this.emotions.concat(this.emotionsSounds) : this.emotions;
     if (!this.wavesurferReady || !this.emotions) return;
-    this.wavesurfer.clearRegions();
     const data = inputData || this.emotions;
     for (let index = 0; index < data.length; index++) {
       const element = data[index];
