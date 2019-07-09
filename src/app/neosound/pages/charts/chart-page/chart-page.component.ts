@@ -107,7 +107,8 @@ export class ChartPageComponent implements OnInit {
 
 
   setLine1() {
-    const series = this.fileStat.totals && this.fileStat.totals.countdata && this.fileStat.totals.countdata.series || [];
+    const series = this.fileStat.totals && this.fileStat.totals.countdata
+        && this.fileStat.totals.countdata.series || [];
     const legenddata = this.fileStat.totals && this.fileStat.totals.legenddata || [];
     // this.fileStat.totals && this.fileStat.totals.countdata && this.fileStat.totals.countdata.series.map(v => {
     //     series.push({
@@ -127,7 +128,7 @@ export class ChartPageComponent implements OnInit {
         }
       },
       grid: {
-        left: false,
+        left: '2%',
         right: '2%',
         bottom: false,
         containLabel: true
@@ -140,7 +141,16 @@ export class ChartPageComponent implements OnInit {
           data: this.fileStat.totals && this.fileStat.totals.dates || [],
       },
       yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          }
       },
       series: [
         {
@@ -235,22 +245,25 @@ export class ChartPageComponent implements OnInit {
     const series = [];
     this.minutesStat.totals && this.minutesStat.totals.durdata && this.minutesStat.totals.durdata.series.map(v => {
         series.push({
-            name:'Name',
-            type:'line',
+            name: 'Name',
+            type: 'line',
             stack: 'stack',
             areaStyle: {},
             data: v,
+            label: {
+              normal: {
+                show: true,
+                position: 'top'
+              }
+            }
         });
     });
     this.minutesStat.totals
-        && this.minutesStat.totals.legenddata.map((v,i) => {
+        && this.minutesStat.totals.legenddata.map((v, i) => {
         series[i].name = v;
     });
 
     this.option4 = {
-      title: {
-          text: this.t('Total minutes per day'),
-      },
       tooltip : {
           trigger: 'axis',
           axisPointer: {
@@ -261,75 +274,36 @@ export class ChartPageComponent implements OnInit {
           }
       },
       legend: {
-          data: this.minutesStat.totals.legenddata, // ['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
-      },
-      toolbox: {
-          feature: {
-              saveAsImage: {}
-          }
+          data: this.minutesStat.totals.legenddata
       },
       grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '2%',
+          right: '2%',
+          bottom: false,
           containLabel: true
       },
       xAxis : [
           {
               type : 'category',
-              boundaryGap : false,
-              data : this.minutesStat.totals.dates, // ['周一','周二','周三','周四','周五','周六','周日']
+              boundaryGap : true,
+              data : this.minutesStat.totals.dates
           }
       ],
       yAxis : [
-          {
-              type : 'value'
+        {
+          type : 'value',
+          axisLabel: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
           }
+        }
       ],
-      series : series,
-    //   [
-    //       {
-    //           name:'邮件营销',
-    //           type:'line',
-    //           stack: '总量',
-    //           areaStyle: {},
-    //           data:[120, 132, 101, 134, 90, 230, 210]
-    //       },
-    //       {
-    //           name:'联盟广告',
-    //           type:'line',
-    //           stack: '总量',
-    //           areaStyle: {},
-    //           data:[220, 182, 191, 234, 290, 330, 310]
-    //       },
-    //       {
-    //           name:'视频广告',
-    //           type:'line',
-    //           stack: '总量',
-    //           areaStyle: {},
-    //           data:[150, 232, 201, 154, 190, 330, 410]
-    //       },
-    //       {
-    //           name:'直接访问',
-    //           type:'line',
-    //           stack: '总量',
-    //           areaStyle: {normal: {}},
-    //           data:[320, 332, 301, 334, 390, 330, 320]
-    //       },
-    //       {
-    //           name:'搜索引擎',
-    //           type:'line',
-    //           stack: '总量',
-    //           label: {
-    //               normal: {
-    //                   show: true,
-    //                   position: 'top'
-    //               }
-    //           },
-    //           areaStyle: {normal: {}},
-    //           data:[820, 932, 901, 934, 1290, 1330, 1320]
-    //       }
-    //   ]
+      series : series
     };
   }
 
