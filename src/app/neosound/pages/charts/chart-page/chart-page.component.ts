@@ -74,9 +74,6 @@ export class ChartPageComponent implements OnInit {
 
   setSankey() {
     this.option1 = {
-        title: {
-            text: 'Sankey Diagram'
-        },
         tooltip: {
             trigger: 'item',
             triggerOn: 'mousemove'
@@ -110,41 +107,67 @@ export class ChartPageComponent implements OnInit {
 
 
   setLine1() {
-    const series = [];
-    this.fileStat.totals && this.fileStat.totals.countdata && this.fileStat.totals.countdata.series.map(v => {
-        series.push({
-            data: v,
-            type: 'line',
-            smooth: true,
-        });
-    });
+    const series = this.fileStat.totals && this.fileStat.totals.countdata && this.fileStat.totals.countdata.series || [];
+    const legenddata = this.fileStat.totals && this.fileStat.totals.legenddata || [];
+    // this.fileStat.totals && this.fileStat.totals.countdata && this.fileStat.totals.countdata.series.map(v => {
+    //     series.push({
+    //         data: v,
+    //         type: 'line',
+    //         smooth: true,
+    //     });
+    // });
     this.option2 = {
+      tooltip : {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
+      grid: {
+        left: false,
+        right: '2%',
+        bottom: false,
+        containLabel: true
+      },
+      legend: {
+        data: legenddata
+      },
       xAxis: {
           type: 'category',
           data: this.fileStat.totals && this.fileStat.totals.dates || [],
-          // ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       },
       yAxis: {
           type: 'value'
       },
-      series: series,
-    //   [
-    //     {
-    //       data: [820, 932, 901, 934, 1290, 1330, 1320],
-    //       type: 'line',
-    //       smooth: true
-    //     },
-    //     {
-    //       data: [120, 232, 301, 434, 590, 1030, 1320],
-    //       type: 'line',
-    //       smooth: true
-    //     },
-    //     {
-    //       data: [20, 1332, 300, 400, 500, 900, 500],
-    //       type: 'line',
-    //       smooth: true
-    //     }
-    //   ]
+      series: [
+        {
+          name: legenddata[0] || '',
+          data: series[0] || [],
+          type: 'line',
+          smooth: true,
+          label: {
+            normal: {
+              show: true,
+              position: 'top'
+            }
+          },
+        },
+        {
+          name: legenddata[1] || '',
+          data: series[1] || [],
+          type: 'line',
+          smooth: true
+        },
+        {
+          name: legenddata[2] || '',
+          data: series[2] || [],
+          type: 'line',
+          smooth: true
+        }
+      ],
     };
   }
 
