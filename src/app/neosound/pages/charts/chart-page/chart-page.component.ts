@@ -406,9 +406,7 @@ export class ChartPageComponent implements OnInit {
         {
             name: this.minutesStat.totals && this.minutesStat.totals.legenddata[0],
             type: 'bar',
-            xAxisIndex: 0,
-            yAxisIndex: 0,
-            stack: '效益',
+            stack: 'stack',
             barCategoryGap: 0,
             barGap: 0,
             barWidth: 50,
@@ -423,9 +421,7 @@ export class ChartPageComponent implements OnInit {
         {
             name: this.minutesStat.totals && this.minutesStat.totals.legenddata[1],
             type: 'bar',
-            xAxisIndex: 0,
-            yAxisIndex: 0,
-            stack: '效益',
+            stack: 'stack',
             barCategoryGap: 0,
             barGap: 0,
             barWidth: 50,
@@ -440,9 +436,7 @@ export class ChartPageComponent implements OnInit {
         {
             name: this.minutesStat.totals && this.minutesStat.totals.legenddata[2],
             type: 'bar',
-            xAxisIndex: 0,
-            yAxisIndex: 0,
-            stack: '效益',
+            stack: 'stack',
             barCategoryGap: 0,
             barGap: 0,
             barWidth: 50,
@@ -454,146 +448,57 @@ export class ChartPageComponent implements OnInit {
             },
             data: [this.minutesStat.totals && this.minutesStat.totals.silentdur],
         }
-];
+    ];
 
-    // var keyValue = 60;
-    // var name = "中";
-    // if (keyValue < 50) {
-    //     name = "低";
-    // } else if (keyValue > 80) {
-    //     name = "高";
-    // }
-    // var serie = [600, -200, 300, 500];
-    // var tital = '贡献度指数: ' + serie[0];
-    // var serie1 = [6, 2, 8];
-    // var serie2 = [0.3, 0.5, 0.2];
-    // var colors = ['#5793f3', '#d48265', '#91c7ae'];
-    // var legend = ['分值', '权重'];
     this.option6 = null;
     this.option6 = {
         backgroundColor: '#ffffff',
-        title: [{
-            text: this.t('Total minutes'),
-            left: '50%',
-            top: '5%',
-            textAlign: 'center'
-        },
-        // , {
-        //     left: '28%',
-        //     top: '51%',
-        //     textAlign: 'center'
-        // }, {
-        //     text: '',
-        //     left: '78%',
-        //     top: '51%',
-        //     textAlign: 'center'
-        // }
-        ],
         tooltip: {
-            trigger: 'axis',
+            trigger: 'item',
             axisPointer: {
                 type: 'shadow'
-            },
-            fomatter: function(obj) {
-                console.log(obj);
-                return '';
-                // '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' + tital + '</div>' +
-                //     '<span>' + '' + '</span>' +
-                //     ' : ' + serie[1] + '<br/>' +
-                //     '<span>' + '' + '</span>' + ' : ' + serie[2] + '<span>' +
-                //     '' + '</span>' + ' : ' + serie[3]
             }
         },
         legend: {
             type: 'plain',
-            top: '35%',
-            pageButtonGap: 10,
-            pageButtonPosition: 'end',
+            top: '60%',
             data: this.minutesStat.totals.legenddata,
         },
-        grid: [{
-            show: false,
-            left: '0%',
-            top: '5%',
-            containLabel: true,
-            width: '95%',
-            height: '30%'
-        }],
         xAxis: [{
-            gridIndex: 0,
             type: 'value',
-            offset: -85,
             splitLine: {
-                show: false, //让X轴数据不显示
+              show: false,
+            },
+            axisLabel: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
             }
         }],
         yAxis: [{
-            gridIndex: 0,
             type: 'category',
+            textStyle: {
+              fontSize: 16
+            },
             splitNumber: 0,
             boundaryGap: [0, 0],
             axisLabel: {
-                show: false, //让Y轴数据不显示
+                show: false,
             },
             itemStyle: {},
             axisTick: {
-                show: false, //隐藏Y轴刻度
+                show: false,
             },
             axisLine: {
-                show: false, //隐藏Y轴线段
+                show: false,
             },
             data: [this.t('Total minutes')]
         }],
         series: series,
-        // [{
-        //     name: '存款效益',
-        //     type: 'bar',
-        //     xAxisIndex: 0,
-        //     yAxisIndex: 0,
-        //     stack: '效益',
-        //     barCategoryGap: 0,
-        //     barGap: 0,
-        //     barWidth: 50,
-        //     label: {
-        //         normal: {
-        //             show: true,
-        //             position: 'insideRight'
-        //         }
-        //     },
-        //     data: [serie[1]]
-        // }, {
-        //     name: '中间业务效益',
-        //     type: 'bar',
-        //     xAxisIndex: 0,
-        //     yAxisIndex: 0,
-        //     stack: '效益',
-        //     barCategoryGap: 0,
-        //     barGap: 0,
-        //     barWidth: 50,
-        //     label: {
-        //         normal: {
-        //             show: true,
-        //             position: 'insideRight'
-        //         }
-        //     },
-        //     data: [serie[2]]
-        // }, {
-        //     name: '贷款效益',
-        //     type: 'bar',
-        //     xAxisIndex: 0,
-        //     yAxisIndex: 0,
-        //     stack: '效益',
-        //     barCategoryGap: 0,
-        //     barGap: 0,
-        //     barWidth: 50,
-        //     label: {
-        //         normal: {
-        //             show: true,
-        //             position: 'insideRight'
-        //         }
-        //     },
-        //     data: [serie[3]]
-        // }]
     };
   }
 
