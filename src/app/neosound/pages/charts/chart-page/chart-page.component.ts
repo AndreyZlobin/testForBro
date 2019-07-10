@@ -507,169 +507,83 @@ export class ChartPageComponent implements OnInit {
   }
 
   setMinutesCalm() {
-    const spNum = 5;
-    const _max=100;
-    const legendData = ['常住人口', '户籍人口', '农村人口','城镇居民'];
-    const y_data = ['成都市', '绵阳市', '自贡市', '攀枝花市', '泸州市', '德阳市'];
-    const _datamax = [100,100,100,100,100,100];
-    const _data1 = [10,15,10,13,15,11];
-    const _data2 = [19,5,40,33,15,51];
-    const _data3 = [21,55,10,13,35,11];
-    const _data4 = [21,55,10,13,35,11];
-    const fomatter_fn = (v) => {
-        return (v.value / _max * 100).toFixed(0)
-    }
+    const legendData = this.minutesStat.totals && this.minutesStat.totals.legenddata || [];
+    const y_data = this.minutesStat.totals && this.minutesStat.totals.batchesnames || [];
+    const _data = this.minutesStat.totals && this.minutesStat.totals.batchesdurdata || [];
     const _label = {
-        normal: {
-            show: true,
-            position: 'inside',
-            formatter: fomatter_fn,
-            textStyle: {
-                color: '#fff',
-                fontSize: 16
-            }
-        }
+      normal: {
+        show: true,
+        position: 'inside'
+      }
     };
+    const minX = Math.min(..._data[0]) < 1 ? -0.5 : 0;
     this.option7 = {
-        backgroundColor: '#091034',
         legend: {
-            data: legendData,
-            textStyle: {
-                color: '#ccc'
-            }
+            data: legendData
         },
         grid: {
-            containLabel: true,
-            left: 0,
-            right: 15,
-            bottom: 30
+          containLabel: true,
+          left: '5%',
+          // right: '5%',
+          bottom: 30
         },
         tooltip: {
-            show: true,
-            backgroundColor: '#fff',
-            borderColor: '#ddd',
-            borderWidth: 1,
-            textStyle: {
-                color: '#3c3c3c',
-                fontSize: 16
-            },
-            formatter: (p) => {
-                console.log(p);
-                var _arr = p.seriesName.split('/'),
-                idx = p.seriesIndex;//1，2，3
-                return '名称：' + p.seriesName + '<br>' + '完成：' + p.value + '<br>' + '占比：' + (p.value / _max * 100).toFixed(0) + '%';
-            },
-            extraCssText: 'box-shadow: 0 0 5px rgba(0, 0, 0, 0.1)'
+          trigger: 'item',
+          axisPointer: {
+            type: 'shadow'
+          }
         },
         xAxis: {
-            splitNumber: spNum,
-            interval: _max / spNum,
-            max: _max,
+            min: minX,
             axisLabel: {
-                show: false,
-                formatter: (v) => {
-                    var _v = (v / _max * 100).toFixed(0);
-                    return +_v === 0 ? _v : _v + '%';
-                }
+              show: false,
             },
             axisLine: {
-                show: false
+              show: false
             },
             axisTick: {
-                show: false
+              show: false
             },
             splitLine: {
-                show: false
+              show: false
             }
-
         },
         yAxis: [{
-            data: y_data,
-            axisLabel: {
-                fontSize: 16,
-                color: '#fff'
-
-            },
-            axisLine: {
-                show: false
-            },
-            axisTick: {
-                show: false
-            },
-            splitLine: {
-                show: false
-            }
-        }, {
-            show: false,
-            data: y_data,
-            axisLine: {
-                show: false
-            }
+          data: y_data,
+          axisLabel: {
+            show: true
+          },
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          }
         }],
         series: [{
-            type: 'bar',
-            name: '常住人口',
-            stack: '2',
-            label: _label,
-            legendHoverLink: false,
-            barWidth: 40,
-            itemStyle: {
-                normal: {
-                    color: '#7E47FF'
-                },
-                emphasis: {
-                    color: '#7E47FF'
-                }
-            },
-            data: _data1
+          type: 'bar',
+          name: legendData[0],
+          stack: '2',
+          label: _label,
+          barWidth: 40,
+          data: _data[0]
         }, {
-            type: 'bar',
-            name: '户籍人口',
-            stack: '2',
-            legendHoverLink: false,
-            barWidth: 40,
-            label: _label,
-            itemStyle: {
-                normal: {
-                    color: '#FD5916'
-                },
-                emphasis: {
-                    color: '#FD5916'
-                }
-            },
-            data: _data2
+          type: 'bar',
+          name: legendData[1],
+          stack: '2',
+          barWidth: 40,
+          label: _label,
+          data: _data[1]
         }, {
-            type: 'bar',
-            stack: '2',
-            name: '农村人口',
-            legendHoverLink: false,
-            barWidth: 40,
-            label: _label,
-            itemStyle: {
-                normal: {
-                    color: '#01A4F7'
-                },
-                emphasis: {
-                    color: '#01A4F7'
-                }
-            },
-            data: _data3
-        }, {
-            type: 'bar',
-            stack: '2',
-            name: '城镇居民',
-            legendHoverLink: false,
-            barWidth: 40,
-            label: _label,
-            itemStyle: {
-                normal: {
-                    color: '#2EDDCD'
-                },
-                emphasis: {
-                    color: '#2EDDCD'
-                }
-            },
-            data: _data4
+          type: 'bar',
+          stack: '2',
+          name: legendData[2],
+          barWidth: 40,
+          label: _label,
+          data: _data[2]
         }]
     };
   }
