@@ -97,22 +97,22 @@ export class ChartPageComponent implements OnInit {
     });
   }
 
-  getColors(s, d, v) {
-      const scheme = new ColorScheme();
-      const rgb = this.config.colors.secondary
-        .substring(4, this.config.colors.secondary.length - 1)
-        .replace(/ /g, "")
-        .split(",");
-      const hex = fullColorHex(rgb[0], rgb[1], rgb[2]);
-
-      scheme
-        .from_hex(hex)
-        .scheme(s)
-        .distance(d)
-        .variation(v);
-
-      return [`#${hex}`, ...scheme.colors().map(c => `#${c}`)];
-  }
+  // getColors(s, d, v) {
+  //     const scheme = new ColorScheme();
+  //     const rgb = this.config.colors.secondary
+  //       .substring(4, this.config.colors.secondary.length - 1)
+  //       .replace(/ /g, "")
+  //       .split(",");
+  //     const hex = fullColorHex(rgb[0], rgb[1], rgb[2]);
+  //
+  //     scheme
+  //       .from_hex(hex)
+  //       .scheme(s)
+  //       .distance(d)
+  //       .variation(v);
+  //
+  //     return [`#${hex}`, ...scheme.colors().map(c => `#${c}`)];
+  // }
 
   initCharts() {
     if (!this.fileStatLoaded || !this.minutesStatLoaded || !this.apiStatLoaded) {
