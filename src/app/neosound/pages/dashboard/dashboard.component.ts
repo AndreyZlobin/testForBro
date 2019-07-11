@@ -71,6 +71,10 @@ export class DashboardComponent implements OnInit {
   allCallsCount: any;
   batchesUploaded: any;
 
+  fileStat: any = {};
+  minutesStat: any = {};
+  apiStat: any = {};
+
   constructor(
     private router: Router,
     private filesService: FilesService,
@@ -96,13 +100,16 @@ export class DashboardComponent implements OnInit {
   }
   ngOnInit() {
     this.filesService.getMinutesStats({}).subscribe(data => {
+      this.minutesStat = data;
       this.fileCount = data.fileCount;
       this.totalMinutes = Math.round(data.totalMinutes);
     });
     this.filesService.getApiCallsStats({}).subscribe(data => {
       this.apiCallsCount = data.apiCallsCount;
+      this.apiStat = data;
     });
     this.filesService.getFileStats({}).subscribe(data => {
+      this.fileStat = data;
       this.loading = false;
       this.allCallsCount = data.totals.allcallscount;
       this.batchesUploaded = data.totals.batchcount;

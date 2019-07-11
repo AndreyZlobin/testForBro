@@ -14,18 +14,7 @@
     </div>
   </div>
   <div class="col-12 col-lg-6 mb-3">
-    <div class="card h-100">
-      <div class="card-header">
-          Calls by days
-      </div>
-      <div class="card-body">
-          <div echarts
-            [options]="option2"
-            class="echart"
-            (chartInit)="onChartInit2($event)">
-          </div>
-      </div>
-    </div>
+    <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-calls-by-day-chart-line>
   </div>
 
   <div class="col-12 col-lg-6 mb-3">
@@ -44,18 +33,7 @@
   </div>
 
   <div class="col-12 col-lg-6 mb-3">
-    <div class="card h-100">
-      <div class="card-header">
-          Total minutes by days
-      </div>
-      <div class="card-body">
-          <div echarts
-            [options]="option4"
-            class="echart"
-            (chartInit)="onChartInit4($event)">
-          </div>
-      </div>
-    </div>
+      <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-total-minutes-by-day-chart-line>
   </div>
 
   <div class="col-12 col-lg-6 mb-3">
@@ -89,18 +67,7 @@
   </div>
 
   <div class="col-12 col-lg-6 mb-3">
-    <div class="card h-100">
-      <div class="card-header">
-          Total minutes by batches
-      </div>
-      <div class="card-body">
-          <div echarts
-            [options]="option7"
-            class="echart"
-            (chartInit)="onChartInit7($event)">
-          </div>
-      </div>
-    </div>
+    <ngx-total-minutes-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-total-minutes-chart-bar>
   </div>
 </div>
 

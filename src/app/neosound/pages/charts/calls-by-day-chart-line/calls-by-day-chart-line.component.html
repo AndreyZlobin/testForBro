@@ -1,0 +1,19 @@
+<ng-container *ngIf="!isLoading; else spinner"></ng-container>
+<div class="card h-100">
+  <div class="card-header">
+      Calls by days
+  </div>
+  <div class="card-body">
+      <div echarts
+        [options]="option2"
+        class="echart"
+        (chartInit)="onChartInit2($event)">
+      </div>
+  </div>
+</div>
+
+<ng-template #spinner>
+  <div class="load-container load1">
+    <div class="loader">{{ t("Loading...") }}</div>
+  </div>
+</ng-template>

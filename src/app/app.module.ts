@@ -90,6 +90,9 @@ import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
 import { DataService } from "./neosound/shared";
 import { ChartPageComponent } from './neosound/pages/charts/chart-page/chart-page.component';
+import { CallsByDayChartLineComponent } from './neosound/pages/charts/calls-by-day-chart-line/calls-by-day-chart-line.component';
+import { TotalMinutesByDayChartLineComponent } from './neosound/pages/charts/total-minutes-by-day-chart-line/total-minutes-by-day-chart-line.component';
+import { TotalMinutesChartBarComponent } from './neosound/pages/charts/total-minutes-chart-bar/total-minutes-chart-bar.component';
 
 @NgModule({
   declarations: [
@@ -120,6 +123,9 @@ import { ChartPageComponent } from './neosound/pages/charts/chart-page/chart-pag
     BatchListComponent,
     BatchDetailsComponent,
     ChartPageComponent,
+    CallsByDayChartLineComponent,
+    TotalMinutesByDayChartLineComponent,
+    TotalMinutesChartBarComponent,
     // ForbiddenPasswordDirective,
 
     //ngx-admin

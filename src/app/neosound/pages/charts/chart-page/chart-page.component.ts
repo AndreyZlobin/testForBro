@@ -120,12 +120,9 @@ export class ChartPageComponent implements OnInit {
     }
     this.isLoading = false;
     this.setSankey();
-    this.setLine1();
     this.setWeekChart();
-    this.setMinutesPerDay();
     this.setTotalQueries();
     this.setTotalMinutes();
-    this.setMinutesCalm();
   }
 
   t(v) {
@@ -164,87 +161,6 @@ export class ChartPageComponent implements OnInit {
 
   onChartInit1(ec) {
     this.echartsInstance1 = ec;
-  }
-
-
-  setLine1() {
-    const series = this.fileStat.totals && this.fileStat.totals.countdata
-        && this.fileStat.totals.countdata.series || [];
-    const legenddata = this.fileStat.totals && this.fileStat.totals.legenddata || [];
-    // this.fileStat.totals && this.fileStat.totals.countdata && this.fileStat.totals.countdata.series.map(v => {
-    //     series.push({
-    //         data: v,
-    //         type: 'line',
-    //         smooth: true,
-    //     });
-    // });
-    this.option2 = {
-      // color: [this.colors[0], this.colors[6], this.colors[1]],
-      tooltip : {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985'
-          }
-        }
-      },
-      grid: {
-        left: '2%',
-        right: '2%',
-        bottom: false,
-        containLabel: true
-      },
-      legend: {
-        data: legenddata
-      },
-      xAxis: {
-          type: 'category',
-          data: this.fileStat.totals && this.fileStat.totals.dates || [],
-      },
-      yAxis: {
-          type: 'value',
-          axisLabel: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            show: false,
-          }
-      },
-      series: [
-        {
-          name: legenddata[0] || '',
-          data: series[0] || [],
-          type: 'line',
-          smooth: true,
-          label: {
-            normal: {
-              show: true,
-              position: 'top'
-            }
-          },
-        },
-        {
-          name: legenddata[1] || '',
-          data: series[1] || [],
-          type: 'line',
-          smooth: true
-        },
-        {
-          name: legenddata[2] || '',
-          data: series[2] || [],
-          type: 'line',
-          smooth: true
-        }
-      ],
-    };
-  }
-
-  onChartInit2(ec) {
-    this.echartsInstance2 = ec;
   }
 
   setWeekChart() {
@@ -302,77 +218,6 @@ export class ChartPageComponent implements OnInit {
 
   onChartInit3(ec) {
     this.echartsInstance3 = ec;
-  }
-
-  setMinutesPerDay() {
-    const series = [];
-    this.minutesStat.totals && this.minutesStat.totals.durdata && this.minutesStat.totals.durdata.series.map(v => {
-        series.push({
-            name: 'Name',
-            type: 'line',
-            stack: 'stack',
-            areaStyle: {},
-            data: v,
-            label: {
-              normal: {
-                show: true,
-                position: 'top'
-              }
-            }
-        });
-    });
-    this.minutesStat.totals
-        && this.minutesStat.totals.legenddata.map((v, i) => {
-        series[i].name = v;
-    });
-
-    this.option4 = {
-      // color: [this.colors[0], this.colors[6], this.colors[1]],
-      tooltip : {
-          trigger: 'axis',
-          axisPointer: {
-              type: 'cross',
-              label: {
-                  backgroundColor: '#6a7985'
-              }
-          }
-      },
-      legend: {
-          data: this.minutesStat.totals.legenddata
-      },
-      grid: {
-          left: '2%',
-          right: '2%',
-          bottom: false,
-          containLabel: true
-      },
-      xAxis : [
-          {
-              type : 'category',
-              boundaryGap : true,
-              data : this.minutesStat.totals.dates
-          }
-      ],
-      yAxis : [
-        {
-          type : 'value',
-          axisLabel: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            show: false,
-          }
-        }
-      ],
-      series : series
-    };
-  }
-
-  onChartInit4(ec) {
-    this.echartsInstance4 = ec;
   }
 
   setTotalQueries() {
@@ -513,93 +358,6 @@ export class ChartPageComponent implements OnInit {
 
   onChartInit6(ec) {
     this.echartsInstance6 = ec;
-  }
-
-  setMinutesCalm() {
-    const legendData = this.minutesStat.totals && this.minutesStat.totals.legenddata || [];
-    const y_data = this.minutesStat.totals && this.minutesStat.totals.batchesnames || [];
-    const _data = this.minutesStat.totals && this.minutesStat.totals.batchesdurdata || [];
-    const _label = {
-      normal: {
-        show: true,
-        position: 'inside'
-      }
-    };
-    const minX = Math.min(..._data[0]) < 1 ? -0.5 : 0;
-    this.option7 = {
-      // color: [this.colors[0], this.colors[6], this.colors[1]],
-        legend: {
-            data: legendData
-        },
-        grid: {
-          containLabel: true,
-          left: '5%',
-          // right: '5%',
-          bottom: 30
-        },
-        tooltip: {
-          trigger: 'item',
-          axisPointer: {
-            type: 'shadow'
-          }
-        },
-        xAxis: {
-            min: minX,
-            axisLabel: {
-              show: false,
-            },
-            axisLine: {
-              show: false
-            },
-            axisTick: {
-              show: false
-            },
-            splitLine: {
-              show: false
-            }
-        },
-        yAxis: [{
-          data: y_data,
-          axisLabel: {
-            show: true
-          },
-          axisLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          }
-        }],
-        series: [{
-          type: 'bar',
-          name: legendData[0],
-          stack: '2',
-          label: _label,
-          barWidth: 40,
-          data: _data[0]
-        }, {
-          type: 'bar',
-          name: legendData[1],
-          stack: '2',
-          barWidth: 40,
-          label: _label,
-          data: _data[1]
-        }, {
-          type: 'bar',
-          stack: '2',
-          name: legendData[2],
-          barWidth: 40,
-          label: _label,
-          data: _data[2]
-        }]
-    };
-  }
-
-  onChartInit7(ec) {
-    this.echartsInstance7 = ec;
   }
 
   // resizeChart() {
