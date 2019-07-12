@@ -8,6 +8,7 @@ export class FilesService {
   private currentFileParams;
   private savedFilter = {};
   private keyWord = ''
+  private batchId = '';
 
   constructor(
     private http: HttpClient
@@ -21,6 +22,12 @@ export class FilesService {
   }
   getKeyWord() {
     return this.keyWord;
+  }
+  setBatchId(batchId) {
+    this.batchId = batchId;
+  }
+  getBatchId() {
+    return this.batchId;
   }
 
   getFilter() {
