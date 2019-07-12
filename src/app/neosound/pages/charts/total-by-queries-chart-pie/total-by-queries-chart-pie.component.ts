@@ -66,7 +66,7 @@ export class TotalByQueriesChartPieComponent implements OnInit {
   }
 
   setTotalQueries() {
-    const legenddata = this.apiStat.data.legend || [];
+    // const legenddata = this.apiStat.data.legend || [];
     const seriesdata = this.apiStat.data.series || [];
     this.option5 = {
       color: this.colors,
@@ -78,7 +78,7 @@ export class TotalByQueriesChartPieComponent implements OnInit {
         show: false,
         x : 'center',
         y : 'bottom',
-        data: legenddata
+        // data: legenddata
       },
       calculable : true,
       series : [
