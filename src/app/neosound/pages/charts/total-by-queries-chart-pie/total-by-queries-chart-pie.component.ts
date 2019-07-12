@@ -16,6 +16,7 @@ export class TotalByQueriesChartPieComponent implements OnInit {
   fileStatLoaded = false;
   minutesStatLoaded = false;
   apiStatLoaded = false;
+  colorsLoaded = false;
 
   fileStat: any = {};
   minutesStat: any = {};
@@ -35,22 +36,26 @@ export class TotalByQueriesChartPieComponent implements OnInit {
     this.init();
   }
   @Input() set apiStatData(data) {
-    this.apiStat = data;
-    this.apiStatLoaded = true;
-    this.init();
+    if ('data' in data) {
+      this.apiStat = data;
+      this.apiStatLoaded = true;
+      this.init();
+    }
   }
   @Input() set colorsData(data) {
     this.colors = data;
+    this.colorsLoaded = true;
     this.init();
   }
 
   constructor() { }
 
   ngOnInit() {
+    // this.init();
   }
 
   init() {
-    if (!this.fileStatLoaded || !this.minutesStatLoaded || !this.apiStatLoaded) {
+    if (!this.apiStatLoaded || !this.colorsLoaded) {
       return;
     }
     this.isLoading = false;
