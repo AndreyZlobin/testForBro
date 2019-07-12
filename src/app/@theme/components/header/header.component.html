@@ -2,13 +2,6 @@
 <div class="header-container"
      [class.left]="position === 'normal'"
      [class.right]="position === 'inverse'">
-  <div class="logo-containter">
-    <!-- <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a> -->
-    <a class="logo" routerLink="/" href="/">
-      <!-- Neo<span>Sound</span> -->
-      <img src="assets/config/{{config.logofilename}}" />
-    </a>
-  </div>
   <nb-actions>
       <!-- <nb-action class="control-item" ><a href="#" (click)="navigate('/guest/quicktest')">{{t('Try')}}</a></nb-action> -->
       <nb-action class="control-item"  *ngIf="isLoggedIn()"><a style="cursor: pointer;" (click)="navigate('/')">{{t('Dashboard')}}</a></nb-action>

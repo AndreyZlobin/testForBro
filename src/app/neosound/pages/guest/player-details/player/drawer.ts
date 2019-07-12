@@ -10,6 +10,12 @@ export default class Drawer extends util.Observer {
      * @param {HTMLElement} container The container node of the wavesurfer instance
      * @param {WavesurferParams} params The wavesurfer initialisation options
      */
+    container: any;
+    params: any;
+    width: number;
+    height: number;
+    lastPos: number;
+    wrapper: any;
     constructor(container, params) {
         super();
         /** @private */
@@ -133,7 +139,7 @@ export default class Drawer extends util.Observer {
             }
 
             if (this.params.interact) {
-                this.fireEvent('click', e, this.handleEvent(e));
+                this.fireEvent('click', e, this.handleEvent(e, {}));
             }
         });
 
@@ -311,7 +317,7 @@ export default class Drawer extends util.Observer {
 
             if (this.params.scrollParent && this.params.autoCenter) {
                 const newPos = ~~(this.wrapper.scrollWidth * progress);
-                this.recenterOnPosition(newPos);
+                this.recenterOnPosition(newPos, null);
             }
 
             this.updateProgress(pos);

@@ -76,6 +76,7 @@ const formSetting: any = {
 };
 
 import { FileDropModule } from "ngx-file-drop";
+import { PlayerComponent } from "./neosound/pages/guest/player-details/player/player.component";
 import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/player-details.component";
 import { PieChartComponent } from "./neosound/components/pie-chart/pie-chart.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
@@ -102,6 +103,7 @@ import { ChartPageComponent } from './neosound/pages/charts/chart-page/chart-pag
     SignupDetailedComponent,
     TermsComponent,
     ForgotPasswordComponent,
+    PlayerComponent,
 
     UserDetailsComponent,
     QuickTestComponent,

@@ -1,5 +1,5 @@
 export default class Observer {
-
+    handlers: any;
     constructor() {
 
         this.handlers = null;
