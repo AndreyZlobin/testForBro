@@ -47,7 +47,7 @@
     [class.right]="position === 'normal'"
     [class.left]="position === 'inverse'">
 
-    <nb-action class="control-item" style="line-height: 2.25rem;" *ngIf="isLoggedIn()"><a href="#" (click)="logout()">{{t('Logout')}}</a></nb-action>
+    <nb-action class="control-item left-border" style="line-height: 2.25rem; border-left: 1px solid #ebeef2 !important;" *ngIf="isLoggedIn()"><a href="#" (click)="logout()">{{t('Logout')}}</a></nb-action>
     <nb-action class="control-item" style="line-height: 2.25rem;" *ngIf="isLoggedIn()">{{username()}}</nb-action>
     <nb-action class="control-item" style="line-height: 2.25rem;" *ngIf="isLoggedIn() && company()">{{company()}}</nb-action>
     <!-- <nb-action icon="nb-gear" class="toggle-layout" (click)="toggleSettings()"></nb-action> -->
