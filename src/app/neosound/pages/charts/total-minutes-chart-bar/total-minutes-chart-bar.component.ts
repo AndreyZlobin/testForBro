@@ -41,6 +41,10 @@ export class TotalMinutesChartBarComponent implements OnInit {
     this.apiStatLoaded = true;
     this.init();
   }
+  @Input() set colorsData(data) {
+    this.colors = data;
+    this.init();
+  }
 
   constructor(
     private filesService: FilesService,
@@ -79,6 +83,7 @@ export class TotalMinutesChartBarComponent implements OnInit {
     const minX = Math.min(..._data[0]) < 1 ? -0.5 : 0;
     this.option7 = {
       // color: [this.colors[0], this.colors[6], this.colors[1]],
+      color: this.colors,
         legend: {
             data: legendData
         },

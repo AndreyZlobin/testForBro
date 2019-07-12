@@ -39,6 +39,10 @@ export class CallsByDayChartLineComponent implements OnInit {
     this.apiStatLoaded = true;
     this.init();
   }
+  @Input() set colorsData(data) {
+    this.colors = data;
+    this.init();
+  }
 
   constructor(
     private filesService: FilesService,
@@ -77,6 +81,7 @@ export class CallsByDayChartLineComponent implements OnInit {
     // });
     this.option2 = {
       // color: [this.colors[0], this.colors[6], this.colors[1]],
+      color: this.colors,
       tooltip : {
         trigger: 'axis',
         axisPointer: {

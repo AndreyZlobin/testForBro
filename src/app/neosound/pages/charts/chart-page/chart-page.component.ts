@@ -54,6 +54,7 @@ export class ChartPageComponent implements OnInit {
 
   config = {};
   colors = [];
+  primarycolor;
 
   constructor(
     private filesService: FilesService,
@@ -87,14 +88,50 @@ export class ChartPageComponent implements OnInit {
         .split(",");
       const hex = fullColorHex(rgb[0], rgb[1], rgb[2]);
 
+      // const s = 'tetrade', d = 0.5, v = 'pastel';
       const s = 'tetrade', d = 0.5, v = 'pastel';
       scheme
         .from_hex(hex)
         .scheme(s)
         .distance(d)
         .variation(v);
-      this.colors = [`#${hex}`, ...scheme.colors().map(c => `#${c}`)];
+      // this.colors = [`#${hex}`, ...scheme.colors().map(c => `#${c}`)];
+      this.primarycolor = `#${hex}`;
+      this.colors = scheme.colors().map(c => `#${c}`);
+      this.colors = [
+        this.colors[0], this.colors[4], this.colors[8],
+        this.colors[1], this.colors[5], this.colors[9],
+        this.colors[2], this.colors[6], this.colors[10],
+        this.colors[3], this.colors[7], this.colors[11]
+      ];
+
+      const shineColors = [
+        '#c12e34','#e6b600','#0098d9','#2b821d',
+        '#005eaa','#339ca8','#cda819','#32a487'
+      ];
+      this.colors = shineColors;
     });
+  }
+
+  setColors(theme) {
+    const themeColors = {
+      'default': ["#c23531", "#2f4554", "#61a0a8", "#d48265", "#91c7ae", "#749f83", "#ca8622", "#bda29a", "#6e7074", "#546570", "#c4ccd3"],
+      'macarons': ['#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80', '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
+        '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050', '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'],
+      'dark': ['#dd6b66','#759aa0','#e69d87','#8dc1a9','#ea7e53','#eedd78','#73a373','#73b9bc','#7289ab', '#91ca8c','#f49f42'],
+      'shine': ['#c12e34', '#e6b600', '#0098d9', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487'],
+      'infografic': ['#C1232B','#27727B','#FCCE10','#E87C25','#B5C334', '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+        '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'],
+      'roma': ['#E01F54','#001852','#f5e8c8','#b8d2c7','#c6b38e', '#a4d8c2','#f3d999','#d3758f','#dcc392','#2e4783',
+        '#82b6e9','#ff6347','#a092f1','#0a915d','#eaf889','#6699FF','#ff6666','#3cb371','#d5b158','#38b6b6'],
+      'vintage': ['#d87c7c','#919e8b', '#d7ab82',  '#6e7074','#61a0a8','#efa18d', '#787464', '#cc7e63', '#724e58', '#4b565b'],
+      'walden': ["#3fb1e3", "#6be6c1", "#626c91", "#a0a7e6", "#c4ebad", "#96dee8"],
+      'westeros': ["#516b91", "#59c4e6","#edafda","#93b7e3","#a5e7f0","#cbb0e3"],
+      'wonderland': ["#4ea397","#22c3aa","#7bd9a5",'#d0648a',"#f58db2","#f2b3c9"]
+    };
+
+    this.colors = themeColors[theme] || themeColors['default'];
+    this.initCharts();
   }
 
   // getColors(s, d, v) {
@@ -130,6 +167,7 @@ export class ChartPageComponent implements OnInit {
   }
 
   setSankey() {
+    // console.log(this.colors.length + ': ' + this.colors);
     this.option1 = {
         color: this.colors,
         tooltip: {
@@ -174,7 +212,7 @@ export class ChartPageComponent implements OnInit {
     var data = [[0,0,5],[0,1,1],[0,2,0],[0,3,0],[0,4,0],[0,5,0],[0,6,0],[0,7,0],[0,8,0],[0,9,0],[0,10,0],[0,11,2],[0,12,4],[0,13,1],[0,14,1],[0,15,3],[0,16,4],[0,17,6],[0,18,4],[0,19,4],[0,20,3],[0,21,3],[0,22,2],[0,23,5],[1,0,7],[1,1,0],[1,2,0],[1,3,0],[1,4,0],[1,5,0],[1,6,0],[1,7,0],[1,8,0],[1,9,0],[1,10,5],[1,11,2],[1,12,2],[1,13,6],[1,14,9],[1,15,11],[1,16,6],[1,17,7],[1,18,8],[1,19,12],[1,20,5],[1,21,5],[1,22,7],[1,23,2],[2,0,1],[2,1,1],[2,2,0],[2,3,0],[2,4,0],[2,5,0],[2,6,0],[2,7,0],[2,8,0],[2,9,0],[2,10,3],[2,11,2],[2,12,1],[2,13,9],[2,14,8],[2,15,10],[2,16,6],[2,17,5],[2,18,5],[2,19,5],[2,20,7],[2,21,4],[2,22,2],[2,23,4],[3,0,7],[3,1,3],[3,2,0],[3,3,0],[3,4,0],[3,5,0],[3,6,0],[3,7,0],[3,8,1],[3,9,0],[3,10,5],[3,11,4],[3,12,7],[3,13,14],[3,14,13],[3,15,12],[3,16,9],[3,17,5],[3,18,5],[3,19,10],[3,20,6],[3,21,4],[3,22,4],[3,23,1],[4,0,1],[4,1,3],[4,2,0],[4,3,0],[4,4,0],[4,5,1],[4,6,0],[4,7,0],[4,8,0],[4,9,2],[4,10,4],[4,11,4],[4,12,2],[4,13,4],[4,14,4],[4,15,14],[4,16,12],[4,17,1],[4,18,8],[4,19,5],[4,20,3],[4,21,7],[4,22,3],[4,23,0],[5,0,2],[5,1,1],[5,2,0],[5,3,3],[5,4,0],[5,5,0],[5,6,0],[5,7,0],[5,8,2],[5,9,0],[5,10,4],[5,11,1],[5,12,5],[5,13,10],[5,14,5],[5,15,7],[5,16,11],[5,17,6],[5,18,0],[5,19,5],[5,20,3],[5,21,4],[5,22,2],[5,23,0],[6,0,1],[6,1,0],[6,2,0],[6,3,0],[6,4,0],[6,5,0],[6,6,0],[6,7,0],[6,8,0],[6,9,0],[6,10,1],[6,11,0],[6,12,2],[6,13,1],[6,14,3],[6,15,4],[6,16,0],[6,17,0],[6,18,0],[6,19,0],[6,20,1],[6,21,2],[6,22,2],[6,23,6]];
 
     this.option3 = {
-      // color: this.colors,
+      color: this.colors,
       tooltip: {
         position: 'top'
       },
@@ -224,8 +262,8 @@ export class ChartPageComponent implements OnInit {
     const legenddata = this.apiStat.data.legend || [];
     const seriesdata = this.apiStat.data.series || [];
     this.option5 = {
-        // color: this.colors,
-        title: {text: 'light'},
+        color: this.colors,
+        // title: {text: 'light'},
         tooltip : {
           trigger: 'item',
           formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -305,8 +343,9 @@ export class ChartPageComponent implements OnInit {
 
     this.option6 = null;
     this.option6 = {
+        color: this.colors,
       // color: [this.colors[0], this.colors[6], this.colors[1]],
-        backgroundColor: '#ffffff',
+      //   backgroundColor: '#ffffff',
         tooltip: {
             trigger: 'item',
             axisPointer: {

@@ -41,6 +41,10 @@ export class TotalMinutesByDayChartLineComponent implements OnInit {
     this.apiStatLoaded = true;
     this.init();
   }
+  @Input() set colorsData(data) {
+    this.colors = data;
+    this.init();
+  }
 
   constructor(
     private filesService: FilesService,
@@ -90,6 +94,7 @@ export class TotalMinutesByDayChartLineComponent implements OnInit {
 
     this.option4 = {
       // color: [this.colors[0], this.colors[6], this.colors[1]],
+      color: this.colors,
       tooltip : {
           trigger: 'axis',
           axisPointer: {
