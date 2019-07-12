@@ -10,9 +10,6 @@
   <button class="btn btn-outline-primary ml-4" (click)="setColors('westeros');">westeros</button>
   <button class="btn btn-outline-primary ml-4" (click)="setColors('wonderland');">wonderland</button>
 <hr>
-<div>
-  <h5> Current Theme: {{ theme ? theme : 'default' }} </h5>
-</div>
 
 <div class="row" *ngIf="!isLoading; else spinner">
   <div class="col-12 col-lg-6 mb-3">

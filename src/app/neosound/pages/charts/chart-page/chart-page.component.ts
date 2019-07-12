@@ -105,11 +105,7 @@ export class ChartPageComponent implements OnInit {
         this.colors[3], this.colors[7], this.colors[11]
       ];
 
-      const shineColors = [
-        '#c12e34','#e6b600','#0098d9','#2b821d',
-        '#005eaa','#339ca8','#cda819','#32a487'
-      ];
-      this.colors = shineColors;
+      this.setColors('default');
     });
   }
 
