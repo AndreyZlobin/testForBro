@@ -154,7 +154,6 @@ export class ChartPageComponent implements OnInit {
     this.isLoading = false;
     this.setSankey();
     this.setWeekChart();
-    this.setTotalQueries();
     this.setTotalMinutes();
   }
 
@@ -252,40 +251,6 @@ export class ChartPageComponent implements OnInit {
 
   onChartInit3(ec) {
     this.echartsInstance3 = ec;
-  }
-
-  setTotalQueries() {
-    const legenddata = this.apiStat.data.legend || [];
-    const seriesdata = this.apiStat.data.series || [];
-    this.option5 = {
-        color: this.colors,
-        // title: {text: 'light'},
-        tooltip : {
-          trigger: 'item',
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-          x : 'center',
-          y : 'bottom',
-          data: legenddata
-        },
-        calculable : true,
-        series : [
-          {
-            name: 'API Calls',
-            type: 'pie',
-            radius : [70, 110],
-            selectedMode: 'multiple',
-            center: ['50%', '40%'],
-            // roseType: 'area',
-            data: seriesdata
-          }
-        ]
-      };
-  }
-
-  onChartInit5(ec) {
-    this.echartsInstance5 = ec;
   }
 
   setTotalMinutes() {

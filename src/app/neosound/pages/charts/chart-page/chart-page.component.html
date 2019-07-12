@@ -52,18 +52,8 @@
   </div>
 
   <div class="col-12 col-lg-6 mb-3">
-    <div class="card h-100">
-      <div class="card-header">
-          Totals by queries
-      </div>
-      <div class="card-body">
-          <div echarts
-            [options]="option5"
-            class="echart"
-            (chartInit)="onChartInit5($event)">
-          </div>
-      </div>
-    </div>
+    <ngx-total-by-queries-chart-pie [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-total-by-queries-chart-pie>
   </div>
 
   <div class="col-12 col-lg-6 mb-3">

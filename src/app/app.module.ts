@@ -93,6 +93,7 @@ import { ChartPageComponent } from './neosound/pages/charts/chart-page/chart-pag
 import { CallsByDayChartLineComponent } from './neosound/pages/charts/calls-by-day-chart-line/calls-by-day-chart-line.component';
 import { TotalMinutesByDayChartLineComponent } from './neosound/pages/charts/total-minutes-by-day-chart-line/total-minutes-by-day-chart-line.component';
 import { TotalMinutesChartBarComponent } from './neosound/pages/charts/total-minutes-chart-bar/total-minutes-chart-bar.component';
+import { TotalByQueriesChartPieComponent } from './neosound/pages/charts/total-by-queries-chart-pie/total-by-queries-chart-pie.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +127,7 @@ import { TotalMinutesChartBarComponent } from './neosound/pages/charts/total-min
     CallsByDayChartLineComponent,
     TotalMinutesByDayChartLineComponent,
     TotalMinutesChartBarComponent,
+    TotalByQueriesChartPieComponent,
     // ForbiddenPasswordDirective,
 
     //ngx-admin
