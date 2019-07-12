@@ -226,15 +226,18 @@
   </div>
   <div class="row mb-3">
     <div class="col-6">
-      <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-calls-by-day-chart-line>
+      <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-calls-by-day-chart-line>
     </div>
     <div class="col-6">
-      <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-total-minutes-by-day-chart-line>
+      <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-minutes-by-day-chart-line>
     </div>
   </div>
   <div class="row mb-3">
     <div class="col-6">
-      <ngx-total-minutes-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-total-minutes-chart-bar>
+      <ngx-total-minutes-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-minutes-chart-bar>
     </div>
     <div class="col-6">
 

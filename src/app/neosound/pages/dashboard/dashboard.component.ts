@@ -9,21 +9,7 @@ import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
 import ColorScheme from "color-scheme";
 
-const colors = [
-  "#37A2DA",
-  "#32C5E9",
-  "#67E0E3",
-  "#9FE6B8",
-  "#FFDB5C",
-  "#ff9f7f",
-  "#fb7293",
-  "#E062AE",
-  "#E690D1",
-  "#e7bcf3",
-  "#9d96f5",
-  "#8378EA",
-  "#96BFFF"
-];
+const colors = ['#c12e34', '#e6b600', '#0098d9', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487'];
 
 const rgbToHex = rgb => {
   let hex = Number(rgb).toString(16);
@@ -81,23 +67,29 @@ export class DashboardComponent implements OnInit {
     private http: HttpClient,
     private lang: LanguageService
   ) {
-    this.http.get("assets/config/config.json").subscribe((data: any) => {
-      this.config = data;
-      const scheme = new ColorScheme();
-      const rgb = data.colors.secondary
-        .substring(4, data.colors.secondary.length - 1)
-        .replace(/ /g, "")
-        .split(",");
-      const hex = fullColorHex(rgb[0], rgb[1], rgb[2]);
-
-      scheme
-        .from_hex(hex)
-        .scheme("analogic")
-        .distance(1)
-        .variation("light");
-      this.colors = [`#${hex}`, ...scheme.colors().map(c => `#${c}`)];
-    });
+    this.setColors();
   }
+
+  setColors() {
+    this.colors = colors;
+    // this.http.get("assets/config/config.json").subscribe((data: any) => {
+    //   this.config = data;
+    //   const scheme = new ColorScheme();
+    //   const rgb = data.colors.secondary
+    //     .substring(4, data.colors.secondary.length - 1)
+    //     .replace(/ /g, "")
+    //     .split(",");
+    //   const hex = fullColorHex(rgb[0], rgb[1], rgb[2]);
+    //
+    //   scheme
+    //     .from_hex(hex)
+    //     .scheme("analogic")
+    //     .distance(1)
+    //     .variation("light");
+    //   this.colors = [`#${hex}`, ...scheme.colors().map(c => `#${c}`)];
+    // });
+  }
+
   ngOnInit() {
     this.filesService.getMinutesStats({}).subscribe(data => {
       this.minutesStat = data;

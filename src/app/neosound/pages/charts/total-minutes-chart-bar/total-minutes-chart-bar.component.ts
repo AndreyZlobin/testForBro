@@ -24,7 +24,7 @@ export class TotalMinutesChartBarComponent implements OnInit {
   apiStat: any = {};
 
   config = {};
-  colors = ["#c23531", "#2f4554", "#61a0a8", "#d48265", "#91c7ae", "#749f83", "#ca8622", "#bda29a", "#6e7074", "#546570", "#c4ccd3"];
+  colors = ['#c12e34', '#e6b600', '#0098d9', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487']; //shine
 
   @Input() set fileStatData(data) {
     this.fileStat = data;
