@@ -71,12 +71,28 @@ export class TotalMinutesChartBarComponent implements OnInit {
   }
 
   setMinutesCalm() {
+    const maxrows = 6;
+    let rawdata = this.minutesStat.totals && this.minutesStat.totals.batchesdurdata || [];
+    const rawbatches = this.minutesStat.totals && this.minutesStat.totals.batchesnames || [];
+    let sortedbatches = [];
+
+    if (rawbatches.length > maxrows) {
+      const sorteddata = Array.apply(null, {length: rawdata[0].length}).map(Number.call, Number)
+        .sort((a, b) => rawdata[0][b] + rawdata[1][b] + rawdata[2][b] - rawdata[0][a] - rawdata[1][a] - rawdata[2][a])
+        .slice(0, maxrows)
+        .reverse();
+      rawdata = rawdata.map(x => {const arr = []; sorteddata.forEach(i => arr.push(x[i])); return arr;});
+      sorteddata.forEach(i => sortedbatches.push(rawbatches[i]));
+    } else {
+      sortedbatches = rawbatches;
+    }
+
     const legendData = this.minutesStat.totals && this.minutesStat.totals.legenddata || [];
-    const y_data = this.minutesStat.totals && this.minutesStat.totals.batchesnames || [];
-    const _data = this.minutesStat.totals && this.minutesStat.totals.batchesdurdata || [];
+    const y_data = sortedbatches;
+    const _data = rawdata;
     const _label = {
       normal: {
-        show: true,
+        show: false,
         position: 'inside'
       }
     };
