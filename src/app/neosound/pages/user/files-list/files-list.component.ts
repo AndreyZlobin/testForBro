@@ -365,7 +365,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     const c = b + 0;
 
     // Return a CSS HSL string
-    return "hsl(" + c + ", 100%, 50%)";
+    return "hsl(" + c + ", 50%, 25%)";
   }
 
   getOpacityLevelPause(val) {
