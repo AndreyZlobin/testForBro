@@ -98,10 +98,15 @@
                     {{ getDateVal(item[0]) | date: "mm:ss" }} -
                     {{ getDateVal(item[1]) | date: "mm:ss" }}
                   </td>
-                  <td class="col-10"><span [innerHTML]=t(item[2])></span></td>
+                  <td class="col-9"><span [innerHTML]=t(item[2])></span></td>
                   <td class="col-1">
                     <span *ngIf="item[3]">
                       {{ item[3] | currency: "%":"symbol":"1.2-2" }}
+                    </span>
+                  </td>
+                  <td class="col-1">
+                    <span *ngIf="item[4]">
+                      {{ item[4] }}
                     </span>
                   </td>
                 </tr>
