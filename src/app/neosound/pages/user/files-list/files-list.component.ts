@@ -417,6 +417,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       case "compliance":
         sortName = "Compliance";
         break;
+      case "avgpause":
+        sortName = "AvgPause";
+        break;
 
       default:
         break;
