@@ -211,19 +211,19 @@
                       </span>
                     </td>
                     <td>
-                      <div class="text-wrap" tooltip="{{item.batchid}}" style="max-width: 150px;">
+                      <div class="text-nowrap" tooltip="{{item.batchid}}" style="max-width: 150px;">
                         {{ item.batchid}}
                       </div>
                     </td>
                     <td><a [routerLink]="getLink(item)" style="cursor: pointer;">
-                        <div class="text-wrap" tooltip="{{item.filename}}">{{item.filename}}</div>
+                        <div class="text-nowrap" tooltip="{{item.filename}}">{{item.filename}}</div>
                       </a></td>
                     <td>
-                      <div class="text-wrap" tooltip="{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}">
+                      <div class="text-nowrap" tooltip="{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}">
                         {{item.uploaddate | date: 'dd/MM/yyyy'}}</div>
                     </td>
                     <td>
-                      <div class="text-wrap" tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">
+                      <div class="text-nowrap" tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">
                         {{ getDateVal(item.duration) | date:'mm:ss'}}</div>
                     </td>
                     <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
