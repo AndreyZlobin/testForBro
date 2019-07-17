@@ -563,7 +563,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
           : "",
       batchid: (this.batchid && "" + this.batchid) || "",
       filename: this.filename,
-      minutesfrom: (this.callfrom && "" + this.callfrom) || "",
+      // minutesfrom: (this.callfrom && "" + this.callfrom) || "",
+      minutesfrom: this.callfrom + '',
       minutesto:
         this.callfrom || this.callto
           ? "" + (this.callfrom > this.callto ? 10000 : this.callto)
