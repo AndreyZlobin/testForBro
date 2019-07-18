@@ -508,7 +508,7 @@ export class PlayerDetailsComponent
   getCompliancePercents() {
     if (this.misswords.length || this.misswordsNotFound.length) {
       const perc = this.misswords.length / (this.misswords.length + this.misswordsNotFound.length);
-      return Math.round(perc) * 10 + '%';
+      return Math.round(perc * 100)  + '%';
     }
     return 'N/A';
   }
