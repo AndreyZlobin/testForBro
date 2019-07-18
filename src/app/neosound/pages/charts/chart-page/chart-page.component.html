@@ -1,3 +1,16 @@
+<hr>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('default');">default</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('macarons'); initCharts();">macarons</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('dark');">dark</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('shine');">shine</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('infografic'); initCharts();">infografic</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('roma');">roma</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('vintage');">vintage</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('walden'); initCharts();">walden</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('westeros');">westeros</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('wonderland');">wonderland</button>
+<hr>
+
 <div class="row" *ngIf="!isLoading; else spinner">
   <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
@@ -14,7 +27,8 @@
     </div>
   </div>
   <div class="col-12 col-lg-6 mb-3">
-    <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-calls-by-day-chart-line>
+    <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-calls-by-day-chart-line>
   </div>
 
   <div class="col-12 col-lg-6 mb-3">
@@ -33,22 +47,13 @@
   </div>
 
   <div class="col-12 col-lg-6 mb-3">
-      <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-total-minutes-by-day-chart-line>
+      <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-minutes-by-day-chart-line>
   </div>
 
   <div class="col-12 col-lg-6 mb-3">
-    <div class="card h-100">
-      <div class="card-header">
-          Totals by queries
-      </div>
-      <div class="card-body">
-          <div echarts
-            [options]="option5"
-            class="echart"
-            (chartInit)="onChartInit5($event)">
-          </div>
-      </div>
-    </div>
+    <ngx-total-by-queries-chart-pie [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-total-by-queries-chart-pie>
   </div>
 
   <div class="col-12 col-lg-6 mb-3">
@@ -67,7 +72,13 @@
   </div>
 
   <div class="col-12 col-lg-6 mb-3">
-    <ngx-total-minutes-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-total-minutes-chart-bar>
+    <ngx-total-minutes-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-total-minutes-chart-bar>
+  </div>
+
+  <div class="col-12 col-lg-6 mb-3">
+    <ngx-total-minutes-plus-batches-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-total-minutes-plus-batches-chart-bar>
   </div>
 </div>
 

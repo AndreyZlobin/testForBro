@@ -62,7 +62,7 @@
           <div class="row">
             <div class="col-6">
               <div class="card h-100">
-                <div class="card-header gradient-text">{{t('Processed calls')}}</div>
+                <div class="card-header">{{t('Processed calls')}}</div>
                 <div class="card-body" *ngIf="totals">
                   <div class="title">{{t('Calls')}}</div>
                   <div class="value">{{ totals.allcallscount }}</div>
@@ -81,7 +81,7 @@
             </div>
             <div class="col-6">
               <div class="card  card-block d-flex h-100">
-                <div class="card-header gradient-text">{{t('Stopwords')}}</div>
+                <div class="card-header">{{t('Stopwords')}}</div>
                 <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords">
                   <angular-tag-cloud [data]="keywords" width="300" height="300" [zoomOnHover]="zoomOPtions"
                     [overflow]="false" (clicked)="keywordClicked($event)">
@@ -95,7 +95,7 @@
     </div>
     <div class="d-none" [ngClass]="{'col-4 d-block': barChart}" *ngIf="barChart">
       <div class="card" style="min-height: calc(100% - 15px);">
-        <div class="card-header gradient-text">{{t('Number of calls by top 6 batches')}}</div>
+        <div class="card-header">{{t('Number of calls by top 6 batches')}}</div>
         <div class="card-body pl-0 pr-0">
           <div echarts [options]="barChart"></div>
         </div>
@@ -105,7 +105,7 @@
   <div class="row mb-3">
     <div class="col-6">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header gradient-text">{{t('Performance by agent')}}</div>
+        <div class="card-header">{{t('Performance by agent')}}</div>
         <div class="card-body">
           <div echarts [options]="options"></div>
         </div>
@@ -113,7 +113,7 @@
     </div>
     <div class="col-6">
       <div class="card h-100">
-        <div class="card-header gradient-text">{{t('Welcome on board')}}</div>
+        <div class="card-header">{{t('Welcome on board')}}</div>
         <div class="card-body">
           <div class="" style="overflow-y: auto; max-height: 440px;">
             <div *ngIf="isEnglish()">
@@ -187,59 +187,70 @@
     </div>
   </div>
   <div class="row mb-3">
-    <div class="col-6" *ngIf="keywords2.length > 0">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header gradient-text">{{t('Most frequently used words')}}</div>
-        <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
-          <angular-tag-cloud [data]="keywords2" width="500" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false"
-            (clicked)="keywordClicked($event)">
-          </angular-tag-cloud>
-        </div>
-      </div>
+    <div class="col-6">
+      <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-calls-by-day-chart-line>
     </div>
-    <div class="col-6" *ngIf="sankey1">
-      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
-        <div class="card-header gradient-text">{{t('Popular Words')}}</div>
-        <div class="card-body">
-          <div echarts [options]="sankey1"></div>
-        </div>
-      </div>
+    <div class="col-6">
+      <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-minutes-by-day-chart-line>
     </div>
   </div>
+
+  <div class="row mb-3">
+    <div class="col-6">
+      <ngx-total-minutes-plus-batches-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-minutes-plus-batches-chart-bar>
+    </div>
+    <div class="col-6">
+      <ngx-total-by-queries-chart-pie [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-by-queries-chart-pie>
+    </div>
+  </div>
+
   <div class="row mb-3">
     <div class="col-6" *ngIf="sankey6">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header gradient-text">{{t('Popular Words Sentiment')}}</div>
+        <div class="card-header">{{t('Popular Words Sentiment')}}</div>
         <div class="card-body">
           <div echarts [options]="sankey6"></div>
         </div>
       </div>
     </div>
+    <div class="col-6" *ngIf="keywords2.length > 0">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">{{t('Most frequently used words')}}</div>
+        <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
+          <angular-tag-cloud [data]="keywords2" width="500" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false"
+                             (clicked)="keywordClicked($event)">
+          </angular-tag-cloud>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-6" *ngIf="sankey1">
+      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
+        <div class="card-header">{{t('Popular Words')}}</div>
+        <div class="card-body">
+          <div echarts [options]="sankey1"></div>
+        </div>
+      </div>
+    </div>
     <div class="col-6" *ngIf="sankey3">
       <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
-        <div class="card-header gradient-text">{{t('Popular Adjectives')}}</div>
+        <div class="card-header">{{t('Popular Adjectives')}}</div>
         <div class="card-body">
           <div echarts [options]="sankey3"></div>
         </div>
       </div>
     </div>
   </div>
-  <div class="row mb-3">
-    <div class="col-6">
-      <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-calls-by-day-chart-line>
-    </div>
-    <div class="col-6">
-      <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-total-minutes-by-day-chart-line>
-    </div>
-  </div>
-  <div class="row mb-3">
-    <div class="col-6">
-      <ngx-total-minutes-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"></ngx-total-minutes-chart-bar>
-    </div>
-    <div class="col-6">
 
-    </div>
-  </div>
+
+
+
 </div>
 <ng-template #loadingTemplate>
   {{ t("Loading...") }}

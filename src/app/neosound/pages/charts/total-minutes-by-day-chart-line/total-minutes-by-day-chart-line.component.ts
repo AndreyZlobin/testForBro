@@ -24,7 +24,7 @@ export class TotalMinutesByDayChartLineComponent implements OnInit {
   apiStat: any = {};
 
   config = {};
-  colors = [];
+  colors = ['#c12e34', '#e6b600', '#0098d9', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487']; //shine
 
   @Input() set fileStatData(data) {
     this.fileStat = data;
@@ -39,6 +39,10 @@ export class TotalMinutesByDayChartLineComponent implements OnInit {
   @Input() set apiStatData(data) {
     this.apiStat = data;
     this.apiStatLoaded = true;
+    this.init();
+  }
+  @Input() set colorsData(data) {
+    this.colors = data;
     this.init();
   }
 
@@ -90,6 +94,7 @@ export class TotalMinutesByDayChartLineComponent implements OnInit {
 
     this.option4 = {
       // color: [this.colors[0], this.colors[6], this.colors[1]],
+      color: this.colors,
       tooltip : {
           trigger: 'axis',
           axisPointer: {

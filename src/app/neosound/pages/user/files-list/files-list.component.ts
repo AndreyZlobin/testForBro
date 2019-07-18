@@ -365,7 +365,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     const c = b + 0;
 
     // Return a CSS HSL string
-    return "hsl(" + c + ", 100%, 50%)";
+    return "hsl(" + c + ", 50%, 50%)";
   }
 
   getOpacityLevelPause(val) {
@@ -416,6 +416,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
       case "compliance":
         sortName = "Compliance";
+        break;
+      case "avgpause":
+        sortName = "AvgPause";
         break;
 
       default:
@@ -560,7 +563,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
           : "",
       batchid: (this.batchid && "" + this.batchid) || "",
       filename: this.filename,
-      minutesfrom: (this.callfrom && "" + this.callfrom) || "",
+      // minutesfrom: (this.callfrom && "" + this.callfrom) || "",
+      minutesfrom: this.callfrom + '',
       minutesto:
         this.callfrom || this.callto
           ? "" + (this.callfrom > this.callto ? 10000 : this.callto)

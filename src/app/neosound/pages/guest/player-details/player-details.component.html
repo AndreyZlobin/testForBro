@@ -101,18 +101,28 @@
                     </ng-container>
                   </td>
                   <td class="col-1 pl-0 pr-0">
-                    <span *ngIf="!item[5] && item[3]">
-                      {{ item[3] | currency: "%":"symbol":"1.2-2" }}
-                    </span>
+                    <ng-container *ngIf="!item[5] && item[3]">
+                      <span>
+                        {{ item[3] | currency: "%":"symbol":"1.2-2" }}
+                      </span>
+                      <span *ngIf="item[4]">
+                        {{ item[4] }}
+                      </span>
+                    </ng-container>
                   </td>
                   <td class="col-8" [ngClass]="{'text-right': !item[5], 'text-left': !!item[5]}">
                     <div [innerHTML]=t(item[2]) class="d-inline-block rounded" [ngClass]="{'border-primary': !!item[5], 'border-secondary': !item[5]}"></div>
                     <!-- border p-2 - to add a border -->
                   </td>
                   <td class="col-1 pl-0 pr-0">
-                    <span *ngIf="!!item[5] && item[3]">
-                      {{ item[3] | currency: "%":"symbol":"1.2-2" }}
-                    </span>
+                    <ng-container *ngIf="!!item[5] && item[3]">
+                      <span>
+                        {{ item[3] | currency: "%":"symbol":"1.2-2" }}
+                      </span>
+                      <span *ngIf="item[4]">
+                        {{ item[4] }}
+                      </span>
+                    </ng-container>
                   </td>
                   <td class="col-1">
                       <ng-container *ngIf="!item[5]">

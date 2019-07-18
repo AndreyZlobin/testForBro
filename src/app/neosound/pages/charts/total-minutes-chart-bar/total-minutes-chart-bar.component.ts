@@ -24,7 +24,7 @@ export class TotalMinutesChartBarComponent implements OnInit {
   apiStat: any = {};
 
   config = {};
-  colors = [];
+  colors = ['#c12e34', '#e6b600', '#0098d9', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487']; //shine
 
   @Input() set fileStatData(data) {
     this.fileStat = data;
@@ -39,6 +39,10 @@ export class TotalMinutesChartBarComponent implements OnInit {
   @Input() set apiStatData(data) {
     this.apiStat = data;
     this.apiStatLoaded = true;
+    this.init();
+  }
+  @Input() set colorsData(data) {
+    this.colors = data;
     this.init();
   }
 
@@ -67,18 +71,35 @@ export class TotalMinutesChartBarComponent implements OnInit {
   }
 
   setMinutesCalm() {
+    const maxrows = 6;
+    let rawdata = this.minutesStat.totals && this.minutesStat.totals.batchesdurdata || [];
+    const rawbatches = this.minutesStat.totals && this.minutesStat.totals.batchesnames || [];
+    let sortedbatches = [];
+
+    if (rawbatches.length > maxrows) {
+      const sorteddata = Array.apply(null, {length: rawdata[0].length}).map(Number.call, Number)
+        .sort((a, b) => rawdata[0][b] + rawdata[1][b] + rawdata[2][b] - rawdata[0][a] - rawdata[1][a] - rawdata[2][a])
+        .slice(0, maxrows)
+        .reverse();
+      rawdata = rawdata.map(x => {const arr = []; sorteddata.forEach(i => arr.push(x[i])); return arr;});
+      sorteddata.forEach(i => sortedbatches.push(rawbatches[i]));
+    } else {
+      sortedbatches = rawbatches;
+    }
+
     const legendData = this.minutesStat.totals && this.minutesStat.totals.legenddata || [];
-    const y_data = this.minutesStat.totals && this.minutesStat.totals.batchesnames || [];
-    const _data = this.minutesStat.totals && this.minutesStat.totals.batchesdurdata || [];
+    const y_data = sortedbatches;
+    const _data = rawdata;
     const _label = {
       normal: {
-        show: true,
+        show: false,
         position: 'inside'
       }
     };
     const minX = Math.min(..._data[0]) < 1 ? -0.5 : 0;
     this.option7 = {
       // color: [this.colors[0], this.colors[6], this.colors[1]],
+      color: this.colors,
         legend: {
             data: legendData
         },
