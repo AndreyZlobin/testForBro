@@ -679,9 +679,13 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
 
-    const index = c.findIndex(el => el.value === tag.value);
+    const tagVal = tag && tag.value || tag;
+    if (tagVal === "") {
+      return;
+    }
+    const index = c.findIndex(el => el.value === tagVal);
     c.splice(index, 1);
-    const val = tag.value.split(",").map(v => v.trim());
+    const val = tagVal.split(",").map(v => v.trim());
     c = val.map(v =>
       c.push({
         value: v,
