@@ -91,44 +91,23 @@
       <div *ngIf="emotions && currentTab === 'text'" class="mt-2">
         <div class="scrollable-list table-responsive">
           <ng-container *ngIf="radioModel === 'Log'">
-            <table class="table border-0" style="overflow-x:auto">
+            <table class="table table-striped" style="overflow-x:auto">
               <ng-container *ngFor="let item of emotions">
-                <tr class="d-flex border-0" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]">
+                <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]">
                   <td class="col-1">
-                    <ng-container *ngIf="!!item[5]">
-                      {{ getDateVal(item[0]) | date: "mm:ss" }} -
-                      {{ getDateVal(item[1]) | date: "mm:ss" }}
-                    </ng-container>
+                    {{ getDateVal(item[0]) | date: "mm:ss" }} -
+                    {{ getDateVal(item[1]) | date: "mm:ss" }}
                   </td>
-                  <td class="col-1 pl-0 pr-0">
-                    <ng-container *ngIf="!item[5] && item[3]">
-                      <span>
-                        {{ item[3] | currency: "%":"symbol":"1.2-2" }}
-                      </span>
-                      <span *ngIf="item[4]">
-                        {{ item[4] }}
-                      </span>
-                    </ng-container>
-                  </td>
-                  <td class="col-8" [ngClass]="{'text-right': !item[5], 'text-left': !!item[5]}">
-                    <div [innerHTML]=t(item[2]) class="d-inline-block rounded" [ngClass]="{'border-primary': !!item[5], 'border-secondary': !item[5]}"></div>
-                    <!-- border p-2 - to add a border -->
-                  </td>
-                  <td class="col-1 pl-0 pr-0">
-                    <ng-container *ngIf="!!item[5] && item[3]">
-                      <span>
-                        {{ item[3] | currency: "%":"symbol":"1.2-2" }}
-                      </span>
-                      <span *ngIf="item[4]">
-                        {{ item[4] }}
-                      </span>
-                    </ng-container>
+                  <td class="col-9"><span [innerHTML]=t(item[2])></span></td>
+                  <td class="col-1">
+                    <span *ngIf="item[3]">
+                      {{ item[3] | currency: "%":"symbol":"1.2-2" }}
+                    </span>
                   </td>
                   <td class="col-1">
-                      <ng-container *ngIf="!item[5]">
-                        {{ getDateVal(item[0]) | date: "mm:ss" }} -
-                        {{ getDateVal(item[1]) | date: "mm:ss" }}
-                      </ng-container>
+                    <span *ngIf="item[4]">
+                      {{ item[4] }}
+                    </span>
                   </td>
                 </tr>
               </ng-container>
