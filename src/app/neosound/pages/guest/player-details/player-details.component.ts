@@ -139,6 +139,8 @@ export class PlayerDetailsComponent
       waveColor: "#3399CC",
       progressColor: "#1CACE3",
       scrollParent: true,
+      splitChannels: true,
+      height: 64,
       plugins: [
         RegionsPlugin.create({
           // plugin options ...
