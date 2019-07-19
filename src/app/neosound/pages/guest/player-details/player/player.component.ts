@@ -14,10 +14,11 @@ import CanvasDrawer from "./canvas-drawer";
 export class PlayerComponent implements OnInit {
   private wavesurfer: any;
   private fileUrl: string;
-  private waveFormData: string;
-  private peekCache: [number[], number[]];
+  private waveFormData: any;
+  private peekCache: any;
   @Input() fileName: string;
   @Input() batchId: string;
+
   constructor(
     private filesService: FilesService,
     private httpClient: HttpClient
@@ -28,16 +29,26 @@ export class PlayerComponent implements OnInit {
       .getFile({ filename: this.fileName, batchid: this.batchId })
       .subscribe(res => {
         this.fileUrl = res.url;
+        this.filesService
+          .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
+          .subscribe(meta => {
+            if (meta.data) {
+              this.wavesurfer = WaveSurfer.create({
+                container: "#waveform",
+                waveColor: "#3399CC",
+                progressColor: "#1CACE3",
+                renderer: CanvasDrawer,
+                barWidth: 3,
+                height: 60,
+                splitChannels: true,
+                backend: 'MediaElement',
+              });
+              this.wavesurfer.load(this.fileUrl, meta.data.data, 'auto');
+            }
+          });
       });
-    this.filesService
-      .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
-      .subscribe(res => {
-        const oReq = new XMLHttpRequest();
-        oReq.onload = e => {
-          this.peekCache = oReq.response;
-        };
-        oReq.open("GET", res.url);
-        oReq.send();
-      });
+  }
+  play() {
+    this.wavesurfer.play();
   }
 }
