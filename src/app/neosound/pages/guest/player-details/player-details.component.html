@@ -91,9 +91,9 @@
       <div *ngIf="emotions && currentTab === 'text'" class="mt-2">
         <div class="scrollable-list table-responsive">
           <ng-container *ngIf="radioModel === 'Log'">
-            <table class="table table-striped" style="overflow-x:auto">
+            <table class="table" style="overflow-x:auto">
               <ng-container *ngFor="let item of emotions">
-                <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]">
+                <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]" [ngClass]="{'grey': !item[5]}">
                   <td class="col-1">
                     {{ getDateVal(item[0]) | date: "mm:ss" }} -
                     {{ getDateVal(item[1]) | date: "mm:ss" }}
