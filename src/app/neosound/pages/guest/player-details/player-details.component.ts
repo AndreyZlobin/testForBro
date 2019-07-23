@@ -325,8 +325,16 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
               this.misswords = this.results.result.stt.keywords.miss;
               this.misswordsNotFound = this.results.result.stt.keywords.missmiss;
             }
-            if (this.results.result.stt.speakers && this.results.result.stt.speakers.length > 1) {
-              this.greySpeaker = this.results.result.stt.speakers[1];
+            if (this.results.result.stt.speakers) {
+              if (Array.isArray(this.results.result.stt.speakers)) {
+                if (this.results.result.stt.speakers.length > 1) {
+                  this.greySpeaker = this.results.result.stt.speakers[1];
+                }
+              } else {
+                if (Object.keys(this.results.result.stt.speakers).length > 1) {
+                  this.greySpeaker = Object.keys(this.results.result.stt.speakers)[1];
+                }
+              }
             }
           }
 
