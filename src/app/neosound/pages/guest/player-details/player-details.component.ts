@@ -22,8 +22,7 @@ import { DataService } from "../../../shared";
   templateUrl: "./player-details.component.html",
   styleUrls: ["./player-details.component.scss"]
 })
-export class PlayerDetailsComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoading: boolean = true;
   fileParams;
   results;
@@ -54,6 +53,7 @@ export class PlayerDetailsComponent
   duration = 0;
   radioModel = "Log";
   onhold;
+  greySpeaker = '';
   @HostListener("document:keyup", ["$event"])
   public handleKeyboardEvent(event: KeyboardEvent): void {
     if (event.code === "Space") {
@@ -317,8 +317,6 @@ export class PlayerDetailsComponent
             if (this.results.result.stt.fulltext) {
               this.sttfulltext = this.results.result.stt.fulltext;
             }
-          }
-          if (this.results.result.stt) {
             if (this.results.result.stt.keywords && Array.isArray(this.results.result.stt.keywords)) {
               this.keywords = this.results.result.stt.keywords;
               this.misswords = [];
@@ -327,7 +325,11 @@ export class PlayerDetailsComponent
               this.misswords = this.results.result.stt.keywords.miss;
               this.misswordsNotFound = this.results.result.stt.keywords.missmiss;
             }
+            if (this.results.result.stt.speakers && this.results.result.stt.speakers.length > 1) {
+              this.greySpeaker = this.results.result.stt.speakers[1];
+            }
           }
+
           if (this.results.result.merged) {
             if (this.results.result.merged.intprobs) {
               this.emotionsSttAnger = this.results.result.merged.intprobs;
