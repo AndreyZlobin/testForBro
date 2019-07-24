@@ -229,8 +229,13 @@
                         {{item.uploaddate | date: 'dd/MM/yyyy'}}</div>
                     </td>
                     <td>
-                      <div class="text-nowrap" tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">
-                        {{ getDateVal(item.duration) | date:'mm:ss'}}</div>
+                      <div class="text-nowrap" >
+                        <span tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">
+                          {{ getDateVal(item.duration) | date:'mm:ss'}}</span>
+                        <span *ngIf="item.errm || item.errc" tooltip="{{item.errm.trim() || item.errc}}">
+                          <i class="fa fa-exclamation ml-2" style="color: #dc3545"></i>
+                        </span>
+                      </div>
                     </td>
                     <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
                       <div *ngIf="item.angertop && item.angertop.anger">
@@ -258,12 +263,17 @@
                       </div>
                     </td>
                     <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
-                    <td><button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)"
-                        tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}"><i class="fa fa-sync"></i></button>
+                    <td>
+                      <button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)"
+                          tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}">
+                        <i class="fa fa-sync"></i>
+                      </button>
                     </td>
-                    <td><button class="btn p-2 c-normal" style="cursor: pointer;"
-                        (click)="delete(item.batchid, item.fileid)" tooltip="{{t('Delete')}}"><i
-                          class="fa fa-trash-alt"></i></button></td>
+                    <td>
+                      <button class="btn p-2 c-normal" style="cursor: pointer;" (click)="delete(item.batchid, item.fileid)" tooltip="{{t('Delete')}}">
+                        <i class="fa fa-trash-alt"></i>
+                      </button>
+                    </td>
                     <td>
                       <span (click)="showModal(tagModal, item)">
                         <div class="badge badge-secondary m-1" style="cursor: pointer;" *ngFor="let tag of item.tags">
