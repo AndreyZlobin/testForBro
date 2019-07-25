@@ -1,5 +1,98 @@
-<nb-card *ngIf="fileParams.filename && fileParams.batchid">
-  <nb-card-body>
-      <ngx-player [fileName]="fileParams.filename" [batchId]="fileParams.batchid"></ngx-player>
-  </nb-card-body>
-</nb-card>
+<nb-card>
+    <nb-card-body>
+      <div class="player-details">
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          {{ t("Error:") }} {{ t(errorMessage) }}
+        </div>
+        <div [ngClass]="{ 'd-none': currentTab === 'results' }">
+            <ng-container *ngIf="fileParams.filename && fileParams.batchid">
+                <ngx-player [fileName]="fileParams.filename" [batchId]="fileParams.batchid"></ngx-player>
+            </ng-container>
+          <div class="d-flex justify-content-start my-2" *ngIf="currentTab !== 'results'">
+            <div class="btn-group mt-2" *ngIf="emotions && currentTab === 'text'">
+              <label class="btn btn-secondary" [(ngModel)]="radioModel" btnRadio="Log" tabindex="0"
+                role="button">{{t('Log')}}</label>
+              <label class="btn btn-secondary" [(ngModel)]="radioModel" btnRadio="Text" tabindex="0"
+                role="button">{{t('Text')}}</label>
+              <label class="btn btn-secondary" [(ngModel)]="radioModel" btnRadio="KeyWords" tabindex="0"
+                role="button">{{t('Keywords')}}</label>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="emotions && currentTab !== 'results' && currentTab !== 'text'" class="mt-2">
+          <div class="scrollable-list table-responsive">
+            <table class="table table-striped" style="overflow-x:auto">
+              <ng-container *ngFor="let item of emotions">
+                <tr (click)="gotoPosition(item[0])" class="d-flex">
+                  <td class="col-1">
+                    {{ getDateVal(item[0]) | date: "mm:ss" }} -
+                    {{ getDateVal(item[1]) | date: "mm:ss" }}
+                  </td>
+                  <td class="col-10">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
+                  <td class="col-1"><span *ngIf="item[3]">{{ item[3] | currency: "%":"symbol":"1.2-2" }}</span></td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+        <div *ngIf="emotions && currentTab === 'text'" class="mt-2">
+          <div class="scrollable-list table-responsive">
+            <ng-container *ngIf="radioModel === 'Log'">
+              <table class="table" style="overflow-x:auto">
+                <ng-container *ngFor="let item of emotions">
+                  <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]"
+                      [ngClass]="{'grey': item[5] && greySpeaker && item[5] == greySpeaker}">
+                    <td class="col-1">
+                      {{ getDateVal(item[0]) | date: "mm:ss" }} -
+                      {{ getDateVal(item[1]) | date: "mm:ss" }}
+                    </td>
+                    <td class="col-10"><span [innerHTML]=t(item[2])></span></td>
+                    <td class="col-1">
+                      <span *ngIf="item[3]">
+                        {{ item[3] | currency: "%":"symbol":"1.2-2" }}
+                      </span>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </ng-container>
+            <ng-container *ngIf="radioModel === 'Text'">
+              <div class="mt-2">
+                <button type="button" class="btn btn-dark" (click)="copyToClipboard(sttfulltext)"
+                  style="position: absolute; right: 20px;bottom: 20px;">
+                  Copy
+                </button>
+                <span [innerHTML]=sttfulltext></span>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="radioModel === 'KeyWords'">
+              <div class="mt-2">
+                <div class="row">
+                  <div class="col">
+                      <h4 class="ml-4 mb-3">{{t("Stopwords")}}</h4>
+                      <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let keyword of keywords">{{keyword}}</li>
+                      </ul>
+                  </div>
+                  <div class="col" *ngIf="misswordsNotFound.length || misswords.length">
+                      <h4 class="ml-4 mb-3">{{t("Compliance")}} {{getCompliancePercents()}}</h4>
+                      <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let missword of misswordsNotFound">
+                            <i class="fa fa-times m-r-5 text-danger"></i> {{missword}}
+                        </li>
+                        <li class="list-group-item" *ngFor="let missword of misswords">
+                            <i class="fa fa-check m-r-5 text-success"></i> {{missword}}
+                        </li>
+                      </ul>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <ng-template #loading>
+          {{ t("Loading...") }}
+        </ng-template>
+      </div>
+    </nb-card-body>
+  </nb-card>

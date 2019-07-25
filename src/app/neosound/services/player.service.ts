@@ -11,7 +11,7 @@ export class PlayerService {
   );
 
   constructor() {}
-  setActtive(time) {
+  setActive(time) {
     this.time = time;
     this.tick$.next(time);
   }
