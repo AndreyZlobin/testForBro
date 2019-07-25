@@ -62,7 +62,7 @@
           <div class="row">
             <div class="col-6">
               <div class="card h-100">
-                <div class="card-header gradient-text">{{t('Processed calls')}}</div>
+                <div class="card-header">{{t('Processed calls')}}</div>
                 <div class="card-body" *ngIf="totals">
                   <div class="title">{{t('Calls')}}</div>
                   <div class="value">{{ totals.allcallscount }}</div>
@@ -81,11 +81,10 @@
             </div>
             <div class="col-6">
               <div class="card  card-block d-flex h-100">
-                <div class="card-header gradient-text">{{t('Stopwords')}}</div>
+                <div class="card-header">{{t('Stopwords')}}</div>
                 <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords">
                   <angular-tag-cloud [data]="keywords" width="300" height="300" [zoomOnHover]="zoomOPtions"
-                    [overflow]="false"
-                    (clicked)="keywordClicked($event)">
+                    [overflow]="false" (clicked)="keywordClicked($event)">
                   </angular-tag-cloud>
                 </div>
               </div>
@@ -96,7 +95,7 @@
     </div>
     <div class="d-none" [ngClass]="{'col-4 d-block': barChart}" *ngIf="barChart">
       <div class="card" style="min-height: calc(100% - 15px);">
-        <div class="card-header gradient-text">{{t('Number of calls by top 6 batches')}}</div>
+        <div class="card-header">{{t('Number of calls by top 6 batches')}}</div>
         <div class="card-body pl-0 pr-0">
           <div echarts [options]="barChart"></div>
         </div>
@@ -106,7 +105,7 @@
   <div class="row mb-3">
     <div class="col-6">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header gradient-text">{{t('Performance by agent')}}</div>
+        <div class="card-header">{{t('Performance by agent')}}</div>
         <div class="card-body">
           <div echarts [options]="options"></div>
         </div>
@@ -114,62 +113,72 @@
     </div>
     <div class="col-6">
       <div class="card h-100">
-        <div class="card-header gradient-text">{{t('Welcome on board')}}</div>
+        <div class="card-header">{{t('Welcome on board')}}</div>
         <div class="card-body">
           <div class="" style="overflow-y: auto; max-height: 440px;">
             <div *ngIf="isEnglish()">
-              <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4>
-              <p class="card-text" style="line-height: 2.0;">
-                {{t('To upload multiple the files please use any SFTP client application and the following credentials')}}
-              </p>
+              <h4 class="card-text" style="line-height: 2.0;">{{t('SFTP Upload')}}</h4>
               <ul style="line-height: 2.0;">
-                <li>Host: <strong>{{config.sFtpHost}}</strong></li>
-                <li>{{t('Use your username and password.')}}</li>
+                <li>Host: <strong>sftp.neosound.eu, port: 22</strong></li>
+                <li>{{t('Username and password - your account credentials.')}}</li>
                 <li>
-                  {{t('Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.')}}
+                  {{t("Once connected, please go to folder ‘/files', and create or upload the separate sub-folders inside the folder ‘/files’,  per each agent, e.g. '/files/’.")}}
                 </li>
                 <li>
-                  {{t('Please, keep in mind, we support only the audio files in .wav and .mp3 formats at the moment. The files of any other formats will not be processed.')}}
-                </li>
-                <li>
-                  <strong>{{t('ATTENTION')}}:</strong>
-                  {{t('the files uploaded to the root of "/files" folder will not be processed. Make sure that they uploaded inside another subfolder, e.g. "/files/batch_agent_X". A batch name is required for successful processing. This way you will be able to filter on UI them as separate batches per agents.')}}
+                  {{t("The recorded calls should be upload to an agent folder inside the folder ‘/files’, e.g. '/files/agent_name. ")}}
+                  <div class="card-text my-3" style="line-height: 2.0;">
+                    <h6>{{t('IMPORTANT')}}</h6>
+                    {{t("The files uploaded to the root folder ‘/files’ folder will NOT be processed! So, please, make sure that the files are being uploaded inside sub-folder, e.g. '/files/agent_name. This is the only way to build statistics per agents.")}}
+                  </div>
                 </li>
                 <li>{{t('The files will start processing soon after uploading.')}}</li>
                 <li>
-                  {{t('Once the files are processed they will appear on the UI and disappear from the files folder on SFTP.')}}
+                  {{t('Once the files are processed they will disappear from the SFTP folder, so nobody can download the files from SFTP.')}}
                 </li>
               </ul>
+              <h4 class="card-text" style="line-height: 2.0;">{{t('Audio format')}}</h4>
               <p class="card-text" style="line-height: 2.0;">
-                <strong>{{t('To upload the files one by one,')}}</strong>
-                {{t('please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.')}}
+                {{t('For best results, the audio source should be captured and transmitted using a lossless encoding (FLACor LINEAR16). The accuracy of the speech recognition can be reduced if lossy codecs are used to capture or transmit audio, particularly if background noise is present. Lossy codecs include MULAW, AMR, AMR_WB, OGG_OPUS, and SPEEX_WITH_HEADER_BYTE.')}}
               </p>
             </div>
             <div *ngIf="isSpanish()">
               <!-- <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4> -->
               <p class="card-text" style="line-height: 2.0;">
-                  Para subir varios archivos, por favor use cualquier cliente SFTP y las siguientes indicaciones.
+                Para subir varios archivos, por favor use cualquier cliente SFTP y las siguientes indicaciones.
               </p>
               <ul style="line-height: 2.0;">
                 <li>Host: <strong>{{config.sFtpHost}}</strong></li>
                 <li>Use su nombre de usuario y contraseña.</li>
                 <li>
-                    Una vez conectado, abra los archivos de la carpeta y cree/cargue subcarpetas separadas dentro de la carpeta ‘/files", por ejemplo, "/files/lote_agente_X". Luego suba las grabaciones dentro de la subcarpeta de nueva creación.
+                  Una vez conectado, abra los archivos de la carpeta y cree/cargue subcarpetas separadas dentro de la
+                  carpeta ‘/files", por ejemplo, "/files/lote_agente_X". Luego suba las grabaciones dentro de la
+                  subcarpeta de nueva creación.
                 </li>
                 <li>
-                    Por favor, tenga en cuenta que, de momento, solo se pueden procesar archivos de audio en formato GSM, WAV y MP3. No se podrá procesar cualquier otro formato.
+                  Por favor, tenga en cuenta que, de momento, solo se pueden procesar archivos de audio en formato GSM,
+                  WAV y MP3. No se podrá procesar cualquier otro formato.
                 </li>
                 <li>
                   <strong>ATENCIÓN:</strong>
-                  los archivos subidos directamente a la carpeta ‘/files" no se procesarán. Asegúrese de que se carguen dentro de otra subcarpeta, por ejemplo, '/files/lote_agente_X'. Se requiere un nombre de lote para un procesamiento exitoso. Así usted podrá filtrarlos en la interfaz de usuario como lotes separados por agentes
+                  los archivos subidos directamente a la carpeta ‘/files" no se procesarán. Asegúrese de que se carguen
+                  dentro de otra subcarpeta, por ejemplo, '/files/lote_agente_X'. Se requiere un nombre de lote para un
+                  procesamiento exitoso. Así usted podrá filtrarlos en la interfaz de usuario como lotes separados por
+                  agentes
                 </li>
                 <li>Los archivos comenzarán a procesarse poco después de la carga.</li>
                 <li>
-                    Una vez procesados los archivos, aparecerán en la interfaz de usuario y desaparecer de la carpeta de archivos en SFTP.
+                  Una vez procesados los archivos, aparecerán en la interfaz de usuario y desaparecer de la carpeta de
+                  archivos en SFTP.
                 </li>
               </ul>
               <p class="card-text" style="line-height: 2.0;">
-                  Para subir los archivos uno por uno, por favor haga clic sobre "Cargar" en el menú superior. Tras completarse la subida del archivo usted será redirigido a la lista de archivos. Sin embargo, tomará unos pocos minutos antes de que el archivo se esté procesando y los datos estén disponibles. El tiempo de procesamiento depende de la duración del archivo de audio. Para ver el texto, vaya a los detalles del archivo haciendo clic en el archivo nombre, a continuación, vaya a la pestaña "Texto". Para fines de demostración, sugerimos utilizar archivos con una duración máxima de 4 minutos con nombres cortos de archivos.
+                Para subir los archivos uno por uno, por favor haga clic sobre "Cargar" en el menú superior. Tras
+                completarse la subida del archivo usted será redirigido a la lista de archivos. Sin embargo, tomará unos
+                pocos minutos antes de que el archivo se esté procesando y los datos estén disponibles. El tiempo de
+                procesamiento depende de la duración del archivo de audio. Para ver el texto, vaya a los detalles del
+                archivo haciendo clic en el archivo nombre, a continuación, vaya a la pestaña "Texto". Para fines de
+                demostración, sugerimos utilizar archivos con una duración máxima de 4 minutos con nombres cortos de
+                archivos.
               </p>
             </div>
           </div>
@@ -178,44 +187,70 @@
     </div>
   </div>
   <div class="row mb-3">
-    <div class="col-6" *ngIf="keywords2.length > 0">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header gradient-text">{{t('Most frequently used words')}}</div>
-        <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
-          <angular-tag-cloud [data]="keywords2" width="500" height="300" [zoomOnHover]="zoomOPtions"
-            [overflow]="false"
-            (clicked)="keywordClicked($event)">
-          </angular-tag-cloud>
-        </div>
-      </div>
+    <div class="col-6">
+      <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-calls-by-day-chart-line>
     </div>
-    <div class="col-6" *ngIf="sankey1">
-      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
-        <div class="card-header gradient-text">{{t('Popular Words')}}</div>
-        <div class="card-body">
-          <div echarts [options]="sankey1"></div>
-        </div>
-      </div>
+    <div class="col-6">
+      <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-minutes-by-day-chart-line>
     </div>
   </div>
+
+  <div class="row mb-3">
+    <div class="col-6">
+      <ngx-total-minutes-plus-batches-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-minutes-plus-batches-chart-bar>
+    </div>
+    <div class="col-6">
+      <ngx-total-by-queries-chart-pie [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-by-queries-chart-pie>
+    </div>
+  </div>
+
   <div class="row mb-3">
     <div class="col-6" *ngIf="sankey6">
       <div class="card  card-block d-flex h-100">
-        <div class="card-header gradient-text">{{t('Popular Words Sentiment')}}</div>
+        <div class="card-header">{{t('Popular Words Sentiment')}}</div>
         <div class="card-body">
           <div echarts [options]="sankey6"></div>
         </div>
       </div>
     </div>
+    <div class="col-6" *ngIf="keywords2.length > 0">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">{{t('Most frequently used words')}}</div>
+        <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
+          <angular-tag-cloud [data]="keywords2" width="500" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false"
+                             (clicked)="keywordClicked($event)">
+          </angular-tag-cloud>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-6" *ngIf="sankey1">
+      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
+        <div class="card-header">{{t('Popular Words')}}</div>
+        <div class="card-body">
+          <div echarts [options]="sankey1"></div>
+        </div>
+      </div>
+    </div>
     <div class="col-6" *ngIf="sankey3">
       <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
-        <div class="card-header gradient-text">{{t('Popular Adjectives')}}</div>
+        <div class="card-header">{{t('Popular Adjectives')}}</div>
         <div class="card-body">
           <div echarts [options]="sankey3"></div>
         </div>
       </div>
     </div>
   </div>
+
+
+
+
 </div>
 <ng-template #loadingTemplate>
   {{ t("Loading...") }}

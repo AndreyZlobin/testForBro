@@ -1,5 +1,18 @@
-<div class="row">
-  <div class="col-12 col-lg-6">
+<hr>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('default');">default</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('macarons'); initCharts();">macarons</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('dark');">dark</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('shine');">shine</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('infografic'); initCharts();">infografic</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('roma');">roma</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('vintage');">vintage</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('walden'); initCharts();">walden</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('westeros');">westeros</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('wonderland');">wonderland</button>
+<hr>
+
+<div class="row" *ngIf="!isLoading; else spinner">
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
         Sankey diagram
@@ -13,22 +26,12 @@
       </div>
     </div>
   </div>
-  <div class="col-12 col-lg-6">
-    <div class="card h-100">
-      <div class="card-header">
-          Количество разного типа (total, emo, silent) звонков по дням или периодам, 3 кривые
-      </div>
-      <div class="card-body">
-          <div echarts
-            [options]="option2"
-            class="echart"
-            (chartInit)="onChartInit2($event)">
-          </div>
-      </div>
-    </div>
+  <div class="col-12 col-lg-6 mb-3">
+    <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-calls-by-day-chart-line>
   </div>
 
-  <div class="col-12 col-lg-6">
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
           Calls distributed by days and time
@@ -43,43 +46,20 @@
     </div>
   </div>
 
-  <div class="col-12 col-lg-6">
-    <div class="card h-100">
-      <div class="card-header">
-          Total minutes per day
-      </div>
-      <div class="card-body">
-          <div echarts
-            [options]="option4"
-            class="echart"
-            (chartInit)="onChartInit4($event)">
-          </div>
-      </div>
-    </div>
+  <div class="col-12 col-lg-6 mb-3">
+      <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-minutes-by-day-chart-line>
   </div>
 
-  <div class="col-12 col-lg-6">
-    <div class="card h-100">
-      <div class="card-header">
-          Totals by queries, карточка pie-chart
-      </div>
-      <div class="card-body">
-          <div echarts
-            [options]="option5"
-            class="echart"
-            (chartInit)="onChartInit5($event)">
-          </div>
-      </div>
-    </div>
+  <div class="col-12 col-lg-6 mb-3">
+    <ngx-total-by-queries-chart-pie [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-total-by-queries-chart-pie>
   </div>
 
-  <div class="col-12 col-lg-6">
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
           Total minutes
-           - calm speech
-           - emotional speech
-           - silence
       </div>
       <div class="card-body">
           <div echarts
@@ -91,18 +71,19 @@
     </div>
   </div>
 
-  <div class="col-12 col-lg-6">
-    <div class="card h-100">
-      <div class="card-header">
-          Minutes = calm speech + emo speech + silence  - Разбивка minutes по каждому батчу
-      </div>
-      <div class="card-body">
-          <div echarts
-            [options]="option7"
-            class="echart"
-            (chartInit)="onChartInit7($event)">
-          </div>
-      </div>
-    </div>
+  <div class="col-12 col-lg-6 mb-3">
+    <ngx-total-minutes-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-total-minutes-chart-bar>
+  </div>
+
+  <div class="col-12 col-lg-6 mb-3">
+    <ngx-total-minutes-plus-batches-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-total-minutes-plus-batches-chart-bar>
   </div>
 </div>
+
+<ng-template #spinner>
+  <div class="load-container load1">
+    <div class="loader">{{ t("Loading...") }}</div>
+  </div>
+</ng-template>

@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  OnDestroy
+} from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { DatepickerOptions } from "ng2-datepicker";
 import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
@@ -6,6 +12,7 @@ import { LanguageService } from "../../../services/language.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription, Observable } from "rxjs";
 import { DataService } from "../../../shared";
+import { debug } from "util";
 
 @Component({
   selector: "app-files-list",
@@ -100,7 +107,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private dataService: DataService,
-    private modalService: BsModalService,
+    private modalService: BsModalService
   ) {}
 
   ngOnInit() {
@@ -109,14 +116,15 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     // this.resetFilter();
     const key = this.filesService.getKeyWord();
-    if (key) {
+    if (key && key !== '') {
       this.keywordsContain = [{ value: key, display: key }];
       this.filterIt();
     }
     this.filter = this.filesService.getFilter();
+    this.setFilterOptions();
     this.sortBy = this.filter.sortby;
     this.sort = this.filter.sortorder;
-    this.getPage(0, this.filter);
+    // this.getPage((this.filter.pagen - 1) || 0, this.filter);
 
     // const els = document.getElementsByClassName('scrollable-container');
     // const el = els[0];
@@ -133,6 +141,30 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     this.filterIt();
   }
+
+  setFilterOptions() {
+    this.sortBy = this.filter.sortby;
+    this.sort = this.filter.sortorder === "desc" ? "up" : "down";
+    this.datefrom = this.filter.datetimefrom;
+    this.dateto = this.filter.datetimeto;
+    this.angerfrom = this.filter.angervolfrom;
+    this.angerto = this.filter.angervolto;
+    this.pausefrom = this.filter.pausefrom;
+    this.pauseto = this.filter.pauseto;
+    this.batchid = this.filter.batchid;
+    this.filename = this.filter.filename;
+    this.callfrom = this.filter.minutesfrom;
+    this.callto = this.filter.minutesto;
+    this.keywordsOnly = this.filter.keywordsOnly;
+    this.tagsOnly = this.filter.tagsOnly;
+    this.missingOnly = this.filter.missingOnly;
+    this.favoriteOnly = this.filter.favoriteOnly;
+    this.keywordsContain = !this.keywordsContain.length ? this.filter["keywordsContain"] && this.filter["keywordsContain"].split(',').map(v => ({value: v, display: v})) || [] : this.keywordsContain;
+    this.keywordsNotContain = this.filter["keywordsNotContain"] && this.filter["keywordsNotContain"].split(',').map(v => ({value: v, display: v})) || [];
+    this.tagsContain = this.filter["tagsContain"] && this.filter["tagsContain"].split(',').map(v => ({value: v, display: v})) || [];
+    this.paginationNum = this.filter.itemsn || 100;
+  }
+
   getPage(page = 0, parameters = this.filter) {
     // this.isLoading = true;
     const params = (this.filter = {
@@ -333,7 +365,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     const c = b + 0;
 
     // Return a CSS HSL string
-    return 'hsl(' + c + ', 100%, 50%)';
+    return "hsl(" + c + ", 50%, 50%)";
   }
 
   getOpacityLevelPause(val) {
@@ -375,6 +407,15 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
       case "emotion":
         sortName = "Emotion";
+        break;
+      case "batchId":
+        sortName = "BatchId";
+        break;
+      case "stopWords":
+        sortName = "Stopwords";
+        break;
+      case "compliance":
+        sortName = "Compliance";
         break;
       case "avgpause":
         sortName = "AvgPause";
@@ -522,7 +563,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
           : "",
       batchid: (this.batchid && "" + this.batchid) || "",
       filename: this.filename,
-      minutesfrom: (this.callfrom && "" + this.callfrom) || "",
+      // minutesfrom: (this.callfrom && "" + this.callfrom) || "",
+      minutesfrom: this.callfrom + '',
       minutesto:
         this.callfrom || this.callto
           ? "" + (this.callfrom > this.callto ? 10000 : this.callto)
@@ -530,7 +572,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       keywordsOnly: this.keywordsOnly,
       tagsOnly: this.tagsOnly,
       missingOnly: this.missingOnly,
-      favoriteOnly: this.favoriteOnly,
+      favoriteOnly: this.favoriteOnly
     };
     if (this.keywordsContain && this.keywordsContain.length) {
       this.filter["keywordsContain"] = this.keywordsContain
@@ -569,7 +611,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
           this.filter[key] === null) &&
         delete this.filter[key]
     );
-    this.getPage(0, this.filter);
+    Object.keys(this.filter).map(key => (this.filter[key] === undefined || this.filter[key] === "undefined") && delete this.filter[key]);
+    this.filesService.setFilter(this.filter);
+    this.getPage((this.filter.pagen - 1) || 0, this.filter);
   }
 
   t(v) {
@@ -590,8 +634,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getMisswords(item) {
     return item.misswords && item.misswords.length
-    ? item.misswords.join(", ")
-    : "";
+      ? item.misswords.join(", ")
+      : "";
   }
 
   getStopwords(item) {
@@ -639,9 +683,13 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
 
-    const index = c.findIndex(el => el.value === tag.value);
+    const tagVal = tag && tag.value || tag;
+    if (tagVal === "") {
+      return;
+    }
+    const index = c.findIndex(el => el.value === tagVal);
     c.splice(index, 1);
-    const val = tag.value.split(",").map(v => v.trim());
+    const val = tagVal.split(",").map(v => v.trim());
     c = val.map(v =>
       c.push({
         value: v,
@@ -652,13 +700,16 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   showModal(ref, item) {
     this.editedFileItem = item;
-    this.itemTags = item.tags && item.tags.map(v => ({
-      value: v,
-      display: v
-    })) || [];
+    this.itemTags =
+      (item.tags &&
+        item.tags.map(v => ({
+          value: v,
+          display: v
+        }))) ||
+      [];
     this.hideModal();
     this.modalRef = this.modalService.show(ref, {
-      class: 'modal-xl',
+      class: "modal-xl"
     });
   }
 
@@ -671,52 +722,50 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   saveTags() {
     const tags = this.itemTags.map(v => v.value);
     const params = {
-      'fileid': {
-        'batchid': this.editedFileItem.batchid,
-        'fileid': this.editedFileItem.fileid,
+      fileid: {
+        batchid: this.editedFileItem.batchid,
+        fileid: this.editedFileItem.fileid
       },
-      'fileinfo': {
-        'filename': this.editedFileItem.filename,
-        'comment': this.editedFileItem.comment || '',
-        'pin': this.editedFileItem.pin,
-        'tags': tags || [],
-      },
+      fileinfo: {
+        filename: this.editedFileItem.filename,
+        comment: this.editedFileItem.comment || "",
+        pin: this.editedFileItem.pin,
+        tags: tags || []
+      }
     };
-    this.filesService.updateFileInfo(params)
-      .subscribe(
-        res => {
-          this.refresh();
-        },
-        e => (this.errorMessage = e.error.message)
-      );
+    this.filesService.updateFileInfo(params).subscribe(
+      res => {
+        this.refresh();
+      },
+      e => (this.errorMessage = e.error.message)
+    );
     this.editedFileItem = null;
     this.hideModal();
   }
 
   markFavorite(item) {
     const params = {
-      'fileid': {
-        'batchid': item.batchid,
-        'fileid': item.fileid,
+      fileid: {
+        batchid: item.batchid,
+        fileid: item.fileid
       },
-      'fileinfo': {
-        'filename': item.filename,
-        'comment': item.comment || '',
-        'pin': `${!this.getBool(item.pin)}`,
-        'tags': item.tags || [],
-      },
+      fileinfo: {
+        filename: item.filename,
+        comment: item.comment || "",
+        pin: `${!this.getBool(item.pin)}`,
+        tags: item.tags || []
+      }
     };
-    this.filesService.updateFileInfo(params)
-      .subscribe(
-        res => {
-          this.refresh();
-        },
-        e => (this.errorMessage = e.error.message)
-      );
+    this.filesService.updateFileInfo(params).subscribe(
+      res => {
+        this.refresh();
+      },
+      e => (this.errorMessage = e.error.message)
+    );
   }
 
   getBool(v) {
-    return v === 'true';
+    return v === "true";
   }
 
   ngOnDestroy() {

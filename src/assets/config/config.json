@@ -39,8 +39,8 @@
 			"show": true
 		}
     },
-    "colors": {
-        "primary": "rgb(0, 172, 217)",
-        "secondary": "rgb(0, 172, 217)"
-    }
+  "colors": {
+      "primary": "rgb(51, 153, 204)",
+      "secondary": "rgb(51, 153, 204)"
+  }
 }
