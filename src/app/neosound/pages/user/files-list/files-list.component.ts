@@ -167,6 +167,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getPage(page = 0, parameters = this.filter) {
+    this.isLoadingSpinner = true;
     // this.isLoading = true;
     const params = (this.filter = {
       ...parameters,
