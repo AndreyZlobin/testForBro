@@ -100,6 +100,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   private sideFilterHasClass = false;
   modalRef: BsModalRef;
   editedFileItem;
+  currentTagEditIndex;
 
   constructor(
     private filesService: FilesService,
@@ -376,7 +377,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     if (val < 1) {
       result = 0;
     }
-    result = val / 20;
+    result = val / 50;
     return "rgba(5, 5, 255, " + result + ")";
   }
 
@@ -698,7 +699,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  showModal(ref, item) {
+  showModal(ref, item, index) {
+    this.currentTagEditIndex = index;
     this.editedFileItem = item;
     this.itemTags =
       (item.tags &&
@@ -721,6 +723,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   saveTags() {
     const tags = this.itemTags.map(v => v.value);
+    if (this.files[this.currentTagEditIndex]) {
+      this.files[this.currentTagEditIndex].tags = tags;
+    }
     const params = {
       fileid: {
         batchid: this.editedFileItem.batchid,
@@ -743,7 +748,10 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.hideModal();
   }
 
-  markFavorite(item) {
+  markFavorite(item, index) {
+    if (this.files && this.files[index]) {
+      this.files[index].pin = !this.getBool(item.pin);
+    }
     const params = {
       fileid: {
         batchid: item.batchid,
