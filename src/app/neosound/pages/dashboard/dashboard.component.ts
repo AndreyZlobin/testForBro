@@ -9,7 +9,7 @@ import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
 import ColorScheme from "color-scheme";
 
-const colors = ['#c12e34', '#e6b600', '#0098d9', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487'];
+export const colors = ['#c12e34', '#e6b600', '#0098d9', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487']; //shine
 
 const rgbToHex = rgb => {
   let hex = Number(rgb).toString(16);
@@ -606,5 +606,9 @@ export class DashboardComponent implements OnInit {
 
   isSpanish() {
     return this.lang.checkLanguage("sp");
+  }
+
+  getColor(i) {
+    return colors[i];
   }
 }
