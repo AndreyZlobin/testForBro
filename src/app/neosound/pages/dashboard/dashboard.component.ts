@@ -274,7 +274,7 @@ export class DashboardComponent implements OnInit {
       if (data) {
         this.hasSankey = true;
       }
-      if (data.nouns) {
+      if (data.words) {
         this.sankey1 = {
           tooltip: {
             trigger: "item",
@@ -354,7 +354,7 @@ export class DashboardComponent implements OnInit {
           }
         };
       }
-      if (data.words) {
+      if (data.nouns) {
         this.sankey2 = {
           tooltip: {
             trigger: "item",

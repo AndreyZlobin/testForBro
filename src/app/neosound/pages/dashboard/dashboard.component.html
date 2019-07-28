@@ -201,11 +201,13 @@
       <ngx-total-by-queries-chart-pie [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
       </ngx-total-by-queries-chart-pie>
     </div>
-    <div class="col-6 mb-3" *ngIf="sankey6">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Popular Words Sentiment')}}</div>
+    <div class="col-6 mb-3" *ngIf="sankey1">
+    </div>
+    <div class="col-6 mb-3" *ngIf="sankey1">
+      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
+        <div class="card-header">{{t('Popular Words')}}</div>
         <div class="card-body">
-          <div echarts [options]="sankey6"></div>
+          <div echarts [options]="sankey1"></div>
         </div>
       </div>
     </div>
@@ -219,11 +221,12 @@
         </div>
       </div>
     </div>
-    <div class="col-6 mb-3" *ngIf="sankey1">
-      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
-        <div class="card-header">{{t('Popular Words')}}</div>
+
+    <div class="col-6 mb-3" *ngIf="sankey6">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">{{t('Popular Words Sentiment')}}</div>
         <div class="card-body">
-          <div echarts [options]="sankey1"></div>
+          <div echarts [options]="sankey6"></div>
         </div>
       </div>
     </div>
