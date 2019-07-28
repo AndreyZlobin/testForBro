@@ -48,7 +48,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   angertoAll = true;
   pausefromAll = true;
   pausetoAll = true;
-  keywordsOnly = false;
+  stopOnly = false;
   tagsOnly = false;
   missingOnly = false;
   favoriteOnly = false;
@@ -156,7 +156,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filename = this.filter.filename;
     this.callfrom = this.filter.minutesfrom;
     this.callto = this.filter.minutesto;
-    this.keywordsOnly = this.filter.keywordsOnly;
+    this.stopOnly = this.filter.stopOnly;
     this.tagsOnly = this.filter.tagsOnly;
     this.missingOnly = this.filter.missingOnly;
     this.favoriteOnly = this.filter.favoriteOnly;
@@ -506,7 +506,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.angertoAll = true;
     this.pausefromAll = true;
     this.pausetoAll = true;
-    this.keywordsOnly = false;
+    this.stopOnly = false;
     this.tagsOnly = false;
     this.missingOnly = false;
     this.favoriteOnly = false;
@@ -566,12 +566,12 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       batchid: (this.batchid && "" + this.batchid) || "",
       filename: this.filename,
       // minutesfrom: (this.callfrom && "" + this.callfrom) || "",
-      minutesfrom: this.callfrom + '',
+      minutesfrom: this.callfrom == null ? '' : this.callfrom + '',
       minutesto:
         this.callfrom || this.callto
           ? "" + (this.callfrom > this.callto ? 10000 : this.callto)
           : "",
-      keywordsOnly: this.keywordsOnly,
+      stopOnly: this.stopOnly,
       tagsOnly: this.tagsOnly,
       missingOnly: this.missingOnly,
       favoriteOnly: this.favoriteOnly
