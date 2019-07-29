@@ -126,14 +126,14 @@
         [apiStatData]="apiStat" [colorsData]="colors">
       </ngx-total-minutes-by-day-chart-line>
     </div>
-    <div class="col-6 mb-3" *ngIf="sankey1">
-      <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
-        <div class="card-header">{{t('Popular Words')}}</div>
-        <div class="card-body">
-          <div echarts [options]="sankey1"></div>
+    <div class="col-6 mb-3" *ngIf="keyWord2Chart">
+        <div class="card" style="min-height: calc(100% - 15px);">
+          <div class="card-header">{{t('Hits vs. Word')}}</div>
+          <div class="card-body pl-0 pr-0">
+            <div echarts [options]="keyWord2Chart"></div>
+          </div>
         </div>
       </div>
-    </div>
     <div class="col-6 mb-3" *ngIf="keywords2.length > 0">
       <div class="card  card-block d-flex h-100">
         <div class="card-header">{{t('Most frequently used words')}}</div>

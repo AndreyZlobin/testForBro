@@ -48,6 +48,7 @@ export class DashboardComponent implements OnInit {
   public users$: Observable<any>;
   public barChart: any;
   public keyWordChart: any;
+  public keyWord2Chart: any;
 
   public totals = {};
   public data_2 = [];
@@ -284,14 +285,18 @@ export class DashboardComponent implements OnInit {
           weight: data.keywords[key]
         };
       });
-      const sortedKeywords = Object.keys(data.keywords).map(key => {
-        return {
-          name: key,
-          value: data.keywords[key],
-        };
-      }).sort((a, b) => b.value - a.value).slice(0, 10).reverse();
+      const sortedKeywords = Object.keys(data.keywords)
+        .map(key => {
+          return {
+            name: key,
+            value: data.keywords[key]
+          };
+        })
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 10)
+        .reverse();
       this.keyWordChart = {
-        color: [ '#3399cc' ],
+        color: ["#3399cc"],
         grid: {
           left: 100
         },
@@ -301,23 +306,23 @@ export class DashboardComponent implements OnInit {
         yAxis: {
           type: "category",
           name: this.t("Stopwords"),
-          data: sortedKeywords.map((i) => i.name)
+          data: sortedKeywords.map(i => i.name)
         },
         xAxis: {
           type: "value",
-          name: this.t("Hits"),
+          name: this.t("Hits")
         },
         series: [
           {
             name: "%",
             type: "bar",
-            data: sortedKeywords.map((i) => i.value),
+            data: sortedKeywords.map(i => i.value),
             label: {
               normal: {
-                  position: 'right',
-                  show: true
+                position: "right",
+                show: true
               }
-          },
+            }
           }
         ]
       };
@@ -606,6 +611,41 @@ export class DashboardComponent implements OnInit {
       }
       if (data.popularWords) {
         this.keywords2 = data.popularWords;
+        const sortedKeywords = data.popularWords
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 10)
+          .reverse();
+        this.keyWord2Chart = {
+          color: ["#3399cc"],
+          grid: {
+            left: 100
+          },
+          legend: {
+            data: ["Keywords"]
+          },
+          yAxis: {
+            type: "category",
+            name: this.t("Words"),
+            data: sortedKeywords.map(i => i.text)
+          },
+          xAxis: {
+            type: "value",
+            name: this.t("Hits")
+          },
+          series: [
+            {
+              name: "%",
+              type: "bar",
+              data: sortedKeywords.map(i => i.weight),
+              label: {
+                normal: {
+                  position: "right",
+                  show: true
+                }
+              }
+            }
+          ]
+        };
       }
     });
   }
