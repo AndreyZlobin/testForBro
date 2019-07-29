@@ -549,7 +549,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   filterIt() {
     this.isLoadingSpinner = true;
-    debugger
     if(this.filter) {
       this.filter["keywordsContain"] = null;
       this.filter["keywordsNotContain"] = null;

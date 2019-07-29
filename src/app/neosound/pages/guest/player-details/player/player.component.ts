@@ -43,11 +43,10 @@ export class PlayerComponent implements OnInit, OnDestroy {
               this.wavesurfer = WaveSurfer.create({
                 container: "#waveform",
                 progressColor: "#3399CC",
-                waveColor: "#1CACE3",
+                waveColor: "#F0F0F0",
                 normalize: true,
-                //renderer: CanvasDrawer,
-                //barWidth: 3,
-                height: 60,
+                renderer: CanvasDrawer,
+                height: 30,
                 splitChannels: true,
                 backend: "MediaElement",
                 plugins: [
@@ -87,7 +86,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.regions.map(region => {
         this.wavesurfer.addRegion({ ...region, drag: false });
       });
-      //this.wavesurfer.enableDragSelection(false)
+      this.wavesurfer.enableDragSelection(false)
     }
   }
   ngOnDestroy() {

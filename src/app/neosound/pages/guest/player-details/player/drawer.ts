@@ -43,14 +43,6 @@ export default class Drawer extends util.Observer {
          */
         this.wrapper = null;
     }
-
-    /**
-     * Alias of `util.style`
-     *
-     * @param {HTMLElement} el The element that the styles will be applied to
-     * @param {Object} styles The map of propName: attribute, both are used as-is
-     * @return {HTMLElement} el
-     */
     style(el, styles) {
         return util.style(el, styles);
     }
@@ -90,7 +82,7 @@ export default class Drawer extends util.Observer {
      * @param {?boolean} noPrevent Set to true to not call `e.preventDefault()`
      * @return {number} Playback position from 0 to 1
      */
-    handleEvent(e, noPrevent?: boolean) {
+    handleEvent(e, noPrevent = null) {
         !noPrevent && e.preventDefault();
 
         const clientX = e.targetTouches
@@ -163,7 +155,7 @@ export default class Drawer extends util.Observer {
         if (!this.setWidth(length)) {
             this.clearWave();
         }
-        this.drawBars(peaks, 0, start, end);
+        this.drawBars(peaks, 0, start, end)
     }
 
     /**
@@ -192,7 +184,7 @@ export default class Drawer extends util.Observer {
      * @param {number} position X-offset in pixels
      * @param {boolean} immediate Set to true to immediately scroll somewhere
      */
-    recenterOnPosition(position: any, immediate?: any) {
+    recenterOnPosition(position, immediate = null) {
         const scrollLeft = this.wrapper.scrollLeft;
         const half = ~~(this.wrapper.clientWidth / 2);
         const maxScroll = this.wrapper.scrollWidth - this.wrapper.clientWidth;

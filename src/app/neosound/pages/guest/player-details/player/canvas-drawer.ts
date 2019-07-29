@@ -21,6 +21,7 @@ export default class CanvasDrawer extends Drawer {
   progressWave: any;
   EntryClass: any;
   overlap: any;
+  barWidth: number = 3;
 
   constructor(container, params) {
     super(container, params);
@@ -110,9 +111,6 @@ export default class CanvasDrawer extends Drawer {
     this.updateCursor();
   }
 
-  /**
-   * Update cursor style
-   */
   updateCursor() {
     this.style(this.progressWave, {
       borderRightWidth: this.params.cursorWidth + "px",
@@ -186,7 +184,6 @@ export default class CanvasDrawer extends Drawer {
 
     this.canvases.push(entry);
   }
-
   removeCanvas() {
     let lastEntry = this.canvases[this.canvases.length - 1];
 
@@ -206,15 +203,16 @@ export default class CanvasDrawer extends Drawer {
 
     this.canvases.pop();
   }
-
   updateDimensions(entry, width, height) {
     const elementWidth = Math.round(width / this.params.pixelRatio);
     const totalWidth = Math.round(this.width / this.params.pixelRatio);
 
+    // update canvas dimensions
     entry.updateDimensions(elementWidth, totalWidth, width, height);
+
+    // style element
     this.style(this.progressWave, { display: "block" });
   }
-
   clearWave() {
     this.canvases.forEach(entry => entry.clearWave());
   }
@@ -231,9 +229,9 @@ export default class CanvasDrawer extends Drawer {
           return;
         }
         // Skip every other value if there are negatives.
-        const peakIndexScale = hasMinVals ? 2 : 1;
+        const peakIndexScale = 1;
         const length = peaks.length / peakIndexScale;
-        const bar = this.params.barWidth * this.params.pixelRatio;
+        const bar = this.barWidth * this.params.pixelRatio;
         const gap =
           this.params.barGap === null
             ? Math.max(this.params.pixelRatio, ~~(bar / 2))
@@ -247,15 +245,15 @@ export default class CanvasDrawer extends Drawer {
         const first = start;
         const last = end;
         let i = first;
-        //debugger;
+
         for (i; i < last; i += step) {
-          const peak = peaks[Math.floor(i * scale * peakIndexScale)] || 0;
-          const h = Math.round((Math.abs(peak) / absmax));
+          const peak = Math.abs(peaks[Math.floor(i * scale * peakIndexScale)]);
+          const h = Math.round((peak / absmax) * halfH) + 1;
           this.fillRect(
             i + this.halfPixel,
-            120,
+            this.height - h,
             bar + this.halfPixel,
-            -Math.abs(peak)
+            this.height
           );
         }
       }
@@ -267,6 +265,7 @@ export default class CanvasDrawer extends Drawer {
       entry.drawLines(peaks, absmax, halfH, offsetY, start, end);
     });
   }
+
   fillRect(x, y, width, height) {
     const startCanvas = Math.floor(x / this.maxCanvasWidth);
     const endCanvas = Math.min(
@@ -297,6 +296,7 @@ export default class CanvasDrawer extends Drawer {
       }
     }
   }
+
   prepareDraw(peaks, channelIndex, start, end, fn) {
     return util.frame(() => {
       // Split channels and call this function with the channelIndex set
@@ -312,17 +312,19 @@ export default class CanvasDrawer extends Drawer {
         }
         peaks = channels[0];
       }
-      let absmax = 1 / this.params.barHeight;
+      // calculate maximum modulation value, either from the barHeight
+      // parameter or if normalize=true from the largest value in the peak
+      // set
+      let absmax = 1 / this.height;
       const max = util.max(peaks);
       const min = util.min(peaks);
       absmax = -min > max ? -min : max;
-
       // Bar wave draws the bottom only as a reflection of the top,
       // so we don't need negative values
       const hasMinVals = [].some.call(peaks, val => val < 0);
       const height = this.params.height * this.params.pixelRatio;
       const offsetY = height * channelIndex || 0;
-      const halfH = height / 2;
+      const halfH = height;
       return fn({
         absmax: absmax,
         hasMinVals: hasMinVals,
@@ -336,6 +338,21 @@ export default class CanvasDrawer extends Drawer {
 
   setFillStyles(entry) {
     entry.setFillStyles(this.params.waveColor, this.params.progressColor);
+  }
+
+  getImage(format, quality, type) {
+    if (type === "blob") {
+      return Promise.all(
+        this.canvases.map(entry => {
+          return entry.getImage(format, quality, type);
+        })
+      );
+    } else if (type === "dataURL") {
+      let images = this.canvases.map(entry =>
+        entry.getImage(format, quality, type)
+      );
+      return images.length > 1 ? images : images[0];
+    }
   }
 
   updateProgress(position) {
