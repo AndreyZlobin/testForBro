@@ -300,7 +300,7 @@ export class DashboardComponent implements OnInit {
         },
         yAxis: {
           type: "category",
-          name: this.t("Keyword"),
+          name: this.t("Stopwords"),
           data: sortedKeywords.map((i) => i.name)
         },
         xAxis: {
