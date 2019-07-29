@@ -549,9 +549,13 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   filterIt() {
     this.isLoadingSpinner = true;
-    this.filter["keywordsContain"] = null;
-    this.filter["keywordsNotContain"] = null;
-    this.filter["tagsContain"] = null;
+    debugger
+    if(this.filter) {
+      this.filter["keywordsContain"] = null;
+      this.filter["keywordsNotContain"] = null;
+      this.filter["tagsContain"] = null;
+    }
+
     this.filter = {
       ...this.filter,
       datetimefrom: this.datefrom || "",
