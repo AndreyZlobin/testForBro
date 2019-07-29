@@ -48,7 +48,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   angertoAll = true;
   pausefromAll = true;
   pausetoAll = true;
-  keywordsOnly = false;
+  stopOnly = false;
   tagsOnly = false;
   missingOnly = false;
   favoriteOnly = false;
@@ -100,6 +100,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   private sideFilterHasClass = false;
   modalRef: BsModalRef;
   editedFileItem;
+  currentTagEditIndex;
 
   constructor(
     private filesService: FilesService,
@@ -155,7 +156,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filename = this.filter.filename;
     this.callfrom = this.filter.minutesfrom;
     this.callto = this.filter.minutesto;
-    this.keywordsOnly = this.filter.keywordsOnly;
+    this.stopOnly = this.filter.stopOnly;
     this.tagsOnly = this.filter.tagsOnly;
     this.missingOnly = this.filter.missingOnly;
     this.favoriteOnly = this.filter.favoriteOnly;
@@ -166,6 +167,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getPage(page = 0, parameters = this.filter) {
+    this.isLoadingSpinner = true;
     // this.isLoading = true;
     const params = (this.filter = {
       ...parameters,
@@ -376,7 +378,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     if (val < 1) {
       result = 0;
     }
-    result = val / 20;
+    result = val / 50;
     return "rgba(5, 5, 255, " + result + ")";
   }
 
@@ -504,7 +506,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.angertoAll = true;
     this.pausefromAll = true;
     this.pausetoAll = true;
-    this.keywordsOnly = false;
+    this.stopOnly = false;
     this.tagsOnly = false;
     this.missingOnly = false;
     this.favoriteOnly = false;
@@ -547,6 +549,13 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   filterIt() {
     this.isLoadingSpinner = true;
+    debugger
+    if(this.filter) {
+      this.filter["keywordsContain"] = null;
+      this.filter["keywordsNotContain"] = null;
+      this.filter["tagsContain"] = null;
+    }
+
     this.filter = {
       ...this.filter,
       datetimefrom: this.datefrom || "",
@@ -564,12 +573,12 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       batchid: (this.batchid && "" + this.batchid) || "",
       filename: this.filename,
       // minutesfrom: (this.callfrom && "" + this.callfrom) || "",
-      minutesfrom: this.callfrom + '',
+      minutesfrom: this.callfrom == null ? '' : this.callfrom + '',
       minutesto:
         this.callfrom || this.callto
           ? "" + (this.callfrom > this.callto ? 10000 : this.callto)
           : "",
-      keywordsOnly: this.keywordsOnly,
+      stopOnly: this.stopOnly,
       tagsOnly: this.tagsOnly,
       missingOnly: this.missingOnly,
       favoriteOnly: this.favoriteOnly
@@ -698,7 +707,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  showModal(ref, item) {
+  showModal(ref, item, index) {
+    this.currentTagEditIndex = index;
     this.editedFileItem = item;
     this.itemTags =
       (item.tags &&
@@ -721,6 +731,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   saveTags() {
     const tags = this.itemTags.map(v => v.value);
+    if (this.files[this.currentTagEditIndex]) {
+      this.files[this.currentTagEditIndex].tags = tags;
+    }
     const params = {
       fileid: {
         batchid: this.editedFileItem.batchid,
@@ -743,7 +756,10 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.hideModal();
   }
 
-  markFavorite(item) {
+  markFavorite(item, index) {
+    if (this.files && this.files[index]) {
+      this.files[index].pin = !this.getBool(item.pin);
+    }
     const params = {
       fileid: {
         batchid: item.batchid,
