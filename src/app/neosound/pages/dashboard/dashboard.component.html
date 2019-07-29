@@ -78,7 +78,7 @@
       </div>
     </div>
     <div class="col-6 mb-3">
-      <div class="card  card-block d-flex h-100">
+      <div class="card card-block d-flex h-100">
         <div class="card-header">{{t('Stopwords')}}</div>
         <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords">
           <angular-tag-cloud [data]="keywords" width="300" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false"
@@ -206,8 +206,6 @@
       </ngx-total-by-queries-chart-pie>
     </div>
     <div class="col-6 mb-3" *ngIf="sankey1">
-    </div>
-    <div class="col-6 mb-3" *ngIf="sankey1">
       <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
         <div class="card-header">{{t('Popular Words')}}</div>
         <div class="card-body">
@@ -243,22 +241,6 @@
       </div>
     </div>
   </div>
-
-  <div class="row">
-  </div>
-
-  <div class="row">
-  </div>
-
-  <div class="row">
-  </div>
-
-  <div class="row">
-  </div>
-
-
-
-
 </div>
 <ng-template #loadingTemplate>
   {{ t("Loading...") }}

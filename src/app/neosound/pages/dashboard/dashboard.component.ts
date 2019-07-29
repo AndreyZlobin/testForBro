@@ -289,7 +289,7 @@ export class DashboardComponent implements OnInit {
           name: key,
           value: data.keywords[key],
         };
-      }).sort((a, b) => a.value - b.value).slice(0, 10);
+      }).sort((a, b) => b.value - a.value).slice(0, 10).reverse();
       this.keyWordChart = {
         color: [ '#3399cc' ],
         grid: {
