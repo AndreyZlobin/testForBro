@@ -285,13 +285,11 @@ export class DashboardComponent implements OnInit {
         };
       });
       const sortedKeywords = Object.keys(data.keywords).map(key => {
-        console.log((data.keywords[key] / this.fileCount));
-        console.log(this.fileCount  );
         return {
           name: key,
           value: (data.keywords[key] / data.tcount) * 100,
         };
-      }).sort((a, b) => a.value - b.value);
+      }).sort((a, b) => a.value - b.value).slice(0, 10);
       this.keyWordChart = {
         color: this.colors,
         grid: {
@@ -306,7 +304,8 @@ export class DashboardComponent implements OnInit {
           data: sortedKeywords.map((i) => i.name)
         },
         xAxis: {
-          type: "value"
+          type: "value",
+          name: this.t("%"),
         },
         series: [
           {
