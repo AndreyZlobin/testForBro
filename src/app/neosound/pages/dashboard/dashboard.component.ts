@@ -9,7 +9,16 @@ import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
 import ColorScheme from "color-scheme";
 
-export const colors = ['#c12e34', '#e6b600', '#0098d9', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487']; //shine
+export const colors = [
+  "#c12e34",
+  "#e6b600",
+  "#0098d9",
+  "#2b821d",
+  "#005eaa",
+  "#339ca8",
+  "#cda819",
+  "#32a487"
+]; //shine
 
 const rgbToHex = rgb => {
   let hex = Number(rgb).toString(16);
@@ -38,6 +47,8 @@ export class DashboardComponent implements OnInit {
   options: any = {};
   public users$: Observable<any>;
   public barChart: any;
+  public keyWordChart: any;
+
   public totals = {};
   public data_2 = [];
   public keywords = [];
@@ -112,15 +123,20 @@ export class DashboardComponent implements OnInit {
         const all = [];
         const silence = [];
         batches
-          .sort((a, b) =>
-            data.batches[b].allCallsN /*+ data.batches[a].angerCallsN + data.batches[a].silentCallsN*/
-            - (data.batches[a].allCallsN/* + data.batches[b].angerCallsN + data.batches[b].silentCallsN*/)
+          .sort(
+            (a, b) =>
+              data.batches[b]
+                .allCallsN /*+ data.batches[a].angerCallsN + data.batches[a].silentCallsN*/ -
+              data.batches[a]
+                .allCallsN /* + data.batches[b].angerCallsN + data.batches[b].silentCallsN*/
           )
-          .slice(0, 6).reverse().forEach(batchName => {
-          all.push(data.batches[batchName].allCallsN);
-          anger.push(data.batches[batchName].angerCallsN);
-          silence.push(data.batches[batchName].silentCallsN);
-        });
+          .slice(0, 6)
+          .reverse()
+          .forEach(batchName => {
+            all.push(data.batches[batchName].allCallsN);
+            anger.push(data.batches[batchName].angerCallsN);
+            silence.push(data.batches[batchName].silentCallsN);
+          });
         const chartData = [
           {
             name: this.t("All"),
@@ -262,13 +278,44 @@ export class DashboardComponent implements OnInit {
       }
     });
     this.filesService.getTagClowd({}).subscribe(data => {
-      // this.keywords2 = comonKeywords;
       this.keywords = Object.keys(data.keywords).map(key => {
         return {
           text: key,
           weight: data.keywords[key]
         };
       });
+      const sortedKeywords = Object.keys(data.keywords).map(key => {
+        console.log((data.keywords[key] / this.fileCount));
+        console.log(this.fileCount  );
+        return {
+          name: key,
+          value: (data.keywords[key] / data.tcount) * 100,
+        };
+      }).sort((a, b) => a.value - b.value);
+      this.keyWordChart = {
+        color: this.colors,
+        grid: {
+          left: 100
+        },
+        legend: {
+          data: ["Keywords"]
+        },
+        yAxis: {
+          type: "category",
+          name: this.t("Keyword"),
+          data: sortedKeywords.map((i) => i.name)
+        },
+        xAxis: {
+          type: "value"
+        },
+        series: [
+          {
+            name: "%",
+            type: "bar",
+            data: sortedKeywords.map((i) => i.value)
+          }
+        ]
+      };
     });
     this.filesService.getEchartData({}).subscribe(data => {
       if (data) {
