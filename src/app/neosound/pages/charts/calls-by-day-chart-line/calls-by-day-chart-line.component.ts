@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FilesService } from '../../../services/files.service';
-import { LanguageService } from '../../../services/language.service';
-import {HttpClient} from "@angular/common/http";
+import { Component, OnInit, Input } from "@angular/core";
+import { FilesService } from "../../../services/files.service";
+import { LanguageService } from "../../../services/language.service";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: 'ngx-calls-by-day-chart-line',
-  templateUrl: './calls-by-day-chart-line.component.html',
-  styleUrls: ['./calls-by-day-chart-line.component.scss']
+  selector: "ngx-calls-by-day-chart-line",
+  templateUrl: "./calls-by-day-chart-line.component.html",
+  styleUrls: ["./calls-by-day-chart-line.component.scss"]
 })
 export class CallsByDayChartLineComponent implements OnInit {
   option2: any = {};
@@ -39,21 +39,20 @@ export class CallsByDayChartLineComponent implements OnInit {
     this.init();
   }
   @Input() set colorsData(data) {
-    this.colors = data;
     this.init();
   }
 
-  constructor(
-    private filesService: FilesService,
-    private http: HttpClient,
-  ) {  }
+  constructor(private filesService: FilesService, private http: HttpClient) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   init() {
-    if (!this.fileStatLoaded || !this.minutesStatLoaded || !this.apiStatLoaded) {
-        return;
+    if (
+      !this.fileStatLoaded ||
+      !this.minutesStatLoaded ||
+      !this.apiStatLoaded
+    ) {
+      return;
     }
     this.isLoading = false;
     this.initChart();
@@ -68,77 +67,79 @@ export class CallsByDayChartLineComponent implements OnInit {
   }
 
   setLine1() {
-    const series = this.fileStat.totals && this.fileStat.totals.countdata
-        && this.fileStat.totals.countdata.series || [];
-    const buff = this.fileStat.totals && this.fileStat.totals.legenddata || [];
-    const legenddata = [buff[1], buff[2], buff[0]];
+    const series =
+      (this.fileStat.totals &&
+        this.fileStat.totals.countdata &&
+        this.fileStat.totals.countdata.series) ||
+      [];
+    const legenddata =
+      (this.fileStat.totals && this.fileStat.totals.legenddata) || [];
     this.option2 = {
-      color: [ '#0098d9', '#e6b600', '#c12e34'],
-      tooltip : {
-        trigger: 'axis',
+      color: ["#c12e34", "#0098d9", "#e6b600"],
+      tooltip: {
+        trigger: "axis",
         axisPointer: {
-          type: 'cross',
+          type: "cross",
           label: {
-            backgroundColor: '#6a7985'
+            backgroundColor: "#6a7985"
           }
         }
       },
       grid: {
-        left: '2%',
-        right: '2%',
+        left: "2%",
+        right: "2%",
         bottom: false,
         containLabel: true
       },
       legend: {
-        data: legenddata
+        data: [legenddata[1], legenddata[2], legenddata[0]],
       },
       xAxis: {
-          type: 'category',
-          data: this.fileStat.totals && this.fileStat.totals.dates || [],
+        type: "category",
+        data: (this.fileStat.totals && this.fileStat.totals.dates) || []
       },
       yAxis: {
-          type: 'value',
-          axisLabel: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            show: false,
-          }
+        type: "value",
+        axisLabel: {
+          show: false
+        },
+        axisTick: {
+          show: false
+        },
+        axisLine: {
+          show: false
+        }
       },
       series: [
         {
-          name: legenddata[1] || '',
+          name: legenddata[1] || "",
           data: series[1] || [],
-          type: 'line',
+          type: "line",
+          smooth: true
+        },
+        {
+          name: legenddata[2] || "",
+          data: series[2] || [],
+          type: "line",
+          smooth: true
+        },
+        {
+          name: legenddata[0] || "",
+          data: series[0] || [],
+          type: "line",
           smooth: true,
           label: {
             normal: {
               show: true,
-              position: 'top'
+              position: "top"
             }
-          },
-        },
-        {
-          name: legenddata[2] || '',
-          data: series[2] || [],
-          type: 'line',
-          smooth: true
-        },
-        {
-          name: legenddata[0] || '',
-          data: series[0] || [],
-          type: 'line',
-          smooth: true
+          }
         }
-      ],
+      ]
     };
   }
 
   onChartInit2(ec) {
     this.echartsInstance2 = ec;
   }
-
 }
