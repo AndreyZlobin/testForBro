@@ -22,7 +22,6 @@ export class CallsByDayChartLineComponent implements OnInit {
   apiStat: any = {};
 
   config = {};
-  colors = ['#c12e34', '#e6b600', '#0098d9', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487']; //shine
 
   @Input() set fileStatData(data) {
     this.fileStat = data;
@@ -71,17 +70,10 @@ export class CallsByDayChartLineComponent implements OnInit {
   setLine1() {
     const series = this.fileStat.totals && this.fileStat.totals.countdata
         && this.fileStat.totals.countdata.series || [];
-    const legenddata = this.fileStat.totals && this.fileStat.totals.legenddata || [];
-    // this.fileStat.totals && this.fileStat.totals.countdata && this.fileStat.totals.countdata.series.map(v => {
-    //     series.push({
-    //         data: v,
-    //         type: 'line',
-    //         smooth: true,
-    //     });
-    // });
+    const buff = this.fileStat.totals && this.fileStat.totals.legenddata || [];
+    const legenddata = [buff[1], buff[2], buff[0]];
     this.option2 = {
-      // color: [this.colors[0], this.colors[6], this.colors[1]],
-      color: this.colors,
+      color: [ '#0098d9', '#e6b600', '#c12e34'],
       tooltip : {
         trigger: 'axis',
         axisPointer: {
@@ -118,8 +110,8 @@ export class CallsByDayChartLineComponent implements OnInit {
       },
       series: [
         {
-          name: legenddata[0] || '',
-          data: series[0] || [],
+          name: legenddata[1] || '',
+          data: series[1] || [],
           type: 'line',
           smooth: true,
           label: {
@@ -130,14 +122,14 @@ export class CallsByDayChartLineComponent implements OnInit {
           },
         },
         {
-          name: legenddata[1] || '',
-          data: series[1] || [],
+          name: legenddata[2] || '',
+          data: series[2] || [],
           type: 'line',
           smooth: true
         },
         {
-          name: legenddata[2] || '',
-          data: series[2] || [],
+          name: legenddata[0] || '',
+          data: series[0] || [],
           type: 'line',
           smooth: true
         }

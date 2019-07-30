@@ -117,14 +117,14 @@
       </div>
     </div>
     <div class="col-6 mb-3">
-      <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"
-        [colorsData]="colors">
-      </ngx-calls-by-day-chart-line>
-    </div>
-    <div class="col-6 mb-3">
       <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat"
         [apiStatData]="apiStat" [colorsData]="colors">
       </ngx-total-minutes-by-day-chart-line>
+    </div>
+    <div class="col-6 mb-3">
+      <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"
+        [colorsData]="colors">
+      </ngx-calls-by-day-chart-line>
     </div>
     <div class="col-6 mb-3" *ngIf="keywords2.length > 0">
       <div class="card  card-block d-flex h-100">
