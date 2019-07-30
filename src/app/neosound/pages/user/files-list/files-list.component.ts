@@ -167,7 +167,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getPage(page = 0, parameters = this.filter) {
-    this.isLoadingSpinner = true;
+    // this.isLoadingSpinner = true;
     // this.isLoading = true;
     const params = (this.filter = {
       ...parameters,
@@ -431,6 +431,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       sortby: sortName,
       sortorder: this.sort === "up" ? "desc" : "asc"
     };
+    this.isLoadingSpinner = true;
     this.getPage(0, this.filter);
 
     this.filesService.setFilter(this.filter);
@@ -523,6 +524,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       // 'sortorder': 'asc',
       // 'export': '',
     };
+    this.isLoadingSpinner = true;
     this.getPage(0, this.filter);
     this.filesService.setFilter(this.filter);
     this.cd.detectChanges();
@@ -549,7 +551,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   filterIt() {
     this.isLoadingSpinner = true;
-    debugger
     if(this.filter) {
       this.filter["keywordsContain"] = null;
       this.filter["keywordsNotContain"] = null;
