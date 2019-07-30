@@ -43,6 +43,7 @@ import { MinutesSecondsPipe } from "./neosound/minutes-seconds.pipe";
 
 import { FilesService } from "./neosound/services/files.service";
 import { PlayerService } from "./neosound/services/player.service";
+import { AnalyticsService } from "./neosound/services/analytics.service";
 import { MediaRecorderService } from "./neosound/services/media-recorder.service";
 import { UsersService } from "./neosound/services/users.service";
 import { RequestsHttpInterceptor } from "./neosound/shared/requests-http.interceptor";
@@ -179,6 +180,7 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     UsersService,
     FilesService,
     PlayerService,
+    AnalyticsService,
     MediaRecorderService,
     {
       provide: HTTP_INTERCEPTORS,
