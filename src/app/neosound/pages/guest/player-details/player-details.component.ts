@@ -8,6 +8,7 @@ import {
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { PlayerService } from "../../../services/player.service";
+import { AnalyticsService } from "../../../services/analytics.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
@@ -69,6 +70,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
     private toastrService: ToastrService,
     private cdRef: ChangeDetectorRef,
     private dataService: DataService,
+    private analyticsService: AnalyticsService
   ) {
     this.fileParams = this.filesService.getQuickFileParams();
     // test file
@@ -258,6 +260,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   play() {
+    this.analyticsService.trackEvent('player', 'togglePlay');
     this.wavesurfer && this.wavesurfer.playPause();
   }
   trackElement(index: number, element: any) {
@@ -273,6 +276,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   copyToClipboard(text: string): void {
+    this.analyticsService.trackEvent('player', 'copyToClipboard');
     const selBox = document.createElement("textarea");
     selBox.style.position = "fixed";
     selBox.style.left = "0";
@@ -385,11 +389,13 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
   zoomIn() {
+    this.analyticsService.trackEvent('player', 'zoomIn');
     if (this.zoomLevel > 20000) return this.zoomLevel;
     this.zoomLevel = this.zoomLevel * 10;
     this.wavesurfer.zoom(this.zoomLevel);
   }
   zoomOut() {
+    this.analyticsService.trackEvent('player', 'zoomOut');
     if (this.zoomLevel < 200) return this.zoomLevel;
     this.zoomLevel = this.zoomLevel / 10;
     this.wavesurfer.zoom(this.zoomLevel);
@@ -462,6 +468,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   gotoPosition(ms) {
+    this.analyticsService.trackEvent('player', 'gotoPosition');
     this.wavesurfer.seekTo(ms / this.wavesurfer.getDuration());
   }
 
@@ -474,6 +481,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   setTab(tab) {
     this.currentTab = tab;
     this.tabsDisabled = true;
+    this.analyticsService.trackEvent('player', 'setTab', tab);
     setTimeout(() => (this.tabsDisabled = false), 3000);
     switch (tab) {
       case "anger":
