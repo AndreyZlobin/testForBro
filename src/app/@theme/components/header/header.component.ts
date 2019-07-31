@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
-import { AnalyticsService } from '../../../@core/utils/analytics.service';
+import { AnalyticsService } from '../../../neosound/services/analytics.service';
 import { LayoutService } from '../../../@core/data/layout.service';
 import { Router } from '@angular/router';
 import { UsersService } from '../../../neosound/services/users.service';
@@ -65,7 +65,6 @@ export class HeaderComponent implements OnInit {
   }
 
   startSearch() {
-    this.analyticsService.trackEvent('startSearch');
   }
 
   navigate(url) {
@@ -74,6 +73,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    this.analyticsService.trackEvent('user', 'logout');
     localStorage.removeItem('user');
     localStorage.removeItem('apikey');
     this.navigate('/auth/login');
@@ -103,6 +103,7 @@ export class HeaderComponent implements OnInit {
   }
 
   setLanguage(val = 'en') {
+    this.analyticsService.trackEvent('user', 'setLanguage', val);
     localStorage.setItem('lang', val);
   }
 

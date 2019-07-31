@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { CloudData } from "angular-tag-cloud-module";
 
 import { FilesService } from "../../services/files.service";
+import { AnalyticsService } from "../../services/analytics.service";
 import { comonKeywords } from "./data";
 import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
@@ -77,7 +78,8 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private filesService: FilesService,
     private http: HttpClient,
-    private lang: LanguageService
+    private lang: LanguageService,
+    private analyticsService: AnalyticsService,
   ) {
     this.setColors();
   }
@@ -684,6 +686,7 @@ export class DashboardComponent implements OnInit {
     delay: 0.1
   };
   keywordClicked(clicked: CloudData) {
+    this.analyticsService.trackEvent('user', 'keywordClicked');
     this.filesService.setKeyWord(clicked.text);
     this.router.navigateByUrl("/user/files");
   }

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsersService } from '../../../services/users.service';
+import { AnalyticsService } from '../../../services/analytics.service';
 import { FormGroup } from '@angular/forms';
 import { LanguageService } from '../../../services/language.service';
 import { HttpClient } from '@angular/common/http';
@@ -71,6 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private userService: UsersService,
     private http: HttpClient,
     private dataService: DataService,
+    private analyticsService: AnalyticsService,
   ) {
     this.messageSuccess = this.userService.getMessage();
   }
@@ -99,6 +101,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public login() {
+    this.analyticsService.trackEvent('user', 'login');
     const params = {
       'username': this.username,
       'password': this.password,
