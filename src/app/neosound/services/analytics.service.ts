@@ -8,11 +8,7 @@ export class AnalyticsService {
   constructor(public router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        ga("send", {
-          hitType: "pageView",
-          eventCategory: "navigation",
-          eventAction: event.urlAfterRedirects
-        });
+        ga('send', 'pageview', event.urlAfterRedirects);
       }
     });
   }
@@ -23,7 +19,7 @@ export class AnalyticsService {
   public trackEvent(
     eventCategory: string,
     eventAction: string,
-    eventValue: string = ""
+    eventValue: string = null
   ) {
     ga("send", {
       hitType: "event",
