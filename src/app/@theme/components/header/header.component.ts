@@ -121,6 +121,10 @@ export class HeaderComponent implements OnInit {
         return 'English';
     }
   }
+  showUpload() {
+    this.analyticsService.trackEvent('user', 'upload');
+    this.showUploadDialog = !this.showUploadDialog;
+  }
 
   t(v) {
     return LanguageService.t(v);
