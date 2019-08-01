@@ -702,6 +702,9 @@ export class DashboardComponent implements OnInit {
   isSpanish() {
     return this.lang.checkLanguage("sp");
   }
+  isRussian() {
+    return this.lang.checkLanguage("ru");
+  }
 
   getColor(i) {
     return colors[i];

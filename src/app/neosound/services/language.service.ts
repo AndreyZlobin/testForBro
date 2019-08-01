@@ -315,13 +315,13 @@ const translationsRu = {
   'Containing keywords': 'Содержат ключ.слова',
   'Call Duration, minutes': 'Продолжительность звонка, минут',
   'Call duration, minutes': 'Продолжительность звонка, минут',
-  'Dashboard': 'Метрики',
+  'Dashboard': 'Панель управления',
   'Log': 'Журнал',
   'Number Of Calls': 'Кол-во звонков',
   'Most frequently used words': 'Наиболее часто используемые слова',
 
   // dashboard start
-  'Welcome on board': "Добро пожаловать на борт",
+  'Welcome on board': "Добро пожаловать",
   'How to upload files': `Как загружать файлы`,
   'Number of calls by top 6 batches': `Количество звонков по топ 6 агентам`,
   'Processed calls': `Обработанные звонки`,
@@ -385,12 +385,19 @@ const translationsRu = {
     'Filter calls with stopwords': 'Показывать только звонки со стоп-словами',
     'Words': 'Слова',
     'Filter calls with missing words': 'Показывать только звонки с пропущенными словами',
-    'Filter favorite calls': 'Показывать только любимые звонки',
+    'Filter favorite calls': 'Только отмеченные',
     'Tags': 'Метки',
     'Close': 'Закрыть',
     'Save': 'Сохранить',
     'Add Tag': 'Добавить метку',
     'Compliance': 'Соответствие',
+    'Hits vs. Stopwords': 'Стоп-слова по популярности',
+    'Hits vs. Word': 'Слова по популярности',
+    'Total minutes by batches': 'Объём аудио, по группам',
+    'Calls by days': 'Типы звонков загруженные по дням',
+    'Totals by queries': 'Запросы',
+    'Total minutes by days': 'Объём аудио, загруженное по дням',
+    'SFTP Upload': 'Загрузка файлов на SFTP',
 };
 
 @Injectable()

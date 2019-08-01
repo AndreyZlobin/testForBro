@@ -173,6 +173,37 @@
                 {{t('For best results, the audio source should be captured and transmitted using a lossless encoding (FLACor LINEAR16). The accuracy of the speech recognition can be reduced if lossy codecs are used to capture or transmit audio, particularly if background noise is present. Lossy codecs include MULAW, AMR, AMR_WB, OGG_OPUS, and SPEEX_WITH_HEADER_BYTE.')}}
               </p>
             </div>
+            <div *ngIf="isRussian()">
+              <h4 class="card-text" style="line-height: 2.0;">{{t('SFTP Upload')}}</h4>
+              <ul style="line-height: 2.0;">
+                <li>Сервер: <strong>sftp.neosound.eu, порт: 22</strong></li>
+                <li>Имя пользователя и пароль - учетные данные вашей учетной записи.</li>
+                <li>
+                  После подключения перейдите в папку "/files" и создайте или загрузите отдельные подпапки внутри папки
+                  "/files" для каждого агента, например, "/files/".
+                </li>
+                <li>
+                  Записанные вызовы должны быть загружены в папку агента внутри папки "/files", например,
+                  "/files/agent_name".
+                  <div class="card-text my-3" style="line-height: 2.0;">
+                    <h6>{{t('ВАЖНО')}}</h6>
+                    Файлы, загруженные в корневую папку '/files', НЕ будут обрабатываться! Поэтому, пожалуйста,
+                    убедитесь, что файлы загружены в подпапку, например, '/files/agent_name'. Это единственный способ
+                    получения статистики по агентам.
+                  </div>
+                </li>
+                <li> Обработка файлов начнется вскоре после загрузки.</li>
+                <li>
+                  После обработки эти файлы исчезнут из папки SFTP, поэтому никто не сможет загрузить их с SFTP
+                </li>
+              </ul>
+              <h4 class="card-text" style="line-height: 2.0;">Аудио формат</h4>
+              <p class="card-text" style="line-height: 2.0;">
+                Для достижения наилучших результатов аудио должно быть записано с помощью без потерь качества (lossless
+                encoding FLACor LINEAR16). Точность распознавания речи может быть снижена, если используются кодеки с
+                потерями качества, особенно если присутствуют фоновые шумы. Примеры не подходящих кодеков: MULAW, AMR,
+                AMR_WB, OGG_OPUS и SPEEX_WITH_HEADER_BYTE.</p>
+            </div>
             <div *ngIf="isSpanish()">
               <!-- <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4> -->
               <p class="card-text" style="line-height: 2.0;">
