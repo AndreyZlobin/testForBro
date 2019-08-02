@@ -528,7 +528,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   getCompliancePercents() {
     if (this.misswords.length || this.misswordsNotFound.length) {
       const perc = this.misswords.length / (this.misswords.length + this.misswordsNotFound.length);
-      return Math.round(perc * 100)  + '%';
+      return Math.round(perc * 10000)/100  + '%';
     }
     return 'N/A';
   }
