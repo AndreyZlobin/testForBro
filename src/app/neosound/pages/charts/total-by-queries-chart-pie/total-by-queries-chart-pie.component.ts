@@ -102,5 +102,4 @@ export class TotalByQueriesChartPieComponent implements OnInit {
     this.echartsInstance5 = ec;
   }
 
-
 }

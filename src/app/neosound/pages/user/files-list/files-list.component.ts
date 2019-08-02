@@ -6,6 +6,7 @@ import {
   OnDestroy
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
+import { AnalyticsService } from "../../../services/analytics.service";
 import { DatepickerOptions } from "ng2-datepicker";
 import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import { LanguageService } from "../../../services/language.service";
@@ -108,7 +109,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private dataService: DataService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private analyticsService: AnalyticsService,
   ) {}
 
   ngOnInit() {
@@ -167,7 +169,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getPage(page = 0, parameters = this.filter) {
-    this.isLoadingSpinner = true;
+    // this.isLoadingSpinner = true;
     // this.isLoading = true;
     const params = (this.filter = {
       ...parameters,
@@ -280,6 +282,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
 
   refresh() {
+    this.analyticsService.trackEvent('fileList', 'refresh');
     this.getPage(this.page);
     // this.filesService.listFiles({}).subscribe(res => {
     //   if (!res) {
@@ -301,6 +304,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   delete(batchid, filename) {
+    this.analyticsService.trackEvent('fileList', 'delete');
     this.filesService
       .deleteFile({
         batchid,
@@ -389,6 +393,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sortTable(sortBy) {
+    this.analyticsService.trackEvent('sortTable', sortBy, this.sort);
     if (sortBy !== this.sortBy) {
       this.sort = "up";
     } else {
@@ -431,6 +436,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       sortby: sortName,
       sortorder: this.sort === "up" ? "desc" : "asc"
     };
+    this.isLoadingSpinner = true;
     this.getPage(0, this.filter);
 
     this.filesService.setFilter(this.filter);
@@ -484,6 +490,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   resetFilter() {
+    this.analyticsService.trackEvent('sortTable', 'resetFilter');
     this.dateVisible = false;
     this.datefrom = undefined;
     this.dateto = undefined;
@@ -523,12 +530,14 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       // 'sortorder': 'asc',
       // 'export': '',
     };
+    this.isLoadingSpinner = true;
     this.getPage(0, this.filter);
     this.filesService.setFilter(this.filter);
     this.cd.detectChanges();
   }
 
   exportCSV() {
+    this.analyticsService.trackEvent('fileList', 'exportCSV');
     const params = {
       ...this.filter,
       export: "csv"
@@ -583,6 +592,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       favoriteOnly: this.favoriteOnly
     };
     if (this.keywordsContain && this.keywordsContain.length) {
+      this.analyticsService.trackEvent('fileList', 'filter', 'keywordsContain');
       this.filter["keywordsContain"] = this.keywordsContain
         .map(v =>
           v.value
@@ -593,6 +603,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
         .join(",");
     }
     if (this.keywordsNotContain && this.keywordsNotContain.length) {
+      this.analyticsService.trackEvent('fileList', 'filter', 'keywordsNotContain');
       this.filter["keywordsNotContain"] = this.keywordsNotContain
         .map(v =>
           v.value
@@ -603,6 +614,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
         .join(",");
     }
     if (this.tagsContain && this.tagsContain.length) {
+      this.analyticsService.trackEvent('fileList', 'filter', 'tagsContain');
       this.filter["tagsContain"] = this.tagsContain
         .map(v =>
           v.value
@@ -707,6 +719,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   showModal(ref, item, index) {
+    this.analyticsService.trackEvent('fileList', 'showModal');
     this.currentTagEditIndex = index;
     this.editedFileItem = item;
     this.itemTags =
@@ -723,12 +736,14 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   hideModal() {
+    this.analyticsService.trackEvent('fileList', 'hideModal');
     if (this.modalRef) {
       this.modalRef.hide();
     }
   }
 
   saveTags() {
+    this.analyticsService.trackEvent('fileList', 'saveTags');
     const tags = this.itemTags.map(v => v.value);
     if (this.files[this.currentTagEditIndex]) {
       this.files[this.currentTagEditIndex].tags = tags;
@@ -756,6 +771,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   markFavorite(item, index) {
+    this.analyticsService.trackEvent('fileList', 'markFavorite');
     if (this.files && this.files[index]) {
       this.files[index].pin = !this.getBool(item.pin);
     }

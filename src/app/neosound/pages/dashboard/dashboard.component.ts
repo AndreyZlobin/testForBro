@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { CloudData } from "angular-tag-cloud-module";
 
 import { FilesService } from "../../services/files.service";
+import { AnalyticsService } from "../../services/analytics.service";
 import { comonKeywords } from "./data";
 import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
@@ -11,8 +12,8 @@ import ColorScheme from "color-scheme";
 
 export const colors = [
   "#c12e34",
-  "#e6b600",
   "#0098d9",
+  "#e6b600",
   "#2b821d",
   "#005eaa",
   "#339ca8",
@@ -77,7 +78,8 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private filesService: FilesService,
     private http: HttpClient,
-    private lang: LanguageService
+    private lang: LanguageService,
+    private analyticsService: AnalyticsService,
   ) {
     this.setColors();
   }
@@ -140,20 +142,20 @@ export class DashboardComponent implements OnInit {
           });
         const chartData = [
           {
-            name: this.t("All"),
-            type: "bar",
-            data: all
-          },
-          {
-            name: this.t("Emotional"),
+            name: this.t("emotional"),
             type: "bar",
             data: anger
           },
           {
-            name: this.t("Silence"),
+            name: this.t("silence"),
             type: "bar",
             data: silence
-          }
+          },
+          {
+            name: this.t("all"),
+            type: "bar",
+            data: all
+          },
         ];
         let maxX = 0;
         let maxY = 0;
@@ -201,7 +203,7 @@ export class DashboardComponent implements OnInit {
             }
           },
           legend: {
-            data: ["All", "Emotional", "Silence"]
+            data: ["emotional", "silence", "all"]
           },
           yAxis: {
             type: "category",
@@ -684,6 +686,7 @@ export class DashboardComponent implements OnInit {
     delay: 0.1
   };
   keywordClicked(clicked: CloudData) {
+    this.analyticsService.trackEvent('user', 'keywordClicked');
     this.filesService.setKeyWord(clicked.text);
     this.router.navigateByUrl("/user/files");
   }
@@ -698,6 +701,9 @@ export class DashboardComponent implements OnInit {
 
   isSpanish() {
     return this.lang.checkLanguage("sp");
+  }
+  isRussian() {
+    return this.lang.checkLanguage("ru");
   }
 
   getColor(i) {

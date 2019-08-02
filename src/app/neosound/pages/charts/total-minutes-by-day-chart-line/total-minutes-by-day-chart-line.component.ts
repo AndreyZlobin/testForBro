@@ -94,7 +94,7 @@ export class TotalMinutesByDayChartLineComponent implements OnInit {
 
     this.option4 = {
       // color: [this.colors[0], this.colors[6], this.colors[1]],
-      color: this.colors,
+      color: ['#c12e34', '#e6b600', '#0098d9'],
       tooltip : {
           trigger: 'axis',
           axisPointer: {
