@@ -7,8 +7,8 @@ import { PlayerService } from "../../../../services/player.service";
 import { LanguageService } from "../../../../services/language.service";
 import { Subscription } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
+import { ToastrService } from "ngx-toastr";
+import { BehaviorSubject } from "rxjs";
 
 import CanvasDrawer from "./canvas-drawer";
 
@@ -31,7 +31,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     private filesService: FilesService,
     private playerService: PlayerService,
     private httpClient: HttpClient,
-    private toastrService: ToastrService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit() {
@@ -41,44 +41,45 @@ export class PlayerComponent implements OnInit, OnDestroy {
         this.fileUrl = res.url;
         this.filesService
           .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
-          .subscribe(meta => {
-            if (meta.data && meta.message === "Success") {
-              const peaks = meta.data.data
-              this.wavesurfer = WaveSurfer.create({
-                container: "#waveform",
-                waveColor: "#0098d9",
-                progressColor: "#a4abb3",
-                normalize: true,
-                renderer: CanvasDrawer,
-                height: 30,
-                height: 60,
-                splitChannels: true,
-                backend: "MediaElement",
-                plugins: [
-                  TimelinePlugin.create({
-                    container: "#timelineContainer"
-                  }),
-                  RegionsPlugin.create({})
-                ]
-              });
-              this.wavesurfer.load(this.fileUrl/*, meta.data.data, "auto"*/);
-              this.wavesurfer.on("ready", () => {
-                this.isLoading = false;
-                this.regions.map(region => {
-                  this.wavesurfer.addRegion(region);
+          .subscribe(
+            meta => {
+              if (meta.data && meta.message === "Success") {
+                const peaks = meta.data.data;
+                this.wavesurfer = WaveSurfer.create({
+                  container: "#waveform",
+                  waveColor: "#0098d9",
+                  progressColor: "#a4abb3",
+                  normalize: true,
+                  renderer: CanvasDrawer,
+                  height: 30,
+                  splitChannels: true,
+                  backend: "MediaElement",
+                  plugins: [
+                    TimelinePlugin.create({
+                      container: "#timelineContainer"
+                    }),
+                    RegionsPlugin.create({})
+                  ]
                 });
-              });
-              this.wavesurfer.on("audioprocess", time => {
-                this.playerService.setActive(time);
-              });
-            } else {
-              this.toastrService.error('This file to long to be played');
+                this.wavesurfer.load(this.fileUrl /*, meta.data.data, "auto"*/);
+                this.wavesurfer.on("ready", () => {
+                  this.isLoading = false;
+                  this.regions.map(region => {
+                    this.wavesurfer.addRegion(region);
+                  });
+                });
+                this.wavesurfer.on("audioprocess", time => {
+                  this.playerService.setActive(time);
+                });
+              } else {
+                this.toastrService.error("This file to long to be played");
+              }
+            },
+            error => {
+              this.toastrService.error("This file to long to be played");
             }
-          }, error => {
-            this.toastrService.error('This file to long to be played');
-          });
+          );
       });
-
   }
   t(v) {
     return LanguageService.t(v);
