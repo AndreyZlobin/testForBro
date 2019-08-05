@@ -51,6 +51,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
                 normalize: true,
                 renderer: CanvasDrawer,
                 height: 30,
+                height: 60,
                 splitChannels: true,
                 backend: "MediaElement",
                 plugins: [
@@ -60,7 +61,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
                   RegionsPlugin.create({})
                 ]
               });
-              this.wavesurfer.load(this.fileUrl, meta.data.data, "auto");
+              this.wavesurfer.load(this.fileUrl/*, meta.data.data, "auto"*/);
               this.wavesurfer.on("ready", () => {
                 this.isLoading = false;
                 this.regions.map(region => {
@@ -95,7 +96,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.regions.map(region => {
         this.wavesurfer.addRegion({ ...region, drag: false });
       });
-      this.wavesurfer.enableDragSelection(false)
     }
   }
   ngOnDestroy() {

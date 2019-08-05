@@ -4,11 +4,11 @@ import {
   AfterViewInit,
   OnDestroy,
   HostListener,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  ViewChild
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { PlayerService } from "../../../services/player.service";
-import { AnalyticsService } from "../../../services/analytics.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
@@ -17,13 +17,17 @@ import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
 import { ToastrService } from "ngx-toastr";
 import { DataService } from "../../../shared";
+import { PlayerComponent } from "./player/player.component";
 
 @Component({
   selector: "ngx-player-details",
   templateUrl: "./player-details.component.html",
   styleUrls: ["./player-details.component.scss"]
 })
-export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PlayerDetailsComponent
+  implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild(PlayerComponent)
+  player: PlayerComponent;
   isLoading: boolean = true;
   fileParams;
   results;
@@ -54,11 +58,12 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   duration = 0;
   radioModel = "Log";
   onhold;
-  greySpeaker = '';
+  greySpeaker = "";
+  regions = [];
   @HostListener("document:keyup", ["$event"])
   public handleKeyboardEvent(event: KeyboardEvent): void {
     if (event.code === "Space") {
-      this.play();
+      this.player.play();
       event.stopPropagation();
     }
   }
@@ -69,8 +74,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
     private playerService: PlayerService,
     private toastrService: ToastrService,
     private cdRef: ChangeDetectorRef,
-    private dataService: DataService,
-    private analyticsService: AnalyticsService
+    private dataService: DataService
   ) {
     this.fileParams = this.filesService.getQuickFileParams();
     // test file
@@ -86,7 +90,6 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
           this.filesService.getFile(this.fileParams).subscribe(
             res => {
               this.fileUrl = res.url;
-              this.loadAudio();
             },
             e => {
               this.errorMessage = e.error.message;
@@ -109,160 +112,9 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
         this.errorMessage = e.error.message;
       }
     );
-
-    if (!this.fileParams) {
-      // this.router.navigateByUrl('/');
-    }
-    // if (this.fileParams) {
-    //   this.filesService.getFile(this.fileParams).subscribe(res => {
-    //     this.fileUrl = res.url;
-    //     // this.duration = res.duration;
-    //     // this.initWaveSurfer();
-    //     this.loadAudio();
-    //   },
-    //   (e) => {
-    //     if (e.status === 502 || e.status === 404 || e.status === 429) {this.router.navigateByUrl('/404');}
-    //     this.errorMessage = e.error.message;
-    //   });
-    // }
   }
 
-  ngAfterViewInit() {
-    // const vid: any = document.getElementById("audio1");
-    // vid.onloadeddata = () => {
-    //     this.duration = vid.duration;
-    //     this.initWaveSurfer();
-    // };
-  }
-
-  initWaveSurfer() {
-    this.wavesurfer = WaveSurfer.create({
-      container: "#myWavesurferContainer",
-      waveColor: "#3399CC",
-      progressColor: "#1CACE3",
-      scrollParent: true,
-      splitChannels: true,
-      height: 64,
-      plugins: [
-        RegionsPlugin.create({
-          // plugin options ...
-        }),
-        TimelinePlugin.create({
-          container: "#timelineContainer",
-          timeInterval: pxPerSec => {
-            let retval = 1;
-            if (pxPerSec >= 25 * 100) {
-              retval = 0.01;
-            } else if (pxPerSec >= 25 * 40) {
-              retval = 0.025;
-            } else if (pxPerSec >= 25 * 10) {
-              retval = 0.1;
-            } else if (pxPerSec >= 25 * 4) {
-              retval = 0.25;
-            } else if (pxPerSec >= 25) {
-              retval = 1;
-            } else if (pxPerSec * 5 >= 25) {
-              retval = 5;
-            } else if (pxPerSec * 15 >= 25) {
-              retval = 15;
-            } else {
-              retval = Math.ceil(0.5 / pxPerSec) * 60;
-            }
-            return retval;
-          },
-          primaryLabelInterval: pxPerSec => {
-            let retval = 1;
-            if (pxPerSec >= 25 * 100) {
-              retval = 15;
-            } else if (pxPerSec >= 25 * 40) {
-              retval = 10;
-            } else if (pxPerSec >= 25 * 10) {
-              retval = 15;
-            } else if (pxPerSec >= 25 * 4) {
-              retval = 15;
-            } else if (pxPerSec >= 25) {
-              retval = 15;
-            } else if (pxPerSec * 5 >= 25) {
-              retval = 15;
-            } else if (pxPerSec * 15 >= 25) {
-              retval = 18;
-            } else {
-              retval = Math.ceil(0.5 / pxPerSec) * 60;
-            }
-            return retval;
-          },
-          secondaryLabelInterval: pxPerSec => {
-            return Math.floor(10 / this.timeInterval(pxPerSec));
-          },
-          formatTimeCallback: (seconds, pxPerSec) => {
-            seconds = Number(seconds);
-            const minutes = Math.floor(seconds / 60);
-            seconds = seconds % 60;
-            let secondsStr = Math.round(seconds).toString();
-            if (pxPerSec >= 25 * 10) {
-              secondsStr = seconds.toFixed(0);
-            } else if (pxPerSec >= 25 * 1) {
-              secondsStr = seconds.toFixed(0);
-            }
-            if (minutes > 0) {
-              if (seconds < 10) {
-                secondsStr = "0" + secondsStr;
-              }
-              if (minutes < 10) {
-                return `0${minutes}:${secondsStr}`;
-              }
-              return `${minutes}:${secondsStr}`;
-            }
-            return "00:" + secondsStr;
-          }
-        })
-      ]
-    });
-    this.loadAudio();
-    this.wavesurfer.on("ready", () => {
-      this.wavesurfer.toggleScroll();
-      this.wavesurferReady = true;
-      this.isLoading = false;
-      this.cdRef.detectChanges();
-      this.setRegions();
-    });
-    this.wavesurfer.on("audioprocess", time => {
-      this.playerService.setActtive(time);
-    });
-  }
-
-  timeInterval(pxPerSec) {
-    let retval = 1;
-    if (pxPerSec >= 25 * 100) {
-      retval = 0.01;
-    } else if (pxPerSec >= 25 * 40) {
-      retval = 0.025;
-    } else if (pxPerSec >= 25 * 10) {
-      retval = 0.1;
-    } else if (pxPerSec >= 25 * 4) {
-      retval = 0.25;
-    } else if (pxPerSec >= 25) {
-      retval = 0.01;
-    } else if (pxPerSec * 5 >= 25) {
-      retval = 5;
-    } else if (pxPerSec * 15 >= 25) {
-      retval = 15;
-    } else {
-      retval = Math.ceil(0.5 / pxPerSec) * 60;
-    }
-    return retval;
-  }
-
-  loadAudio() {
-    if (this.wavesurfer && this.fileUrl) {
-      this.wavesurfer.load(this.fileUrl);
-    }
-  }
-
-  play() {
-    this.analyticsService.trackEvent('player', 'togglePlay');
-    this.wavesurfer && this.wavesurfer.playPause();
-  }
+  ngAfterViewInit() {}
   trackElement(index: number, element: any) {
     return element ? element.guid : null;
   }
@@ -276,7 +128,6 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   copyToClipboard(text: string): void {
-    this.analyticsService.trackEvent('player', 'copyToClipboard');
     const selBox = document.createElement("textarea");
     selBox.style.position = "fixed";
     selBox.style.left = "0";
@@ -296,8 +147,6 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
         this.results = res;
 
         this.duration = res.result.duration;
-        this.initWaveSurfer();
-        this.loadAudio();
         if (this.results.result || this.attempsCount < 0) {
           clearInterval(this.intervalRef);
         }
@@ -309,7 +158,7 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
               this.emotionsAnger = this.results.result.anger.ints;
               this.emotions = this.emotionsAnger;
               // this.onhold = this.results.result.anger.ints;
-              this.setTab('anger');
+              this.setTab("anger");
               // this.setRegions();
             }
             if (this.results.result.anger.music) {
@@ -321,7 +170,10 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
             if (this.results.result.stt.fulltext) {
               this.sttfulltext = this.results.result.stt.fulltext;
             }
-            if (this.results.result.stt.keywords && Array.isArray(this.results.result.stt.keywords)) {
+            if (
+              this.results.result.stt.keywords &&
+              Array.isArray(this.results.result.stt.keywords)
+            ) {
               this.keywords = this.results.result.stt.keywords;
               this.misswords = [];
             } else {
@@ -336,7 +188,9 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
                 }
               } else {
                 if (Object.keys(this.results.result.stt.speakers).length > 1) {
-                  this.greySpeaker = Object.keys(this.results.result.stt.speakers)[1];
+                  this.greySpeaker = Object.keys(
+                    this.results.result.stt.speakers
+                  )[1];
                 }
               }
             }
@@ -346,12 +200,12 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
             if (this.results.result.merged.intprobs) {
               this.emotionsSttAnger = this.results.result.merged.intprobs;
               this.emotions = this.emotionsSttAnger;
-              this.setTab('text');
+              this.setTab("text");
             }
           }
         }
       },
-      e => (this.errorMessage = e.error.message),
+      e => (this.errorMessage = e.error.message)
     );
   }
 
@@ -363,42 +217,31 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
 
   // @ts-ignore
   setRegions() {
-    const inputData = this.emotionsSounds ? this.emotions.concat(this.emotionsSounds) : this.emotions;
-    if (!this.wavesurferReady || !this.emotions) return;
-    this.wavesurfer.clearRegions();
+    const inputData = this.emotionsSounds
+      ? this.emotions.concat(this.emotionsSounds)
+      : this.emotions;
+    if (!this.emotions) return;
     const data = inputData || this.emotions;
     for (let index = 0; index < data.length; index++) {
       const element = data[index];
-      this.wavesurfer.addRegion({
+      this.regions.push({
         start: element[0],
         end: element[1],
-        color: this.getColor(element[3], element[2], !element[2]),
+        color: this.getColor(element[3], element[2], !element[2])
       });
     }
 
-    // if (this.currentTab === "text" && this.emotionsAnger) {
     if (this.emotionsAnger) {
       for (let index = 0; index < this.emotionsAnger.length; index++) {
         const element = this.emotionsAnger[index];
-        this.wavesurfer.addRegion({
+        this.regions.push({
           start: element[0],
           end: element[1],
-          color: this.getColor(element[3], element[2], !element[2]),
+          color: this.getColor(element[3], element[2], !element[2])
         });
       }
     }
-  }
-  zoomIn() {
-    this.analyticsService.trackEvent('player', 'zoomIn');
-    if (this.zoomLevel > 20000) return this.zoomLevel;
-    this.zoomLevel = this.zoomLevel * 10;
-    this.wavesurfer.zoom(this.zoomLevel);
-  }
-  zoomOut() {
-    this.analyticsService.trackEvent('player', 'zoomOut');
-    if (this.zoomLevel < 200) return this.zoomLevel;
-    this.zoomLevel = this.zoomLevel / 10;
-    this.wavesurfer.zoom(this.zoomLevel);
+    this.player.setRegions(this.regions);
   }
 
   getColor(val: any, type?: string, isMusic = false) {
@@ -468,20 +311,14 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   gotoPosition(ms) {
-    this.analyticsService.trackEvent('player', 'gotoPosition');
-    this.wavesurfer.seekTo(ms / this.wavesurfer.getDuration());
+    this.player.seekTo(ms);
   }
 
-  ngOnDestroy() {
-    this.subRoute.unsubscribe();
-    this.play();
-    this.wavesurfer && this.wavesurfer.destroy();
-  }
+  ngOnDestroy() {}
 
   setTab(tab) {
     this.currentTab = tab;
     this.tabsDisabled = true;
-    this.analyticsService.trackEvent('player', 'setTab', tab);
     setTimeout(() => (this.tabsDisabled = false), 3000);
     switch (tab) {
       case "anger":
@@ -509,27 +346,26 @@ export class PlayerDetailsComponent implements OnInit, AfterViewInit, OnDestroy 
     this.setRegions();
   }
 
-  toggleScroll() {
-    this.wavesurfer.toggleScroll();
-  }
-
   t(v) {
     return LanguageService.t(v);
   }
 
-  zoom($event) {
-    this.wavesurfer.zoom(Number($event.target.value));
-  }
-
   get secondaryColor() {
-    return this.dataService.config && (this.dataService.config as any).colors && (this.dataService.config as any).colors.secondary || 'rgb(0, 154, 210)';
+    return (
+      (this.dataService.config &&
+        (this.dataService.config as any).colors &&
+        (this.dataService.config as any).colors.secondary) ||
+      "rgb(0, 154, 210)"
+    );
   }
 
   getCompliancePercents() {
     if (this.misswords.length || this.misswordsNotFound.length) {
-      const perc = this.misswords.length / (this.misswords.length + this.misswordsNotFound.length);
-      return Math.round(perc * 10000)/100  + '%';
+      const perc =
+        this.misswords.length /
+        (this.misswords.length + this.misswordsNotFound.length);
+      return Math.round(perc * 100) + "%";
     }
-    return 'N/A';
+    return "N/A";
   }
 }
