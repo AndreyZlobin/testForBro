@@ -61,7 +61,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
                     RegionsPlugin.create({})
                   ]
                 });
-                this.wavesurfer.load(this.fileUrl /*, meta.data.data, "auto"*/);
+                this.wavesurfer.load(this.fileUrl , meta.data.data, "auto");
                 this.wavesurfer.on("ready", () => {
                   this.isLoading = false;
                   this.regions.map(region => {
