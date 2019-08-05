@@ -7,6 +7,8 @@ import { PlayerService } from "../../../../services/player.service";
 import { LanguageService } from "../../../../services/language.service";
 import { Subscription } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject } from 'rxjs';
 
 import CanvasDrawer from "./canvas-drawer";
 
@@ -28,7 +30,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
   constructor(
     private filesService: FilesService,
     private playerService: PlayerService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private toastrService: ToastrService,
   ) {}
 
   ngOnInit() {
@@ -39,11 +42,12 @@ export class PlayerComponent implements OnInit, OnDestroy {
         this.filesService
           .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
           .subscribe(meta => {
-            if (meta.data) {
+            if (meta.data && meta.message === "Success") {
+              const peaks = meta.data.data
               this.wavesurfer = WaveSurfer.create({
                 container: "#waveform",
-                progressColor: "#3399CC",
-                waveColor: "#F0F0F0",
+                waveColor: "#0098d9",
+                progressColor: "#a4abb3",
                 normalize: true,
                 renderer: CanvasDrawer,
                 height: 30,
@@ -66,9 +70,14 @@ export class PlayerComponent implements OnInit, OnDestroy {
               this.wavesurfer.on("audioprocess", time => {
                 this.playerService.setActive(time);
               });
+            } else {
+              this.toastrService.error('This file to long to be played');
             }
+          }, error => {
+            this.toastrService.error('This file to long to be played');
           });
       });
+
   }
   t(v) {
     return LanguageService.t(v);

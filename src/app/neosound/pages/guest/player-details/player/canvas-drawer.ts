@@ -94,7 +94,7 @@ export default class CanvasDrawer extends Drawer {
     this.progressWave = this.wrapper.appendChild(
       this.style(document.createElement("wave"), {
         position: "absolute",
-        zIndex: 3,
+        zIndex: 4,
         left: 0,
         top: 0,
         bottom: 0,
@@ -157,12 +157,12 @@ export default class CanvasDrawer extends Drawer {
       this.wrapper.appendChild(
         this.style(document.createElement("canvas"), {
           position: "absolute",
-          zIndex: 2,
           left: leftOffset + "px",
           top: 0,
           bottom: 0,
           height: "100%",
-          pointerEvents: "none"
+          pointerEvents: "none",
+          zIndex: 3,
         })
       )
     );
@@ -173,10 +173,12 @@ export default class CanvasDrawer extends Drawer {
         this.progressWave.appendChild(
           this.style(document.createElement("canvas"), {
             position: "absolute",
+            //backgroundColor: '#dee2e6',
             left: leftOffset + "px",
             top: 0,
             bottom: 0,
-            height: "100%"
+            height: "100%",
+            zIndex: 5,
           })
         )
       );
@@ -223,13 +225,11 @@ export default class CanvasDrawer extends Drawer {
       start,
       end,
       ({ absmax, hasMinVals, height, offsetY, halfH, peaks }) => {
-        // if drawBars was called within ws.empty we don't pass a start and
-        // don't want anything to happen
         if (start === undefined) {
           return;
         }
         // Skip every other value if there are negatives.
-        const peakIndexScale = 1;
+        const peakIndexScale = hasMinVals ? 2 : 1;
         const length = peaks.length / peakIndexScale;
         const bar = this.barWidth * this.params.pixelRatio;
         const gap =
@@ -247,13 +247,13 @@ export default class CanvasDrawer extends Drawer {
         let i = first;
 
         for (i; i < last; i += step) {
-          const peak = Math.abs(peaks[Math.floor(i * scale * peakIndexScale)]);
-          const h = Math.round((peak / absmax) * halfH) + 1;
+          const peak = peaks[Math.floor(i * scale * peakIndexScale)] || 0;
+          const h = Math.round((peak / absmax) * halfH);
           this.fillRect(
             i + this.halfPixel,
-            this.height - h,
+            halfH - h + offsetY,
             bar + this.halfPixel,
-            this.height
+            h * 2
           );
         }
       }
@@ -315,16 +315,20 @@ export default class CanvasDrawer extends Drawer {
       // calculate maximum modulation value, either from the barHeight
       // parameter or if normalize=true from the largest value in the peak
       // set
-      let absmax = 1 / this.height;
-      const max = util.max(peaks);
-      const min = util.min(peaks);
-      absmax = -min > max ? -min : max;
+      let absmax = 1 / this.params.barHeight;
+      if (this.params.normalize) {
+        const max = util.max(peaks);
+        const min = util.min(peaks);
+        absmax = -min > max ? -min : max;
+      }
+
       // Bar wave draws the bottom only as a reflection of the top,
       // so we don't need negative values
       const hasMinVals = [].some.call(peaks, val => val < 0);
       const height = this.params.height * this.params.pixelRatio;
       const offsetY = height * channelIndex || 0;
-      const halfH = height;
+      const halfH = height / 2;
+
       return fn({
         absmax: absmax,
         hasMinVals: hasMinVals,
