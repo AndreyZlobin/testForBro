@@ -568,11 +568,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       ...this.filter,
       datetimefrom: this.datefrom || "",
       datetimeto: this.dateto || "",
-      angervolfrom: (this.angerfrom && "" + this.angerfrom) || "",
-      angervolto:
-        this.angerfrom || this.angerto
-          ? "" + (this.angerfrom > this.angerto ? 100 : this.angerto)
-          : "",
+      angervolfrom: this.angerfrom == null ? '' : this.angerfrom + '',
+      angervolto: this.angerto == null ? ''
+        : (this.angerfrom && this.angerfrom > this.angerto ? '10000' : this.angerto + ''),
       pausefrom: (this.pausefrom && "" + this.pausefrom) || "",
       pauseto:
         this.pausefrom || this.pauseto
@@ -582,10 +580,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       filename: this.filename,
       // minutesfrom: (this.callfrom && "" + this.callfrom) || "",
       minutesfrom: this.callfrom == null ? '' : this.callfrom + '',
-      minutesto:
-        this.callfrom || this.callto
-          ? "" + (this.callfrom > this.callto ? 10000 : this.callto)
-          : "",
+      minutesto: this.callto == null ? ''
+        : (this.callfrom && this.callfrom > this.callto ? '10000' : this.callto + ''),
       stopOnly: this.stopOnly,
       tagsOnly: this.tagsOnly,
       missingOnly: this.missingOnly,
