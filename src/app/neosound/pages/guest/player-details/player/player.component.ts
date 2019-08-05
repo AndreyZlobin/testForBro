@@ -2,7 +2,8 @@ import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { FilesService } from "../../../../services/files.service";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
-import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions.min.js";
+import RegionsPlugin from "./region-plugin";
+import CursorPlugin from "wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js";
 import { PlayerService } from "../../../../services/player.service";
 import { LanguageService } from "../../../../services/language.service";
 import { Subscription } from "rxjs";
@@ -58,15 +59,16 @@ export class PlayerComponent implements OnInit, OnDestroy {
                     TimelinePlugin.create({
                       container: "#timelineContainer"
                     }),
-                    RegionsPlugin.create({})
+                    RegionsPlugin.create({}),
                   ]
                 });
-                this.wavesurfer.load(this.fileUrl , meta.data.data, "auto");
+                this.wavesurfer.load(this.fileUrl, meta.data.data, "auto");
                 this.wavesurfer.on("ready", () => {
-                  this.isLoading = false;
-                  this.regions.map(region => {
-                    this.wavesurfer.addRegion(region);
-                  });
+                  setTimeout(() => {
+                    this.regions.map(region => {
+                      this.wavesurfer.addRegion(region);
+                    });
+                  }, 10);
                 });
                 this.wavesurfer.on("audioprocess", time => {
                   this.playerService.setActive(time);
@@ -92,12 +94,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
   setRegions(regions) {
     this.regions = regions;
-    if (this.wavesurfer) {
-      this.wavesurfer.clearRegions();
-      this.regions.map(region => {
-        this.wavesurfer.addRegion({ ...region, drag: false });
-      });
-    }
   }
   ngOnDestroy() {
     this.wavesurfer && this.wavesurfer.destroy();

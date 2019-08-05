@@ -10,9 +10,6 @@ import {
 import { FilesService } from "../../../services/files.service";
 import { PlayerService } from "../../../services/player.service";
 import { Router, ActivatedRoute } from "@angular/router";
-import * as WaveSurfer from "wavesurfer.js";
-import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
-import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions.min.js";
 import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
 import { ToastrService } from "ngx-toastr";
@@ -246,7 +243,7 @@ export class PlayerDetailsComponent
 
   getColor(val: any, type?: string, isMusic = false) {
     if (isMusic) {
-      return "rgba(0,255,0, 0.7)";
+      return "rgba(0,255,0, 1)";
     }
     switch (this.currentTab) {
       case "anger":
@@ -255,16 +252,16 @@ export class PlayerDetailsComponent
           (255 - (val - 50) * 5) +
           ", " +
           (255 - (val - 50) * 5) +
-          ", 0.7)"
+          ", 1)"
         );
       case "age":
-        if (type === "young") return "rgba(255,0,0, 0.7)";
-        if (type === "mid") return "rgba(0,255,0, 0.7)";
-        if (type === "old") return "rgba(0,0,255, 0.7)";
+        if (type === "young") return "rgba(255,0,0, 1)";
+        if (type === "mid") return "rgba(0,255,0, 1)";
+        if (type === "old") return "rgba(0,0,255, 1)";
         break;
       case "gender":
-        if (type === "w") return "rgba(255,0,0, 0.7)";
-        if (type === "m") return "rgba(0,0,255, 0.7)";
+        if (type === "w") return "rgba(255,0,0, 1)";
+        if (type === "m") return "rgba(0,0,255, 1)";
         break;
       case "beta":
         if (type === "Anger")
@@ -273,7 +270,7 @@ export class PlayerDetailsComponent
             (255 - (val - 50) * 5) +
             ", " +
             (255 - (val - 50) * 5) +
-            ", 0.7)"
+            ", 1)"
           );
         if (type === "Neutral") return "rgba(255, 255, 255, 0)";
         if (type === "Happy")
@@ -282,7 +279,7 @@ export class PlayerDetailsComponent
             (255 - (val - 50) * 5) +
             ", 255, " +
             (255 - (val - 50) * 5) +
-            ", 0.7)"
+            ", 1)"
           );
         if (type === "Sadness")
           return (
@@ -290,11 +287,11 @@ export class PlayerDetailsComponent
             (255 - (val - 50) * 5) +
             ", " +
             (255 - (val - 50) * 5) +
-            ", 255, 0.7)"
+            ", 255, 1)"
           );
         break;
       case "sounds":
-        return "rgba(0,255,0, 0.7)";
+        return "rgba(0,255,0, 1)";
       case "text":
         const x = val / 2 + 50;
         return (
@@ -302,7 +299,7 @@ export class PlayerDetailsComponent
           (255 - (x - 50) * 5) +
           ", " +
           (255 - (x - 50) * 5) +
-          ", 0.7)"
+          ", 1)"
         );
       default:
         break;
