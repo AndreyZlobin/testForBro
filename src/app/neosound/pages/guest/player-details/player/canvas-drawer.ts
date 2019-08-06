@@ -21,7 +21,7 @@ export default class CanvasDrawer extends Drawer {
   progressWave: any;
   EntryClass: any;
   overlap: any;
-  barWidth: number = 3;
+  barWidth: number = 1;
 
   constructor(container, params) {
     super(container, params);

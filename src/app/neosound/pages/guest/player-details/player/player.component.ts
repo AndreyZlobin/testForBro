@@ -42,64 +42,87 @@ export class PlayerComponent implements OnInit, OnDestroy {
         this.fileUrl = res.url;
         this.filesService
           .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
-          .subscribe(
-            meta => {
-              if (meta.data && meta.message === "Success") {
-                let peaks = [];
-                if (meta.data.data[0] instanceof Array || meta.data.channels === 1) {
-                  peaks = meta.data.data;
-                } else {
-                  peaks = [[],[]];
-                  const datalen = meta.data.data.length;
-                  for (let i = 0; i < datalen/2; i++) {
-                    if (i % 2) {
-                      peaks[1].push(meta.data.data[2*i]);
-                      peaks[1].push(meta.data.data[2*i+1]);
-                    } else {
-                      peaks[0].push(meta.data.data[2*i]);
-                      peaks[0].push(meta.data.data[2*i+1]);
-                    }
-                  }
-                }
-                this.wavesurfer = WaveSurfer.create({
-                  container: "#waveform",
-                  waveColor: "#0098d9",
-                  progressColor: "#a4abb3",
-                  normalize: true,
-                  renderer: CanvasDrawer,
-                  height: 60,
-                  splitChannels: true,
-                  backend: "MediaElement",
-                  plugins: [
-                    TimelinePlugin.create({
-                      container: "#timelineContainer"
-                    }),
-                    RegionsPlugin.create({}),
-                  ]
-                });
-                this.wavesurfer.load(this.fileUrl, peaks, "auto");
-                this.wavesurfer.on("ready", () => {
-                  setTimeout(() => {
-                    this.regions.map(region => {
-                      this.wavesurfer.addRegion(region);
-                    });
-                  }, 10);
-                });
-                this.wavesurfer.on("audioprocess", time => {
-                  this.playerService.setActive(time);
-                });
-              } else {
-                this.toastrService.error("This file to long to be played");
-              }
-            },
-            error => {
-              this.toastrService.error("This file to long to be played");
+          .subscribe(meta => {
+            if (meta.ContentRange) {
+              this.loadChunks(meta);
+            } else {
+              this.init(this.fileUrl, this.getPeaks(meta));
             }
-          );
+          });
       });
   }
   t(v) {
     return LanguageService.t(v);
+  }
+
+  loadChunks(meta) {
+    this.filesService
+      .getAudioWaveForm({
+        filename: this.fileName,
+        batchid: this.batchId,
+        ContentRange: meta.ContentRange
+      })
+      .subscribe(res => {
+        meta.data = meta.data + res.data;
+        debugger
+        if (meta.ContentRange) {
+          this.loadChunks(meta);
+        } else {
+          this.init(this.fileUrl, this.getPeaks(meta));
+        }
+      });
+  }
+
+  getPeaks(meta) {
+    const data = JSON.parse(meta.data);
+    let peaks = [];
+    if (data.data[0] instanceof Array || data.channels === 1) {
+      peaks = data.data;
+    } else {
+      peaks = [[], []];
+      const datalen = data.data.length;
+      for (let i = 0; i < datalen / 2; i++) {
+        if (i % 2) {
+          peaks[1].push(data.data[2 * i]);
+          peaks[1].push(data.data[2 * i + 1]);
+        } else {
+          peaks[0].push(data.data[2 * i]);
+          peaks[0].push(data.data[2 * i + 1]);
+        }
+      }
+    }
+    return peaks;
+  }
+
+  init(fileUrl, peaks) {
+    this.wavesurfer = WaveSurfer.create({
+      container: "#waveform",
+      waveColor: "#0098d9",
+      progressColor: "#a4abb3",
+      normalize: true,
+      renderer: CanvasDrawer,
+      height: peaks[0] instanceof Array ? 30 : 60,
+      splitChannels: true,
+      backend: "MediaElement",
+      plugins: [
+        TimelinePlugin.create({
+          container: "#timelineContainer"
+        }),
+        RegionsPlugin.create({})
+      ]
+    });
+    this.wavesurfer.load(fileUrl, peaks, "auto");
+    this.wavesurfer.on("ready", () => {
+      this.isLoading = false;
+      setTimeout(() => {
+        this.regions.map(region => {
+          this.wavesurfer.addRegion(region);
+        });
+      }, 0);
+    });
+    this.wavesurfer.on("audioprocess", time => {
+      this.playerService.setActive(time);
+    });
   }
   play() {
     this.wavesurfer && this.wavesurfer.playPause();

@@ -53,7 +53,7 @@ export class FilesService {
   }
   getAudioWaveForm(params): Observable<any> {
     params = params;
-    return this.http.post(`${environment.api}/getAudioWaveForm`,
+    return this.http.post(`${environment.api}/getAudioWaveForm1`,
       params
     );
   }
