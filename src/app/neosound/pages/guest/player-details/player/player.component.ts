@@ -52,7 +52,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
                   progressColor: "#a4abb3",
                   normalize: true,
                   renderer: CanvasDrawer,
-                  height: 30,
+                  height: 60,
                   splitChannels: true,
                   backend: "MediaElement",
                   plugins: [
