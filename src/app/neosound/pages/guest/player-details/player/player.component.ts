@@ -64,7 +64,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
       })
       .subscribe(res => {
         meta.data = meta.data + res.data;
-        debugger
+        meta.ContentRange = res.ContentRange
         if (meta.ContentRange) {
           this.loadChunks(meta);
         } else {
