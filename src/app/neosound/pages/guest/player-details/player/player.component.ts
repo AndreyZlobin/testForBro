@@ -45,7 +45,22 @@ export class PlayerComponent implements OnInit, OnDestroy {
           .subscribe(
             meta => {
               if (meta.data && meta.message === "Success") {
-                const peaks = meta.data.data;
+                let peaks = [];
+                if (meta.data.data[0] instanceof Array || meta.data.channels === 1) {
+                  peaks = meta.data.data;
+                } else {
+                  peaks = [[],[]];
+                  const datalen = meta.data.data.length;
+                  for (let i = 0; i < datalen/2; i++) {
+                    if (i % 2) {
+                      peaks[1].push(meta.data.data[2*i]);
+                      peaks[1].push(meta.data.data[2*i+1]);
+                    } else {
+                      peaks[0].push(meta.data.data[2*i]);
+                      peaks[0].push(meta.data.data[2*i+1]);
+                    }
+                  }
+                }
                 this.wavesurfer = WaveSurfer.create({
                   container: "#waveform",
                   waveColor: "#0098d9",
@@ -62,7 +77,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
                     RegionsPlugin.create({}),
                   ]
                 });
-                this.wavesurfer.load(this.fileUrl, meta.data.data, "auto");
+                this.wavesurfer.load(this.fileUrl, peaks, "auto");
                 this.wavesurfer.on("ready", () => {
                   setTimeout(() => {
                     this.regions.map(region => {
