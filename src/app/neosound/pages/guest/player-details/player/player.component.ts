@@ -123,6 +123,10 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActive(time);
     });
+    this.wavesurfer.on("seek", time => {
+      this.playerService.setActive(time * this.wavesurfer.getDuration());
+    });
+
   }
   play() {
     this.wavesurfer && this.wavesurfer.playPause();
