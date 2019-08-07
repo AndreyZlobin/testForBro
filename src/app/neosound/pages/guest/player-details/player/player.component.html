@@ -1,0 +1,16 @@
+<div>
+    <button class="btn btn-secondary pull-right" routerLink="/user/files" style="float: right">
+        {{ t("Back") }}
+    </button>
+    <h2>
+        <button class="btn btn-primary mr-2 my-2" (click)="play()">
+            <i class="fa fa-play"></i>/<i class="fa fa-pause"></i>
+        </button>
+        {{ t("Details") }} <span>{{ fileName }}</span>
+    </h2>
+</div>
+<div class="clearfix"></div>
+<div id="waveform">
+    <div class="loader" *ngIf="isLoading">Loading...</div>
+</div>
+<div id="timelineContainer"></div>
