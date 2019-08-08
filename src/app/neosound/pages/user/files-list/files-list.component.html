@@ -74,11 +74,11 @@
                         secondaryPlaceholder="{{t('Words')}}" [separatorKeyCodes]='[13, 188]'
                         (onBlur)="onItemAdd($event, 'keywordsContain')"></tag-input>
                     </div>
-                    <div class="col-12 pt-3">
+                    <div class="col-12">
                       <div ngbDropdown class="ghost-dropdown dropdown w-100">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" style="border: 1px solid #dfe3e9;" id="dropdownBasic1" ngbDropdownToggle>{{t(stopwordLooking)}}</button>
                         <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
-                          <li class="dropdown-item" ngbDropdownItem (click)="setStopwordLooking('Both')">{{t('Both')}}</li>
+                          <li class="dropdown-item" ngbDropdownItem (click)="setStopwordLooking('Everywhere')">{{t('Everywhere')}}</li>
                           <li class="dropdown-item" ngbDropdownItem (click)="setStopwordLooking('Agent')">{{t('Agent')}}</li>
                           <li class="dropdown-item" ngbDropdownItem (click)="setStopwordLooking('Customer')">{{t('Customer')}}</li>
                         </ul>
