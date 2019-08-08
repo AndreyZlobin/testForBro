@@ -42,6 +42,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   callto;
   page; //  = 0;
   batchid; // = 1;
+  stopwordLooking;
   batchidAll = true;
   datefromAll = true;
   datetoAll = true;
@@ -127,6 +128,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setFilterOptions();
     this.sortBy = this.filter.sortby;
     this.sort = this.filter.sortorder;
+    this.stopwordLooking = 'Both';
     // this.getPage((this.filter.pagen - 1) || 0, this.filter);
 
     // const els = document.getElementsByClassName('scrollable-container');
@@ -169,8 +171,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getPage(page = 0, parameters = this.filter) {
-    // this.isLoadingSpinner = true;
-    // this.isLoading = true;
     const params = (this.filter = {
       ...parameters,
       itemsn: `${this.paginationNum}`,
@@ -187,19 +187,12 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
         this.files = [];
         return;
       }
-      // const a = new Array(Math.round(res.count / 50));
       this.totalCount = res.totalcount;
       this.pagesArr = Array.from(
         { length: Math.ceil(res.totalcount / 100) },
         (v, k) => k + 1
       );
       this.files = res.files;
-      // this.isLoading = false;
-      // .sort((a, b) => {
-      //   const x = +new Date(a.uploaddate);
-      //   const y = +new Date(b.uploaddate);
-      //   return y - x;
-      // });
     });
   }
 
@@ -212,6 +205,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return [];
   }
+  setStopwordLooking(value: string): void {
+    this.stopwordLooking = value;
+  }
 
   getEmotionName(val) {
     return val && Object.keys(val)[0];
@@ -221,86 +217,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     return val && val[Object.keys(val)[0]] && val[Object.keys(val)[0]] + "%";
   }
 
-  // getFileResult(file) {
-  //   this.filesService.listFileResults({
-  //     'batchid': file.batchid,
-  //     'filename': file.fileid,
-  //     'date': file.uploaddate,
-  //   }).subscribe(res => {
-  //     if (res.result) {
-  //       this.filesResult.p
-  //     }
-  //   },
-  //   (e) => this.errorMessage = e.error.message,
-  //   );
-  // }
-
-  // getEmotionValue() {
-  //   let max = 0;
-  //   let name = '';
-  //   if (this.analysisResult.Anger > max) {
-  //     max = this.analysisResult.Anger;
-  //     name = 'Anger';
-  //   }
-  //   if (this.analysisResult.Happy > max) {
-  //     max = this.analysisResult.Happy;
-  //     name = 'Happy';
-  //   }
-  //   if (this.analysisResult.Neutral > max) {
-  //     max = this.analysisResult.Neutral;
-  //     name = 'Neutral';
-  //   }
-  //   if (this.analysisResult.Sadness > max) {
-  //     max = this.analysisResult.Sadness;
-  //     name = 'Sadness';
-  //   }
-  //   // const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
-  //   return max;
-  // }
-
-  // getEmotionName() {
-  //   let max = 0;
-  //   let name = '';
-  //   if (this.analysisResult.Anger > max) {
-  //     max = this.analysisResult.Anger;
-  //     name = 'Anger';
-  //   }
-  //   if (this.analysisResult.Happy > max) {
-  //     max = this.analysisResult.Happy;
-  //     name = 'Happy';
-  //   }
-  //   if (this.analysisResult.Neutral > max) {
-  //     max = this.analysisResult.Neutral;
-  //     name = 'Neutral';
-  //   }
-  //   if (this.analysisResult.Sadness > max) {
-  //     max = this.analysisResult.Sadness;
-  //     name = 'Sadness';
-  //   }
-  //   // const name = '' + Object.keys(this.analysisResult.fourclass.latest.data.top)[0];
-  //   return name ? name : 'Neutral';
-  // }
-
   refresh() {
     this.analyticsService.trackEvent('fileList', 'refresh');
     this.getPage(this.page);
-    // this.filesService.listFiles({}).subscribe(res => {
-    //   if (!res) {
-    //     this.files = [];
-    //     this.totalCount = 0;
-    //     this.pagesArr = [1];
-    //     return;
-    //   }
-    //   this.totalCount = res.count;
-    //   this.pagesArr = Array.from({length: Math.ceil(res.count / 50) }, (v, k) => k+1);
-    //   this.files = res.files.sort((a, b) => {
-    //     const x = +new Date(a.uploaddate);
-    //     const y = +new Date(b.uploaddate);
-    //     return y - x;
-    //   });
-    // },
-    // (e) => this.errorMessage = e.error.message,
-    // );
   }
 
   delete(batchid, filename) {
@@ -442,51 +361,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filesService.setFilter(this.filter);
 
     return;
-    // if (sortBy !== this.sortBy) {
-    //   this.sort = 'up';
-    // } else {
-    //   this.sort = this.sort === 'up' ? 'down' : 'up';
-    // }
-    // this.sortBy = sortBy;
-    // switch (sortBy) {
-    //   case 'name':
-    //     this.files = this.files.sort((a, b) => {
-    //       return this.sort === 'up' ? a.filename.localeCompare(b.filename) : b.filename.localeCompare(a.filename);
-    //     });
-    //     break;
-    //   case 'uploaded':
-    //     this.files = this.files.sort((a, b) => {
-    //       const x = +new Date(a.uploaddate);
-    //       const y = +new Date(b.uploaddate);
-    //       return this.sort === 'up' ? y - x : x - y;
-    //     });
-    //     break;
-    //   case 'duration':
-    //     this.files = this.files.sort((a, b) => {
-    //       return this.sort === 'up' ? a.duration - b.duration : b.duration - a.duration;
-    //     });
-    //     break;
-    //   case 'emotion':
-    //     this.files = this.files.sort((a, b) => {
-    //       let x;
-    //       let y;
-    //       if (!a.angertop || !a.angertop.anger) {
-    //         x = 0;
-    //       } else {
-    //         x = a.angertop.anger;
-    //       }
-    //       if (!b.angertop || !b.angertop.anger) {
-    //         y = 0;
-    //       } else {
-    //         y = b.angertop.anger;
-    //       }
-    //       return this.sort === 'up' ? y - x : x - y;
-    //     });
-    //     break;
-
-    //   default:
-    //     break;
-    // }
   }
 
   resetFilter() {
@@ -521,14 +395,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter = {
       itemsn: "100",
       pagen: "1"
-      // 'batchid': '1',
-      // 'datetimefrom': '',
-      // 'datetimeto': '',
-      // 'angervolfrom': '',
-      // 'angervolto': '',
-      // 'sortby': '',
-      // 'sortorder': 'asc',
-      // 'export': '',
     };
     this.isLoadingSpinner = true;
     this.getPage(0, this.filter);
@@ -550,11 +416,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       error => console.log("Error downloading the file."),
       () => console.info("OK");
   }
-  // downloadFile(data: Response) {
-  //   const blob = new Blob([data], { type: "text/csv" });
-  //   const url = window.URL.createObjectURL(blob);
-  //   window.open(url);
-  // }
 
   filterIt() {
     this.isLoadingSpinner = true;
@@ -597,6 +458,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
             .join(",")
         )
         .join(",");
+      this.filter["stopBy"] = this.stopwordLooking;
     }
     if (this.keywordsNotContain && this.keywordsNotContain.length) {
       this.analyticsService.trackEvent('fileList', 'filter', 'keywordsNotContain');
