@@ -128,7 +128,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setFilterOptions();
     this.sortBy = this.filter.sortby;
     this.sort = this.filter.sortorder;
-    this.stopwordLooking = 'Both';
+    this.stopwordLooking = 'Everywhere';
     // this.getPage((this.filter.pagen - 1) || 0, this.filter);
 
     // const els = document.getElementsByClassName('scrollable-container');
