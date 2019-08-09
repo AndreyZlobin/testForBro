@@ -71,7 +71,7 @@
                       <!-- <rl-tag-input [(ngModel)]="keywordsContain" placeholder="{{t('Keywords')}}"></rl-tag-input> -->
                       <tag-input [(ngModel)]="keywordsContain" [editable]="true" theme="minimal"
                         (onAdd)="onItemAdd($event, 'keywordsContain')" placeholder="{{t('Words')}}"
-                        secondaryPlaceholder="{{t('Words')}}" [separatorKeyCodes]='[13, 188]'
+                        secondaryPlaceholder="{{t('Words')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
                         (onBlur)="onItemAdd($event, 'keywordsContain')"></tag-input>
                     </div>
                     <div class="col-12">
@@ -88,14 +88,14 @@
                       <div class="mb-2">{{t('Missing words')}}</div>
                       <tag-input [(ngModel)]="keywordsNotContain" [editable]="true" theme="minimal"
                         (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Missing words')}}"
-                        secondaryPlaceholder="{{t('Words')}}" [separatorKeyCodes]='[13, 188]'
+                        secondaryPlaceholder="{{t('Words')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
                         (onBlur)="onItemAdd($event, 'keywordsNotContain')"></tag-input>
                     </div>
                     <div class="col-12 pt-3">
                       <div class="mb-2">{{t('Tags')}}</div>
                       <tag-input [(ngModel)]="tagsContain" [editable]="true" theme="minimal"
                         (onAdd)="onItemAdd($event, 'tagsContain')" placeholder="{{t('Tags')}}"
-                        secondaryPlaceholder="{{t('Tags')}}" [separatorKeyCodes]='[13, 188]'
+                        secondaryPlaceholder="{{t('Tags')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
                         (onBlur)="onItemAdd($event, 'tagsContain')"></tag-input>
                     </div>
                     <div class="col-12">
@@ -335,7 +335,7 @@
   </div>
   <div class="modal-body tagsModal">
     <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal" (onAdd)="onItemAdd($event, 'itemTags')"
-      placeholder="{{t('Add Tag')}}" secondaryPlaceholder="{{t('Add Tag')}}" [separatorKeyCodes]='[13, 188]'
+      placeholder="{{t('Add Tag')}}" secondaryPlaceholder="{{t('Add Tag')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
       (onBlur)="onItemAdd($event, 'itemTags')"></tag-input>
     <div class="text-right">
       <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
