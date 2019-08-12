@@ -268,7 +268,7 @@
                     </td>
                     <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
                     <td>
-                      <span style="cursor: pointer" tooltip='{{item.pause.dur / item.duration | currency: "%":"symbol":"1.2-2"}}'>
+                      <span *ngIf="item.pause && item.pause.dur" style="cursor: pointer" tooltip='{{item.pause.dur / item.duration | currency: "%":"symbol":"1.2-2"}}'>
                         {{getDateVal(item.pause.dur) | date: 'mm:ss'}}
                       </span>
                     </td>
