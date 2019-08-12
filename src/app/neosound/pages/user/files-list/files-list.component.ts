@@ -383,8 +383,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tagsContain = [];
     this.pauseAvgFrom = null;
     this.pauseAvgTo = null;
-    this.pauseAvgFrom = null;
-    this.pauseAvgTo = null;
+    this.pauseDurFrom = null;
+    this.pauseDurTo = null;
     this.callfrom = null;
     this.callto = null;
     this.page = null;
