@@ -36,8 +36,10 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   dateto; //  = new Date();
   angerfrom; // = 0;
   angerto; //  = 100;
-  pausefrom; //  = 0;
-  pauseto; //  = 10000;
+  pauseAvgFrom; //  = 0;
+  pauseAvgTo; //  = 10000;
+  pauseDurFrom; //  = 0;
+  pauseDurTo; //  = 10000;
   callfrom;
   callto;
   page; //  = 0;
@@ -154,8 +156,10 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dateto = this.filter.datetimeto;
     this.angerfrom = this.filter.angervolfrom;
     this.angerto = this.filter.angervolto;
-    this.pausefrom = this.filter.pausefrom;
-    this.pauseto = this.filter.pauseto;
+    this.pauseAvgFrom = this.filter.pauseAvgFrom;
+    this.pauseAvgTo = this.filter.pauseAvgTo;
+    this.pauseDurFrom = this.filter.pauseDurFrom;
+    this.pauseDurTo = this.filter.pauseDurTo;
     this.batchid = this.filter.batchid;
     this.filename = this.filter.filename;
     this.callfrom = this.filter.minutesfrom;
@@ -346,6 +350,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       case "avgpause":
         sortName = "AvgPause";
         break;
+      case "pausedur":
+        sortName = "PauseDur";
+        break;
 
       default:
         break;
@@ -374,8 +381,10 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.keywordsContain = [];
     this.keywordsNotContain = [];
     this.tagsContain = [];
-    this.pausefrom = null;
-    this.pauseto = null;
+    this.pauseAvgFrom = null;
+    this.pauseAvgTo = null;
+    this.pauseAvgFrom = null;
+    this.pauseAvgTo = null;
     this.callfrom = null;
     this.callto = null;
     this.page = null;
@@ -432,11 +441,18 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       angervolfrom: this.angerfrom == null ? '' : this.angerfrom + '',
       angervolto: this.angerto == null ? ''
         : (this.angerfrom && this.angerfrom > this.angerto ? '10000' : this.angerto + ''),
-      pausefrom: (this.pausefrom && "" + this.pausefrom) || "",
-      pauseto:
-        this.pausefrom || this.pauseto
-          ? "" + (this.pausefrom > this.pauseto ? 10000 : this.pauseto)
+      pauseAvgFrom: (this.pauseAvgFrom && "" + this.pauseAvgFrom) || "",
+      pauseAvgTo:
+        this.pauseAvgFrom || this.pauseAvgTo
+          ? "" + (this.pauseAvgFrom > this.pauseAvgTo ? 10000 : this.pauseAvgTo)
           : "",
+
+      pauseDurFrom: (this.pauseDurFrom && "" + this.pauseDurFrom) || "",
+      pauseDurTo:
+        this.pauseDurFrom || this.pauseDurTo
+          ? "" + (this.pauseDurFrom > this.pauseDurTo ? 10000 : this.pauseDurTo)
+          : "",
+
       batchid: (this.batchid && "" + this.batchid) || "",
       filename: this.filename,
       // minutesfrom: (this.callfrom && "" + this.callfrom) || "",
@@ -626,6 +642,10 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     );
     this.editedFileItem = null;
     this.hideModal();
+  }
+
+  getPercent(fl) {
+    return Math.floor(fl * 100);
   }
 
   markFavorite(item, index) {
