@@ -436,26 +436,19 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.filter = {
       ...this.filter,
+      batchid: (this.batchid && "" + this.batchid) || "",
+      filename: this.filename,
       datetimefrom: this.datefrom || "",
       datetimeto: this.dateto || "",
       angervolfrom: this.angerfrom == null ? '' : this.angerfrom + '',
       angervolto: this.angerto == null ? ''
         : (this.angerfrom && this.angerfrom > this.angerto ? '10000' : this.angerto + ''),
-      pauseAvgFrom: (this.pauseAvgFrom && "" + this.pauseAvgFrom) || "",
-      pauseAvgTo:
-        this.pauseAvgFrom || this.pauseAvgTo
-          ? "" + (this.pauseAvgFrom > this.pauseAvgTo ? 10000 : this.pauseAvgTo)
-          : "",
-
-      pauseDurFrom: (this.pauseDurFrom && "" + this.pauseDurFrom) || "",
-      pauseDurTo:
-        this.pauseDurFrom || this.pauseDurTo
-          ? "" + (this.pauseDurFrom > this.pauseDurTo ? 10000 : this.pauseDurTo)
-          : "",
-
-      batchid: (this.batchid && "" + this.batchid) || "",
-      filename: this.filename,
-      // minutesfrom: (this.callfrom && "" + this.callfrom) || "",
+      pauseAvgFrom: this.pauseAvgFrom == null ? '' : this.pauseAvgFrom + '',
+      pauseAvgTo: this.pauseAvgTo == null ? ''
+        : (this.pauseAvgFrom && this.pauseAvgFrom > this.pauseAvgTo ? '10000' : this.pauseAvgTo + ''),
+      pauseDurFrom: this.pauseDurFrom == null ? '' : this.pauseDurFrom + '',
+      pauseDurTo: this.pauseDurTo == null ? ''
+        : (this.pauseDurFrom && this.pauseDurFrom > this.pauseDurTo ? '10000' : this.pauseDurTo + ''),
       minutesfrom: this.callfrom == null ? '' : this.callfrom + '',
       minutesto: this.callto == null ? ''
         : (this.callfrom && this.callfrom > this.callto ? '10000' : this.callto + ''),
