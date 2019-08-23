@@ -135,11 +135,17 @@
         </div>
       </div>
     </div>
-    <div class="col-6 mb-3" *ngIf="keyWord2Chart">
+    <div class="col-6 mb-3" *ngIf="freqWords">
+      {{freqWord | json}}
       <div class="card" style="min-height: calc(100% - 15px);">
         <div class="card-header">{{t('Hits vs. Word')}}</div>
         <div class="card-body pl-0 pr-0">
-          <div echarts [options]="keyWord2Chart"></div>
+          <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
+            <li class="list-group-item d-flex" *ngFor="let freqWord of freqWords" style="color: #211b19">
+              <span>{{freqWord.name}}</span>
+              <span class="ml-auto">{{freqWord.value}}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
