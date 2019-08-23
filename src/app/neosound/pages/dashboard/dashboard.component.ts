@@ -73,13 +73,13 @@ export class DashboardComponent implements OnInit {
   fileStat: any = {};
   minutesStat: any = {};
   apiStat: any = {};
-
+  freqWords: any[] = [];
   constructor(
     private router: Router,
     private filesService: FilesService,
     private http: HttpClient,
     private lang: LanguageService,
-    private analyticsService: AnalyticsService,
+    private analyticsService: AnalyticsService
   ) {
     this.setColors();
   }
@@ -155,7 +155,7 @@ export class DashboardComponent implements OnInit {
             name: this.t("all"),
             type: "bar",
             data: all
-          },
+          }
         ];
         let maxX = 0;
         let maxY = 0;
@@ -613,41 +613,14 @@ export class DashboardComponent implements OnInit {
       }
       if (data.popularWords) {
         this.keywords2 = data.popularWords;
-        const sortedKeywords = data.popularWords
-          .sort((a, b) => b.value - a.value)
-          .slice(0, 10)
-          .reverse();
-        this.keyWord2Chart = {
-          color: ["#3399cc"],
-          grid: {
-            left: 100
-          },
-          legend: {
-            data: ["Keywords"]
-          },
-          yAxis: {
-            type: "category",
-            name: this.t("Words"),
-            data: sortedKeywords.map(i => i.text)
-          },
-          xAxis: {
-            type: "value",
-            name: this.t("Hits")
-          },
-          series: [
-            {
-              name: "%",
-              type: "bar",
-              data: sortedKeywords.map(i => i.weight),
-              label: {
-                normal: {
-                  position: "right",
-                  show: true
-                }
-              }
-            }
-          ]
-        };
+        this.freqWords = data.popularWords
+          .map(item => {
+            return {
+              name: item.text,
+              value: item.weight
+            };
+          })
+          .sort((a, b) => b.value - a.value);
       }
     });
   }
@@ -686,7 +659,7 @@ export class DashboardComponent implements OnInit {
     delay: 0.1
   };
   keywordClicked(clicked: CloudData) {
-    this.analyticsService.trackEvent('user', 'keywordClicked');
+    this.analyticsService.trackEvent("user", "keywordClicked");
     this.filesService.setKeyWord(clicked.text);
     this.router.navigateByUrl("/user/files");
   }
