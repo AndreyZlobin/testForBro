@@ -151,6 +151,11 @@ angular-tag-cloud > span {
   color: #fff;
   text-align: right;
 }
+
+.nb-theme-default .text-primary {
+  color: var(--color-secondary) !important;
+}
+
 .nb-theme-default .btn.btn-primary {
   cursor: pointer;
   background-color: var(--color-secondary);
