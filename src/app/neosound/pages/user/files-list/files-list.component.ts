@@ -30,6 +30,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   pagesArr = [1];
   totalCount = 0;
   sortBy = "uploaded";
+  viewStyle = 0;
+  viewStyles = ["list", "table"];
   sort = "up";
   filter;
   datefrom; // = new Date();
@@ -668,6 +670,13 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getBool(v) {
     return v === "true";
+  }
+  toggleView () {
+    if(this.viewStyle === 0) {
+      this.viewStyle = 1;
+    } else {
+      this.viewStyle = 0;
+    }
   }
 
   ngOnDestroy() {

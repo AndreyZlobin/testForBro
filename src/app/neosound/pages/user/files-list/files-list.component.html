@@ -171,162 +171,304 @@
                   <div class="row mb-1">
                     <!-- <div class="col-2 pr-0" style="line-height: 31px;">Filename:</div> -->
                     <div class="col text-right pl-0" *ngIf="!isLoading">
+                      <button class="btn btn-primary ml-5 pull-right mt-1 btn-sm" (click)="toggleView()">
+                        <i *ngIf="viewStyle === 1" class="fa fa-list"></i>
+                        <i *ngIf="viewStyle === 0" class="fas fa-table"></i>
+                      </button>
                       <button class="btn btn-primary ml-5 pull-right mt-1 btn-sm"
                         (click)="exportCSV()">{{t('Export to CSV')}}</button>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="d-flex border-top border-bottom">
-                <span class="mt-2 pt-1">Sort:</span>
-                <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb" (click)="sortTable('batchId')">
-                  {{t('Batch Id')}}
-                  <i *ngIf="sortBy === 'batchId' && sort ==='up'" class="fas fa-sort-up"></i><i
-                    *ngIf="sortBy === 'batchId' && sort ==='down'" class="fas fa-sort-down"></i><i
-                    *ngIf="sortBy !== 'batchId'" style="color: #bbbbbb" class="fas fa-sort"></i>
-                </button>
-                <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-                  (click)="sortTable('name')">{{t('Name')}}
-                  <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i
-                    *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i
-                    *ngIf="sortBy !== 'name'" style="color: #bbbbbb" class="fas fa-sort"></i>
-                </button>
-                <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-                  (click)="sortTable('uploaded')">{{t('Uploaded')}}
-                  <i *ngIf="sortBy === 'uploaded' && sort ==='up'" class="fas fa-sort-up"></i><i
-                    *ngIf="sortBy === 'uploaded' && sort ==='down'" class="fas fa-sort-down"></i><i
-                    *ngIf="sortBy !== 'uploaded'" style="color: #bbbbbb" class="fas fa-sort"></i>
-                </button>
-                <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-                  (click)="sortTable('duration')">{{t('Duration')}}
-                  <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i
-                    *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i
-                    *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i>
-                </button>
-                <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-                  (click)="sortTable('emotion')">{{t('Emotion')}}
-                  <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i
-                    *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i
-                    *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i>
-                </button>
-                <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-                  (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
-                  <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i
-                    *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i
-                    *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i>
-                </button>
-                <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-                  (click)="sortTable('pausedur')">{{t('Tot.Pause')}}
-                  <i *ngIf="sortBy === 'pausedur' && sort ==='down'" class="fas fa-sort-up"></i><i
-                    *ngIf="sortBy === 'pausedur' && sort ==='up'" class="fas fa-sort-down"></i><i
-                    *ngIf="sortBy !== 'pausedur'" style="color: #bbbbbb" class="fas fa-sort"></i>
-                </button>
-                <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-                  (click)="sortTable('stopWords')">{{t('Stopwords')}}
-                  <i *ngIf="sortBy === 'stopWords' && sort ==='down'" class="fas fa-sort-up"></i><i
-                    *ngIf="sortBy === 'stopWords' && sort ==='up'" class="fas fa-sort-down"></i><i
-                    *ngIf="sortBy !== 'stopWords'" style="color: #bbbbbb" class="fas fa-sort"></i>
-                </button>
-                <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-                  (click)="sortTable('compliance')">{{t('Compliance')}}
-                  <i *ngIf="sortBy === 'compliance' && sort ==='down'" class="fas fa-sort-up"></i><i
-                    *ngIf="sortBy === 'compliance' && sort ==='up'" class="fas fa-sort-down"></i><i
-                    *ngIf="sortBy !== 'compliance'" style="color: #bbbbbb" class="fas fa-sort"></i>
-                </button>
-              </div>
-              <div>
-                <div class="d-flex flex-column w-100">
-                  <div class="d-flex flex-row border-top border-bottom align-items-stretch justify-content-start"
-                    *ngFor="let item of files; let i = index">
-                    <div (click)="markFavorite(item, i)" style="cursor: pointer; width: 4%;" class="align-self-center">
-                      <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
-                      <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
-                    </div>
-                    <div style="width: 46%">
-                      <div class="d-flex flex-column">
-                        <div class="w-100 mt-2">
-                          <span class="font-weight-bold text-primary text-truncate"
-                            style="width: 25rem;">{{item.filename}}</span>
-                        </div>
-                        <div class="w-100">
-                          <div class="row">
-                            <div class="col-6 align-self-center">
-                              <div class="w-100 mb-2">
-                                <a href="#" style="text-decoration: underline">{{item.batchid}}</a>
+              <ng-container *ngIf="viewStyle === 0">
+                <div class="d-flex border-top border-bottom">
+                  <span class="mt-2 pt-1">Sort:</span>
+                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
+                    (click)="sortTable('batchId')">
+                    {{t('Batch Id')}}
+                    <i *ngIf="sortBy === 'batchId' && sort ==='up'" class="fas fa-sort-up"></i><i
+                      *ngIf="sortBy === 'batchId' && sort ==='down'" class="fas fa-sort-down"></i><i
+                      *ngIf="sortBy !== 'batchId'" style="color: #bbbbbb" class="fas fa-sort"></i>
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
+                    (click)="sortTable('name')">{{t('Name')}}
+                    <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i
+                      *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i
+                      *ngIf="sortBy !== 'name'" style="color: #bbbbbb" class="fas fa-sort"></i>
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
+                    (click)="sortTable('uploaded')">{{t('Uploaded')}}
+                    <i *ngIf="sortBy === 'uploaded' && sort ==='up'" class="fas fa-sort-up"></i><i
+                      *ngIf="sortBy === 'uploaded' && sort ==='down'" class="fas fa-sort-down"></i><i
+                      *ngIf="sortBy !== 'uploaded'" style="color: #bbbbbb" class="fas fa-sort"></i>
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
+                    (click)="sortTable('duration')">{{t('Duration')}}
+                    <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i
+                      *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i
+                      *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i>
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
+                    (click)="sortTable('emotion')">{{t('Emotion')}}
+                    <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i
+                      *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i
+                      *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i>
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
+                    (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
+                    <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i
+                      *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i
+                      *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i>
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
+                    (click)="sortTable('pausedur')">{{t('Tot.Pause')}}
+                    <i *ngIf="sortBy === 'pausedur' && sort ==='down'" class="fas fa-sort-up"></i><i
+                      *ngIf="sortBy === 'pausedur' && sort ==='up'" class="fas fa-sort-down"></i><i
+                      *ngIf="sortBy !== 'pausedur'" style="color: #bbbbbb" class="fas fa-sort"></i>
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
+                    (click)="sortTable('stopWords')">{{t('Stopwords')}}
+                    <i *ngIf="sortBy === 'stopWords' && sort ==='down'" class="fas fa-sort-up"></i><i
+                      *ngIf="sortBy === 'stopWords' && sort ==='up'" class="fas fa-sort-down"></i><i
+                      *ngIf="sortBy !== 'stopWords'" style="color: #bbbbbb" class="fas fa-sort"></i>
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
+                    (click)="sortTable('compliance')">{{t('Compliance')}}
+                    <i *ngIf="sortBy === 'compliance' && sort ==='down'" class="fas fa-sort-up"></i><i
+                      *ngIf="sortBy === 'compliance' && sort ==='up'" class="fas fa-sort-down"></i><i
+                      *ngIf="sortBy !== 'compliance'" style="color: #bbbbbb" class="fas fa-sort"></i>
+                  </button>
+                </div>
+                <div>
+                  <div class="d-flex flex-column w-100">
+                    <div class="d-flex flex-row border-top border-bottom align-items-stretch justify-content-start"
+                      *ngFor="let item of files; let i = index">
+                      <div (click)="markFavorite(item, i)" style="cursor: pointer; width: 4%;"
+                        class="align-self-center">
+                        <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
+                        <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
+                      </div>
+                      <div style="width: 46%">
+                        <div class="d-flex flex-column">
+                          <div class="w-100 mt-2">
+                            <span class="font-weight-bold text-primary text-truncate"
+                              style="width: 25rem;">{{item.filename}}</span>
+                          </div>
+                          <div class="w-100">
+                            <div class="row">
+                              <div class="col-6 align-self-center">
+                                <div class="w-100 mb-2">
+                                  <a href="#" style="text-decoration: underline">{{item.batchid}}</a>
+                                </div>
+                                <div class="w-100">
+                                  <span class="badge badge-secondary mr-1" *ngFor="let tag of item.tags">{{tag}}</span>
+                                  <button class="btn p-0 c-normal" style="cursor: pointer;"
+                                    (click)="showModal(tagModal, item, i)" tooltip="{{t('Delete')}}">
+                                    <i class="fa fa-pencil-alt"></i>
+                                  </button>
+                                </div>
                               </div>
-                              <div class="w-100">
-                                <span class="badge badge-secondary mr-1" *ngFor="let tag of item.tags">{{tag}}</span>
-                                <button class="btn p-0 c-normal" style="cursor: pointer;"
-                                  (click)="showModal(tagModal, item, i)" tooltip="{{t('Delete')}}">
-                                  <i class="fa fa-pencil-alt"></i>
-                                </button>
+                              <div class="col-3">
+                                <dl class="row" style="font-size: xx-small;">
+                                  <dt class="col-6 font-weight-normal">Uploaded:</dt>
+                                  <dd class="col-6 p-0 font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</dd>
+                                  <dt class="col-6 font-weight-normal">Duration:</dt>
+                                  <dd class="col-6 p-0 font-weight-bold">{{ getDateVal(item.duration) | date:'mm:ss'}}
+                                  </dd>
+                                  <dt class="col-6 font-weight-normal">Silence:</dt>
+                                  <dd class="col-6 p-0 font-weight-bold">&nbsp;</dd>
+                                </dl>
                               </div>
-                            </div>
-                            <div class="col-3">
-                              <dl class="row" style="font-size: xx-small;">
-                                <dt class="col-6 font-weight-normal">Uploaded:</dt>
-                                <dd class="col-6 p-0 font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</dd>
-                                <dt class="col-6 font-weight-normal">Duration:</dt>
-                                <dd class="col-6 p-0 font-weight-bold">{{ getDateVal(item.duration) | date:'mm:ss'}}
-                                </dd>
-                                <dt class="col-6 font-weight-normal">Silence:</dt>
-                                <dd class="col-6 p-0 font-weight-bold">&nbsp;</dd>
-                              </dl>
-                            </div>
-                            <div class="col-3 align-self-center">
-                              <dl class="row" style="font-size: xx-small;" *ngIf="item.pause && item.pause.dur">
-                                <dt class="col-6 font-weight-normal">Pauses:</dt>
-                                <dd class="col-6 font-weight-bold p-0">&nbsp;</dd>
-                                <dt class="col-6 font-weight-normal">Max.</dt>
-                                <dd class="col-6 font-weight-bold p-0">{{getDateVal(item.pause.dur) | date: 'mm:ss'}}
-                                </dd>
-                                <dt class="col-6 font-weight-normal">Avg.</dt>
-                                <dd class="col-6 font-weight-bold p-0">{{getDateVal(item.pause.avg) | date: 'mm:ss'}}
-                                </dd>
-                              </dl>
+                              <div class="col-3 align-self-center">
+                                <dl class="row" style="font-size: xx-small;" *ngIf="item.pause && item.pause.dur">
+                                  <dt class="col-6 font-weight-normal">Pauses:</dt>
+                                  <dd class="col-6 font-weight-bold p-0">&nbsp;</dd>
+                                  <dt class="col-6 font-weight-normal">Max.</dt>
+                                  <dd class="col-6 font-weight-bold p-0">{{getDateVal(item.pause.dur) | date: 'mm:ss'}}
+                                  </dd>
+                                  <dt class="col-6 font-weight-normal">Avg.</dt>
+                                  <dd class="col-6 font-weight-bold p-0">{{getDateVal(item.pause.avg) | date: 'mm:ss'}}
+                                  </dd>
+                                </dl>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                        <div class="d-flex flex-row justify-content-between align-self-center" style="width: 15%">
-                          <i class="fa fa-user-friends"></i><span class="badge badge-danger">2</span>
-                          <i class="fa fa-headset"></i><span class="badge badge-danger">3</span>
-                          <i class="fa fa-user-tie"></i><span class="badge badge-danger">4</span>
+                      <div class="d-flex flex-row justify-content-between align-self-center" style="width: 15%">
+                        <i class="fa fa-user-friends"></i><span class="badge badge-danger">2</span>
+                        <i class="fa fa-headset"></i><span class="badge badge-danger">3</span>
+                        <i class="fa fa-user-tie"></i><span class="badge badge-danger">4</span>
+                      </div>
+                      <div class="d-flex justify-content-around" style="width: 15%">
+                        <div class="align-self-center text-center"><i class="fa fa-3x fa-shield-alt"></i></div>
+                        <div class="align-self-center text-center">
+                          <div style="font-size: x-small;">Compliance:</div>
+                          <h2 *ngIf="item.angertop && item.angertop.anger"
+                            [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}">
+                            {{item.compliancepercent}}%
+                          </h2>
                         </div>
-                    <div class="d-flex justify-content-around" style="width: 15%">
-                      <div class="align-self-center text-center"><i class="fa fa-3x fa-shield-alt"></i></div>
-                      <div class="align-self-center text-center">
-                        <div style="font-size: x-small;">Compliance:</div>
-                        <h2 *ngIf="item.angertop && item.angertop.anger"
-                          [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}">
-                          {{item.compliancepercent}}%
-                        </h2>
                       </div>
-                    </div>
-                    <div class="d-flex justify-content-around align-self-center" style="width: 15%"
-                      [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
-                      <div class="align-self-center text-center"><i class="fa fa-3x fa-thermometer-empty"></i></div>
-                      <div class="align-self-center text-center">
-                        <div style="font-size: x-small;">Average emotional level: </div>
-                        <h2 *ngIf="item.angertop && item.angertop.anger">
-                          {{item.angertop && item.angertop.anger}}%
-                        </h2>
+                      <div class="d-flex justify-content-around align-self-center" style="width: 15%"
+                        [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
+                        <div class="align-self-center text-center"><i class="fa fa-3x fa-thermometer-empty"></i></div>
+                        <div class="align-self-center text-center">
+                          <div style="font-size: x-small;">Average emotional level: </div>
+                          <h2 *ngIf="item.angertop && item.angertop.anger">
+                            {{item.angertop && item.angertop.anger}}%
+                          </h2>
+                        </div>
                       </div>
-                    </div>
-                    <div class="d-flex justify-content-around" style="width: 7%">
-                      <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
-                        (click)="proccessFile(item, i)" tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}">
-                        <i class="fa fa-sync"></i>
-                      </button>
-                      <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
-                        (click)="delete(item.batchid, item.fileid)" tooltip="{{t('Delete')}}">
-                        <i class="fa fa-trash-alt"></i>
-                      </button>
+                      <div class="d-flex justify-content-around" style="width: 7%">
+                        <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
+                          (click)="proccessFile(item, i)" tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}">
+                          <i class="fa fa-sync"></i>
+                        </button>
+                        <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
+                          (click)="delete(item.batchid, item.fileid)" tooltip="{{t('Delete')}}">
+                          <i class="fa fa-trash-alt"></i>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </ng-container>
+              <ng-container *ngIf="viewStyle === 1">
+                <table class="table" *ngIf="!isLoadingSpinner; else spinner">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th class="text-one-line"><a (click)="sortTable('batchId')">{{t('Batch Id')}}
+                          <i *ngIf="sortBy === 'batchId' && sort ==='up'" class="fas fa-sort-up"></i><i
+                            *ngIf="sortBy === 'batchId' && sort ==='down'" class="fas fa-sort-down"></i><i
+                            *ngIf="sortBy !== 'batchId'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                      </th>
+                      <th class="text-one-line"><a (click)="sortTable('name')">{{t('Name')}}
+                          <i *ngIf="sortBy === 'name' && sort ==='up'" class="fas fa-sort-up"></i><i
+                            *ngIf="sortBy === 'name' && sort ==='down'" class="fas fa-sort-down"></i><i
+                            *ngIf="sortBy !== 'name'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                      </th>
+                      <th class="text-one-line"><a (click)="sortTable('uploaded')">{{t('Uploaded')}}
+                          <i *ngIf="sortBy === 'uploaded' && sort ==='up'" class="fas fa-sort-up"></i><i
+                            *ngIf="sortBy === 'uploaded' && sort ==='down'" class="fas fa-sort-down"></i><i
+                            *ngIf="sortBy !== 'uploaded'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                      </th>
+                      <th class="text-one-line"><a (click)="sortTable('duration')">{{t('Duration')}}
+                          <i *ngIf="sortBy === 'duration' && sort ==='up'" class="fas fa-sort-up"></i><i
+                            *ngIf="sortBy === 'duration' && sort ==='down'" class="fas fa-sort-down"></i><i
+                            *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                      </th>
+                      <th class="text-one-line"><a (click)="sortTable('emotion')">{{t('Emotion')}}
+                          <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i
+                            *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i
+                            *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                      </th>
+                      <th class="text-one-line"><a (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
+                          <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i
+                            *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i
+                            *ngIf="sortBy !== 'avgpause'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                      </th>
+                      <th class="text-one-line"><a (click)="sortTable('pausedur')">{{t('Tot.Pause')}}
+                          <i *ngIf="sortBy === 'pausedur' && sort ==='down'" class="fas fa-sort-up"></i><i
+                            *ngIf="sortBy === 'pausedur' && sort ==='up'" class="fas fa-sort-down"></i><i
+                            *ngIf="sortBy !== 'pausedur'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                      </th>
+                      <th class="text-one-line"><a (click)="sortTable('stopWords')">{{t('Stopwords')}}
+                          <i *ngIf="sortBy === 'stopWords' && sort ==='down'" class="fas fa-sort-up"></i><i
+                            *ngIf="sortBy === 'stopWords' && sort ==='up'" class="fas fa-sort-down"></i><i
+                            *ngIf="sortBy !== 'stopWords'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                      </th>
+                      <th class="text-one-line"><a (click)="sortTable('compliance')">{{t('Compliance')}}
+                          <i *ngIf="sortBy === 'compliance' && sort ==='down'" class="fas fa-sort-up"></i><i
+                            *ngIf="sortBy === 'compliance' && sort ==='up'" class="fas fa-sort-down"></i><i
+                            *ngIf="sortBy !== 'compliance'" style="color: #bbbbbb" class="fas fa-sort"></i></a>
+                      </th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of files; let i = index">
+                      <td>
+                        <span (click)="markFavorite(item, i)" style="cursor: pointer;">
+                          <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
+                          <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
+                        </span>
+                      </td>
+                      <td>
+                        <div class="text-nowrap" tooltip="{{item.batchid}}" style="max-width: 150px;">
+                          {{ item.batchid}}
+                        </div>
+                      </td>
+                      <td><a [routerLink]="getLink(item)" style="cursor: pointer;">
+                          <div class="text-nowrap" tooltip="{{item.filename}}">{{item.filename}}</div>
+                        </a></td>
+                      <td>
+                        <div class="text-nowrap" tooltip="{{item.uploaddate | date: 'dd/MM/yyyy hh:mm:ss'}}">
+                          {{item.uploaddate | date: 'dd/MM/yyyy'}}</div>
+                      </td>
+                      <td>
+                        <div class="text-nowrap">
+                          <span tooltip="{{getDateVal(item.duration) | date:'mm:ss.SSS'}}">
+                            {{ getDateVal(item.duration) | date:'mm:ss'}}</span>
+                          <span *ngIf="item.errm || item.errc" tooltip="{{item.errm.trim() || item.errc}}">
+                            <i class="fa fa-exclamation ml-2" style="color: #dc3545"></i>
+                          </span>
+                        </div>
+                      </td>
+                      <td [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
+                        <div *ngIf="item.angertop && item.angertop.anger">
+                          {{item.angertop && item.angertop.anger}}%
+                        </div>
+                      </td>
+                      <td [ngStyle]="{'background': getOpacityLevelPause(item.pauses)}">{{ item.pauses }}</td>
+                      <td>
+                        <span *ngIf="item.pause && item.pause.dur" style="cursor: pointer"
+                          tooltip='{{item.pause.dur / item.duration | percent}}'>
+                          {{getDateVal(item.pause.dur) | date: 'mm:ss'}}
+                        </span>
+                      </td>
+                      <td class="text-center">
+                        <div class="badge badge-danger" style="cursor: pointer" *ngIf="item.stopwordcount"
+                          tooltip="{{getStopwords(item)}}">
+                          {{item.stopwordcount}}
+                        </div>
+                        <span *ngIf="!item.stopwords">-</span>
+                      </td>
+                      <td class="text-center">
+                        <div class="" style="cursor: pointer"
+                          [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}">
+                          {{item.compliancepercent}}
+                        </div>
+                      </td>
+                      <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
+                      <td>
+                        <button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)"
+                          tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}">
+                          <i class="fa fa-sync"></i>
+                        </button>
+                      </td>
+                      <td>
+                        <button class="btn p-2 c-normal" style="cursor: pointer;"
+                          (click)="delete(item.batchid, item.fileid)" tooltip="{{t('Delete')}}">
+                          <i class="fa fa-trash-alt"></i>
+                        </button>
+                      </td>
+                      <td>
+                        <span (click)="showModal(tagModal, item, i)">
+                          <div class="badge badge-secondary m-1" style="cursor: pointer;" *ngFor="let tag of item.tags">
+                            {{tag}}
+                          </div>
+                          <i class="fa fa-pencil-alt ml-2"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </ng-container>
               <div *ngIf="!isLoadingSpinner">
                 <div *ngIf="!isLoading && !files.length" class="mb-4">{{t('0 Files')}}</div>
                 <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
