@@ -37,6 +37,7 @@ import { FilesListComponent } from "./neosound/pages/user/files-list/files-list.
 import { FileResultsComponent } from "./neosound/pages/user/file-results/file-results.component";
 import { LandingComponent } from "./neosound/pages/landing/landing.component";
 import { AdminDashboardComponent } from "./neosound/pages/admin/dashboard/dashboard.component";
+import { OrganizationSettingsComponent } from "./neosound/pages/admin/organisation-settings/organization-settings.component";
 import { AuthGuard } from "./neosound/shared/auth-guard";
 import { AboutComponent } from "./neosound/pages/about/about.component";
 import { MinutesSecondsPipe } from "./neosound/minutes-seconds.pipe";
@@ -119,6 +120,7 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     FileResultsComponent,
     LandingComponent,
     AdminDashboardComponent,
+    OrganizationSettingsComponent,
     AboutComponent,
     PlayerDetailsComponent,
     PieChartComponent,
