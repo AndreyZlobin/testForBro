@@ -30,6 +30,7 @@ import { FilesListComponent } from './neosound/pages/user/files-list/files-list.
 import { FileResultsComponent } from './neosound/pages/user/file-results/file-results.component';
 import { LandingComponent } from './neosound/pages/landing/landing.component';
 import { AdminDashboardComponent } from './neosound/pages/admin/dashboard/dashboard.component';
+import { OrganizationSettingsComponent } from './neosound/pages/admin/organisation-settings/organization-settings.component';
 import { AuthGuard } from './neosound/shared/auth-guard';
 import { AboutComponent } from './neosound/pages/about/about.component';
 
@@ -61,6 +62,11 @@ const routes: Routes = [
         path: 'admin',
         canActivate: [ AuthGuard ],
         component: AdminDashboardComponent
+      },
+      {
+        path: 'admin/settings',
+        canActivate: [ AuthGuard ],
+        component: OrganizationSettingsComponent
       },
       {
         path: 'admin/user/:id',

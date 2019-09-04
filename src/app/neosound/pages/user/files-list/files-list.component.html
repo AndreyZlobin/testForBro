@@ -302,12 +302,14 @@
                         </div>
                       </div>
                       <div class="d-flex flex-row justify-content-between align-self-center" style="width: 15%">
-                        <div tooltip="{{t('Client')}}" class="ml-3"><i class="fa fa-user-friends mr-2"></i><span
-                            class="badge badge-danger">{{item.customerstopwordcount}}</span></div>
+                        <div class="ml-4">
+                          <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-2"></i>
+                          <span tooltip="{{getStopwords(item)}}" class="badge badge-danger">{{item.stopwordcount ? item.stopwordcount : 0}}</span>
+                          </div>
                         <div tooltip="{{t('Agent')}}"><i class="fa fa-headset mr-2"></i><span
-                            class="badge badge-danger">{{item.agentstopwordcount}}</span></div>
-                        <div tooltip="{{t('All')}}" class="mr-3"><i class="fa fa-user-tie mr-2"></i><span
-                            class="badge badge-danger">{{item.stopwordcount}}</span>
+                            class="badge badge-danger">{{item.agentstopwordcount ? item.agentstopwordcount : 0 }}</span></div>
+                        <div tooltip="{{t('Client')}}" class="mr-4"><i class="fa fa-user-tie mr-2"></i><span
+                            class="badge badge-danger">{{item.customerstopwordcount ? item.customerstopwordcount : 0}}</span>
                         </div>
                       </div>
                       <div class="d-flex justify-content-center align-self-scratch font-weight-bold" style="width: 15%">
