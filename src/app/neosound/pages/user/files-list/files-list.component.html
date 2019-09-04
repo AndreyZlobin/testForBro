@@ -252,73 +252,87 @@
                       <div style="width: 46%">
                         <div class="d-flex flex-column">
                           <div class="w-100 mt-2">
-                            <span class="font-weight-bold text-primary text-truncate"
-                              style="width: 25rem;">{{item.filename}}</span>
+                            <a [routerLink]="getLink(item)" style="cursor: pointer;"
+                              class="font-weight-bold text-primary text-truncate">
+                              <span style="width: 25rem;">{{item.filename}}</span>
+                            </a>
                           </div>
                           <div class="w-100">
                             <div class="row">
                               <div class="col-6 align-self-center">
-                                <div class="w-100 mb-2">
+                                <div class="w-100 my-2">
                                   <a href="#" style="text-decoration: underline">{{item.batchid}}</a>
-                                </div>
-                                <div class="w-100">
-                                  <span class="badge badge-secondary mr-1" *ngFor="let tag of item.tags">{{tag}}</span>
-                                  <button class="btn p-0 c-normal" style="cursor: pointer;"
-                                    (click)="showModal(tagModal, item, i)" tooltip="{{t('Delete')}}">
-                                    <i class="fa fa-pencil-alt"></i>
-                                  </button>
                                 </div>
                               </div>
                               <div class="col-3">
-                                <dl class="row" style="font-size: xx-small;">
-                                  <dt class="col-6 font-weight-normal">Uploaded:</dt>
-                                  <dd class="col-6 p-0 font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</dd>
-                                  <dt class="col-6 font-weight-normal">Duration:</dt>
-                                  <dd class="col-6 p-0 font-weight-bold">{{ getDateVal(item.duration) | date:'mm:ss'}}
-                                  </dd>
-                                  <dt class="col-6 font-weight-normal">Silence:</dt>
-                                  <dd class="col-6 p-0 font-weight-bold">&nbsp;</dd>
-                                </dl>
+                                <div class="row" style="font-size: xx-small;">
+                                  <div class="col-6 font-weight-normal">{{t('Uploaded')}}:</div>
+                                  <div class="col-6 font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</div>
+                                  <div class="col-6 font-weight-normal my-1">{{t('Duration')}}:</div>
+                                  <div class="col-6 font-weight-bold my-1">{{ getDateVal(item.duration) | date:'mm:ss'}}
+                                  </div>
+                                  <div class="col-6 font-weight-normal">{{t('Silence')}}:</div>
+                                  <div class="col-6 font-weight-bold" *ngIf="item.pause && item.pause.dur">
+                                    <span>{{getDateVal(item.pause.dur) | date: 'mm:ss'}}</span>&nbsp;<span>({{item.pause.dur / item.duration | percent}})</span>
+                                  </div>
+                                </div>
                               </div>
-                              <div class="col-3 align-self-center">
-                                <dl class="row" style="font-size: xx-small;" *ngIf="item.pause && item.pause.dur">
-                                  <dt class="col-6 font-weight-normal">Pauses:</dt>
-                                  <dd class="col-6 font-weight-bold p-0">&nbsp;</dd>
-                                  <dt class="col-6 font-weight-normal">Max.</dt>
-                                  <dd class="col-6 font-weight-bold p-0">{{getDateVal(item.pause.dur) | date: 'mm:ss'}}
-                                  </dd>
-                                  <dt class="col-6 font-weight-normal">Avg.</dt>
-                                  <dd class="col-6 font-weight-bold p-0">{{getDateVal(item.pause.avg) | date: 'mm:ss'}}
-                                  </dd>
-                                </dl>
+                              <div class="col-3">
+                                <div class="row" style="font-size: xx-small;" *ngIf="item.pause && item.pause.dur">
+                                  <div class="col-6 font-weight-normal">Pauses:</div>
+                                  <div class="col-6 font-weight-bold">&nbsp;</div>
+                                  <div class="col-6 font-weight-normal my-1">Max.</div>
+                                  <div class="col-6 font-weight-bold my-1">
+                                    {{getDateVal(item.pause.dur) | date: 'mm:ss'}}
+                                  </div>
+                                  <div class="col-6 font-weight-normal">Avg.</div>
+                                  <div class="col-6 font-weight-bold">{{getDateVal(item.pause.avg) | date: 'mm:ss'}}
+                                  </div>
+                                </div>
                               </div>
                             </div>
+                          </div>
+                          <div class="w-100 mb-1">
+                            <span class="badge badge-secondary mr-1" *ngFor="let tag of item.tags">{{tag}}</span>
+                            <button class="btn p-0 c-normal" style="cursor: pointer;"
+                              (click)="showModal(tagModal, item, i)" tooltip="{{t('Edit tags')}}">
+                              <i class="fa fa-pencil-alt"></i>
+                            </button>
                           </div>
                         </div>
                       </div>
                       <div class="d-flex flex-row justify-content-between align-self-center" style="width: 15%">
-                        <i class="fa fa-user-friends"></i><span class="badge badge-danger">2</span>
-                        <i class="fa fa-headset"></i><span class="badge badge-danger">3</span>
-                        <i class="fa fa-user-tie"></i><span class="badge badge-danger">4</span>
+                        <div tooltip="{{t('Client')}}" class="ml-3"><i class="fa fa-user-friends mr-2"></i><span
+                            class="badge badge-danger">{{item.customerstopwordcount}}</span></div>
+                        <div tooltip="{{t('Agent')}}"><i class="fa fa-headset mr-2"></i><span
+                            class="badge badge-danger">{{item.agentstopwordcount}}</span></div>
+                        <div tooltip="{{t('All')}}" class="mr-3"><i class="fa fa-user-tie mr-2"></i><span
+                            class="badge badge-danger">{{item.stopwordcount}}</span>
+                        </div>
                       </div>
-                      <div class="d-flex justify-content-around" style="width: 15%">
-                        <div class="align-self-center text-center"><i class="fa fa-3x fa-shield-alt"></i></div>
+                      <div class="d-flex justify-content-center align-self-scratch font-weight-bold" style="width: 15%">
+                        <div class="align-self-center text-center mr-1"><i class="fa fa-3x fa-shield-alt"></i></div>
                         <div class="align-self-center text-center">
-                          <div style="font-size: x-small;">Compliance:</div>
-                          <h2 *ngIf="item.angertop && item.angertop.anger"
-                            [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}">
-                            {{item.compliancepercent}}%
+                          <div style="font-size: x-small;">{{t('Compliance')}}:</div>
+                          <h2 [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}">
+                            {{item.compliancepercent !== '-' ? item.compliancepercent + '%' : '-' }}
                           </h2>
                         </div>
                       </div>
-                      <div class="d-flex justify-content-around align-self-center" style="width: 15%"
+                      <div class="d-flex justify-content-center align-self-scratch" style="width: 15%"
                         [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
-                        <div class="align-self-center text-center"><i class="fa fa-3x fa-thermometer-empty"></i></div>
-                        <div class="align-self-center text-center">
+                        <div class="align-self-center text-center mr-1"><i class="fa fa-3x fa-thermometer-empty"></i>
+                        </div>
+                        <div class="align-self-center text-center font-weight-bold">
                           <div style="font-size: x-small;">Average emotional level: </div>
-                          <h2 *ngIf="item.angertop && item.angertop.anger">
+                          <h2 *ngIf="item.angertop && item.angertop.anger; else empty">
                             {{item.angertop && item.angertop.anger}}%
                           </h2>
+                          <ng-template #empty>
+                            <h2>
+                              -
+                            </h2>
+                          </ng-template>
                         </div>
                       </div>
                       <div class="d-flex justify-content-around" style="width: 7%">
@@ -444,7 +458,6 @@
                           {{item.compliancepercent}}
                         </div>
                       </td>
-                      <!-- <td><button class="btn p-2 c-normal" style="cursor: pointer;" [routerLink]="getLink(item)" tooltip="{{t('File details')}}"><i class="fa fa-info-circle"></i></button></td> -->
                       <td>
                         <button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(item, i)"
                           tooltip="{{t('Refresh')}}{{proccessing[i] ? '...' : ''}}">
