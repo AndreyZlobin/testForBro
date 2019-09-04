@@ -266,12 +266,12 @@
                               </div>
                               <div class="col-3">
                                 <div class="row" style="font-size: xx-small;">
-                                  <div class="col-6 font-weight-normal">{{t('Uploaded')}}:</div>
+                                  <div class="col-6 font-weight-normal">{{t('Uploaded')}}</div>
                                   <div class="col-6 font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</div>
-                                  <div class="col-6 font-weight-normal my-1">{{t('Duration')}}:</div>
+                                  <div class="col-6 font-weight-normal my-1">{{t('Duration')}}</div>
                                   <div class="col-6 font-weight-bold my-1">{{ getDateVal(item.duration) | date:'mm:ss'}}
                                   </div>
-                                  <div class="col-6 font-weight-normal">{{t('Silence')}}:</div>
+                                  <div class="col-6 font-weight-normal">{{t('Silence')}}</div>
                                   <div class="col-6 font-weight-bold" *ngIf="item.pause && item.pause.dur">
                                     <span>{{getDateVal(item.pause.dur) | date: 'mm:ss'}}</span>&nbsp;<span>({{item.pause.dur / item.duration | percent}})</span>
                                   </div>
@@ -279,13 +279,13 @@
                               </div>
                               <div class="col-3">
                                 <div class="row" style="font-size: xx-small;" *ngIf="item.pause && item.pause.dur">
-                                  <div class="col-6 font-weight-normal">Pauses:</div>
+                                  <div class="col-6 font-weight-normal">{{t('Pauses')}}</div>
                                   <div class="col-6 font-weight-bold">&nbsp;</div>
-                                  <div class="col-6 font-weight-normal my-1">Max.</div>
+                                  <div class="col-6 font-weight-normal my-1">{{t('Max.')}}</div>
                                   <div class="col-6 font-weight-bold my-1">
                                     {{getDateVal(item.pause.dur) | date: 'mm:ss'}}
                                   </div>
-                                  <div class="col-6 font-weight-normal">Avg.</div>
+                                  <div class="col-6 font-weight-normal">{{t('Avg.')}}</div>
                                   <div class="col-6 font-weight-bold">{{getDateVal(item.pause.avg) | date: 'mm:ss'}}
                                   </div>
                                 </div>
