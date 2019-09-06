@@ -38,11 +38,15 @@ import { FileResultsComponent } from "./neosound/pages/user/file-results/file-re
 import { LandingComponent } from "./neosound/pages/landing/landing.component";
 import { AdminDashboardComponent } from "./neosound/pages/admin/dashboard/dashboard.component";
 import { OrganizationSettingsComponent } from "./neosound/pages/admin/organisation-settings/organization-settings.component";
+import { KeywordsComponent } from "./neosound/pages/admin/organisation-settings/components/keywords/keywords.component";
+import { SensitiveDataComponent } from "./neosound/pages/admin/organisation-settings/components/sensitive-data/sensitive-data.component";
+
 import { AuthGuard } from "./neosound/shared/auth-guard";
 import { AboutComponent } from "./neosound/pages/about/about.component";
 import { MinutesSecondsPipe } from "./neosound/minutes-seconds.pipe";
 
 import { FilesService } from "./neosound/services/files.service";
+import { OrganizationSettingsService } from "./neosound/services/organization-settings.service";
 import { PlayerService } from "./neosound/services/player.service";
 import { AnalyticsService } from "./neosound/services/analytics.service";
 import { MediaRecorderService } from "./neosound/services/media-recorder.service";
@@ -121,6 +125,8 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     LandingComponent,
     AdminDashboardComponent,
     OrganizationSettingsComponent,
+    KeywordsComponent,
+    SensitiveDataComponent,
     AboutComponent,
     PlayerDetailsComponent,
     PieChartComponent,
@@ -183,6 +189,7 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     AuthGuard,
     UsersService,
     FilesService,
+    OrganizationSettingsService,
     PlayerService,
     AnalyticsService,
     MediaRecorderService,

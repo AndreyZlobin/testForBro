@@ -1,0 +1,53 @@
+<div class="loader" *ngIf="isLoading">Loading...</div>
+<div class="d-flex flex-column" *ngIf="!isLoading">
+    <div class="my-3">
+        <h3>{{descriptionLabel}}</h3>
+    </div>
+    <div class="my-3">
+        <div class="d-flex align-items-center">
+            <nb-action class="control-action mr-2"><a (click)="exportAsCsv()" class=">"><i
+                        class="fas fa-download mr-2"></i>Download as CSV</a></nb-action>
+            <nb-action class="control-action mr-2"><a (click)="fileImport()">
+                    <i class="fas fa-file-import mr-2"></i>Import as CSV</a>
+            </nb-action>
+            <nb-action class="control-action ml-auto"><button class="btn btn-primary" (click)="save()">Save</button>
+            </nb-action>
+        </div>
+    </div>
+    <div class="border my-3">
+        <div style="overflow-y: auto">
+            <div style="height: 41vh">
+                <tag-input [(ngModel)]="tags" [editable]="true" theme="minimal" [separatorKeys]="[',']"
+                    [separatorKeyCodes]="[13]" (onAdd)="onItemAdd($event)" (onBlur)="onItemAdd($event)">
+                </tag-input>
+            </div>
+        </div>
+
+    </div>
+    <div class="my-3">
+        <div class="d-flex align-items-center">
+            <span>{{totalLabel}}: {{tags.length}}, just {{tags.length - initialLength < 0 ? 'removed' : 'added'}}
+                {{abs(tags.length - initialLength)}}</span>
+            <nb-action class="control-action mr-2 ml-auto"><button class="btn btn-secondary btn-sm ml-auto"
+                    (click)="openModal(long)"><i class="fas fa-sync-alt mr-2"></i>Re-launch {{singularLabel}}
+                    reduction</button></nb-action>
+            <nb-action class="control-action mr-2"><button class="btn btn-secondary btn-sm"
+                    (click)="openModal(confirm)"><i class="fas fa-trash-alt mr-2"></i>Remove All</button>
+            </nb-action>
+        </div>
+    </div>
+</div>
+<ng-template #confirm>
+    <div class="modal-body text-center">
+        <p>Please confirm, all {{singularLabel}}s will be eliminated from the company settings.</p>
+        <button type="button" class="btn btn-primary" (click)="deleteAll()">Yes</button>
+        <button type="button" class="btn btn-secondary" (click)="decline()">No</button>
+    </div>
+</ng-template>
+<ng-template #long>
+    <div class="modal-body text-center">
+        <p>It will take a few hours depending on the database size before you can see transcript.</p>
+        <button type="button" class="btn btn-primary" (click)="launch()">Ok</button>
+    </div>
+</ng-template>
+<input #cvsUpload type="file" (change)="handleFileInput($event.target.files)" style="visibility: hidden">

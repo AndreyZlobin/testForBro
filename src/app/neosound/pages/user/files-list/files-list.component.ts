@@ -11,9 +11,8 @@ import { DatepickerOptions } from "ng2-datepicker";
 import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import { LanguageService } from "../../../services/language.service";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Subscription, Observable } from "rxjs";
+import { Subscription } from "rxjs";
 import { DataService } from "../../../shared";
-import { debug } from "util";
 
 @Component({
   selector: "app-files-list",
