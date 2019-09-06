@@ -11,7 +11,7 @@ export class OrganizationSettingsService {
     const params = {
       setting: nameSpace
     };
-    return this.http.post(`${environment.api}/getMySettings`, params);
+    return this.http.post(`${environment.api}/getMyCompanySettings`, params);
   }
 
   updateSettings(nameSpace: string, settings: any): Observable<any> {
