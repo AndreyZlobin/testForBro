@@ -133,6 +133,7 @@ export class KeywordsComponent implements OnChanges {
   public deleteAll(): void {
     this.modalRef.hide();
     this.tags = [];
+    this.save();
   }
 
   public launch(): void {
@@ -154,7 +155,7 @@ export class KeywordsComponent implements OnChanges {
             this.tags.length - this.initialLength < 0 ? "removed" : "added"
           } ${this.singularLabel}s: ${this.abs(
             this.tags.length - this.initialLength
-          )}. this update set of ${
+          )}. this updated set of ${
             this.singularLabel
           }s will be applied automatically to all new uploaded calls`,
           "Saved"
