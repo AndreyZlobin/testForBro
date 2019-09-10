@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit,  EventEmitter, Output  } from "@angular/core";
 import { OrganizationSettingsService } from "../../../../../services/organization-settings.service";
 import { LanguageService } from "../../../../../services/language.service";
 
@@ -9,6 +9,7 @@ import { LanguageService } from "../../../../../services/language.service";
 })
 export class SensitiveDataComponent implements OnInit {
   public isLoading: boolean = true;
+  @Output() changed = new EventEmitter<boolean>();
   public setting: any = {
     reductDictName: false,
     reductName: false,

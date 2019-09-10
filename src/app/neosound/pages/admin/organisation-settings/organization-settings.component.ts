@@ -6,7 +6,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./organization-settings.component.scss"]
 })
 export class OrganizationSettingsComponent implements OnInit {
-  items: any[] = [
+  public items: any[] = [
     {
       name: "Setup Keywords",
       key: "keywords"
@@ -16,12 +16,19 @@ export class OrganizationSettingsComponent implements OnInit {
       name: "Setup Sensitive Data"
     }
   ];
-  activeItem: string = "keywords";
+  public activeItem: string = "keywords";
+  public unsavedLabel: string = "";
+  public hasUnsaved: boolean = false;
   constructor() {}
 
   ngOnInit() {}
 
   setView(view: string): void {
     this.activeItem = view;
+  }
+
+  onChange($event) {
+    this.hasUnsaved = $event.changed;
+    this.unsavedLabel = $event.name;
   }
 }
