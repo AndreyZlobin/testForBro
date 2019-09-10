@@ -298,6 +298,10 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     return "hsl(" + c + ", 50%, 50%)";
   }
 
+  abc(percent: number): string {
+    return percent.toFixed();
+  }
+
   getOpacityLevelPause(val) {
     if (!val) {
       return "";
