@@ -306,9 +306,15 @@
                           <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-2"></i>
                           <span tooltip="{{getStopwords(item)}}" class="badge badge-danger">{{item.stopwordcount ? item.stopwordcount : 0}}</span>
                           </div>
-                        <div tooltip="{{t('Agent')}}"><i class="fa fa-headset mr-2"></i><span
+                        <div>
+                          <i class="fa fa-headset mr-2" tooltip="{{t('Agent')}}"></i>
+                          <span
+                            tooltip="{{getAgentStopwords(item)}}"
                             class="badge badge-danger">{{item.agentstopwordcount ? item.agentstopwordcount : 0 }}</span></div>
-                        <div tooltip="{{t('Client')}}" class="mr-4"><i class="fa fa-user-tie mr-2"></i><span
+                        <div class="mr-4">
+                          <i tooltip="{{t('Client')}}" class="fa fa-user-tie mr-2"></i>
+                          <span
+                            tooltip="{{getCustomerStopword(item)}}"
                             class="badge badge-danger">{{item.customerstopwordcount ? item.customerstopwordcount : 0}}</span>
                         </div>
                       </div>

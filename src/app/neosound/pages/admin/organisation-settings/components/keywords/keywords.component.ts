@@ -71,12 +71,13 @@ export class KeywordsComponent implements OnChanges {
   handleFileInput(files: any[]) {
     const file = files[0];
     const self = this;
-    if (file.name.endsWith(".csv")) {
+    if (file && file.name && file.name.endsWith(".csv")) {
       this.isLoading = true;
       const reader = new FileReader();
       reader.onload = function() {
         const text = reader.result;
         let parsed = [...self.tags.map(i => i.value), ...self.csvtoArray(text)];
+        parsed = parsed.filter(i => i && i.length > 0);
         const deduplicate = new Set(parsed);
         const result = Array.from(deduplicate).map(v => {
           return { value: v, display: v };
@@ -128,20 +129,8 @@ export class KeywordsComponent implements OnChanges {
   }
 
   private csvtoArray(text) {
-    const re_valid = /^\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*(?:,\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*)*$/;
-    const re_value = /(?!\s*$)\s*(?:'([^'\\]*(?:\\[\S\s][^'\\]*)*)'|"([^"\\]*(?:\\[\S\s][^"\\]*)*)"|([^,'"\s\\]*(?:\s+[^,'"\s\\]+)*))\s*(?:,|$)/g;
-    // Return NULL if input string is not well formed CSV string.
-    if (!re_valid.test(text)) return null;
-    const a = [];
-    text.replace(re_value, (m0, m1, m2, m3) => {
-      if (m1 !== undefined) a.push(m1.replace(/\\'/g, "'"));
-      else if (m2 !== undefined) a.push(m2.replace(/\\"/g, '"'));
-      else if (m3 !== undefined) a.push(m3);
-      return "";
-    });
-    if (/,\s*$/.test(text)) a.push("");
-
-    return a.filter((value, index) => index !== 0 && value.length > 0);
+    const a = text.split(/\r?\n|\r/)
+    return a.map((v) => v.replace(/[\",\,]/gm, "")).filter((value, index) => index !== 0 || value.length > 0);
   }
 
   public openModal(template: TemplateRef<any>) {
@@ -173,10 +162,12 @@ export class KeywordsComponent implements OnChanges {
             this.tags.length - this.initialLength < 0 ? "removed" : "added"
           } ${this.singularLabel}s: ${this.abs(
             this.tags.length - this.initialLength
-          )}. this updated set of ${
+          )}.
+          <br>This updated set of ${
             this.singularLabel
           }s will be applied automatically to all new uploaded calls`,
-          "Saved"
+          "Saved",
+          { timeOut: 10000, enableHtml: true }
         );
         this.isLoading = false;
         this.hasChanges = false;
