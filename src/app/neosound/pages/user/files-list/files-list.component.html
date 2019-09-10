@@ -317,7 +317,7 @@
                         <div class="align-self-center text-center">
                           <div style="font-size: x-small;">{{t('Compliance')}}:</div>
                           <h2 [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}">
-                            {{item.compliancepercent !== '-' ? item.compliancepercent + '%' : '-' }}
+                            {{item.compliancepercent !== '-' ? abc(item.compliancepercent) + '%' : '-' }}
                           </h2>
                         </div>
                       </div>

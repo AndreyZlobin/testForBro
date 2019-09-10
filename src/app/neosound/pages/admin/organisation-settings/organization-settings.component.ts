@@ -11,10 +11,10 @@ export class OrganizationSettingsComponent implements OnInit {
       name: "Setup Keywords",
       key: "keywords"
     },
-    {
-      key: "sensitive-data",
-      name: "Setup Sensitive Data"
-    }
+    // {
+    //   key: "sensitive-data",
+    //   name: "Setup Sensitive Data"
+    // }
   ];
   public activeItem: string = "keywords";
   public unsavedLabel: string = "";
@@ -32,7 +32,10 @@ export class OrganizationSettingsComponent implements OnInit {
       ) {
         this.activeItem = view;
       }
+    } else {
+      this.activeItem = view;
     }
+
   }
 
   onChange($event) {

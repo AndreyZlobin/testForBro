@@ -217,4 +217,9 @@ export class KeywordsComponent implements OnChanges {
       })
       .sort((a, b) => a.value.localeCompare(b.value));
   }
+
+  onItemRemove(tag): void {
+    this.tags = this.tags.filter((t) => t.value !== tag.value);
+    this.hasChanges = true;
+  }
 }
