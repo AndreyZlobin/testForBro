@@ -32,6 +32,7 @@ import { LandingComponent } from './neosound/pages/landing/landing.component';
 import { AdminDashboardComponent } from './neosound/pages/admin/dashboard/dashboard.component';
 import { OrganizationSettingsComponent } from './neosound/pages/admin/organisation-settings/organization-settings.component';
 import { AuthGuard } from './neosound/shared/auth-guard';
+import { CanDeactivateGuard } from './neosound/shared/can-deactivate';
 import { AboutComponent } from './neosound/pages/about/about.component';
 
 import {PagesComponent} from './pages/pages.component';
@@ -66,6 +67,7 @@ const routes: Routes = [
       {
         path: 'admin/settings',
         canActivate: [ AuthGuard ],
+        canDeactivate: [CanDeactivateGuard],
         component: OrganizationSettingsComponent
       },
       {

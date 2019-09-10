@@ -4,7 +4,10 @@ import {
   Input,
   ViewChild,
   ElementRef,
-  TemplateRef
+  TemplateRef,
+  HostListener,
+  EventEmitter,
+  Output
 } from "@angular/core";
 import { OrganizationSettingsService } from "../../../../../services/organization-settings.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
@@ -21,13 +24,23 @@ export class KeywordsComponent implements OnChanges {
   @Input() totalLabel: string = "";
   @Input() singularLabel: string = "";
 
+  @Output() changed = new EventEmitter<{ changed: boolean; name: string }>();
+
   @ViewChild("cvsUpload") cvsUpload: ElementRef;
   modalRef: BsModalRef;
+
+  @HostListener("window:beforeunload", ["$event"])
+  unloadNotification($event: any) {
+    if (this.hasChanges) {
+      $event.returnValue = true;
+    }
+  }
 
   public isLoading: boolean = true;
   public setting: any = {};
   public tags: any[] = [];
   public initialLength: number = 0;
+  public hasChanges: boolean = false;
   constructor(
     private organizationSettingsService: OrganizationSettingsService,
     private modalService: BsModalService,
@@ -69,6 +82,11 @@ export class KeywordsComponent implements OnChanges {
           return { value: v, display: v };
         });
         self.isLoading = false;
+        self.hasChanges = true;
+        self.changed.emit({
+          changed: self.hasChanges,
+          name: self.singularLabel
+        });
         self.tags = result.sort((a, b) => a.value.localeCompare(b.value));
       };
       reader.readAsText(file);
@@ -161,6 +179,11 @@ export class KeywordsComponent implements OnChanges {
           "Saved"
         );
         this.isLoading = false;
+        this.hasChanges = false;
+        this.changed.emit({
+          changed: this.hasChanges,
+          name: this.singularLabel
+        });
         this.initialLength = this.tags.length;
       });
   }
@@ -169,6 +192,8 @@ export class KeywordsComponent implements OnChanges {
   }
 
   public onItemAdd(tag): void {
+    this.hasChanges = true;
+    this.changed.emit({ changed: this.hasChanges, name: this.singularLabel });
     let c = [];
     const tagVal = (tag && tag.value) || tag;
     if (tagVal === "") {

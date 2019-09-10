@@ -10,7 +10,7 @@
             <nb-action class="control-action mr-2"><a (click)="fileImport()">
                     <i class="fas fa-file-import mr-2"></i>Import as CSV</a>
             </nb-action>
-            <nb-action class="control-action ml-auto"><button class="btn btn-primary" (click)="save()">Save</button>
+            <nb-action class="control-action ml-auto"><button class="btn btn-primary" [disabled]="!hasChanges" (click)="save()">Save</button>
             </nb-action>
         </div>
     </div>

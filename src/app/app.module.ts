@@ -42,6 +42,8 @@ import { KeywordsComponent } from "./neosound/pages/admin/organisation-settings/
 import { SensitiveDataComponent } from "./neosound/pages/admin/organisation-settings/components/sensitive-data/sensitive-data.component";
 
 import { AuthGuard } from "./neosound/shared/auth-guard";
+import { CanDeactivateGuard } from "./neosound/shared/can-deactivate";
+
 import { AboutComponent } from "./neosound/pages/about/about.component";
 import { MinutesSecondsPipe } from "./neosound/minutes-seconds.pipe";
 
@@ -187,6 +189,7 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
       useValue: 'de-de',
     },
     AuthGuard,
+    CanDeactivateGuard,
     UsersService,
     FilesService,
     OrganizationSettingsService,
