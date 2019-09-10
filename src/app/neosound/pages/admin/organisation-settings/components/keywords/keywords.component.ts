@@ -89,6 +89,7 @@ export class KeywordsComponent implements OnChanges {
           name: self.singularLabel
         });
         self.tags = result.sort((a, b) => a.value.localeCompare(b.value));
+        self.cvsUpload.nativeElement.value = "";
       };
       reader.readAsText(file);
     }
@@ -130,7 +131,7 @@ export class KeywordsComponent implements OnChanges {
 
   private csvtoArray(text) {
     const a = text.split(/\r?\n|\r/)
-    return a.map((v) => v.replace(/[\",\,]/gm, "")).filter((value, index) => index !== 0 || value.length > 0);
+    return a.map((v) => v.replace(/[\",\,,;]/gm, "")).filter((value, index) => index !== 0 || value.length > 0);
   }
 
   public openModal(template: TemplateRef<any>) {
