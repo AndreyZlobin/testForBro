@@ -24,7 +24,15 @@ export class OrganizationSettingsComponent implements OnInit {
   ngOnInit() {}
 
   setView(view: string): void {
-    this.activeItem = view;
+    if (this.hasUnsaved) {
+      if (
+        confirm(
+          `You have unsaved ${this.unsavedLabel}s If you leave, your changes will be lost.`
+        )
+      ) {
+        this.activeItem = view;
+      }
+    }
   }
 
   onChange($event) {
