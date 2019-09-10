@@ -32,7 +32,10 @@ export class OrganizationSettingsComponent implements OnInit {
       ) {
         this.activeItem = view;
       }
+    } else {
+      this.activeItem = view;
     }
+
   }
 
   onChange($event) {
