@@ -31,7 +31,7 @@
             <!-- <nb-action class="control-action mr-2 ml-auto"><button class="btn btn-secondary btn-sm ml-auto"
                     (click)="openModal(long)"><i class="fas fa-sync-alt mr-2"></i>Re-launch {{singularLabel}}
                     reduction</button></nb-action> -->
-            <nb-action class="control-action mr-2"><button class="btn btn-secondary btn-sm"
+            <nb-action class="control-action mr-2 ml-auto"><button class="btn btn-secondary btn-sm"
                     (click)="openModal(confirm)"><i class="fas fa-trash-alt mr-2"></i>Remove All</button>
             </nb-action>
         </div>
@@ -40,7 +40,7 @@
 <ng-template #confirm>
     <div class="modal-body text-center">
         <p>Please confirm, all {{singularLabel}}s will be eliminated from the company settings.</p>
-        <button type="button" class="btn btn-primary" (click)="deleteAll()">Yes</button>
+        <button type="button" class="btn btn-primary mr-2" (click)="deleteAll()">Yes</button>
         <button type="button" class="btn btn-secondary" (click)="decline()">No</button>
     </div>
 </ng-template>
