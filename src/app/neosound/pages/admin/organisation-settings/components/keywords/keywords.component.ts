@@ -199,6 +199,7 @@ export class KeywordsComponent implements OnChanges {
     if (tagVal === "") {
       return;
     }
+    this.tags = this.tags.filter(a => a.value !== tagVal);
     const val = tagVal.split(",").map(v => v.trim());
     val.map(v =>
       c.push({
@@ -211,15 +212,16 @@ export class KeywordsComponent implements OnChanges {
       ...c.map(i => i.value)
     ]);
 
-    this.tags = Array.from(deduplicate)
+    let buff = Array.from(deduplicate)
       .map(v => {
         return { value: v, display: v };
       })
       .sort((a, b) => a.value.localeCompare(b.value));
+    this.tags = buff;
   }
 
   onItemRemove(tag): void {
-    this.tags = this.tags.filter((t) => t.value !== tag.value);
+    this.tags = this.tags.filter(t => t.value !== tag.value);
     this.hasChanges = true;
   }
 }
