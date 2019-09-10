@@ -162,10 +162,12 @@ export class KeywordsComponent implements OnChanges {
             this.tags.length - this.initialLength < 0 ? "removed" : "added"
           } ${this.singularLabel}s: ${this.abs(
             this.tags.length - this.initialLength
-          )}. this updated set of ${
+          )}.
+          <br>This updated set of ${
             this.singularLabel
           }s will be applied automatically to all new uploaded calls`,
-          "Saved"
+          "Saved",
+          { timeOut: 10000, enableHtml: true }
         );
         this.isLoading = false;
         this.hasChanges = false;
