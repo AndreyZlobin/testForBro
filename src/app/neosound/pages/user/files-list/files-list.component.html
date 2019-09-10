@@ -210,12 +210,6 @@
                       *ngIf="sortBy !== 'duration'" style="color: #bbbbbb" class="fas fa-sort"></i>
                   </button>
                   <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-                    (click)="sortTable('emotion')">{{t('Emotion')}}
-                    <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i
-                      *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i
-                      *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i>
-                  </button>
-                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
                     (click)="sortTable('avgpause')">{{t('Avg.Pause')}}
                     <i *ngIf="sortBy === 'avgpause' && sort ==='down'" class="fas fa-sort-up"></i><i
                       *ngIf="sortBy === 'avgpause' && sort ==='up'" class="fas fa-sort-down"></i><i
@@ -238,6 +232,12 @@
                     <i *ngIf="sortBy === 'compliance' && sort ==='down'" class="fas fa-sort-up"></i><i
                       *ngIf="sortBy === 'compliance' && sort ==='up'" class="fas fa-sort-down"></i><i
                       *ngIf="sortBy !== 'compliance'" style="color: #bbbbbb" class="fas fa-sort"></i>
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
+                    (click)="sortTable('emotion')">{{t('Emotion')}}
+                    <i *ngIf="sortBy === 'emotion' && sort ==='down'" class="fas fa-sort-up"></i><i
+                      *ngIf="sortBy === 'emotion' && sort ==='up'" class="fas fa-sort-down"></i><i
+                      *ngIf="sortBy !== 'emotion'" style="color: #bbbbbb" class="fas fa-sort"></i>
                   </button>
                 </div>
                 <div>

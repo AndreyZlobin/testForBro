@@ -218,3 +218,7 @@ angular-tag-cloud > span {
 .left-border {
   border-left: 1px solid #ebeef2 !important;
 }
+
+.nb-theme-default nb-tabset ul li a::before {
+  background-color: var(--color-secondary);
+}
