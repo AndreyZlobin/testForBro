@@ -568,6 +568,11 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isKeywordsContain = value;
   }
 
+  filterByBatch(batchId: string) : void {
+    this.batchid = batchId;
+    this.filterIt();
+  }
+
   onItemAdd(tag: any, container) {
     let c;
     switch (container) {
