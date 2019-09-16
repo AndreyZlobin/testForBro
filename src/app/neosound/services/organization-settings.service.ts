@@ -14,6 +14,11 @@ export class OrganizationSettingsService {
     return this.http.post(`${environment.api}/getMyCompanySettings`, params);
   }
 
+  getRedoKeywordsStatus(): Observable<any> {
+    const params = {};
+    return this.http.post(`${environment.api}/getRedoKeywordsStatus`, params);
+  }
+
   updateSettings(nameSpace: string, settings: any): Observable<any> {
     const params = {
       settings: {}
@@ -27,5 +32,9 @@ export class OrganizationSettingsService {
       setting: "sensitive"
     };
     return this.http.post(`${environment.api}/getMyCompanySettings`, params);
+  }
+
+  launchRedo() {
+    return this.http.post(`${environment.api}/redoKeywords`, {});
   }
 }

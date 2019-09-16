@@ -12,6 +12,7 @@ import {
 import { OrganizationSettingsService } from "../../../../../services/organization-settings.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { ToastrService } from "ngx-toastr";
+import { Moment } from "moment";
 
 @Component({
   selector: "app-keywords",
@@ -41,13 +42,22 @@ export class KeywordsComponent implements OnChanges {
   public tags: any[] = [];
   public initialLength: number = 0;
   public hasChanges: boolean = false;
+  public showMessage = false;
+  public postDate: string = "";
   constructor(
     private organizationSettingsService: OrganizationSettingsService,
     private modalService: BsModalService,
     private toastrService: ToastrService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.organizationSettingsService.getRedoKeywordsStatus().subscribe(res => {
+      if (res && res.data && res.data.postDate) {
+        this.showMessage = true;
+        this.postDate = res.data.postDate;
+      }
+    });
+  }
 
   ngOnChanges(changes: any) {
     if (changes.nameSpace) {
@@ -130,8 +140,10 @@ export class KeywordsComponent implements OnChanges {
   }
 
   private csvtoArray(text) {
-    const a = text.split(/\r?\n|\r/)
-    return a.map((v) => v.replace(/[\",\,,;]/gm, "")).filter((value, index) => index !== 0 || value.length > 0);
+    const a = text.split(/\r?\n|\r/);
+    return a
+      .map(v => v.replace(/[\",\,,;]/gm, ""))
+      .filter((value, index) => index !== 0 || value.length > 0);
   }
 
   public openModal(template: TemplateRef<any>) {
@@ -146,6 +158,17 @@ export class KeywordsComponent implements OnChanges {
 
   public launch(): void {
     this.modalRef.hide();
+    this.isLoading = true;
+    this.organizationSettingsService.launchRedo().subscribe((res: any) => {
+      if (res && res.error) {
+        this.toastrService.error(res.error.message, res.error.code);
+        this.isLoading = false;
+      } else {
+        this.showMessage = true;
+        this.isLoading = false;
+        this.postDate = Date.now().toString();
+      }
+    });
   }
 
   public decline(): void {

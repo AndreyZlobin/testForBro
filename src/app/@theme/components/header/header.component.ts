@@ -94,7 +94,7 @@ export class HeaderComponent implements OnInit {
   company() {
     const data = localStorage.getItem('user');
     const user = data && JSON.parse(data);
-    return data && user && user.companyid;
+    return data && user && user.companyname;
   }
 
   getLanguage(ln) {
