@@ -22,7 +22,7 @@
             </nb-tab>
           </nb-tabset>
         </ng-container>
-        <!-- <ng-container *ngIf="activeItem === items[1].key">
+        <ng-container *ngIf="activeItem === items[1].key">
           <nb-tabset>
             <nb-tab tabTitle="Settings">
               <app-sensitive-data></app-sensitive-data>
@@ -31,7 +31,7 @@
               <app-keywords (changed)="onChange($event)" nameSpace='dictNames' singularLabel="name" descriptionLabel="Input the names separated by comma or add the names by uploading CSV" totalLabel="Total names words"></app-keywords>
             </nb-tab>
           </nb-tabset>
-        </ng-container> -->
+        </ng-container>
       </div>
     </div>
   </nb-card-body>
