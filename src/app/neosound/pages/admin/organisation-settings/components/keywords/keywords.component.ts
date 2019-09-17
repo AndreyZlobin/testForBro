@@ -24,8 +24,11 @@ export class KeywordsComponent implements OnChanges {
   @Input() descriptionLabel: string = "";
   @Input() totalLabel: string = "";
   @Input() singularLabel: string = "";
+  @Input() showMessage = false;
+  @Input() postDate: string = "";
 
   @Output() changed = new EventEmitter<{ changed: boolean; name: string }>();
+  @Output() launch = new EventEmitter<any>();
 
   @ViewChild("cvsUpload") cvsUpload: ElementRef;
   modalRef: BsModalRef;
@@ -42,8 +45,6 @@ export class KeywordsComponent implements OnChanges {
   public tags: any[] = [];
   public initialLength: number = 0;
   public hasChanges: boolean = false;
-  public showMessage = false;
-  public postDate: string = "";
   constructor(
     private organizationSettingsService: OrganizationSettingsService,
     private modalService: BsModalService,
@@ -51,12 +52,7 @@ export class KeywordsComponent implements OnChanges {
   ) {}
 
   ngOnInit() {
-    this.organizationSettingsService.getRedoKeywordsStatus().subscribe(res => {
-      if (res && res.data && res.data.postDate) {
-        this.showMessage = true;
-        this.postDate = res.data.postDate;
-      }
-    });
+
   }
 
   ngOnChanges(changes: any) {
@@ -156,19 +152,9 @@ export class KeywordsComponent implements OnChanges {
     this.save();
   }
 
-  public launch(): void {
+  public launchRedo(): void {
     this.modalRef.hide();
-    this.isLoading = true;
-    this.organizationSettingsService.launchRedo().subscribe((res: any) => {
-      if (res && res.error) {
-        this.toastrService.error(res.error.message, res.error.code);
-        this.isLoading = false;
-      } else {
-        this.showMessage = true;
-        this.isLoading = false;
-        this.postDate = Date.now().toString();
-      }
-    });
+    this.launch.emit();
   }
 
   public decline(): void {
