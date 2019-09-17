@@ -2,6 +2,14 @@
   display: none;
 }
 
+a:not([href]):not([tabindex]) {
+  color: inherit;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .chart-legend .legend-wrap {
   width: 100% !important;
 }
@@ -175,16 +183,33 @@ angular-tag-cloud > span {
   }
 }
 .nb-theme-default a {
-  color: var(--color-primary);
+  color: var(--color-secondary);
   &:active,
   &:focus,
   &:hover {
-    color: var(--color-primary);
+    color: var(--color-secondary);
     opacity: 0.8;
     &:disabled {
       opacity: 0.3;
     }
   }
+}
+.file-list a {
+  &:active,
+  &:hover,
+  &:visited {
+    color: var(--color-secondary);
+  }
+  &:not([href]):not([tabindex]),
+  &:not([href]):not([tabindex]):hover,
+  &:not([href]):not([tabindex]):focus {
+    color: var(--color-secondary);
+    opacity: 0.8;
+  }
+}
+
+.sort-bar .btn.btn-sm {
+  padding: 0.625rem 0.5rem;
 }
 .nb-theme-default mark {
   background-color: var(--color-secondary);
