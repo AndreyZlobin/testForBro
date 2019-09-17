@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { OrganizationSettingsService } from "../../../services/organization-settings.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-organization-settings",
@@ -19,9 +21,21 @@ export class OrganizationSettingsComponent implements OnInit {
   public activeItem: string = "keywords";
   public unsavedLabel: string = "";
   public hasUnsaved: boolean = false;
-  constructor() {}
+  public showMessage: boolean = false;
+  public postDate: any;
+  constructor(
+    private organizationSettingsService: OrganizationSettingsService,
+    private toastrService: ToastrService,
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.organizationSettingsService.getRedoKeywordsStatus().subscribe(res => {
+      if (res && res.data && res.data.postDate) {
+        this.showMessage = true;
+        this.postDate = res.data.postDate;
+      }
+    });
+  }
 
   setView(view: string): void {
     if (this.hasUnsaved) {
@@ -35,7 +49,24 @@ export class OrganizationSettingsComponent implements OnInit {
     } else {
       this.activeItem = view;
     }
-
+  }
+  public launch(): void {
+    this.organizationSettingsService.launchRedo().subscribe((res: any) => {
+      if (res && res.error) {
+        this.toastrService.error(res.error.message, res.error.code);
+        this.organizationSettingsService
+          .getRedoKeywordsStatus()
+          .subscribe(res => {
+            if (res && res.data && res.data.postDate) {
+              this.showMessage = true;
+              this.postDate = res.data.postDate;
+            }
+          });
+      } else {
+        this.showMessage = true;
+        this.postDate = Date.now().toString();
+      }
+    });
   }
 
   onChange($event) {
