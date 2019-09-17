@@ -50,6 +50,7 @@ export class DashboardComponent implements OnInit {
   public barChart: any;
   public keyWordChart: any;
   public keyWord2Chart: any;
+  public showHitsVsStopwors = false;
 
   public totals = {};
   public data_2 = [];
@@ -612,6 +613,7 @@ export class DashboardComponent implements OnInit {
         };
       }
       if (data.popularWords) {
+        this.showHitsVsStopwors = true;
         this.keywords2 = data.popularWords;
         this.freqWords = data.popularWords
           .map(item => {
