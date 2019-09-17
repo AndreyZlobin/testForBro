@@ -29,14 +29,15 @@
         </div>
 
     </div>
-    <div class="alert alert-info text-center" role="alert" *ngIf="showMessage">
-        Re-indexing is working now. Started: {{postDate | date: 'dd/MM/yyyy hh:mm' }}
-    </div>
     <div class="my-3">
         <div class="d-flex align-items-center">
             <span>{{totalLabel}}: {{tags.length}}, just {{tags.length - initialLength < 0 ? 'removed' : 'added'}}
                 {{abs(tags.length - initialLength)}}</span>
-            <nb-action class="control-action mr-2 ml-auto"><button class="btn btn-secondary btn-sm ml-auto"
+            <span class=" mr-2 ml-auto"> </span>
+            <span class=" mr-2" *ngIf="showMessage">
+                Re-indexing is working now. Started: {{postDate | date: 'dd/MM/yyyy hh:mm' }}
+            </span>
+            <nb-action class="control-action"><button class="btn btn-secondary btn-sm mr-2"
                     (click)="openModal(long)" [disabled]="showMessage"><i class="fas fa-sync-alt mr-2"></i>Re-launch
                     {{singularLabel}}
                     reduction</button></nb-action>

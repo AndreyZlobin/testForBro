@@ -181,8 +181,8 @@
                   </div>
                 </div>
               </div>
-              <ng-container *ngIf="viewStyle === 0">
-                <div class="d-flex border-top border-bottom">
+              <div class="file-list" *ngIf="viewStyle === 0">
+                <div class="d-flex border-top border-bottom sort-bar">
                   <span class="mt-2 pt-1">Sort:</span>
                   <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
                     (click)="sortTable('batchId')">
@@ -253,7 +253,7 @@
                         <div class="d-flex flex-column">
                           <div class="w-100 mt-2">
                             <a [routerLink]="getLink(item)" style="cursor: pointer;"
-                              class="font-weight-bold text-primary text-truncate">
+                              class="font-weight-bold text-truncate">
                               <span style="width: 25rem;">{{item.filename}}</span>
                             </a>
                           </div>
@@ -356,7 +356,7 @@
                     </div>
                   </div>
                 </div>
-              </ng-container>
+              </div>
               <ng-container *ngIf="viewStyle === 1">
                 <table class="table" *ngIf="!isLoadingSpinner; else spinner">
                   <thead>
