@@ -290,7 +290,7 @@
                                 </div>
                                 <div>
                                   <span>{{t('Avg.')}}</span>
-                                  <span
+                                  <span *ngIf="item.pause && item.pause.avg"
                                     class="float-right font-weight-bold">{{getDateVal(item.pause.avg) | date: 'mm:ss'}}</span>
                                 </div>
                               </div>
