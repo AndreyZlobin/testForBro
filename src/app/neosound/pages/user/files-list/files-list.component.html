@@ -275,7 +275,8 @@
                                 <div>
                                   <span>{{t('Silence')}}</span>
                                   <span *ngIf="item.pause && item.pause.dur"
-                                    class="float-right font-weight-bold">{{getDateVal(item.pause.dur) | date: 'mm:ss'}}</span>&nbsp;<span>({{item.pause.dur / item.duration | percent}})</span>
+                                    class="float-right font-weight-bold">{{getDateVal(item.pause.dur) | date: 'mm:ss'}}
+                                    ({{item.pause.dur / item.duration | percent}})</span>
                                 </div>
                               </div>
                               <div class="my-2 w-25" style="font-size: xx-small;">
