@@ -123,14 +123,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.sub = this.route.data.subscribe(v => {
       this.router.navigateByUrl("/user/files");
     });
-    const key = this.filesService.getKeyWord();
-    if (key && key !== "") {
-      this.keywordsContain = [{ value: key, display: key }];
-      this.filterIt();
-    }
-    this.filter = this.filesService.getFilter();
-    this.setFilterOptions();
-
     this.filesService.files.subscribe(res => {
       this.isLoadingSpinner = false;
       if (res && res.files) {
@@ -148,9 +140,15 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       );
       this.files = res.files;
     });
+    const key = this.filesService.getKeyWord();
+    if (key && key !== "") {
+      this.keywordsContain = [{ value: key, display: key }];
+      this.filterIt();
+    }
+    this.setFilterOptions();
+    this.filesService.listFilesPage(this.filter);
   }
   ngAfterViewInit() {
-    this.filterIt();
     if (this.lastFile) {
       this.scrollToElement();
       this.filesService.setQuickFileParams(null);
@@ -164,6 +162,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setFilterOptions() {
+    this.filter = this.filesService.getFilter();
     let sortName;
     switch (this.filter.sortby) {
       case "Name":
@@ -236,7 +235,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
           .map(v => ({ value: v, display: v }))) ||
       [];
     this.paginationNum = this.filter.itemsn || 100;
-    this.page = parseInt(this.filter.pagen);
+    this.page = parseInt(this.filter.pagen) - 1 || 0;
 
     this.lastFile = this.filesService.getQuickFileParams();
   }
@@ -245,9 +244,10 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     const params = (this.filter = {
       ...parameters,
       itemsn: `${this.paginationNum}`,
-      pagen: "" + (page + 1)
+      pagen: page + 1,
     });
     this.page = page;
+    this.filesService.setFilter(params);
     this.filesService.listFilesPage(params);
   }
 
@@ -412,9 +412,9 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       sortorder: this.sort === "up" ? "desc" : "asc"
     };
     this.isLoadingSpinner = true;
-    this.getPage(0, this.filter);
 
     this.filesService.setFilter(this.filter);
+    this.filesService.listFileResults(this.filter);
   }
 
   resetFilter() {
@@ -434,7 +434,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pauseDurTo = null;
     this.callfrom = null;
     this.callto = null;
-    this.page = null;
+    this.page = 0;
     this.batchid = null;
     this.batchidAll = true;
     this.datefromAll = true;
@@ -454,8 +454,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       pagen: "1"
     };
     this.isLoadingSpinner = true;
-    this.getPage(0, this.filter);
-    this.filesService.setFilter(this.filter);
+    this.filesService.setFilter({ itemsn: 100, pagen: 1 });
+    this.getPage(0, {});
     this.cd.detectChanges();
   }
 
@@ -572,7 +572,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
         delete this.filter[key]
     );
     this.filesService.setFilter(this.filter);
-    this.getPage(this.filter.pagen - 1 || 0, this.filter);
+    this.getPage(0, this.filter);
   }
 
   t(v) {

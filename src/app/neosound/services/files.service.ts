@@ -9,7 +9,10 @@ export class FilesService {
   public files = this.filesSubject.asObservable();
   private store: any = {};
   private currentFileParams;
-  private savedFilter = {};
+  private savedFilter = {
+    itemsn: 100,
+    pagen: 1,
+  };
   private keyWord = "";
   private batchId = "";
 
