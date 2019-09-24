@@ -80,8 +80,8 @@ export class PlayerDetailsComponent
         if (event.url.startsWith("/file/")) {
           const batchid = this.route.snapshot.params["batchid"];
           const filename = this.route.snapshot.params["filename"];
+          this.fileUrl = null;
           if (filename && batchid) {
-            this.changed = false;
             this.fileParams = {
               filename: decodeURIComponent(filename),
               batchid: decodeURIComponent(batchid)
@@ -115,12 +115,6 @@ export class PlayerDetailsComponent
     return element ? element.guid : null;
   }
   ngOnInit() {
-    this.getInfo();
-    this.attempsCount = 20;
-    this.intervalRef = setInterval(() => {
-      this.attempsCount--;
-      this.getInfo();
-    }, 20000);
   }
 
   copyToClipboard(text: string): void {
