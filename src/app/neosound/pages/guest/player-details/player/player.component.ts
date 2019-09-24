@@ -1,11 +1,17 @@
-import { Component, OnInit, Input, OnDestroy, OnChanges, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges
+} from "@angular/core";
 import { FilesService } from "../../../../services/files.service";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
 import RegionsPlugin from "./region-plugin";
 import { PlayerService } from "../../../../services/player.service";
 import { LanguageService } from "../../../../services/language.service";
-
 
 import CanvasDrawer from "./canvas-drawer";
 
@@ -19,17 +25,17 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   public fileUrl: string;
   public waveFormData: any;
   public peekCache: any;
-  private isLoading: boolean = false;
+  public isLoading: boolean = false;
+
   @Input() fileName: string;
   @Input() batchId: string;
 
   public regions = [];
 
   constructor(
-    private filesService: FilesService,
-    private playerService: PlayerService
-  ) {
-  }
+    public filesService: FilesService,
+    public playerService: PlayerService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     this.fetchFile();
