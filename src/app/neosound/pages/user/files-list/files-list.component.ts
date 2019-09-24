@@ -29,8 +29,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   pagesArr = [1];
   totalCount = 0;
   sortBy = "uploaded";
-  viewStyle = 0;
-  viewStyles = ["list", "table"];
   sort = "up";
   filter;
   datefrom; // = new Date();
@@ -121,7 +119,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.sub = this.route.data.subscribe(v => {
       this.router.navigateByUrl("/user/files");
     });
-    // this.resetFilter();
     const key = this.filesService.getKeyWord();
     if (key && key !== '') {
       this.keywordsContain = [{ value: key, display: key }];
@@ -129,29 +126,65 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.filter = this.filesService.getFilter();
     this.setFilterOptions();
-    this.sortBy = this.filter.sortby;
-    this.sort = this.filter.sortorder;
-    this.stopwordLooking = 'Everywhere';
-    // this.getPage((this.filter.pagen - 1) || 0, this.filter);
 
-    // const els = document.getElementsByClassName('scrollable-container');
-    // const el = els[0];
-    // el && el.addEventListener('scroll', (e) => {
-    //   if (el.scrollTop > 75 && !this.sideFilterHasClass) {
-    //     document.getElementById('side-filter').classList.add('scrolled');
-    //     this.sideFilterHasClass = true;
-    //   } else if (el.scrollTop < 75 && this.sideFilterHasClass) {
-    //     document.getElementById('side-filter').classList.remove('scrolled');
-    //     this.sideFilterHasClass = false;
-    //   }
-    // });
+    this.filesService.files.subscribe((res) => {
+      this.isLoadingSpinner = false;
+      if (res && res.files) {
+        this.isLoading = false;
+      }
+      if (!res || res.totalcount === 0) {
+        this.isLoading = false;
+        this.files = [];
+        return;
+      }
+      this.totalCount = res.totalcount;
+      this.pagesArr = Array.from(
+        { length: Math.ceil(res.totalcount / 100) },
+        (v, k) => k + 1
+      );
+      this.files = res.files;
+    })
   }
   ngAfterViewInit() {
     this.filterIt();
   }
 
   setFilterOptions() {
-    this.sortBy = this.filter.sortby;
+    let sortName;
+    switch (this.filter.sortby) {
+      case "Name":
+        sortName = "name";
+        break;
+      case "Uploaded":
+        sortName = "uploaded";
+        break;
+      case "Duration":
+        sortName = "duration";
+        break;
+      case "Emotion":
+        sortName = "emotion";
+        break;
+      case "BatchId":
+        sortName = "batchId";
+        break;
+      case "Stopwords":
+        sortName = "stopWords";
+        break;
+      case "Compliance":
+        sortName = "compliance";
+        break;
+      case "AvgPause":
+        sortName = "avgpause";
+        break;
+      case "PauseDur":
+        sortName = "pausedur";
+        break;
+
+      default:
+        break;
+    }
+    this.sortBy = sortName;
+    this.stopwordLooking = this.filter.stopBy || 'Everywhere';
     this.sort = this.filter.sortorder === "desc" ? "up" : "down";
     this.datefrom = this.filter.datetimefrom;
     this.dateto = this.filter.datetimeto;
@@ -173,6 +206,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.keywordsNotContain = this.filter["keywordsNotContain"] && this.filter["keywordsNotContain"].split(',').map(v => ({value: v, display: v})) || [];
     this.tagsContain = this.filter["tagsContain"] && this.filter["tagsContain"].split(',').map(v => ({value: v, display: v})) || [];
     this.paginationNum = this.filter.itemsn || 100;
+    this.page = parseInt(this.filter.pagen);
   }
 
   getPage(page = 0, parameters = this.filter) {
@@ -182,23 +216,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       pagen: "" + (page + 1)
     });
     this.page = page;
-    this.filesService.listFilesPage(params).subscribe(res => {
-      this.isLoadingSpinner = false;
-      if (res && res.files) {
-        this.isLoading = false;
-      }
-      if (!res || res.totalcount === 0) {
-        this.isLoading = false;
-        this.files = [];
-        return;
-      }
-      this.totalCount = res.totalcount;
-      this.pagesArr = Array.from(
-        { length: Math.ceil(res.totalcount / 100) },
-        (v, k) => k + 1
-      );
-      this.files = res.files;
-    });
+    this.filesService.listFilesPage(params);
   }
 
   getPages() {
@@ -257,14 +275,8 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.proccessing[i] = true;
     this.filesService.processFile(params).subscribe(
       v => {
-        // this.filesService.processFile(params, 3).subscribe(v => {
-        //   this.filesService.processFile(params, 5).subscribe(v => {
-        //     this.filesService.processFile(params, 7).subscribe(v => {
         this.proccessing[i] = false;
         this.refresh();
-        //     });
-        //   });
-        // });
       },
       e => (this.errorMessage = e.error.message)
     );
@@ -371,8 +383,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getPage(0, this.filter);
 
     this.filesService.setFilter(this.filter);
-
-    return;
   }
 
   resetFilter() {
@@ -402,6 +412,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pausefromAll = true;
     this.pausetoAll = true;
     this.stopOnly = false;
+    this.sortBy = "Everywhere";
     this.tagsOnly = false;
     this.missingOnly = false;
     this.favoriteOnly = false;
@@ -422,7 +433,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
       ...this.filter,
       export: "csv"
     };
-    this.filesService.listFilesPage(params).subscribe(
+    this.filesService.postListFilesPage(params).subscribe(
       data =>
         // this.downloadFile(data)
         (window.location.href = data.url)
@@ -688,13 +699,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getBool(v) {
     return v === "true";
-  }
-  toggleView () {
-    if(this.viewStyle === 0) {
-      this.viewStyle = 1;
-    } else {
-      this.viewStyle = 0;
-    }
   }
 
   ngOnDestroy() {

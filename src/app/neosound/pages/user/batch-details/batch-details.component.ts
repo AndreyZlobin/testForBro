@@ -89,7 +89,7 @@ export class BatchDetailsComponent implements OnInit {
         'pagen': '' + (page + 1),
       };
       this.page = page;
-      this.filesService.listFilesPage(params).subscribe(res => {
+      this.filesService.postListFilesPage(params).subscribe(res => {
         if (res && res.files) this.isLoading = false;
         if (!res || res.totalcount === 0) {
           this.isLoading = false;
@@ -258,7 +258,7 @@ export class BatchDetailsComponent implements OnInit {
         ...this.filter,
         export: 'csv',
       };
-      this.filesService.listFilesPage(params).subscribe(data =>
+      this.filesService.postListFilesPage(params).subscribe(data =>
         // this.downloadFile(data)
         (window.location.href = data.url)
         ),
