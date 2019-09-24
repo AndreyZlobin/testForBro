@@ -77,36 +77,35 @@ export class PlayerDetailsComponent
     this.fileParams = this.filesService.getQuickFileParams();
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
-        if(event.url.startsWith("/file/")) {
+        if (event.url.startsWith("/file/")) {
           const batchid = this.route.snapshot.params["batchid"];
-        const filename = this.route.snapshot.params["filename"];
-        if (filename && batchid) {
-          this.changed = false;
-          this.fileParams = {
-            filename: decodeURIComponent(filename),
-            batchid: decodeURIComponent(batchid)
-          };
-          this.filesService.getFile(this.fileParams).subscribe(
-            res => {
-              this.fileUrl = res.url;
-              this.changed = true;
-              this.getInfo();
-            },
-            e => {
-              this.errorMessage = e.error.message;
-              if (e.status === 502 || e.status === 404 || e.status === 429) {
-                this.router.navigateByUrl("/404");
+          const filename = this.route.snapshot.params["filename"];
+          if (filename && batchid) {
+            this.changed = false;
+            this.fileParams = {
+              filename: decodeURIComponent(filename),
+              batchid: decodeURIComponent(batchid)
+            };
+            this.filesService.getFile(this.fileParams).subscribe(
+              res => {
+                this.fileUrl = res.url;
+                this.changed = true;
+                this.getInfo();
+              },
+              e => {
+                this.errorMessage = e.error.message;
+                if (e.status === 502 || e.status === 404 || e.status === 429) {
+                  this.router.navigateByUrl("/404");
+                }
               }
-            }
-          );
+            );
 
-          this.filesService.setQuickFileParams({
-            batchid: decodeURIComponent(batchid),
-            filename: decodeURIComponent(filename)
-          });
+            this.filesService.setQuickFileParams({
+              batchid: decodeURIComponent(batchid),
+              filename: decodeURIComponent(filename)
+            });
+          }
         }
-        }
-
       }
     });
   }

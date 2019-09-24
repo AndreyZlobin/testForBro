@@ -111,7 +111,7 @@ export class KeywordsComponent implements OnChanges {
     }
   }
 
-  private exportAsCsv() {
+  public exportAsCsv() {
     let data = [this.nameSpace];
     data.push(...this.tags.map(i => `"${i}"`));
     let content = data.join(",\n");
