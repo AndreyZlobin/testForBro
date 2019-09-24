@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../neosound/services/analytics.service';
+import { FilesService } from '../../../neosound/services/files.service';
 import { LayoutService } from '../../../@core/data/layout.service';
 import { Router } from '@angular/router';
 import { UsersService } from '../../../neosound/services/users.service';
@@ -35,6 +36,7 @@ export class HeaderComponent implements OnInit {
               private userServ: UsersService,
               private dataService: DataService,
               private http: HttpClient,
+              private filesService: FilesService,
             ) {
   }
 
@@ -76,6 +78,8 @@ export class HeaderComponent implements OnInit {
     this.analyticsService.trackEvent('user', 'logout');
     localStorage.removeItem('user');
     localStorage.removeItem('apikey');
+    this.filesService.setFilter({ itemsn: 100, pagen: 1 });
+    this.filesService.resetFiles();
     this.navigate('/auth/login');
     return false;
   }

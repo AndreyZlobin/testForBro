@@ -22,13 +22,13 @@ import CanvasDrawer from "./canvas-drawer";
 })
 export class PlayerComponent implements OnDestroy, OnChanges {
   public wavesurfer: any;
-  public fileUrl: string;
   public waveFormData: any;
   public peekCache: any;
   public isLoading: boolean = false;
 
   @Input() fileName: string;
   @Input() batchId: string;
+  @Input() fileUrl: string;
 
   public regions = [];
 
@@ -43,18 +43,13 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   fetchFile() {
     this.isLoading = true;
     this.filesService
-      .getFile({ filename: this.fileName, batchid: this.batchId })
-      .subscribe(res => {
-        this.fileUrl = res.url;
-        this.filesService
-          .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
-          .subscribe(meta => {
-            if (meta.ContentRange) {
-              this.loadChunks(meta);
-            } else {
-              this.init(this.fileUrl, this.getPeaks(meta));
-            }
-          });
+      .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
+      .subscribe(meta => {
+        if (meta.ContentRange) {
+          this.loadChunks(meta);
+        } else {
+          this.init(this.fileUrl, this.getPeaks(meta));
+        }
       });
   }
   t(v) {

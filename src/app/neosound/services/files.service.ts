@@ -45,7 +45,10 @@ export class FilesService {
   getQuickFileParams() {
     return this.currentFileParams;
   }
-
+  resetFiles() {
+    this.store = null;
+    this.filesSubject.next([]);
+  }
   getFile(params): Observable<any> {
     params = params || {
       batchid: "1234",

@@ -147,15 +147,11 @@ export class PlayerDetailsComponent
           clearInterval(this.intervalRef);
         }
         if (this.results.result) {
-          // this.analysisResult = this.results.result;
-
           if (this.results.result.anger) {
             if (this.results.result.anger.ints) {
               this.emotionsAnger = this.results.result.anger.ints;
               this.emotions = this.emotionsAnger;
-              // this.onhold = this.results.result.anger.ints;
               this.setTab("anger");
-              // this.setRegions();
             }
             if (this.results.result.anger.music) {
               this.emotionsSounds = this.results.result.anger.music;
