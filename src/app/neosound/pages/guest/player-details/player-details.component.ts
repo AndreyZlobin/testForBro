@@ -77,7 +77,8 @@ export class PlayerDetailsComponent
     this.fileParams = this.filesService.getQuickFileParams();
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
-        const batchid = this.route.snapshot.params["batchid"];
+        if(event.url.startsWith("/file/")) {
+          const batchid = this.route.snapshot.params["batchid"];
         const filename = this.route.snapshot.params["filename"];
         if (filename && batchid) {
           this.changed = false;
@@ -104,6 +105,8 @@ export class PlayerDetailsComponent
             filename: decodeURIComponent(filename)
           });
         }
+        }
+
       }
     });
   }
