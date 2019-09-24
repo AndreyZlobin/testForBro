@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs/Observable";
 import { environment } from "../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable()
 export class FilesService {
