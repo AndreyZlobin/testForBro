@@ -126,9 +126,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.filter = this.filesService.getFilter();
     this.setFilterOptions();
-    this.sortBy = this.filter.sortby;
-    this.sort = this.filter.sortorder;
-    this.stopwordLooking = 'Everywhere';
+
     this.filesService.files.subscribe((res) => {
       this.isLoadingSpinner = false;
       if (res && res.files) {
@@ -152,7 +150,41 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setFilterOptions() {
-    this.sortBy = this.filter.sortby;
+    let sortName;
+    switch (this.filter.sortby) {
+      case "Name":
+        sortName = "name";
+        break;
+      case "Uploaded":
+        sortName = "uploaded";
+        break;
+      case "Duration":
+        sortName = "duration";
+        break;
+      case "Emotion":
+        sortName = "emotion";
+        break;
+      case "BatchId":
+        sortName = "batchId";
+        break;
+      case "Stopwords":
+        sortName = "stopWords";
+        break;
+      case "Compliance":
+        sortName = "compliance";
+        break;
+      case "AvgPause":
+        sortName = "avgpause";
+        break;
+      case "PauseDur":
+        sortName = "pausedur";
+        break;
+
+      default:
+        break;
+    }
+    this.sortBy = sortName;
+    this.stopwordLooking = this.filter.stopBy || 'Everywhere';
     this.sort = this.filter.sortorder === "desc" ? "up" : "down";
     this.datefrom = this.filter.datetimefrom;
     this.dateto = this.filter.datetimeto;
@@ -174,6 +206,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.keywordsNotContain = this.filter["keywordsNotContain"] && this.filter["keywordsNotContain"].split(',').map(v => ({value: v, display: v})) || [];
     this.tagsContain = this.filter["tagsContain"] && this.filter["tagsContain"].split(',').map(v => ({value: v, display: v})) || [];
     this.paginationNum = this.filter.itemsn || 100;
+    this.page = parseInt(this.filter.pagen);
   }
 
   getPage(page = 0, parameters = this.filter) {
@@ -350,8 +383,6 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getPage(0, this.filter);
 
     this.filesService.setFilter(this.filter);
-
-    return;
   }
 
   resetFilter() {
@@ -381,6 +412,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pausefromAll = true;
     this.pausetoAll = true;
     this.stopOnly = false;
+    this.sortBy = "Everywhere";
     this.tagsOnly = false;
     this.missingOnly = false;
     this.favoriteOnly = false;

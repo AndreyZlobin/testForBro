@@ -156,7 +156,7 @@
                 <div class="col-3">
                   <h1>{{t('Files')}}</h1>
                 </div>
-                <div class="col-6" *ngIf="!isLoadingSpinner">
+                <div class="col-6">
                   <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
                     <div class="btn-group mr-2 mb-2">
                       <div
@@ -167,7 +167,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-3" *ngIf="!isLoadingSpinner">
+                <div class="col-3">
                   <div class="row mb-1">
                     <div class="col text-right pl-0" *ngIf="!isLoading">
                       <button class="btn btn-primary ml-5 pull-right mt-1 btn-sm"
@@ -176,7 +176,7 @@
                   </div>
                 </div>
               </div>
-              <div class="file-list">
+              <div class="file-list"> {{sortBy}}
                 <div class="d-flex border-top border-bottom sort-bar">
                   <span class="mt-2 pt-1">Sort:</span>
                   <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
