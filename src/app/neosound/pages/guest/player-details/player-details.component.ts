@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { PlayerService } from "../../../services/player.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
 import { ToastrService } from "ngx-toastr";
@@ -57,6 +57,7 @@ export class PlayerDetailsComponent
   onhold;
   greySpeaker = "";
   regions = [];
+  changed = false;
   @HostListener("document:keyup", ["$event"])
   public handleKeyboardEvent(event: KeyboardEvent): void {
     if (event.code === "Space") {
@@ -74,19 +75,21 @@ export class PlayerDetailsComponent
     private dataService: DataService
   ) {
     this.fileParams = this.filesService.getQuickFileParams();
-    // test file
-    // this.fileParams = {batchid: 1, filename: '2018-9-18_0:1:11.wav'};
-
-    this.subRoute = this.route.params.subscribe(
-      params => {
-        if (params && params.filename && params.batchid) {
+    this.router.events.forEach(event => {
+      if (event instanceof NavigationEnd) {
+        const batchid = this.route.snapshot.params["batchid"];
+        const filename = this.route.snapshot.params["filename"];
+        if (filename && batchid) {
+          this.changed = false;
           this.fileParams = {
-            filename: decodeURIComponent(params.filename),
-            batchid: decodeURIComponent(params.batchid)
+            filename: decodeURIComponent(filename),
+            batchid: decodeURIComponent(batchid)
           };
           this.filesService.getFile(this.fileParams).subscribe(
             res => {
               this.fileUrl = res.url;
+              this.changed = true;
+              this.getInfo();
             },
             e => {
               this.errorMessage = e.error.message;
@@ -97,18 +100,12 @@ export class PlayerDetailsComponent
           );
 
           this.filesService.setQuickFileParams({
-            batchid: decodeURIComponent(params.batchid),
-            filename: decodeURIComponent(params.filename)
+            batchid: decodeURIComponent(batchid),
+            filename: decodeURIComponent(filename)
           });
         }
-      },
-      e => {
-        if (e.status === 502 || e.status === 404 || e.status === 429) {
-          this.router.navigateByUrl("/404");
-        }
-        this.errorMessage = e.error.message;
       }
-    );
+    });
   }
 
   ngAfterViewInit() {}
@@ -130,7 +127,7 @@ export class PlayerDetailsComponent
     selBox.style.left = "0";
     selBox.style.top = "0";
     selBox.style.opacity = "0";
-    selBox.value = text.replace(/(<([^>]+)>)/ig, "");
+    selBox.value = text.replace(/(<([^>]+)>)/gi, "");
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
@@ -238,6 +235,7 @@ export class PlayerDetailsComponent
         });
       }
     }
+
     this.player.setRegions(this.regions);
   }
 

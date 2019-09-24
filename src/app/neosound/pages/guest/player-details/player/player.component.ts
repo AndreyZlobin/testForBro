@@ -1,15 +1,11 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, OnChanges, SimpleChanges } from "@angular/core";
 import { FilesService } from "../../../../services/files.service";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
 import RegionsPlugin from "./region-plugin";
-import CursorPlugin from "wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js";
 import { PlayerService } from "../../../../services/player.service";
 import { LanguageService } from "../../../../services/language.service";
-import { Subscription } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { ToastrService } from "ngx-toastr";
-import { BehaviorSubject } from "rxjs";
+
 
 import CanvasDrawer from "./canvas-drawer";
 
@@ -18,24 +14,28 @@ import CanvasDrawer from "./canvas-drawer";
   templateUrl: "./player.component.html",
   styleUrls: ["./player.component.scss"]
 })
-export class PlayerComponent implements OnInit, OnDestroy {
+export class PlayerComponent implements OnDestroy, OnChanges {
   public wavesurfer: any;
   public fileUrl: string;
   public waveFormData: any;
   public peekCache: any;
+  private isLoading: boolean = false;
   @Input() fileName: string;
   @Input() batchId: string;
-  public isLoading = true;
+
   public regions = [];
 
   constructor(
     private filesService: FilesService,
-    private playerService: PlayerService,
-    private httpClient: HttpClient,
-    private toastrService: ToastrService
-  ) {}
+    private playerService: PlayerService
+  ) {
+  }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
+    this.fetchFile();
+  }
+  fetchFile() {
+    this.isLoading = true;
     this.filesService
       .getFile({ filename: this.fileName, batchid: this.batchId })
       .subscribe(res => {
@@ -64,7 +64,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
       })
       .subscribe(res => {
         meta.data = meta.data + res.data;
-        meta.ContentRange = res.ContentRange
+        meta.ContentRange = res.ContentRange;
         if (meta.ContentRange) {
           this.loadChunks(meta);
         } else {
@@ -126,7 +126,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.wavesurfer.on("seek", time => {
       this.playerService.setActive(time * this.wavesurfer.getDuration());
     });
-
   }
   play() {
     this.wavesurfer && this.wavesurfer.playPause();

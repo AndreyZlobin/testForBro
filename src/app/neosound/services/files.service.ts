@@ -1,18 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { environment } from "../../../environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class FilesService {
+  private filesSubject = new BehaviorSubject<any>({});
+  public files = this.filesSubject.asObservable();
+  private store: any = {};
   private currentFileParams;
   private savedFilter = {};
-  private keyWord = ''
-  private batchId = '';
+  private keyWord = "";
+  private batchId = "";
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   setFilter(params) {
     this.savedFilter = params;
@@ -44,91 +46,72 @@ export class FilesService {
 
   getFile(params): Observable<any> {
     params = params || {
-      'batchid': '1234',
-      'filename': '1.mp3'
+      batchid: "1234",
+      filename: "1.mp3"
     };
-    return this.http.post(`${environment.api}/getFile`,
-      params
-    );
+    return this.http.post(`${environment.api}/getFile`, params);
   }
   getAudioWaveForm(params): Observable<any> {
     params = params;
-    return this.http.post(`${environment.api}/getAudioWaveForm`,
-      params
-    );
+    return this.http.post(`${environment.api}/getAudioWaveForm`, params);
   }
   getFileStats(params): Observable<any> {
-    params = params || {
-    };
-    return this.http.post(`${environment.api}/fileStats`,
-      params
-    );
+    params = params || {};
+    return this.http.post(`${environment.api}/fileStats`, params);
   }
   getEchartData(params): Observable<any> {
-    params = params || {
-    };
-    return this.http.post(`${environment.api}/getEchartData`,
-      params
-    );
+    params = params || {};
+    return this.http.post(`${environment.api}/getEchartData`, params);
   }
-  getApiCallsStats (params): Observable<any> {
-    params = params || {
-    };
-    return this.http.post(`${environment.api}/apiCallsStats`,
-      params
-    );
+  getApiCallsStats(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/apiCallsStats`, params);
   }
-  getMinutesStats (params): Observable<any> {
-    params = params || {
-    };
-    return this.http.post(`${environment.api}/minutesStats`,
-      params
-    );
+  getMinutesStats(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/minutesStats`, params);
   }
   getTagClowd(params): Observable<any> {
-    params = params || {
-    };
-    return this.http.post(`${environment.api}/tagCloud `,
-      params
-    );
+    params = params || {};
+    return this.http.post(`${environment.api}/tagCloud `, params);
   }
 
   deleteFile(params): Observable<any> {
     params = params || {
-      'batchid': '1234',
-      'filename': '1.mp3'
+      batchid: "1234",
+      filename: "1.mp3"
     };
-    return this.http.post(`${environment.api}/deleteFile`,
-      params
-    );
+    return this.http.post(`${environment.api}/deleteFile`, params);
   }
 
   listFiles(params): Observable<any> {
     params = params || {};
-    return this.http.post(`${environment.api}/listFiles`,
-      params
-    );
+    return this.http.post(`${environment.api}/listFiles`, params);
   }
 
-  listFilesPage(params): Observable<any> {
+  listFilesPage(params): void {
     params = params || {};
-    return this.http.post(`${environment.api}/listFilesPage`,
-      params
-    );
+    this.http
+      .post(`${environment.api}/listFilesPage`, params)
+      .subscribe(res => {
+        this.store = res;
+        this.filesSubject.next(this.store);
+      });
+  }
+  postListFilesPage(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/listFilesPage`, params);
   }
 
-  processFile(params/*, mlid = 9*/): Observable<any> {
+  processFile(params /*, mlid = 9*/): Observable<any> {
     params = params || {
-      'batchid': '1234',
-      'filename': '1.mp3',
+      batchid: "1234",
+      filename: "1.mp3"
     };
     params = {
-      ...params,
-      // mlid: '' + mlid,
+      ...params
     };
-    return this.http.post(`${environment.api}/processFile`,
-      params
-    );
+    return this.http.post(`${environment.api}/processFile`, params);
   }
 
   uploadFile(params): Observable<any> {
@@ -137,34 +120,81 @@ export class FilesService {
 
   listFileResults(params): Observable<any> {
     params = params || {
-      'batchid': '1234',
-      'filename': '1.mp3',
+      batchid: "1234",
+      filename: "1.mp3"
     };
     return this.http.post(`${environment.api}/listFileResults`, params);
   }
 
   getFileResultJson(params): Observable<any> {
     params = params || {
-      'uri': '1234',
+      uri: "1234"
     };
-    return this.http.post(`${environment.api}/getFileResultJson`,
-      params
-    );
+    return this.http.post(`${environment.api}/getFileResultJson`, params);
   }
 
   getFileResultDetails(params): Observable<any> {
     params = params || {
-      'batchid': '1',
-      'filename': '1.mp3',
+      batchid: "1",
+      filename: "1.mp3"
     };
-    return this.http.post(`${environment.api}/getFileResultDetails`,
-      params
-    );
+    return this.http.post(`${environment.api}/getFileResultDetails`, params);
   }
 
   updateFileInfo(params): Observable<any> {
-    return this.http.post(`${environment.api}/updateFileInfo`,
-      params,
-    );
+    return this.http.post(`${environment.api}/updateFileInfo`, params);
+  }
+
+  getNextLink(fileName: string, batchId: string): string {
+    if (this.store && this.store.files && this.store.files.length) {
+      const index = this.store.files.findIndex(
+        file => file.filename === fileName && file.batchid === batchId
+      );
+
+      if (index !== -1 && this.store.files[index + 1]) {
+        return `/file/${this.store.files[index + 1].batchid}/${this.store.files[index + 1].filename}`;
+      }
+      return "";
+    } else {
+      return "";
+    }
+  }
+  getPrevLink(fileName: string, batchId: string): string {
+    if (this.store && this.store.files && this.store.files.length) {
+      const index = this.store.files.findIndex(
+        file => file.filename === fileName && file.batchid === batchId
+      );
+      if (index !== -1 && this.store.files[index - 1]) {
+        return `/file/${this.store.files[index - 1].batchid}/${this.store.files[index - 1].filename}`;
+      }
+      return "";
+    } else {
+      return "";
+    }
+  }
+
+  hasNextLink(fileName: string, batchId: string): boolean {
+    let res = true;
+    if (this.store && this.store.files && this.store.files.length) {
+      const index = this.store.files.findIndex(
+        file => file.filename === fileName && file.batchid === batchId
+      );
+      if (index !== -1 && this.store.files[index + 1]) {
+        res = false;
+      }
+    }
+    return res;
+  }
+  hasPrevLink(fileName: string, batchId: string): boolean {
+    let res = true;
+    if (this.store && this.store.files && this.store.files.length) {
+      const index = this.store.files.findIndex(
+        file => file.filename === fileName && file.batchid === batchId
+      );
+      if (index !== -1 && this.store.files[index - 1]) {
+        res = false;
+      }
+    }
+    return res;
   }
 }
