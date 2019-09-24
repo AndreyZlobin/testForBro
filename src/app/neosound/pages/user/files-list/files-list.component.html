@@ -241,6 +241,7 @@
                       *ngFor="let item of files; let i = index">
                       <div (click)="markFavorite(item, i)" style="cursor: pointer; width: 4%;"
                         class="align-self-center">
+                        <span *ngIf="lastFile && item.filename === lastFile.filename" #scroll></span>
                         <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
                         <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
                       </div>
