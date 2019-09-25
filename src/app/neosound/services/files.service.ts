@@ -11,7 +11,7 @@ export class FilesService {
   private currentFileParams;
   private savedFilter = {
     itemsn: 100,
-    pagen: 1,
+    pagen: 1
   };
   private keyWord = "";
   private batchId = "";
@@ -126,6 +126,13 @@ export class FilesService {
 
   listFileResults(params): Observable<any> {
     return this.http.post(`${environment.api}/listFileResults`, params);
+  }
+
+  markFavorite(item, index) {
+    if (this.store.files[index]) {
+      this.store.files[index].pin = `${!(item.pin === "true")}`;
+      this.filesSubject.next(this.store);
+    }
   }
 
   getFileResultJson(params): Observable<any> {

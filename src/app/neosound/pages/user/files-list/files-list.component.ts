@@ -244,7 +244,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     const params = (this.filter = {
       ...parameters,
       itemsn: `${this.paginationNum}`,
-      pagen: page + 1,
+      pagen: page + 1
     });
     this.page = page;
     this.filesService.setFilter(params);
@@ -729,28 +729,25 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   markFavorite(item, index) {
+    const pin = `${!(item.pin === "true")}`;
     this.analyticsService.trackEvent("fileList", "markFavorite");
-    if (this.files && this.files[index]) {
-      this.files[index].pin = !this.getBool(item.pin);
-    }
+    this.filesService.markFavorite(item, index);
     const params = {
       fileid: {
         batchid: item.batchid,
         fileid: item.fileid
       },
+
       fileinfo: {
         filename: item.filename,
         comment: item.comment || "",
-        pin: `${!this.getBool(item.pin)}`,
+        pin: pin,
         tags: item.tags || []
       }
     };
-    this.filesService.updateFileInfo(params).subscribe(
-      res => {
-        this.refresh();
-      },
-      e => (this.errorMessage = e.error.message)
-    );
+    this.filesService
+      .updateFileInfo(params)
+      .subscribe(res => {}, e => (this.errorMessage = e.error.message));
   }
 
   getBool(v) {
