@@ -414,7 +414,7 @@ export class FilesListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isLoadingSpinner = true;
 
     this.filesService.setFilter(this.filter);
-    this.filesService.listFileResults(this.filter);
+    this.getPage(0, this.filter);
   }
 
   resetFilter() {
