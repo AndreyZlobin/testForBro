@@ -50,6 +50,7 @@ export class FilesService {
     this.filesSubject.next([]);
   }
   getFile(params): Observable<any> {
+    debugger;
     params = params || {
       batchid: "1234",
       filename: "1.mp3"
@@ -124,10 +125,6 @@ export class FilesService {
   }
 
   listFileResults(params): Observable<any> {
-    params = params || {
-      batchid: "1234",
-      filename: "1.mp3"
-    };
     return this.http.post(`${environment.api}/listFileResults`, params);
   }
 
