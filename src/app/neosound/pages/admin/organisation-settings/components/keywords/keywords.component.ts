@@ -7,13 +7,12 @@ import {
   TemplateRef,
   HostListener,
   EventEmitter,
-  Output,
-
+  Output
 } from "@angular/core";
 import { OrganizationSettingsService } from "../../../../../services/organization-settings.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { ToastrService } from "ngx-toastr";
-import Tagify from '@yaireo/tagify';
+import { Moment } from "moment";
 
 @Component({
   selector: "app-keywords",
@@ -34,8 +33,6 @@ export class KeywordsComponent implements OnChanges {
   @ViewChild("cvsUpload") cvsUpload: ElementRef;
   modalRef: BsModalRef;
 
-  @ViewChild("tagsInput") tagsInput: ElementRef;
-
   @HostListener("window:beforeunload", ["$event"])
   unloadNotification($event: any) {
     if (this.hasChanges) {
@@ -48,7 +45,6 @@ export class KeywordsComponent implements OnChanges {
   public tags: any[] = [];
   public initialLength: number = 0;
   public hasChanges: boolean = false;
-  public tagify: any;
   constructor(
     private organizationSettingsService: OrganizationSettingsService,
     private modalService: BsModalService,
@@ -64,18 +60,12 @@ export class KeywordsComponent implements OnChanges {
       this.organizationSettingsService
         .getKeyWordSettings(changes.nameSpace.currentValue)
         .subscribe(data => {
-          this.isLoading = false;
           if (data && data.settings) {
             this.tags = data.settings[this.nameSpace].map(v => {
-              return v;
+              return { value: v, display: v };
             });
             this.initialLength = data.settings[this.nameSpace].length;
-            setTimeout(() => {
-              this.tagify = new Tagify(this.tagsInput.nativeElement, {});
-              this.tagify.addTags(this.tags);
-              this.tagify.on("add", this.onItemAdd.bind(this));
-              this.tagify.on("remove", this.onItemRemove.bind(this));
-            },0);
+            this.isLoading = false;
           }
         });
     }
@@ -95,25 +85,25 @@ export class KeywordsComponent implements OnChanges {
         let parsed = [...self.tags.map(i => i.value), ...self.csvtoArray(text)];
         parsed = parsed.filter(i => i && i.length > 0);
         const deduplicate = new Set(parsed);
-        const result = Array.from(deduplicate);
+        const result = Array.from(deduplicate).map(v => {
+          return { value: v, display: v };
+        });
         self.isLoading = false;
         self.hasChanges = true;
         self.changed.emit({
           changed: self.hasChanges,
           name: self.singularLabel
         });
-        self.tags = result.sort((a, b) => a.localeCompare(b));
-        self.tagify.removeAllTags();
-        self.tagify.addTags(self.tags);
+        self.tags = result.sort((a, b) => a.value.localeCompare(b.value));
         self.cvsUpload.nativeElement.value = "";
       };
       reader.readAsText(file);
     }
   }
 
-  public exportAsCsv() {
+  private exportAsCsv() {
     let data = [this.nameSpace];
-    data.push(...this.tags.map(i => `"${i}"`));
+    data.push(...this.tags.map(i => `"${i.value}"`));
     let content = data.join(",\n");
     this.download(content, "template.csv", "text/csv;encoding:utf-8");
   }
@@ -149,7 +139,7 @@ export class KeywordsComponent implements OnChanges {
     const a = text.split(/\r?\n|\r/);
     return a
       .map(v => v.replace(/[\",\,,;]/gm, ""))
-      .filter((value, index) => index > 0 && value.length > 0);
+      .filter((value, index) => index !== 0 || value.length > 0);
   }
 
   public openModal(template: TemplateRef<any>) {
@@ -158,7 +148,6 @@ export class KeywordsComponent implements OnChanges {
 
   public deleteAll(): void {
     this.modalRef.hide();
-    this.tagify.removeAllTags();
     this.tags = [];
     this.save();
   }
@@ -174,9 +163,10 @@ export class KeywordsComponent implements OnChanges {
   public save() {
     this.isLoading = true;
     this.organizationSettingsService
-      .updateSettings(this.nameSpace, this.tags)
+      .updateSettings(this.nameSpace, this.tags.map(i => i.value))
       .subscribe(data => {
-        this.tags = this.tags.sort((a, b) => a.localeCompare(b));
+        this.tags = this.tags.sort((a, b) => a.value.localeCompare(b.value));
+        //{{tags.length - initialLength < 0 ? 'removed' : 'added'}}{{abs(tags.length - initialLength)}}
         this.toastrService.success(
           `Just ${
             this.tags.length - this.initialLength < 0 ? "removed" : "added"
@@ -205,11 +195,34 @@ export class KeywordsComponent implements OnChanges {
   public onItemAdd(tag): void {
     this.hasChanges = true;
     this.changed.emit({ changed: this.hasChanges, name: this.singularLabel });
-    this.tags = this.tagify.value.map(i => i.value);
+    let c = [];
+    const tagVal = (tag && tag.value) || tag;
+    if (tagVal === "") {
+      return;
+    }
+    this.tags = this.tags.filter(a => a.value !== tagVal);
+    const val = tagVal.split(",").map(v => v.trim());
+    val.map(v =>
+      c.push({
+        value: v,
+        display: v
+      })
+    );
+    let deduplicate = new Set([
+      ...this.tags.map(i => i.value),
+      ...c.map(i => i.value)
+    ]);
+
+    let buff = Array.from(deduplicate)
+      .map(v => {
+        return { value: v, display: v };
+      })
+      .sort((a, b) => a.value.localeCompare(b.value));
+    this.tags = buff;
   }
-  public onItemRemove(tag): void {
+
+  onItemRemove(tag): void {
+    this.tags = this.tags.filter(t => t.value !== tag.value);
     this.hasChanges = true;
-    this.changed.emit({ changed: this.hasChanges, name: this.singularLabel });
-    this.tags = this.tagify.value.map(i => i.value);
   }
 }
