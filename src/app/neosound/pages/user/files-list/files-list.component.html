@@ -28,7 +28,7 @@
                           class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
                         </ng-datepicker>
                         <ng-datepicker *ngIf="dateVisible" [(ngModel)]="dateto" [options]="datePickerToOptions"
-                          class="form-control-bak form-control-lg-bak form-gr-last"></ng-datepicker>
+                          class="form-control-bak form-control-lg-bak form-gr-last" style=""></ng-datepicker>
                       </div>
                     </div>
                     <div class="col-12 pt-3">
@@ -156,18 +156,18 @@
                 <div class="col-3">
                   <h1>{{t('Files')}}</h1>
                 </div>
-                <div class="col-6">
+                <div class="col-6" *ngIf="!isLoadingSpinner;">
                   <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
                     <div class="btn-group mr-2 mb-2">
                       <div
-                        *ngFor="let pageItem of files | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }">
+                        *ngFor="let pageItem of getPages() | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }">
                       </div>
                       <pagination-controls (pageChange)="getPage($event - 1)" previousLabel="{{t('previous')}}"
                         nextLabel="{{t('next')}}"></pagination-controls>
                     </div>
                   </div>
                 </div>
-                <div class="col-3">
+                <div class="col-3" *ngIf="!isLoadingSpinner;">
                   <div class="row mb-1">
                     <div class="col text-right pl-0" *ngIf="!isLoading">
                       <button class="btn btn-primary ml-5 pull-right mt-1 btn-sm"
@@ -241,13 +241,12 @@
                       *ngFor="let item of files; let i = index">
                       <div (click)="markFavorite(item, i)" style="cursor: pointer; width: 4%;"
                         class="align-self-center">
-                        <span *ngIf="lastFile && item.filename === lastFile.filename" #scroll></span>
                         <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
                         <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
                       </div>
                       <div style="width: 46%">
                         <div class="d-flex flex-column">
-                          <div class="w-100 mt-1">
+                          <div class="w-100 mt-2">
                             <a [routerLink]="getLink(item)" tooltip="{{item.filename}}">
                               <span class="d-inline-block text-truncate font-weight-bold" style="max-width: 100%;">
                                 {{item.filename}}
@@ -255,43 +254,43 @@
                             </a>
                           </div>
                           <div class="w-100">
-                            <div class="d-flex flex-row justify-content-start">
-                              <div class="w-50 align-self-center ">
-                                <div class="w-100 my-1">
+                            <div class="d-flex flex-row">
+                              <div class="w-50 align-self-center">
+                                <div class="w-100 my-2">
                                   <a style="text-decoration: underline; cursor: pointer;"
                                     (click)="filterByBatch(item.batchid)">{{item.batchid}}</a>
                                 </div>
                               </div>
-                              <div class="pr-4" style="font-size: xx-small;">
-                                <div class="mb-1">
-                                  <span class="mr-2">{{t('Uploaded')}}</span>
+                              <div class="my-2 mr-2 w-25" style="font-size: xx-small;">
+                                <div>
+                                  <span>{{t('Uploaded')}}</span>
                                   <span
                                     class="float-right font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</span>
                                 </div>
-                                <div class="mb-1">
-                                  <span class="mr-2">{{t('Duration')}}</span>
+                                <div>
+                                  <span>{{t('Duration')}}</span>
                                   <span
                                     class="float-right font-weight-bold">{{ getDateVal(item.duration) | date:'mm:ss'}}</span>
                                 </div>
-                                <div class="mb-1">
-                                  <span class="mr-2"> {{t('Silence')}}</span>
+                                <div>
+                                  <span>{{t('Silence')}}</span>
                                   <span *ngIf="item.pause && item.pause.dur"
                                     class="float-right font-weight-bold">{{getDateVal(item.pause.dur) | date: 'mm:ss'}}
                                     ({{item.pause.dur / item.duration | percent}})</span>
                                 </div>
                               </div>
-                              <div style="font-size: xx-small;">
-                                <div class="mb-1">
-                                  <span class="mr-2">{{t('Pauses')}}</span>
+                              <div class="my-2 w-25" style="font-size: xx-small;">
+                                <div>
+                                  <span>{{t('Pauses')}}</span>
                                   <span class="float-right font-weight-bold"></span>
                                 </div>
-                                <div class="mb-1">
-                                  <span class="mr-2">{{t('Max.')}}</span>
+                                <div>
+                                  <span>{{t('Max.')}}</span>
                                   <span class="float-right font-weight-bold">-</span>
                                 </div>
-                                <div class="mb-1">
-                                  <span class="mr-2">{{t('Avg.')}}</span>
-                                  <span *ngIf="item.pause && item.pause.avg"
+                                <div>
+                                  <span>{{t('Avg.')}}</span>
+                                  <span  *ngIf="item.pause && item.pause.avg"
                                     class="float-right font-weight-bold">{{getDateVal(item.pause.avg) | date: 'mm:ss'}}</span>
                                 </div>
                               </div>
@@ -362,19 +361,6 @@
                   </div>
                 </div>
               </div>
-              <div class="d-flex justify-content-around">
-                <div class="btn-toolbar mb-3 mt-3" *ngIf="!isLoading && files && !!files.length">
-                  <div class="btn-group mr-2 mb-2">
-                    <div
-                      *ngFor="let pageItem of files | paginate: { itemsPerPage: paginationNum, currentPage: (page+1), totalItems: totalCount }">
-                    </div>
-                    <pagination-controls (pageChange)="getPage($event - 1)" previousLabel="{{t('previous')}}"
-                      nextLabel="{{t('next')}}"></pagination-controls>
-                  </div>
-                </div>
-              </div>
-              <h6>{{t('Total files on page')}} {{getFilesOnPageLabel()}} {{t('out of')}} {{totalCount}} </h6>
-              <button class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
             </div>
           </div>
         </div>
