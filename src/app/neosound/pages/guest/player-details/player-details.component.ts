@@ -8,8 +8,9 @@ import {
   ViewChild
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
+import { FilterService } from "../../../services/filter.service";
 import { PlayerService } from "../../../services/player.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
 import { ToastrService } from "ngx-toastr";
@@ -57,6 +58,7 @@ export class PlayerDetailsComponent
   onhold;
   greySpeaker = "";
   regions = [];
+  changed = false;
   @HostListener("document:keyup", ["$event"])
   public handleKeyboardEvent(event: KeyboardEvent): void {
     if (event.code === "Space") {
@@ -66,6 +68,7 @@ export class PlayerDetailsComponent
   }
   constructor(
     private filesService: FilesService,
+    private filterService: FilterService,
     private router: Router,
     private route: ActivatedRoute,
     private playerService: PlayerService,
@@ -74,41 +77,35 @@ export class PlayerDetailsComponent
     private dataService: DataService
   ) {
     this.fileParams = this.filesService.getQuickFileParams();
-    // test file
-    // this.fileParams = {batchid: 1, filename: '2018-9-18_0:1:11.wav'};
-
-    this.subRoute = this.route.params.subscribe(
-      params => {
-        if (params && params.filename && params.batchid) {
-          this.fileParams = {
-            filename: decodeURIComponent(params.filename),
-            batchid: decodeURIComponent(params.batchid)
-          };
-          this.filesService.getFile(this.fileParams).subscribe(
-            res => {
-              this.fileUrl = res.url;
-            },
-            e => {
-              this.errorMessage = e.error.message;
-              if (e.status === 502 || e.status === 404 || e.status === 429) {
-                this.router.navigateByUrl("/404");
+    this.router.events.forEach(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url.startsWith("/file/")) {
+          const batchid = this.route.snapshot.params["batchid"];
+          const filename = this.route.snapshot.params["filename"];
+          this.fileUrl = null;
+          this.filterService.lastFileId = decodeURIComponent(filename);
+          if (filename && batchid) {
+            this.fileParams = {
+              filename: decodeURIComponent(filename),
+              batchid: decodeURIComponent(batchid)
+            };
+            this.filesService.getFile(this.fileParams).subscribe(
+              res => {
+                this.fileUrl = res.url;
+                this.changed = true;
+                this.getInfo();
+              },
+              e => {
+                this.errorMessage = e.error.message;
+                if (e.status === 502 || e.status === 404 || e.status === 429) {
+                  this.router.navigateByUrl("/404");
+                }
               }
-            }
-          );
-
-          this.filesService.setQuickFileParams({
-            batchid: decodeURIComponent(params.batchid),
-            filename: decodeURIComponent(params.filename)
-          });
+            );
+          }
         }
-      },
-      e => {
-        if (e.status === 502 || e.status === 404 || e.status === 429) {
-          this.router.navigateByUrl("/404");
-        }
-        this.errorMessage = e.error.message;
       }
-    );
+    });
   }
 
   ngAfterViewInit() {}
@@ -116,12 +113,6 @@ export class PlayerDetailsComponent
     return element ? element.guid : null;
   }
   ngOnInit() {
-    this.getInfo();
-    this.attempsCount = 20;
-    this.intervalRef = setInterval(() => {
-      this.attempsCount--;
-      this.getInfo();
-    }, 20000);
   }
 
   copyToClipboard(text: string): void {
@@ -130,7 +121,7 @@ export class PlayerDetailsComponent
     selBox.style.left = "0";
     selBox.style.top = "0";
     selBox.style.opacity = "0";
-    selBox.value = text.replace(/(<([^>]+)>)/ig, "");
+    selBox.value = text.replace(/(<([^>]+)>)/gi, "");
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
@@ -148,15 +139,11 @@ export class PlayerDetailsComponent
           clearInterval(this.intervalRef);
         }
         if (this.results.result) {
-          // this.analysisResult = this.results.result;
-
           if (this.results.result.anger) {
             if (this.results.result.anger.ints) {
               this.emotionsAnger = this.results.result.anger.ints;
               this.emotions = this.emotionsAnger;
-              // this.onhold = this.results.result.anger.ints;
               this.setTab("anger");
-              // this.setRegions();
             }
             if (this.results.result.anger.music) {
               this.emotionsSounds = this.results.result.anger.music;
@@ -238,6 +225,9 @@ export class PlayerDetailsComponent
         });
       }
     }
+  }
+
+  pushRegions() {
     this.player.setRegions(this.regions);
   }
 

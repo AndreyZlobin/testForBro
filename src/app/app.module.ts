@@ -48,6 +48,7 @@ import { AboutComponent } from "./neosound/pages/about/about.component";
 import { MinutesSecondsPipe } from "./neosound/minutes-seconds.pipe";
 
 import { FilesService } from "./neosound/services/files.service";
+import { FilterService } from "./neosound/services/filter.service";
 import { OrganizationSettingsService } from "./neosound/services/organization-settings.service";
 import { PlayerService } from "./neosound/services/player.service";
 import { AnalyticsService } from "./neosound/services/analytics.service";
@@ -57,6 +58,7 @@ import { RequestsHttpInterceptor } from "./neosound/shared/requests-http.interce
 import { NbPasswordAuthStrategy, NbAuthModule } from "@nebular/auth";
 import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
 import { TagCloudModule } from 'angular-tag-cloud-module';
+
 import {
   NgxChartsModule,
   PieChartModule,
@@ -93,7 +95,7 @@ import { ChartModule } from "angular2-chartjs";
 import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-found.component";
 import { LanguageService } from "./neosound/services/language.service";
 import { NgxPaginationModule } from "ngx-pagination";
-// import { ForbiddenPasswordDirective } from './neosound/directives/forbidden-password.directive';
+import { ForbiddenValidatorDirective } from './neosound/directives/forbidden-password.directive';
 import { IntervalDirective } from "./neosound/directives/interval.detective";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
@@ -135,6 +137,7 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     ApiPageComponent,
     PageNotFoundComponent,
     IntervalDirective,
+    ForbiddenValidatorDirective,
     BatchListComponent,
     BatchDetailsComponent,
     ChartPageComponent,
@@ -192,6 +195,7 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     CanDeactivateGuard,
     UsersService,
     FilesService,
+    FilterService,
     OrganizationSettingsService,
     PlayerService,
     AnalyticsService,

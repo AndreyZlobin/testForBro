@@ -1,15 +1,20 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges,
+  EventEmitter,
+} from "@angular/core";
 import { FilesService } from "../../../../services/files.service";
+import { FilterService } from "../../../../services/filter.service";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
 import RegionsPlugin from "./region-plugin";
-import CursorPlugin from "wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js";
 import { PlayerService } from "../../../../services/player.service";
 import { LanguageService } from "../../../../services/language.service";
-import { Subscription } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { ToastrService } from "ngx-toastr";
-import { BehaviorSubject } from "rxjs";
 
 import CanvasDrawer from "./canvas-drawer";
 
@@ -18,37 +23,37 @@ import CanvasDrawer from "./canvas-drawer";
   templateUrl: "./player.component.html",
   styleUrls: ["./player.component.scss"]
 })
-export class PlayerComponent implements OnInit, OnDestroy {
+export class PlayerComponent implements OnDestroy, OnChanges {
   public wavesurfer: any;
-  public fileUrl: string;
   public waveFormData: any;
   public peekCache: any;
+  public isLoading: boolean = false;
+
   @Input() fileName: string;
   @Input() batchId: string;
-  public isLoading = true;
+  @Input() fileUrl: string;
+  @Output() ready: EventEmitter<any> = new EventEmitter<any>();
   public regions = [];
 
   constructor(
-    private filesService: FilesService,
-    private playerService: PlayerService,
-    private httpClient: HttpClient,
-    private toastrService: ToastrService
+    public filesService: FilesService,
+    public filterService: FilterService,
+    public playerService: PlayerService
   ) {}
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
+    this.fetchFile();
+  }
+  fetchFile() {
+    this.isLoading = true;
     this.filesService
-      .getFile({ filename: this.fileName, batchid: this.batchId })
-      .subscribe(res => {
-        this.fileUrl = res.url;
-        this.filesService
-          .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
-          .subscribe(meta => {
-            if (meta.ContentRange) {
-              this.loadChunks(meta);
-            } else {
-              this.init(this.fileUrl, this.getPeaks(meta));
-            }
-          });
+      .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
+      .subscribe(meta => {
+        if (meta.ContentRange) {
+          this.loadChunks(meta);
+        } else {
+          this.init(this.fileUrl, this.getPeaks(meta));
+        }
       });
   }
   t(v) {
@@ -64,7 +69,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
       })
       .subscribe(res => {
         meta.data = meta.data + res.data;
-        meta.ContentRange = res.ContentRange
+        meta.ContentRange = res.ContentRange;
         if (meta.ContentRange) {
           this.loadChunks(meta);
         } else {
@@ -114,11 +119,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.wavesurfer.load(fileUrl, peaks, "auto");
     this.wavesurfer.on("ready", () => {
       this.isLoading = false;
-      setTimeout(() => {
-        this.regions.map(region => {
-          this.wavesurfer.addRegion(region);
-        });
-      }, 0);
+      this.ready.emit();
     });
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActive(time);
@@ -126,7 +127,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.wavesurfer.on("seek", time => {
       this.playerService.setActive(time * this.wavesurfer.getDuration());
     });
-
   }
   play() {
     this.wavesurfer && this.wavesurfer.playPause();
@@ -135,7 +135,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.wavesurfer.seekTo(ms / this.wavesurfer.getDuration());
   }
   setRegions(regions) {
-    this.regions = regions;
+    regions.map(region => {
+      this.wavesurfer.addRegion(region);
+    });
   }
   ngOnDestroy() {
     this.wavesurfer && this.wavesurfer.destroy();

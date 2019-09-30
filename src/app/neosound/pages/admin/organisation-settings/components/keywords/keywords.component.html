@@ -1,8 +1,7 @@
 <div class="my-4">
     <div class="loader" *ngIf="isLoading">Loading...</div>
 </div>
-
-<div class="d-flex flex-column" *ngIf="!isLoading">
+<div class="d-flex flex-column" [style.visibility]="!isLoading ? 'visible' : 'hidden'">
     <div class="my-3">
         <div class="d-flex align-items-center">
             <nb-action class="control-action mr-2"><a (click)="exportAsCsv()" class=">"><i
@@ -19,15 +18,9 @@
         <span class="font-weight-bold">{{descriptionLabel}}</span>
     </div>
     <div class="border my-2">
-        <div style="overflow-y: auto">
-            <div style="height: 41vh">
-                <tag-input [(ngModel)]="tags" [editable]="true" theme="minimal" [separatorKeys]="[',']"
-                    [separatorKeyCodes]="[13]" (onAdd)="onItemAdd($event)" (onBlur)="onItemAdd($event)"
-                    (onRemove)="onItemRemove($event)">
-                </tag-input>
-            </div>
+        <div style="height: 41vh;">
+            <textarea #tagsInput></textarea>
         </div>
-
     </div>
     <div class="my-3">
         <div class="d-flex align-items-center">
@@ -37,8 +30,9 @@
             <span class=" mr-2" *ngIf="showMessage">
                 Re-indexing is working now. Started: {{postDate | date: 'dd/MM/yyyy hh:mm' }}
             </span>
-            <nb-action class="control-action"><button class="btn btn-secondary btn-sm mr-2"
-                    (click)="openModal(long)" [disabled]="showMessage"><i class="fas fa-sync-alt mr-2"></i>Relaunch files processing</button></nb-action>
+            <nb-action class="control-action"><button class="btn btn-secondary btn-sm mr-2" (click)="openModal(long)"
+                    [disabled]="showMessage"><i class="fas fa-sync-alt mr-2"></i>Relaunch files processing</button>
+            </nb-action>
             <nb-action class="control-action mr-2"><button class="btn btn-secondary btn-sm"
                     (click)="openModal(confirm)"><i class="fas fa-trash-alt mr-2"></i>Remove All</button>
             </nb-action>
