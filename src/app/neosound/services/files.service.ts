@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 export class FilesService {
   private filesSubject = new BehaviorSubject<any>({});
   public files = this.filesSubject.asObservable();
-  private store: any = {};
+  public store: any = {};
   private currentFileParams;
   private savedFilter = {
     itemsn: 100,
@@ -50,7 +50,6 @@ export class FilesService {
     this.filesSubject.next([]);
   }
   getFile(params): Observable<any> {
-    debugger;
     params = params || {
       batchid: "1234",
       filename: "1.mp3"
@@ -95,14 +94,10 @@ export class FilesService {
     return this.http.post(`${environment.api}/listFiles`, params);
   }
 
-  listFilesPage(params): void {
+  listFilesPage(params): Observable<any> {
     params = params || {};
-    this.http
-      .post(`${environment.api}/listFilesPage`, params)
-      .subscribe(res => {
-        this.store = res;
-        this.filesSubject.next(this.store);
-      });
+    return this.http
+      .post(`${environment.api}/listFilesPage`, params);
   }
   postListFilesPage(params): Observable<any> {
     params = params || {};
@@ -152,58 +147,5 @@ export class FilesService {
 
   updateFileInfo(params): Observable<any> {
     return this.http.post(`${environment.api}/updateFileInfo`, params);
-  }
-
-  getNextLink(fileName: string, batchId: string): string {
-    if (this.store && this.store.files && this.store.files.length) {
-      const index = this.store.files.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
-
-      if (index !== -1 && this.store.files[index + 1]) {
-        return `/file/${this.store.files[index + 1].batchid}/${this.store.files[index + 1].filename}`;
-      }
-      return "";
-    } else {
-      return "";
-    }
-  }
-  getPrevLink(fileName: string, batchId: string): string {
-    if (this.store && this.store.files && this.store.files.length) {
-      const index = this.store.files.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
-      if (index !== -1 && this.store.files[index - 1]) {
-        return `/file/${this.store.files[index - 1].batchid}/${this.store.files[index - 1].filename}`;
-      }
-      return "";
-    } else {
-      return "";
-    }
-  }
-
-  hasNextLink(fileName: string, batchId: string): boolean {
-    let res = true;
-    if (this.store && this.store.files && this.store.files.length) {
-      const index = this.store.files.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
-      if (index !== -1 && this.store.files[index + 1]) {
-        res = false;
-      }
-    }
-    return res;
-  }
-  hasPrevLink(fileName: string, batchId: string): boolean {
-    let res = true;
-    if (this.store && this.store.files && this.store.files.length) {
-      const index = this.store.files.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
-      if (index !== -1 && this.store.files[index - 1]) {
-        res = false;
-      }
-    }
-    return res;
   }
 }

@@ -2,11 +2,14 @@ import {
   Component,
   OnInit,
   Input,
+  Output,
   OnDestroy,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  EventEmitter,
 } from "@angular/core";
 import { FilesService } from "../../../../services/files.service";
+import { FilterService } from "../../../../services/filter.service";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
 import RegionsPlugin from "./region-plugin";
@@ -29,11 +32,12 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   @Input() fileName: string;
   @Input() batchId: string;
   @Input() fileUrl: string;
-
+  @Output() ready: EventEmitter<any> = new EventEmitter<any>();
   public regions = [];
 
   constructor(
     public filesService: FilesService,
+    public filterService: FilterService,
     public playerService: PlayerService
   ) {}
 
@@ -115,11 +119,7 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     this.wavesurfer.load(fileUrl, peaks, "auto");
     this.wavesurfer.on("ready", () => {
       this.isLoading = false;
-      setTimeout(() => {
-        this.regions.map(region => {
-          this.wavesurfer.addRegion(region);
-        });
-      }, 0);
+      this.ready.emit();
     });
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActive(time);
@@ -135,7 +135,9 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     this.wavesurfer.seekTo(ms / this.wavesurfer.getDuration());
   }
   setRegions(regions) {
-    this.regions = regions;
+    regions.map(region => {
+      this.wavesurfer.addRegion(region);
+    });
   }
   ngOnDestroy() {
     this.wavesurfer && this.wavesurfer.destroy();

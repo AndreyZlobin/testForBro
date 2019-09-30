@@ -8,6 +8,7 @@ import {
   ViewChild
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
+import { FilterService } from "../../../services/filter.service";
 import { PlayerService } from "../../../services/player.service";
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -67,6 +68,7 @@ export class PlayerDetailsComponent
   }
   constructor(
     private filesService: FilesService,
+    private filterService: FilterService,
     private router: Router,
     private route: ActivatedRoute,
     private playerService: PlayerService,
@@ -81,6 +83,7 @@ export class PlayerDetailsComponent
           const batchid = this.route.snapshot.params["batchid"];
           const filename = this.route.snapshot.params["filename"];
           this.fileUrl = null;
+          this.filterService.lastFileId = decodeURIComponent(filename);
           if (filename && batchid) {
             this.fileParams = {
               filename: decodeURIComponent(filename),
@@ -99,11 +102,6 @@ export class PlayerDetailsComponent
                 }
               }
             );
-
-            this.filesService.setQuickFileParams({
-              batchid: decodeURIComponent(batchid),
-              filename: decodeURIComponent(filename)
-            });
           }
         }
       }
@@ -227,7 +225,9 @@ export class PlayerDetailsComponent
         });
       }
     }
+  }
 
+  pushRegions() {
     this.player.setRegions(this.regions);
   }
 

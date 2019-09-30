@@ -48,6 +48,7 @@ import { AboutComponent } from "./neosound/pages/about/about.component";
 import { MinutesSecondsPipe } from "./neosound/minutes-seconds.pipe";
 
 import { FilesService } from "./neosound/services/files.service";
+import { FilterService } from "./neosound/services/filter.service";
 import { OrganizationSettingsService } from "./neosound/services/organization-settings.service";
 import { PlayerService } from "./neosound/services/player.service";
 import { AnalyticsService } from "./neosound/services/analytics.service";
@@ -194,6 +195,7 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     CanDeactivateGuard,
     UsersService,
     FilesService,
+    FilterService,
     OrganizationSettingsService,
     PlayerService,
     AnalyticsService,

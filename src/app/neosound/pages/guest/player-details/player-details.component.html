@@ -6,7 +6,7 @@
       </div>
       <div [ngClass]="{ 'd-none': currentTab === 'results' }">
         <ng-container *ngIf="fileParams.filename && fileParams.batchid && fileUrl">
-          <ngx-player [fileName]="fileParams.filename" [batchId]="fileParams.batchid" [fileUrl]="fileUrl"></ngx-player>
+          <ngx-player [fileName]="fileParams.filename" [batchId]="fileParams.batchid" [fileUrl]="fileUrl" (ready)="pushRegions()"></ngx-player>
         </ng-container>
         <div class="d-flex justify-content-start my-2" *ngIf="currentTab !== 'results'">
           <div class="btn-group mt-2" *ngIf="emotions && currentTab === 'text'">
