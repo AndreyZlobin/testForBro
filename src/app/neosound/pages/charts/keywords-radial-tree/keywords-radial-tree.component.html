@@ -1,13 +1,10 @@
 <ng-container *ngIf="!isLoading; else spinner"></ng-container>
 <div class="card h-100">
   <div class="card-header">
-    {{t('Keyword phrases')}}
+    {{t('Keywords dependencies')}}
   </div>
   <div class="card-body">
-    <div echarts
-         [options]="option"
-         class="echart"
-         (chartInit)="onChartInit($event)">
+    <div echarts [options]="option" class="echart" (chartInit)="onChartInit($event)">
     </div>
   </div>
 </div>

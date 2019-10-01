@@ -256,6 +256,12 @@
           </div>
         </div>
       </div>
+      <div class="col-6 mb-3" *ngIf="radialTreeData">
+        <ngx-keywords-radial-tree
+          [treeRadialData]="radialTreeData"
+          [colors]="colors">
+        </ngx-keywords-radial-tree>
+      </div>
       <div class="col-6 mb-3">
         <ngx-total-by-queries-chart-pie [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"
           [colorsData]="colors">
