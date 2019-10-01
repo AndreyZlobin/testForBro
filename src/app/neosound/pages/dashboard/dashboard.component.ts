@@ -76,6 +76,7 @@ export class DashboardComponent implements OnInit {
   apiStat: any = {};
   freqWords: any[] = [];
   radialTreeData: any;
+  showRadialTreeData: boolean = false;
   constructor(
     private router: Router,
     private filesService: FilesService,
@@ -84,6 +85,7 @@ export class DashboardComponent implements OnInit {
     private analyticsService: AnalyticsService
   ) {
     this.setColors();
+    this.showRadialTreeData = false;
   }
 
   setColors() {
@@ -479,8 +481,9 @@ export class DashboardComponent implements OnInit {
           ]
         };
       }
-      if(data.treeRadialData) {
+      if(data.treeRadialData && data.treeRadialData.name) {
         this.radialTreeData = data.treeRadialData;
+        this.showRadialTreeData = true;
       }
       if (data.verbs) {
         this.sankey4 = {
