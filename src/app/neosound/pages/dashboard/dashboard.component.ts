@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { CloudData } from "angular-tag-cloud-module";
 
 import { FilesService } from "../../services/files.service";
+import { DataService } from "../../shared";
 import { AnalyticsService } from "../../services/analytics.service";
 import { comonKeywords } from "./data";
 import { HttpClient } from "@angular/common/http";
@@ -77,12 +78,14 @@ export class DashboardComponent implements OnInit {
   freqWords: any[] = [];
   radialTreeData: any;
   showRadialTreeData: boolean = false;
+  primiryColor: string = "#3399cc";
   constructor(
     private router: Router,
     private filesService: FilesService,
     private http: HttpClient,
     private lang: LanguageService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    public dataService: DataService
   ) {
     this.setColors();
     this.showRadialTreeData = false;
@@ -273,9 +276,7 @@ export class DashboardComponent implements OnInit {
           tooltip: {
             show: true,
             formatter: function(param) {
-              return `${param.data[3]}<br>Calls: ${param.data[2]}<br> Silent: ${
-                param.data[0]
-              }<br> Emotional: ${param.data[1]}`;
+              return `${param.data[3]}<br>Calls: ${param.data[2]}<br> Silent: ${param.data[0]}<br> Emotional: ${param.data[1]}`;
             }
           },
           series: buble
@@ -301,8 +302,13 @@ export class DashboardComponent implements OnInit {
         .sort((a, b) => b.value - a.value)
         .slice(0, 10)
         .reverse();
+      if (this.dataService.config["colors"].secondary) {
+        this.primiryColor = this.dataService.config["colors"].secondary;
+      } else {
+        this.primiryColor = "#0098d9";
+      }
       this.keyWordChart = {
-        color: ["#3399cc"],
+        color: [this.primiryColor],
         grid: {
           left: 100
         },
@@ -481,7 +487,7 @@ export class DashboardComponent implements OnInit {
           ]
         };
       }
-      if(data.treeRadialData && data.treeRadialData.name) {
+      if (data.treeRadialData && data.treeRadialData.name) {
         this.radialTreeData = data.treeRadialData;
         this.showRadialTreeData = true;
       }
