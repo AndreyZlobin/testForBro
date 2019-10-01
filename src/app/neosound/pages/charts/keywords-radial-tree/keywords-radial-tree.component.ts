@@ -16,6 +16,7 @@ export class KeywordsRadialTreeComponent implements OnInit {
   minutesStatLoaded = false;
   apiStatLoaded = false;
   colorsLoaded = false;
+  keywordsLoaded = false;
 
   fileStat: any = {};
   minutesStat: any = {};
@@ -44,11 +45,12 @@ export class KeywordsRadialTreeComponent implements OnInit {
   }
   @Input() set colorsData(data) {
     this.colors = data;
+    this.colorsLoaded = true;
     this.init();
   }
   @Input() set keywordsData(data) {
     this.keywordsDataName = data;
-    this.colorsLoaded = true;
+    this.keywordsLoaded = true;
     this.init();
   }
 
@@ -58,7 +60,7 @@ export class KeywordsRadialTreeComponent implements OnInit {
   }
 
   init() {
-    if (!this.apiStatLoaded || !this.colorsLoaded) {
+    if (!this.apiStatLoaded || !this.colorsLoaded || !this.keywordsLoaded) {
       return;
     }
     this.isLoading = false;
