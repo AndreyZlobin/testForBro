@@ -112,8 +112,7 @@ export class PlayerDetailsComponent
   trackElement(index: number, element: any) {
     return element ? element.guid : null;
   }
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   copyToClipboard(text: string): void {
     const selBox = document.createElement("textarea");
@@ -199,8 +198,7 @@ export class PlayerDetailsComponent
     return d;
   }
 
-  // @ts-ignore
-  setRegions() {
+  setRegions(): void {
     const inputData = this.emotionsSounds
       ? this.emotions.concat(this.emotionsSounds)
       : this.emotions;
@@ -228,7 +226,9 @@ export class PlayerDetailsComponent
   }
 
   pushRegions() {
-    this.player.setRegions(this.regions);
+    setTimeout(() => {
+      this.player.setRegions(this.regions);
+    }, 0);
   }
 
   getColor(val: any, type?: string, isMusic = false) {

@@ -1,0 +1,29 @@
+<nb-card>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-6 pt-3">
+                <div class="mb-2">{{t('Range 1')}}</div>
+                <div class="input-group">
+                    <ng-datepicker [(ngModel)]="rangeFirstFrom" [options]="datePickerFromOptions"
+                        class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
+                    </ng-datepicker>
+                    <ng-datepicker [(ngModel)]="rangeFirstTo" [options]="datePickerToOptions"
+                        class="form-control-bak form-control-lg-bak form-gr-last"></ng-datepicker>
+                </div>
+            </div>
+            <div class="col-6 pt-3">
+                <div class="mb-2">{{t('Range 2')}}</div>
+                <div class="input-group">
+                    <ng-datepicker [(ngModel)]="rangeSecondFrom" [options]="datePickerFromOptions"
+                        class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
+                    </ng-datepicker>
+                    <ng-datepicker [(ngModel)]="rangeSecondTo" [options]="datePickerToOptions"
+                        class="form-control-bak form-control-lg-bak form-gr-last"></ng-datepicker>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 pt-3"></div>
+        </div>
+    </nb-card-body>
+</nb-card>
