@@ -48,7 +48,6 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     } else {
       this.color = "#0098d9";
     }
-
   }
 
   ngOnChanges(changes: SimpleChanges) {
