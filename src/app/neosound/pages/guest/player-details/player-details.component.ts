@@ -77,33 +77,39 @@ export class PlayerDetailsComponent
     private dataService: DataService
   ) {
     this.router.events.forEach(event => {
-      if (event instanceof NavigationEnd && event.url.startsWith("/file/")) {
-        const batchid = this.route.snapshot.params["batchid"];
-        const filename = this.route.snapshot.params["filename"];
+      if (event instanceof NavigationEnd) {
         this.fileUrl = null;
         this.regions = [];
-        this.filterService.lastFileId = decodeURIComponent(filename);
-        if (filename && batchid) {
-          if(this.fileParams && filename === this.fileParams.filename && batchid === this.fileParams.batchid) {
-            return;
-          }
-          this.fileParams = {
-            filename: decodeURIComponent(filename),
-            batchid: decodeURIComponent(batchid)
-          };
-          this.filesService.getFile(this.fileParams).subscribe(
-            res => {
-              this.fileUrl = res.url;
-              this.changed = true;
-              this.getInfo();
-            },
-            e => {
-              this.errorMessage = e.error.message;
-              if (e.status === 502 || e.status === 404 || e.status === 429) {
-                this.router.navigateByUrl("/404");
-              }
+        if (event.url.startsWith("/file/")) {
+          const batchid = this.route.snapshot.params["batchid"];
+          const filename = this.route.snapshot.params["filename"];
+          this.filterService.lastFileId = decodeURIComponent(filename);
+          if (filename && batchid) {
+            if (
+              this.fileParams &&
+              filename === this.fileParams.filename &&
+              batchid === this.fileParams.batchid
+            ) {
+              return;
             }
-          );
+            this.fileParams = {
+              filename: decodeURIComponent(filename),
+              batchid: decodeURIComponent(batchid)
+            };
+            this.filesService.getFile(this.fileParams).subscribe(
+              res => {
+                this.fileUrl = res.url;
+                this.changed = true;
+                this.getInfo();
+              },
+              e => {
+                this.errorMessage = e.error.message;
+                if (e.status === 502 || e.status === 404 || e.status === 429) {
+                  this.router.navigateByUrl("/404");
+                }
+              }
+            );
+          }
         }
       }
     });
