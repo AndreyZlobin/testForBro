@@ -76,15 +76,22 @@ export class PlayerDetailsComponent
     private cdRef: ChangeDetectorRef,
     private dataService: DataService
   ) {
-    this.fileParams = this.filesService.getQuickFileParams();
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
+        this.fileUrl = null;
+        this.regions = [];
         if (event.url.startsWith("/file/")) {
           const batchid = this.route.snapshot.params["batchid"];
           const filename = this.route.snapshot.params["filename"];
-          this.fileUrl = null;
           this.filterService.lastFileId = decodeURIComponent(filename);
           if (filename && batchid) {
+            if (
+              this.fileParams &&
+              filename === this.fileParams.filename &&
+              batchid === this.fileParams.batchid
+            ) {
+              return;
+            }
             this.fileParams = {
               filename: decodeURIComponent(filename),
               batchid: decodeURIComponent(batchid)
