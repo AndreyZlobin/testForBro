@@ -256,16 +256,16 @@
           </div>
         </div>
       </div>
-      <div class="col-6 mb-3" *ngIf="radialTreeData">
-        <ngx-keywords-radial-tree
-          [treeRadialData]="radialTreeData"
-          [colors]="colors">
-        </ngx-keywords-radial-tree>
-      </div>
       <div class="col-6 mb-3">
         <ngx-total-by-queries-chart-pie [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat"
           [colorsData]="colors">
         </ngx-total-by-queries-chart-pie>
+      </div>
+      <div class="col-12 mb-3" *ngIf="radialTreeData">
+        <ngx-keywords-radial-tree
+          [treeRadialData]="radialTreeData"
+          [colors]="colors">
+        </ngx-keywords-radial-tree>
       </div>
       <div class="col-6 mb-3" *ngIf="sankey6">
         <div class="card  card-block d-flex h-100">
