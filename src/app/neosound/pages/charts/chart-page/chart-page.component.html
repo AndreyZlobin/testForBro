@@ -13,6 +13,19 @@
 
 <div class="row" *ngIf="!isLoading; else spinner">
   <div class="col-12 col-lg-6 mb-3">
+    <hr>
+      <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data4');">data4</button>
+      <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data5');">data5</button>
+      <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data6');">data6</button>
+      <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data7');">data7</button>
+    <hr>
+    <ngx-keywords-radial-tree [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors"
+                              [keywordsData]="keywordRadialTreeData">
+    </ngx-keywords-radial-tree>
+  </div>
+
+
+  <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
         Sankey diagram

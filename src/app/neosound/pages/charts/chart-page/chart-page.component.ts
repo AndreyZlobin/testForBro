@@ -57,6 +57,7 @@ export class ChartPageComponent implements OnInit {
   config = {};
   colors = [];
   primarycolor;
+  keywordRadialTreeData;
 
   constructor(
     private filesService: FilesService,
@@ -108,6 +109,7 @@ export class ChartPageComponent implements OnInit {
       this.setColors('default');
     });
 
+    this.setKeywordsRadialTreeData('default');
     // this.initCharts();
   }
 
@@ -129,6 +131,19 @@ export class ChartPageComponent implements OnInit {
     };
 
     this.colors = themeColors[theme] || themeColors['default'];
+    this.initCharts();
+  }
+
+  setKeywordsRadialTreeData(key) {
+    const keys = {
+      'default': 'data7',
+      'data4': 'data4',
+      'data5': 'data5',
+      'data6': 'data6',
+      'data7': 'data7',
+    };
+
+    this.keywordRadialTreeData = keys[key] || keys['default'];
     this.initCharts();
   }
 
