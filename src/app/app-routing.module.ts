@@ -15,6 +15,7 @@ registerLocaleData(localGermany, localGermanyExtra);
 
 import { LoginComponent } from "./neosound/pages/auth/login/login.component";
 import { DashboardComponent } from "./neosound/pages/dashboard/dashboard.component";
+import { StopwordsComponent } from "./neosound/pages/dashboard/details/stopwords/stopwords.component";
 import { MainComponent } from "./neosound/components/main/main.component";
 
 import { SignupLinkComponent } from "./neosound/pages/auth/signup-link/signup-link.component";
@@ -54,6 +55,11 @@ const routes: Routes = [
         path: "home",
         canActivate: [AuthGuard],
         component: DashboardComponent
+      },
+      {
+        path: "dashboard/details/stopwords",
+        canActivate: [AuthGuard],
+        component: StopwordsComponent
       },
       {
         path: "about",

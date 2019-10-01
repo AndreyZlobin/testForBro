@@ -256,12 +256,12 @@
                     <ng-container *ngIf="(filterService.files | async) as files">
                       <div class="d-flex flex-row border-top border-bottom align-items-stretch justify-content-start"
                         *ngFor="let item of files; let i = index">
-                        <div (click)="markFavorite(item)" style="cursor: pointer; width: 4%;" class="align-self-center">
+                        <div (click)="markFavorite(item)" style="cursor: pointer; width: 2%;" class="align-self-center">
                           <span *ngIf="filterService.lastFileId === item.filename" #scroll></span>
                           <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
                           <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
                         </div>
-                        <div style="width: 46%">
+                        <div style="width: 44%">
                           <div class="d-flex flex-column">
                             <div class="w-100 mt-1">
                               <a [routerLink]="getLink(item)" tooltip="{{item.filename}}">
@@ -323,7 +323,7 @@
                           </div>
                         </div>
                         <div class="d-flex flex-row justify-content-between align-self-center" style="width: 15%">
-                          <div class="ml-4">
+                          <div>
                             <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-2"></i>
                             <span tooltip="{{getStopwords(item)}}"
                               class="badge badge-danger">{{item.stopwordcount ? item.stopwordcount : 0}}</span>

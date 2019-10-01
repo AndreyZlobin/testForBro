@@ -23,6 +23,7 @@ import { ButtonsModule } from "ngx-bootstrap/buttons";
 import { MainComponent } from "./neosound/components/main/main.component";
 import { LoginComponent } from "./neosound/pages/auth/login/login.component";
 import { DashboardComponent } from "./neosound/pages/dashboard/dashboard.component";
+import { StopwordsComponent } from "./neosound/pages/dashboard/details/stopwords/stopwords.component";
 
 import { SignupLinkComponent } from "./neosound/pages/auth/signup-link/signup-link.component";
 import { SignupDetailedComponent } from "./neosound/pages/auth/signup-detailed/signup-detailed.component";
@@ -114,7 +115,7 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     MainComponent,
     LoginComponent,
     DashboardComponent,
-
+    StopwordsComponent,
     SignupLinkComponent,
     SignupDetailedComponent,
     TermsComponent,
