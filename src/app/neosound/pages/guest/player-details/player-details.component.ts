@@ -153,7 +153,6 @@ export class PlayerDetailsComponent
             }
             if (this.results.result.anger.music) {
               this.emotionsSounds = this.results.result.anger.music;
-              this.setRegions();
             }
           }
           if (this.results.result.stt) {
@@ -194,6 +193,7 @@ export class PlayerDetailsComponent
             }
           }
         }
+        this.setRegions();
       },
       e => (this.errorMessage = e.error.message)
     );
@@ -206,6 +206,7 @@ export class PlayerDetailsComponent
   }
 
   setRegions(): void {
+
     const inputData = this.emotionsSounds
       ? this.emotions.concat(this.emotionsSounds)
       : this.emotions;
@@ -235,7 +236,7 @@ export class PlayerDetailsComponent
   pushRegions() {
     setTimeout(() => {
       this.player.setRegions(this.regions);
-    }, 0);
+    }, 1000);
   }
 
   getColor(val: any, type?: string, isMusic = false) {
@@ -337,7 +338,6 @@ export class PlayerDetailsComponent
       default:
         break;
     }
-    this.setRegions();
   }
 
   t(v) {
