@@ -75,6 +75,7 @@ export class DashboardComponent implements OnInit {
   minutesStat: any = {};
   apiStat: any = {};
   freqWords: any[] = [];
+  radialTreeData: any;
   constructor(
     private router: Router,
     private filesService: FilesService,
@@ -477,6 +478,9 @@ export class DashboardComponent implements OnInit {
             }
           ]
         };
+      }
+      if(data.treeRadialData) {
+        this.radialTreeData = data.treeRadialData;
       }
       if (data.verbs) {
         this.sankey4 = {
