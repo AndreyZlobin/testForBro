@@ -129,7 +129,7 @@ export class FilterService {
       missingOnly: this.filter.missingOnly,
       favoriteOnly: this.filter.favoriteOnly,
       sortorder: this.filter.sortorder,
-      sortby: this.filter.sortby,
+      sortby: this.filter.sortby
     };
     if (this.filter.keywordsContain && this.filter.keywordsContain.length) {
       params["keywordsContain"] = this.filter.keywordsContain
@@ -178,13 +178,16 @@ export class FilterService {
         this.totalcount = data.totalcount;
         this.pagecount = data.pagecount;
         this.fileStore = data.files;
-        this.label = ((this.filter.pagen + 1) * 100 < this.fileStore.length) ? (this.filter.pagen + 1) * 100 : this.fileStore.length;
+        this.label =
+          (this.filter.pagen + 1) * 100 < this.fileStore.length
+            ? (this.filter.pagen + 1) * 100
+            : this.fileStore.length;
         this.filesSubject.next(this.fileStore);
       } else {
         this.totalcount = 0;
         this.pagecount = 0;
         this.fileStore = [];
-        this.label = ""
+        this.label = "";
         this.filesSubject.next(this.fileStore);
       }
       this.isLoading = false;
@@ -217,11 +220,15 @@ export class FilterService {
   }
   public processFile(batchid, filename) {
     const index = this.fileStore.findIndex(
-      item => item.batchid !== batchid && item.filename !== filename
+      item => item.batchid === batchid && item.filename === filename
     );
     if (index !== -1) {
       this.fileStore[index].proccessing = true;
       this.filesSubject.next(this.fileStore);
+      this.filesService.processFile({
+        batchid: batchid,
+        filename: filename
+      }).subscribe();
     }
   }
   public resetFilter() {
@@ -299,7 +306,7 @@ export class FilterService {
         fileinfo: {
           filename: this.fileStore[index].filename,
           comment: "",
-          pin: this.fileStore[index].pin ,
+          pin: this.fileStore[index].pin,
           tags: tags
         }
       };
@@ -349,7 +356,7 @@ export class FilterService {
   }
   hasPrevLink(fileName: string, batchId: string): boolean {
     let res = true;
-    if (this.fileStore  && this.fileStore.length) {
+    if (this.fileStore && this.fileStore.length) {
       const index = this.fileStore.findIndex(
         file => file.filename === fileName && file.batchid === batchId
       );
