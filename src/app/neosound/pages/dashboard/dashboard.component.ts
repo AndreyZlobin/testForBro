@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { CloudData } from "angular-tag-cloud-module";
 
 import { FilesService } from "../../services/files.service";
+import { FilterService } from "../../services/filter.service";
 import { DataService } from "../../shared";
 import { AnalyticsService } from "../../services/analytics.service";
 import { comonKeywords } from "./data";
@@ -85,7 +86,8 @@ export class DashboardComponent implements OnInit {
     private http: HttpClient,
     private lang: LanguageService,
     private analyticsService: AnalyticsService,
-    public dataService: DataService
+    public dataService: DataService,
+    private filterService: FilterService,
   ) {
     this.setColors();
     this.showRadialTreeData = false;
@@ -675,7 +677,7 @@ export class DashboardComponent implements OnInit {
   };
   keywordClicked(clicked: CloudData) {
     this.analyticsService.trackEvent("user", "keywordClicked");
-    this.filesService.setKeyWord(clicked.text);
+    this.filterService.filter.keywordsContain = [{display: clicked.text, value: clicked.text}];
     this.router.navigateByUrl("/user/files");
   }
 
