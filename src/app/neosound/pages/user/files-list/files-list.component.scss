@@ -73,14 +73,14 @@ td {
 .loader,
 .loader:before,
 .loader:after {
-  background: #009ad2;
+  background: var(--color-secondary);;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
   height: 128px;
 }
 .loader {
-  color: #009ad2;
+  color: var(--color-secondary);;
   text-indent: -9999em;
   margin: 88px auto;
   position: relative;
