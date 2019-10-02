@@ -23,6 +23,7 @@ import { ButtonsModule } from "ngx-bootstrap/buttons";
 import { MainComponent } from "./neosound/components/main/main.component";
 import { LoginComponent } from "./neosound/pages/auth/login/login.component";
 import { DashboardComponent } from "./neosound/pages/dashboard/dashboard.component";
+import { StopwordsComponent } from "./neosound/pages/dashboard/details/stopwords/stopwords.component";
 
 import { SignupLinkComponent } from "./neosound/pages/auth/signup-link/signup-link.component";
 import { SignupDetailedComponent } from "./neosound/pages/auth/signup-detailed/signup-detailed.component";
@@ -48,6 +49,7 @@ import { AboutComponent } from "./neosound/pages/about/about.component";
 import { MinutesSecondsPipe } from "./neosound/minutes-seconds.pipe";
 
 import { FilesService } from "./neosound/services/files.service";
+import { FilterService } from "./neosound/services/filter.service";
 import { OrganizationSettingsService } from "./neosound/services/organization-settings.service";
 import { PlayerService } from "./neosound/services/player.service";
 import { AnalyticsService } from "./neosound/services/analytics.service";
@@ -57,7 +59,6 @@ import { RequestsHttpInterceptor } from "./neosound/shared/requests-http.interce
 import { NbPasswordAuthStrategy, NbAuthModule } from "@nebular/auth";
 import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
 import { TagCloudModule } from 'angular-tag-cloud-module';
-
 import {
   NgxChartsModule,
   PieChartModule,
@@ -94,7 +95,7 @@ import { ChartModule } from "angular2-chartjs";
 import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-found.component";
 import { LanguageService } from "./neosound/services/language.service";
 import { NgxPaginationModule } from "ngx-pagination";
-import { ForbiddenValidatorDirective } from './neosound/directives/forbidden-password.directive';
+// import { ForbiddenPasswordDirective } from './neosound/directives/forbidden-password.directive';
 import { IntervalDirective } from "./neosound/directives/interval.detective";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
@@ -105,6 +106,7 @@ import { TotalMinutesByDayChartLineComponent } from './neosound/pages/charts/tot
 import { TotalMinutesChartBarComponent } from './neosound/pages/charts/total-minutes-chart-bar/total-minutes-chart-bar.component';
 import { TotalByQueriesChartPieComponent } from './neosound/pages/charts/total-by-queries-chart-pie/total-by-queries-chart-pie.component';
 import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/charts/total-minutes-plus-batches-chart-bar/total-minutes-plus-batches-chart-bar.component';
+import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-radial-tree/keywords-radial-tree.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +114,7 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     MainComponent,
     LoginComponent,
     DashboardComponent,
-
+    StopwordsComponent,
     SignupLinkComponent,
     SignupDetailedComponent,
     TermsComponent,
@@ -136,7 +138,6 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     ApiPageComponent,
     PageNotFoundComponent,
     IntervalDirective,
-    ForbiddenValidatorDirective,
     BatchListComponent,
     BatchDetailsComponent,
     ChartPageComponent,
@@ -145,6 +146,7 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     TotalMinutesChartBarComponent,
     TotalByQueriesChartPieComponent,
     TotalMinutesPlusBatchesChartBarComponent,
+    KeywordsRadialTreeComponent,
     // ForbiddenPasswordDirective,
 
     //ngx-admin
@@ -194,6 +196,7 @@ import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/chart
     CanDeactivateGuard,
     UsersService,
     FilesService,
+    FilterService,
     OrganizationSettingsService,
     PlayerService,
     AnalyticsService,

@@ -8,6 +8,7 @@ import {
   ViewChild
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
+import { FilterService } from "../../../services/filter.service";
 import { PlayerService } from "../../../services/player.service";
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -67,6 +68,7 @@ export class PlayerDetailsComponent
   }
   constructor(
     private filesService: FilesService,
+    private filterService: FilterService,
     private router: Router,
     private route: ActivatedRoute,
     private playerService: PlayerService,
@@ -74,14 +76,22 @@ export class PlayerDetailsComponent
     private cdRef: ChangeDetectorRef,
     private dataService: DataService
   ) {
-    this.fileParams = this.filesService.getQuickFileParams();
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
+        this.fileUrl = null;
+        this.regions = [];
         if (event.url.startsWith("/file/")) {
           const batchid = this.route.snapshot.params["batchid"];
           const filename = this.route.snapshot.params["filename"];
-          this.fileUrl = null;
+          this.filterService.lastFileId = decodeURIComponent(filename);
           if (filename && batchid) {
+            if (
+              this.fileParams &&
+              filename === this.fileParams.filename &&
+              batchid === this.fileParams.batchid
+            ) {
+              return;
+            }
             this.fileParams = {
               filename: decodeURIComponent(filename),
               batchid: decodeURIComponent(batchid)
@@ -99,11 +109,6 @@ export class PlayerDetailsComponent
                 }
               }
             );
-
-            this.filesService.setQuickFileParams({
-              batchid: decodeURIComponent(batchid),
-              filename: decodeURIComponent(filename)
-            });
           }
         }
       }
@@ -114,8 +119,7 @@ export class PlayerDetailsComponent
   trackElement(index: number, element: any) {
     return element ? element.guid : null;
   }
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   copyToClipboard(text: string): void {
     const selBox = document.createElement("textarea");
@@ -149,7 +153,6 @@ export class PlayerDetailsComponent
             }
             if (this.results.result.anger.music) {
               this.emotionsSounds = this.results.result.anger.music;
-              this.setRegions();
             }
           }
           if (this.results.result.stt) {
@@ -190,6 +193,7 @@ export class PlayerDetailsComponent
             }
           }
         }
+        this.setRegions();
       },
       e => (this.errorMessage = e.error.message)
     );
@@ -201,8 +205,8 @@ export class PlayerDetailsComponent
     return d;
   }
 
-  // @ts-ignore
-  setRegions() {
+  setRegions(): void {
+
     const inputData = this.emotionsSounds
       ? this.emotions.concat(this.emotionsSounds)
       : this.emotions;
@@ -227,8 +231,12 @@ export class PlayerDetailsComponent
         });
       }
     }
+  }
 
-    this.player.setRegions(this.regions);
+  pushRegions() {
+    setTimeout(() => {
+      this.player.setRegions(this.regions);
+    }, 1000);
   }
 
   getColor(val: any, type?: string, isMusic = false) {
@@ -330,7 +338,6 @@ export class PlayerDetailsComponent
       default:
         break;
     }
-    this.setRegions();
   }
 
   t(v) {

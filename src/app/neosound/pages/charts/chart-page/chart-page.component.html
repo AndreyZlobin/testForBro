@@ -10,8 +10,25 @@
   <button class="btn btn-outline-primary ml-4" (click)="setColors('westeros');">westeros</button>
   <button class="btn btn-outline-primary ml-4" (click)="setColors('wonderland');">wonderland</button>
 <hr>
+<hr>
+  <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data4');">data4</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data5');">data5</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data6');">data6</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data7');">data7</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data8');">data8</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setLevelRadialTreeData(1);">level1</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setLevelRadialTreeData(2);">level2</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setLevelRadialTreeData(3);">level3</button>
+<hr>
 
 <div class="row" *ngIf="!isLoading; else spinner">
+  <div class="col-12 col-lg-6 mb-3">
+    <!-- <ngx-keywords-radial-tree [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors"
+                              [optionData]="radialTreeData.data" [optionLevel]="radialTreeData.level">
+    </ngx-keywords-radial-tree> -->
+  </div>
+
+
   <div class="col-12 col-lg-6 mb-3">
     <div class="card h-100">
       <div class="card-header">
