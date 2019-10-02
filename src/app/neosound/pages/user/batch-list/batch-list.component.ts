@@ -76,7 +76,6 @@ export class BatchListComponent implements OnInit {
     this.filter = this.filesService.getFilter();
     this.sortBy = this.filter.sortby;
     this.sort = this.filter.sortorder;
-
     this.getPage(0, this.filter);
   }
 
@@ -87,8 +86,17 @@ export class BatchListComponent implements OnInit {
       'pagen': '' + (page + 1),
     };
     this.page = page;
-    this.filesService.setFilter(params);
-    this.filesService.listFilesPage(params);
+    this.filesService.listFilesPage(params).subscribe(res => {
+      if (res && res.files) this.isLoading = false;
+      if (!res || res.totalcount === 0) {
+        this.isLoading = false;
+        this.files = [];
+        return;
+      }
+      this.totalCount = res.totalcount;
+      this.pagesArr = Array.from({length: Math.ceil(res.totalcount / 100) }, (v, k) => k + 1);
+      this.files = res.files;
+    });
   }
 
   getPages() {
@@ -247,7 +255,7 @@ export class BatchListComponent implements OnInit {
       ...this.filter,
       export: 'csv',
     };
-    this.filesService.postListFilesPage(params).subscribe(data =>
+    this.filesService.listFilesPage(params).subscribe(data =>
       // this.downloadFile(data)
       (window.location.href = data.url)
       ),
