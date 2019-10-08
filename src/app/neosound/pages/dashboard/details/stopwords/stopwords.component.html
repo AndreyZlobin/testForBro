@@ -8,7 +8,8 @@
                         class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
                     </ng-datepicker>
                     <ng-datepicker [(ngModel)]="rangeFirstTo" [options]="datePickerToOptions"
-                        class="form-control-bak form-control-lg-bak form-gr-last"></ng-datepicker>
+                        class="form-control-bak form-control-lg-bak form-gr-last">
+                    </ng-datepicker>
                 </div>
             </div>
             <div class="col-6 pt-3">
@@ -18,12 +19,26 @@
                         class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
                     </ng-datepicker>
                     <ng-datepicker [(ngModel)]="rangeSecondTo" [options]="datePickerToOptions"
-                        class="form-control-bak form-control-lg-bak form-gr-last"></ng-datepicker>
+                        class="form-control-bak form-control-lg-bak form-gr-last">
+                    </ng-datepicker>
+                    <div class="ml-auto">
+                        <button class="btn btn-primary btn-sm" (click)="update()">Update</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 pt-3"></div>
+            <div class="col-6 mb-3" *ngIf="firstData && !isLoadingFirst; else spinner">
+                <div echarts [options]="firstData"></div>
+            </div>
+            <div class="col-6 mb-3" *ngIf="secondData && !isLoadingSecond; else spinner">
+                <div echarts [options]="secondData"></div>
+            </div>
         </div>
     </nb-card-body>
 </nb-card>
+<ng-template #spinner>
+    <div class="load-container load1 w-50">
+        <div class="loader">{{ t("Loading...") }}</div>
+    </div>
+</ng-template>
