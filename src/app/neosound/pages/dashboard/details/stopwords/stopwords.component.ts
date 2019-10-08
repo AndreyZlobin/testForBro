@@ -85,6 +85,7 @@ export class StopwordsComponent implements OnInit {
   rangeSecondTo;
   firstData: any;
   secondData: any;
+  data: any
   primiryColor: any;
   isLoadingFirst: boolean = true;
   isLoadingSecond: boolean = true;
@@ -109,6 +110,55 @@ export class StopwordsComponent implements OnInit {
   update() {
     this.updateFirst();
     this.updateSecond();
+  }
+
+  setData() {
+    debugger
+   if(this.secondData && this.firstData) {
+    this.data = {
+      grid: {
+        left: 100
+      },
+      legend: {
+        data: ["Keywords"]
+      },
+      xAxis: {
+        type: "category",
+        name: this.t("Stopwords"),
+        data: Array.from(new Set([...this.firstData.map(i => i.name), ...this.firstData.map(i => i.name) ]))
+      },
+      yAxis: {
+        type: "value",
+        name: this.t("Hits")
+      },
+      series: [
+        {
+          name: "%",
+          type: "bar",
+          color: this.colors[0],
+          data: this.firstData,
+          label: {
+            normal: {
+              position: "right",
+              show: true
+            }
+          }
+        },
+        {
+          name: "%",
+          type: "bar",
+          color: this.colors[1],
+          data: this.secondData,
+          label: {
+            normal: {
+              position: "right",
+              show: true
+            }
+          }
+        }
+      ]
+    };
+   }
   }
 
   updateFirst() {
@@ -139,37 +189,8 @@ export class StopwordsComponent implements OnInit {
           .sort((a, b) => b.value - a.value)
           .slice(0, 10)
           .reverse();
-        this.firstData = {
-          color: [this.primiryColor],
-          grid: {
-            left: 100
-          },
-          legend: {
-            data: ["Keywords"]
-          },
-          yAxis: {
-            type: "category",
-            name: this.t("Stopwords"),
-            data: sortedKeywords.map(i => i.name)
-          },
-          xAxis: {
-            type: "value",
-            name: this.t("Hits")
-          },
-          series: [
-            {
-              name: "%",
-              type: "bar",
-              data: sortedKeywords.map(i => i.value),
-              label: {
-                normal: {
-                  position: "right",
-                  show: true
-                }
-              }
-            }
-          ]
-        };
+        this.firstData = sortedKeywords;
+        this.setData();
         this.isLoadingFirst = false;
       });
   }
@@ -200,37 +221,8 @@ export class StopwordsComponent implements OnInit {
           .sort((a, b) => b.value - a.value)
           .slice(0, 10)
           .reverse();
-        this.secondData = {
-          color: [this.primiryColor],
-          grid: {
-            left: 100
-          },
-          legend: {
-            data: ["Keywords"]
-          },
-          yAxis: {
-            type: "category",
-            name: this.t("Stopwords"),
-            data: sortedKeywords.map(i => i.name)
-          },
-          xAxis: {
-            type: "value",
-            name: this.t("Hits")
-          },
-          series: [
-            {
-              name: "%",
-              type: "bar",
-              data: sortedKeywords.map(i => i.value),
-              label: {
-                normal: {
-                  position: "right",
-                  show: true
-                }
-              }
-            }
-          ]
-        };
+        this.secondData = sortedKeywords;
+        this.setData();
         this.isLoadingSecond = false;
       });
   }
