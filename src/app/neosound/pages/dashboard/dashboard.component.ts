@@ -187,10 +187,13 @@ export class DashboardComponent implements OnInit {
             name: batchName,
             data: [
               [
-                data.batches[batchName].silentCallsN,
-                data.batches[batchName].angerCallsN,
+                data.batches[batchName].silentCallsN / data.batches[batchName].allCallsN *100,
+                data.batches[batchName].angerCallsN / data.batches[batchName].allCallsN * 100,
                 data.batches[batchName].allCallsN,
-                batchName
+                batchName,
+                data.batches[batchName].silentCallsN,
+                data.batches[batchName].angerCallsN
+
               ]
             ],
             type: "scatter",
@@ -250,14 +253,14 @@ export class DashboardComponent implements OnInit {
               }
             },
             type: "value",
-            name: this.t("Silent Calls"),
+            name: this.t("Silent Calls, %"),
             nameLocation: "middle",
             nameGap: 35,
             axisLabel: {
               formatter: "{value}"
             },
             min: 0,
-            max: Math.round(maxX * 1.5)
+            max: 110
           },
           yAxis: {
             splitLine: {
@@ -268,17 +271,17 @@ export class DashboardComponent implements OnInit {
             },
             scale: true,
             type: "value",
-            name: this.t("Emotional Calls"),
+            name: this.t("Emotional Calls, %"),
             axisLabel: {
               formatter: "{value}"
             },
             min: 0,
-            max: Math.round(maxY * 1.5)
+            max: 110
           },
           tooltip: {
             show: true,
             formatter: function(param) {
-              return `${param.data[3]}<br>Calls: ${param.data[2]}<br> Silent: ${param.data[0]}<br> Emotional: ${param.data[1]}`;
+              return `${param.data[3]}<br>Calls: ${param.data[2]}<br> Silent: ${param.data[4]}<br> Emotional: ${param.data[5]}`;
             }
           },
           series: buble

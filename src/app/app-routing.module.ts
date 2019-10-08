@@ -148,6 +148,7 @@ const routes: Routes = [
       },
       {
         path: "charts",
+        canActivate: [AuthGuard],
         component: ChartPageComponent
       },
       {
