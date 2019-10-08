@@ -187,7 +187,7 @@ export class StopwordsComponent implements OnInit {
             };
           })
           .sort((a, b) => b.value - a.value)
-          .slice(0, 10)
+          .slice(0, 40)
           .reverse();
         this.firstData = sortedKeywords;
         this.setData();
@@ -219,7 +219,7 @@ export class StopwordsComponent implements OnInit {
             };
           })
           .sort((a, b) => b.value - a.value)
-          .slice(0, 10)
+          .slice(0, 40)
           .reverse();
         this.secondData = sortedKeywords;
         this.setData();
