@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
     private lang: LanguageService,
     private analyticsService: AnalyticsService,
     public dataService: DataService,
-    private filterService: FilterService,
+    private filterService: FilterService
   ) {
     this.setColors();
     this.showRadialTreeData = false;
@@ -187,13 +187,16 @@ export class DashboardComponent implements OnInit {
             name: batchName,
             data: [
               [
-                data.batches[batchName].silentCallsN / data.batches[batchName].allCallsN * 100,
-                data.batches[batchName].angerCallsN / data.batches[batchName].allCallsN * 100,
+                (data.batches[batchName].silentCallsN /
+                  data.batches[batchName].allCallsN) *
+                  100,
+                (data.batches[batchName].angerCallsN /
+                  data.batches[batchName].allCallsN) *
+                  100,
                 data.batches[batchName].allCallsN,
                 batchName,
                 data.batches[batchName].silentCallsN,
                 data.batches[batchName].angerCallsN
-
               ]
             ],
             type: "scatter",
@@ -680,7 +683,9 @@ export class DashboardComponent implements OnInit {
   };
   keywordClicked(clicked: CloudData) {
     this.analyticsService.trackEvent("user", "keywordClicked");
-    this.filterService.filter.keywordsContain = [{display: clicked.text, value: clicked.text}];
+    this.filterService.filter.keywordsContain = [
+      { display: clicked.text, value: clicked.text }
+    ];
     this.router.navigateByUrl("/user/files");
   }
 
