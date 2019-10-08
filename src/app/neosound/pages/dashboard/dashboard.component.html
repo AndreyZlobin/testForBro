@@ -93,9 +93,6 @@
               (clicked)="keywordClicked($event)">
             </angular-tag-cloud>
           </div>
-          <div class="card-body">
-            <a routerLink="dashboard/details/stopwords" class="btn btn-primary mr-auto">Details</a>
-          </div>
         </div>
       </div>
       <div class="col-6 mb-3" *ngIf="keyWordChart">
@@ -103,6 +100,10 @@
           <div class="card-header">{{t('Hits vs. Stopwords')}}</div>
           <div class="card-body pl-0 pr-0">
             <div echarts [options]="keyWordChart"></div>
+
+          </div>
+          <div class="card-body">
+              <a routerLink="dashboard/details/stopwords" class="btn btn-primary mr-auto">Details</a>
           </div>
         </div>
       </div>

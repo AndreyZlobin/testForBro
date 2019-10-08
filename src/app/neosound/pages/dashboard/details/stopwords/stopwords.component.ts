@@ -4,7 +4,8 @@ import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import { LanguageService } from "../../../../services/language.service";
 import { FilesService } from "../../../../services/files.service";
 import { DataService } from "../../../../shared/data.service";
-import { subWeeks, format } from "date-fns";
+import { subWeeks, format, isAfter } from "date-fns";
+import { ToastrService } from "ngx-toastr";
 
 export const colors = [
   "#c12e34",
@@ -89,7 +90,8 @@ export class StopwordsComponent implements OnInit {
   isLoadingSecond: boolean = true;
   constructor(
     private filesService: FilesService,
-    private dataService: DataService
+    private dataService: DataService,
+    private toastrService: ToastrService
   ) {
     const today = Date.now();
     this.rangeFirstFrom = subWeeks(today, 1);
@@ -110,6 +112,10 @@ export class StopwordsComponent implements OnInit {
   }
 
   updateFirst() {
+    if(isAfter(this.rangeFirstFrom, this.rangeFirstTo)) {
+      this.toastrService.error(this.t('Wrong first date range'));
+      return;
+    }
     this.firstData = null;
     this.isLoadingFirst = true;
     this.filesService
@@ -171,6 +177,10 @@ export class StopwordsComponent implements OnInit {
     return format(date, "yyyy-MM-dd");
   }
   updateSecond() {
+    if(isAfter(this.rangeSecondFrom, this.rangeSecondTo)) {
+      this.toastrService.error(this.t('Wrong second date range'));
+      return;
+    }
     this.isLoadingSecond = true;
     this.secondData = null;
     this.filesService
