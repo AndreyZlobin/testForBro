@@ -135,9 +135,14 @@ export class StopwordsComponent implements OnInit {
         {
           name: "%",
           type: "bar",
+          barMaxWidth: 20,
           color: this.colors[0],
           data: this.firstData,
+          tooltip: {
+            formatter: "{a} {b} {c}",
+          },
           label: {
+            formatter: "{a} {c}",
             normal: {
               position: "right",
               show: true
@@ -147,9 +152,14 @@ export class StopwordsComponent implements OnInit {
         {
           name: "%",
           type: "bar",
+          barMaxWidth: 20,
           color: this.colors[1],
           data: this.secondData,
+          tooltip: {
+            formatter: "{a} {b} {c}",
+          },
           label: {
+            formatter: "{a} {c}",
             normal: {
               position: "right",
               show: true
