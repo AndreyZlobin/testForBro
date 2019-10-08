@@ -12,7 +12,7 @@
         </div>
         <div class="row">
             <div class="col-6 pt-3">
-                <div class="mb-2">{{t('Range 1')}}</div>
+                <div class="mb-2"><i class="fas fa-exchange-alt mr-2" [style.color]="colors[0]"></i>{{t('Range 1')}}</div>
                 <div class="input-group">
                     <ng-datepicker [(ngModel)]="rangeFirstFrom" [options]="datePickerFromOptions"
                         class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="col-6 pt-3">
-                <div class="mb-2">{{t('Range 2')}}</div>
+                <div class="mb-2"><i class="fas fa-exchange-alt mr-2" [style.color]="colors[1]"></i>{{t('Range 2')}}</div>
                 <div class="input-group">
                     <ng-datepicker [(ngModel)]="rangeSecondFrom" [options]="datePickerFromOptions"
                         class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
