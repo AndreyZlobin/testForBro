@@ -187,7 +187,7 @@ export class DashboardComponent implements OnInit {
             name: batchName,
             data: [
               [
-                data.batches[batchName].silentCallsN / data.batches[batchName].allCallsN *100,
+                data.batches[batchName].silentCallsN / data.batches[batchName].allCallsN * 100,
                 data.batches[batchName].angerCallsN / data.batches[batchName].allCallsN * 100,
                 data.batches[batchName].allCallsN,
                 batchName,
