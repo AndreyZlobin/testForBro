@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6 pt-3">
+            <div class="col-3 pt-3">
                 <div class="mb-2"><i class="fas fa-exchange-alt mr-2" [style.color]="colors[0]"></i>{{t('Range 1')}}</div>
                 <div class="input-group">
                     <ng-datepicker [(ngModel)]="rangeFirstFrom" [options]="datePickerFromOptions"
@@ -22,7 +22,7 @@
                     </ng-datepicker>
                 </div>
             </div>
-            <div class="col-6 pt-3">
+            <div class="col-9 pt-3">
                 <div class="mb-2"><i class="fas fa-exchange-alt mr-2" [style.color]="colors[1]"></i>{{t('Range 2')}}</div>
                 <div class="input-group">
                     <ng-datepicker [(ngModel)]="rangeSecondFrom" [options]="datePickerFromOptions"
@@ -38,14 +38,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col mb-3" *ngIf="data && !isLoadingFirst && !isLoadingSecond; else spinner">
-                <div echarts [options]="data"></div>
+            <div class="col my-3" *ngIf="data && !isLoadingFirst && !isLoadingSecond; else spinner">
+                <div style="height: calc(70vh - 20px)" echarts [options]="data"></div>
             </div>
         </div>
     </nb-card-body>
 </nb-card>
 <ng-template #spinner>
-    <div class="load-container load1 w-100">
+    <div class="load-container load1 w-100 h-100">
         <div class="loader">{{ t("Loading...") }}</div>
     </div>
 </ng-template>

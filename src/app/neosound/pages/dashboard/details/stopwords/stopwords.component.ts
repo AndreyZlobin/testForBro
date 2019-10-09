@@ -85,7 +85,7 @@ export class StopwordsComponent implements OnInit {
   rangeSecondTo;
   firstData: any;
   secondData: any;
-  data: any
+  data: any;
   primiryColor: any;
   isLoadingFirst: boolean = true;
   isLoadingSecond: boolean = true;
@@ -113,67 +113,74 @@ export class StopwordsComponent implements OnInit {
   }
 
   setData() {
-    debugger
-   if(this.secondData && this.firstData) {
-    this.data = {
-      grid: {
-        left: 100
-      },
-      legend: {
-        data: ["Keywords"]
-      },
-      xAxis: {
-        type: "category",
-        name: this.t("Stopwords"),
-        data: Array.from(new Set([...this.firstData.map(i => i.name), ...this.firstData.map(i => i.name) ]))
-      },
-      yAxis: {
-        type: "value",
-        name: this.t("Hits")
-      },
-      series: [
-        {
-          name: "%",
-          type: "bar",
-          barMaxWidth: 20,
-          color: this.colors[0],
-          data: this.firstData,
-          tooltip: {
-            formatter: "{a} {b} {c}",
-          },
-          label: {
-            formatter: "{a} {c}",
-            normal: {
-              position: "right",
-              show: true
-            }
-          }
+    if (this.secondData && this.firstData) {
+      this.data = {
+        grid: {
+          left: 100
         },
-        {
-          name: "%",
-          type: "bar",
-          barMaxWidth: 20,
-          color: this.colors[1],
-          data: this.secondData,
-          tooltip: {
-            formatter: "{a} {b} {c}",
+        legend: {
+          type: "scroll",
+          data: ["Range 1", "Range 2"],
+          orient: 'horizontal',
+        },
+        xAxis: {
+          type: "category",
+          name: this.t("Stopwords"),
+          data: Array.from(
+            new Set([
+              ...this.firstData.map(i => i.name),
+              ...this.secondData.map(i => i.name)
+            ])
+          )
+        },
+        yAxis: {
+          type: "value",
+          name: this.t("Hits")
+        },
+        series: [
+          {
+            name: "Range 1",
+            type: "bar",
+            barMaxWidth: 20,
+            color: this.colors[0],
+            data: [
+              ...this.firstData.map(i => [i.name, i.value]),
+            ],
+            tooltip: {
+              formatter: "{a} {b} {c}"
+            },
+            label: {
+              formatter: "{a} {c}",
+              normal: {
+                position: "right",
+                show: true
+              }
+            }
           },
-          label: {
-            formatter: "{a} {c}",
-            normal: {
-              position: "right",
-              show: true
+          {
+            type: "bar",
+            name: "Range 2",
+            barMaxWidth: 20,
+            color: this.colors[1],
+            data: [
+              ...this.secondData.map(i => [i.name, i.value]),
+            ],
+            label: {
+              formatter: "{a} {c}",
+              normal: {
+                position: "right",
+                show: true
+              }
             }
           }
-        }
-      ]
-    };
-   }
+        ]
+      };
+    }
   }
 
   updateFirst() {
-    if(isAfter(this.rangeFirstFrom, this.rangeFirstTo)) {
-      this.toastrService.error(this.t('Wrong first date range'));
+    if (isAfter(this.rangeFirstFrom, this.rangeFirstTo)) {
+      this.toastrService.error(this.t("Wrong first date range"));
       return;
     }
     this.firstData = null;
@@ -208,8 +215,8 @@ export class StopwordsComponent implements OnInit {
     return format(date, "yyyy-MM-dd");
   }
   updateSecond() {
-    if(isAfter(this.rangeSecondFrom, this.rangeSecondTo)) {
-      this.toastrService.error(this.t('Wrong second date range'));
+    if (isAfter(this.rangeSecondFrom, this.rangeSecondTo)) {
+      this.toastrService.error(this.t("Wrong second date range"));
       return;
     }
     this.isLoadingSecond = true;
