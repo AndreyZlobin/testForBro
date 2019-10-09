@@ -126,6 +126,9 @@ export class StopwordsComponent implements OnInit {
         xAxis: {
           type: "category",
           name: this.t("Stopwords"),
+          axisLabel: {
+            rotate: 90
+          },
           data: Array.from(
             new Set([
               ...this.firstData.map(i => i.name),
@@ -135,8 +138,14 @@ export class StopwordsComponent implements OnInit {
         },
         yAxis: {
           type: "value",
-          name: this.t("Hits")
+          name: this.t("Hits"),
         },
+        tooltip : {
+          trigger: 'axis',
+          axisPointer : {
+              type : 'shadow'
+          }
+      },
         series: [
           {
             name: "Range 1",
@@ -204,7 +213,7 @@ export class StopwordsComponent implements OnInit {
             };
           })
           .sort((a, b) => b.value - a.value)
-          .slice(0, 40)
+          .slice(0, 20)
           .reverse();
         this.firstData = sortedKeywords;
         this.setData();
@@ -236,7 +245,7 @@ export class StopwordsComponent implements OnInit {
             };
           })
           .sort((a, b) => b.value - a.value)
-          .slice(0, 40)
+          .slice(0, 20)
           .reverse();
         this.secondData = sortedKeywords;
         this.setData();
