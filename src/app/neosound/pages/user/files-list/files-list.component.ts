@@ -196,7 +196,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   exportCSV() {
     this.analyticsService.trackEvent("fileList", "exportCSV");
     const params = {
-      ...this.filterService.filter,
+      ...this.filterService.getFilterParams(),
       export: "csv"
     };
     this.filesService.postListFilesPage(params).subscribe(

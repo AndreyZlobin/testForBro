@@ -81,8 +81,7 @@ export class FilterService {
   };
   constructor(private filesService: FilesService) {}
 
-  updateFileList(): void {
-    this.isLoading = true;
+  public getFilterParams(): any {
     const params = {
       itemsn: `${this.filter.itemsn}`,
       pagen: `${this.filter.pagen}`,
@@ -173,6 +172,12 @@ export class FilterService {
           params[key] === false) &&
         delete params[key]
     );
+    return params;
+  }
+
+  updateFileList(): void {
+    this.isLoading = true;
+    const params = this.getFilterParams();
     this.filesService.listFilesPage(params).subscribe(data => {
       if (data && data.files) {
         this.totalcount = data.totalcount;
