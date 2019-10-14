@@ -13,9 +13,10 @@ import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
   styleUrls: ["./file-results.component.scss"]
 })
 export class FileResultsComponent implements OnInit {
-  batchid;
+  id;
   filename;
   isLoading: boolean = true;
+  fullText: string = "";
   constructor(
     private filesService: FilesService,
     private filterService: TextFilterService,
@@ -27,10 +28,16 @@ export class FileResultsComponent implements OnInit {
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
         if (event.url.startsWith("/text/")) {
-          this.batchid = this.route.snapshot.params["batchid"];
-          this.filename = this.route.snapshot.params["filename"];
-          this.isLoading = false;
-
+          this.id = this.route.snapshot.params["id"];
+          this.filesService
+            .getTextFileResultDetails(this.id)
+            .subscribe(data => {
+              if (data && data.result) {
+                this.fullText = data.result.fulltext;
+                this.filename = data.result.filename;
+              }
+              this.isLoading = false;
+            });
         }
       }
     });

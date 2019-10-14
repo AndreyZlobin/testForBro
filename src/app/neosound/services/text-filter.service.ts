@@ -218,9 +218,7 @@ export class TextFilterService {
       item => item.batchid === batchid && item.filename === filename
     );
     if (index !== -1) {
-      this.fileStore = this.fileStore.filter(
-        (item, i) => i !== index
-      );
+      this.fileStore = this.fileStore.filter((item, i) => i !== index);
       this.filesSubject.next(this.fileStore);
       this.filesService.deleteTextFile({
         batchid,
@@ -325,27 +323,23 @@ export class TextFilterService {
     }
   }
 
-  getNextLink(fileName: string, batchId: string): string {
+  getNextLink(fileId: string): string {
     if (this.fileStore && this.fileStore.length) {
-      const index = this.fileStore.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
+      const index = this.fileStore.findIndex(file => file.id === fileId);
 
       if (index !== -1 && this.fileStore[index + 1]) {
-        return `/text/${this.fileStore[index + 1].batchid}/${this.fileStore[index + 1].filename}`;
+        return `/text/${this.fileStore[index + 1].id}`;
       }
       return "";
     } else {
       return "";
     }
   }
-  getPrevLink(fileName: string, batchId: string): string {
+  getPrevLink(fileId: string): string {
     if (this.fileStore && this.fileStore.length) {
-      const index = this.fileStore.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
+      const index = this.fileStore.findIndex(file => file.id === fileId);
       if (index !== -1 && this.fileStore[index - 1]) {
-        return `/text/${this.fileStore[index - 1].batchid}/${this.fileStore[index - 1].filename}`;
+        return `/text/${this.fileStore[index - 1].id}`;
       }
       return "";
     } else {
@@ -353,24 +347,20 @@ export class TextFilterService {
     }
   }
 
-  hasNextLink(fileName: string, batchId: string): boolean {
+  hasNextLink(fileId: string): boolean {
     let res = true;
     if (this.fileStore && this.fileStore.length) {
-      const index = this.fileStore.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
+      const index = this.fileStore.findIndex(file => file.id === fileId);
       if (index !== -1 && this.fileStore[index + 1]) {
         res = false;
       }
     }
     return res;
   }
-  hasPrevLink(fileName: string, batchId: string): boolean {
+  hasPrevLink(fileId: string): boolean {
     let res = true;
     if (this.fileStore && this.fileStore.length) {
-      const index = this.fileStore.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
+      const index = this.fileStore.findIndex(file => file.id === fileId);
       if (index !== -1 && this.fileStore[index - 1]) {
         res = false;
       }
