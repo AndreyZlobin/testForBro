@@ -106,9 +106,9 @@ export class TextFilesListComponent implements OnInit, AfterViewInit {
     this.filterService.updateFileList();
   }
 
-  delete(batchid, filename) {
+  delete(id) {
     this.analyticsService.trackEvent("fileList", "delete");
-    this.filterService.deteleFile(batchid, filename);
+    this.filterService.deteleFile(id);
   }
 
   getLink(item) {

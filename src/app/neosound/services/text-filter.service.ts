@@ -213,17 +213,12 @@ export class TextFilterService {
     return [];
   }
 
-  public deteleFile(batchid, filename) {
-    const index = this.fileStore.findIndex(
-      item => item.batchid === batchid && item.filename === filename
-    );
+  public deteleFile(id) {
+    const index = this.fileStore.findIndex(item => item.id === id);
     if (index !== -1) {
       this.fileStore = this.fileStore.filter((item, i) => i !== index);
       this.filesSubject.next(this.fileStore);
-      this.filesService.deleteTextFile({
-        batchid,
-        filename
-      });
+      this.filesService.deleteTextFile(id).subscribe();
     }
   }
   public processFile(batchid, filename) {

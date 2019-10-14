@@ -91,12 +91,8 @@ export class FilesService {
   listBatches(): Observable<any> {
     return this.http.post(`${environment.api}/listBatches`, {});
   }
-  deleteTextFile(params): Observable<any> {
-    params = params || {
-      batchid: "1234",
-      filename: "1.mp3"
-    };
-    return this.http.post(`${environment.api}/deleteFile`, params);
+  deleteTextFile(id): Observable<any> {
+    return this.http.post(`${environment.api}/deleteTextFile`, { id: id });
   }
 
   listFiles(params): Observable<any> {
