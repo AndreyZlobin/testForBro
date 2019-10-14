@@ -298,18 +298,18 @@ export class TextFilterService {
   }
   setTags(index, tags) {
     if (index !== -1) {
+      const pin = `${!(this.fileStore[index].pin === "true")}`;
       this.fileStore[index].tags = tags;
       this.filesSubject.next(this.fileStore);
       const params = {
         fileid: {
-          batchid: this.fileStore[index].batchid,
-          fileid: this.fileStore[index].filename
+          id: this.fileStore[index].id
         },
         fileinfo: {
           filename: this.fileStore[index].filename,
           comment: "",
           pin: this.fileStore[index].pin,
-          tags: tags
+          tags: tags || []
         }
       };
       this.filesService.updateTextFileInfo(params).subscribe();
