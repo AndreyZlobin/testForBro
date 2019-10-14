@@ -2,6 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import {
   NbActionsModule,
@@ -50,6 +51,7 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { UploadDialogComponent } from '../neosound/pages/user/upload-dialog/upload-dialog.component';
+import { UploadProgressComponent } from '../neosound/pages/user/upload-progress/upload-progress.component';
 import { FileDropModule } from 'ngx-file-drop';
 import { MinutesSecondsPipe } from '../neosound/minutes-seconds.pipe';
 
@@ -88,6 +90,7 @@ const COMPONENTS = [
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
   UploadDialogComponent,
+  UploadProgressComponent,
 ];
 
 const ENTRY_COMPONENTS = [

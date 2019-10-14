@@ -213,17 +213,12 @@ export class TextFilterService {
     return [];
   }
 
-  public deteleFile(batchid, filename) {
-    const index = this.fileStore.findIndex(
-      item => item.batchid === batchid && item.filename === filename
-    );
+  public deteleFile(id) {
+    const index = this.fileStore.findIndex(item => item.id === id);
     if (index !== -1) {
       this.fileStore = this.fileStore.filter((item, i) => i !== index);
       this.filesSubject.next(this.fileStore);
-      this.filesService.deleteTextFile({
-        batchid,
-        filename
-      });
+      this.filesService.deleteTextFile(id).subscribe();
     }
   }
   public processFile(batchid, filename) {
@@ -279,9 +274,9 @@ export class TextFilterService {
     this.updateFileList();
   }
 
-  markFavorite(batchid, filename) {
+  markFavorite(id, filename) {
     const index = this.fileStore.findIndex(
-      item => item.batchid === batchid && item.filename === filename
+      item => item.id === id
     );
     if (index !== -1) {
       const pin = `${!(this.fileStore[index].pin === "true")}`;
@@ -289,10 +284,8 @@ export class TextFilterService {
       this.filesSubject.next(this.fileStore);
       const params = {
         fileid: {
-          batchid,
-          fileid: filename
+          id
         },
-
         fileinfo: {
           filename,
           comment: "",
@@ -305,18 +298,18 @@ export class TextFilterService {
   }
   setTags(index, tags) {
     if (index !== -1) {
+      const pin = `${!(this.fileStore[index].pin === "true")}`;
       this.fileStore[index].tags = tags;
       this.filesSubject.next(this.fileStore);
       const params = {
         fileid: {
-          batchid: this.fileStore[index].batchid,
-          fileid: this.fileStore[index].filename
+          id: this.fileStore[index].id
         },
         fileinfo: {
           filename: this.fileStore[index].filename,
           comment: "",
           pin: this.fileStore[index].pin,
-          tags: tags
+          tags: tags || []
         }
       };
       this.filesService.updateTextFileInfo(params).subscribe();

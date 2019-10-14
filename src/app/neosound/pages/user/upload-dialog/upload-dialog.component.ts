@@ -12,7 +12,6 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsersService } from "../../../services/users.service";
 import { FilesService } from "../../../services/files.service";
 import { MediaRecorderService } from "../../../services/media-recorder.service";
-import { AnalyticsService } from "../../../services/analytics.service";
 import { Router } from "@angular/router";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { timer, Subscription } from "rxjs";
@@ -60,6 +59,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   count = 20;
   intervalRef;
   filename;
+  selectedBatchId: string;
   @ViewChild("templateModal") templateModal: ElementRef;
   @ViewChild("confirmModal") confirmModal: ElementRef;
   @Input() set showDialog(visible) {
@@ -77,8 +77,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     private router: Router,
     private modalService: BsModalService,
     private mediaRecorderService: MediaRecorderService,
-    private filesService: FilesService,
-    private analyticsService: AnalyticsService
+    private filesService: FilesService
   ) {
     this.sub = this.mediaRecorderService.stop$.subscribe(record => {
       this.fileBlob = record;
@@ -111,13 +110,11 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   record() {
-    this.analyticsService.trackEvent("upload", "record");
     this.mediaRecorderService.initialize();
     this.mediaRecorderService.start();
   }
 
   play() {
-    this.analyticsService.trackEvent("upload", "play");
     this.audio = new Audio();
     this.audio.src = URL.createObjectURL(this.fileBlob);
     this.audio.load();
@@ -132,20 +129,17 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   stopPlaying() {
-    this.analyticsService.trackEvent("upload", "stop");
     this.audio && this.audio.pause();
     this.isPlaying = false;
   }
 
   stop() {
-    this.analyticsService.trackEvent("upload", "stop");
     this.mediaRecorderService.stop();
   }
 
   discard() {
-    this.analyticsService.trackEvent("upload", "discard");
     this.mediaRecorderService.reset();
-    // this.currentFileParams = undefined;
+    this.currentFileParams = undefined;
     this.files = [];
     this.attached = false;
     this.uploaded = false;
@@ -153,7 +147,6 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   attach() {
-    this.analyticsService.trackEvent("upload", "attach");
     this.stopPlaying();
     this.filename &&
       (this.currentFileParams.name =
@@ -165,30 +158,27 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   upload(record) {
-    this.analyticsService.trackEvent("upload", "upload");
     const uploadFile = new FormData();
     const user = this.userService.getUserLocal();
     const username = (user && user.username) || "fronttrust";
-    const companyid = (user && user.companyid) || "";
 
-    uploadFile.append("batchid", this.batchid);
+    uploadFile.append("batchid", this.selectedBatchId || this.batchid);
     uploadFile.append("username", username);
-    uploadFile.append("companyid", companyid);
     uploadFile.append("file", this.currentFileParams.file);
     this.filesService.uploadFile(uploadFile).subscribe(
       res => {
         this.uploaded = true;
-        this.successMessage =
-          "Successfully uploaded to the server: " + this.currentFileParams &&
-          this.currentFileParams.name;
-        this.filesService.processFile(this.getFileParams()).subscribe(
-          v => {
-            this.proccessed = true;
-            const params = this.getFileParams();
-            this.filesService.setQuickFileParams(params);
-          },
-          e => (this.errorMessage = e.error.message)
-        );
+        this.successMessage = "Successfully uploaded to the server.";
+        if (this.modalType !== "text") {
+          this.filesService.processFile(this.getFileParams()).subscribe(
+            v => {
+              this.proccessed = true;
+              const params = this.getFileParams();
+              this.filesService.setQuickFileParams(params);
+            },
+            e => (this.errorMessage = e.error.message)
+          );
+        }
       },
       e => (this.errorMessage = e.error.message)
     );

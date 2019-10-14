@@ -1,0 +1,50 @@
+<ng-container>
+  <div class="border bg-white" [ngStyle]="{'height': minimized ? '200px' : '42px'}"
+    style="width: 300px; position: fixed; z-index: 99; bottom: 0; right: 20px;">
+    <div class="card">
+      <div class="card-header">
+        Upload Progress
+        <button type="button" class="close pull-right" *ngIf="!minimized" (click)="minimized = true">
+          <i class="fas fa-window-maximize"></i>
+        </button>
+        <button type="button" class="close pull-right" *ngIf="minimized" (click)="minimized = false">
+          <i class="fas fa-window-minimize"></i>
+        </button>
+      </div>
+      <div class="card-body" *ngIf="minimized">
+        <div style="overflow-y: auto;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{{t('Name')}}</th>
+              </tr>
+            </thead>
+            <tbody class="upload-name-style">
+              <tr>
+                <td><strong>1</strong></td>
+              </tr>
+              <tr>
+                <td><strong>1</strong></td>
+              </tr>
+              <tr>
+                <td><strong>1</strong></td>
+              </tr>
+              <tr>
+                <td><strong>1</strong></td>
+              </tr>
+              <tr>
+                <td><strong>1</strong></td>
+              </tr>
+              <tr>
+                <td><strong>1</strong></td>
+              </tr>
+              <tr>
+                <td><strong>1</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
