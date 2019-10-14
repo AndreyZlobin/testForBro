@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
-import { FilterService } from "../../../services/filter.service";
+import { TextFilterService } from "../../../services/text-filter.service";
 import { LanguageService } from "../../../services/language.service";
 import { ToastrService } from "ngx-toastr";
 import { DataService } from "../../../shared";
@@ -15,9 +15,10 @@ import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 export class FileResultsComponent implements OnInit {
   batchid;
   filename;
+  isLoading: boolean = true;
   constructor(
     private filesService: FilesService,
-    private filterService: FilterService,
+    private filterService: TextFilterService,
     private router: Router,
     private route: ActivatedRoute,
     private toastrService: ToastrService,
@@ -28,6 +29,8 @@ export class FileResultsComponent implements OnInit {
         if (event.url.startsWith("/text/")) {
           this.batchid = this.route.snapshot.params["batchid"];
           this.filename = this.route.snapshot.params["filename"];
+          this.isLoading = false;
+
         }
       }
     });

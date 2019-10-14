@@ -89,6 +89,14 @@ export class FilesService {
     return this.http.post(`${environment.api}/deleteFile`, params);
   }
 
+  deleteTextFile(params): Observable<any> {
+    params = params || {
+      batchid: "1234",
+      filename: "1.mp3"
+    };
+    return this.http.post(`${environment.api}/deleteFile`, params);
+  }
+
   listFiles(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/listFiles`, params);
@@ -151,6 +159,9 @@ export class FilesService {
   }
 
   updateFileInfo(params): Observable<any> {
+    return this.http.post(`${environment.api}/updateFileInfo`, params);
+  }
+  updateTextFileInfo(params): Observable<any> {
     return this.http.post(`${environment.api}/updateFileInfo`, params);
   }
 }
