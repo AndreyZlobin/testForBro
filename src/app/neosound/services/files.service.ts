@@ -89,6 +89,11 @@ export class FilesService {
     return this.http.post(`${environment.api}/deleteFile`, params);
   }
 
+
+  listBatches(): Observable<any>  {
+    return this.http.post(`${environment.api}/listBatches`, {});
+  }
+
   listFiles(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/listFiles`, params);

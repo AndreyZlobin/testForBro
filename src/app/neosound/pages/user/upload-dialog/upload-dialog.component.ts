@@ -11,6 +11,7 @@ import {
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsersService } from "../../../services/users.service";
 import { FilesService } from "../../../services/files.service";
+import { UploadService } from "../../../services/upload.service";
 import { MediaRecorderService } from "../../../services/media-recorder.service";
 import { AnalyticsService } from "../../../services/analytics.service";
 import { Router } from "@angular/router";
@@ -48,6 +49,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   private ticker;
   private sub: Subscription;
   public files: UploadFile[] = [];
+  public fileNames: string[] = [];
   currentFileParams;
   successMessage = "";
   errorMessage = "";
@@ -60,6 +62,9 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   count = 20;
   intervalRef;
   filename;
+  batchNames: string[] = [
+  ];
+  selectedBatchId: string = '';
   @ViewChild("templateModal") templateModal: ElementRef;
   @ViewChild("confirmModal") confirmModal: ElementRef;
   @Input() set showDialog(visible) {
@@ -78,7 +83,8 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private mediaRecorderService: MediaRecorderService,
     private filesService: FilesService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private uploadService: UploadService,
   ) {
     this.sub = this.mediaRecorderService.stop$.subscribe(record => {
       this.fileBlob = record;
@@ -108,6 +114,15 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.discard();
     this.createForm();
+    this.getBatches();
+  }
+
+  getBatches() {
+    this.filesService.listBatches().subscribe(data => {
+      if (data && data.batches) {
+        this.batchNames = data.batches;
+      }
+    });
   }
 
   record() {
@@ -145,25 +160,23 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   discard() {
     this.analyticsService.trackEvent("upload", "discard");
     this.mediaRecorderService.reset();
-    // this.currentFileParams = undefined;
     this.files = [];
+    this.fileNames = [];
     this.attached = false;
     this.uploaded = false;
     this.proccessed = false;
   }
 
   attach() {
-    this.analyticsService.trackEvent("upload", "attach");
-    this.stopPlaying();
-    this.filename &&
-      (this.currentFileParams.name =
-        this.filename.replace(".wav", "") + ".wav");
-    this.upload(this.fileBlob);
-    this.hideModal();
-    this.attached = true;
-    this.router.navigateByUrl("/user/files/reload");
   }
+  attachFiles() {
+    this.analyticsService.trackEvent("upload", "attach");
 
+    this.uploadService.uploadFiles(this.files);
+    this.files = [];
+    this.hideModal();
+    this.attached = false;
+  }
   upload(record) {
     this.analyticsService.trackEvent("upload", "upload");
     const uploadFile = new FormData();
@@ -260,38 +273,19 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   public dropped(event: UploadEvent) {
-    this.files = event.files;
     for (const item of event.files) {
       const file = item as any;
       file.fileEntry.file(currentFile => {
-        const reader = new FileReader();
-        reader.readAsDataURL(currentFile);
-        reader.onload = () => {
-          const params = {
-            batchid: this.batchid,
-            name: currentFile.name,
-            file: currentFile
-          };
-          this.currentFileParams = params;
-          this.fileBlob = currentFile;
-        };
-        reader.onerror = error => {
-          console.log("Error: ", error);
-          this.successMessage = "";
-        };
+        this.files.push(currentFile);
       });
     }
   }
 
   public handleFileInput(files: FileList) {
-    const params = {
-      batchid: this.batchid,
-      name: files.item(0).name,
-      file: files.item(0)
-    };
-    this.currentFileParams = params;
-    this.fileBlob = files.item(0);
-    this.files.push(files.item(0) as any);
+    for(let i = 0; i !== files.length; i++) {
+      this.files.push(files.item(i) as any);
+      this.fileNames.push(files.item(i).name);
+    }
   }
 
   public fileOver(event) {}
