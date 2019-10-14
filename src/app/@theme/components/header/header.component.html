@@ -18,36 +18,20 @@
       <nb-action class="control-item" *ngIf="!isLoggedIn()"><a href="/auth/login"
           (click)="navigate('/auth/login')">{{t('Login')}}</a></nb-action>
       <nb-action class="control-item" *ngIf="isLoggedIn()"><a href="/user/files"
-          (click)="navigate('/user/files')">{{t('Files')}}</a></nb-action>
-      <!-- <nb-action class="control-item"  *ngIf="isLoggedIn()"><a href="/user/batch"  (click)="navigate('/user/batch')">{{t('Batches')}}</a></nb-action> -->
-      <nb-action *ngIf="isLoggedIn() && config.header.api.show" class="control-item"><a
+          (click)="navigate('/user/files')">{{t('Calls')}}</a></nb-action>
+        <nb-action class="control-item" *ngIf="isLoggedIn()"><a href="/user/files"
+          (click)="navigate('/user/text-files')">{{t('Text')}}</a></nb-action>
+       <nb-action *ngIf="isLoggedIn() && config.header.api.show" class="control-item"><a
           href="{{config.header.api.link}}" target="_blank"
           (click)="navigate(config.header.api.link)">{{t(config.header.api.text)}}</a></nb-action>
       <nb-action *ngIf="config.header.about.show" class="control-item"><a href="{{config.header.about.link}}"
           target="_blank">{{t(config.header.about.text)}}</a></nb-action>
     </nb-actions>
-    <!-- <ngx-theme-switcher></ngx-theme-switcher> -->
   </div>
 
   <ngx-upload-dialog [showDialog]="showUploadDialog" (modalOpened)="showUploadDialog = $event"></ngx-upload-dialog>
 
   <div class="header-container">
-
-    <!-- <ul>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/about">About</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" routerLink="/guest/quicktest">Try</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/auth/sign-up">Sign up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/auth/login">Login</a>
-          </li>
-          </ul> -->
-    <!-- <ngx-layout-direction-switcher></ngx-layout-direction-switcher> -->
     <nb-actions size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
 
       <nb-action class="control-item left-border"

@@ -99,6 +99,11 @@ export class FilesService {
     return this.http
       .post(`${environment.api}/listFilesPage`, params);
   }
+  listTextFilesPage(params): Observable<any> {
+    params = params || {};
+    return this.http
+      .post(`${environment.api}/listTextFiles`, params);
+  }
   postListFilesPage(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/listFilesPage`, params);
