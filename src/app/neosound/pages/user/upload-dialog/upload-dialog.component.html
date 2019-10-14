@@ -64,19 +64,25 @@
           </div>
           <div *ngIf="files.length" class="text-right">
             <button class="btn btn-link btn-secondary mr-3" (click)="discard()">{{t('Discard')}}</button>
-            <button [disabled]="!!selectedBatchId" class="btn btn-primary"
+            <button [disabled]="!!!selectedBatchId" class="btn btn-primary"
               (click)="attachFiles()">{{t('Attach')}}</button>
           </div>
         </div>
       </div>
       <div *ngIf="modalType === 'text'">
-        <div class="alert alert-info">{{t('You can upload only one file a time')}}</div>
+        <div class="row">
+          <div class="col-12 py-3">
+            <div class="mb-2">{{t('Batch name')}}</div>
+            <input type="text" class="form-control" [(ngModel)]="selectedBatchId" class="form-control form-control-lg"
+              [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
         <div class="center">
           <div class="drop-zone-wrap">
             <file-drop *ngIf="!files.length" dropZoneLabel="{{t('Drop file here or click to browse')}}"
               (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
               <span></span>
-              <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+              <input type="file" id="file" multiple (change)="handleFileInput($event.target.files)">
             </file-drop>
           </div>
           <div class="upload-table">
@@ -87,15 +93,16 @@
                 </tr>
               </thead>
               <tbody class="upload-name-style">
-                <tr *ngFor="let item of files; let i=index">
-                  <td><strong>{{ item.relativePath || item.name }}</strong></td>
+                <tr *ngFor="let item of fileNames; let i=index">
+                  <td><strong>{{ item }}</strong></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div *ngIf="currentFileParams || files.length" class="text-right">
+          <div *ngIf="files.length" class="text-right">
             <button class="btn btn-link btn-secondary mr-3" (click)="discard()">{{t('Discard')}}</button>
-            <button class="btn btn-primary" (click)="attach()">{{t('Attach')}}</button>
+            <button [disabled]="!!!selectedBatchId" class="btn btn-primary"
+              (click)="attachFiles()">{{t('Attach')}}</button>
           </div>
         </div>
       </div>

@@ -48,7 +48,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   private audioChunks: any[] = [];
   private ticker;
   private sub: Subscription;
-  public files: UploadFile[] = [];
+  public files: any[] = [];
   public fileNames: string[] = [];
   currentFileParams;
   successMessage = "";
@@ -274,10 +274,8 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
 
   public dropped(event: UploadEvent) {
     for (const item of event.files) {
-      const file = item as any;
-      file.fileEntry.file(currentFile => {
-        this.files.push(currentFile);
-      });
+      this.files.push(item.fileEntry);
+      this.fileNames.push(item.fileEntry.name)
     }
   }
 

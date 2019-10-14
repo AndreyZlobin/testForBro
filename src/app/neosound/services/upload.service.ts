@@ -12,6 +12,7 @@ export enum FileQueueStatus {
 }
 
 export class FileQueueObject {
+
   public file: any;
   public status: FileQueueStatus = FileQueueStatus.Pending;
   public progress: number = 0;
@@ -36,6 +37,7 @@ export class FileQueueObject {
 
 @Injectable()
 export class UploadService {
+  public hasUpload: boolean = false;
   public queue: BehaviorSubject<FileQueueObject[]>;
   private files: FileQueueObject[] = [];
 
@@ -43,7 +45,7 @@ export class UploadService {
     this.queue = <BehaviorSubject<FileQueueObject[]>>new BehaviorSubject(this.files);
   }
   public uploadFiles(files: UploadFile[]) {
-    debugger
+    this.hasUpload = true;
   }
 
   public clearQueue() {
