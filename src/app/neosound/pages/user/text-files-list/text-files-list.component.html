@@ -170,7 +170,7 @@
                   </a>
                 </th>
                 <th></th>
-                <th></th>
+                <!-- <th></th> -->
                 <th></th>
               </thead>
               <tbody>
@@ -206,12 +206,12 @@
                         {{file.compliancepercent}}
                       </div>
                     </td>
-                    <td>
+                    <!-- <td>
                       <button class="btn p-2 c-normal" style="cursor: pointer;" (click)="proccessFile(file)"
                         tooltip="{{t('Refresh')}}{{file.proccessing ? '...' : ''}}">
                         <i class="fa fa-sync"></i>
                       </button>
-                    </td>
+                    </td> -->
                     <td>
                       <button class="btn p-2 c-normal" style="cursor: pointer;"
                         (click)="delete(file.batchid, file.filename)" tooltip="{{t('Delete')}}">
