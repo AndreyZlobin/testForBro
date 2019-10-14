@@ -11,9 +11,7 @@ import {
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsersService } from "../../../services/users.service";
 import { FilesService } from "../../../services/files.service";
-import { UploadService } from "../../../services/upload.service";
 import { MediaRecorderService } from "../../../services/media-recorder.service";
-import { AnalyticsService } from "../../../services/analytics.service";
 import { Router } from "@angular/router";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { timer, Subscription } from "rxjs";
@@ -48,8 +46,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   private audioChunks: any[] = [];
   private ticker;
   private sub: Subscription;
-  public files: any[] = [];
-  public fileNames: string[] = [];
+  public files: UploadFile[] = [];
   currentFileParams;
   successMessage = "";
   errorMessage = "";
@@ -62,9 +59,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   count = 20;
   intervalRef;
   filename;
-  batchNames: string[] = [
-  ];
-  selectedBatchId: string = '';
+  selectedBatchId: string;
   @ViewChild("templateModal") templateModal: ElementRef;
   @ViewChild("confirmModal") confirmModal: ElementRef;
   @Input() set showDialog(visible) {
@@ -82,9 +77,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     private router: Router,
     private modalService: BsModalService,
     private mediaRecorderService: MediaRecorderService,
-    private filesService: FilesService,
-    private analyticsService: AnalyticsService,
-    private uploadService: UploadService,
+    private filesService: FilesService
   ) {
     this.sub = this.mediaRecorderService.stop$.subscribe(record => {
       this.fileBlob = record;
@@ -114,25 +107,14 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.discard();
     this.createForm();
-    this.getBatches();
-  }
-
-  getBatches() {
-    this.filesService.listBatches().subscribe(data => {
-      if (data && data.batches) {
-        this.batchNames = data.batches;
-      }
-    });
   }
 
   record() {
-    this.analyticsService.trackEvent("upload", "record");
     this.mediaRecorderService.initialize();
     this.mediaRecorderService.start();
   }
 
   play() {
-    this.analyticsService.trackEvent("upload", "play");
     this.audio = new Audio();
     this.audio.src = URL.createObjectURL(this.fileBlob);
     this.audio.load();
@@ -147,61 +129,56 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   stopPlaying() {
-    this.analyticsService.trackEvent("upload", "stop");
     this.audio && this.audio.pause();
     this.isPlaying = false;
   }
 
   stop() {
-    this.analyticsService.trackEvent("upload", "stop");
     this.mediaRecorderService.stop();
   }
 
   discard() {
-    this.analyticsService.trackEvent("upload", "discard");
     this.mediaRecorderService.reset();
+    this.currentFileParams = undefined;
     this.files = [];
-    this.fileNames = [];
     this.attached = false;
     this.uploaded = false;
     this.proccessed = false;
   }
 
   attach() {
-  }
-  attachFiles() {
-    this.analyticsService.trackEvent("upload", "attach");
-
-    this.uploadService.uploadFiles(this.files);
-    this.files = [];
+    this.stopPlaying();
+    this.filename &&
+      (this.currentFileParams.name =
+        this.filename.replace(".wav", "") + ".wav");
+    this.upload(this.fileBlob);
     this.hideModal();
-    this.attached = false;
+    this.attached = true;
+    this.router.navigateByUrl("/user/files/reload");
   }
+
   upload(record) {
-    this.analyticsService.trackEvent("upload", "upload");
     const uploadFile = new FormData();
     const user = this.userService.getUserLocal();
     const username = (user && user.username) || "fronttrust";
-    const companyid = (user && user.companyid) || "";
 
-    uploadFile.append("batchid", this.batchid);
+    uploadFile.append("batchid", this.selectedBatchId || this.batchid);
     uploadFile.append("username", username);
-    uploadFile.append("companyid", companyid);
     uploadFile.append("file", this.currentFileParams.file);
     this.filesService.uploadFile(uploadFile).subscribe(
       res => {
         this.uploaded = true;
-        this.successMessage =
-          "Successfully uploaded to the server: " + this.currentFileParams &&
-          this.currentFileParams.name;
-        this.filesService.processFile(this.getFileParams()).subscribe(
-          v => {
-            this.proccessed = true;
-            const params = this.getFileParams();
-            this.filesService.setQuickFileParams(params);
-          },
-          e => (this.errorMessage = e.error.message)
-        );
+        this.successMessage = "Successfully uploaded to the server.";
+        if (this.modalType !== "text") {
+          this.filesService.processFile(this.getFileParams()).subscribe(
+            v => {
+              this.proccessed = true;
+              const params = this.getFileParams();
+              this.filesService.setQuickFileParams(params);
+            },
+            e => (this.errorMessage = e.error.message)
+          );
+        }
       },
       e => (this.errorMessage = e.error.message)
     );
@@ -273,17 +250,38 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   public dropped(event: UploadEvent) {
+    this.files = event.files;
     for (const item of event.files) {
-      this.files.push(item.fileEntry);
-      this.fileNames.push(item.fileEntry.name)
+      const file = item as any;
+      file.fileEntry.file(currentFile => {
+        const reader = new FileReader();
+        reader.readAsDataURL(currentFile);
+        reader.onload = () => {
+          const params = {
+            batchid: this.batchid,
+            name: currentFile.name,
+            file: currentFile
+          };
+          this.currentFileParams = params;
+          this.fileBlob = currentFile;
+        };
+        reader.onerror = error => {
+          console.log("Error: ", error);
+          this.successMessage = "";
+        };
+      });
     }
   }
 
   public handleFileInput(files: FileList) {
-    for(let i = 0; i !== files.length; i++) {
-      this.files.push(files.item(i) as any);
-      this.fileNames.push(files.item(i).name);
-    }
+    const params = {
+      batchid: this.batchid,
+      name: files.item(0).name,
+      file: files.item(0)
+    };
+    this.currentFileParams = params;
+    this.fileBlob = files.item(0);
+    this.files.push(files.item(0) as any);
   }
 
   public fileOver(event) {}

@@ -158,7 +158,7 @@ export class FilesService {
     return this.http.post(`${environment.api}/updateFileInfo`, params);
   }
   updateTextFileInfo(params): Observable<any> {
-    return this.http.post(`${environment.api}/updateFileInfo`, params);
+    return this.http.post(`${environment.api}/updateTextFileInfo`, params);
   }
   getTextFileResultDetails(fileId: string): Observable<any> {
     return this.http.post(`${environment.api}/getTextFileResultDetails`, {

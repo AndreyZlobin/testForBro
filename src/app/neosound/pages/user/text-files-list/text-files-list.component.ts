@@ -296,9 +296,9 @@ export class TextFilesListComponent implements OnInit, AfterViewInit {
     this.hideModal();
   }
 
-  markFavorite(item) {
-    this.analyticsService.trackEvent("fileList", "markFavorite");
-    this.filterService.markFavorite(item.batchid, item.filename);
+  markFavorite(id, filename) {
+    this.analyticsService.trackEvent("textFileList", "markFavorite");
+    this.filterService.markFavorite(id, filename);
   }
 
   getBool(v) {

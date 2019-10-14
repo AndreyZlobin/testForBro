@@ -274,9 +274,9 @@ export class TextFilterService {
     this.updateFileList();
   }
 
-  markFavorite(batchid, filename) {
+  markFavorite(id, filename) {
     const index = this.fileStore.findIndex(
-      item => item.batchid === batchid && item.filename === filename
+      item => item.id === id
     );
     if (index !== -1) {
       const pin = `${!(this.fileStore[index].pin === "true")}`;
@@ -284,10 +284,8 @@ export class TextFilterService {
       this.filesSubject.next(this.fileStore);
       const params = {
         fileid: {
-          batchid,
-          fileid: filename
+          id
         },
-
         fileinfo: {
           filename,
           comment: "",
