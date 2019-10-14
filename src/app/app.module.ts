@@ -35,6 +35,7 @@ import { QuickTestComponent } from "./neosound/pages/guest/quick-test/quick-test
 import { ResultsComponent } from "./neosound/pages/guest/results/results.component";
 import { AccountDetailsComponent } from "./neosound/pages/user/account-details/account-details.component";
 import { FilesListComponent } from "./neosound/pages/user/files-list/files-list.component";
+import { TextFilesListComponent } from "./neosound/pages/user/text-files-list/text-files-list.component";
 import { FileResultsComponent } from "./neosound/pages/user/file-results/file-results.component";
 import { LandingComponent } from "./neosound/pages/landing/landing.component";
 import { AdminDashboardComponent } from "./neosound/pages/admin/dashboard/dashboard.component";
@@ -50,6 +51,7 @@ import { MinutesSecondsPipe } from "./neosound/minutes-seconds.pipe";
 
 import { FilesService } from "./neosound/services/files.service";
 import { FilterService } from "./neosound/services/filter.service";
+import { TextFilterService } from "./neosound/services/text-filter.service";
 import { OrganizationSettingsService } from "./neosound/services/organization-settings.service";
 import { PlayerService } from "./neosound/services/player.service";
 import { AnalyticsService } from "./neosound/services/analytics.service";
@@ -126,6 +128,7 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     ResultsComponent,
     AccountDetailsComponent,
     FilesListComponent,
+    TextFilesListComponent,
     FileResultsComponent,
     LandingComponent,
     AdminDashboardComponent,
@@ -197,6 +200,7 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     UsersService,
     FilesService,
     FilterService,
+    TextFilterService,
     OrganizationSettingsService,
     PlayerService,
     AnalyticsService,

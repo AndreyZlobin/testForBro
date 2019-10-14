@@ -28,6 +28,7 @@ import { QuickTestComponent } from "./neosound/pages/guest/quick-test/quick-test
 import { ResultsComponent } from "./neosound/pages/guest/results/results.component";
 import { AccountDetailsComponent } from "./neosound/pages/user/account-details/account-details.component";
 import { FilesListComponent } from "./neosound/pages/user/files-list/files-list.component";
+import { TextFilesListComponent } from "./neosound/pages/user/text-files-list/text-files-list.component";
 import { FileResultsComponent } from "./neosound/pages/user/file-results/file-results.component";
 import { LandingComponent } from "./neosound/pages/landing/landing.component";
 import { AdminDashboardComponent } from "./neosound/pages/admin/dashboard/dashboard.component";
@@ -92,6 +93,11 @@ const routes: Routes = [
         component: FilesListComponent
       },
       {
+        path: "user/text-files",
+        canActivate: [AuthGuard],
+        component: TextFilesListComponent,
+      },
+      {
         path: "user/files/reload",
         data: { reload: true },
         canActivate: [AuthGuard],
@@ -103,12 +109,7 @@ const routes: Routes = [
         component: PlayerDetailsComponent
       },
       {
-        path: "user/result",
-        canActivate: [AuthGuard],
-        component: FileResultsComponent
-      },
-      {
-        path: "user/result/:id",
+        path: "text/:batchid/:filename",
         canActivate: [AuthGuard],
         component: FileResultsComponent
       },
