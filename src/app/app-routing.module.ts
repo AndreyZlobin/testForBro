@@ -109,7 +109,7 @@ const routes: Routes = [
         component: PlayerDetailsComponent
       },
       {
-        path: "text/:batchid/:filename",
+        path: "text/:id",
         canActivate: [AuthGuard],
         component: FileResultsComponent
       },

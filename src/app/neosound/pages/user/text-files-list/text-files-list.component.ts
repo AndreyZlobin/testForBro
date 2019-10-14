@@ -112,9 +112,7 @@ export class TextFilesListComponent implements OnInit, AfterViewInit {
   }
 
   getLink(item) {
-    return `/text/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
-      item.fileid
-    )}`;
+    return `/text/${encodeURIComponent(item.id)}`;
   }
 
   proccessFile(item) {
