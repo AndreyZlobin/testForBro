@@ -37,6 +37,7 @@ import { QuickTestComponent } from "./neosound/pages/guest/quick-test/quick-test
 import { ResultsComponent } from "./neosound/pages/guest/results/results.component";
 import { AccountDetailsComponent } from "./neosound/pages/user/account-details/account-details.component";
 import { FilesListComponent } from "./neosound/pages/user/files-list/files-list.component";
+import { TextFilesListComponent } from "./neosound/pages/user/text-files-list/text-files-list.component";
 import { FileResultsComponent } from "./neosound/pages/user/file-results/file-results.component";
 import { LandingComponent } from "./neosound/pages/landing/landing.component";
 import { AdminDashboardComponent } from "./neosound/pages/admin/dashboard/dashboard.component";
@@ -53,6 +54,7 @@ import { MinutesSecondsPipe } from "./neosound/minutes-seconds.pipe";
 import { FilesService } from "./neosound/services/files.service";
 import { UploadService } from "./neosound/services/upload.service";
 import { FilterService } from "./neosound/services/filter.service";
+import { TextFilterService } from "./neosound/services/text-filter.service";
 import { OrganizationSettingsService } from "./neosound/services/organization-settings.service";
 import { PlayerService } from "./neosound/services/player.service";
 import { AnalyticsService } from "./neosound/services/analytics.service";
@@ -62,7 +64,6 @@ import { RequestsHttpInterceptor } from "./neosound/shared/requests-http.interce
 import { NbPasswordAuthStrategy, NbAuthModule } from "@nebular/auth";
 import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
 import { TagCloudModule } from 'angular-tag-cloud-module';
-
 import {
   NgxChartsModule,
   PieChartModule,
@@ -99,7 +100,7 @@ import { ChartModule } from "angular2-chartjs";
 import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-found.component";
 import { LanguageService } from "./neosound/services/language.service";
 import { NgxPaginationModule } from "ngx-pagination";
-import { ForbiddenValidatorDirective } from './neosound/directives/forbidden-password.directive';
+// import { ForbiddenPasswordDirective } from './neosound/directives/forbidden-password.directive';
 import { IntervalDirective } from "./neosound/directives/interval.detective";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
@@ -130,6 +131,7 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     ResultsComponent,
     AccountDetailsComponent,
     FilesListComponent,
+    TextFilesListComponent,
     FileResultsComponent,
     LandingComponent,
     AdminDashboardComponent,
@@ -142,7 +144,6 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     ApiPageComponent,
     PageNotFoundComponent,
     IntervalDirective,
-    ForbiddenValidatorDirective,
     BatchListComponent,
     BatchDetailsComponent,
     ChartPageComponent,
@@ -197,6 +198,7 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     FilesService,
     FilterService,
     UploadService,
+    TextFilterService,
     OrganizationSettingsService,
     PlayerService,
     AnalyticsService,

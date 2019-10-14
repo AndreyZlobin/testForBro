@@ -88,10 +88,15 @@ export class FilesService {
     };
     return this.http.post(`${environment.api}/deleteFile`, params);
   }
-
-
-  listBatches(): Observable<any>  {
+  listBatches(): Observable<any> {
     return this.http.post(`${environment.api}/listBatches`, {});
+  }
+  deleteTextFile(params): Observable<any> {
+    params = params || {
+      batchid: "1234",
+      filename: "1.mp3"
+    };
+    return this.http.post(`${environment.api}/deleteFile`, params);
   }
 
   listFiles(params): Observable<any> {
@@ -101,8 +106,11 @@ export class FilesService {
 
   listFilesPage(params): Observable<any> {
     params = params || {};
-    return this.http
-      .post(`${environment.api}/listFilesPage`, params);
+    return this.http.post(`${environment.api}/listFilesPage`, params);
+  }
+  listTextFilesPage(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/listTextFiles`, params);
   }
   postListFilesPage(params): Observable<any> {
     params = params || {};
@@ -152,5 +160,13 @@ export class FilesService {
 
   updateFileInfo(params): Observable<any> {
     return this.http.post(`${environment.api}/updateFileInfo`, params);
+  }
+  updateTextFileInfo(params): Observable<any> {
+    return this.http.post(`${environment.api}/updateFileInfo`, params);
+  }
+  getTextFileResultDetails(fileId: string): Observable<any> {
+    return this.http.post(`${environment.api}/getTextFileResultDetails`, {
+      id: fileId
+    });
   }
 }

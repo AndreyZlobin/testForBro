@@ -22,9 +22,6 @@ export class PieChartComponent implements OnInit {
   inProgress = true;
   animations = false;
   showLabels = true;
-  doughnut;
-  tooltipText;
-  labelFormatting;
 
   constructor() { }
 
