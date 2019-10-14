@@ -214,15 +214,19 @@ export class TextFilterService {
   }
 
   public deteleFile(batchid, filename) {
-    this.fileStore = this.fileStore.filter(
-      item => item.batchid !== batchid && item.filename !== filename
+    const index = this.fileStore.findIndex(
+      item => item.batchid === batchid && item.filename === filename
     );
-
-    this.filesSubject.next(this.fileStore);
-    this.filesService.deleteFile({
-      batchid,
-      filename
-    });
+    if (index !== -1) {
+      this.fileStore = this.fileStore.filter(
+        (item, i) => i !== index
+      );
+      this.filesSubject.next(this.fileStore);
+      this.filesService.deleteTextFile({
+        batchid,
+        filename
+      });
+    }
   }
   public processFile(batchid, filename) {
     const index = this.fileStore.findIndex(
@@ -231,10 +235,12 @@ export class TextFilterService {
     if (index !== -1) {
       this.fileStore[index].proccessing = true;
       this.filesSubject.next(this.fileStore);
-      this.filesService.processFile({
-        batchid: batchid,
-        filename: filename
-      }).subscribe();
+      this.filesService
+        .processFile({
+          batchid: batchid,
+          filename: filename
+        })
+        .subscribe();
     }
   }
   public resetFilter() {
@@ -296,7 +302,7 @@ export class TextFilterService {
           tags: this.fileStore[index].tags || []
         }
       };
-      this.filesService.updateFileInfo(params).subscribe();
+      this.filesService.updateTextFileInfo(params).subscribe();
     }
   }
   setTags(index, tags) {
@@ -315,7 +321,7 @@ export class TextFilterService {
           tags: tags
         }
       };
-      this.filesService.updateFileInfo(params).subscribe();
+      this.filesService.updateTextFileInfo(params).subscribe();
     }
   }
 
@@ -326,7 +332,7 @@ export class TextFilterService {
       );
 
       if (index !== -1 && this.fileStore[index + 1]) {
-        return `/file/${this.fileStore[index + 1].batchid}/${this.fileStore[index + 1].filename}`;
+        return `/text/${this.fileStore[index + 1].batchid}/${this.fileStore[index + 1].filename}`;
       }
       return "";
     } else {
@@ -339,7 +345,7 @@ export class TextFilterService {
         file => file.filename === fileName && file.batchid === batchId
       );
       if (index !== -1 && this.fileStore[index - 1]) {
-        return `/file/${this.fileStore[index - 1].batchid}/${this.fileStore[index - 1].filename}`;
+        return `/text/${this.fileStore[index - 1].batchid}/${this.fileStore[index - 1].filename}`;
       }
       return "";
     } else {
