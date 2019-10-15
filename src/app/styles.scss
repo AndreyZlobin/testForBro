@@ -128,34 +128,43 @@ angular-tag-cloud > span {
 }
 
 .card-header {
-	background: none;
-	font-size: 1.5rem;
-	border: none;
+  background: none;
+  font-size: 1.5rem;
+  border: none;
 }
 
 .card-header:after {
-    content:"";
-    background: linear-gradient(to right, var(--color-secondary) 0%, var(--color-primary) 100%);
-	display: block;
-    height: 3px;
-    width: 100%;
-    position: absolute;
-	top: 2.3em;
-	left: 0;
+  content: "";
+  background: linear-gradient(
+    to right,
+    var(--color-secondary) 0%,
+    var(--color-primary) 100%
+  );
+  display: block;
+  height: 3px;
+  width: 100%;
+  position: absolute;
+  top: 2.3em;
+  left: 0;
 }
 
 .gradient-text {
-  background: linear-gradient(to right, var(--color-secondary) 0%, var(--color-primary) 100%);
+  background: linear-gradient(
+    to right,
+    var(--color-secondary) 0%,
+    var(--color-primary) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .dasboard-card {
-	color: #fff; //var(--color-secondary);
-	background-color: #fff;
+  color: #fff; //var(--color-secondary);
+  background-color: #fff;
 }
 
-.dasboard-card h6, .dasboard-card h4 {
+.dasboard-card h6,
+.dasboard-card h4 {
   // color: var(--color-secondary);
   color: #fff;
   text-align: right;
@@ -228,7 +237,7 @@ angular-tag-cloud > span {
 }
 
 .tagsModal .ng2-tag-input.minimal {
-	border: 1px solid #cccccc !important;
+  border: 1px solid #cccccc !important;
   padding: 5px;
   border-radius: 3px;
   margin-bottom: 15px;
@@ -247,4 +256,13 @@ angular-tag-cloud > span {
 
 .nb-theme-default nb-tabset ul li a::before {
   background-color: var(--color-secondary);
+}
+
+typeahead-container {
+  .dropdown-item {
+    &.active {
+      color: #ebeef2 !important;
+      background-color: var(--color-secondary);
+    }
+  }
 }
