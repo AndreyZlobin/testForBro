@@ -265,7 +265,7 @@ export class DashboardComponent implements OnInit {
               formatter: "{value}"
             },
             min: 0,
-            max: 120
+            max: 140
           },
           yAxis: {
             splitLine: {
@@ -283,7 +283,7 @@ export class DashboardComponent implements OnInit {
               formatter: "{value}"
             },
             min: 0,
-            max: 120
+            max: 140
           },
           tooltip: {
             show: true,
@@ -348,7 +348,7 @@ export class DashboardComponent implements OnInit {
               formatter: "{value}"
             },
             min: 0,
-            max: Math.round(maxX * 1.2)
+            max: Math.round(maxX * 1.4)
           },
           yAxis: {
             splitLine: {
@@ -366,7 +366,7 @@ export class DashboardComponent implements OnInit {
               formatter: "{value}"
             },
             min: 0,
-            max: Math.round(maxY * 1.2)
+            max: Math.round(maxY * 1.4)
           },
           tooltip: {
             show: true,
