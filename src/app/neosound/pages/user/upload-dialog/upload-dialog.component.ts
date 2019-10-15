@@ -17,6 +17,10 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { timer, Subscription } from "rxjs";
 import { UploadEvent, UploadFile } from "ngx-file-drop";
 import { LanguageService } from "../../../services/language.service";
+import { UploadService } from "../../../services/upload.service";
+import { TextFilterService } from "../../../services/text-filter.service";
+import { FilterService } from "../../../services/filter.service";
+
 
 const makeId = () => {
   let text = "";
@@ -78,7 +82,9 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     private router: Router,
     private modalService: BsModalService,
     private mediaRecorderService: MediaRecorderService,
-    private filesService: FilesService
+    private filesService: FilesService,
+    private textFilterService: TextFilterService,
+    private filterService: FilterService,
   ) {
     this.sub = this.mediaRecorderService.stop$.subscribe(record => {
       this.fileBlob = record;
@@ -163,7 +169,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     this.hideModal();
     this.attached = true;
     if (this.modalType !== "text") {
-      this.router.navigateByUrl("/user/files/reload");
+      this.router.navigateByUrl("/user/files");
     } else {
       this.router.navigateByUrl("/user/text-files");
     }
@@ -188,9 +194,12 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
               this.proccessed = true;
               const params = this.getFileParams();
               this.filesService.setQuickFileParams(params);
+              this.filterService.updateFileList();
             },
             e => (this.errorMessage = e.error.message)
           );
+        } else {
+          this.textFilterService.updateFileList();
         }
       },
       e => (this.errorMessage = e.error.message)
