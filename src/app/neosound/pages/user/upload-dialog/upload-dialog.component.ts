@@ -56,6 +56,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   attached = false;
   uploaded = false;
   proccessed = false;
+  batches: string[] = [];
   count = 20;
   intervalRef;
   filename;
@@ -107,8 +108,15 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.discard();
     this.createForm();
+    this.getBatches();
   }
-
+  getBatches() {
+    this.filesService.listBatches().subscribe((data) => {
+      if(data && data.batches) {
+        this.batches = data.batches;
+      }
+    })
+  }
   record() {
     this.mediaRecorderService.initialize();
     this.mediaRecorderService.start();
@@ -154,7 +162,12 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     this.upload(this.fileBlob);
     this.hideModal();
     this.attached = true;
-    this.router.navigateByUrl("/user/files/reload");
+    if (this.modalType !== "text") {
+      this.router.navigateByUrl("/user/files/reload");
+    } else {
+      this.router.navigateByUrl("/user/text-files");
+    }
+
   }
 
   upload(record) {

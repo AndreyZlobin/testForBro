@@ -73,6 +73,7 @@ const NB_MODULES = [
   NgbModule,
   NbSecurityModule, // *nbIsGranted directive,
   NbProgressBarModule,
+  TypeaheadModule,
 ];
 
 const COMPONENTS = [
