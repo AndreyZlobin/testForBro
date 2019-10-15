@@ -178,7 +178,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       this.filterService.filter.sortorder = "asc";
     } else {
       if(this.filterService.filter.sortorder === "desc") {
-        this.filterService.filter.sortorder = "acs";
+        this.filterService.filter.sortorder = "asc";
       } else {
         this.filterService.filter.sortorder = "desc";
       }
