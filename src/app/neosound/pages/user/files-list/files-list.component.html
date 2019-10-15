@@ -175,10 +175,10 @@
             <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb" (click)="sortTable('BatchId')">
               {{t('Batch Id')}}
               <i *ngIf="filterService.filter.sortby === 'BatchId' && filterService.filter.sortorder ==='asc'"
-                class="fas fa-sort-up"></i><i
-                *ngIf="filterService.filter.sortby === 'BatchId' && filterService.filter.sortorder ==='desc'"
-                class="fas fa-sort-down"></i><i *ngIf="filterService.filter.sortby !== 'BatchId'" style="color: #bbbbbb"
-                class="fas fa-sort"></i>
+                class="fas fa-sort-up"></i>
+              <i *ngIf="filterService.filter.sortby === 'BatchId' && filterService.filter.sortorder ==='desc'"
+                class="fas fa-sort-down"></i>
+              <i *ngIf="filterService.filter.sortby !== 'BatchId'" style="color: #bbbbbb" class="fas fa-sort"></i>
             </button>
             <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
               (click)="sortTable('Name')">{{t('Name')}}

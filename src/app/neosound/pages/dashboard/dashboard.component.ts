@@ -48,6 +48,8 @@ export class DashboardComponent implements OnInit {
   config = {};
   colors = [];
   options: any = {};
+  options2: any = {};
+  optionsByCalls: any = {};
   public users$: Observable<any>;
   public barChart: any;
   public keyWordChart: any;
@@ -258,12 +260,12 @@ export class DashboardComponent implements OnInit {
             type: "value",
             name: this.t("Silent Calls, %"),
             nameLocation: "middle",
-            nameGap: 35,
+            nameGap: 30,
             axisLabel: {
               formatter: "{value}"
             },
             min: 0,
-            max: 110
+            max: 120
           },
           yAxis: {
             splitLine: {
@@ -274,12 +276,14 @@ export class DashboardComponent implements OnInit {
             },
             scale: true,
             type: "value",
+            nameLocation: "middle",
+            nameGap: 30,
             name: this.t("Emotional Calls, %"),
             axisLabel: {
               formatter: "{value}"
             },
             min: 0,
-            max: 110
+            max: 120
           },
           tooltip: {
             show: true,
@@ -288,6 +292,89 @@ export class DashboardComponent implements OnInit {
             }
           },
           series: buble
+        };
+        const buble2 = batches.map((batchName, index) => {
+          if (maxX < data.batches[batchName].silentCallsN) {
+            maxX = data.batches[batchName].silentCallsN;
+          }
+          if (maxY < data.batches[batchName].angerCallsN) {
+            maxY = data.batches[batchName].angerCallsN;
+          }
+          if (maxR < data.batches[batchName].allCallsN) {
+            maxR = data.batches[batchName].allCallsN;
+          }
+          if (data.batches[batchName].allCallsN < minR) {
+            minR = data.batches[batchName].allCallsN;
+          }
+          return {
+            name: batchName,
+            data: [
+              [
+                data.batches[batchName].silentCallsN,
+                data.batches[batchName].angerCallsN,
+                data.batches[batchName].allCallsN,
+                batchName
+              ]
+            ],
+            type: "scatter",
+            symbolSize: data => {
+              return this.getRadius(data[2], minR, maxR);
+            }
+          };
+        });
+        this.options2 = {
+          color: this.colors,
+          backgroundColor: "#fff",
+          legend: {
+            type: "scroll",
+            orient: "vertical",
+            right: 10,
+            top: 20,
+            bottom: 80,
+            data: batches
+          },
+          xAxis: {
+            splitLine: {
+              lineStyle: {
+                type: "none",
+                opacity: 0
+              }
+            },
+            type: "value",
+            name: this.t("Silent Calls"),
+            nameLocation: "middle",
+            nameGap: 30,
+            axisLabel: {
+              formatter: "{value}"
+            },
+            min: 0,
+            max: Math.round(maxX * 1.2)
+          },
+          yAxis: {
+            splitLine: {
+              lineStyle: {
+                type: "none",
+                opacity: 0
+              }
+            },
+            scale: true,
+            type: "value",
+            nameGap: 30,
+            name: this.t("Emotional Calls"),
+            nameLocation: "middle",
+            axisLabel: {
+              formatter: "{value}"
+            },
+            min: 0,
+            max: Math.round(maxY * 1.2)
+          },
+          tooltip: {
+            show: true,
+            formatter: function(param) {
+              return `${param.data[3]}<br>Calls: ${param.data[2]}<br> Silent: ${param.data[0]}<br> Emotional: ${param.data[1]}`;
+            }
+          },
+          series: buble2
         };
       } else {
         this.hasData = false;

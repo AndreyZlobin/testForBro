@@ -58,7 +58,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-6 mb-3">
+      <div class="col-4 mb-3">
         <div class="card h-100">
           <div class="card-header">{{t('Processed calls')}}</div>
           <div class="card-body" *ngIf="totals">
@@ -77,14 +77,22 @@
           </div>
         </div>
       </div>
-      <div class="col-6 mb-3">
+      <div class="col-4 mb-3">
         <div class="card  card-block d-flex h-100">
-          <div class="card-header">{{t('Performance by agent')}}</div>
+          <div class="card-header">{{t('Performance by agent, by calls')}}</div>
           <div class="card-body">
-            <div echarts [options]="options"></div>
+            <div echarts [options]="options2"></div>
           </div>
         </div>
       </div>
+      <div class="col-4 mb-3">
+          <div class="card card-block d-flex h-100">
+            <div class="card-header">{{t('Performance by agent, by %')}}</div>
+            <div class="card-body">
+              <div echarts [options]="options"></div>
+            </div>
+          </div>
+        </div>
       <div class="col-6 mb-3">
         <div class="card card-block d-flex h-100">
           <div class="card-header">{{t('Stopwords')}}</div>
@@ -102,9 +110,9 @@
             <div echarts [options]="keyWordChart"></div>
 
           </div>
-          <div class="card-body">
+          <!-- <div class="card-body">
               <a routerLink="dashboard/details/stopwords" class="btn btn-primary mr-auto">Details</a>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-6 mb-3">
@@ -139,7 +147,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-6 mb-3" *ngIf="showHitsVsStopwors">
         <div class="card" style="min-height: calc(100% - 15px);">
           <div class="card-header">{{t('Hits vs. Word')}}</div>
