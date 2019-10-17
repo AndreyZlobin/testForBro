@@ -40,7 +40,7 @@
               [typeaheadMinLength]="0" class="form-control form-control-lg" [ngModelOptions]="{standalone: true}">
           </div>
         </div>
-        <div class="alert alert-info">{{t('You can upload only one file a time')}}</div>
+        <div class="alert alert-info">{{t('Maximum file size: 200 MB')}}</div>
         <div class="center">
           <div class="drop-zone-wrap">
             <file-drop *ngIf="!files.length" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div *ngIf="modalType === 'text'">
-        <div class="alert alert-info">{{t('You can upload only one file a time')}}</div>
+        <div class="alert alert-info">{{t('Maximum file size: 200 MB')}}</div>
         <div class="row">
           <div class="col-12 py-3">
             <div class="mb-2">{{t('Batch name')}}</div>
