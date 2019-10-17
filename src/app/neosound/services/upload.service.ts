@@ -132,7 +132,6 @@ export class UploadService {
   private upload(queueObj: FileQueueObject) {
     const form = new FormData();
     form.append("batchid", queueObj.batchId);
-    form.append("username", "username");
     form.append("file", queueObj.file);
 
     const req = new HttpRequest("POST", `${environment.api}/uploadFile`, form, {
