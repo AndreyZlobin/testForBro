@@ -21,7 +21,6 @@ import { UploadService } from "../../../services/upload.service";
 import { TextFilterService } from "../../../services/text-filter.service";
 import { FilterService } from "../../../services/filter.service";
 
-
 const makeId = () => {
   let text = "";
   const possible =
@@ -50,7 +49,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   private audioChunks: any[] = [];
   private ticker;
   private sub: Subscription;
-  public files: UploadFile[] = [];
+  public files: any[] = [];
   currentFileParams;
   successMessage = "";
   errorMessage = "";
@@ -65,6 +64,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   intervalRef;
   filename;
   selectedBatchId: string;
+  fileNames: string[] = [];
   @ViewChild("templateModal") templateModal: ElementRef;
   @ViewChild("confirmModal") confirmModal: ElementRef;
   @Input() set showDialog(visible) {
@@ -85,6 +85,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     private filesService: FilesService,
     private textFilterService: TextFilterService,
     private filterService: FilterService,
+    private uploadService: UploadService
   ) {
     this.sub = this.mediaRecorderService.stop$.subscribe(record => {
       this.fileBlob = record;
@@ -117,11 +118,11 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     this.getBatches();
   }
   getBatches() {
-    this.filesService.listBatches().subscribe((data) => {
-      if(data && data.batches) {
+    this.filesService.listBatches().subscribe(data => {
+      if (data && data.batches) {
         this.batches = data.batches;
       }
-    })
+    });
   }
   record() {
     this.mediaRecorderService.initialize();
@@ -155,6 +156,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     this.mediaRecorderService.reset();
     this.currentFileParams = undefined;
     this.files = [];
+    this.fileNames = [];
     this.attached = false;
     this.uploaded = false;
     this.proccessed = false;
@@ -173,16 +175,15 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigateByUrl("/user/text-files");
     }
-
   }
-
+  attachFiles() {
+    this.uploadService.uploadFiles(this.selectedBatchId, this.files);
+    this.discard();
+    this.hideModal();
+  }
   upload(record) {
     const uploadFile = new FormData();
-    const user = this.userService.getUserLocal();
-    const username = (user && user.username) || "fronttrust";
-
     uploadFile.append("batchid", this.selectedBatchId || this.batchid);
-    uploadFile.append("username", username);
     uploadFile.append("file", this.currentFileParams.file);
     this.filesService.uploadFile(uploadFile).subscribe(
       res => {
@@ -192,8 +193,6 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
           this.filesService.processFile(this.getFileParams()).subscribe(
             v => {
               this.proccessed = true;
-              const params = this.getFileParams();
-              this.filesService.setQuickFileParams(params);
               this.filterService.updateFileList();
             },
             e => (this.errorMessage = e.error.message)
@@ -276,34 +275,19 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     for (const item of event.files) {
       const file = item as any;
       file.fileEntry.file(currentFile => {
-        const reader = new FileReader();
-        reader.readAsDataURL(currentFile);
-        reader.onload = () => {
-          const params = {
-            batchid: this.batchid,
-            name: currentFile.name,
-            file: currentFile
-          };
-          this.currentFileParams = params;
-          this.fileBlob = currentFile;
-        };
-        reader.onerror = error => {
-          console.log("Error: ", error);
-          this.successMessage = "";
-        };
+        console.log(currentFile);
+        this.fileNames.push(currentFile.name);
+        this.files.push(currentFile.file);
       });
     }
   }
 
   public handleFileInput(files: FileList) {
-    const params = {
-      batchid: this.batchid,
-      name: files.item(0).name,
-      file: files.item(0)
-    };
-    this.currentFileParams = params;
-    this.fileBlob = files.item(0);
-    this.files.push(files.item(0) as any);
+    for (let i = 0; i !== files.length; i++) {
+      console.log(files.item(i));
+      this.fileNames.push(files.item(i).name);
+      this.files.push(files.item(i));
+    }
   }
 
   public fileOver(event) {}

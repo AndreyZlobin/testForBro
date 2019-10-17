@@ -214,14 +214,21 @@ export class FilterService {
   }
 
   public deteleFile(batchid, filename) {
-    this.fileStore = this.fileStore.filter(
-      item => item.batchid !== batchid && item.filename !== filename
+    const index = this.fileStore.findIndex(
+      item => item.batchid === batchid && item.filename === filename
     );
-    this.filesSubject.next(this.fileStore);
-    this.filesService.deleteFile({
-      batchid,
-      filename
-    });
+    if (index !== -1) {
+      this.fileStore = this.fileStore.filter(function(value, i, arr) {
+        return index !== i;
+      });
+      this.filesSubject.next(this.fileStore);
+      this.filesService
+        .deleteFile({
+          batchid,
+          filename
+        })
+        .subscribe();
+    }
   }
   public processFile(batchid, filename) {
     const index = this.fileStore.findIndex(
@@ -230,10 +237,12 @@ export class FilterService {
     if (index !== -1) {
       this.fileStore[index].proccessing = true;
       this.filesSubject.next(this.fileStore);
-      this.filesService.processFile({
-        batchid: batchid,
-        filename: filename
-      }).subscribe();
+      this.filesService
+        .processFile({
+          batchid: batchid,
+          filename: filename
+        })
+        .subscribe();
     }
   }
   public resetFilter() {

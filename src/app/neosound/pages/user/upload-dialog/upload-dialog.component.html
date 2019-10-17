@@ -36,9 +36,8 @@
         <div class="row">
           <div class="col-12 py-3">
             <div class="mb-2">{{t('Batch name')}}</div>
-            <input type="text" class="form-control" [(ngModel)]="selectedBatchId"
-            [typeahead]="batches" [typeaheadMinLength]="0" class="form-control form-control-lg"
-              [ngModelOptions]="{standalone: true}">
+            <input type="text" class="form-control" [(ngModel)]="selectedBatchId" [typeahead]="batches"
+              [typeaheadMinLength]="0" class="form-control form-control-lg" [ngModelOptions]="{standalone: true}">
           </div>
         </div>
         <div class="alert alert-info">{{t('You can upload only one file a time')}}</div>
@@ -47,7 +46,7 @@
             <file-drop *ngIf="!files.length" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
               (onFileLeave)="fileLeave($event)">
               <span>{{t('Drop file here or click to browse')}}</span>
-              <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+              <input type="file" accept="audio/*" id="file" (change)="handleFileInput($event.target.files)" multiple>
             </file-drop>
           </div>
           <div class="upload-table">
@@ -58,16 +57,16 @@
                 </tr>
               </thead>
               <tbody class="upload-name-style">
-                <tr *ngFor="let item of files; let i=index">
-                  <td><strong>{{ item.relativePath || item.name }}</strong></td>
+                <tr *ngFor="let item of fileNames; let i=index">
+                  <td><strong>{{ item }}</strong></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div *ngIf="currentFileParams || files.length" class="text-right">
+          <div *ngIf="fileNames.length" class="text-right">
             <button class="btn btn-link btn-secondary mr-3" (click)="discard()">{{t('Discard')}}</button>
             <button [disabled]="!!!this.selectedBatchId" class="btn btn-primary"
-              (click)="attach()">{{t('Attach')}}</button>
+              (click)="attachFiles()">{{t('Attach')}}</button>
           </div>
         </div>
       </div>
@@ -76,11 +75,8 @@
         <div class="row">
           <div class="col-12 py-3">
             <div class="mb-2">{{t('Batch name')}}</div>
-            <input type="text"
-              class="form-control"
-              [(ngModel)]="selectedBatchId" class="form-control form-control-lg"
-              [typeahead]="batches" [typeaheadMinLength]="0"
-              [ngModelOptions]="{standalone: true}">
+            <input type="text" class="form-control" [(ngModel)]="selectedBatchId" class="form-control form-control-lg"
+              [typeahead]="batches" [typeaheadMinLength]="0" [ngModelOptions]="{standalone: true}">
           </div>
         </div>
         <div class="center">
@@ -88,7 +84,7 @@
             <file-drop *ngIf="!files.length" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
               (onFileLeave)="fileLeave($event)">
               <span>{{t('Drop file here or click to browse')}}</span>
-              <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+              <input type="file" id="file" accept="text/plain" (change)="handleFileInput($event.target.files)" multiple>
             </file-drop>
           </div>
           <div class="upload-table">
@@ -108,7 +104,7 @@
           <div *ngIf="currentFileParams || files.length" class="text-right">
             <button class="btn btn-link btn-secondary mr-3" (click)="discard()">{{t('Discard')}}</button>
             <button [disabled]="!!!this.selectedBatchId" class="btn btn-primary"
-              (click)="attach()">{{t('Attach')}}</button>
+              (click)="attachFiles()">{{t('Attach')}}</button>
           </div>
         </div>
       </div>
@@ -154,7 +150,7 @@
 
             <div class="text-right">
               <button class="btn btn-link btn-secondary mr-3" (click)="discard()">{{t('Discard')}}</button>
-              <button class="btn btn-primary" (click)="attach()">{{t('Attach')}}</button>
+              <button class="btn btn-primary" (click)="attachFiles()">{{t('Attach')}}</button>
             </div>
           </ng-container>
 
