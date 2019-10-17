@@ -12,13 +12,13 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsersService } from "../../../services/users.service";
 import { FilesService } from "../../../services/files.service";
 import { UploadService } from "../../../services/upload.service";
-import { MediaRecorderService } from "../../../services/media-recorder.service";
 import { AnalyticsService } from "../../../services/analytics.service";
 import { Router } from "@angular/router";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { timer, Subscription } from "rxjs";
 import { UploadEvent, UploadFile } from "ngx-file-drop";
 import { LanguageService } from "../../../services/language.service";
+
 
 @Component({
   selector: "ngx-upload-progress",
@@ -31,7 +31,6 @@ export class UploadProgressComponent {
     private userService: UsersService,
     private router: Router,
     private modalService: BsModalService,
-    private mediaRecorderService: MediaRecorderService,
     private filesService: FilesService,
     private analyticsService: AnalyticsService,
     private uploadService: UploadService
