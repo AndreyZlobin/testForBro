@@ -1,16 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { CloudData } from "angular-tag-cloud-module";
-
+import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
+import { DatepickerOptions } from "ng2-datepicker";
 import { FilesService } from "../../services/files.service";
 import { FilterService } from "../../services/filter.service";
 import { DataService } from "../../shared";
 import { AnalyticsService } from "../../services/analytics.service";
-import { comonKeywords } from "./data";
 import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
-import ColorScheme from "color-scheme";
 
 export const colors = [
   "#c12e34",
@@ -44,7 +43,42 @@ const fullColorHex = (r, g, b) => {
   styleUrls: ["./dashboard.component.scss"]
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild("scroll") scrollTo: ElementRef;
+  datePickerFromOptions: DatepickerOptions = {
+    minYear: 1970,
+    maxYear: 2030,
+    displayFormat: "MMM D[,] YYYY",
+    barTitleFormat: "MMMM YYYY",
+    dayNamesFormat: "dd",
+    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+    locale: frLocale,
+    barTitleIfEmpty: "Click to select a date",
+    placeholder: this.t("from"), // HTML input placeholder attribute (default: '')
+    addClass: "form-control form-control-lg form-gr-first", // Optional, value to pass on to [ngClass] on the input field
+    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+  };
+
+  datePickerToOptions: DatepickerOptions = {
+    minYear: 1970,
+    maxYear: 2030,
+    displayFormat: "MMM D[,] YYYY",
+    barTitleFormat: "MMMM YYYY",
+    dayNamesFormat: "dd",
+    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+    locale: frLocale,
+    barTitleIfEmpty: "Click to select a date",
+    placeholder: this.t("to"), // HTML input placeholder attribute (default: '')
+    addClass: "form-control form-control-lg form-gr-last", // Optional, value to pass on to [ngClass] on the input field
+    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+  };
+  modalType: string = "calls";
   hasData: boolean = false;
+  showConfig: boolean = false;
+  modalRef: BsModalRef;
   config = {};
   colors = [];
   options: any = {};
@@ -55,7 +89,9 @@ export class DashboardComponent implements OnInit {
   public keyWordChart: any;
   public keyWord2Chart: any;
   public showHitsVsStopwors = false;
-
+  public selectedBatchId: string;
+  public datefrom: any;
+  public dateto: any;
   public totals = {};
   public data_2 = [];
   public keywords = [];
@@ -82,6 +118,7 @@ export class DashboardComponent implements OnInit {
   radialTreeData: any;
   showRadialTreeData: boolean = false;
   primiryColor: string = "#3399cc";
+  batches: string[] = [];
   constructor(
     private router: Router,
     private filesService: FilesService,
@@ -89,7 +126,8 @@ export class DashboardComponent implements OnInit {
     private lang: LanguageService,
     private analyticsService: AnalyticsService,
     public dataService: DataService,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private modalService: BsModalService
   ) {
     this.setColors();
     this.showRadialTreeData = false;
@@ -97,35 +135,29 @@ export class DashboardComponent implements OnInit {
 
   setColors() {
     this.colors = colors;
-    // this.http.get("assets/config/config.json").subscribe((data: any) => {
-    //   this.config = data;
-    //   const scheme = new ColorScheme();
-    //   const rgb = data.colors.secondary
-    //     .substring(4, data.colors.secondary.length - 1)
-    //     .replace(/ /g, "")
-    //     .split(",");
-    //   const hex = fullColorHex(rgb[0], rgb[1], rgb[2]);
-    //
-    //   scheme
-    //     .from_hex(hex)
-    //     .scheme("analogic")
-    //     .distance(1)
-    //     .variation("light");
-    //   this.colors = [`#${hex}`, ...scheme.colors().map(c => `#${c}`)];
-    // });
   }
-
-  ngOnInit() {
-    this.filesService.getMinutesStats({}).subscribe(data => {
+  getMinutesStats(param: any = {}) {
+    this.filesService.getMinutesStats(param).subscribe(data => {
       this.minutesStat = data;
       this.fileCount = data.fileCount;
       this.totalMinutes = Math.round(data.totalMinutes);
     });
-    this.filesService.getApiCallsStats({}).subscribe(data => {
+  }
+  listBatches() {
+    this.filesService.listBatches().subscribe(data => {
+      if (data && data.batches) {
+        this.batches = data.batches;
+      }
+    });
+  }
+  getApiCallsStats(param: any = {}) {
+    this.filesService.getApiCallsStats(param).subscribe(data => {
       this.apiCallsCount = data.apiCallsCount;
       this.apiStat = data;
     });
-    this.filesService.getFileStats({}).subscribe(data => {
+  }
+  getFileStats(param: any = {}) {
+    this.filesService.getFileStats(param).subscribe(data => {
       this.fileStat = data;
       this.loading = false;
       this.allCallsCount = data.totals.allcallscount;
@@ -380,7 +412,9 @@ export class DashboardComponent implements OnInit {
         this.hasData = false;
       }
     });
-    this.filesService.getTagClowd({}).subscribe(data => {
+  }
+  getTagClowd(param: any = {}) {
+    this.filesService.getTagClowd(param).subscribe(data => {
       this.keywords = Object.keys(data.keywords).map(key => {
         return {
           text: key,
@@ -434,7 +468,9 @@ export class DashboardComponent implements OnInit {
         ]
       };
     });
-    this.filesService.getEchartData({}).subscribe(data => {
+  }
+  getEchartData(param: any = {}) {
+    this.filesService.getEchartData(param).subscribe(data => {
       if (data) {
         this.hasSankey = true;
       }
@@ -734,6 +770,26 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+  ngOnInit() {
+    this.getMinutesStats();
+    this.listBatches();
+    this.getApiCallsStats();
+    this.getFileStats();
+    this.getTagClowd();
+    this.getEchartData();
+  }
+  updateData() {
+    const params = {
+      dateFrom: this.datefrom,
+      dateTo: this.dateto,
+    }
+    this.loading = true;
+    this.hideModal();
+    this.getMinutesStats(params);
+    this.getApiCallsStats(params);
+    this.getFileStats(params);
+    this.getTagClowd(params);
+  }
 
   public loadData() {}
   private getRadius(r, minR, maxR) {
@@ -793,5 +849,15 @@ export class DashboardComponent implements OnInit {
 
   getColor(i) {
     return colors[i];
+  }
+  showModal(ref, item, index) {
+    this.hideModal();
+    this.modalRef = this.modalService.show(ref, {});
+  }
+
+  hideModal() {
+    if (this.modalRef) {
+      this.modalRef.hide();
+    }
   }
 }

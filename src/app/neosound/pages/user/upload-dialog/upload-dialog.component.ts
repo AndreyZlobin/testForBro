@@ -118,6 +118,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     this.discard();
     this.createForm();
     this.getBatches();
+    this.getTextBatches();
   }
   getBatches() {
     this.filesService.listBatches().subscribe(data => {
@@ -127,7 +128,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     });
   }
   getTextBatches() {
-    this.filesService.listBatches().subscribe(data => {
+    this.filesService.listTextBatches().subscribe(data => {
       if (data && data.batches) {
         this.textBatches = data.batches;
       }
