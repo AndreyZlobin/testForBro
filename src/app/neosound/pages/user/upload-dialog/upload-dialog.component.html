@@ -43,10 +43,10 @@
         <div class="alert alert-info">{{t('Maximum file size: 200 MB')}}</div>
         <div class="center">
           <div class="drop-zone-wrap">
-            <file-drop *ngIf="!files.length" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
-              (onFileLeave)="fileLeave($event)">
+            <file-drop   accept="wav,mp3" *ngIf="!files.length" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+              (onFileLeave)="fileLeave($event)" accept="mp3,wav">
               <span>{{t('Drop file here or click to browse')}}</span>
-              <input type="file" accept="audio/*" id="file" (change)="handleFileInput($event.target.files)" multiple>
+              <input type="file"  accept="txt,eml" id="file" (change)="handleFileInput($event.target.files)" multiple>
             </file-drop>
           </div>
           <div class="upload-table">
@@ -76,12 +76,12 @@
           <div class="col-12 py-3">
             <div class="mb-2">{{t('Batch name')}}</div>
             <input type="text" class="form-control" [(ngModel)]="selectedBatchId" class="form-control form-control-lg"
-              [typeahead]="batches" [typeaheadMinLength]="0" [ngModelOptions]="{standalone: true}">
+              [typeahead]="textBatches" [typeaheadMinLength]="0" [ngModelOptions]="{standalone: true}">
           </div>
         </div>
         <div class="center">
           <div class="drop-zone-wrap">
-            <file-drop *ngIf="!files.length" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+            <file-drop  accept="txt,eml" *ngIf="!files.length" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
               (onFileLeave)="fileLeave($event)">
               <span>{{t('Drop file here or click to browse')}}</span>
               <input type="file" id="file" accept="text/plain" (change)="handleFileInput($event.target.files)" multiple>
