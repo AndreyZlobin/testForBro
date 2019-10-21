@@ -60,10 +60,12 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   uploaded = false;
   proccessed = false;
   batches: string[] = [];
+  textBatches: string[] = [];
   count = 20;
   intervalRef;
   filename;
   selectedBatchId: string;
+
   fileNames: string[] = [];
   @ViewChild("templateModal") templateModal: ElementRef;
   @ViewChild("confirmModal") confirmModal: ElementRef;
@@ -124,6 +126,13 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
       }
     });
   }
+  getTextBatches() {
+    this.filesService.listBatches().subscribe(data => {
+      if (data && data.batches) {
+        this.textBatches = data.batches;
+      }
+    });
+  }
   record() {
     this.mediaRecorderService.initialize();
     this.mediaRecorderService.start();
@@ -155,6 +164,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   discard() {
     this.mediaRecorderService.reset();
     this.currentFileParams = undefined;
+    this.selectedBatchId = '';
     this.files = [];
     this.fileNames = [];
     this.attached = false;
@@ -222,8 +232,12 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   showModal(ref, modalType, newModal = true) {
+    debugger;
     this.successMessage = "";
     this.modalType = modalType;
+    this.selectedBatchId = "";
+    this.fileNames = [];
+    this.files = [];
     if (newModal) {
       this.hideModal();
       this.modalRef = this.modalService.show(ref, {
@@ -272,11 +286,9 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   public dropped(event: UploadEvent) {
-    console.log(event)
     for (const item of event.files) {
       const file = item as any;
       file.fileEntry.file(currentFile => {
-        console.log(currentFile);
         this.fileNames.push(currentFile.name);
         this.files.push(currentFile);
       });
