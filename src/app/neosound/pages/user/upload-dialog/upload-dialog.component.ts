@@ -181,6 +181,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     this.discard();
     this.hideModal();
   }
+
   upload(record) {
     const uploadFile = new FormData();
     uploadFile.append("batchid", this.selectedBatchId || this.batchid);
@@ -271,13 +272,13 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   public dropped(event: UploadEvent) {
-    this.files = event.files;
+    console.log(event)
     for (const item of event.files) {
       const file = item as any;
       file.fileEntry.file(currentFile => {
         console.log(currentFile);
         this.fileNames.push(currentFile.name);
-        this.files.push(currentFile.file);
+        this.files.push(currentFile);
       });
     }
   }
