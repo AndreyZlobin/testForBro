@@ -91,6 +91,9 @@ export class FilesService {
   listBatches(): Observable<any> {
     return this.http.post(`${environment.api}/listBatches`, {});
   }
+  listTextBatches() : Observable<any> {
+    return this.http.post(`${environment.api}/listTextBatches`, {});
+  }
   deleteTextFile(id): Observable<any> {
     return this.http.post(`${environment.api}/deleteTextFile`, { id: id });
   }
