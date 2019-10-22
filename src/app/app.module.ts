@@ -27,6 +27,9 @@ import { LoginComponent } from "./neosound/pages/auth/login/login.component";
 import { DashboardComponent } from "./neosound/pages/dashboard/dashboard.component";
 import { StopwordsComponent } from "./neosound/pages/dashboard/details/stopwords/stopwords.component";
 
+import { CallsDashboardComponent } from "./neosound/pages/dashboard/calls-dashboard/calls-dashboard.component";
+import { TextsDashboardComponent } from "./neosound/pages/dashboard/texts-dashboard/texts-dashboard.component";
+
 import { SignupLinkComponent } from "./neosound/pages/auth/signup-link/signup-link.component";
 import { SignupDetailedComponent } from "./neosound/pages/auth/signup-detailed/signup-detailed.component";
 import { TermsComponent } from "./neosound/pages/auth/terms/terms.component";
@@ -153,6 +156,8 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     TotalByQueriesChartPieComponent,
     TotalMinutesPlusBatchesChartBarComponent,
     KeywordsRadialTreeComponent,
+    CallsDashboardComponent,
+    TextsDashboardComponent,
   ],
   imports: [
     BrowserModule,
