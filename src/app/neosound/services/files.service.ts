@@ -64,6 +64,10 @@ export class FilesService {
     params = params || {};
     return this.http.post(`${environment.api}/fileStats`, params);
   }
+  getTextStats(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/textStats`, params);
+  }
   getEchartData(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/getEchartData`, params);
@@ -80,6 +84,12 @@ export class FilesService {
     params = params || {};
     return this.http.post(`${environment.api}/tagCloud `, params);
   }
+  getTextStopwords(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/textStopwords `, params);
+  }
+
+
 
   deleteFile(params): Observable<any> {
     params = params || {
@@ -87,6 +97,15 @@ export class FilesService {
       filename: "1.mp3"
     };
     return this.http.post(`${environment.api}/deleteFile`, params);
+  }
+  listBatches(): Observable<any> {
+    return this.http.post(`${environment.api}/listBatches`, {});
+  }
+  listTextBatches() : Observable<any> {
+    return this.http.post(`${environment.api}/listTextBatches`, {});
+  }
+  deleteTextFile(id): Observable<any> {
+    return this.http.post(`${environment.api}/deleteTextFile`, { id: id });
   }
 
   listFiles(params): Observable<any> {
@@ -96,8 +115,11 @@ export class FilesService {
 
   listFilesPage(params): Observable<any> {
     params = params || {};
-    return this.http
-      .post(`${environment.api}/listFilesPage`, params);
+    return this.http.post(`${environment.api}/listFilesPage`, params);
+  }
+  listTextFilesPage(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/listTextFiles`, params);
   }
   postListFilesPage(params): Observable<any> {
     params = params || {};
@@ -147,5 +169,13 @@ export class FilesService {
 
   updateFileInfo(params): Observable<any> {
     return this.http.post(`${environment.api}/updateFileInfo`, params);
+  }
+  updateTextFileInfo(params): Observable<any> {
+    return this.http.post(`${environment.api}/updateTextFileInfo`, params);
+  }
+  getTextFileResultDetails(fileId: string): Observable<any> {
+    return this.http.post(`${environment.api}/getTextFileResultDetails`, {
+      id: fileId
+    });
   }
 }

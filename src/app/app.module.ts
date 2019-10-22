@@ -11,9 +11,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CoreModule } from "./@core/core.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
+
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { TooltipModule } from "ngx-bootstrap/tooltip";
 import { ModalModule } from "ngx-bootstrap/modal";
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
@@ -25,6 +27,9 @@ import { LoginComponent } from "./neosound/pages/auth/login/login.component";
 import { DashboardComponent } from "./neosound/pages/dashboard/dashboard.component";
 import { StopwordsComponent } from "./neosound/pages/dashboard/details/stopwords/stopwords.component";
 
+import { CallsDashboardComponent } from "./neosound/pages/dashboard/calls-dashboard/calls-dashboard.component";
+import { TextsDashboardComponent } from "./neosound/pages/dashboard/texts-dashboard/texts-dashboard.component";
+
 import { SignupLinkComponent } from "./neosound/pages/auth/signup-link/signup-link.component";
 import { SignupDetailedComponent } from "./neosound/pages/auth/signup-detailed/signup-detailed.component";
 import { TermsComponent } from "./neosound/pages/auth/terms/terms.component";
@@ -35,6 +40,7 @@ import { QuickTestComponent } from "./neosound/pages/guest/quick-test/quick-test
 import { ResultsComponent } from "./neosound/pages/guest/results/results.component";
 import { AccountDetailsComponent } from "./neosound/pages/user/account-details/account-details.component";
 import { FilesListComponent } from "./neosound/pages/user/files-list/files-list.component";
+import { TextFilesListComponent } from "./neosound/pages/user/text-files-list/text-files-list.component";
 import { FileResultsComponent } from "./neosound/pages/user/file-results/file-results.component";
 import { LandingComponent } from "./neosound/pages/landing/landing.component";
 import { AdminDashboardComponent } from "./neosound/pages/admin/dashboard/dashboard.component";
@@ -49,7 +55,9 @@ import { AboutComponent } from "./neosound/pages/about/about.component";
 import { MinutesSecondsPipe } from "./neosound/minutes-seconds.pipe";
 
 import { FilesService } from "./neosound/services/files.service";
+import { UploadService } from "./neosound/services/upload.service";
 import { FilterService } from "./neosound/services/filter.service";
+import { TextFilterService } from "./neosound/services/text-filter.service";
 import { OrganizationSettingsService } from "./neosound/services/organization-settings.service";
 import { PlayerService } from "./neosound/services/player.service";
 import { AnalyticsService } from "./neosound/services/analytics.service";
@@ -126,6 +134,7 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     ResultsComponent,
     AccountDetailsComponent,
     FilesListComponent,
+    TextFilesListComponent,
     FileResultsComponent,
     LandingComponent,
     AdminDashboardComponent,
@@ -147,13 +156,12 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     TotalByQueriesChartPieComponent,
     TotalMinutesPlusBatchesChartBarComponent,
     KeywordsRadialTreeComponent,
-    // ForbiddenPasswordDirective,
-
-    //ngx-admin
-    //   NbAlertComponent,
+    CallsDashboardComponent,
+    TextsDashboardComponent,
   ],
   imports: [
     BrowserModule,
+
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
@@ -168,6 +176,7 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
+    TypeaheadModule.forRoot(),
     ButtonsModule.forRoot(),
 
     NgbModule.forRoot(),
@@ -175,11 +184,7 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     CoreModule.forRoot(),
 
     FileDropModule,
-    // NgxChartsModule,
-    // NgxEchartsModule,
     NgxChartsModule,
-    // ChartModule,
-    // PieChartModule,
     BarChartModule,
     ToastrModule.forRoot(),
     NgDatepickerModule,
@@ -197,6 +202,8 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     UsersService,
     FilesService,
     FilterService,
+    UploadService,
+    TextFilterService,
     OrganizationSettingsService,
     PlayerService,
     AnalyticsService,

@@ -8,20 +8,19 @@ import {
   ElementRef
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
-import { FilterService } from "../../../services/filter.service";
+import { TextFilterService } from "../../../services/text-filter.service";
 import { AnalyticsService } from "../../../services/analytics.service";
 import { DatepickerOptions } from "ng2-datepicker";
 import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import { LanguageService } from "../../../services/language.service";
-import { Subscription } from "rxjs";
 import { DataService } from "../../../shared";
 
 @Component({
-  selector: "app-files-list",
-  templateUrl: "./files-list.component.html",
-  styleUrls: ["./files-list.component.scss"]
+  selector: "app-text-files-list",
+  templateUrl: "./text-files-list.component.html",
+  styleUrls: ["./text-files-list.component.scss"]
 })
-export class FilesListComponent implements OnInit, AfterViewInit {
+export class TextFilesListComponent implements OnInit, AfterViewInit {
   @ViewChild("scroll") scrollTo: ElementRef;
   errorMessage = "";
   isLoading = true;
@@ -68,7 +67,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private filesService: FilesService,
-    public filterService: FilterService,
+    public filterService: TextFilterService,
     private cd: ChangeDetectorRef,
     private dataService: DataService,
     private modalService: BsModalService,
@@ -107,15 +106,13 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.filterService.updateFileList();
   }
 
-  delete(batchid, filename) {
+  delete(id) {
     this.analyticsService.trackEvent("fileList", "delete");
-    this.filterService.deteleFile(batchid, filename);
+    this.filterService.deteleFile(id);
   }
 
   getLink(item) {
-    return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
-      item.fileid
-    )}`;
+    return `/text/${encodeURIComponent(item.id)}`;
   }
 
   proccessFile(item) {
@@ -174,15 +171,10 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   sortTable(sortBy) {
     this.analyticsService.trackEvent("sortTable", sortBy);
-    if (sortBy !== this.filterService.filter.sortby) {
+    if(this.filterService.filter.sortorder === "desc") {
       this.filterService.filter.sortorder = "asc";
     } else {
-      if(this.filterService.filter.sortorder === "desc") {
-        this.filterService.filter.sortorder = "asc";
-      } else {
-        this.filterService.filter.sortorder = "desc";
-      }
-
+      this.filterService.filter.sortorder = "desc";
     }
 
     this.filterService.filter.sortby = sortBy;
@@ -304,9 +296,9 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.hideModal();
   }
 
-  markFavorite(item) {
-    this.analyticsService.trackEvent("fileList", "markFavorite");
-    this.filterService.markFavorite(item.batchid, item.filename);
+  markFavorite(id, filename) {
+    this.analyticsService.trackEvent("textFileList", "markFavorite");
+    this.filterService.markFavorite(id, filename);
   }
 
   getBool(v) {

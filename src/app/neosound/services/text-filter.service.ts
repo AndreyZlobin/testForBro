@@ -3,7 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { FilesService } from "./files.service";
 
 @Injectable()
-export class FilterService {
+export class TextFilterService {
   public fileStore: any = [];
   private filesSubject = new BehaviorSubject<any[]>([]);
   public files = this.filesSubject.asObservable();
@@ -178,7 +178,7 @@ export class FilterService {
   updateFileList(): void {
     this.isLoading = true;
     const params = this.getFilterParams();
-    this.filesService.listFilesPage(params).subscribe(data => {
+    this.filesService.listTextFilesPage(params).subscribe(data => {
       if (data && data.files) {
         this.totalcount = data.totalcount;
         this.pagecount = data.pagecount;
@@ -213,21 +213,12 @@ export class FilterService {
     return [];
   }
 
-  public deteleFile(batchid, filename) {
-    const index = this.fileStore.findIndex(
-      item => item.batchid === batchid && item.filename === filename
-    );
+  public deteleFile(id) {
+    const index = this.fileStore.findIndex(item => item.id === id);
     if (index !== -1) {
-      this.fileStore = this.fileStore.filter(function(value, i, arr) {
-        return index !== i;
-      });
+      this.fileStore = this.fileStore.filter((item, i) => i !== index);
       this.filesSubject.next(this.fileStore);
-      this.filesService
-        .deleteFile({
-          batchid,
-          filename
-        })
-        .subscribe();
+      this.filesService.deleteTextFile(id).subscribe();
     }
   }
   public processFile(batchid, filename) {
@@ -283,9 +274,9 @@ export class FilterService {
     this.updateFileList();
   }
 
-  markFavorite(batchid, filename) {
+  markFavorite(id, filename) {
     const index = this.fileStore.findIndex(
-      item => item.batchid === batchid && item.filename === filename
+      item => item.id === id
     );
     if (index !== -1) {
       const pin = `${!(this.fileStore[index].pin === "true")}`;
@@ -293,10 +284,8 @@ export class FilterService {
       this.filesSubject.next(this.fileStore);
       const params = {
         fileid: {
-          batchid,
-          fileid: filename
+          id
         },
-
         fileinfo: {
           filename,
           comment: "",
@@ -304,7 +293,7 @@ export class FilterService {
           tags: this.fileStore[index].tags || []
         }
       };
-      this.filesService.updateFileInfo(params).subscribe();
+      this.filesService.updateTextFileInfo(params).subscribe();
     }
   }
   setTags(index, tags) {
@@ -314,41 +303,36 @@ export class FilterService {
       this.filesSubject.next(this.fileStore);
       const params = {
         fileid: {
-          batchid: this.fileStore[index].batchid,
-          fileid: this.fileStore[index].filename
+          id: this.fileStore[index].id
         },
         fileinfo: {
           filename: this.fileStore[index].filename,
           comment: "",
           pin: this.fileStore[index].pin,
-          tags: tags
+          tags: tags || []
         }
       };
-      this.filesService.updateFileInfo(params).subscribe();
+      this.filesService.updateTextFileInfo(params).subscribe();
     }
   }
 
-  getNextLink(fileName: string, batchId: string): string {
+  getNextLink(fileId: string): string {
     if (this.fileStore && this.fileStore.length) {
-      const index = this.fileStore.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
+      const index = this.fileStore.findIndex(file => file.id === fileId);
 
       if (index !== -1 && this.fileStore[index + 1]) {
-        return `/file/${this.fileStore[index + 1].batchid}/${this.fileStore[index + 1].filename}`;
+        return `/text/${this.fileStore[index + 1].id}`;
       }
       return "";
     } else {
       return "";
     }
   }
-  getPrevLink(fileName: string, batchId: string): string {
+  getPrevLink(fileId: string): string {
     if (this.fileStore && this.fileStore.length) {
-      const index = this.fileStore.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
+      const index = this.fileStore.findIndex(file => file.id === fileId);
       if (index !== -1 && this.fileStore[index - 1]) {
-        return `/file/${this.fileStore[index - 1].batchid}/${this.fileStore[index - 1].filename}`;
+        return `/text/${this.fileStore[index - 1].id}`;
       }
       return "";
     } else {
@@ -356,24 +340,20 @@ export class FilterService {
     }
   }
 
-  hasNextLink(fileName: string, batchId: string): boolean {
+  hasNextLink(fileId: string): boolean {
     let res = true;
     if (this.fileStore && this.fileStore.length) {
-      const index = this.fileStore.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
+      const index = this.fileStore.findIndex(file => file.id === fileId);
       if (index !== -1 && this.fileStore[index + 1]) {
         res = false;
       }
     }
     return res;
   }
-  hasPrevLink(fileName: string, batchId: string): boolean {
+  hasPrevLink(fileId: string): boolean {
     let res = true;
     if (this.fileStore && this.fileStore.length) {
-      const index = this.fileStore.findIndex(
-        file => file.filename === fileName && file.batchid === batchId
-      );
+      const index = this.fileStore.findIndex(file => file.id === fileId);
       if (index !== -1 && this.fileStore[index - 1]) {
         res = false;
       }
