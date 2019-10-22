@@ -64,6 +64,10 @@ export class FilesService {
     params = params || {};
     return this.http.post(`${environment.api}/fileStats`, params);
   }
+  getTextStats(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/textStats`, params);
+  }
   getEchartData(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/getEchartData`, params);
@@ -80,6 +84,12 @@ export class FilesService {
     params = params || {};
     return this.http.post(`${environment.api}/tagCloud `, params);
   }
+  getTextStopwords(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/textStopwords `, params);
+  }
+
+
 
   deleteFile(params): Observable<any> {
     params = params || {
