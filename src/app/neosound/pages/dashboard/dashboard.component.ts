@@ -10,6 +10,8 @@ import { DataService } from "../../shared";
 import { AnalyticsService } from "../../services/analytics.service";
 import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
+import * as moment from "moment";
+import { setTime } from "ngx-bootstrap/chronos/utils/date-setters";
 
 export const colors = [
   "#c12e34",
@@ -85,6 +87,7 @@ export class DashboardComponent implements OnInit {
   public dateTo: any;
   public dateFromModel: any;
   public dateToModel: any;
+  public loading: boolean = true;
   constructor(
     private router: Router,
     private filesService: FilesService,
@@ -94,11 +97,11 @@ export class DashboardComponent implements OnInit {
     public dataService: DataService,
     private filterService: FilterService,
     private modalService: BsModalService
-  ) {
-  }
+  ) {}
   ngOnInit() {
     this.listCallsBatches();
     this.listTextBatches();
+    this.loading = false;
   }
   listCallsBatches() {
     this.filesService.listBatches().subscribe(data => {
@@ -116,9 +119,14 @@ export class DashboardComponent implements OnInit {
   }
   updateData() {
     this.hideModal();
+
+    this.loading = true;
     this.type = this.modalType;
-    this.dateFrom = this.dateFromModel;
-    this.dateTo = this.dateToModel;
+    this.dateFrom = moment(this.dateFromModel).format("YYYY-MM-DD");
+    this.dateTo = moment(this.dateToModel).format("YYYY-MM-DD");
+    setTimeout(() => {
+      this.loading = false;
+    }, 10);
   }
   t(v) {
     return LanguageService.t(v);

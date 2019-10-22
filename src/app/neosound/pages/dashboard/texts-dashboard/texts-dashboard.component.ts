@@ -119,7 +119,13 @@ export class TextsDashboardComponent implements OnInit, OnChanges {
   setColors() {
     this.colors = colors;
   }
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.dataService.config["colors"].secondary) {
+      this.primiryColor = this.dataService.config["colors"].secondary;
+    } else {
+      this.primiryColor = "#0098d9";
+    }
+  }
   ngOnChanges(changes: SimpleChanges) {
     const params = {
       source: "emails"
@@ -223,7 +229,7 @@ export class TextsDashboardComponent implements OnInit, OnChanges {
           ];
 
           this.barChart = {
-            color: this.colors,
+            color: this.primiryColor,
             grid: {
               left: 100
             },
@@ -267,7 +273,7 @@ export class TextsDashboardComponent implements OnInit, OnChanges {
             });
           });
           this.byDay = {
-            color: ["#c12e34", "#e6b600", "#0098d9"],
+            color: this.primiryColor,
             tooltip: {
               trigger: "axis",
               axisPointer: {
