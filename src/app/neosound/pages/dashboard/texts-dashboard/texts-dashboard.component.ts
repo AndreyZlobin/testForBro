@@ -50,40 +50,23 @@ const fullColorHex = (r, g, b) => {
 export class TextsDashboardComponent implements OnInit, OnChanges {
   @Input() dateFrom: string;
   @Input() dateTo: string;
-  datePickerFromOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("from"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-first", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
 
-  datePickerToOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("to"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-last", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
   loading: boolean = true;
   colors: string[] = [];
   primiryColor: string = "#3399cc";
+  hasSankey: boolean = false;
+  sankey1: any;
+  sankey2: any;
+  sankey3: any;
+  radialTreeData: any;
+  showRadialTreeData: boolean = false;
+  sankey4: any;
+  sankey5: any;
+  sankey6: any;
+  sankey7: any;
+  keywords2 = [];
+  showHitsVsStopwors: boolean = false;
+  freqWords = [];
 
   options: any = {};
   options2: any = {};
@@ -139,6 +122,8 @@ export class TextsDashboardComponent implements OnInit, OnChanges {
     this.getTextStats(params);
     this.getApiCallsStats(params);
     this.getTextStopwords(params);
+    this.getEchartData(params);
+
     this.loading = true;
   }
   private getRadius(r, minR, maxR) {
@@ -149,6 +134,307 @@ export class TextsDashboardComponent implements OnInit, OnChanges {
     } else {
       return Math.floor(20 + (40 * r) / maxR);
     }
+  }
+  getEchartData(param: any = { source: "emails" }) {
+    this.filesService.getEchartData(param).subscribe(data => {
+      if (data) {
+        this.hasSankey = true;
+      }
+      if (data.words) {
+        this.sankey1 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          lineStyle: {
+            normal: {
+              curveness: 0.5
+            }
+          },
+          levels: [
+            {
+              depth: 0,
+              itemStyle: {
+                color: "#fbb4ae"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            },
+            {
+              depth: 1,
+              itemStyle: {
+                color: "#b3cde3"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            },
+            {
+              depth: 2,
+              itemStyle: {
+                color: "#ccebc5"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            },
+            {
+              depth: 3,
+              itemStyle: {
+                color: "#decbe4"
+              },
+              lineStyle: {
+                color: "source",
+                opacity: 0.6
+              }
+            }
+          ],
+          color: this.colors,
+          graph: {
+            color: this.colors
+          },
+          series: {
+            type: "sankey",
+            data: data.words.nodes,
+            links: data.words.links,
+            layout: "none",
+            focusNodeAdjacency: "allEdges",
+            coordinateSystem: "view",
+            draggable: true,
+            itemStyle: {
+              normal: {
+                borderWidth: 1,
+                borderColor: "#aaa"
+              }
+            },
+            lineStyle: {
+              normal: {
+                color: "source",
+                curveness: 0.5
+              }
+            }
+          }
+        };
+      }
+      if (data.nouns) {
+        this.sankey2 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: this.colors,
+          graph: {
+            color: this.colors
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.nouns.nodes,
+              links: data.nouns.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+      }
+      if (data.adjs) {
+        this.sankey3 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: this.colors,
+          graph: {
+            color: this.colors
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.adjs.nodes,
+              links: data.adjs.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+      }
+      if (data.treeRadialData && data.treeRadialData.name) {
+        this.radialTreeData = data.treeRadialData;
+        this.showRadialTreeData = true;
+      }
+      if (data.verbs) {
+        this.sankey4 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: this.colors,
+          graph: {
+            color: this.colors
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.verbs.nodes,
+              links: data.verbs.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+      }
+      if (data.wordsParts) {
+        this.sankey5 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: this.colors,
+          graph: {
+            color: this.colors
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.wordsParts.nodes,
+              links: data.wordsParts.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+      }
+      if (data.wordsSent) {
+        this.sankey6 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: this.colors,
+          graph: {
+            color: this.colors
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.wordsSent.nodes.map(v => ({
+                ...v,
+                name: this.t(v.name)
+              })),
+              links: data.wordsSent.links.map(v => ({
+                ...v,
+                target: this.t(v.target)
+              })),
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+      }
+      if (data.adjsSent) {
+        this.sankey7 = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: this.colors,
+          graph: {
+            color: this.colors
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.adjsSent.nodes,
+              links: data.adjsSent.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+      }
+      if (data.popularWords) {
+        this.showHitsVsStopwors = true;
+        this.keywords2 = data.popularWords;
+        this.freqWords = data.popularWords
+          .map(item => {
+            return {
+              name: item.text,
+              value: item.weight
+            };
+          })
+          .sort((a, b) => b.value - a.value);
+      }
+    });
   }
   public logout() {
     this.router.navigateByUrl("/");
