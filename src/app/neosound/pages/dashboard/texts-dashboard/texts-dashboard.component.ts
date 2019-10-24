@@ -111,7 +111,7 @@ export class TextsDashboardComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges) {
     const params = {
-      source: "emails"
+      source: "email"
     };
     if (changes.dateFrom.currentValue) {
       params["dateFrom"] = changes.dateFrom.currentValue;
@@ -135,7 +135,7 @@ export class TextsDashboardComponent implements OnInit, OnChanges {
       return Math.floor(20 + (40 * r) / maxR);
     }
   }
-  getEchartData(param: any = { source: "emails" }) {
+  getEchartData(param: any = { source: "email" }) {
     this.filesService.getEchartData(param).subscribe(data => {
       if (data) {
         this.hasSankey = true;

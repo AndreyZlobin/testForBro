@@ -24,14 +24,6 @@
       <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'texts'}"
         (click)="modalType = 'texts'">{{t('Texts')}}</button>
     </div>
-    <div class="row" *ngIf="modalType === 'calls'">
-      <!-- <div class="col-12 py-3">
-        <div class="mb-2">{{t('Batch name')}}</div>
-        <input type="text" class="form-control form-control-lg" [(ngModel)]="selectedBatchId" [typeahead]="batches"
-          [typeaheadMinLength]="0" [ngModelOptions]="{standalone: true}">
-      </div> -->
-
-    </div>
     <div class="row">
       <div class="col-12 py-3">
         <div class="mb-2">{{t('Date range')}}</div>
@@ -41,11 +33,10 @@
           </ng-datepicker>
           <ng-datepicker [(ngModel)]="dateToModel" [options]="datePickerToOptions"
             class="form-control-bak form-control-lg-bak form-gr-last"></ng-datepicker>
+          <!-- <button type="button" class="close pull-right mx-2" aria-label="clear dates" (click)="clearDates()">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
         </div>
-      </div>
-    </div>
-    <div class="row" *ngIf="modalType === 'texts'">
-      <div class="col-6 pt-3">
       </div>
     </div>
     <div class="row">
