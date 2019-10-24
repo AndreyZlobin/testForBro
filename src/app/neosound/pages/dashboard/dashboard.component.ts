@@ -145,4 +145,9 @@ export class DashboardComponent implements OnInit {
       this.modalRef.hide();
     }
   }
+
+  clearDates() {
+    this.dateToModel = undefined;
+    this.dateFromModel = undefined;
+  }
 }
