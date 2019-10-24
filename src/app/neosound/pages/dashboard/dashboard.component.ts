@@ -122,8 +122,12 @@ export class DashboardComponent implements OnInit {
 
     this.loading = true;
     this.type = this.modalType;
-    this.dateFrom = moment(this.dateFromModel).format("YYYY-MM-DD");
-    this.dateTo = moment(this.dateToModel).format("YYYY-MM-DD");
+    if(this.dateFromModel) {
+      this.dateFrom = moment(this.dateFromModel).format("YYYY-MM-DD");
+    }
+    if(this.dateToModel) {
+      this.dateTo = moment(this.dateToModel).format("YYYY-MM-DD");
+    }
     setTimeout(() => {
       this.loading = false;
     }, 10);
