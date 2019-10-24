@@ -53,38 +53,7 @@ const fullColorHex = (r, g, b) => {
 export class CallsDashboardComponent implements OnInit, OnChanges {
   @Input() dateFrom: string;
   @Input() dateTo: string;
-  datePickerFromOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("from"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-first", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
-
-  datePickerToOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("to"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-last", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
-  modalType: string = "calls";
+  @Input() batches: string[];
   hasData: boolean = false;
   showConfig: boolean = false;
   modalRef: BsModalRef;
@@ -127,7 +96,6 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   radialTreeData: any;
   showRadialTreeData: boolean = false;
   primiryColor: string = "#3399cc";
-  batches: string[] = [];
   constructor(
     private router: Router,
     private filesService: FilesService,
@@ -789,6 +757,9 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     }
     if (changes.dateFrom.currentValue) {
       params["dateTo"] = changes.dateTo.currentValue;
+    }
+    if(changes.batches.currentValue) {
+      params["batches"] = changes.batches.currentValue;
     }
     this.loading = true;
     this.getMinutesStats(params);

@@ -1,6 +1,8 @@
 <div *ngIf="!loading; else loadingTemplate">
-  <app-calls-dashboard *ngIf="type === 'calls'" [dateTo]="dateTo" [dateFrom]="dateFrom"></app-calls-dashboard>
-  <app-texts-dashboard *ngIf="type === 'texts'" [dateTo]="dateTo" [dateFrom]="dateFrom"></app-texts-dashboard>
+  <app-calls-dashboard *ngIf="type === 'calls'" [batches]="batches" [dateTo]="dateTo" [dateFrom]="dateFrom">
+  </app-calls-dashboard>
+  <app-texts-dashboard *ngIf="type === 'texts'" [batches]="batches" [dateTo]="dateTo" [dateFrom]="dateFrom">
+  </app-texts-dashboard>
 </div>
 <ng-template #loadingTemplate>
   {{ t("Loading...") }}
@@ -20,11 +22,28 @@
   <div class="modal-body">
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'calls'}"
-        (click)="modalType = 'calls'">{{t('Calls')}}</button>
+        (click)="switchTabs('calls')">{{t('Calls')}}</button>
       <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'texts'}"
-        (click)="modalType = 'texts'">{{t('Texts')}}</button>
+        (click)="switchTabs('texts')">{{t('Texts')}}</button>
     </div>
     <div class="row">
+      <div class="col-12 py-3" *ngIf="modalType === 'calls'">
+        <input type="text" class="form-control" [typeahead]="batchesCalls" [typeaheadMinLength]="0"
+          class="form-control form-control-lg" [(ngModel)]="selectedValue" (typeaheadOnSelect)="onSelect($event)"
+          [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="col-12 py-3" *ngIf="modalType === 'texts'">
+        <input type="text" class="form-control" [typeahead]="batchesTexts" [typeaheadMinLength]="0"
+          class="form-control form-control-lg" [(ngModel)]="selectedValue" (typeaheadOnSelect)="onSelect($event)"
+          [ngModelOptions]="{standalone: true}">
+      </div>
+      <ul class="col-12 py-3 list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center w-100"
+          *ngFor="let id of selectedBatches">{{id}}<button type="button" class="close ml-2" aria-label="Close"
+            (click)="onRemove(id)">
+            <span aria-hidden="true">&times;</span>
+          </button></li>
+      </ul>
       <div class="col-12 py-3">
         <div class="mb-2">{{t('Date range')}}</div>
         <div class="input-group">
@@ -33,9 +52,6 @@
           </ng-datepicker>
           <ng-datepicker [(ngModel)]="dateToModel" [options]="datePickerToOptions"
             class="form-control-bak form-control-lg-bak form-gr-last"></ng-datepicker>
-          <!-- <button type="button" class="close pull-right mx-2" aria-label="clear dates" (click)="clearDates()">
-            <span aria-hidden="true">&times;</span>
-          </button> -->
         </div>
       </div>
     </div>

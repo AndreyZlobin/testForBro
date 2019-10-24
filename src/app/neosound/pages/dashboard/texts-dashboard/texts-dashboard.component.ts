@@ -50,6 +50,7 @@ const fullColorHex = (r, g, b) => {
 export class TextsDashboardComponent implements OnInit, OnChanges {
   @Input() dateFrom: string;
   @Input() dateTo: string;
+  @Input() batches: string[];
 
   loading: boolean = true;
   colors: string[] = [];
@@ -118,6 +119,9 @@ export class TextsDashboardComponent implements OnInit, OnChanges {
     }
     if (changes.dateFrom.currentValue) {
       params["dateTo"] = changes.dateTo.currentValue;
+    }
+    if(changes.batches.currentValue) {
+      params["batches"] = changes.batches.currentValue;
     }
     this.getTextStats(params);
     this.getApiCallsStats(params);
