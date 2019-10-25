@@ -11,7 +11,6 @@ import { AnalyticsService } from "../../services/analytics.service";
 import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
 import * as moment from "moment";
-import { setTime } from "ngx-bootstrap/chronos/utils/date-setters";
 
 export const colors = [
   "#c12e34",
@@ -45,7 +44,7 @@ const fullColorHex = (r, g, b) => {
   styleUrls: ["./dashboard.component.scss"]
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild("scroll") scrollTo: ElementRef;
+  selectedValue;
   datePickerFromOptions: DatepickerOptions = {
     minYear: 1970,
     maxYear: 2030,
@@ -82,7 +81,10 @@ export class DashboardComponent implements OnInit {
   modalRef: BsModalRef;
   batchesCalls: string[] = [];
   batchesTexts: string[] = [];
-  public selectedBatchId: string;
+  public batches: string[] = [];
+  public settingsCalls = { whitelist: []};
+  public settingsTexts = { whitelist: []};
+  public selectedBatches: string[] = [];
   public dateFrom: any;
   public dateTo: any;
   public dateFromModel: any;
@@ -101,11 +103,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.listCallsBatches();
     this.listTextBatches();
-    this.loading = false;
   }
   listCallsBatches() {
     this.filesService.listBatches().subscribe(data => {
       if (data && data.batches) {
+        this.loading = false;
         this.batchesCalls = data.batches;
       }
     });
@@ -113,6 +115,7 @@ export class DashboardComponent implements OnInit {
   listTextBatches() {
     this.filesService.listTextBatches().subscribe(data => {
       if (data && data.batches) {
+        this.loading = false;
         this.batchesTexts = data.batches;
       }
     });
@@ -122,8 +125,15 @@ export class DashboardComponent implements OnInit {
 
     this.loading = true;
     this.type = this.modalType;
-    this.dateFrom = moment(this.dateFromModel).format("YYYY-MM-DD");
-    this.dateTo = moment(this.dateToModel).format("YYYY-MM-DD");
+    if(this.selectedBatches) {
+      this.batches = this.selectedBatches;
+    }
+    if (this.dateFromModel) {
+      this.dateFrom = moment(this.dateFromModel).format("YYYY-MM-DD");
+    }
+    if (this.dateToModel) {
+      this.dateTo = moment(this.dateToModel).format("YYYY-MM-DD");
+    }
     setTimeout(() => {
       this.loading = false;
     }, 10);
@@ -135,10 +145,32 @@ export class DashboardComponent implements OnInit {
     this.hideModal();
     this.modalRef = this.modalService.show(ref, {});
   }
-
+  switchTabs(tabName) {
+    this.modalType = tabName;
+    this.selectedBatches = [];
+    this.batches = [];
+    this.selectedValue = '';
+  }
   hideModal() {
     if (this.modalRef) {
       this.modalRef.hide();
     }
+  }
+  clearDates() {
+    this.dateToModel = undefined;
+    this.dateFromModel = undefined;
+  }
+
+  onSelect(tag: any) {
+    this.selectedValue = '';
+    const deduplicate = new Set([
+      ...this.selectedBatches,
+      tag.value
+    ]);
+    this.selectedBatches = Array.from(deduplicate);
+  }
+
+  onRemove(tag: string) {
+    this.selectedBatches = this.selectedBatches.filter(id => id !== tag);
   }
 }

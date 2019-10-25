@@ -85,7 +85,6 @@ import { NbAlertModule, NbInputModule } from "@nebular/theme";
 import { ToastrModule } from "ngx-toastr";
 import { NgDatepickerModule } from "ng2-datepicker";
 import { TagInputModule } from 'ngx-chips';
-
 const formSetting: any = {
   redirectDelay: 0,
   showMessages: {
@@ -115,6 +114,7 @@ import { TotalMinutesChartBarComponent } from './neosound/pages/charts/total-min
 import { TotalByQueriesChartPieComponent } from './neosound/pages/charts/total-by-queries-chart-pie/total-by-queries-chart-pie.component';
 import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/charts/total-minutes-plus-batches-chart-bar/total-minutes-plus-batches-chart-bar.component';
 import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-radial-tree/keywords-radial-tree.component';
+import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.component";
 
 @NgModule({
   declarations: [
@@ -128,7 +128,7 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     TermsComponent,
     ForgotPasswordComponent,
     PlayerComponent,
-
+    TagifyComponent,
     UserDetailsComponent,
     QuickTestComponent,
     ResultsComponent,
@@ -158,6 +158,7 @@ import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-ra
     KeywordsRadialTreeComponent,
     CallsDashboardComponent,
     TextsDashboardComponent,
+    TagifyComponent,
   ],
   imports: [
     BrowserModule,
