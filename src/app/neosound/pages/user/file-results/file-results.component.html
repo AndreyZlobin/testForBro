@@ -19,16 +19,14 @@
       </div>
     </div>
     <nb-tabset>
-      <nb-tab tabTitle="Text">
-        <div class="d-flex flex-column">
-          <div class="mt-3" *ngIf="!isLoading; else spinner">
-            <div [innerHTML]="fullText"></div>
-          </div>
-        </div>
-      </nb-tab>
       <nb-tab tabTitle="Analytics">
         <div class="d-flex flex-column" *ngIf="!isLoading; else spinner">
           <div class="row">
+            <div class="col-12 mt-3 mb-3" *ngIf="sankey">
+              <div class="mt-3">
+                <div [innerHTML]="fullText"></div>
+              </div>
+            </div>
             <div class="col-6 mt-3 mb-3" *ngIf="sankey">
               <div class="card">
                 <div class="card-header">Sankey</div>

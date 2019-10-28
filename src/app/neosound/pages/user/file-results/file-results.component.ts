@@ -30,6 +30,7 @@ export class FileResultsComponent implements OnInit {
     transitionTime: 1.2,
     delay: 0.1
   };
+
   colors = colors;
   filename;
   isLoading: boolean = true;
