@@ -1,84 +1,92 @@
 <nb-card>
   <nb-card-body>
-    <div class="player-details">
+    <div>
       <div class="alert alert-danger" *ngIf="errorMessage">
         {{ t("Error:") }} {{ t(errorMessage) }}
       </div>
-      <div [ngClass]="{ 'd-none': currentTab === 'results' }">
-        <ng-container *ngIf="fileParams.filename && fileParams.batchid && fileUrl; else empty">
-          <ngx-player [fileName]="fileParams.filename" [batchId]="fileParams.batchid" [fileUrl]="fileUrl" (ready)="pushRegions()"></ngx-player>
-        </ng-container>
-        <ng-template #empty>
-          <div style="height: 160px; width: 100%"></div>
-        </ng-template>
-        <div class="d-flex justify-content-start my-2" *ngIf="currentTab !== 'results'">
-          <div class="btn-group mt-2" *ngIf="emotions && currentTab === 'text'">
-            <label class="btn btn-secondary" [(ngModel)]="radioModel" btnRadio="Log" tabindex="0"
-              role="button">{{t('Log')}}</label>
-            <label class="btn btn-secondary" [(ngModel)]="radioModel" btnRadio="Text" tabindex="0"
-              role="button">{{t('Text')}}</label>
-            <label class="btn btn-secondary" [(ngModel)]="radioModel" btnRadio="KeyWords" tabindex="0"
-              role="button">{{t('Keywords')}}</label>
-          </div>
+      <div>
+        <div class="d-flex flex-row py-3">
+          <button class="btn btm-sm btn-primary mr-2" style="cursor: pointer;"
+            [disabled]=" filterService.hasPrevLink(fileParams.filename, fileParams.batchid)"
+            [routerLink]="filterService.getPrevLink(fileParams.filename, fileParams.batchid)">
+            <i class="fa fa-step-backward"></i>
+          </button>
+          <button class="btn btm-sm btn-primary mr-2" style="cursor: pointer;"
+            [disabled]="filterService.hasNextLink(fileParams.filename, fileParams.batchid)"
+            [routerLink]="filterService.getNextLink(fileParams.filename, fileParams.batchid)">
+            <i class="fa fa-step-forward"></i>
+          </button>
+          <h2 class="text-truncate" style="max-width: 60vw;">
+            {{ fileParams.filename }}
+          </h2>
+          <button class="btn btm-sm btn-secondary ml-auto" style="cursor: pointer;" routerLink="/user/files">
+            {{ t("Back to List") }}
+          </button>
         </div>
       </div>
-      <div *ngIf="emotions && currentTab !== 'results' && currentTab !== 'text'" class="mt-2">
-        <div class="scrollable-list table-responsive">
-          <table class="table table-striped" style="overflow-x:auto">
-            <ng-container *ngFor="let item of emotions">
-              <tr (click)="gotoPosition(item[0])" class="d-flex">
-                <td class="col-1">
-                  {{ getDateVal(item[0]) | date: "mm:ss" }} -
-                  {{ getDateVal(item[1]) | date: "mm:ss" }}
-                </td>
-                <td class="col-10">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-                <td class="col-1"><span *ngIf="item[3]">{{ item[3] | currency: "%":"symbol":"1.2-2" }}</span></td>
-              </tr>
+      <nb-tabset>
+        <nb-tab tabTitle="Player">
+          <div class="d-flex flex-column">
+            <ng-container *ngIf="fileParams.filename && fileParams.batchid && fileUrl; else empty">
+              <ngx-player [fileName]="fileParams.filename" [batchId]="fileParams.batchid" [fileUrl]="fileUrl"
+                (ready)="pushRegions()"></ngx-player>
             </ng-container>
-          </table>
-        </div>
-      </div>
-      <div *ngIf="emotions && currentTab === 'text'" class="mt-2">
-        <div class="scrollable-list table-responsive">
-          <ng-container *ngIf="radioModel === 'Log'">
-            <table class="table" style="overflow-x:auto">
-              <ng-container *ngFor="let item of emotions">
-                <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]"
-                  [ngClass]="{'grey': item[5] && greySpeaker && item[5] == greySpeaker}">
-                  <td class="col-1">
-                    {{ getDateVal(item[0]) | date: "mm:ss" }} -
-                    {{ getDateVal(item[1]) | date: "mm:ss" }}
-                  </td>
-                  <td class="col-10"><span [innerHTML]=t(item[2])></span></td>
-                  <td class="col-1">
-                    <span *ngIf="item[3]">
-                      {{ item[3] | currency: "%":"symbol":"1.2-2" }}
-                    </span>
-                  </td>
-                </tr>
-              </ng-container>
-            </table>
-          </ng-container>
-          <ng-container *ngIf="radioModel === 'Text'">
-            <div class="mt-2">
-              <button type="button" class="btn btn-dark" (click)="copyToClipboard(sttfulltext)"
-                style="position: absolute; right: 20px;bottom: 20px;">
-                <i class="fa fa-copy"></i>
-              </button>
-              <span [innerHTML]=sttfulltext></span>
+            <div>
+              <div>
+                <table class="table">
+                  <ng-container *ngFor="let item of emotions">
+                    <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]"
+                      [ngClass]="{'grey': item[5] && greySpeaker && item[5] == greySpeaker}">
+                      <td class="col-1">
+                        {{ getDateVal(item[0]) | date: "mm:ss" }} -
+                        {{ getDateVal(item[1]) | date: "mm:ss" }}
+                      </td>
+                      <td class="col-10"><span [innerHTML]=t(item[2])></span></td>
+                      <td class="col-1">
+                        <span *ngIf="item[3]">
+                          {{ item[3] | currency: "%":"symbol":"1.2-2" }}
+                        </span>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </table>
+              </div>
             </div>
-          </ng-container>
-          <ng-container *ngIf="radioModel === 'KeyWords'">
-            <div class="mt-2">
-              <div class="row">
-                <div class="col">
-                  <h4 class="ml-4 mb-3">{{t("Stopwords")}}</h4>
-                  <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let keyword of keywords">{{keyword}}</li>
+          </div>
+        </nb-tab>
+        <nb-tab tabTitle="Analitics">
+          <div class="row">
+            <div class="col-12 mb-3" *ngIf="sttfulltext">
+              <div class="card">
+                <div class="card-header">{{t('Text')}}</div>
+                <div class="card-body">
+                  <div class="mt-2">
+                    <button type="button" class="btn btn-dark" (click)="copyToClipboard(sttfulltext)"
+                      style="position: absolute; right: 20px;bottom: 20px;">
+                      <i class="fa fa-copy"></i>
+                    </button>
+                    <span [innerHTML]=sttfulltext></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 mb-3" *ngIf="popularWords">
+              <div class="card">
+                <div class="card-header">{{t('Stopwords')}}</div>
+                <div class="card-body">
+                  <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
+                    <li class="list-group-item d-flex" *ngFor="let popularWord of popularWords" style="color: #211b19">
+                      <span>{{popularWord.text}}</span>
+                      <span class="ml-auto">{{popularWord.value}}</span>
+                    </li>
                   </ul>
                 </div>
-                <div class="col" *ngIf="misswordsNotFound.length || misswords.length">
-                  <h4 class="ml-4 mb-3">{{t("Compliance")}} {{getCompliancePercents()}}</h4>
+              </div>
+            </div>
+            <div class="col-6 mb-3" *ngIf="misswordsNotFound.length || misswords.length">
+              <div class="card">
+                <div class="card-header">{{t("Compliance")}} {{getCompliancePercents()}}</div>
+                <div class="card-body">
                   <ul class="list-group">
                     <li class="list-group-item" *ngFor="let missword of misswordsNotFound">
                       <i class="fa fa-times m-r-5 text-danger"></i> {{missword}}
@@ -90,9 +98,52 @@
                 </div>
               </div>
             </div>
-          </ng-container>
-        </div>
-      </div>
+            <div class="col-6 mb-3">
+              <div class="card">
+                <div class="card-header">{{t('Sankey Diagram')}}</div>
+                <div class="card-body">
+                  <div echarts [options]="sankey"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 mb-3">
+              <div class="card">
+                <div class="card-header">{{t('Keywords and phases')}}</div>
+                <div class="card-body">
+                  <div echarts [options]="treeRadialData">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 mb-3" *ngIf="popularWords">
+              <div class="card">
+                <div class="card-header">{{t('Most frequency used words')}}</div>
+                <div class="card-body">
+                  <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
+                    <li class="list-group-item d-flex" *ngFor="let popularWord of popularWords" style="color: #211b19">
+                      <span>{{popularWord.text}}</span>
+                      <span class="ml-auto">{{popularWord.value}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 mb-3" *ngIf="popularWords">
+              <div class="card">
+                <div class="card-header">{{t('Hits vs words')}}</div>
+                <div class="card-body">
+                  <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
+                    <li class="list-group-item d-flex" *ngFor="let popularWord of popularWords" style="color: #211b19">
+                      <span>{{popularWord.text}}</span>
+                      <span class="ml-auto">{{popularWord.value}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nb-tab>
+      </nb-tabset>
       <ng-template #loading>
         {{ t("Loading...") }}
       </ng-template>

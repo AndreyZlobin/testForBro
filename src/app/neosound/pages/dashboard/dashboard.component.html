@@ -28,7 +28,7 @@
     </div>
     <div class="row">
       <div class="col-12 py-3" *ngIf="modalType === 'calls'">
-        <input type="text" class="form-control" [typeahead]="batchesCalls" [typeaheadMinLength]="0"
+        <input type="text" placeholder="Batch name" class="form-control" [typeahead]="batchesCalls" [typeaheadMinLength]="0"
           class="form-control form-control-lg" [(ngModel)]="selectedValue" (typeaheadOnSelect)="onSelect($event)"
           [ngModelOptions]="{standalone: true}">
       </div>

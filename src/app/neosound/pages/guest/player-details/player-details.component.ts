@@ -17,6 +17,17 @@ import { ToastrService } from "ngx-toastr";
 import { DataService } from "../../../shared";
 import { PlayerComponent } from "./player/player.component";
 
+export const colors = [
+  "#c12e34",
+  "#0098d9",
+  "#e6b600",
+  "#2b821d",
+  "#005eaa",
+  "#339ca8",
+  "#cda819",
+  "#32a487"
+];
+
 @Component({
   selector: "ngx-player-details",
   templateUrl: "./player-details.component.html",
@@ -26,10 +37,123 @@ export class PlayerDetailsComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(PlayerComponent)
   player: PlayerComponent;
+  stopwords: ["tets1", "test2"];
+  colors = colors;
+  sankey = {
+    tooltip: {
+      trigger: "item",
+      triggerOn: "mousemove"
+    },
+    color: this.colors,
+    graph: {
+      color: this.colors
+    },
+    series: [
+      {
+        type: "sankey",
+        data: [
+          { name: "sentiment" },
+          { name: "Neutral" },
+          { name: "call" },
+          { name: "Negative" },
+          { name: "want" }
+        ],
+        links: [
+          { source: "sentiment", target: "Neutral", value: 2 },
+          { source: "Neutral", target: "call", value: 2 },
+          { source: "sentiment", target: "Negative", value: 1 },
+          { source: "Negative", target: "want", value: 1 }
+        ],
+        focusNodeAdjacency: "allEdges",
+        itemStyle: {
+          normal: {
+            borderWidth: 1,
+            borderColor: "#aaa"
+          }
+        },
+        lineStyle: {
+          normal: {
+            color: "source",
+            curveness: 0.5
+          }
+        }
+      }
+    ]
+  };
   isLoading: boolean = true;
   fileParams;
   results;
-  emotions: any[];
+  treeRadialData: any = {
+    color: this.colors,
+    tooltip: {
+      trigger: "item",
+      triggerOn: "mousemove"
+    },
+    series: [
+      {
+        type: "tree",
+        data: [
+          {
+            name: "sentiment",
+            children: [
+              {
+                name: "Neutral",
+                children: [
+                  {
+                    name: "call",
+                    value: 2,
+                    children: [
+                      {
+                        name: "who \u0027s calling my name \u0027s hayley",
+                        value: 1
+                      },
+                      {
+                        name:
+                          "i \u0027m calling from lindsay wealth part of delenn degrees how \u0027re you doing",
+                        value: 1
+                      }
+                    ]
+                  }
+                ],
+                value: 2
+              },
+              {
+                name: "Negative",
+                children: [
+                  {
+                    name: "want",
+                    value: 1,
+                    children: [
+                      {
+                        name: "not that i wanted to do staff no",
+                        value: 1
+                      }
+                    ]
+                  }
+                ],
+                value: 1
+              }
+            ],
+            value: 3
+          }
+        ],
+        top: "18%",
+        bottom: "14%",
+        layout: "radial",
+        symbol: "emptyCircle",
+        symbolSize: 7,
+        initialTreeDepth: 1,
+        animationDurationUpdate: 750
+      }
+    ]
+  };
+  popularWords: any[] = [
+    { text: "yeah", weight: 100 },
+    { text: "know", weight: 22 },
+    { text: "okay", weight: 33 },
+    { text: "get", weight: 44 }
+  ];
+  emotions: any[] = [];
   intervalRef;
   analysisResult;
   chartData;
@@ -71,9 +195,7 @@ export class PlayerDetailsComponent
     private filterService: FilterService,
     private router: Router,
     private route: ActivatedRoute,
-    private playerService: PlayerService,
     private toastrService: ToastrService,
-    private cdRef: ChangeDetectorRef,
     private dataService: DataService
   ) {
     this.router.events.forEach(event => {
@@ -206,7 +328,6 @@ export class PlayerDetailsComponent
   }
 
   setRegions(): void {
-
     const inputData = this.emotionsSounds
       ? this.emotions.concat(this.emotionsSounds)
       : this.emotions;
