@@ -233,7 +233,6 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   }
 
   showModal(ref, modalType, newModal = true) {
-    debugger;
     this.successMessage = "";
     this.modalType = modalType;
     this.selectedBatchId = "";

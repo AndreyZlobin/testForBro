@@ -36,6 +36,7 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   @Output() ready: EventEmitter<any> = new EventEmitter<any>();
   public regions = [];
   private color;
+  playing: boolean = false;
 
   constructor(
     public filesService: FilesService,
@@ -137,6 +138,7 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     });
   }
   play() {
+    this.playing = !this.playing;
     this.wavesurfer && this.wavesurfer.playPause();
   }
   seekTo(ms) {

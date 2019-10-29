@@ -17,6 +17,17 @@ import { ToastrService } from "ngx-toastr";
 import { DataService } from "../../../shared";
 import { PlayerComponent } from "./player/player.component";
 
+export const colors = [
+  "#c12e34",
+  "#0098d9",
+  "#e6b600",
+  "#2b821d",
+  "#005eaa",
+  "#339ca8",
+  "#cda819",
+  "#32a487"
+];
+
 @Component({
   selector: "ngx-player-details",
   templateUrl: "./player-details.component.html",
@@ -26,10 +37,20 @@ export class PlayerDetailsComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(PlayerComponent)
   player: PlayerComponent;
+  public zoomOptions = {
+    scale: 1.3,
+    transitionTime: 1.2,
+    delay: 0.1
+  };
+  currentView: string;
+  colors = colors;
+  sankey: any;
   isLoading: boolean = true;
   fileParams;
   results;
-  emotions: any[];
+  treeRadialData: any;
+  popularWords: any;
+  emotions: any[] = [];
   intervalRef;
   analysisResult;
   chartData;
@@ -71,15 +92,14 @@ export class PlayerDetailsComponent
     private filterService: FilterService,
     private router: Router,
     private route: ActivatedRoute,
-    private playerService: PlayerService,
     private toastrService: ToastrService,
-    private cdRef: ChangeDetectorRef,
     private dataService: DataService
   ) {
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
         this.fileUrl = null;
         this.regions = [];
+        this.currentView = "analytic";
         if (event.url.startsWith("/file/")) {
           const batchid = this.route.snapshot.params["batchid"];
           const filename = this.route.snapshot.params["filename"];
@@ -101,6 +121,7 @@ export class PlayerDetailsComponent
                 this.fileUrl = res.url;
                 this.changed = true;
                 this.getInfo();
+                this.getAnalytics(this.fileParams.batchid, this.fileParams.filename);
               },
               e => {
                 this.errorMessage = e.error.message;
@@ -120,6 +141,16 @@ export class PlayerDetailsComponent
     return element ? element.guid : null;
   }
   ngOnInit() {}
+  changeTab(event: any): void {
+    if (this.currentView === "player") {
+      this.currentView = "analytic";
+      return;
+    }
+    if (this.currentView === "analytic") {
+      this.currentView = "player";
+      return;
+    }
+  }
 
   copyToClipboard(text: string): void {
     const selBox = document.createElement("textarea");
@@ -149,7 +180,6 @@ export class PlayerDetailsComponent
             if (this.results.result.anger.ints) {
               this.emotionsAnger = this.results.result.anger.ints;
               this.emotions = this.emotionsAnger;
-              this.setTab("anger");
             }
             if (this.results.result.anger.music) {
               this.emotionsSounds = this.results.result.anger.music;
@@ -189,7 +219,6 @@ export class PlayerDetailsComponent
             if (this.results.result.merged.intprobs) {
               this.emotionsSttAnger = this.results.result.merged.intprobs;
               this.emotions = this.emotionsSttAnger;
-              this.setTab("text");
             }
           }
         }
@@ -206,7 +235,6 @@ export class PlayerDetailsComponent
   }
 
   setRegions(): void {
-
     const inputData = this.emotionsSounds
       ? this.emotions.concat(this.emotionsSounds)
       : this.emotions;
@@ -311,35 +339,6 @@ export class PlayerDetailsComponent
 
   ngOnDestroy() {}
 
-  setTab(tab) {
-    this.currentTab = tab;
-    this.tabsDisabled = true;
-    setTimeout(() => (this.tabsDisabled = false), 3000);
-    switch (tab) {
-      case "anger":
-        this.emotions = this.emotionsAnger;
-        break;
-      case "age":
-        this.emotions = this.emotionsAge;
-        break;
-      case "gender":
-        this.emotions = this.emotionsGender;
-        break;
-      case "beta":
-        this.emotions = this.emotionsFourclass;
-        break;
-      case "sounds":
-        this.emotions = this.emotionsSounds;
-        break;
-      case "text":
-        this.emotions = this.emotionsSttAnger;
-        break;
-
-      default:
-        break;
-    }
-  }
-
   t(v) {
     return LanguageService.t(v);
   }
@@ -361,5 +360,71 @@ export class PlayerDetailsComponent
       return Math.round(perc * 100) + "%";
     }
     return "N/A";
+  }
+
+  getAnalytics(batchid: string, filename: string) {
+    this.isLoading = true;
+    this.filesService
+      .getDetailsEchartData({ batchid, filename })
+      .subscribe(data => {
+        if (data.sankeyData) {
+          this.sankey = {
+            tooltip: {
+              trigger: "item",
+              triggerOn: "mousemove"
+            },
+            color: this.colors,
+            graph: {
+              color: this.colors
+            },
+            series: [
+              {
+                type: "sankey",
+                data: data.sankeyData.nodes,
+                links: data.sankeyData.links,
+                focusNodeAdjacency: "allEdges",
+                itemStyle: {
+                  normal: {
+                    borderWidth: 1,
+                    borderColor: "#aaa"
+                  }
+                },
+                lineStyle: {
+                  normal: {
+                    color: "source",
+                    curveness: 0.5
+                  }
+                }
+              }
+            ]
+          };
+        }
+        if (data.treeRadialData) {
+          this.treeRadialData = {
+            color: this.colors,
+            tooltip: {
+              trigger: "item",
+              triggerOn: "mousemove"
+            },
+            series: [
+              {
+                type: "tree",
+                data: [data.treeRadialData],
+                top: "18%",
+                bottom: "14%",
+                layout: "radial",
+                symbol: "emptyCircle",
+                symbolSize: 7,
+                initialTreeDepth: 1,
+                animationDurationUpdate: 750
+              }
+            ]
+          };
+        }
+        if (data.popularWords) {
+          this.popularWords = data.popularWords;
+        }
+        this.isLoading = false;
+      });
   }
 }
