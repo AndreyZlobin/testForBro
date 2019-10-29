@@ -36,7 +36,7 @@
             (ready)="pushRegions()"></ngx-player>
         </ng-container>
         <div style="overflow-y: auto;">
-          <div style="height: 40vh;">
+          <div style="height: 55vh;">
             <table class="table">
               <ng-container *ngFor="let item of emotions">
                 <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]"
