@@ -44,120 +44,12 @@ export class PlayerDetailsComponent
   };
   currentView: string;
   colors = colors;
-  sankey = {
-    tooltip: {
-      trigger: "item",
-      triggerOn: "mousemove"
-    },
-    color: this.colors,
-    graph: {
-      color: this.colors
-    },
-    series: [
-      {
-        type: "sankey",
-        data: [
-          { name: "sentiment" },
-          { name: "Neutral" },
-          { name: "call" },
-          { name: "Negative" },
-          { name: "want" }
-        ],
-        links: [
-          { source: "sentiment", target: "Neutral", value: 2 },
-          { source: "Neutral", target: "call", value: 2 },
-          { source: "sentiment", target: "Negative", value: 1 },
-          { source: "Negative", target: "want", value: 1 }
-        ],
-        focusNodeAdjacency: "allEdges",
-        itemStyle: {
-          normal: {
-            borderWidth: 1,
-            borderColor: "#aaa"
-          }
-        },
-        lineStyle: {
-          normal: {
-            color: "source",
-            curveness: 0.5
-          }
-        }
-      }
-    ]
-  };
+  sankey: any;
   isLoading: boolean = true;
   fileParams;
   results;
-  treeRadialData: any = {
-    color: this.colors,
-    tooltip: {
-      trigger: "item",
-      triggerOn: "mousemove"
-    },
-    series: [
-      {
-        type: "tree",
-        data: [
-          {
-            name: "sentiment",
-            children: [
-              {
-                name: "Neutral",
-                children: [
-                  {
-                    name: "call",
-                    value: 2,
-                    children: [
-                      {
-                        name: "who \u0027s calling my name \u0027s hayley",
-                        value: 1
-                      },
-                      {
-                        name:
-                          "i \u0027m calling from lindsay wealth part of delenn degrees how \u0027re you doing",
-                        value: 1
-                      }
-                    ]
-                  }
-                ],
-                value: 2
-              },
-              {
-                name: "Negative",
-                children: [
-                  {
-                    name: "want",
-                    value: 1,
-                    children: [
-                      {
-                        name: "not that i wanted to do staff no",
-                        value: 1
-                      }
-                    ]
-                  }
-                ],
-                value: 1
-              }
-            ],
-            value: 3
-          }
-        ],
-        top: "18%",
-        bottom: "14%",
-        layout: "radial",
-        symbol: "emptyCircle",
-        symbolSize: 7,
-        initialTreeDepth: 1,
-        animationDurationUpdate: 750
-      }
-    ]
-  };
-  popularWords: any[] = [
-    { text: "yeah", weight: 100 },
-    { text: "know", weight: 22 },
-    { text: "okay", weight: 33 },
-    { text: "get", weight: 44 }
-  ];
+  treeRadialData: any;
+  popularWords: any;
   emotions: any[] = [];
   intervalRef;
   analysisResult;
@@ -207,7 +99,7 @@ export class PlayerDetailsComponent
       if (event instanceof NavigationEnd) {
         this.fileUrl = null;
         this.regions = [];
-        this.currentView = 'analytic';
+        this.currentView = "analytic";
         if (event.url.startsWith("/file/")) {
           const batchid = this.route.snapshot.params["batchid"];
           const filename = this.route.snapshot.params["filename"];
@@ -229,6 +121,7 @@ export class PlayerDetailsComponent
                 this.fileUrl = res.url;
                 this.changed = true;
                 this.getInfo();
+                this.getAnalytics(this.fileParams.batchid, this.fileParams.filename);
               },
               e => {
                 this.errorMessage = e.error.message;
@@ -249,12 +142,12 @@ export class PlayerDetailsComponent
   }
   ngOnInit() {}
   changeTab(event: any): void {
-    if(this.currentView === 'player') {
-      this.currentView = 'analytic'
+    if (this.currentView === "player") {
+      this.currentView = "analytic";
       return;
     }
-    if(this.currentView === 'analytic') {
-      this.currentView = 'player'
+    if (this.currentView === "analytic") {
+      this.currentView = "player";
       return;
     }
   }
@@ -467,5 +360,71 @@ export class PlayerDetailsComponent
       return Math.round(perc * 100) + "%";
     }
     return "N/A";
+  }
+
+  getAnalytics(batchid: string, filename: string) {
+    this.isLoading = true;
+    this.filesService
+      .getDetailsEchartData({ batchid, filename })
+      .subscribe(data => {
+        if (data.sankeyData) {
+          this.sankey = {
+            tooltip: {
+              trigger: "item",
+              triggerOn: "mousemove"
+            },
+            color: this.colors,
+            graph: {
+              color: this.colors
+            },
+            series: [
+              {
+                type: "sankey",
+                data: data.sankeyData.nodes,
+                links: data.sankeyData.links,
+                focusNodeAdjacency: "allEdges",
+                itemStyle: {
+                  normal: {
+                    borderWidth: 1,
+                    borderColor: "#aaa"
+                  }
+                },
+                lineStyle: {
+                  normal: {
+                    color: "source",
+                    curveness: 0.5
+                  }
+                }
+              }
+            ]
+          };
+        }
+        if (data.treeRadialData) {
+          this.treeRadialData = {
+            color: this.colors,
+            tooltip: {
+              trigger: "item",
+              triggerOn: "mousemove"
+            },
+            series: [
+              {
+                type: "tree",
+                data: [data.treeRadialData],
+                top: "18%",
+                bottom: "14%",
+                layout: "radial",
+                symbol: "emptyCircle",
+                symbolSize: 7,
+                initialTreeDepth: 1,
+                animationDurationUpdate: 750
+              }
+            ]
+          };
+        }
+        if (data.popularWords) {
+          this.popularWords = data.popularWords;
+        }
+        this.isLoading = false;
+      });
   }
 }
