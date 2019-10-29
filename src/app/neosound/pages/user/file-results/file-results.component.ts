@@ -41,7 +41,7 @@ export class FileResultsComponent implements OnInit {
   keywords: string[];
   misswords: string[];
   misswordsNotFound: string[];
-  tagCloud: any
+  tagCloud: any;
   constructor(
     private filesService: FilesService,
     private filterService: TextFilterService,
@@ -117,29 +117,27 @@ export class FileResultsComponent implements OnInit {
           this.treeRadialData = {
             color: this.colors,
             tooltip: {
-              trigger: 'item',
-              triggerOn: 'mousemove',
+              trigger: "item",
+              triggerOn: "mousemove"
             },
             series: [
               {
-                type: 'tree',
+                type: "tree",
                 data: [data.treeRadialData],
-                top: '18%',
-                bottom: '14%',
-                layout: 'radial',
-                symbol: 'emptyCircle',
+                top: "18%",
+                bottom: "14%",
+                layout: "radial",
+                symbol: "emptyCircle",
                 symbolSize: 7,
                 initialTreeDepth: 1,
-                animationDurationUpdate: 750,
-              },
-            ],
+                animationDurationUpdate: 750
+              }
+            ]
           };
         }
         if (data.popularWords) {
           this.popularWords = data.popularWords;
-          this.tagCloud = {
-
-          }
+          this.tagCloud = {};
         }
         this.isLoading = false;
       });
@@ -152,5 +150,19 @@ export class FileResultsComponent implements OnInit {
       return Math.round(perc * 100) + "%";
     }
     return "N/A";
+  }
+  copyToClipboard(text: string): void {
+    const selBox = document.createElement("textarea");
+    selBox.style.position = "fixed";
+    selBox.style.left = "0";
+    selBox.style.top = "0";
+    selBox.style.opacity = "0";
+    selBox.value = text.replace(/(<([^>]+)>)/gi, "");
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand("copy");
+    document.body.removeChild(selBox);
+    this.toastrService.info("Copied!");
   }
 }
