@@ -37,7 +37,12 @@ export class PlayerDetailsComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(PlayerComponent)
   player: PlayerComponent;
-  stopwords: ["tets1", "test2"];
+  public zoomOptions = {
+    scale: 1.3,
+    transitionTime: 1.2,
+    delay: 0.1
+  };
+  currentView: string;
   colors = colors;
   sankey = {
     tooltip: {
@@ -202,6 +207,7 @@ export class PlayerDetailsComponent
       if (event instanceof NavigationEnd) {
         this.fileUrl = null;
         this.regions = [];
+        this.currentView = 'analytic';
         if (event.url.startsWith("/file/")) {
           const batchid = this.route.snapshot.params["batchid"];
           const filename = this.route.snapshot.params["filename"];
@@ -242,6 +248,16 @@ export class PlayerDetailsComponent
     return element ? element.guid : null;
   }
   ngOnInit() {}
+  changeTab(event: any): void {
+    if(this.currentView === 'player') {
+      this.currentView = 'analytic'
+      return;
+    }
+    if(this.currentView === 'analytic') {
+      this.currentView = 'player'
+      return;
+    }
+  }
 
   copyToClipboard(text: string): void {
     const selBox = document.createElement("textarea");
@@ -271,7 +287,6 @@ export class PlayerDetailsComponent
             if (this.results.result.anger.ints) {
               this.emotionsAnger = this.results.result.anger.ints;
               this.emotions = this.emotionsAnger;
-              this.setTab("anger");
             }
             if (this.results.result.anger.music) {
               this.emotionsSounds = this.results.result.anger.music;
@@ -311,7 +326,6 @@ export class PlayerDetailsComponent
             if (this.results.result.merged.intprobs) {
               this.emotionsSttAnger = this.results.result.merged.intprobs;
               this.emotions = this.emotionsSttAnger;
-              this.setTab("text");
             }
           }
         }
@@ -431,35 +445,6 @@ export class PlayerDetailsComponent
   }
 
   ngOnDestroy() {}
-
-  setTab(tab) {
-    this.currentTab = tab;
-    this.tabsDisabled = true;
-    setTimeout(() => (this.tabsDisabled = false), 3000);
-    switch (tab) {
-      case "anger":
-        this.emotions = this.emotionsAnger;
-        break;
-      case "age":
-        this.emotions = this.emotionsAge;
-        break;
-      case "gender":
-        this.emotions = this.emotionsGender;
-        break;
-      case "beta":
-        this.emotions = this.emotionsFourclass;
-        break;
-      case "sounds":
-        this.emotions = this.emotionsSounds;
-        break;
-      case "text":
-        this.emotions = this.emotionsSttAnger;
-        break;
-
-      default:
-        break;
-    }
-  }
 
   t(v) {
     return LanguageService.t(v);
