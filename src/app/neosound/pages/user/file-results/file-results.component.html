@@ -80,9 +80,8 @@
         <div class="col-6 mb-3">
           <div class="card" *ngIf="popularWords">
             <div class="card-header">Most frequency used words</div>
-            <div class="card-body p-0">
-              <angular-tag-cloud [data]="popularWords" [zoomOnHover]="zoomOPtions"
-                [overflow]="false">
+            <div class="card-body">
+              <angular-tag-cloud [data]="popularWords" [zoomOnHover]="zoomOptions" [overflow]="false">
               </angular-tag-cloud>
             </div>
           </div>
@@ -106,7 +105,6 @@
     </div>
   </nb-card-body>
 </nb-card>
-
 <ng-template #spinner>
   <div class="load-container load1">
     <div class="loader">{{ t("Loading...") }}</div>

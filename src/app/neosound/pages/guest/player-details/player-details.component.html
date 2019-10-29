@@ -24,124 +24,126 @@
           </button>
         </div>
       </div>
-      <nb-tabset>
-        <nb-tab tabTitle="Player">
-          <div class="d-flex flex-column">
-            <ng-container *ngIf="fileParams.filename && fileParams.batchid && fileUrl; else empty">
-              <ngx-player [fileName]="fileParams.filename" [batchId]="fileParams.batchid" [fileUrl]="fileUrl"
-                (ready)="pushRegions()"></ngx-player>
-            </ng-container>
-            <div>
-              <div>
-                <table class="table">
-                  <ng-container *ngFor="let item of emotions">
-                    <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]"
-                      [ngClass]="{'grey': item[5] && greySpeaker && item[5] == greySpeaker}">
-                      <td class="col-1">
-                        {{ getDateVal(item[0]) | date: "mm:ss" }} -
-                        {{ getDateVal(item[1]) | date: "mm:ss" }}
-                      </td>
-                      <td class="col-9"><span [innerHTML]=t(item[2])></span></td>
-                      <td class="col-1">
-                        <span *ngIf="item[3]">
-                          {{ item[3] | currency: "%":"symbol":"1.2-2" }}
-                        </span>
-                      </td>
-                      <td class="col-1">
-                          <i class="far fa-angry text-danger" tooltip="Negative" *ngIf="item[4] === 'Negative'"></i>
-                          <i class="far fa-grin text-success" tooltip="Positive" *ngIf="item[4] === 'Positive'"></i>
-                      </td>
-                    </tr>
-                  </ng-container>
-                </table>
-              </div>
-            </div>
-          </div>
+      <nb-tabset (changeTab)="changeTab($event)" *ngIf="currentView">
+        <nb-tab tabTitle="Player" [active]="currentView === 'player'">
         </nb-tab>
-        <nb-tab tabTitle="Analitics">
-          <div class="row">
-            <div class="col-12 mb-3" *ngIf="sttfulltext">
-              <div class="card">
-                <div class="card-header">{{t('Text')}}</div>
-                <div class="card-body">
-                  <div class="mt-2">
-                    <button type="button" class="btn btn-dark" (click)="copyToClipboard(sttfulltext)"
-                      style="position: absolute; right: 20px;bottom: 20px; opacity: .5;">
-                      <i class="fa fa-copy"></i>
-                    </button>
-                    <span [innerHTML]=sttfulltext></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-6 mb-3" *ngIf="popularWords">
-              <div class="card">
-                <div class="card-header">{{t('Stopwords')}}</div>
-                <div class="card-body">
-                  <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
-                    <li class="list-group-item d-flex" *ngFor="let keyword of keywords" style="color: #211b19">
-                      <span>{{keyword}}</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-6 mb-3" *ngIf="misswordsNotFound.length || misswords.length">
-              <div class="card">
-                <div class="card-header">{{t("Compliance")}} {{getCompliancePercents()}}</div>
-                <div class="card-body">
-                  <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let missword of misswordsNotFound">
-                      <i class="fa fa-times m-r-5 text-danger"></i> {{missword}}
-                    </li>
-                    <li class="list-group-item" *ngFor="let missword of misswords">
-                      <i class="fa fa-check m-r-5 text-success"></i> {{missword}}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-6 mb-3">
-              <div class="card">
-                <div class="card-header">{{t('Sankey Diagram')}}</div>
-                <div class="card-body">
-                  <div echarts [options]="sankey"></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-6 mb-3">
-              <div class="card">
-                <div class="card-header">{{t('Keywords and phases')}}</div>
-                <div class="card-body">
-                  <div echarts [options]="treeRadialData">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-6 mb-3" *ngIf="popularWords">
-              <div class="card">
-                <div class="card-header">{{t('Most frequency used words')}}</div>
-                <div class="card-body">
-
-                </div>
-              </div>
-            </div>
-            <div class="col-6 mb-3" *ngIf="popularWords">
-              <div class="card">
-                <div class="card-header">{{t('Hits vs words')}}</div>
-                <div class="card-body">
-                  <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
-                    <li class="list-group-item d-flex" *ngFor="let popularWord of popularWords" style="color: #211b19">
-                      <span>{{popularWord.text}}</span>
-                      <span class="ml-auto">{{popularWord.weight}}</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+        <nb-tab tabTitle="Analytics" [active]="currentView === 'analytic'">
         </nb-tab>
       </nb-tabset>
+      <div class="d-flex flex-column" *ngIf="currentView === 'player'">
+        <ng-container *ngIf="fileParams.filename && fileParams.batchid && fileUrl; else empty">
+          <ngx-player [fileName]="fileParams.filename" [batchId]="fileParams.batchid" [fileUrl]="fileUrl"
+            (ready)="pushRegions()"></ngx-player>
+        </ng-container>
+        <div style="overflow-y: auto;">
+          <div style="height: 50vh;">
+            <table class="table">
+              <ng-container *ngFor="let item of emotions">
+                <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]"
+                  [ngClass]="{'grey': item[5] && greySpeaker && item[5] == greySpeaker}">
+                  <td class="col-1">
+                    {{ getDateVal(item[0]) | date: "mm:ss" }} -
+                    {{ getDateVal(item[1]) | date: "mm:ss" }}
+                  </td>
+                  <td class="col-9"><span [innerHTML]=t(item[2])></span></td>
+                  <td class="col-1">
+                    <span *ngIf="item[3]">
+                      {{ item[3] | currency: "%":"symbol":"1.2-2" }}
+                    </span>
+                  </td>
+                  <td class="col-1">
+                    <i class="far fa-angry text-danger" tooltip="Negative" *ngIf="item[4] === 'Negative'"></i>
+                    <i class="far fa-grin text-success" tooltip="Positive" *ngIf="item[4] === 'Positive'"></i>
+                    <i class="far fa-meh text-info" tooltip="Neutral" *ngIf="item[4] === 'Neutral'"></i>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="currentView === 'analytic'">
+        <div class="col-12 mb-3" *ngIf="sttfulltext">
+          <div class="card">
+            <div class="card-header">{{t('Text')}}</div>
+            <div class="card-body">
+              <div class="mt-2">
+                <button type="button" class="btn btn-dark" (click)="copyToClipboard(sttfulltext)"
+                  style="position: absolute; right: 20px;bottom: 20px; opacity: .5;">
+                  <i class="fa fa-copy"></i>
+                </button>
+                <span [innerHTML]=sttfulltext></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 mb-3" *ngIf="popularWords">
+          <div class="card">
+            <div class="card-header">{{t('Stopwords')}}</div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
+                <li class="list-group-item d-flex" *ngFor="let keyword of keywords" style="color: #211b19">
+                  <span>{{keyword}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 mb-3" *ngIf="misswordsNotFound.length || misswords.length">
+          <div class="card">
+            <div class="card-header">{{t("Compliance")}} {{getCompliancePercents()}}</div>
+            <div class="card-body p-0">
+              <ul class="list-group mt-3">
+                <li class="list-group-item" *ngFor="let missword of misswordsNotFound">
+                  <i class="fa fa-times m-r-5 text-danger"></i> {{missword}}
+                </li>
+                <li class="list-group-item" *ngFor="let missword of misswords">
+                  <i class="fa fa-check m-r-5 text-success"></i> {{missword}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 mb-3">
+          <div class="card">
+            <div class="card-header">{{t('Sankey Diagram')}}</div>
+            <div class="card-body">
+              <div echarts [options]="sankey"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 mb-3">
+          <div class="card">
+            <div class="card-header">{{t('Keywords and phases')}}</div>
+            <div class="card-body">
+              <div echarts [options]="treeRadialData">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 mb-3" *ngIf="popularWords">
+          <div class="card">
+            <div class="card-header">{{t('Most frequency used words')}}</div>
+            <div class="card-body">
+              <angular-tag-cloud [data]="popularWords" [zoomOnHover]="zoomOptions" [overflow]="false">
+              </angular-tag-cloud>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 mb-3" *ngIf="popularWords">
+          <div class="card">
+            <div class="card-header">{{t('Hits vs words')}}</div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
+                <li class="list-group-item d-flex" *ngFor="let popularWord of popularWords" style="color: #211b19">
+                  <span>{{popularWord.text}}</span>
+                  <span class="ml-auto">{{popularWord.weight}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
       <ng-template #loading>
         {{ t("Loading...") }}
       </ng-template>
