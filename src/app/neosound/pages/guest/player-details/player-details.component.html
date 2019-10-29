@@ -5,7 +5,7 @@
         {{ t("Error:") }} {{ t(errorMessage) }}
       </div>
       <div>
-        <div class="d-flex flex-row py-3">
+        <div class="d-flex flex-row py-1">
           <button class="btn btm-sm btn-secondary mr-2" style="cursor: pointer;"
             [disabled]=" filterService.hasPrevLink(fileParams.filename, fileParams.batchid)"
             [routerLink]="filterService.getPrevLink(fileParams.filename, fileParams.batchid)">
@@ -36,7 +36,7 @@
             (ready)="pushRegions()"></ngx-player>
         </ng-container>
         <div style="overflow-y: auto;">
-          <div style="height: 55vh;">
+          <div style="height: 56vh;">
             <table class="table">
               <ng-container *ngFor="let item of emotions">
                 <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]"
