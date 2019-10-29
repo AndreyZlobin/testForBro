@@ -157,6 +157,23 @@
         </div>
       </div>
     </div>
+    <div class="col-12 mb-3" *ngIf="sentimentData">
+      <div class="card">
+        <div class="card-header">{{t('Sentimental Sankey')}}</div>
+        <div class="card-body">
+          <div echarts [options]="sentimentData"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mb-3" *ngIf="sentimentTreeRadialData">
+      <div class="card">
+        <div class="card-header">{{t('Sentimental Radial Tree')}}</div>
+        <div class="card-body">
+          <div echarts [options]="sentimentTreeRadialData">
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="col-12 mb-3" *ngIf="showRadialTreeData">
       <ngx-keywords-radial-tree [treeRadialData]="radialTreeData" [colors]="colors">
       </ngx-keywords-radial-tree>
