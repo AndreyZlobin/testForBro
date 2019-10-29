@@ -75,6 +75,8 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   public keywords = [];
   public keywords2 = [];
   public loading = true;
+  public sentimentData;
+  public sentimentTreeRadialData;
   hasSankey = false;
   sankey1: any;
   sankey2: any;
@@ -627,6 +629,58 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
                   curveness: 0.5
                 }
               }
+            }
+          ]
+        };
+      }
+      if(data.sentiment && data.sentiment.sankeyData && data.sentiment.treeRadialData) {
+        this.sentimentData = {
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          color: this.colors,
+          graph: {
+            color: this.colors
+          },
+          series: [
+            {
+              type: "sankey",
+              data: data.sentiment.sankeyData.nodes,
+              links: data.sentiment.sankeyData.links,
+              focusNodeAdjacency: "allEdges",
+              itemStyle: {
+                normal: {
+                  borderWidth: 1,
+                  borderColor: "#aaa"
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: "source",
+                  curveness: 0.5
+                }
+              }
+            }
+          ]
+        };
+        this.sentimentTreeRadialData = {
+          color: this.colors,
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove"
+          },
+          series: [
+            {
+              type: "tree",
+              data: [data.sentiment.treeRadialData],
+              top: "18%",
+              bottom: "14%",
+              layout: "radial",
+              symbol: "emptyCircle",
+              symbolSize: 7,
+              initialTreeDepth: 1,
+              animationDurationUpdate: 750
             }
           ]
         };
