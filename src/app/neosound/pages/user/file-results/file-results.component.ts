@@ -25,11 +25,12 @@ export const colors = [
 })
 export class FileResultsComponent implements OnInit {
   id;
-  public zoomOPtions = {
+  public zoomOptions = {
     scale: 1.3,
     transitionTime: 1.2,
     delay: 0.1
   };
+
   colors = colors;
   filename;
   isLoading: boolean = true;
@@ -37,6 +38,10 @@ export class FileResultsComponent implements OnInit {
   sankey: any;
   treeRadialData: any;
   popularWords: any;
+  keywords: string[];
+  misswords: string[];
+  misswordsNotFound: string[];
+  tagCloud: any;
   constructor(
     private filesService: FilesService,
     private filterService: TextFilterService,
@@ -55,8 +60,10 @@ export class FileResultsComponent implements OnInit {
               if (data && data.result) {
                 this.fullText = data.result.fulltext;
                 this.filename = data.result.filename;
+                this.keywords = data.result.keywords.stop;
+                this.misswords = data.result.keywords.miss;
+                this.misswordsNotFound = data.result.keywords.missmiss;
               }
-              this.isLoading = false;
             });
           this.getAnalytics(this.id);
         }
@@ -110,28 +117,52 @@ export class FileResultsComponent implements OnInit {
           this.treeRadialData = {
             color: this.colors,
             tooltip: {
-              trigger: 'item',
-              triggerOn: 'mousemove',
+              trigger: "item",
+              triggerOn: "mousemove"
             },
             series: [
               {
-                type: 'tree',
+                type: "tree",
                 data: [data.treeRadialData],
-                top: '18%',
-                bottom: '14%',
-                layout: 'radial',
-                symbol: 'emptyCircle',
+                top: "18%",
+                bottom: "14%",
+                layout: "radial",
+                symbol: "emptyCircle",
                 symbolSize: 7,
                 initialTreeDepth: 1,
-                animationDurationUpdate: 750,
-              },
-            ],
+                animationDurationUpdate: 750
+              }
+            ]
           };
         }
         if (data.popularWords) {
           this.popularWords = data.popularWords;
+          this.tagCloud = {};
         }
         this.isLoading = false;
       });
+  }
+  getCompliancePercents() {
+    if (this.misswords.length || this.misswordsNotFound.length) {
+      const perc =
+        this.misswords.length /
+        (this.misswords.length + this.misswordsNotFound.length);
+      return Math.round(perc * 100) + "%";
+    }
+    return "N/A";
+  }
+  copyToClipboard(text: string): void {
+    const selBox = document.createElement("textarea");
+    selBox.style.position = "fixed";
+    selBox.style.left = "0";
+    selBox.style.top = "0";
+    selBox.style.opacity = "0";
+    selBox.value = text.replace(/(<([^>]+)>)/gi, "");
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand("copy");
+    document.body.removeChild(selBox);
+    this.toastrService.info("Copied!");
   }
 }
