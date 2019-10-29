@@ -16,7 +16,7 @@
             [routerLink]="filterService.getNextLink(fileParams.filename, fileParams.batchid)">
             <i class="fas fa-chevron-right"></i>
           </button>
-          <h2 class="text-truncate" style="max-width: 60vw;">
+          <h2 class="text-truncate my-2" style="max-width: 60vw;">
             {{ fileParams.filename }}
           </h2>
           <button class="btn btm-sm btn-secondary ml-auto" style="cursor: pointer;" routerLink="/user/files">
@@ -36,7 +36,7 @@
             (ready)="pushRegions()"></ngx-player>
         </ng-container>
         <div style="overflow-y: auto;">
-          <div style="height: 50vh;">
+          <div style="height: 40vh;">
             <table class="table">
               <ng-container *ngFor="let item of emotions">
                 <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]"
@@ -77,15 +77,15 @@
             </div>
           </div>
         </div>
-        <div class="col-6 mb-3" *ngIf="popularWords">
+        <div class="col-6 mb-3" *ngIf="keywords">
           <div class="card">
             <div class="card-header">{{t('Stopwords')}}</div>
-            <div class="card-body">
-              <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
-                <li class="list-group-item d-flex" *ngFor="let keyword of keywords" style="color: #211b19">
-                  <span>{{keyword}}</span>
-                </li>
-              </ul>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush mt-3" style="height: 300px; overflow-y: auto">
+                    <li class="list-group-item d-flex" *ngFor="let keyword of keywords" style="color: #211b19">
+                      <span>{{keyword}}</span>
+                    </li>
+                  </ul>
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@
           <div class="card">
             <div class="card-header">{{t("Compliance")}} {{getCompliancePercents()}}</div>
             <div class="card-body p-0">
-              <ul class="list-group mt-3">
+              <ul class="list-group mt-3" style="height: 300px; overflow-y: auto">
                 <li class="list-group-item" *ngFor="let missword of misswordsNotFound">
                   <i class="fa fa-times m-r-5 text-danger"></i> {{missword}}
                 </li>
@@ -124,7 +124,7 @@
         <div class="col-6 mb-3" *ngIf="popularWords">
           <div class="card">
             <div class="card-header">{{t('Most frequency used words')}}</div>
-            <div class="card-body">
+            <div class="card-body p-0">
               <angular-tag-cloud [data]="popularWords" [zoomOnHover]="zoomOptions" [overflow]="false">
               </angular-tag-cloud>
             </div>

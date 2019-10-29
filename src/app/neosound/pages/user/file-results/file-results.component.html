@@ -10,7 +10,7 @@
           [disabled]="isLoading || filterService.hasNextLink(id)" [routerLink]="filterService.getNextLink(id)">
           <i class="fas fa-chevron-right"></i>
         </button>
-        <h2 class="text-truncate mt-2" style="max-width: 60vw;">
+        <h2 class="text-truncate my-2 " style="max-width: 60vw;">
           {{ filename }}
         </h2>
         <button class="btn btm-sm btn-secondary ml-auto" style="cursor: pointer;" routerLink="/user/text-files">
@@ -37,7 +37,7 @@
           <div class="card">
             <div class="card-header">{{t('Stopwords')}}</div>
             <div class="card-body p-0">
-              <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
+              <ul class="list-group mt-4" style="height: 300px; overflow-y: auto">
                 <li class="list-group-item d-flex" *ngFor="let keyword of keywords" style="color: #211b19">
                   <span>{{keyword}}</span>
                 </li>
@@ -68,8 +68,8 @@
             </div>
           </div>
         </div>
-        <div class="col-6 mt-3 mb-3">
-          <div class="card" *ngIf="treeRadialData">
+        <div class="col-6 mt-3 mb-3" *ngIf="treeRadialData">
+          <div class="card">
             <div class="card-header">Radial Tree</div>
             <div class="card-body">
               <div echarts [options]="treeRadialData">
