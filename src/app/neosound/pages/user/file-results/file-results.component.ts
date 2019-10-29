@@ -25,7 +25,7 @@ export const colors = [
 })
 export class FileResultsComponent implements OnInit {
   id;
-  public zoomOPtions = {
+  public zoomOptions = {
     scale: 1.3,
     transitionTime: 1.2,
     delay: 0.1
@@ -38,6 +38,10 @@ export class FileResultsComponent implements OnInit {
   sankey: any;
   treeRadialData: any;
   popularWords: any;
+  keywords: string[];
+  misswords: string[];
+  misswordsNotFound: string[];
+  tagCloud: any
   constructor(
     private filesService: FilesService,
     private filterService: TextFilterService,
@@ -56,8 +60,10 @@ export class FileResultsComponent implements OnInit {
               if (data && data.result) {
                 this.fullText = data.result.fulltext;
                 this.filename = data.result.filename;
+                this.keywords = data.result.keywords.stop;
+                this.misswords = data.result.keywords.miss;
+                this.misswordsNotFound = data.result.keywords.missmiss;
               }
-              this.isLoading = false;
             });
           this.getAnalytics(this.id);
         }
@@ -131,8 +137,20 @@ export class FileResultsComponent implements OnInit {
         }
         if (data.popularWords) {
           this.popularWords = data.popularWords;
+          this.tagCloud = {
+
+          }
         }
         this.isLoading = false;
       });
+  }
+  getCompliancePercents() {
+    if (this.misswords.length || this.misswordsNotFound.length) {
+      const perc =
+        this.misswords.length /
+        (this.misswords.length + this.misswordsNotFound.length);
+      return Math.round(perc * 100) + "%";
+    }
+    return "N/A";
   }
 }

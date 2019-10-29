@@ -118,12 +118,7 @@
               <div class="card">
                 <div class="card-header">{{t('Most frequency used words')}}</div>
                 <div class="card-body">
-                  <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
-                    <li class="list-group-item d-flex" *ngFor="let popularWord of popularWords" style="color: #211b19">
-                      <span>{{popularWord.text}}</span>
-                      <span class="ml-auto">{{popularWord.value}}</span>
-                    </li>
-                  </ul>
+
                 </div>
               </div>
             </div>
@@ -134,7 +129,7 @@
                   <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
                     <li class="list-group-item d-flex" *ngFor="let popularWord of popularWords" style="color: #211b19">
                       <span>{{popularWord.text}}</span>
-                      <span class="ml-auto">{{popularWord.value}}</span>
+                      <span class="ml-auto">{{popularWord.weight}}</span>
                     </li>
                   </ul>
                 </div>
