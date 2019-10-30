@@ -25,11 +25,11 @@
                 descriptionLabel="Input the compliance words separated by comma or add the compliance words by uploading CSV"
                 totalLabel="Total compliance words"></app-keywords>
             </nb-tab>
-            <nb-tab tabTitle="Sentimental words">
+            <nb-tab tabTitle="Sentiment words">
               <app-keywords [showMessage]="showMessage" [postDate]="postDate" (launch)="launch()"
-                (changed)="onChange($event)" nameSpace='sentimental' singularLabel="sentimental word"
-                descriptionLabel="Input the sentimental words separated by comma or add the compliance words by uploading CSV"
-                totalLabel="Total sentimental words"></app-keywords>
+                (changed)="onChange($event)" nameSpace='sentiment' singularLabel="sentiment word"
+                descriptionLabel="Input the sentiment words separated by comma or add the compliance words by uploading CSV"
+                totalLabel="Total sentiment words"></app-keywords>
             </nb-tab>
           </nb-tabset>
         </ng-container>
