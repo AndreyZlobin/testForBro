@@ -280,12 +280,12 @@
                             <div class="mb-1">
                               <span class="mr-2">{{t('Duration')}}</span>
                               <span
-                                class="float-right font-weight-bold">{{ getFormatedTime(item.duration)}}</span>
+                                class="float-right font-weight-bold">{{ getDateVal(item.duration) | date:'mm:ss'}}</span>
                             </div>
                             <div class="mb-1">
                               <span class="mr-2"> {{t('Silence')}}</span>
                               <span *ngIf="item.pause && item.pause.dur"
-                                class="float-right font-weight-bold">{{getFormatedTime(item.pause.dur)}}
+                                class="float-right font-weight-bold">{{getDateVal(item.pause.dur) | date: 'mm:ss'}}
                                 ({{item.pause.dur / item.duration | percent}})</span>
                             </div>
                           </div>
@@ -301,7 +301,7 @@
                             <div class="mb-1">
                               <span class="mr-2">{{t('Avg.')}}</span>
                               <span *ngIf="item.pause && item.pause.avg"
-                                class="float-right font-weight-bold">{{getFormatedTime(item.pause.avg)}}</span>
+                                class="float-right font-weight-bold">{{getDateVal(item.pause.avg) | date: 'mm:ss'}}</span>
                             </div>
                           </div>
                         </div>
