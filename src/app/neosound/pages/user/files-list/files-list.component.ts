@@ -357,6 +357,5 @@ export class FilesListComponent implements OnInit, AfterViewInit {
         return `${minutes}:${formatedSeconds}`;
       }
     }
-    return "-";
   }
 }
