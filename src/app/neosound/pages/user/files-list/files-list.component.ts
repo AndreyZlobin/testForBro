@@ -338,12 +338,16 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   getFormatedTime(val: string): string {
     const time = parseFloat(val);
     if (time < 60) {
-      return `00:${Math.floor(time)}`;
+      if (time < 10) {
+        return `00:0${Math.floor(time)}`;
+      } else {
+        return `00:${Math.floor(time)}`;
+      }
     } else {
       const minutes = Math.floor(time / 60);
-      const seconds = Math.floor(time - (minutes * 60));
+      const seconds = Math.floor(time - minutes * 60);
       let formatedSeconds = "";
-      if(seconds < 10) {
+      if (seconds < 10) {
         formatedSeconds = `0${seconds}`;
       } else {
         formatedSeconds = `${seconds}`;
