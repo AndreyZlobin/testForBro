@@ -335,4 +335,26 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       return;
     }
   }
+  getFormatedTime(val: string): string {
+    const time = parseFloat(val);
+    if (time < 60) {
+      return `00:${Math.floor(time)}`;
+    } else {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time - (minutes * 60));
+      let formatedSeconds = "";
+      if(seconds < 10) {
+        formatedSeconds = `0${seconds}`;
+      } else {
+        formatedSeconds = `${seconds}`;
+      }
+      if (minutes < 10) {
+        return `0${minutes}:${formatedSeconds}`;
+      } else {
+        return `${minutes}:${formatedSeconds}`;
+      }
+    }
+    return "-";
+  }
+
 }
