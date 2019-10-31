@@ -106,9 +106,9 @@ export class TextFilesListComponent implements OnInit, AfterViewInit {
     this.filterService.updateFileList();
   }
 
-  delete(batchid, filename) {
+  delete(id) {
     this.analyticsService.trackEvent("fileList", "delete");
-    this.filterService.deteleFile(batchid, filename);
+    this.filterService.deteleFile(id);
   }
 
   getLink(item) {
@@ -296,9 +296,9 @@ export class TextFilesListComponent implements OnInit, AfterViewInit {
     this.hideModal();
   }
 
-  markFavorite(item) {
-    this.analyticsService.trackEvent("fileList", "markFavorite");
-    this.filterService.markFavorite(item.batchid, item.filename);
+  markFavorite(id, filename) {
+    this.analyticsService.trackEvent("textFileList", "markFavorite");
+    this.filterService.markFavorite(id, filename);
   }
 
   getBool(v) {

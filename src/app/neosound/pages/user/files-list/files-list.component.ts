@@ -177,11 +177,12 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     if (sortBy !== this.filterService.filter.sortby) {
       this.filterService.filter.sortorder = "asc";
     } else {
-      if (this.filterService.filter.sortorder === "desc") {
-        this.filterService.filter.sortorder = "acs";
+      if(this.filterService.filter.sortorder === "desc") {
+        this.filterService.filter.sortorder = "asc";
       } else {
         this.filterService.filter.sortorder = "desc";
       }
+
     }
 
     this.filterService.filter.sortby = sortBy;
@@ -329,35 +330,9 @@ export class FilesListComponent implements OnInit, AfterViewInit {
         break;
     }
 
-    const tagVal = (tag && tag.value) || tag;
+    const tagVal = tag && tag.value || tag;
     if (tagVal === "") {
       return;
     }
-  }
-
-  getFormatedTime(val: string): string {
-    const time = parseFloat(val);
-    if (time < 60) {
-      if (time < 10) {
-        return `00:0${Math.floor(time)}`;
-      } else {
-        return `00:${Math.floor(time)}`;
-      }
-    } else {
-      const minutes = Math.floor(time / 60);
-      const seconds = Math.floor(time - minutes * 60);
-      let formatedSeconds = "";
-      if (seconds < 10) {
-        formatedSeconds = `0${seconds}`;
-      } else {
-        formatedSeconds = `${seconds}`;
-      }
-      if (minutes < 10) {
-        return `0${minutes}:${formatedSeconds}`;
-      } else {
-        return `${minutes}:${formatedSeconds}`;
-      }
-    }
-    return "-";
   }
 }

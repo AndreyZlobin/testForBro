@@ -12,7 +12,6 @@ import {
 import { OrganizationSettingsService } from "../../../../../services/organization-settings.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { ToastrService } from "ngx-toastr";
-import { Moment } from "moment";
 
 @Component({
   selector: "app-keywords",

@@ -177,7 +177,7 @@
                 <ng-container *ngIf="(filterService.files | async) as files">
                   <tr *ngFor="let file of files; let i = index">
                     <td>
-                      <span (click)="markFavorite(file)" style="cursor: pointer;">
+                      <span (click)="markFavorite(file.id, file.filename)" style="cursor: pointer;">
                         <i *ngIf="getBool(file.pin)" class="fa fa-star"></i>
                         <i *ngIf="!getBool(file.pin)" class="far fa-star"></i>
                       </span>
@@ -214,7 +214,7 @@
                     </td> -->
                     <td>
                       <button class="btn p-2 c-normal" style="cursor: pointer;"
-                        (click)="delete(file.batchid, file.filename)" tooltip="{{t('Delete')}}">
+                        (click)="delete(file.id)" tooltip="{{t('Delete')}}">
                         <i class="fa fa-trash-alt"></i>
                       </button>
                     </td>

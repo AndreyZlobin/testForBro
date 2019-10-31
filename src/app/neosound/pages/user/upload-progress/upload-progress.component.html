@@ -1,0 +1,30 @@
+<ng-container *ngIf="uploadService.hasUpload">
+  <div class="border bg-white" [ngStyle]="{'height': minimized ? '300px' : '42px'}"
+    style="width: 300px; position: fixed; z-index: 99; bottom: 3px; right: 20px;">
+    <div class="card border">
+      <div class="card-header">
+        Upload Progress
+        <button type="button" class="close pull-right" *ngIf="!minimized" (click)="minimized = true">
+          <i class="fas fa-window-maximize"></i>
+        </button>
+        <button type="button" class="close pull-right" *ngIf="minimized" (click)="minimized = false">
+          <i class="fas fa-window-minimize"></i>
+        </button>
+      </div>
+      <div class="card-body" *ngIf="minimized" style="overflow-y: auto;">
+        <div style="max-height: 180px;">
+          <div class="d-flex flex-column upload-name-style" *ngIf="(uploadService.queue | async) as files">
+            <div class="mb-2" *ngFor="let file of files">
+              <div class="mb-1">
+                  {{file.name}}
+              </div>
+              <div>
+                  <nb-progress-bar [value]="file.progress"></nb-progress-bar>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
