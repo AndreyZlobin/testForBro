@@ -50,10 +50,6 @@ export class FilesService {
     this.filesSubject.next([]);
   }
   getFile(params): Observable<any> {
-    params = params || {
-      batchid: "1234",
-      filename: "1.mp3"
-    };
     return this.http.post(`${environment.api}/getFile`, params);
   }
   getAudioWaveForm(params): Observable<any> {

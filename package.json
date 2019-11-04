@@ -94,6 +94,7 @@
     "typeface-exo": "0.0.22",
     "wavesurfer.js": "^2.2.1",
     "web-animations-js": "2.2.5",
+    "wordcloud": "^1.1.0",
     "zone.js": "^0.8.29"
   },
   "devDependencies": {

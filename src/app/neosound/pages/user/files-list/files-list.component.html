@@ -315,7 +315,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="d-flex flex-row justify-content-between align-self-center" style="width: 15%">
+                  <div class="d-flex flex-row justify-content-between align-self-center" style="width:15%">
                     <div>
                       <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-2"></i>
                       <span tooltip="{{getStopwords(item)}}"
@@ -332,7 +332,7 @@
                         class="badge badge-danger">{{item.customerstopwordcount ? item.customerstopwordcount : 0}}</span>
                     </div>
                   </div>
-                  <div class="d-flex justify-content-center align-self-scratch font-weight-bold" style="width: 15%">
+                  <div class="d-flex justify-content-center align-self-scratch font-weight-bold" style="width: 10%">
                     <div class="align-self-center text-center mr-1"><i class="fa fa-3x fa-shield-alt"></i></div>
                     <div class="align-self-center text-center">
                       <div style="font-size: x-small;">{{t('Compliance')}}:</div>
@@ -341,7 +341,12 @@
                       </h2>
                     </div>
                   </div>
-                  <div class="d-flex justify-content-center align-self-scratch" style="width: 15%"
+                  <div class="d-flex flex-row justify-content-center align-self-center" style="width: 10%">
+                      <i class="far fa-angry text-danger fa-2x" tooltip="Negative"></i>
+                      <i class="fas fa-long-arrow-alt-right fa-2x mx-2"></i>
+                      <i class="far fa-angry text-danger fa-2x" tooltip="Negative"></i>
+                  </div>
+                  <div class="d-flex justify-content-center align-self-scratch" style="width: 10%"
                     [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
                     <div class="align-self-center text-center mr-1"><i class="fa fa-3x fa-thermometer-empty"></i>
                     </div>
