@@ -185,6 +185,7 @@ export class FilterService {
         this.pagecount = data.pagecount;
         this.fileStore = data.files.map((file) => Object.assign({}, ...file, {
           topic: this.topic[this.getRandom()],
+          topicValue: Math.floor(Math.random() * (100)),
           emotionStart: this.getRandom(),
           emotionEnd: this.getRandom(),
         }));
