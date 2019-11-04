@@ -4,6 +4,7 @@ import { FilesService } from "./files.service";
 
 @Injectable()
 export class FilterService {
+  topic = ["Technical issues", "Account balance", "Credit card"];
   public fileStore: any = [];
   private filesSubject = new BehaviorSubject<any[]>([]);
   public files = this.filesSubject.asObservable();
@@ -182,7 +183,11 @@ export class FilterService {
       if (data && data.files) {
         this.totalcount = data.totalcount;
         this.pagecount = data.pagecount;
-        this.fileStore = data.files;
+        this.fileStore = data.files.map((file) => Object.assign({}, ...file, {
+          topic: this.topic[this.getRandom()],
+          emotionStart: this.getRandom(),
+          emotionEnd: this.getRandom(),
+        }));
         this.label =
           (this.filter.pagen + 1) * 100 < this.fileStore.length
             ? (this.filter.pagen + 1) * 100
@@ -379,5 +384,9 @@ export class FilterService {
       }
     }
     return res;
+  }
+
+  getRandom() {
+    return Math.floor(Math.random() * (3));
   }
 }

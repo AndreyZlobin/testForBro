@@ -23,6 +23,7 @@ import { DataService } from "../../../shared";
 })
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild("scroll") scrollTo: ElementRef;
+  trends= [ "fa-angry text-danger",  "fa-grin text-success", "fa-meh text-info"];
   errorMessage = "";
   isLoading = true;
   pagesArr = [1];

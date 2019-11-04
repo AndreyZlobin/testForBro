@@ -279,8 +279,7 @@
                             </div>
                             <div class="mb-1">
                               <span class="mr-2">{{t('Duration')}}</span>
-                              <span
-                                class="float-right font-weight-bold">{{ getFormatedTime(item.duration)}}</span>
+                              <span class="float-right font-weight-bold">{{ getFormatedTime(item.duration)}}</span>
                             </div>
                             <div class="mb-1">
                               <span class="mr-2"> {{t('Silence')}}</span>
@@ -315,7 +314,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="d-flex flex-row justify-content-between align-self-center" style="width: 15%">
+                  <div class="d-flex flex-row justify-content-between align-self-center" style="width:15%">
                     <div>
                       <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-2"></i>
                       <span tooltip="{{getStopwords(item)}}"
@@ -332,29 +331,54 @@
                         class="badge badge-danger">{{item.customerstopwordcount ? item.customerstopwordcount : 0}}</span>
                     </div>
                   </div>
-                  <div class="d-flex justify-content-center align-self-scratch font-weight-bold" style="width: 15%">
-                    <div class="align-self-center text-center mr-1"><i class="fa fa-3x fa-shield-alt"></i></div>
-                    <div class="align-self-center text-center">
-                      <div style="font-size: x-small;">{{t('Compliance')}}:</div>
-                      <h2 [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}">
-                        {{item.compliancepercent !== '-' ? abc(item.compliancepercent) + '%' : '-' }}
-                      </h2>
+                  <div class="d-flex flex-column py-2" style="width: 30%">
+                    <div class="d-flex flex-row justify-content-between">
+                      <div class="d-flex justify-content-center align-self-scratch">
+                        <div class="d-flex justify-content-between flex-column">
+                          <div style="font-size: x-small;" class="mb-2 font-weight-bold">{{t('Compliance')}}:</div>
+                          <div class="d-flex flex-row">
+                            <div class="align-self-center text-center mr-1">
+                              <i class="fa fa-2x fa-shield-alt"></i>
+                            </div>
+                            <h2 class="m-0" [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}">
+                              {{item.compliancepercent !== '-' ? abc(item.compliancepercent) + '%' : '-    ' }}
+                            </h2>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-center align-self-scratch">
+                        <div class="d-flex flex-column">
+                          <div style="font-size: x-small;" class="mb-2 font-weight-bold">{{t('Sentiment trend')}}:</div>
+                          <div class="d-flex flex-row align-self-center">
+                            <i class="far fa-2x" tooltip="Negative"
+                              [ngClass]='trends[item.emotionStart]'></i>
+                            <i class="fas fa-long-arrow-alt-right fa-2x mx-2"></i>
+                            <i [ngClass]='trends[item.emotionEnd]' class="far fa-2x" tooltip="Negative"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-center align-self-scratch"
+                        [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
+                        <div class="d-flex flex-column">
+                          <div style="font-size: x-small;" class="mb-2 font-weight-bold">{{t('Average emotional level')}}: </div>
+                          <div class="d-flex flex-row">
+                            <div class="align-self-center text-center mr-1"><i
+                                class="fa fa-2x fa-thermometer-empty"></i>
+                            </div>
+                            <h2 class="m-0" *ngIf="item.angertop && item.angertop.anger; else empty">
+                              {{item.angertop && item.angertop.anger}}%
+                            </h2>
+                            <ng-template #empty>
+                              <h2>
+                                  -
+                              </h2>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="d-flex justify-content-center align-self-scratch" style="width: 15%"
-                    [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
-                    <div class="align-self-center text-center mr-1"><i class="fa fa-3x fa-thermometer-empty"></i>
-                    </div>
-                    <div class="align-self-center text-center font-weight-bold">
-                      <div style="font-size: x-small;">Average emotional level: </div>
-                      <h2 *ngIf="item.angertop && item.angertop.anger; else empty">
-                        {{item.angertop && item.angertop.anger}}%
-                      </h2>
-                      <ng-template #empty>
-                        <h2>
-                          -
-                        </h2>
-                      </ng-template>
+                    <div class="mt-auto">
+                        <i class="fas fa-quote-left mr-1"></i>{{item.topic}}<span class="font-weight-bold ml-1">42 %</span>
                     </div>
                   </div>
                   <div class="d-flex justify-content-around" style="width: 7%">
