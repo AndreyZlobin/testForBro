@@ -173,6 +173,19 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     return d;
   }
 
+  getTrend(itemTrend) {
+    if(itemTrend === "Negative") {
+      return  "fa-angry text-danger";
+    }
+    if(itemTrend === "Positive") {
+      return  "fa-grin text-success"
+    }
+    if(itemTrend === "Neutral") {
+      return  "fa-meh text-info"
+    }
+    return "fa-meh";
+  }
+
   sortTable(sortBy) {
     this.analyticsService.trackEvent("sortTable", sortBy);
     if (sortBy !== this.filterService.filter.sortby) {
@@ -187,6 +200,13 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
     this.filterService.filter.sortby = sortBy;
     this.filterService.updateFileList();
+  }
+
+  hasTrend(sentimentTrend) {
+    return sentimentTrend.start && sentimentTrend.end;
+  }
+  setEmotionalTrend(value) {
+    this.filterService.filter.sentimentTrend = value;
   }
 
   resetFilter() {

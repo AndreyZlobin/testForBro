@@ -46,6 +46,7 @@ export class FilterService {
     pagen: number;
     sortby: string;
     sortorder: string;
+    sentimentTrend: string;
   } = {
     datefrom: null,
     dateto: null,
@@ -71,6 +72,7 @@ export class FilterService {
     pausetoAll: true,
     stopOnly: false,
     stopwordLooking: "Everywhere",
+    sentimentTrend: null,
     tagsOnly: false,
     missingOnly: false,
     favoriteOnly: false,
@@ -142,6 +144,9 @@ export class FilterService {
         .join(",");
       params["stopBy"] = this.filter.stopwordLooking;
     }
+    if(this.filter.sentimentTrend) {
+      params["sentimentTrend"] = this.filter.sentimentTrend;
+    }
     if (
       this.filter.keywordsNotContain &&
       this.filter.keywordsNotContain.length
@@ -183,12 +188,7 @@ export class FilterService {
       if (data && data.files) {
         this.totalcount = data.totalcount;
         this.pagecount = data.pagecount;
-        this.fileStore = data.files.map((file) => Object.assign({}, ...file, {
-          topic: this.topic[this.getRandom()],
-          topicValue: Math.floor(Math.random() * (100)),
-          emotionStart: this.getRandom(),
-          emotionEnd: this.getRandom(),
-        }));
+        this.fileStore = data.files;
         this.label =
           (this.filter.pagen + 1) * 100 < this.fileStore.length
             ? (this.filter.pagen + 1) * 100
@@ -277,6 +277,7 @@ export class FilterService {
       pausetoAll: true,
       stopOnly: false,
       stopwordLooking: "Everywhere",
+      sentimentTrend: null;
       tagsOnly: false,
       missingOnly: false,
       favoriteOnly: false,

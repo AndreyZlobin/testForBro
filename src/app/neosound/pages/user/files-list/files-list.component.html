@@ -107,6 +107,60 @@
                 (onBlur)="onItemAdd($event, 'tagsContain')"></tag-input>
             </div>
             <div class="col-12">
+              <div class="my-2">{{t('Sentiment trend')}}</div>
+              <div ngbDropdown class="ghost-dropdown dropdown w-100">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" style="border: 1px solid #dfe3e9;"
+                  id="dropdownBasic1"
+                  ngbDropdownToggle>{{t(filterService.filter.sentimentTrend ? filterService.filter.sentimentTrend : "Select trend")}}</button>
+                <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Negative')">
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Neutral')">
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Positive')">
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Negative')">
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Neutral')">
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Positive')">
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-grin text-success" tooltip="Positive"></i></li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Positive-Negative')">
+                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Positive-Neutral')">
+                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Positive-Positive')">
+                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-12">
               <div class="mt-3">
                 <label>
                   <input [(ngModel)]="filterService.filter.stopOnly" [ngModelOptions]="{standalone: true}"
@@ -332,10 +386,10 @@
                           class="badge badge-danger">{{item.customerstopwordcount ? item.customerstopwordcount : 0}}</span>
                       </div>
                     </div>
-                    <div class="">
+                    <!-- <div class="">
                       <i class="fas fa-quote-left mr-1"></i>{{item.topic}}<span
                         class="font-weight-bold ml-1">{{item.topicValue}} %</span>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="d-flex flex-row justify-content-around align-self-scratch" style="width: 30%">
                     <div class="d-flex justify-content-center align-self-scratch">
@@ -345,7 +399,8 @@
                           <div class="align-self-center text-center mr-1">
                             <i class="fa fa-2x fa-shield-alt"></i>
                           </div>
-                          <h2 class="m-0" [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent)}">
+                          <h2 class="m-0"
+                            [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent), 'width': '4rem'}">
                             {{item.compliancepercent !== '-' ? abc(item.compliancepercent) + '%' : '-    ' }}
                           </h2>
                         </div>
@@ -354,11 +409,22 @@
                     <div class="d-flex justify-content-center align-self-scratch">
                       <div class="d-flex flex-column  p-2">
                         <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Sentiment trend')}}:</div>
-                        <div class="d-flex flex-row align-self-center">
-                          <i class="far fa-2x" tooltip="Negative" [ngClass]='trends[item.emotionStart]'></i>
-                          <i class="fas fa-long-arrow-alt-right fa-2x mx-2"></i>
-                          <i [ngClass]='trends[item.emotionEnd]' class="far fa-2x" tooltip="Negative"></i>
-                        </div>
+                        <ng-container *ngIf="hasTrend(item.sentimentTrend); else emptyTrend">
+                          <div class="d-flex flex-row align-self-center my-1">
+                            <i class="far fa-2x" [ngClass]='getTrend(item.sentimentTrend.start)'
+                              [tooltip]="item.sentimentTrend.start"></i>
+                            <i class="fas fa-long-arrow-alt-right fa-2x mx-2"></i>
+                            <i [ngClass]='getTrend(item.sentimentTrend.end)' [tooltip]="item.sentimentTrend.end"
+                              class="far fa-2x"></i>
+                          </div>
+                        </ng-container>
+                        <ng-template #emptyTrend>
+                          <div class="d-flex flex-row align-self-start">
+                            <h2 style="width: 4rem">
+                              -
+                            </h2>
+                          </div>
+                        </ng-template>
                       </div>
                     </div>
                     <div class="d-flex justify-content-center align-self-scratch"
@@ -373,7 +439,7 @@
                             {{item.angertop && item.angertop.anger}}%
                           </h2>
                           <ng-template #empty>
-                            <h2>
+                            <h2 style="width: 4rem;">
                               -
                             </h2>
                           </ng-template>
