@@ -61,7 +61,7 @@
           </div>
         </div>
         <div class="col-6 mb-3" *ngIf="misswordsNotFound.length || misswords.length">
-
+            <ngx-text-stopwords [batchId]="fileParams.batchid" [fileName]="fileParams.filename"></ngx-text-stopwords>
         </div>
         <div class="col-6 mb-3">
           <div class="card">
