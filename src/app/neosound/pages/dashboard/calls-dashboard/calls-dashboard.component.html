@@ -186,7 +186,7 @@
             <div *ngIf="isEnglish()">
               <h4 class="card-text" style="line-height: 2.0;">{{t('SFTP Upload')}}</h4>
               <ul style="line-height: 2.0;">
-                <li>Host: <strong>sftp.neosound.eu, port: 22</strong></li>
+                <li>Host: <strong>{{host}}, port: 22</strong></li>
                 <li>{{t('Username and password - your account credentials.')}}</li>
                 <li>
                   {{t("Once connected, please go to folder ‘/files', and create or upload the separate sub-folders inside the folder ‘/files’,  per each agent, e.g. '/files/’.")}}

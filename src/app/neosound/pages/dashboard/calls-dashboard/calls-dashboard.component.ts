@@ -54,6 +54,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   @Input() dateFrom: string;
   @Input() dateTo: string;
   @Input() batches: string[];
+  host: string = "";
   hasData: boolean = false;
   showConfig: boolean = false;
   modalRef: BsModalRef;
@@ -414,6 +415,9 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
         this.primiryColor = this.dataService.config["colors"].secondary;
       } else {
         this.primiryColor = "#0098d9";
+      }
+      if (this.dataService.config["sFtpHost"]) {
+        this.host = this.dataService.config["sFtpHost"];
       }
       this.keyWordChart = {
         color: [this.primiryColor],
