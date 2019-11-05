@@ -410,7 +410,7 @@
                       <div class="d-flex flex-column  p-2">
                         <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Sentiment trend')}}:</div>
                         <ng-container *ngIf="hasTrend(item.sentimentTrend); else emptyTrend">
-                          <div class="d-flex flex-row align-self-center my-1">
+                          <div class="d-flex flex-row align-self-center mt-1">
                             <i class="far fa-2x" [ngClass]='getTrend(item.sentimentTrend.start)'
                               [tooltip]="item.sentimentTrend.start"></i>
                             <i class="fas fa-long-arrow-alt-right fa-2x mx-2"></i>
