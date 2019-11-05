@@ -58,6 +58,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   showConfig: boolean = false;
   modalRef: BsModalRef;
   config = {};
+  host: string;
   colors = [];
   options: any = {};
   options2: any = {};
@@ -412,6 +413,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
         .reverse();
       if (this.dataService.config["colors"].secondary) {
         this.primiryColor = this.dataService.config["colors"].secondary;
+        this.host = this.dataService.config["sFtpHost"];
       } else {
         this.primiryColor = "#0098d9";
       }
