@@ -144,7 +144,7 @@ export class FilterService {
         .join(",");
       params["stopBy"] = this.filter.stopwordLooking;
     }
-    if(this.filter.sentimentTrend) {
+    if (this.filter.sentimentTrend) {
       params["sentimentTrend"] = this.filter.sentimentTrend;
     }
     if (
@@ -277,7 +277,7 @@ export class FilterService {
       pausetoAll: true,
       stopOnly: false,
       stopwordLooking: "Everywhere",
-      sentimentTrend: null;
+      sentimentTrend: null,
       tagsOnly: false,
       missingOnly: false,
       favoriteOnly: false,
@@ -389,6 +389,6 @@ export class FilterService {
   }
 
   getRandom() {
-    return Math.floor(Math.random() * (3));
+    return Math.floor(Math.random() * 3);
   }
 }
