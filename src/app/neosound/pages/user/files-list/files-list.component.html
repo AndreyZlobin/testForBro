@@ -92,6 +92,60 @@
                 </ul>
               </div>
             </div>
+            <div class="col-12">
+              <div class="my-2">{{t('Sentiment trend')}}</div>
+              <div ngbDropdown class="ghost-dropdown dropdown w-100">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" style="border: 1px solid #dfe3e9;"
+                  id="dropdownBasic1"
+                  ngbDropdownToggle>{{t(filterService.filter.emotionalTrend ? filterService.filter.emotionalTrend : "Select trend")}}</button>
+                <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('negative - negative')">
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('negative - neutral')">
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('negative - positive')">
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('neutral - negative')">
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('neutral - neutral')">
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('neutral - positive')">
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-grin text-success" tooltip="Positive"></i></li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('positive - negative')">
+                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('positive - neutral')">
+                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                  </li>
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('positive - positive')">
+                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <div class="col-12 pt-3">
               <div class="mb-2">{{t('Missing words')}}</div>
               <tag-input [(ngModel)]="filterService.filter.keywordsNotContain" [editable]="true" theme="minimal"
@@ -342,9 +396,9 @@
                     </div>
                   </div>
                   <div class="d-flex flex-row justify-content-center align-self-center" style="width: 10%">
-                      <i class="far fa-angry text-danger fa-2x" tooltip="Negative"></i>
-                      <i class="fas fa-long-arrow-alt-right fa-2x mx-2"></i>
-                      <i class="far fa-angry text-danger fa-2x" tooltip="Negative"></i>
+                    <i class="far fa-angry text-danger fa-2x" tooltip="Negative"></i>
+                    <i class="fas fa-long-arrow-alt-right fa-2x mx-2"></i>
+                    <i class="far fa-angry text-danger fa-2x" tooltip="Negative"></i>
                   </div>
                   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%"
                     [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">

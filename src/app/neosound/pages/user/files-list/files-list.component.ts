@@ -93,6 +93,9 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   setStopwordLooking(value: string): void {
     this.filterService.filter.stopwordLooking = value;
   }
+  setEmotionalTrend(value: string): void {
+    this.filterService.filter.emotionalTrend = value;
+  }
 
   getEmotionName(val) {
     return val && Object.keys(val)[0];

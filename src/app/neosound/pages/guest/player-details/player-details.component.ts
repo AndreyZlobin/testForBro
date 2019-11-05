@@ -80,6 +80,7 @@ export class PlayerDetailsComponent
   greySpeaker = "";
   regions = [];
   changed = false;
+  routeSub: Subscription;
   @HostListener("document:keyup", ["$event"])
   public handleKeyboardEvent(event: KeyboardEvent): void {
     if (event.code === "Space") {
@@ -121,7 +122,10 @@ export class PlayerDetailsComponent
                 this.fileUrl = res.url;
                 this.changed = true;
                 this.getInfo();
-                this.getAnalytics(this.fileParams.batchid, this.fileParams.filename);
+                this.getAnalytics(
+                  this.fileParams.batchid,
+                  this.fileParams.filename
+                );
               },
               e => {
                 this.errorMessage = e.error.message;
@@ -333,11 +337,11 @@ export class PlayerDetailsComponent
     return "rgba(255,0,0, 0.1)";
   }
 
-  gotoPosition(ms) {
-    this.player.seekTo(ms);
+  ngOnDestroy() {
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+    }
   }
-
-  ngOnDestroy() {}
 
   t(v) {
     return LanguageService.t(v);

@@ -45,6 +45,7 @@ export class FilterService {
     pagen: number;
     sortby: string;
     sortorder: string;
+    emotionalTrend: string;
   } = {
     datefrom: null,
     dateto: null,
@@ -77,7 +78,8 @@ export class FilterService {
     itemsn: 100,
     pagen: 1,
     sortby: "",
-    sortorder: ""
+    sortorder: "",
+    emotionalTrend: "",
   };
   constructor(private filesService: FilesService) {}
 
@@ -278,7 +280,8 @@ export class FilterService {
       itemsn: 100,
       pagen: 1,
       sortby: "",
-      sortorder: ""
+      sortorder: "",
+      emotionalTrend: "",
     };
     this.updateFileList();
   }

@@ -8,15 +8,25 @@ export class FileTextStatsService {
   private fileName: string;
   public isLoading: boolean = false;
   private fileEmotionsStore: {
-    text: [];
-    missWord: [];
-    missWordNotFound: [];
-    stopWords: [];
-    missPhrases: [];
-    stopPhrases: [];
+    text: string;
+    missWord: any;
+    missWordNotFound: any;
+    stopWords: any;
+    missPhrases: any;
+    stopPhrases: any;
     sentiment: string;
-    speakers: [];
+    speakers: any;
     compliance: string;
+  } = {
+    text: "",
+    missWord: [],
+    missWordNotFound: [],
+    stopWords: [],
+    missPhrases: [],
+    stopPhrases: [],
+    sentiment: "",
+    speakers: [],
+    compliance: ""
   };
   private fileInfoSubject = new BehaviorSubject<any>({});
   public fileInfo = this.fileInfoSubject.asObservable();
@@ -35,7 +45,7 @@ export class FileTextStatsService {
         .subscribe(data => {
           if (data && data.result && data.result.stt) {
             const stt = data.result.stt;
-            this.fileEmotionsStore.text = stt;
+            this.fileEmotionsStore.text = stt.fulltext;
             this.fileEmotionsStore.missWord = stt.keywords.miss;
             this.fileEmotionsStore.missWordNotFound = stt.keywords.missmiss;
             this.fileEmotionsStore.stopWords = stt.keywords.stop;
@@ -48,15 +58,15 @@ export class FileTextStatsService {
               stt.keywords.missmiss
             );
           } else {
-            this.fileEmotionsStore.text = null;
-            this.fileEmotionsStore.missWord = null;
-            this.fileEmotionsStore.missWordNotFound = null;
-            this.fileEmotionsStore.stopWords = null;
-            this.fileEmotionsStore.missPhrases = null;
-            this.fileEmotionsStore.stopPhrases = null;
-            this.fileEmotionsStore.sentiment = null;
-            this.fileEmotionsStore.speakers = null;
-            this.fileEmotionsStore.compliance = null;
+            this.fileEmotionsStore.text = "";
+            this.fileEmotionsStore.missWord = [];
+            this.fileEmotionsStore.missWordNotFound = [];
+            this.fileEmotionsStore.stopWords = [];
+            this.fileEmotionsStore.missPhrases = [];
+            this.fileEmotionsStore.stopPhrases = [];
+            this.fileEmotionsStore.sentiment = "";
+            this.fileEmotionsStore.speakers = [];
+            this.fileEmotionsStore.compliance = "";
           }
           this.fileInfoSubject.next(this.fileEmotionsStore);
           this.isLoading = false;
@@ -65,7 +75,7 @@ export class FileTextStatsService {
       this.fileInfoSubject.next(this.fileEmotionsStore);
     }
   }
-  getCompliancePercents(misswords: [], misswordsNotFound: []): string {
+  getCompliancePercents(misswords: any[], misswordsNotFound: any[]): string {
     if (misswords.length || misswordsNotFound.length) {
       const perc =
         misswords.length / (misswords.length + misswordsNotFound.length);

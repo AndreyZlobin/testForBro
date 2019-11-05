@@ -1,0 +1,15 @@
+<div *ngIf="hasData">
+  <div class="card">
+    <div class="card-header">{{t("Compliance")}} {{compliance}}</div>
+    <div class="card-body p-0">
+      <ul class="list-group mt-3" style="height: 300px; overflow-y: auto">
+        <li class="list-group-item" *ngFor="let missword of misswordsNotFound">
+          <i class="fa fa-times m-r-5 text-danger"></i> {{missword}}
+        </li>
+        <li class="list-group-item" *ngFor="let missword of misswords">
+          <i class="fa fa-check m-r-5 text-success"></i> {{missword}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

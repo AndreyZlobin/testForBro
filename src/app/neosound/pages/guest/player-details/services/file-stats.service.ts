@@ -8,9 +8,9 @@ export class FileInfoService {
   private fileName: string;
   public isLoading: boolean = false;
   private fileStatsStore: {
-    popularWords: [];
-    sankeyData: {};
-    treeRadialData: {};
+    popularWords: any[];
+    sankeyData: any;
+    treeRadialData: any;
   };
   private fileInfoSubject = new BehaviorSubject<any>({});
   public fileInfo = this.fileInfoSubject.asObservable();

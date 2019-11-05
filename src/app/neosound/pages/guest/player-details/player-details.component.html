@@ -16,7 +16,7 @@
             [routerLink]="filterService.getNextLink(fileParams.filename, fileParams.batchid)">
             <i class="fas fa-chevron-right"></i>
           </button>
-          <h2 class="text-truncate my-2" style="max-width: 60vw;">
+          <h2 class="text-truncate my-2" style="max-width: 56vw;">
             {{ fileParams.filename }}
           </h2>
           <button class="btn btm-sm btn-secondary ml-auto" style="cursor: pointer;" routerLink="/user/files">
@@ -37,28 +37,7 @@
         </ng-container>
         <div style="overflow-y: auto;">
           <div style="height: 56vh;">
-            <table class="table">
-              <ng-container *ngFor="let item of emotions">
-                <tr class="d-flex" (click)="gotoPosition(item[0])" interval [timeInterval]="[item[0], item[1]]"
-                  [ngClass]="{'grey': item[5] && greySpeaker && item[5] == greySpeaker}">
-                  <td class="col-1">
-                    {{ getDateVal(item[0]) | date: "mm:ss" }} -
-                    {{ getDateVal(item[1]) | date: "mm:ss" }}
-                  </td>
-                  <td class="col-9"><span [innerHTML]=t(item[2])></span></td>
-                  <td class="col-1">
-                    <span *ngIf="item[3]">
-                      {{ item[3] | currency: "%":"symbol":"1.2-2" }}
-                    </span>
-                  </td>
-                  <td class="col-1">
-                    <i class="far fa-angry text-danger" tooltip="Negative" *ngIf="item[4] === 'Negative'"></i>
-                    <i class="far fa-grin text-success" tooltip="Positive" *ngIf="item[4] === 'Positive'"></i>
-                    <i class="far fa-meh text-info" tooltip="Neutral" *ngIf="item[4] === 'Neutral'"></i>
-                  </td>
-                </tr>
-              </ng-container>
-            </table>
+            <ngx-text-log [batchId]="fileParams.batchid" [fileName]="fileParams.filename"></ngx-text-log>
           </div>
         </div>
       </div>
@@ -68,11 +47,7 @@
             <div class="card-header">{{t('Text')}}</div>
             <div class="card-body">
               <div class="mt-2">
-                <button type="button" class="btn btn-dark" (click)="copyToClipboard(sttfulltext)"
-                  style="position: absolute; right: 20px;bottom: 20px; opacity: .5;">
-                  <i class="fa fa-copy"></i>
-                </button>
-                <span [innerHTML]=sttfulltext></span>
+                <ngx-full-text [batchId]="fileParams.batchid" [fileName]="fileParams.filename"></ngx-full-text>
               </div>
             </div>
           </div>
@@ -81,28 +56,12 @@
           <div class="card">
             <div class="card-header">{{t('Stopwords')}}</div>
             <div class="card-body p-0">
-                <ul class="list-group list-group-flush mt-3" style="height: 300px; overflow-y: auto">
-                    <li class="list-group-item d-flex" *ngFor="let keyword of keywords" style="color: #211b19">
-                      <span>{{keyword}}</span>
-                    </li>
-                  </ul>
+              <ngx-text-stopwords [batchId]="fileParams.batchid" [fileName]="fileParams.filename"></ngx-text-stopwords>
             </div>
           </div>
         </div>
         <div class="col-6 mb-3" *ngIf="misswordsNotFound.length || misswords.length">
-          <div class="card">
-            <div class="card-header">{{t("Compliance")}} {{getCompliancePercents()}}</div>
-            <div class="card-body p-0">
-              <ul class="list-group mt-3" style="height: 300px; overflow-y: auto">
-                <li class="list-group-item" *ngFor="let missword of misswordsNotFound">
-                  <i class="fa fa-times m-r-5 text-danger"></i> {{missword}}
-                </li>
-                <li class="list-group-item" *ngFor="let missword of misswords">
-                  <i class="fa fa-check m-r-5 text-success"></i> {{missword}}
-                </li>
-              </ul>
-            </div>
-          </div>
+
         </div>
         <div class="col-6 mb-3">
           <div class="card">

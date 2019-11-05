@@ -8,11 +8,11 @@ export class FileEmotionsService {
   private fileName: string;
   public isLoading: boolean = false;
   private fileEmotionsStore: {
-    emotions: [];
-    music: [];
+    emotions: any[];
+    music: any[];
   } = {
-    emotions: null,
-    music: null
+    emotions: [],
+    music: [],
   };
   private fileInfoSubject = new BehaviorSubject<any>({});
   public fileInfo = this.fileInfoSubject.asObservable();
@@ -30,19 +30,19 @@ export class FileEmotionsService {
         })
         .subscribe(data => {
           if (data) {
-            if (data.results.result.anger) {
-              if (data.results.result.anger.ints) {
+            if (data.result.anger) {
+              if (data.result.anger.ints) {
                 this.fileEmotionsStore.emotions =
-                  data.results.result.anger.ints;
+                  data.result.anger.ints;
               }
-              if (data.results.result.anger.music) {
-                this.fileEmotionsStore.music = data.results.result.anger.music;
+              if (data.result.anger.music) {
+                this.fileEmotionsStore.music = data.result.anger.music;
               }
             }
-            if (data.results.result.merged) {
-              if (data.results.result.merged.intprobs) {
-                data.fileEmotionsStore.emotions =
-                  data.results.result.merged.intprobs;
+            if (data.result.merged) {
+              if (data.result.merged.intprobs) {
+                this.fileEmotionsStore.emotions =
+                  data.result.merged.intprobs;
               }
             }
           } else {

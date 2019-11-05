@@ -93,8 +93,14 @@ const formSetting: any = {
 };
 
 import { FileDropModule } from "ngx-file-drop";
+
 import { PlayerComponent } from "./neosound/pages/guest/player-details/player/player.component";
 import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/player-details.component";
+import { TextLogComponent } from "./neosound/pages/guest/player-details/cards/text-log/text-log.component";
+import { TextComplianceComponent } from "./neosound/pages/guest/player-details/cards/text-compliance/text-compliance.component";
+import { FullTextComponent } from "./neosound/pages/guest/player-details/cards/full-text/full-text.component";
+import { TextStopwordsComponent } from "./neosound/pages/guest/player-details/cards/text-stopwords/text-stopwords.component";
+
 import { PieChartComponent } from "./neosound/components/pie-chart/pie-chart.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
 import { NgxEchartsModule } from "ngx-echarts";
@@ -143,6 +149,10 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     SensitiveDataComponent,
     AboutComponent,
     PlayerDetailsComponent,
+    TextLogComponent,
+    TextComplianceComponent,
+    TextStopwordsComponent,
+    FullTextComponent,
     PieChartComponent,
     ApiPageComponent,
     PageNotFoundComponent,
