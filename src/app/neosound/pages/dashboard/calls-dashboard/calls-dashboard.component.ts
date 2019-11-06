@@ -59,7 +59,6 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   showConfig: boolean = false;
   modalRef: BsModalRef;
   config = {};
-  host: string;
   colors = [];
   options: any = {};
   options2: any = {};
