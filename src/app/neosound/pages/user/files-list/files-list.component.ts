@@ -80,10 +80,6 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.filterService.updateFileList();
   }
   ngAfterViewInit() {
-    if (this.filterService.lastFileId) {
-      this.scrollToElement();
-      this.filterService.lastFileId = "";
-    }
   }
   scrollToElement() {
     if (this.scrollTo) {
