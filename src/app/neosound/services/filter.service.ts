@@ -4,6 +4,7 @@ import { FilesService } from "./files.service";
 
 @Injectable()
 export class FilterService {
+  topic = ["Technical issues", "Account balance", "Credit card"];
   public fileStore: any = [];
   private filesSubject = new BehaviorSubject<any[]>([]);
   public files = this.filesSubject.asObservable();
@@ -45,6 +46,7 @@ export class FilterService {
     pagen: number;
     sortby: string;
     sortorder: string;
+    sentimentTrend: string;
   } = {
     datefrom: null,
     dateto: null,
@@ -70,6 +72,7 @@ export class FilterService {
     pausetoAll: true,
     stopOnly: false,
     stopwordLooking: "Everywhere",
+    sentimentTrend: null,
     tagsOnly: false,
     missingOnly: false,
     favoriteOnly: false,
@@ -140,6 +143,9 @@ export class FilterService {
         )
         .join(",");
       params["stopBy"] = this.filter.stopwordLooking;
+    }
+    if (this.filter.sentimentTrend) {
+      params["sentimentTrend"] = this.filter.sentimentTrend;
     }
     if (
       this.filter.keywordsNotContain &&
@@ -271,6 +277,7 @@ export class FilterService {
       pausetoAll: true,
       stopOnly: false,
       stopwordLooking: "Everywhere",
+      sentimentTrend: null,
       tagsOnly: false,
       missingOnly: false,
       favoriteOnly: false,
@@ -379,5 +386,9 @@ export class FilterService {
       }
     }
     return res;
+  }
+
+  getRandom() {
+    return Math.floor(Math.random() * 3);
   }
 }
