@@ -23,6 +23,7 @@ import { DataService } from "../../../shared";
 })
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild("scroll") scrollTo: ElementRef;
+  trends= [ "fa-angry text-danger",  "fa-grin text-success", "fa-meh text-info"];
   errorMessage = "";
   isLoading = true;
   pagesArr = [1];
@@ -79,10 +80,6 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.filterService.updateFileList();
   }
   ngAfterViewInit() {
-    if (this.filterService.lastFileId) {
-      this.scrollToElement();
-      this.filterService.lastFileId = "";
-    }
   }
   scrollToElement() {
     if (this.scrollTo) {
@@ -175,21 +172,40 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     return d;
   }
 
+  getTrend(itemTrend) {
+    if(itemTrend === "Negative") {
+      return  "fa-angry text-danger";
+    }
+    if(itemTrend === "Positive") {
+      return  "fa-grin text-success"
+    }
+    if(itemTrend === "Neutral") {
+      return  "fa-meh text-info"
+    }
+    return "fa-meh";
+  }
+
   sortTable(sortBy) {
     this.analyticsService.trackEvent("sortTable", sortBy);
     if (sortBy !== this.filterService.filter.sortby) {
       this.filterService.filter.sortorder = "asc";
     } else {
-      if(this.filterService.filter.sortorder === "desc") {
+      if (this.filterService.filter.sortorder === "desc") {
         this.filterService.filter.sortorder = "asc";
       } else {
         this.filterService.filter.sortorder = "desc";
       }
-
     }
 
     this.filterService.filter.sortby = sortBy;
     this.filterService.updateFileList();
+  }
+
+  hasTrend(sentimentTrend) {
+    return sentimentTrend.start && sentimentTrend.end;
+  }
+  setEmotionalTrend(value) {
+    this.filterService.filter.sentimentTrend = value;
   }
 
   resetFilter() {
@@ -333,9 +349,33 @@ export class FilesListComponent implements OnInit, AfterViewInit {
         break;
     }
 
-    const tagVal = tag && tag.value || tag;
+    const tagVal = (tag && tag.value) || tag;
     if (tagVal === "") {
       return;
+    }
+  }
+  getFormatedTime(val: string): string {
+    const time = parseFloat(val);
+    if (time < 60) {
+      if (time < 10) {
+        return `00:0${Math.ceil(time)}`;
+      } else {
+        return `00:${Math.ceil(time)}`;
+      }
+    } else {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time - minutes * 60);
+      let formatedSeconds = "";
+      if (seconds < 10) {
+        formatedSeconds = `0${seconds}`;
+      } else {
+        formatedSeconds = `${seconds}`;
+      }
+      if (minutes < 10) {
+        return `0${minutes}:${formatedSeconds}`;
+      } else {
+        return `${minutes}:${formatedSeconds}`;
+      }
     }
   }
 }

@@ -17,7 +17,7 @@
       <nb-action class="control-item" *ngIf="isLoggedIn()"><a href="/user/files"
           (click)="navigate('/user/files')">{{t('Calls')}}</a></nb-action>
         <nb-action class="control-item" *ngIf="isLoggedIn()"><a href="/user/files"
-          (click)="navigate('/user/text-files')">{{t('Text')}}</a></nb-action>
+          (click)="navigate('/user/text-files')">{{t('Texts')}}</a></nb-action>
        <nb-action *ngIf="isLoggedIn() && config.header.api.show" class="control-item"><a
           href="{{config.header.api.link}}" target="_blank"
           (click)="navigate(config.header.api.link)">{{t(config.header.api.text)}}</a></nb-action>

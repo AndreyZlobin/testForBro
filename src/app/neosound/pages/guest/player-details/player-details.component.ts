@@ -104,7 +104,6 @@ export class PlayerDetailsComponent
         if (event.url.startsWith("/file/")) {
           const batchid = this.route.snapshot.params["batchid"];
           const filename = this.route.snapshot.params["filename"];
-          this.filterService.lastFileId = decodeURIComponent(filename);
           if (filename && batchid) {
             if (
               this.fileParams &&

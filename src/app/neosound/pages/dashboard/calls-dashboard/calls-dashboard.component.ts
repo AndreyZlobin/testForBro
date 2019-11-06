@@ -54,11 +54,11 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   @Input() dateFrom: string;
   @Input() dateTo: string;
   @Input() batches: string[];
+  host: string = "";
   hasData: boolean = false;
   showConfig: boolean = false;
   modalRef: BsModalRef;
   config = {};
-  host: string;
   colors = [];
   options: any = {};
   options2: any = {};
@@ -417,6 +417,9 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
       } else {
         this.primiryColor = "#0098d9";
       }
+      if (this.dataService.config["sFtpHost"]) {
+        this.host = this.dataService.config["sFtpHost"];
+      }
       this.keyWordChart = {
         color: [this.primiryColor],
         grid: {
@@ -635,7 +638,11 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
           ]
         };
       }
-      if(data.sentiment && data.sentiment.sankeyData && data.sentiment.treeRadialData) {
+      if (
+        data.sentiment &&
+        data.sentiment.sankeyData &&
+        data.sentiment.treeRadialData
+      ) {
         this.sentimentData = {
           tooltip: {
             trigger: "item",
@@ -814,7 +821,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     if (changes.dateFrom.currentValue) {
       params["dateTo"] = changes.dateTo.currentValue;
     }
-    if(changes.batches.currentValue) {
+    if (changes.batches.currentValue) {
       params["batches"] = changes.batches.currentValue;
     }
     this.loading = true;
