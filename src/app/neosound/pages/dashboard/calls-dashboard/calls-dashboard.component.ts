@@ -638,7 +638,11 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
           ]
         };
       }
-      if(data.sentiment && data.sentiment.sankeyData && data.sentiment.treeRadialData) {
+      if (
+        data.sentiment &&
+        data.sentiment.sankeyData &&
+        data.sentiment.treeRadialData
+      ) {
         this.sentimentData = {
           tooltip: {
             trigger: "item",
@@ -817,7 +821,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     if (changes.dateFrom.currentValue) {
       params["dateTo"] = changes.dateTo.currentValue;
     }
-    if(changes.batches.currentValue) {
+    if (changes.batches.currentValue) {
       params["batches"] = changes.batches.currentValue;
     }
     this.loading = true;
