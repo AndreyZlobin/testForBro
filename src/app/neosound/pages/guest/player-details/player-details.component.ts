@@ -275,6 +275,7 @@ export class PlayerDetailsComponent
       return "rgba(0,255,0, 1)";
     }
     switch (this.currentTab) {
+
       case "anger":
         return (
           "rgba(255, " +
