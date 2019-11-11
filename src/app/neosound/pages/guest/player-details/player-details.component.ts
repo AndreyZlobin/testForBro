@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  OnDestroy,
-  HostListener,
-  ChangeDetectorRef,
-  ViewChild
-} from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { FilterService } from "../../../services/filter.service";
 import { PlayerService } from "../../../services/player.service";
@@ -33,64 +25,23 @@ export const colors = [
   templateUrl: "./player-details.component.html",
   styleUrls: ["./player-details.component.scss"]
 })
-export class PlayerDetailsComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+export class PlayerDetailsComponent implements OnInit, OnDestroy {
   @ViewChild(PlayerComponent)
   player: PlayerComponent;
-  public zoomOptions = {
-    scale: 1.3,
-    transitionTime: 1.2,
-    delay: 0.1
-  };
   currentView: string;
-  colors = colors;
   sankey: any;
   isLoading: boolean = true;
   fileParams;
-  results;
-  treeRadialData: any;
-  popularWords: any;
-  emotions: any[] = [];
-  intervalRef;
-  analysisResult;
-  chartData;
-  fileUrl;
-  wavesurfer;
-  wavesurferReady = false;
-  attempsCount = 20;
   subRoute: Subscription;
   zoomLevel = 200;
   errorMessage = "";
-  emotionsAnger;
-  emotionsAge;
-  emotionsFourclass;
-  emotionsSounds;
-  emotionsGender;
-  sttfulltext;
-  keywords;
-  misswords = [];
-  misswordsNotFound = [];
   emotionsSttAnger;
   currentTab = "text";
   tabsDisabled = false;
-  isScroll = false;
-  duration = 0;
-  radioModel = "Log";
-  onhold;
-  greySpeaker = "";
-  regions = [];
-  changed = false;
   routeSub: Subscription;
-  @HostListener("document:keyup", ["$event"])
-  public handleKeyboardEvent(event: KeyboardEvent): void {
-    if (event.code === "Space") {
-      this.player.play();
-      event.stopPropagation();
-    }
-  }
   constructor(
     private filesService: FilesService,
-    private filterService: FilterService,
+    public filterService: FilterService,
     private router: Router,
     private route: ActivatedRoute,
     private toastrService: ToastrService,
@@ -98,8 +49,6 @@ export class PlayerDetailsComponent
   ) {
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
-        this.fileUrl = null;
-        this.regions = [];
         this.currentView = "analytic";
         if (event.url.startsWith("/file/")) {
           const batchid = this.route.snapshot.params["batchid"];
@@ -115,10 +64,6 @@ export class PlayerDetailsComponent
     });
   }
 
-  ngAfterViewInit() {}
-  trackElement(index: number, element: any) {
-    return element ? element.guid : null;
-  }
   ngOnInit() {}
   changeTab(event: any): void {
     if (this.currentView === "player") {
@@ -131,7 +76,7 @@ export class PlayerDetailsComponent
     }
   }
 
-  getDateVal(val) {
+  getDateVal(val): any {
     const d = new Date(1, 1, 1);
     d.setMilliseconds(val * 1000);
     return d;

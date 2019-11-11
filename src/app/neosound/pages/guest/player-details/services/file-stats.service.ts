@@ -3,7 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { FilesService } from "../../../../services/files.service";
 
 @Injectable()
-export class FileInfoService {
+export class FileStatsService {
   private batchId: string;
   private fileName: string;
   public isLoading: boolean = false;

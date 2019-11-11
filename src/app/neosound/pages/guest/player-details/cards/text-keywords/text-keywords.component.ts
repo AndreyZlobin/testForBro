@@ -23,7 +23,6 @@ export const colors = [
 @Component({
   selector: "ngx-text-keywords",
   templateUrl: "./text-keywords.component.html",
-  providers: [FileChartDataService]
 })
 export class TextKeywordsComponent implements OnChanges, OnDestroy {
   treeData: any;

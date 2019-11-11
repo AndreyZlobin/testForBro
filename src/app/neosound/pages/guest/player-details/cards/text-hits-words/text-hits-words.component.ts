@@ -23,7 +23,6 @@ export const colors = [
 @Component({
   selector: "ngx-text-hits-words",
   templateUrl: "./text-hits-words.component.html",
-  providers: [FileChartDataService]
 })
 export class TextHitsWordsComponent implements OnChanges, OnDestroy {
   popularWords: string[];

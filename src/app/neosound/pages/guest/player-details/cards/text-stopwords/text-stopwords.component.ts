@@ -11,8 +11,7 @@ import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-text-stopwords",
-  templateUrl: "./text-stopwords.component.html",
-  providers: [FileTextStatsService]
+  templateUrl: "./text-stopwords.component.html"
 })
 export class TextStopwordsComponent implements OnChanges, OnDestroy {
   data: any[];

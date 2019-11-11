@@ -1,5 +1,5 @@
-<div class="p-4">
-  <canvas id="canvas" style="width: 100%;"></canvas>
+<div class="p-4" *ngIf="!isLoading">
+  <canvas #texttagcloud style="width: 100%;"></canvas>
 </div>
 <ng-template #loading>
   loading...

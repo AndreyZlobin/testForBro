@@ -12,7 +12,6 @@ import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "ngx-full-text",
   templateUrl: "./full-text.component.html",
-  providers: [FileTextStatsService]
 })
 export class FullTextComponent implements OnChanges, OnDestroy {
   data: any[];

@@ -11,7 +11,6 @@ import { FileTextStatsService } from "../../services/file-text-stats.service";
 @Component({
   selector: "ngx-text-compliance",
   templateUrl: "./text-compliance.component.html",
-  providers: [FileTextStatsService]
 })
 export class TextComplianceComponent implements OnChanges, OnDestroy {
   missWord: any[];

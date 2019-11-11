@@ -6,7 +6,6 @@ import { FileEmotionsService } from "../../services/file-emotions.service";
 @Component({
   selector: 'ngx-text-log',
   templateUrl: "./text-log.component.html",
-  providers: [ FileEmotionsService ],
 })
 export class TextLogComponent implements OnChanges, OnDestroy {
   data: any[];

@@ -22,8 +22,7 @@ export const colors = [
 
 @Component({
   selector: "ngx-text-sankey",
-  templateUrl: "./text-sankey.component.html",
-  providers: [FileChartDataService]
+  templateUrl: "./text-sankey.component.html"
 })
 export class TextSankeyComponent implements OnChanges, OnDestroy {
   sankeyData: any;
@@ -34,7 +33,10 @@ export class TextSankeyComponent implements OnChanges, OnDestroy {
   constructor(private fileChartDataService: FileChartDataService) {
     this.dataSub = this.fileChartDataService.chartData.subscribe(data => {
       if (data && data.sankeyData) {
-        this.sankeyData = this.init(data.sankeyData.nodes, data.sankeyData.links);
+        this.sankeyData = this.init(
+          data.sankeyData.nodes,
+          data.sankeyData.links
+        );
         this.isLoading = false;
       }
     });
