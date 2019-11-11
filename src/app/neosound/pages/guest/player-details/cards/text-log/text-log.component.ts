@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { LanguageService } from "../../../../../services/language.service";
 import { FileEmotionsService } from "../../services/file-emotions.service";
 
@@ -11,11 +11,13 @@ import { FileEmotionsService } from "../../services/file-emotions.service";
 export class TextLogComponent implements OnChanges, OnDestroy {
   data: any[];
   dataSub: any;
+
   @Input('batchId') batchId: string;
   @Input('fileName') fileName: string;
+  @Output() goToRegion = new EventEmitter<any>();
   constructor(public fileEmotionsService: FileEmotionsService) {
     this.dataSub = this.fileEmotionsService.fileInfo.subscribe((data) => {
-      this.data = data.emotions;
+      this.data = data.sentiments;
     });
   }
   ngOnChanges(simpleChanges: SimpleChanges) {
@@ -33,5 +35,8 @@ export class TextLogComponent implements OnChanges, OnDestroy {
     const d = new Date(1, 1, 1);
     d.setMilliseconds(val * 1000);
     return d;
+  }
+  emitEvent(time: any) {
+    this.goToRegion.emit(time);
   }
 }

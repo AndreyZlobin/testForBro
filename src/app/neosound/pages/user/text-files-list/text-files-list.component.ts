@@ -191,7 +191,7 @@ export class TextFilesListComponent implements OnInit, AfterViewInit {
       ...this.filterService.getFilterParams(),
       export: "csv"
     };
-    this.filesService.postListFilesPage(params).subscribe(
+    this.filesService.postListTextFiles(params).subscribe(
       data =>
         // this.downloadFile(data)
         (window.location.href = data.url)

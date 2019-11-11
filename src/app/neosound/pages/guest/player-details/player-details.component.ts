@@ -105,13 +105,6 @@ export class PlayerDetailsComponent
           const batchid = this.route.snapshot.params["batchid"];
           const filename = this.route.snapshot.params["filename"];
           if (filename && batchid) {
-            if (
-              this.fileParams &&
-              filename === this.fileParams.filename &&
-              batchid === this.fileParams.batchid
-            ) {
-              return;
-            }
             this.fileParams = {
               filename: decodeURIComponent(filename),
               batchid: decodeURIComponent(batchid)
@@ -144,98 +137,8 @@ export class PlayerDetailsComponent
     return d;
   }
 
-  setRegions(): void {
-    const inputData = this.emotionsSounds
-      ? this.emotions.concat(this.emotionsSounds)
-      : this.emotions;
-    if (!this.emotions) return;
-    const data = inputData || this.emotions;
-    for (let index = 0; index < data.length; index++) {
-      const element = data[index];
-      this.regions.push({
-        start: element[0],
-        end: element[1],
-        color: this.getColor(element[3], element[2], !element[2])
-      });
-    }
-
-    if (this.emotionsAnger) {
-      for (let index = 0; index < this.emotionsAnger.length; index++) {
-        const element = this.emotionsAnger[index];
-        this.regions.push({
-          start: element[0],
-          end: element[1],
-          color: this.getColor(element[3], element[2], !element[2])
-        });
-      }
-    }
-  }
-
-  getColor(val: any, type?: string, isMusic = false) {
-    if (isMusic) {
-      return "rgba(0,255,0, 1)";
-    }
-    switch (this.currentTab) {
-
-      case "anger":
-        return (
-          "rgba(255, " +
-          (255 - (val - 50) * 5) +
-          ", " +
-          (255 - (val - 50) * 5) +
-          ", 1)"
-        );
-      case "age":
-        if (type === "young") return "rgba(255,0,0, 1)";
-        if (type === "mid") return "rgba(0,255,0, 1)";
-        if (type === "old") return "rgba(0,0,255, 1)";
-        break;
-      case "gender":
-        if (type === "w") return "rgba(255,0,0, 1)";
-        if (type === "m") return "rgba(0,0,255, 1)";
-        break;
-      case "beta":
-        if (type === "Anger")
-          return (
-            "rgba(255, " +
-            (255 - (val - 50) * 5) +
-            ", " +
-            (255 - (val - 50) * 5) +
-            ", 1)"
-          );
-        if (type === "Neutral") return "rgba(255, 255, 255, 0)";
-        if (type === "Happy")
-          return (
-            "rgba(" +
-            (255 - (val - 50) * 5) +
-            ", 255, " +
-            (255 - (val - 50) * 5) +
-            ", 1)"
-          );
-        if (type === "Sadness")
-          return (
-            "rgba(" +
-            (255 - (val - 50) * 5) +
-            ", " +
-            (255 - (val - 50) * 5) +
-            ", 255, 1)"
-          );
-        break;
-      case "sounds":
-        return "rgba(0,255,0, 1)";
-      case "text":
-        const x = val / 2 + 50;
-        return (
-          "rgba(255, " +
-          (255 - (x - 50) * 5) +
-          ", " +
-          (255 - (x - 50) * 5) +
-          ", 1)"
-        );
-      default:
-        break;
-    }
-    return "rgba(255,0,0, 0.1)";
+  public goToRegion(time: any) {
+    this.player.seekTo(time);
   }
 
   ngOnDestroy() {
@@ -255,81 +158,5 @@ export class PlayerDetailsComponent
         (this.dataService.config as any).colors.secondary) ||
       "rgb(0, 154, 210)"
     );
-  }
-
-  getCompliancePercents() {
-    if (this.misswords.length || this.misswordsNotFound.length) {
-      const perc =
-        this.misswords.length /
-        (this.misswords.length + this.misswordsNotFound.length);
-      return Math.round(perc * 100) + "%";
-    }
-    return "N/A";
-  }
-
-  getAnalytics(batchid: string, filename: string) {
-    this.isLoading = true;
-    this.filesService
-      .getDetailsEchartData({ batchid, filename })
-      .subscribe(data => {
-        if (data.sankeyData) {
-          this.sankey = {
-            tooltip: {
-              trigger: "item",
-              triggerOn: "mousemove"
-            },
-            color: this.colors,
-            graph: {
-              color: this.colors
-            },
-            series: [
-              {
-                type: "sankey",
-                data: data.sankeyData.nodes,
-                links: data.sankeyData.links,
-                focusNodeAdjacency: "allEdges",
-                itemStyle: {
-                  normal: {
-                    borderWidth: 1,
-                    borderColor: "#aaa"
-                  }
-                },
-                lineStyle: {
-                  normal: {
-                    color: "source",
-                    curveness: 0.5
-                  }
-                }
-              }
-            ]
-          };
-        }
-        if (data.treeRadialData) {
-          this.treeRadialData = {
-            color: this.colors,
-            tooltip: {
-              trigger: "item",
-              triggerOn: "mousemove"
-            },
-            series: [
-              {
-                type: "tree",
-                data: [data.treeRadialData],
-                top: "18%",
-                bottom: "14%",
-                layout: "radial",
-                symbol: "emptyCircle",
-                symbolSize: 7,
-                initialTreeDepth: 1,
-                animationDurationUpdate: 750
-              }
-            ]
-          };
-        }
-        if (data.popularWords) {
-          this.popularWords = data.popularWords;
-        }
-        this.isLoading = false;
-      });
   }
 }

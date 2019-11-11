@@ -15,14 +15,16 @@ import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js
 import RegionsPlugin from "./region-plugin";
 import { PlayerService } from "../../../../services/player.service";
 import { LanguageService } from "../../../../services/language.service";
-import { DataService } from '../../../../shared';
+import { DataService } from "../../../../shared";
+import { FileEmotionsService } from "../services/file-emotions.service";
 
 import CanvasDrawer from "./canvas-drawer";
 
 @Component({
   selector: "ngx-player",
   templateUrl: "./player.component.html",
-  styleUrls: ["./player.component.scss"]
+  styleUrls: ["./player.component.scss"],
+  providers: [FileEmotionsService]
 })
 export class PlayerComponent implements OnDestroy, OnChanges {
   public wavesurfer: any;
@@ -38,12 +40,16 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   playing: boolean = false;
 
   constructor(
-    public filesService: FilesService,
-    public filterService: FilterService,
-    public playerService: PlayerService,
-    public dataService: DataService
+    private filesService: FilesService,
+    private filterService: FilterService,
+    private playerService: PlayerService,
+    private dataService: DataService,
+    private fileEmotionsService: FileEmotionsService
   ) {
-    if(dataService.config["colors"] && dataService.config["colors"].secondary) {
+    if (
+      dataService.config["colors"] &&
+      dataService.config["colors"].secondary
+    ) {
       this.color = dataService.config["colors"].secondary;
     } else {
       this.color = "#0098d9";
@@ -55,21 +61,25 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   }
   fetchFile() {
     this.isLoading = true;
-    this.filesService.getFile({batchid: this.batchId, filename: this.fileName}).subscribe(data => {
-      if(data) {
-        this.fileUrl = data.url;
-        this.filesService
-        .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
-        .subscribe(meta => {
-          if (meta.ContentRange) {
-            this.loadChunks(meta);
-          } else {
-            this.init(this.fileUrl, this.getPeaks(meta));
-          }
-        });
-      }
-    });
-
+    this.filesService
+      .getFile({ batchid: this.batchId, filename: this.fileName })
+      .subscribe(data => {
+        if (data) {
+          this.fileUrl = data.url;
+          this.filesService
+            .getAudioWaveForm({
+              filename: this.fileName,
+              batchid: this.batchId
+            })
+            .subscribe(meta => {
+              if (meta.ContentRange) {
+                this.loadChunks(meta);
+              } else {
+                this.init(this.fileUrl, this.getPeaks(meta));
+              }
+            });
+        }
+      });
   }
   t(v) {
     return LanguageService.t(v);
@@ -134,6 +144,14 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     this.wavesurfer.load(fileUrl, peaks, "auto");
     this.wavesurfer.on("ready", () => {
       this.isLoading = false;
+      this.fileEmotionsService.fileInfo.subscribe(data => {
+        this.removeRegions();
+        if(data.regions) {
+          this.setRegions(data.regions);
+        }
+      });
+      this.fileEmotionsService.getFileEmotions(this.batchId, this.fileName);
+      this.fileEmotionsService.getRegions();
     });
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActive(time);
@@ -150,9 +168,13 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     this.wavesurfer.seekTo(ms / this.wavesurfer.getDuration());
   }
   setRegions(regions) {
+    console.log(regions);
     regions.map(region => {
       this.wavesurfer.addRegion(region);
     });
+  }
+  removeRegions() {
+    this.wavesurfer && this.wavesurfer.clearRegions();
   }
   ngOnDestroy() {
     this.wavesurfer && this.wavesurfer.destroy();

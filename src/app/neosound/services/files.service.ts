@@ -121,6 +121,10 @@ export class FilesService {
     params = params || {};
     return this.http.post(`${environment.api}/listFilesPage`, params);
   }
+  postListTextFiles(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/listTextFiles`, params);
+  }
 
   processFile(params /*, mlid = 9*/): Observable<any> {
     params = params || {

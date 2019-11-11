@@ -36,7 +36,8 @@
         </ng-container>
         <div style="overflow-y: auto;">
           <div style="height: 56vh;">
-            <ngx-text-log [batchId]="fileParams.batchid" [fileName]="fileParams.filename"></ngx-text-log>
+            <ngx-text-log [batchId]="fileParams.batchid" [fileName]="fileParams.filename"
+              (goToRegion)="goToRegion($event)"></ngx-text-log>
           </div>
         </div>
       </div>
