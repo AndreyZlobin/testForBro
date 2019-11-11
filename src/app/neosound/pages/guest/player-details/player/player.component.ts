@@ -29,11 +29,10 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   public waveFormData: any;
   public peekCache: any;
   public isLoading: boolean = false;
+  private fileUrl: string;
 
   @Input() fileName: string;
   @Input() batchId: string;
-  @Input() fileUrl: string;
-  @Output() ready: EventEmitter<any> = new EventEmitter<any>();
   public regions = [];
   private color;
   playing: boolean = false;
@@ -44,7 +43,7 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     public playerService: PlayerService,
     public dataService: DataService
   ) {
-    if(dataService.config["colors"].secondary) {
+    if(dataService.config["colors"] && dataService.config["colors"].secondary) {
       this.color = dataService.config["colors"].secondary;
     } else {
       this.color = "#0098d9";
@@ -56,15 +55,21 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   }
   fetchFile() {
     this.isLoading = true;
-    this.filesService
-      .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
-      .subscribe(meta => {
-        if (meta.ContentRange) {
-          this.loadChunks(meta);
-        } else {
-          this.init(this.fileUrl, this.getPeaks(meta));
-        }
-      });
+    this.filesService.getFile({batchid: this.batchId, filename: this.fileName}).subscribe(data => {
+      if(data) {
+        this.fileUrl = data.url;
+        this.filesService
+        .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
+        .subscribe(meta => {
+          if (meta.ContentRange) {
+            this.loadChunks(meta);
+          } else {
+            this.init(this.fileUrl, this.getPeaks(meta));
+          }
+        });
+      }
+    });
+
   }
   t(v) {
     return LanguageService.t(v);
@@ -128,7 +133,7 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     });
     this.wavesurfer.load(fileUrl, peaks, "auto");
     this.wavesurfer.on("ready", () => {
-      this.ready.emit();
+      this.isLoading = false;
     });
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActive(time);
@@ -148,7 +153,6 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     regions.map(region => {
       this.wavesurfer.addRegion(region);
     });
-    this.isLoading = false;
   }
   ngOnDestroy() {
     this.wavesurfer && this.wavesurfer.destroy();

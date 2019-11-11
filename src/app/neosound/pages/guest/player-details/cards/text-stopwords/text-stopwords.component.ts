@@ -21,7 +21,6 @@ export class TextStopwordsComponent implements OnChanges, OnDestroy {
   @Input("fileName") fileName: string;
   constructor(
     private fileTextStatsService: FileTextStatsService,
-    private toastrService: ToastrService
   ) {
     this.dataSub = this.fileTextStatsService.fileInfo.subscribe(data => {
       this.data = data.stopWords;

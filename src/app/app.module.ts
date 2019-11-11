@@ -1,8 +1,3 @@
-/**
- * @license
- * Copyright Akveo. All Rights Reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- */
 import { APP_BASE_HREF } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -100,6 +95,10 @@ import { TextLogComponent } from "./neosound/pages/guest/player-details/cards/te
 import { TextComplianceComponent } from "./neosound/pages/guest/player-details/cards/text-compliance/text-compliance.component";
 import { FullTextComponent } from "./neosound/pages/guest/player-details/cards/full-text/full-text.component";
 import { TextStopwordsComponent } from "./neosound/pages/guest/player-details/cards/text-stopwords/text-stopwords.component";
+import { TextSankeyComponent } from "./neosound/pages/guest/player-details/cards/text-sankey/text-sankey.component";
+import { TextKeywordsComponent } from "./neosound/pages/guest/player-details/cards/text-keywords/text-keywords.component";
+import { TextTagCloudComponent } from "./neosound/pages/guest/player-details/cards/text-tag-cloud/text-tag-cloud.component";
+import { TextHitsWordsComponent } from "./neosound/pages/guest/player-details/cards/text-hits-words/text-hits-words.component";
 
 import { PieChartComponent } from "./neosound/components/pie-chart/pie-chart.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
@@ -152,6 +151,10 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     TextLogComponent,
     TextComplianceComponent,
     TextStopwordsComponent,
+    TextSankeyComponent,
+    TextKeywordsComponent,
+    TextTagCloudComponent,
+    TextHitsWordsComponent,
     FullTextComponent,
     PieChartComponent,
     ApiPageComponent,

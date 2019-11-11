@@ -7,7 +7,6 @@ import {
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { FileTextStatsService } from "../../services/file-text-stats.service";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-text-compliance",
@@ -15,8 +14,8 @@ import { ToastrService } from "ngx-toastr";
   providers: [FileTextStatsService]
 })
 export class TextComplianceComponent implements OnChanges, OnDestroy {
-  missWord: any;
-  missWordNotFound: any;
+  missWord: any[];
+  missWordNotFound: any[];
   compliance: string;
   dataSub: any;
   hasData: boolean = false;
@@ -24,7 +23,6 @@ export class TextComplianceComponent implements OnChanges, OnDestroy {
   @Input("fileName") fileName: string;
   constructor(
     private fileTextStatsService: FileTextStatsService,
-    private toastrService: ToastrService
   ) {
     this.dataSub = this.fileTextStatsService.fileInfo.subscribe(data => {
       this.missWord = data.missWord;

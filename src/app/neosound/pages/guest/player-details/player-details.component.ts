@@ -116,23 +116,6 @@ export class PlayerDetailsComponent
               filename: decodeURIComponent(filename),
               batchid: decodeURIComponent(batchid)
             };
-            this.filesService.getFile(this.fileParams).subscribe(
-              res => {
-                this.fileUrl = res.url;
-                this.changed = true;
-                this.getInfo();
-                this.getAnalytics(
-                  this.fileParams.batchid,
-                  this.fileParams.filename
-                );
-              },
-              e => {
-                this.errorMessage = e.error.message;
-                if (e.status === 502 || e.status === 404 || e.status === 429) {
-                  this.router.navigateByUrl("/404");
-                }
-              }
-            );
           }
         }
       }
@@ -153,82 +136,6 @@ export class PlayerDetailsComponent
       this.currentView = "player";
       return;
     }
-  }
-
-  copyToClipboard(text: string): void {
-    const selBox = document.createElement("textarea");
-    selBox.style.position = "fixed";
-    selBox.style.left = "0";
-    selBox.style.top = "0";
-    selBox.style.opacity = "0";
-    selBox.value = text.replace(/(<([^>]+)>)/gi, "");
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand("copy");
-    document.body.removeChild(selBox);
-    this.toastrService.info("Copied!");
-  }
-  getInfo() {
-    this.filesService.getFileResultDetails(this.fileParams).subscribe(
-      res => {
-        this.results = res;
-
-        this.duration = res.result.duration;
-        if (this.results.result || this.attempsCount < 0) {
-          clearInterval(this.intervalRef);
-        }
-        if (this.results.result) {
-          if (this.results.result.anger) {
-            if (this.results.result.anger.ints) {
-              this.emotionsAnger = this.results.result.anger.ints;
-              this.emotions = this.emotionsAnger;
-            }
-            if (this.results.result.anger.music) {
-              this.emotionsSounds = this.results.result.anger.music;
-            }
-          }
-          if (this.results.result.stt) {
-            if (this.results.result.stt.fulltext) {
-              this.sttfulltext = this.results.result.stt.fulltext;
-            }
-            if (
-              this.results.result.stt.keywords &&
-              Array.isArray(this.results.result.stt.keywords)
-            ) {
-              this.keywords = this.results.result.stt.keywords;
-              this.misswords = [];
-            } else {
-              this.keywords = this.results.result.stt.keywords.stop;
-              this.misswords = this.results.result.stt.keywords.miss;
-              this.misswordsNotFound = this.results.result.stt.keywords.missmiss;
-            }
-            if (this.results.result.stt.speakers) {
-              if (Array.isArray(this.results.result.stt.speakers)) {
-                if (this.results.result.stt.speakers.length > 1) {
-                  this.greySpeaker = this.results.result.stt.speakers[1];
-                }
-              } else {
-                if (Object.keys(this.results.result.stt.speakers).length > 1) {
-                  this.greySpeaker = Object.keys(
-                    this.results.result.stt.speakers
-                  )[1];
-                }
-              }
-            }
-          }
-
-          if (this.results.result.merged) {
-            if (this.results.result.merged.intprobs) {
-              this.emotionsSttAnger = this.results.result.merged.intprobs;
-              this.emotions = this.emotionsSttAnger;
-            }
-          }
-        }
-        this.setRegions();
-      },
-      e => (this.errorMessage = e.error.message)
-    );
   }
 
   getDateVal(val) {
@@ -262,12 +169,6 @@ export class PlayerDetailsComponent
         });
       }
     }
-  }
-
-  pushRegions() {
-    setTimeout(() => {
-      this.player.setRegions(this.regions);
-    }, 1000);
   }
 
   getColor(val: any, type?: string, isMusic = false) {

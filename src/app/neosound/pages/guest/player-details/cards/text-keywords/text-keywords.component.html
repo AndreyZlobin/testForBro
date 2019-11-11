@@ -1,0 +1,6 @@
+<div *ngIf="!isLoading; else loading">
+  <div echarts [options]="treeData"></div>
+</div>
+<ng-template #loading>
+  loading...
+</ng-template>

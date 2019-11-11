@@ -31,9 +31,8 @@
         </nb-tab>
       </nb-tabset>
       <div class="d-flex flex-column" *ngIf="currentView === 'player'">
-        <ng-container *ngIf="fileParams.filename && fileParams.batchid && fileUrl; else empty">
-          <ngx-player [fileName]="fileParams.filename" [batchId]="fileParams.batchid" [fileUrl]="fileUrl"
-            (ready)="pushRegions()"></ngx-player>
+        <ng-container *ngIf="fileParams.filename && fileParams.batchid; else empty">
+          <ngx-player [fileName]="fileParams.filename" [batchId]="fileParams.batchid"></ngx-player>
         </ng-container>
         <div style="overflow-y: auto;">
           <div style="height: 56vh;">
@@ -42,7 +41,7 @@
         </div>
       </div>
       <div class="row" *ngIf="currentView === 'analytic'">
-        <div class="col-12 mb-3" *ngIf="sttfulltext">
+        <div class="col-12 mb-3">
           <div class="card">
             <div class="card-header">{{t('Text')}}</div>
             <div class="card-body">
@@ -52,7 +51,7 @@
             </div>
           </div>
         </div>
-        <div class="col-6 mb-3" *ngIf="keywords">
+        <div class="col-6 mb-3">
           <div class="card">
             <div class="card-header">{{t('Stopwords')}}</div>
             <div class="card-body p-0">
@@ -60,14 +59,14 @@
             </div>
           </div>
         </div>
-        <div class="col-6 mb-3" *ngIf="misswordsNotFound.length || misswords.length">
-            <ngx-text-stopwords [batchId]="fileParams.batchid" [fileName]="fileParams.filename"></ngx-text-stopwords>
+        <div class="col-6 mb-3">
+          <ngx-text-compliance [batchId]="fileParams.batchid" [fileName]="fileParams.filename"></ngx-text-compliance>
         </div>
         <div class="col-6 mb-3">
           <div class="card">
             <div class="card-header">{{t('Sankey Diagram')}}</div>
             <div class="card-body">
-              <div echarts [options]="sankey"></div>
+              <ngx-text-sankey [batchId]="fileParams.batchid" [fileName]="fileParams.filename"></ngx-text-sankey>
             </div>
           </div>
         </div>
@@ -75,30 +74,24 @@
           <div class="card">
             <div class="card-header">{{t('Keywords and phases')}}</div>
             <div class="card-body">
-              <div echarts [options]="treeRadialData">
-              </div>
+              <ngx-text-keywords [batchId]="fileParams.batchid" [fileName]="fileParams.filename"></ngx-text-keywords>
             </div>
           </div>
         </div>
-        <div class="col-6 mb-3" *ngIf="popularWords">
+        <div class="col-6 mb-3">
           <div class="card">
             <div class="card-header">{{t('Most frequency used words')}}</div>
             <div class="card-body p-0">
-              <angular-tag-cloud [data]="popularWords" [zoomOnHover]="zoomOptions" [overflow]="false">
-              </angular-tag-cloud>
+              <ngx-text-tag-cloud [batchId]="fileParams.batchid" [fileName]="fileParams.filename"></ngx-text-tag-cloud>
             </div>
           </div>
         </div>
-        <div class="col-6 mb-3" *ngIf="popularWords">
+        <div class="col-6 mb-3">
           <div class="card">
             <div class="card-header">{{t('Hits vs words')}}</div>
             <div class="card-body">
-              <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
-                <li class="list-group-item d-flex" *ngFor="let popularWord of popularWords" style="color: #211b19">
-                  <span>{{popularWord.text}}</span>
-                  <span class="ml-auto">{{popularWord.weight}}</span>
-                </li>
-              </ul>
+              <ngx-text-hits-words [batchId]="fileParams.batchid" [fileName]="fileParams.filename">
+              </ngx-text-hits-words>
             </div>
           </div>
         </div>
