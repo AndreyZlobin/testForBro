@@ -32,6 +32,11 @@ export class TextTagCloudComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("texttagcloud") canvas: ElementRef;
   popularWords: any;
   dataSub: any;
+  public zoomOPtions = {
+    scale: 1.3,
+    transitionTime: 1.2,
+    delay: 0.1
+  };
   isLoading: boolean = true;
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
@@ -46,7 +51,7 @@ export class TextTagCloudComponent implements OnInit, OnDestroy, AfterViewInit {
           this.popularWords = [];
         } else {
           if (data.popularWords) {
-            this.popularWords = data.popularWords.map(v => [v.text, v.weight]);
+            this.popularWords = data.popularWords;
             this.init();
           }
         }
@@ -64,13 +69,6 @@ export class TextTagCloudComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {}
 
   init() {
-    WordCloud(document.getElementById("texttagcloud"), {
-      list: this.popularWords,
-      rotateRatio: 0,
-      shape: "square",
-      color: this.secondaryColor(),
-      fontFamily: "Roboto"
-    });
   }
   t(v) {
     return LanguageService.t(v);

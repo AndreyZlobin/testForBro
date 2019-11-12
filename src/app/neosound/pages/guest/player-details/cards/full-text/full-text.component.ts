@@ -15,6 +15,7 @@ import { ToastrService } from "ngx-toastr";
 })
 export class FullTextComponent implements OnInit, OnDestroy {
   data: any[];
+  isLoading: boolean = true;
   dataSub: any;
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
@@ -23,7 +24,12 @@ export class FullTextComponent implements OnInit, OnDestroy {
     private toastrService: ToastrService
   ) {
     this.dataSub = this.fileResultService.fileResult.subscribe(data => {
-      this.data = data.sttfulltext;
+      this.isLoading = data.isLoading;
+      if(data.isLoading) {
+        this.data = null;
+      } else {
+        this.data = data.sttfulltext;
+      }
     });
   }
   ngOnInit() {

@@ -1,6 +1,7 @@
-<ng-template *ngIf="isLoading">
+<div *ngIf="!isLoading; else loading">
+  <angular-tag-cloud [data]="popularWords" width="500" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false">
+  </angular-tag-cloud>
+</div>
+<ng-template #loading>
   loading...
 </ng-template>
-<div class="p-4">
-  <canvas id="texttagcloud" style="width: 100%;"></canvas>
-</div>

@@ -192,9 +192,11 @@ export class TextFilesListComponent implements OnInit, AfterViewInit {
       export: "csv"
     };
     this.filesService.postListTextFiles(params).subscribe(
-      data =>
-        // this.downloadFile(data)
-        (window.location.href = data.url)
+      data => {
+        if(data.url) {
+          window.location.href = data.url
+        }
+      }
     ),
       error => console.log("Error downloading the file."),
       () => console.info("OK");
