@@ -40,14 +40,12 @@ export class FileChartDataService {
             if (data.popularWords) {
               this.fileDataStore.popularWords = data.popularWords;
             }
-            if (data && data.sentiment) {
-              if (data.sentiment.sankeyData) {
-                this.fileDataStore.sankeyData = data.sentiment.sankeyData;
-              }
-              if (data.sentiment.treeRadialData) {
-                this.fileDataStore.treeRadialData =
-                  data.sentiment.treeRadialData;
-              }
+            if (data.sankeyData) {
+              this.fileDataStore.sankeyData = data.sankeyData;
+            }
+            if (data.treeRadialData) {
+              this.fileDataStore.treeRadialData =
+                data.treeRadialData;
             }
           }
           this.fileDataStore.isLoading = false;

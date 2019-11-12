@@ -38,7 +38,6 @@ export class TextSankeyComponent implements OnInit, OnDestroy {
         if (data.isLoading) {
           this.sankeyData = null;
         } else {
-          debugger
           if(data.sankeyData) {
             this.sankeyData = this.init(
               data.sankeyData.nodes,
