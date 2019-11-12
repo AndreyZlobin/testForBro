@@ -67,8 +67,9 @@ export class TextTagCloudComponent implements OnInit, OnDestroy, AfterViewInit {
     WordCloud(document.getElementById("texttagcloud"), {
       list: this.popularWords,
       rotateRatio: 0,
-      fontFamily: "Roboto",
-      shape: "square"
+      shape: "square",
+      color: this.secondaryColor(),
+      fontFamily: "Roboto"
     });
   }
   t(v) {
