@@ -1,34 +1,36 @@
 import {
   Component,
   Input,
-  OnChanges,
+  OnInit,
   SimpleChanges,
   OnDestroy
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
-import { FileTextStatsService } from "../../services/file-text-stats.service";
+import { FileResultService } from "../../services/file-result.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "ngx-full-text",
-  templateUrl: "./full-text.component.html",
-  providers: [FileTextStatsService]
+  templateUrl: "./full-text.component.html"
 })
-export class FullTextComponent implements OnChanges, OnDestroy {
+export class FullTextComponent implements OnInit, OnDestroy {
   data: any[];
   dataSub: any;
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
   constructor(
-    private fileTextStatsService: FileTextStatsService,
+    private fileResultService: FileResultService,
     private toastrService: ToastrService
   ) {
-    this.dataSub = this.fileTextStatsService.fileInfo.subscribe(data => {
-      this.data = data.text;
+    this.dataSub = this.fileResultService.fileResult.subscribe(data => {
+      this.data = data.sttfulltext;
     });
   }
-  ngOnChanges(simpleChanges: SimpleChanges) {
-    this.fileTextStatsService.getFileEmotions(this.batchId, this.fileName);
+  ngOnInit() {
+    this.fileResultService.getResult(
+      this.batchId,
+      this.fileName
+    );
   }
   ngOnDestroy() {
     if (this.dataSub) {

@@ -6,12 +6,13 @@ import { FilesService } from "../../../../services/files.service";
 export class FileChartDataService {
   private batchId: string;
   private fileName: string;
-  public isLoading: boolean = false;
   private fileDataStore: {
+    isLoading: boolean;
     popularWords: any[];
     sankeyData: any;
     treeRadialData: any;
   } = {
+    isLoading: true,
     popularWords: [],
     sankeyData: {},
     treeRadialData: {}
@@ -21,19 +22,20 @@ export class FileChartDataService {
 
   constructor(private filesService: FilesService) {}
   public getFileChartData(batchId: string, fileName: string) {
-    if (batchId !== this.batchId && fileName !== this.fileName) {
-      this.isLoading = true;
+    if (fileName !== this.fileName) {
+      this.fileDataStore.popularWords = [];
+      this.fileDataStore.sankeyData = null;
+      this.fileDataStore.treeRadialData = null;
+      this.fileDataStore.isLoading = true;
+      this.dataSubject.next(this.fileDataStore);
       this.fileName = fileName;
       this.batchId = batchId;
       this.filesService
-        .getEchartData({
+        .getDetailsEchartData({
           batchid: batchId,
           filename: fileName
         })
         .subscribe(data => {
-          this.fileDataStore.popularWords = [];
-          this.fileDataStore.sankeyData = null;
-          this.fileDataStore.treeRadialData = null;
           if (data) {
             if (data.popularWords) {
               this.fileDataStore.popularWords = data.popularWords;
@@ -48,8 +50,8 @@ export class FileChartDataService {
               }
             }
           }
+          this.fileDataStore.isLoading = false;
           this.dataSubject.next(this.fileDataStore);
-          this.isLoading = false;
         });
     } else {
       this.dataSubject.next(this.fileDataStore);

@@ -1,4 +1,4 @@
-<table class="table" *ngIf="data && data.length">
+<table class="table" *ngIf="!isLoading; else loading">
   <ng-container *ngFor="let item of data">
     <tr class="d-flex" (click)="emitEvent(item[0])" interval [timeInterval]="[item[0], item[1]]"
       [ngClass]="{'grey': item[5] && greySpeaker && item[5] == greySpeaker}">
@@ -20,3 +20,6 @@
     </tr>
   </ng-container>
 </table>
+<ng-template #loading>
+  loading...
+</ng-template>

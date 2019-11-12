@@ -6,11 +6,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CoreModule } from "./@core/core.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { TooltipModule } from "ngx-bootstrap/tooltip";
 import { ModalModule } from "ngx-bootstrap/modal";
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { TypeaheadModule } from "ngx-bootstrap/typeahead";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
@@ -61,7 +60,7 @@ import { UsersService } from "./neosound/services/users.service";
 import { RequestsHttpInterceptor } from "./neosound/shared/requests-http.interceptor";
 import { NbPasswordAuthStrategy, NbAuthModule } from "@nebular/auth";
 import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
-import { TagCloudModule } from 'angular-tag-cloud-module';
+import { TagCloudModule } from "angular-tag-cloud-module";
 import {
   NgxChartsModule,
   PieChartModule,
@@ -79,12 +78,12 @@ import {
 import { NbAlertModule, NbInputModule } from "@nebular/theme";
 import { ToastrModule } from "ngx-toastr";
 import { NgDatepickerModule } from "ng2-datepicker";
-import { TagInputModule } from 'ngx-chips';
+import { TagInputModule } from "ngx-chips";
 const formSetting: any = {
   redirectDelay: 0,
   showMessages: {
-    success: true,
-  },
+    success: true
+  }
 };
 
 import { FileDropModule } from "ngx-file-drop";
@@ -100,6 +99,11 @@ import { TextKeywordsComponent } from "./neosound/pages/guest/player-details/car
 import { TextTagCloudComponent } from "./neosound/pages/guest/player-details/cards/text-tag-cloud/text-tag-cloud.component";
 import { TextHitsWordsComponent } from "./neosound/pages/guest/player-details/cards/text-hits-words/text-hits-words.component";
 
+import { FileChartDataService } from "./neosound/pages/guest/player-details/services/file-chart-data.service";
+import { FileResultService } from "./neosound/pages/guest/player-details/services/file-result.service";
+import { FileInfoService } from "./neosound/pages/guest/player-details/services/file-info.service";
+import { FileStatsService } from "./neosound/pages/guest/player-details/services/file-stats.service";
+
 import { PieChartComponent } from "./neosound/components/pie-chart/pie-chart.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
 import { NgxEchartsModule } from "ngx-echarts";
@@ -112,13 +116,13 @@ import { IntervalDirective } from "./neosound/directives/interval.detective";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
 import { DataService } from "./neosound/shared";
-import { ChartPageComponent } from './neosound/pages/charts/chart-page/chart-page.component';
-import { CallsByDayChartLineComponent } from './neosound/pages/charts/calls-by-day-chart-line/calls-by-day-chart-line.component';
-import { TotalMinutesByDayChartLineComponent } from './neosound/pages/charts/total-minutes-by-day-chart-line/total-minutes-by-day-chart-line.component';
-import { TotalMinutesChartBarComponent } from './neosound/pages/charts/total-minutes-chart-bar/total-minutes-chart-bar.component';
-import { TotalByQueriesChartPieComponent } from './neosound/pages/charts/total-by-queries-chart-pie/total-by-queries-chart-pie.component';
-import { TotalMinutesPlusBatchesChartBarComponent } from './neosound/pages/charts/total-minutes-plus-batches-chart-bar/total-minutes-plus-batches-chart-bar.component';
-import { KeywordsRadialTreeComponent } from './neosound/pages/charts/keywords-radial-tree/keywords-radial-tree.component';
+import { ChartPageComponent } from "./neosound/pages/charts/chart-page/chart-page.component";
+import { CallsByDayChartLineComponent } from "./neosound/pages/charts/calls-by-day-chart-line/calls-by-day-chart-line.component";
+import { TotalMinutesByDayChartLineComponent } from "./neosound/pages/charts/total-minutes-by-day-chart-line/total-minutes-by-day-chart-line.component";
+import { TotalMinutesChartBarComponent } from "./neosound/pages/charts/total-minutes-chart-bar/total-minutes-chart-bar.component";
+import { TotalByQueriesChartPieComponent } from "./neosound/pages/charts/total-by-queries-chart-pie/total-by-queries-chart-pie.component";
+import { TotalMinutesPlusBatchesChartBarComponent } from "./neosound/pages/charts/total-minutes-plus-batches-chart-bar/total-minutes-plus-batches-chart-bar.component";
+import { KeywordsRadialTreeComponent } from "./neosound/pages/charts/keywords-radial-tree/keywords-radial-tree.component";
 import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.component";
 
 @NgModule({
@@ -171,7 +175,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     KeywordsRadialTreeComponent,
     CallsDashboardComponent,
     TextsDashboardComponent,
-    TagifyComponent,
+    TagifyComponent
   ],
   imports: [
     BrowserModule,
@@ -203,19 +207,23 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     ToastrModule.forRoot(),
     NgDatepickerModule,
     NgxPaginationModule,
-    TagInputModule,
+    TagInputModule
   ],
   bootstrap: [AppComponent],
   providers: [
     {
       provide: LOCALE_ID,
-      useValue: 'de-de',
+      useValue: "de-de"
     },
     AuthGuard,
     CanDeactivateGuard,
     UsersService,
     FilesService,
     FilterService,
+    FileChartDataService,
+    FileInfoService,
+    FileStatsService,
+    FileResultService,
     UploadService,
     TextFilterService,
     OrganizationSettingsService,
@@ -225,10 +233,10 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestsHttpInterceptor,
-      multi: true,
+      multi: true
     },
     LanguageService,
-    DataService,
-  ],
+    DataService
+  ]
 })
 export class AppModule {}

@@ -3,7 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { FilesService } from "../../../../services/files.service";
 
 @Injectable()
-export class FileInfoService {
+export class FileStatsService {
   private batchId: string;
   private fileName: string;
   public isLoading: boolean = false;
@@ -17,7 +17,7 @@ export class FileInfoService {
 
   constructor(private filesService: FilesService) {}
   public getInfo(batchId: string, fileName: string) {
-    if (batchId !== this.batchId && fileName !== this.fileName) {
+    if (fileName !== this.fileName) {
       this.isLoading = true;
       this.fileName = fileName;
       this.batchId = batchId;

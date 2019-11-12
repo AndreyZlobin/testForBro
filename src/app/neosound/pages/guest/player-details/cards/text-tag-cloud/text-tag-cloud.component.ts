@@ -1,11 +1,12 @@
 import {
   Component,
   Input,
-  OnChanges,
+  OnInit,
   SimpleChanges,
   OnDestroy,
   ViewChild,
-  ElementRef
+  ElementRef,
+  AfterViewInit
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { DataService } from "../../../../../shared/data.service";
@@ -25,12 +26,11 @@ export const colors = [
 
 @Component({
   selector: "ngx-text-tag-cloud",
-  templateUrl: "./text-tag-cloud.component.html",
-  providers: [FileChartDataService]
+  templateUrl: "./text-tag-cloud.component.html"
 })
-export class TextTagCloudComponent implements OnChanges, OnDestroy {
-  @ViewChild("canvas") canvas: ElementRef;
-  sankeyData: any;
+export class TextTagCloudComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild("texttagcloud") canvas: ElementRef;
+  popularWords: any;
   dataSub: any;
   isLoading: boolean = true;
   @Input("batchId") batchId: string;
@@ -40,13 +40,20 @@ export class TextTagCloudComponent implements OnChanges, OnDestroy {
     private dataService: DataService
   ) {
     this.dataSub = this.fileChartDataService.chartData.subscribe(data => {
-      if (data && data.popularWords) {
-        this.isLoading = false;
-        this.init(data.popularWords);
+      if (data) {
+        this.isLoading = data.isLoading;
+        if (data.isLoading) {
+          this.popularWords = [];
+        } else {
+          if (data.popularWords) {
+            this.popularWords = data.popularWords.map(v => [v.text, v.weight]);
+            this.init();
+          }
+        }
       }
     });
   }
-  ngOnChanges(simpleChanges: SimpleChanges) {
+  ngOnInit() {
     this.fileChartDataService.getFileChartData(this.batchId, this.fileName);
   }
   ngOnDestroy() {
@@ -54,13 +61,15 @@ export class TextTagCloudComponent implements OnChanges, OnDestroy {
       this.dataSub.unsubscribe();
     }
   }
-  init(words) {
-      WordCloud(document.getElementById('canvas'), {
-        list: words.map(v => [v.text, v.weight]),
-        rotateRatio: 0,
-        shape: "square",
-        color: this.secondaryColor(),
-      });
+  ngAfterViewInit() {}
+
+  init() {
+    WordCloud(document.getElementById("texttagcloud"), {
+      list: this.popularWords,
+      rotateRatio: 0,
+      fontFamily: "Roboto",
+      shape: "square"
+    });
   }
   t(v) {
     return LanguageService.t(v);

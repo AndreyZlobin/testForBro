@@ -1,7 +1,7 @@
 import {
   Component,
   Input,
-  OnChanges,
+  OnInit,
   SimpleChanges,
   OnDestroy
 } from "@angular/core";
@@ -22,10 +22,9 @@ export const colors = [
 
 @Component({
   selector: "ngx-text-keywords",
-  templateUrl: "./text-keywords.component.html",
-  providers: [FileChartDataService]
+  templateUrl: "./text-keywords.component.html"
 })
-export class TextKeywordsComponent implements OnChanges, OnDestroy {
+export class TextKeywordsComponent implements OnInit, OnDestroy {
   treeData: any;
   dataSub: any;
   isLoading: boolean = true;
@@ -33,16 +32,23 @@ export class TextKeywordsComponent implements OnChanges, OnDestroy {
   @Input("fileName") fileName: string;
   constructor(private fileChartDataService: FileChartDataService) {
     this.dataSub = this.fileChartDataService.chartData.subscribe(data => {
-      if (data && data.treeRadialData) {
-        this.treeData = this.init(
-          data.treeRadialData
-        );
-        this.isLoading = false;
+      if (data) {
+        this.isLoading = data.isLoading;
+        if (data.isLoading) {
+          this.treeData = null;
+        } else {
+          if (data.treeRadialData) {
+            this.treeData = this.init(data.treeRadialData);
+          }
+        }
       }
     });
   }
-  ngOnChanges(simpleChanges: SimpleChanges) {
-    this.fileChartDataService.getFileChartData(this.batchId, this.fileName);
+  ngOnInit() {
+    this.fileChartDataService.getFileChartData(
+      this.batchId,
+      this.fileName
+    );
   }
   ngOnDestroy() {
     if (this.dataSub) {

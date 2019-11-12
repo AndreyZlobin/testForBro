@@ -68,6 +68,8 @@ export class FilesService {
     params = params || {};
     return this.http.post(`${environment.api}/getEchartData`, params);
   }
+
+
   getApiCallsStats(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/apiCallsStats`, params);
