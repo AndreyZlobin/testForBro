@@ -95,7 +95,6 @@ export class ResultsComponent implements OnInit, OnDestroy {
        ) {
           clearInterval(this.intervalRef);
         }
-        console.log(this.results);
         if (res.result
           && (
             res.result.Anger !== ''
@@ -164,7 +163,6 @@ export class ResultsComponent implements OnInit, OnDestroy {
     ];
   }
   labelFormatting(data) {
-    console.log(data);
     return data;
   }
 

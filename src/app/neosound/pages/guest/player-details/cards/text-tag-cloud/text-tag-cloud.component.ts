@@ -1,7 +1,7 @@
 import {
   Component,
   Input,
-  OnChanges,
+  OnInit,
   SimpleChanges,
   OnDestroy,
   ViewChild,
@@ -28,8 +28,7 @@ export const colors = [
   selector: "ngx-text-tag-cloud",
   templateUrl: "./text-tag-cloud.component.html"
 })
-export class TextTagCloudComponent
-  implements OnChanges, OnDestroy, AfterViewInit {
+export class TextTagCloudComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("texttagcloud") canvas: ElementRef;
   popularWords: any;
   dataSub: any;
@@ -41,14 +40,20 @@ export class TextTagCloudComponent
     private dataService: DataService
   ) {
     this.dataSub = this.fileChartDataService.chartData.subscribe(data => {
-      if (data && data.popularWords) {
-        this.popularWords = data.popularWords.map(v => [v.text, v.weight]);
-        this.isLoading = false;
-        this.init();
+      if (data) {
+        this.isLoading = data.isLoading;
+        if (data.isLoading) {
+          this.popularWords = [];
+        } else {
+          if (data.popularWords) {
+            this.popularWords = data.popularWords.map(v => [v.text, v.weight]);
+            this.init();
+          }
+        }
       }
     });
   }
-  ngOnChanges(simpleChanges: SimpleChanges) {
+  ngOnInit() {
     this.fileChartDataService.getFileChartData(this.batchId, this.fileName);
   }
   ngOnDestroy() {
@@ -56,18 +61,15 @@ export class TextTagCloudComponent
       this.dataSub.unsubscribe();
     }
   }
-  ngAfterViewInit() {
-    this.init();
-  }
+  ngAfterViewInit() {}
+
   init() {
-    if (this.canvas) {
-      // WordCloud(this.canvas.nativeElement, {
-      //   list: this.popularWords,
-      //   rotateRatio: 0,
-      //   shape: "square",
-      //   color: this.secondaryColor()
-      // });
-    }
+    WordCloud(document.getElementById("texttagcloud"), {
+      list: this.popularWords,
+      rotateRatio: 0,
+      fontFamily: "Roboto",
+      shape: "square"
+    });
   }
   t(v) {
     return LanguageService.t(v);

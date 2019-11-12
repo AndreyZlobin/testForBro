@@ -3,7 +3,8 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
-  OnDestroy
+  OnDestroy,
+  OnInit
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { FileChartDataService } from "../../services/file-chart-data.service";
@@ -24,7 +25,7 @@ export const colors = [
   selector: "ngx-text-sankey",
   templateUrl: "./text-sankey.component.html"
 })
-export class TextSankeyComponent implements OnChanges, OnDestroy {
+export class TextSankeyComponent implements OnInit, OnDestroy {
   sankeyData: any;
   dataSub: any;
   isLoading: boolean = true;
@@ -32,17 +33,27 @@ export class TextSankeyComponent implements OnChanges, OnDestroy {
   @Input("fileName") fileName: string;
   constructor(private fileChartDataService: FileChartDataService) {
     this.dataSub = this.fileChartDataService.chartData.subscribe(data => {
-      if (data && data.sankeyData) {
-        this.sankeyData = this.init(
-          data.sankeyData.nodes,
-          data.sankeyData.links
-        );
-        this.isLoading = false;
+      if (data) {
+        this.isLoading = data.isLoading;
+        if (data.isLoading) {
+          this.sankeyData = null;
+        } else {
+          debugger
+          if(data.sankeyData) {
+            this.sankeyData = this.init(
+              data.sankeyData.nodes,
+              data.sankeyData.links
+            );
+          }
+        }
       }
     });
   }
-  ngOnChanges(simpleChanges: SimpleChanges) {
-    this.fileChartDataService.getFileChartData(this.batchId, this.fileName);
+  ngOnInit() {
+    this.fileChartDataService.getFileChartData(
+      this.batchId,
+      this.fileName
+    );
   }
   ngOnDestroy() {
     if (this.dataSub) {

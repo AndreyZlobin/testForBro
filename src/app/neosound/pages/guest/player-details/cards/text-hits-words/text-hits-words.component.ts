@@ -1,7 +1,7 @@
 import {
   Component,
   Input,
-  OnChanges,
+  OnInit,
   SimpleChanges,
   OnDestroy
 } from "@angular/core";
@@ -24,7 +24,7 @@ export const colors = [
   selector: "ngx-text-hits-words",
   templateUrl: "./text-hits-words.component.html",
 })
-export class TextHitsWordsComponent implements OnChanges, OnDestroy {
+export class TextHitsWordsComponent implements OnInit, OnDestroy {
   popularWords: string[];
   dataSub: any;
   isLoading: boolean = true;
@@ -34,12 +34,15 @@ export class TextHitsWordsComponent implements OnChanges, OnDestroy {
     this.dataSub = this.fileChartDataService.chartData.subscribe(data => {
       if (data && data.popularWords) {
         this.popularWords = data.popularWords;
-        this.isLoading = false;
+        this.isLoading = data.isLoading;
       }
     });
   }
-  ngOnChanges(simpleChanges: SimpleChanges) {
-    this.fileChartDataService.getFileChartData(this.batchId, this.fileName);
+  ngOnInit() {
+    this.fileChartDataService.getFileChartData(
+      this.batchId,
+      this.fileName
+    );
   }
   ngOnDestroy() {
     if (this.dataSub) {

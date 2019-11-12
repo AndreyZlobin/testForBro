@@ -16,7 +16,7 @@ import RegionsPlugin from "./region-plugin";
 import { PlayerService } from "../../../../services/player.service";
 import { LanguageService } from "../../../../services/language.service";
 import { DataService } from "../../../../shared";
-import { FileEmotionsService } from "../services/file-emotions.service";
+import { FileResultService } from "../services/file-result.service";
 
 import CanvasDrawer from "./canvas-drawer";
 
@@ -24,7 +24,6 @@ import CanvasDrawer from "./canvas-drawer";
   selector: "ngx-player",
   templateUrl: "./player.component.html",
   styleUrls: ["./player.component.scss"],
-  providers: [FileEmotionsService]
 })
 export class PlayerComponent implements OnDestroy, OnChanges {
   public wavesurfer: any;
@@ -44,7 +43,7 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     private filterService: FilterService,
     private playerService: PlayerService,
     private dataService: DataService,
-    private fileEmotionsService: FileEmotionsService
+    private fileResultService: FileResultService
   ) {
     if (
       dataService.config["colors"] &&
@@ -59,6 +58,7 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.fetchFile();
   }
+
   fetchFile() {
     this.isLoading = true;
     this.filesService
@@ -125,6 +125,9 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   }
 
   init(fileUrl, peaks) {
+    if(this.wavesurfer) {
+      this.wavesurfer.destroy();
+    }
     this.wavesurfer = WaveSurfer.create({
       container: "#waveform",
       waveColor: this.color,
@@ -144,14 +147,13 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     this.wavesurfer.load(fileUrl, peaks, "auto");
     this.wavesurfer.on("ready", () => {
       this.isLoading = false;
-      this.fileEmotionsService.fileInfo.subscribe(data => {
+      this.fileResultService.fileResult.subscribe(data => {
         this.removeRegions();
         if(data.regions) {
           this.setRegions(data.regions);
         }
       });
-      this.fileEmotionsService.getFileEmotions(this.batchId, this.fileName);
-      this.fileEmotionsService.getRegions();
+      this.fileResultService.getResult(this.batchId, this.fileName);
     });
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActive(time);
@@ -168,7 +170,6 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     this.wavesurfer.seekTo(ms / this.wavesurfer.getDuration());
   }
   setRegions(regions) {
-    console.log(regions);
     regions.map(region => {
       this.wavesurfer.addRegion(region);
     });

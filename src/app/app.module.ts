@@ -100,10 +100,9 @@ import { TextTagCloudComponent } from "./neosound/pages/guest/player-details/car
 import { TextHitsWordsComponent } from "./neosound/pages/guest/player-details/cards/text-hits-words/text-hits-words.component";
 
 import { FileChartDataService } from "./neosound/pages/guest/player-details/services/file-chart-data.service";
-import { FileEmotionsService } from "./neosound/pages/guest/player-details/services/file-emotions.service";
+import { FileResultService } from "./neosound/pages/guest/player-details/services/file-result.service";
 import { FileInfoService } from "./neosound/pages/guest/player-details/services/file-info.service";
 import { FileStatsService } from "./neosound/pages/guest/player-details/services/file-stats.service";
-import { FileTextStatsService } from "./neosound/pages/guest/player-details/services/file-text-stats.service";
 
 import { PieChartComponent } from "./neosound/components/pie-chart/pie-chart.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
@@ -222,10 +221,9 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     FilesService,
     FilterService,
     FileChartDataService,
-    FileEmotionsService,
     FileInfoService,
     FileStatsService,
-    FileTextStatsService,
+    FileResultService,
     UploadService,
     TextFilterService,
     OrganizationSettingsService,

@@ -1,29 +1,46 @@
-import { Component, Input, OnChanges, SimpleChanges, OnDestroy, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  OnDestroy,
+  Output,
+  OnInit,
+  EventEmitter
+} from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
-import { FileEmotionsService } from "../../services/file-emotions.service";
-
+import { FileResultService } from "../../services/file-result.service";
 
 @Component({
-  selector: 'ngx-text-log',
-  templateUrl: "./text-log.component.html",
+  selector: "ngx-text-log",
+  templateUrl: "./text-log.component.html"
 })
-export class TextLogComponent implements OnChanges, OnDestroy {
+export class TextLogComponent implements OnInit, OnDestroy {
   data: any[];
   dataSub: any;
+  isLoading: boolean;
 
-  @Input('batchId') batchId: string;
-  @Input('fileName') fileName: string;
+  @Input("batchId") batchId: string;
+  @Input("fileName") fileName: string;
   @Output() goToRegion = new EventEmitter<any>();
-  constructor(public fileEmotionsService: FileEmotionsService) {
-    this.dataSub = this.fileEmotionsService.fileInfo.subscribe((data) => {
-      this.data = data.sentiments;
+  constructor(public fileResultService: FileResultService) {
+    this.dataSub = this.fileResultService.fileResult.subscribe(data => {
+      this.isLoading = data.isLoading;
+      if(!data.isLoading) {
+        this.data = data.emotions;
+      } else {
+        this.data = [];
+      }
     });
   }
-  ngOnChanges(simpleChanges: SimpleChanges) {
-    this.fileEmotionsService.getFileEmotions(this.batchId, this.fileName);
+  ngOnInit() {
+    this.fileResultService.getResult(
+      this.batchId,
+      this.fileName
+    );
   }
   ngOnDestroy() {
-    if(this.dataSub) {
+    if (this.dataSub) {
       this.dataSub.unsubscribe();
     }
   }

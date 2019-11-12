@@ -17,7 +17,7 @@ export class FileStatsService {
 
   constructor(private filesService: FilesService) {}
   public getInfo(batchId: string, fileName: string) {
-    if (batchId !== this.batchId && fileName !== this.fileName) {
+    if (fileName !== this.fileName) {
       this.isLoading = true;
       this.fileName = fileName;
       this.batchId = batchId;

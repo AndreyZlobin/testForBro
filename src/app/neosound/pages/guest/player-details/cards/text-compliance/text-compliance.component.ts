@@ -1,18 +1,18 @@
 import {
   Component,
   Input,
-  OnChanges,
+  OnInit,
   SimpleChanges,
   OnDestroy
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
-import { FileTextStatsService } from "../../services/file-text-stats.service";
+import { FileResultService } from "../../services/file-result.service";
 
 @Component({
   selector: "ngx-text-compliance",
-  templateUrl: "./text-compliance.component.html",
+  templateUrl: "./text-compliance.component.html"
 })
-export class TextComplianceComponent implements OnChanges, OnDestroy {
+export class TextComplianceComponent implements OnInit, OnDestroy {
   missWord: any[];
   missWordNotFound: any[];
   compliance: string;
@@ -20,18 +20,16 @@ export class TextComplianceComponent implements OnChanges, OnDestroy {
   hasData: boolean = false;
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
-  constructor(
-    private fileTextStatsService: FileTextStatsService,
-  ) {
-    this.dataSub = this.fileTextStatsService.fileInfo.subscribe(data => {
-      this.missWord = data.missWord;
-      this.missWordNotFound = data.missWordNotFound;
+  constructor(private fileResultService: FileResultService) {
+    this.dataSub = this.fileResultService.fileResult.subscribe(data => {
+      this.missWord = data.misswords;
+      this.missWordNotFound = data.misswordsNotFound;
       this.compliance = data.compliance;
       this.hasData = true;
     });
   }
-  ngOnChanges(simpleChanges: SimpleChanges) {
-    this.fileTextStatsService.getFileEmotions(this.batchId, this.fileName);
+  ngOnInit() {
+    this.fileResultService.getResult(this.batchId, this.fileName);
   }
   ngOnDestroy() {
     if (this.dataSub) {
