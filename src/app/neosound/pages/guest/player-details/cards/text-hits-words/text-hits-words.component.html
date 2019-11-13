@@ -1,0 +1,9 @@
+<ul *ngIf="!isLoading; else loading" class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
+  <li class="list-group-item d-flex" *ngFor="let popularWord of popularWords" style="color: #211b19">
+    <span>{{popularWord.text}}</span>
+    <span class="ml-auto">{{popularWord.weight}}</span>
+  </li>
+</ul>
+<ng-template #loading>
+  loading...
+</ng-template>

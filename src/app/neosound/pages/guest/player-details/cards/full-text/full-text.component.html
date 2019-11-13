@@ -1,0 +1,10 @@
+<div *ngIf="!isLoading; else loading">
+  <button type="button" class="btn btn-dark" (click)="copyToClipboard(data)"
+    style="position: absolute; right: 20px;bottom: 20px; opacity: .5;">
+    <i class="fa fa-copy"></i>
+  </button>
+  <span [innerHTML]=data></span>
+</div>
+<ng-template #loading>
+  loading...
+</ng-template>

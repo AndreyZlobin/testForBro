@@ -50,10 +50,6 @@ export class FilesService {
     this.filesSubject.next([]);
   }
   getFile(params): Observable<any> {
-    params = params || {
-      batchid: "1234",
-      filename: "1.mp3"
-    };
     return this.http.post(`${environment.api}/getFile`, params);
   }
   getAudioWaveForm(params): Observable<any> {
@@ -72,6 +68,8 @@ export class FilesService {
     params = params || {};
     return this.http.post(`${environment.api}/getEchartData`, params);
   }
+
+
   getApiCallsStats(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/apiCallsStats`, params);
@@ -124,6 +122,10 @@ export class FilesService {
   postListFilesPage(params): Observable<any> {
     params = params || {};
     return this.http.post(`${environment.api}/listFilesPage`, params);
+  }
+  postListTextFiles(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/listTextFiles`, params);
   }
 
   processFile(params /*, mlid = 9*/): Observable<any> {

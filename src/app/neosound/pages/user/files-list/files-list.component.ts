@@ -90,6 +90,9 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   setStopwordLooking(value: string): void {
     this.filterService.filter.stopwordLooking = value;
   }
+  setEmotionalTrend(value: string): void {
+    this.filterService.filter.sentimentTrend = value;
+  }
 
   getEmotionName(val) {
     return val && Object.keys(val)[0];
@@ -200,9 +203,6 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   hasTrend(sentimentTrend) {
     return sentimentTrend.start && sentimentTrend.end;
-  }
-  setEmotionalTrend(value) {
-    this.filterService.filter.sentimentTrend = value;
   }
 
   resetFilter() {

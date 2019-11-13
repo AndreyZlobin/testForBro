@@ -290,7 +290,7 @@ export class FilterService {
     this.updateFileList();
   }
 
-  markFavorite(batchid, filename) {
+  public markFavorite(batchid, filename) {
     const index = this.fileStore.findIndex(
       item => item.batchid === batchid && item.filename === filename
     );
@@ -314,7 +314,7 @@ export class FilterService {
       this.filesService.updateFileInfo(params).subscribe();
     }
   }
-  setTags(index, tags) {
+  public setTags(index, tags) {
     if (index !== -1) {
       const pin = `${!(this.fileStore[index].pin === "true")}`;
       this.fileStore[index].tags = tags;
@@ -335,7 +335,7 @@ export class FilterService {
     }
   }
 
-  getNextLink(fileName: string, batchId: string): string {
+  public getNextLink(fileName: string, batchId: string): string {
     if (this.fileStore && this.fileStore.length) {
       const index = this.fileStore.findIndex(
         file => file.filename === fileName && file.batchid === batchId
@@ -349,7 +349,7 @@ export class FilterService {
       return "";
     }
   }
-  getPrevLink(fileName: string, batchId: string): string {
+  public getPrevLink(fileName: string, batchId: string): string {
     if (this.fileStore && this.fileStore.length) {
       const index = this.fileStore.findIndex(
         file => file.filename === fileName && file.batchid === batchId
@@ -363,7 +363,7 @@ export class FilterService {
     }
   }
 
-  hasNextLink(fileName: string, batchId: string): boolean {
+  public hasNextLink(fileName: string, batchId: string): boolean {
     let res = true;
     if (this.fileStore && this.fileStore.length) {
       const index = this.fileStore.findIndex(
@@ -375,7 +375,7 @@ export class FilterService {
     }
     return res;
   }
-  hasPrevLink(fileName: string, batchId: string): boolean {
+  public hasPrevLink(fileName: string, batchId: string): boolean {
     let res = true;
     if (this.fileStore && this.fileStore.length) {
       const index = this.fileStore.findIndex(

@@ -15,36 +15,40 @@ import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js
 import RegionsPlugin from "./region-plugin";
 import { PlayerService } from "../../../../services/player.service";
 import { LanguageService } from "../../../../services/language.service";
-import { DataService } from '../../../../shared';
+import { DataService } from "../../../../shared";
+import { FileResultService } from "../services/file-result.service";
 
 import CanvasDrawer from "./canvas-drawer";
 
 @Component({
   selector: "ngx-player",
   templateUrl: "./player.component.html",
-  styleUrls: ["./player.component.scss"]
+  styleUrls: ["./player.component.scss"],
 })
 export class PlayerComponent implements OnDestroy, OnChanges {
   public wavesurfer: any;
   public waveFormData: any;
   public peekCache: any;
   public isLoading: boolean = false;
+  private fileUrl: string;
 
   @Input() fileName: string;
   @Input() batchId: string;
-  @Input() fileUrl: string;
-  @Output() ready: EventEmitter<any> = new EventEmitter<any>();
   public regions = [];
   private color;
   playing: boolean = false;
 
   constructor(
-    public filesService: FilesService,
-    public filterService: FilterService,
-    public playerService: PlayerService,
-    public dataService: DataService
+    private filesService: FilesService,
+    private filterService: FilterService,
+    private playerService: PlayerService,
+    private dataService: DataService,
+    private fileResultService: FileResultService
   ) {
-    if(dataService.config["colors"].secondary) {
+    if (
+      dataService.config["colors"] &&
+      dataService.config["colors"].secondary
+    ) {
       this.color = dataService.config["colors"].secondary;
     } else {
       this.color = "#0098d9";
@@ -54,15 +58,26 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.fetchFile();
   }
+
   fetchFile() {
     this.isLoading = true;
     this.filesService
-      .getAudioWaveForm({ filename: this.fileName, batchid: this.batchId })
-      .subscribe(meta => {
-        if (meta.ContentRange) {
-          this.loadChunks(meta);
-        } else {
-          this.init(this.fileUrl, this.getPeaks(meta));
+      .getFile({ batchid: this.batchId, filename: this.fileName })
+      .subscribe(data => {
+        if (data) {
+          this.fileUrl = data.url;
+          this.filesService
+            .getAudioWaveForm({
+              filename: this.fileName,
+              batchid: this.batchId
+            })
+            .subscribe(meta => {
+              if (meta.ContentRange) {
+                this.loadChunks(meta);
+              } else {
+                this.init(this.fileUrl, this.getPeaks(meta));
+              }
+            });
         }
       });
   }
@@ -110,6 +125,9 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   }
 
   init(fileUrl, peaks) {
+    if(this.wavesurfer) {
+      this.wavesurfer.destroy();
+    }
     this.wavesurfer = WaveSurfer.create({
       container: "#waveform",
       waveColor: this.color,
@@ -128,7 +146,14 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     });
     this.wavesurfer.load(fileUrl, peaks, "auto");
     this.wavesurfer.on("ready", () => {
-      this.ready.emit();
+      this.isLoading = false;
+      this.fileResultService.fileResult.subscribe(data => {
+        this.removeRegions();
+        if(data.regions) {
+          this.setRegions(data.regions);
+        }
+      });
+      this.fileResultService.getResult(this.batchId, this.fileName);
     });
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActive(time);
@@ -148,7 +173,9 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     regions.map(region => {
       this.wavesurfer.addRegion(region);
     });
-    this.isLoading = false;
+  }
+  removeRegions() {
+    this.wavesurfer && this.wavesurfer.clearRegions();
   }
   ngOnDestroy() {
     this.wavesurfer && this.wavesurfer.destroy();
