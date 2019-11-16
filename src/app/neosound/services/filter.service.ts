@@ -181,7 +181,7 @@ export class FilterService {
     return params;
   }
 
-  updateFileList(): void {
+   updateFileList(): void {
     this.isLoading = true;
     const params = this.getFilterParams();
     this.filesService.listFilesPage(params).subscribe(data => {
@@ -312,6 +312,16 @@ export class FilterService {
         }
       };
       this.filesService.updateFileInfo(params).subscribe();
+    }
+  }
+  public getFile(batchid, filename) {
+    const index = this.fileStore.findIndex(
+      item => item.batchid === batchid && item.filename === filename
+    );
+    if (index !== -1) {
+      return this.fileStore[index];
+    } else {
+      return null;
     }
   }
   public setTags(index, tags) {

@@ -1,12 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
-import { FilesService } from "../../../services/files.service";
 import { FilterService } from "../../../services/filter.service";
-import { PlayerService } from "../../../services/player.service";
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
-import { ToastrService } from "ngx-toastr";
-import { DataService } from "../../../shared";
 import { PlayerComponent } from "./player/player.component";
 import "rxjs/add/operator/filter";
 
@@ -35,6 +31,7 @@ export class PlayerDetailsComponent {
   batchid: string;
   subRoute: Subscription;
   routeSub: Subscription;
+  file: any;
   constructor(
     public filterService: FilterService,
     private router: Router,
@@ -47,6 +44,26 @@ export class PlayerDetailsComponent {
           this.currentView = null;
           const batchid = this.route.snapshot.params["batchid"];
           const filename = this.route.snapshot.params["filename"];
+          this.file = {
+            batchid: "tests",
+            fileid: "9.wav",
+            filename: "9.wav",
+            uploaddate: "2019-10-30T05:36:08.843Z",
+            duration: "2171.74",
+            angertop: { anger: "0.17" },
+            pin: "false",
+            pauses: "1.61",
+            pause: { avg: "1.61", dur: "941.75" },
+            stopwords: ["don't know", "stop"],
+            stopwordcount: 2,
+            agentstopwordcount: 0,
+            customerstopwords: ["don't know", "stop"],
+            customerstopwordcount: 2,
+            misswordcount: 0,
+            compliancepercent: 100.0,
+            sentimentTrend: { start: "Positive", end: "Positive" },
+            topic: { topic: "Technology", confidence: "100." }
+          };
           if (filename && batchid) {
             this.filename = decodeURIComponent(filename);
             this.batchid = decodeURIComponent(batchid);
@@ -54,7 +71,95 @@ export class PlayerDetailsComponent {
         }
       });
   }
+  getKeywords(item) {
+    return item.keywords && item.keywords.length
+      ? item.keywords.join(", ")
+      : "";
+  }
 
+  public abs(v: number): number {
+    return Math.abs(v);
+  }
+
+  getMisswords(item) {
+    return item.misswords && item.misswords.length
+      ? item.misswords.join(", ")
+      : "";
+  }
+  getOpacityLevelAnger(val) {
+    if (!val) {
+      return "";
+    }
+    let result;
+    if (val.anger < 1) {
+      result = 0;
+    }
+    result = val.anger / 2 / 100;
+    return "rgba(255, 5, 5, " + result + ")";
+  }
+  hasTrend(sentimentTrend) {
+    return sentimentTrend.start && sentimentTrend.end;
+  }
+  getTrend(itemTrend) {
+    if (itemTrend === "Negative") {
+      return "fa-angry text-danger";
+    }
+    if (itemTrend === "Positive") {
+      return "fa-grin text-success";
+    }
+    if (itemTrend === "Neutral") {
+      return "fa-meh text-info";
+    }
+    return "fa-meh";
+  }
+  getOpacityLevelCompliance(percent) {
+    const a = percent / 100;
+    const b = 100 * a;
+    const c = b + 0;
+
+    // Return a CSS HSL string
+    return "hsl(" + c + ", 50%, 50%)";
+  }
+
+  getStopwords(item) {
+    return item.stopwords && item.stopwords.length
+      ? item.stopwords.join(", ")
+      : "";
+  }
+  getCustomerStopword(item) {
+    return item.customerstopwords && item.customerstopwords.length
+      ? item.customerstopwords.join(", ")
+      : "";
+  }
+  getAgentStopwords(item) {
+    return item.agentstopwords && item.agentstopwords.length
+      ? item.agentstopwords.join(", ")
+      : "";
+  }
+  getFormatedTime(val: string): string {
+    const time = parseFloat(val);
+    if (time < 60) {
+      if (time < 10) {
+        return `00:0${Math.ceil(time)}`;
+      } else {
+        return `00:${Math.ceil(time)}`;
+      }
+    } else {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time - minutes * 60);
+      let formatedSeconds = "";
+      if (seconds < 10) {
+        formatedSeconds = `0${seconds}`;
+      } else {
+        formatedSeconds = `${seconds}`;
+      }
+      if (minutes < 10) {
+        return `0${minutes}:${formatedSeconds}`;
+      } else {
+        return `${minutes}:${formatedSeconds}`;
+      }
+    }
+  }
   changeTab(event: any): void {
     if (this.currentView === "player") {
       this.currentView = "analytic";

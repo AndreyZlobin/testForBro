@@ -1,19 +1,22 @@
 <div class="loader-wrapper" *ngIf="isLoading">
     <div class="loader">Loading...</div>
 </div>
-<div class="my-2">
-    <div id="waveform">
-    </div>
-    <div id="timelineContainer"></div>
-</div>
-<div class="d-flex flex-row py-2">
-    <button [disabled]="isLoading" class="btn btm-sm btn-primary mx-2" (click)="play()" style="
+
+<div class="row">
+    <div class="col-1 d-flex align-items-center justify-content-center"><button [disabled]="isLoading" class="btn btm-sm btn-primary mx-2"
+            (click)="play()" style="
     border-radius: 20px;
     height: 40px;
     width: 40px;
     padding: 11px;
     ">
-        <i *ngIf="!playing" class="fa fa-play"></i>
-        <i *ngIf="playing" class="fa fa-pause"></i>
-    </button>
+            <i *ngIf="!playing" class="fa fa-play"></i>
+            <i *ngIf="playing" class="fa fa-pause"></i>
+        </button></div>
+
+    <div class="col-11 my-2">
+        <div id="waveform">
+        </div>
+        <div id="timelineContainer"></div>
+    </div>
 </div>
