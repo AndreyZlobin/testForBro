@@ -1,11 +1,11 @@
-<div class="d-flex align-items-center justify-content-between" *ngIf="file">
+<div class="d-flex align-items-start justify-content-between" *ngIf="file">
   <div style="width: 5%;">
     <button class="btn btn-link" style="cursor: pointer;" [disabled]="filterService.hasPrevLink(fileName, batchId)"
       [routerLink]="filterService.getPrevLink(fileName, batchId)" [tooltip]="t(' Back to List')">
       <i class="fas fa-long-arrow-alt-left"></i>
     </button>
   </div>
-  <div style="cursor: pointer; width: 5%;" class="align-self-center">
+  <div style="cursor: pointer; width: 2%;" class="align-self-center">
     <i *ngIf="getBool(file.pin)" class="fa fa-star"></i>
     <i *ngIf="!getBool(file.pin)" class="far fa-star"></i>
   </div>
@@ -25,7 +25,7 @@
         <i class="fa fa-pencil-alt"></i>
       </button>
     </div>
-    <div class="" *ngIf="file.topic" style="width: 20%;">
+    <div class="" *ngIf="file.topic">
       <i class="fas fa-quote-left mr-1"></i>{{file.topic.topic}}<span
         class="font-weight-bold ml-1">{{file.topic.confidence}} %</span>
     </div>
@@ -49,68 +49,67 @@
     </div>
   </div>
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;">
-    <div class="d-flex flex-column  p-2">
-      <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Compliance')}}:</div>
+    <div class="d-flex flex-column px-2">
+      <div style="font-size: x-small;" class="font-weight-bold">{{t('Compliance')}}:</div>
       <div class="d-flex flex-row">
         <div class="align-self-center text-center mr-1">
-          <i class="fa fa-2x fa-shield-alt"></i>
+          <i class="fa fa-shield-alt"></i>
         </div>
-        <h2 class="m-0" [ngStyle]="{'color': getOpacityLevelCompliance(file.compliancepercent), 'width': '4rem'}">
-          {{file.compliancepercent !== '-' ? abs(file.compliancepercent) + '%' : '-    ' }}
-        </h2>
+        <div class="m-0" [ngStyle]="{'color': getOpacityLevelCompliance(file.compliancepercent), 'width': '4rem'}">
+          {{file.compliancepercent !== '-' ? abs(file.compliancepercent) + '%' : '-  ' }}
+        </div>
       </div>
     </div>
   </div>
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;">
-    <div class="d-flex flex-column  p-2">
-      <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Sentiment trend')}}:</div>
+    <div class="d-flex flex-column px-2">
+      <div style="font-size: x-small;" class="font-weight-bold">{{t('Sentiment trend')}}:</div>
       <ng-container *ngIf="hasTrend(file.sentimentTrend); else emptyTrend">
         <div class="d-flex flex-row align-self-center mt-1">
-          <i class="far fa-2x" [ngClass]='getTrend(file.sentimentTrend.start)'
-            [tooltip]="file.sentimentTrend.start"></i>
-          <i class="fas fa-long-arrow-alt-right fa-2x mx-2"></i>
-          <i [ngClass]='getTrend(file.sentimentTrend.end)' [tooltip]="file.sentimentTrend.end" class="far fa-2x"></i>
+          <i class="far " [ngClass]='getTrend(file.sentimentTrend.start)' [tooltip]="file.sentimentTrend.start"></i>
+          <i class="fas fa-long-arrow-alt-right mx-2"></i>
+          <i [ngClass]='getTrend(file.sentimentTrend.end)' [tooltip]="file.sentimentTrend.end" class="far "></i>
         </div>
       </ng-container>
       <ng-template #emptyTrend>
         <div class="d-flex flex-row align-self-start">
-          <h2 style="width: 4rem">
+          <div style="width: 4rem">
             -
-          </h2>
+          </div>
         </div>
       </ng-template>
     </div>
   </div>
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;"
     [ngStyle]="{'background': getOpacityLevelAnger(file.angertop)}">
-    <div class="d-flex flex-column p-2">
-      <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Average emotional level')}}:
+    <div class="d-flex flex-column px-2">
+      <div style="font-size: x-small;" class="font-weight-bold">{{t('Average emotional level')}}:
       </div>
       <div class="d-flex flex-row">
-        <div class="align-self-center text-center mr-1"><i class="fa fa-2x fa-thermometer-empty"></i>
+        <div class="align-self-center text-center mr-1"><i class="fa fa-thermometer-empty"></i>
         </div>
-        <h2 class="m-0" *ngIf="file.angertop && file.angertop.anger; else empty">
+        <div class="m-0" *ngIf="file.angertop && file.angertop.anger; else empty">
           {{file.angertop && file.angertop.anger}}%
-        </h2>
+        </div>
         <ng-template #empty>
-          <h2 style="width: 4rem;">
+          <div style="width: 4rem;">
             -
-          </h2>
+          </div>
         </ng-template>
       </div>
     </div>
   </div>
-  <div class="d-flex flex-column" style="width: 20%;">
-      <div class="d-inline-block text-truncate font-weight-bold">
-        {{filterService.totalcount}}
-      </div>
+  <div class="d-flex flex-column" style="width: 10%;">
+    <div class="d-inline-block text-truncate font-weight-bold">
+      {{filterService.totalcount}}
     </div>
-  <div class="d-flex flex-row justify-content-center align-self-scratch" style="width: 5%;" >
+  </div>
+  <div class="d-flex flex-row justify-content-center align-self-scratch" style="width: 5%;">
     <button class="btn btn-link" style="cursor: pointer;" [disabled]="filterService.hasPrevLink(fileName, batchId)"
       [routerLink]="filterService.getPrevLink(fileName, batchId)" [tooltip]="t(' Back to List')">
       <i class="fas fa-long-arrow-alt-left"></i>
     </button>
-    <button class="btn btn-link" style="cursor: pointer;" [disabled]="filterService.hasPNextLink(fileName, batchId)"
+    <button class="btn btn-link" style="cursor: pointer;" [disabled]="filterService.hasNextLink(fileName, batchId)"
       [routerLink]="filterService.getNextLink(fileName, batchId)" [tooltip]="t(' Back to List')">
       <i class="fas fa-long-arrow-alt-right"></i>
     </button>
