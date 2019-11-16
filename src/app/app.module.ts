@@ -98,6 +98,7 @@ import { TextSankeyComponent } from "./neosound/pages/guest/player-details/cards
 import { TextKeywordsComponent } from "./neosound/pages/guest/player-details/cards/text-keywords/text-keywords.component";
 import { TextTagCloudComponent } from "./neosound/pages/guest/player-details/cards/text-tag-cloud/text-tag-cloud.component";
 import { TextHitsWordsComponent } from "./neosound/pages/guest/player-details/cards/text-hits-words/text-hits-words.component";
+import { FileInfoComponent } from "./neosound/pages/guest/player-details/cards/file-info/file-info.component";
 
 import { FileChartDataService } from "./neosound/pages/guest/player-details/services/file-chart-data.service";
 import { FileResultService } from "./neosound/pages/guest/player-details/services/file-result.service";
@@ -175,6 +176,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     KeywordsRadialTreeComponent,
     CallsDashboardComponent,
     TextsDashboardComponent,
+    FileInfoComponent,
     TagifyComponent
   ],
   imports: [

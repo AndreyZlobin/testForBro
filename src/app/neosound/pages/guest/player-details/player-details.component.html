@@ -1,242 +1,82 @@
 <nb-card>
   <nb-card-body>
-    <div>
-      <div>
-        <div class="d-flex flex-row py-1">
-          <button class="btn btm-sm btn-secondary mr-2" style="cursor: pointer;"
-            [disabled]=" filterService.hasPrevLink(filename, batchid)"
-            [routerLink]="filterService.getPrevLink(filename, batchid)">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="btn btm-sm btn-secondary mr-2" style="cursor: pointer;"
-            [disabled]="filterService.hasNextLink(filename, batchid)"
-            [routerLink]="filterService.getNextLink(filename, batchid)">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-          <h3 class="text-truncate my-2">
-            {{ filename }}
-          </h3>
-          <button class="btn btm-sm btn-secondary ml-auto" style="cursor: pointer;" routerLink="/user/files">
-            {{ t("Back to List") }}
-          </button>
+    <ng-container *ngIf="filename && batchid">
+      <ngx-file-info [batchId]="batchid" [fileName]="filename"></ngx-file-info>
+    </ng-container>
+    <nb-tabset (changeTab)="changeTab($event)">
+      <nb-tab tabTitle="Player" [active]="currentView === 'player'">
+      </nb-tab>
+      <nb-tab tabTitle="Analytics" [active]="currentView === 'analytic'">
+      </nb-tab>
+    </nb-tabset>
+    <div class="d-flex flex-column" *ngIf="currentView === 'player'">
+      <ng-container *ngIf="filename && batchid; else loading">
+        <ngx-player [fileName]="filename" [batchId]="batchid"></ngx-player>
+      </ng-container>
+      <div style="overflow-y: auto;">
+        <div style="height: 54vh;">
+          <ngx-text-log [batchId]="batchid" [fileName]="filename" (goToRegion)="goToRegion($event)"></ngx-text-log>
         </div>
       </div>
-      <!-- <ng-container *ngIf="file"> -->
-      <div class="d-flex align-items-center justify-content-between">
-        <div>
-          <button class="btn btn-link" style="cursor: pointer;"
-            [disabled]=" filterService.hasPrevLink(filename, batchid)"
-            [routerLink]="filterService.getPrevLink(filename, batchid)" [tooltip]="t(' Back to List')">
-            <i class="fas fa-long-arrow-alt-left"></i>
-          </button>
-        </div>
-        <div>
-          <div style="cursor: pointer;" class="align-self-center">
-            <i class="fa fa-star"></i>
-            <!-- <i *ngIf="!getBool(file.pin)" class="far fa-star"></i> -->
-          </div>
-        </div>
-        <div class="d-flex flex-column">
-          <div class="d-inline-block text-truncate font-weight-bold">
-            {{file.filename}}
-          </div>
-          <div class="d-inline-block text-truncate font-weight-bold">
-            {{file.batchid}}
-          </div>
-        </div>
-        <div>
-          <span class="badge badge-secondary mr-1" *ngFor="let tag of file.tags">{{tag}}</span>
-          <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, item, i)"
-            tooltip="{{t('Edit tags')}}">
-            <i class="fa fa-pencil-alt"></i>
-          </button>
-          <div class="" *ngIf="file.topic">
-            <i class="fas fa-quote-left mr-1"></i>{{file.topic.topic}}<span
-              class="font-weight-bold ml-1">{{file.topic.confidence}} %</span>
-          </div>
-
-        </div>
-        <div class="d-flex flex-row justify-content-start">
-          <div class="pr-4" style="font-size: xx-small;">
-            <div class="mb-1">
-              <span class="mr-2">{{t('Uploaded')}}</span>
-              <span class="float-right font-weight-bold">{{file.uploaddate | date: 'dd/MM/yyyy'}}</span>
-            </div>
-            <div class="mb-1">
-              <span class="mr-2">{{t('Duration')}}</span>
-              <span class="float-right font-weight-bold">{{ getFormatedTime(file.duration)}}</span>
-            </div>
-            <div class="mb-1">
-              <span class="mr-2"> {{t('Silence')}}</span>
-              <span *ngIf="file.pause && file.pause.dur"
-                class="float-right font-weight-bold">{{getFormatedTime(file.pause.dur)}}
-                ({{file.pause.dur / file.duration | percent}})</span>
-            </div>
-          </div>
-          <div style="font-size: xx-small;">
-            <div class="mb-1">
-              <span class="mr-2">{{t('Pauses')}}</span>
-              <span class="float-right font-weight-bold"></span>
-            </div>
-            <div class="mb-1">
-              <span class="mr-2">{{t('Max.')}}</span>
-              <span class="float-right font-weight-bold">-</span>
-            </div>
-            <div class="mb-1">
-              <span class="mr-2">{{t('Avg.')}}</span>
-              <span *ngIf="file.pause && file.pause.avg"
-                class="float-right font-weight-bold">{{getFormatedTime(file.pause.avg)}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="d-flex flex-row justify-content-around align-self-scratch">
-          <div class="d-flex justify-content-center align-self-scratch">
-            <div class="d-flex flex-column  p-2">
-              <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Compliance')}}:</div>
-              <div class="d-flex flex-row">
-                <div class="align-self-center text-center mr-1">
-                  <i class="fa fa-2x fa-shield-alt"></i>
-                </div>
-                <h2 class="m-0"
-                  [ngStyle]="{'color': getOpacityLevelCompliance(file.compliancepercent), 'width': '4rem'}">
-                  {{file.compliancepercent !== '-' ? abs(file.compliancepercent) + '%' : '-    ' }}
-                </h2>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-center align-self-scratch">
-            <div class="d-flex flex-column  p-2">
-              <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Sentiment trend')}}:</div>
-              <ng-container *ngIf="hasTrend(file.sentimentTrend); else emptyTrend">
-                <div class="d-flex flex-row align-self-center mt-1">
-                  <i class="far fa-2x" [ngClass]='getTrend(file.sentimentTrend.start)'
-                    [tooltip]="file.sentimentTrend.start"></i>
-                  <i class="fas fa-long-arrow-alt-right fa-2x mx-2"></i>
-                  <i [ngClass]='getTrend(file.sentimentTrend.end)' [tooltip]="file.sentimentTrend.end"
-                    class="far fa-2x"></i>
-                </div>
-              </ng-container>
-              <ng-template #emptyTrend>
-                <div class="d-flex flex-row align-self-start">
-                  <h2 style="width: 4rem">
-                    -
-                  </h2>
-                </div>
-              </ng-template>
-            </div>
-          </div>
-          <div class="d-flex justify-content-center align-self-scratch"
-            [ngStyle]="{'background': getOpacityLevelAnger(file.angertop)}">
-            <div class="d-flex flex-column p-2">
-              <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Average emotional level')}}:
-              </div>
-              <div class="d-flex flex-row">
-                <div class="align-self-center text-center mr-1"><i class="fa fa-2x fa-thermometer-empty"></i>
-                </div>
-                <h2 class="m-0" *ngIf="file.angertop && file.angertop.anger; else empty">
-                  {{file.angertop && file.angertop.anger}}%
-                </h2>
-                <ng-template #empty>
-                  <h2 style="width: 4rem;">
-                    -
-                  </h2>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-          <div>
-            2 of 167
-          </div>
-          <div>
-            <button class="btn btn-link" style="cursor: pointer;"
-              [disabled]=" filterService.hasPrevLink(filename, batchid)"
-              [routerLink]="filterService.getPrevLink(filename, batchid)" [tooltip]="t(' Back to List')">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="btn btn-link" style="cursor: pointer;"
-              [disabled]=" filterService.hasPrevLink(filename, batchid)"
-              [routerLink]="filterService.getPrevLink(filename, batchid)" [tooltip]="t(' Back to List')">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <!-- </ng-container> -->
-      <nb-tabset (changeTab)="changeTab($event)">
-        <nb-tab tabTitle="Player" [active]="currentView === 'player'">
-        </nb-tab>
-        <nb-tab tabTitle="Analytics" [active]="currentView === 'analytic'">
-        </nb-tab>
-      </nb-tabset>
-      <div class="d-flex flex-column" *ngIf="currentView === 'player'">
-        <ng-container *ngIf="filename && batchid; else loading">
-          <ngx-player [fileName]="filename" [batchId]="batchid"></ngx-player>
-        </ng-container>
-        <div style="overflow-y: auto;">
-          <div style="height: 54vh;">
-            <ngx-text-log [batchId]="batchid" [fileName]="filename" (goToRegion)="goToRegion($event)"></ngx-text-log>
-          </div>
-        </div>
-      </div>
-      <div class="row" *ngIf="currentView === 'analytic'">
-        <div class="col-12 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Text')}}</div>
-            <div class="card-body">
-              <div class="mt-2">
-                <ngx-full-text [batchId]="batchid" [fileName]="filename"></ngx-full-text>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Stopwords')}}</div>
-            <div class="card-body p-0">
-              <ngx-text-stopwords [batchId]="batchid" [fileName]="filename"></ngx-text-stopwords>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-          <ngx-text-compliance [batchId]="batchid" [fileName]="filename"></ngx-text-compliance>
-        </div>
-        <div class="col-6 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Sankey Diagram')}}</div>
-            <div class="card-body">
-              <ngx-text-sankey [batchId]="batchid" [fileName]="filename"></ngx-text-sankey>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Keywords and phases')}}</div>
-            <div class="card-body">
-              <ngx-text-keywords [batchId]="batchid" [fileName]="filename"></ngx-text-keywords>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Most frequency used words')}}</div>
-            <div class="card-body p-0">
-              <ngx-text-tag-cloud [batchId]="batchid" [fileName]="filename"></ngx-text-tag-cloud>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Hits vs words')}}</div>
-            <div class="card-body">
-              <ngx-text-hits-words [batchId]="batchid" [fileName]="filename">
-              </ngx-text-hits-words>
-            </div>
-          </div>
-        </div>
-      </div>
-      <ng-template #loading>
-        {{ t("Loading...") }}
-      </ng-template>
     </div>
+    <div class="row" *ngIf="currentView === 'analytic'">
+      <div class="col-12 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Text')}}</div>
+          <div class="card-body">
+            <div class="mt-2">
+              <ngx-full-text [batchId]="batchid" [fileName]="filename"></ngx-full-text>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Stopwords')}}</div>
+          <div class="card-body p-0">
+            <ngx-text-stopwords [batchId]="batchid" [fileName]="filename"></ngx-text-stopwords>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <ngx-text-compliance [batchId]="batchid" [fileName]="filename"></ngx-text-compliance>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Sankey Diagram')}}</div>
+          <div class="card-body">
+            <ngx-text-sankey [batchId]="batchid" [fileName]="filename"></ngx-text-sankey>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Keywords and phases')}}</div>
+          <div class="card-body">
+            <ngx-text-keywords [batchId]="batchid" [fileName]="filename"></ngx-text-keywords>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Most frequency used words')}}</div>
+          <div class="card-body p-0">
+            <ngx-text-tag-cloud [batchId]="batchid" [fileName]="filename"></ngx-text-tag-cloud>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Hits vs words')}}</div>
+          <div class="card-body">
+            <ngx-text-hits-words [batchId]="batchid" [fileName]="filename">
+            </ngx-text-hits-words>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #loading>
+      {{ t("Loading...") }}
+    </ng-template>
   </nb-card-body>
 </nb-card>
