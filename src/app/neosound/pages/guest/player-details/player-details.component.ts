@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
 import { PlayerComponent } from "./player/player.component";
+import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import "rxjs/add/operator/filter";
 
 export const colors = [

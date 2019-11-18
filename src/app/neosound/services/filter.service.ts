@@ -181,7 +181,7 @@ export class FilterService {
     return params;
   }
 
-   updateFileList(): void {
+  updateFileList(): void {
     this.isLoading = true;
     const params = this.getFilterParams();
     this.filesService.listFilesPage(params).subscribe(data => {
@@ -324,6 +324,12 @@ export class FilterService {
       return null;
     }
   }
+  public getIndex(batchid, filename) {
+    const index = this.fileStore.findIndex(
+      item => item.batchid === batchid && item.filename === filename
+    );
+    return index + 1;
+  }
   public setTags(index, tags) {
     if (index !== -1) {
       const pin = `${!(this.fileStore[index].pin === "true")}`;
@@ -352,7 +358,9 @@ export class FilterService {
       );
 
       if (index !== -1 && this.fileStore[index + 1]) {
-        return `/file/${this.fileStore[index + 1].batchid}/${this.fileStore[index + 1].filename}`;
+        return `/file/${this.fileStore[index + 1].batchid}/${
+          this.fileStore[index + 1].filename
+        }`;
       }
       return "";
     } else {
@@ -365,7 +373,9 @@ export class FilterService {
         file => file.filename === fileName && file.batchid === batchId
       );
       if (index !== -1 && this.fileStore[index - 1]) {
-        return `/file/${this.fileStore[index - 1].batchid}/${this.fileStore[index - 1].filename}`;
+        return `/file/${this.fileStore[index - 1].batchid}/${
+          this.fileStore[index - 1].filename
+        }`;
       }
       return "";
     } else {

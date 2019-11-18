@@ -101,7 +101,7 @@
   </div>
   <div class="d-flex flex-column" style="width: 10%;">
     <div class="d-inline-block text-truncate font-weight-bold">
-      {{filterService.totalcount}}
+      {{filterService.getIndex(fileName, batchId)}} out of {{filterService.totalcount}}
     </div>
   </div>
   <div class="d-flex flex-row justify-content-center align-self-scratch" style="width: 5%;">
@@ -118,3 +118,20 @@
 <ng-template #loading>
   loading...
 </ng-template>
+<ng-template #tagModal>
+    <div class="modal-header">
+      {{t('Tags')}}
+      <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body tagsModal">
+      <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal" (onAdd)="onItemAdd($event, 'itemTags')"
+        placeholder="{{t('Add Tag')}}" secondaryPlaceholder="{{t('Add Tag')}}" [separatorKeys]="[',']"
+        [separatorKeyCodes]="[13]" (onBlur)="onItemAdd($event, 'itemTags')"></tag-input>
+      <div class="text-right">
+        <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
+        <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>
+      </div>
+    </div>
+  </ng-template>

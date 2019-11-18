@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { FilterService } from "../../../../../services/filter.service";
+import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 
 @Component({
   selector: "ngx-file-info",
@@ -8,9 +9,16 @@ import { FilterService } from "../../../../../services/filter.service";
 })
 export class FileInfoComponent implements OnInit {
   file: any;
+  currentTagEditIndex;
+  editedFileItem;
+  itemTags;
+  modalRef: BsModalRef;
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
-  constructor(private filterService: FilterService) {}
+  constructor(
+    private filterService: FilterService,
+    private modalService: BsModalService
+  ) {}
   ngOnInit() {
     this.filterService.files.subscribe(() => {
       this.file = this.filterService.getFile(this.batchId, this.fileName);
@@ -112,5 +120,36 @@ export class FileInfoComponent implements OnInit {
         return `${minutes}:${formatedSeconds}`;
       }
     }
+  }
+  showModal(ref, index) {
+    this.currentTagEditIndex = index;
+    this.itemTags =
+      (this.file.tags &&
+        this.file.tags.map(v => ({
+          value: v,
+          display: v
+        }))) ||
+      [];
+    this.hideModal();
+    this.modalRef = this.modalService.show(ref, {
+      class: "modal-xl"
+    });
+  }
+
+  hideModal() {
+    if (this.modalRef) {
+      this.modalRef.hide();
+    }
+  }
+
+  saveTags() {
+    const tags = this.itemTags.map(v => v.value);
+    this.filterService.setTags(this.currentTagEditIndex, tags);
+    this.currentTagEditIndex = -1;
+    this.hideModal();
+  }
+
+  markFavorite(item) {
+    this.filterService.markFavorite(item.batchid, item.filename);
   }
 }
