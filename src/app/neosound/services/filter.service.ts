@@ -328,7 +328,7 @@ export class FilterService {
     const index = this.fileStore.findIndex(
       item => item.batchid === batchid && item.filename === filename
     );
-    return index + 1;
+    return index;
   }
   public setTags(index, tags) {
     if (index !== -1) {

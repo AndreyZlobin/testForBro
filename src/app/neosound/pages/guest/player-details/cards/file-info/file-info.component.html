@@ -5,7 +5,7 @@
       <i class="fas fa-long-arrow-alt-left"></i>
     </button>
   </div>
-  <div style="cursor: pointer; width: 2%;" class="align-self-center">
+  <div (click)="markFavorite(file)" style="cursor: pointer; width: 2%;" class="align-self-start">
     <i *ngIf="getBool(file.pin)" class="fa fa-star"></i>
     <i *ngIf="!getBool(file.pin)" class="far fa-star"></i>
   </div>
@@ -20,7 +20,7 @@
   <div style="width: 20%;">
     <div>
       <span class="badge badge-secondary mr-1" *ngFor="let tag of file.tags">{{tag}}</span>
-      <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, file, i)"
+      <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, file)"
         tooltip="{{t('Edit tags')}}">
         <i class="fa fa-pencil-alt"></i>
       </button>
@@ -100,18 +100,18 @@
     </div>
   </div>
   <div class="d-flex flex-column" style="width: 10%;">
-    <div class="d-inline-block text-truncate font-weight-bold">
-      {{filterService.getIndex(fileName, batchId)}} out of {{filterService.totalcount}}
+    <div class="d-inline-block text-muted text-center font-weight-bold">
+      {{fileIndex + 1}} out of {{filterService.totalcount}}
     </div>
   </div>
   <div class="d-flex flex-row justify-content-center align-self-scratch" style="width: 5%;">
     <button class="btn btn-link" style="cursor: pointer;" [disabled]="filterService.hasPrevLink(fileName, batchId)"
-      [routerLink]="filterService.getPrevLink(fileName, batchId)" [tooltip]="t(' Back to List')">
-      <i class="fas fa-long-arrow-alt-left"></i>
+      [routerLink]="filterService.getPrevLink(fileName, batchId)" [tooltip]="t('Previous File')">
+      <i class="fas fa-chevron-left"></i>
     </button>
     <button class="btn btn-link" style="cursor: pointer;" [disabled]="filterService.hasNextLink(fileName, batchId)"
-      [routerLink]="filterService.getNextLink(fileName, batchId)" [tooltip]="t(' Back to List')">
-      <i class="fas fa-long-arrow-alt-right"></i>
+      [routerLink]="filterService.getNextLink(fileName, batchId)" [tooltip]="t('Next File')">
+      <i class="fas fa-chevron-right"></i>
     </button>
   </div>
 </div>
@@ -119,19 +119,18 @@
   loading...
 </ng-template>
 <ng-template #tagModal>
-    <div class="modal-header">
-      {{t('Tags')}}
-      <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+  <div class="modal-header">
+    {{t('Tags')}}
+    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body tagsModal">
+    <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal" placeholder="{{t('Add Tag')}}"
+      secondaryPlaceholder="{{t('Add Tag')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"></tag-input>
+    <div class="text-right">
+      <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
+      <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>
     </div>
-    <div class="modal-body tagsModal">
-      <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal" (onAdd)="onItemAdd($event, 'itemTags')"
-        placeholder="{{t('Add Tag')}}" secondaryPlaceholder="{{t('Add Tag')}}" [separatorKeys]="[',']"
-        [separatorKeyCodes]="[13]" (onBlur)="onItemAdd($event, 'itemTags')"></tag-input>
-      <div class="text-right">
-        <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
-        <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>
-      </div>
-    </div>
-  </ng-template>
+  </div>
+</ng-template>

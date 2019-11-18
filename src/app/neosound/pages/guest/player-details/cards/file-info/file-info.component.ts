@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnChanges } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { FilterService } from "../../../../../services/filter.service";
 import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
@@ -7,24 +7,28 @@ import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
   selector: "ngx-file-info",
   templateUrl: "./file-info.component.html"
 })
-export class FileInfoComponent implements OnInit {
+export class FileInfoComponent implements OnChanges {
   file: any;
   currentTagEditIndex;
   editedFileItem;
   itemTags;
   modalRef: BsModalRef;
+  fileIndex: number = -1;
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
   constructor(
-    private filterService: FilterService,
+    public filterService: FilterService,
     private modalService: BsModalService
   ) {}
-  ngOnInit() {
+  ngOnChanges(a:any) {
+    this.file = this.filterService.getFile(this.batchId, this.fileName);
     this.filterService.files.subscribe(() => {
       this.file = this.filterService.getFile(this.batchId, this.fileName);
-      console.log(this.file);
+      this.fileIndex = this.filterService.getIndex(this.batchId, this.fileName);
     });
-    this.filterService.updateFileList();
+    if (!this.file) {
+      this.filterService.updateFileList();
+    }
   }
   t(v) {
     return LanguageService.t(v);
@@ -73,6 +77,7 @@ export class FileInfoComponent implements OnInit {
     }
     return "fa-meh";
   }
+
   getOpacityLevelCompliance(percent) {
     const a = percent / 100;
     const b = 100 * a;
@@ -144,7 +149,7 @@ export class FileInfoComponent implements OnInit {
 
   saveTags() {
     const tags = this.itemTags.map(v => v.value);
-    this.filterService.setTags(this.currentTagEditIndex, tags);
+    this.filterService.setTags(this.fileIndex, tags);
     this.currentTagEditIndex = -1;
     this.hideModal();
   }

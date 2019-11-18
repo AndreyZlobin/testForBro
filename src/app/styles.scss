@@ -173,15 +173,19 @@ angular-tag-cloud > span {
 .nb-theme-default .text-primary {
   color: var(--color-secondary) !important;
 }
+
+.nb-theme-default .btn.c-normal {
+	color: #2a2a2a;
+}
 .nb-theme-default .btn.btn-link {
   cursor: pointer;
   border-color: transparent;
   color: #2a2a2a;
+  padding: 0;
   &:active:focus,
   &:active,
   &:focus,
   &:hover {
-    background-color: var(--color-secondary);
     opacity: 0.8;
     &:disabled {
       opacity: 0.3;
