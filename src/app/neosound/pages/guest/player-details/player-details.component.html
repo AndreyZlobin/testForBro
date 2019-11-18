@@ -1,105 +1,82 @@
 <nb-card>
   <nb-card-body>
-    <div>
-      <div class="alert alert-danger" *ngIf="errorMessage">
-        {{ t("Error:") }} {{ t(errorMessage) }}
-      </div>
-      <div>
-        <div class="d-flex flex-row py-1">
-          <button class="btn btm-sm btn-secondary mr-2" style="cursor: pointer;"
-            [disabled]=" filterService.hasPrevLink(filename, batchid)"
-            [routerLink]="filterService.getPrevLink(filename, batchid)">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="btn btm-sm btn-secondary mr-2" style="cursor: pointer;"
-            [disabled]="filterService.hasNextLink(filename, batchid)"
-            [routerLink]="filterService.getNextLink(filename, batchid)">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-          <h2 class="text-truncate my-2" style="max-width: 56vw;">
-            {{ filename }}
-          </h2>
-          <button class="btn btm-sm btn-secondary ml-auto" style="cursor: pointer;" routerLink="/user/files">
-            {{ t("Back to List") }}
-          </button>
+    <ng-container *ngIf="filename && batchid">
+      <ngx-file-info [batchId]="batchid" [fileName]="filename"></ngx-file-info>
+    </ng-container>
+    <nb-tabset (changeTab)="changeTab($event)">
+      <nb-tab tabTitle="Player" [active]="currentView === 'player'">
+      </nb-tab>
+      <nb-tab tabTitle="Analytics" [active]="currentView === 'analytic'">
+      </nb-tab>
+    </nb-tabset>
+    <div class="d-flex flex-column" *ngIf="currentView === 'player'">
+      <ng-container *ngIf="filename && batchid; else loading">
+        <ngx-player [fileName]="filename" [batchId]="batchid"></ngx-player>
+      </ng-container>
+      <div style="overflow-y: auto;">
+        <div style="height: 54vh;">
+          <ngx-text-log [batchId]="batchid" [fileName]="filename" (goToRegion)="goToRegion($event)"></ngx-text-log>
         </div>
       </div>
-      <nb-tabset (changeTab)="changeTab($event)">
-        <nb-tab tabTitle="Player" [active]="currentView === 'player'">
-        </nb-tab>
-        <nb-tab tabTitle="Analytics" [active]="currentView === 'analytic'">
-        </nb-tab>
-      </nb-tabset>
-      <div class="d-flex flex-column" *ngIf="currentView === 'player'">
-        <ng-container *ngIf="filename && batchid; else loading">
-          <ngx-player [fileName]="filename" [batchId]="batchid"></ngx-player>
-        </ng-container>
-        <div style="overflow-y: auto;">
-          <div style="height: 54vh;">
-            <ngx-text-log [batchId]="batchid" [fileName]="filename"
-              (goToRegion)="goToRegion($event)"></ngx-text-log>
-          </div>
-        </div>
-      </div>
-      <div class="row" *ngIf="currentView === 'analytic'">
-        <div class="col-12 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Text')}}</div>
-            <div class="card-body">
-              <div class="mt-2">
-                <ngx-full-text [batchId]="batchid" [fileName]="filename"></ngx-full-text>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Stopwords')}}</div>
-            <div class="card-body p-0">
-              <ngx-text-stopwords [batchId]="batchid" [fileName]="filename"></ngx-text-stopwords>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-          <ngx-text-compliance [batchId]="batchid" [fileName]="filename"></ngx-text-compliance>
-        </div>
-        <div class="col-6 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Sankey Diagram')}}</div>
-            <div class="card-body">
-              <ngx-text-sankey [batchId]="batchid" [fileName]="filename"></ngx-text-sankey>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Keywords and phases')}}</div>
-            <div class="card-body">
-              <ngx-text-keywords [batchId]="batchid" [fileName]="filename"></ngx-text-keywords>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Most frequency used words')}}</div>
-            <div class="card-body p-0">
-              <ngx-text-tag-cloud [batchId]="batchid" [fileName]="filename"></ngx-text-tag-cloud>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-          <div class="card">
-            <div class="card-header">{{t('Hits vs words')}}</div>
-            <div class="card-body">
-              <ngx-text-hits-words [batchId]="batchid" [fileName]="filename">
-              </ngx-text-hits-words>
-            </div>
-          </div>
-        </div>
-      </div>
-      <ng-template #loading>
-        {{ t("Loading...") }}
-      </ng-template>
     </div>
+    <div class="row" *ngIf="currentView === 'analytic'">
+      <div class="col-12 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Text')}}</div>
+          <div class="card-body">
+            <div class="mt-2">
+              <ngx-full-text [batchId]="batchid" [fileName]="filename"></ngx-full-text>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Stopwords')}}</div>
+          <div class="card-body p-0">
+            <ngx-text-stopwords [batchId]="batchid" [fileName]="filename"></ngx-text-stopwords>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <ngx-text-compliance [batchId]="batchid" [fileName]="filename"></ngx-text-compliance>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Sankey Diagram')}}</div>
+          <div class="card-body">
+            <ngx-text-sankey [batchId]="batchid" [fileName]="filename"></ngx-text-sankey>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Keywords and phases')}}</div>
+          <div class="card-body">
+            <ngx-text-keywords [batchId]="batchid" [fileName]="filename"></ngx-text-keywords>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Most frequency used words')}}</div>
+          <div class="card-body p-0">
+            <ngx-text-tag-cloud [batchId]="batchid" [fileName]="filename"></ngx-text-tag-cloud>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3">
+        <div class="card">
+          <div class="card-header">{{t('Hits vs words')}}</div>
+          <div class="card-body">
+            <ngx-text-hits-words [batchId]="batchid" [fileName]="filename">
+            </ngx-text-hits-words>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #loading>
+      {{ t("Loading...") }}
+    </ng-template>
   </nb-card-body>
 </nb-card>

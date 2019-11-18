@@ -92,6 +92,9 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   allCallsCount: any;
   batchesUploaded: any;
 
+  public topicChart: any;
+  public topics = [];
+
   fileStat: any = {};
   minutesStat: any = {};
   apiStat: any = {};
@@ -431,6 +434,66 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
         yAxis: {
           type: "category",
           name: this.t("Stopwords"),
+          data: sortedKeywords.map(i => i.name)
+        },
+        xAxis: {
+          type: "value",
+          name: this.t("Hits")
+        },
+        series: [
+          {
+            name: "%",
+            type: "bar",
+            data: sortedKeywords.map(i => i.value),
+            label: {
+              normal: {
+                position: "right",
+                show: true
+              }
+            }
+          }
+        ]
+      };
+    });
+  }
+  getTopicClowd(param: any = {}) {
+    this.filesService.getTopicCloud(param).subscribe(data => {
+      this.topics = Object.keys(data.topics).map(key => {
+        return {
+          text: key,
+          weight: data.topics[key]
+        };
+      });
+      const sortedKeywords = Object.keys(data.topics)
+        .map(key => {
+          return {
+            name: key,
+            value: data.topics[key]
+          };
+        })
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 10)
+        .reverse();
+      if (this.dataService.config["colors"].secondary) {
+        this.primiryColor = this.dataService.config["colors"].secondary;
+        this.host = this.dataService.config["sFtpHost"];
+      } else {
+        this.primiryColor = "#0098d9";
+      }
+      if (this.dataService.config["sFtpHost"]) {
+        this.host = this.dataService.config["sFtpHost"];
+      }
+      this.topicChart = {
+        color: [this.primiryColor],
+        grid: {
+          left: 100
+        },
+        legend: {
+          data: ["Topics"]
+        },
+        yAxis: {
+          type: "category",
+          name: this.t("Topics"),
           data: sortedKeywords.map(i => i.name)
         },
         xAxis: {
@@ -829,6 +892,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     this.getApiCallsStats(params);
     this.getFileStats(params);
     this.getTagClowd(params);
+    this.getTopicClowd({});
     this.getEchartData(params);
   }
 

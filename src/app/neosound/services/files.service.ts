@@ -80,11 +80,15 @@ export class FilesService {
   }
   getTagClowd(params): Observable<any> {
     params = params || {};
-    return this.http.post(`${environment.api}/tagCloud `, params);
+    return this.http.post(`${environment.api}/tagCloud`, params);
+  }
+  getTopicCloud(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/topicCloud`, params);
   }
   getTextStopwords(params): Observable<any> {
     params = params || {};
-    return this.http.post(`${environment.api}/textStopwords `, params);
+    return this.http.post(`${environment.api}/textStopwords`, params);
   }
 
 

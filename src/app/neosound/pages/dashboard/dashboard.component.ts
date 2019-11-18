@@ -120,6 +120,8 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+
   updateData() {
     this.hideModal();
 

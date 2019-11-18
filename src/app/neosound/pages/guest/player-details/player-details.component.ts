@@ -1,13 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
-import { FilesService } from "../../../services/files.service";
 import { FilterService } from "../../../services/filter.service";
-import { PlayerService } from "../../../services/player.service";
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
-import { ToastrService } from "ngx-toastr";
-import { DataService } from "../../../shared";
 import { PlayerComponent } from "./player/player.component";
+import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import "rxjs/add/operator/filter";
 
 export const colors = [
@@ -35,6 +32,7 @@ export class PlayerDetailsComponent {
   batchid: string;
   subRoute: Subscription;
   routeSub: Subscription;
+  file: any;
   constructor(
     public filterService: FilterService,
     private router: Router,

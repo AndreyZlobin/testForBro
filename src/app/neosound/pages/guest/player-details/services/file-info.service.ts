@@ -10,6 +10,11 @@ export class FileInfoService {
   private fileInfoStore: {
     bytes: number;
     url: string;
+    isLoading: boolean;
+  } = {
+    bytes: 0,
+    url: null,
+    isLoading: false
   };
   private fileInfoSubject = new BehaviorSubject<any>({});
   public fileInfo = this.fileInfoSubject.asObservable();
@@ -20,6 +25,10 @@ export class FileInfoService {
       this.isLoading = true;
       this.fileName = fileName;
       this.batchId = batchId;
+      this.fileInfoStore.bytes = 0;
+      this.fileInfoStore.url = null;
+      this.fileInfoStore.isLoading = true;
+      this.fileInfoSubject.next(this.fileInfoStore);
       this.filesService
         .getFile({
           batchid: batchId,
@@ -29,16 +38,12 @@ export class FileInfoService {
           if (data) {
             this.fileInfoStore.bytes = data.bytes;
             this.fileInfoStore.url = data.url;
-          } else {
-            this.fileInfoStore.bytes = null;
-            this.fileInfoStore.url = null;
+            this.fileInfoStore.isLoading = false;
+            this.fileInfoSubject.next(this.fileInfoStore);
           }
         });
-      this.fileInfoSubject.next(this.fileInfoStore);
-      this.isLoading = false;
     } else {
       this.fileInfoSubject.next(this.fileInfoStore);
-      this.isLoading = false;
     }
   }
 }
