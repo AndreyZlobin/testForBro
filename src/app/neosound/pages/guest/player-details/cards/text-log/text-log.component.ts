@@ -19,6 +19,7 @@ export class TextLogComponent implements OnInit, OnDestroy {
   data: any[];
   dataSub: any;
   isLoading: boolean;
+  greySpeaker: string = "S1";
 
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
@@ -28,6 +29,7 @@ export class TextLogComponent implements OnInit, OnDestroy {
       this.isLoading = data.isLoading;
       if(!data.isLoading) {
         this.data = data.emotions;
+        this.greySpeaker = data.greySpeaker;
       } else {
         this.data = [];
       }
