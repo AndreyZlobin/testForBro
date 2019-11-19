@@ -18,29 +18,23 @@ export class FilePeeksService {
 
   constructor(private filesService: FilesService) {}
   public getAudioWaveForm(batchId: string, fileName: string) {
-    if (fileName !== this.fileName) {
-      this.fileName = fileName;
-      this.batchId = batchId;
-      this.filePeaksStore.peaks = null;
-      this.filePeaksStore.isLoading = true;
-      this.peeksSubject.next(this.filePeaksStore);
+    if (fileName && batchId) {
+      this.peeksSubject.next(null);
       this.filesService
         .getAudioWaveForm({
-          filename: this.fileName,
-          batchid: this.batchId
+          filename: fileName,
+          batchid: batchId
         })
         .subscribe(meta => {
           if (meta.ContentRange) {
             this.loadChunks(meta);
           } else {
-            this.filePeaksStore.peaks = this.getPeaks(meta);
-            this.filePeaksStore.isLoading = false;
-            this.peeksSubject.next(this.filePeaksStore);
+            this.peeksSubject.next(this.getPeaks(meta));
           }
         });
     } else {
       this.filePeaksStore.isLoading = false;
-      this.peeksSubject.next(this.filePeaksStore);
+      this.peeksSubject.next(null);
     }
   }
   loadChunks(meta) {
@@ -56,9 +50,8 @@ export class FilePeeksService {
         if (meta.ContentRange) {
           this.loadChunks(meta);
         } else {
-          this.filePeaksStore.peaks = this.getPeaks(meta);
           this.filePeaksStore.isLoading = false;
-          this.peeksSubject.next(this.filePeaksStore);
+          this.peeksSubject.next(this.getPeaks(meta));
         }
       });
   }
