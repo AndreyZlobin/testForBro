@@ -9,11 +9,11 @@
     <i *ngIf="getBool(file.pin)" class="fa fa-star"></i>
     <i *ngIf="!getBool(file.pin)" class="far fa-star"></i>
   </div>
-  <div class="d-flex flex-column" style="width: 20%;">
-    <div class="d-inline-block text-truncate font-weight-bold">
+  <div class="d-flex flex-column  justify-content-between align-self-scratch" style="width: 20%;">
+    <div class="d-inline-block text-truncate">
       {{file.filename}}
     </div>
-    <div class="d-inline-block text-truncate font-weight-bold">
+    <div class="d-inline-block text-truncate font-weight-bold mt-2">
       {{file.batchid}}
     </div>
   </div>
@@ -25,7 +25,7 @@
         <i class="fa fa-pencil-alt"></i>
       </button>
     </div>
-    <div class="" *ngIf="file.topic">
+    <div class="mt-2" *ngIf="file.topic">
       <i class="fas fa-quote-left mr-1"></i>{{file.topic.topic}}<span
         class="font-weight-bold ml-1">{{file.topic.confidence}} %</span>
     </div>
@@ -109,7 +109,7 @@
       [routerLink]="filterService.getPrevLink(fileName, batchId)" [tooltip]="t('Previous File')">
       <i class="fas fa-chevron-left"></i>
     </button>
-    <button class="btn btn-link" style="cursor: pointer;" [disabled]="filterService.hasNextLink(fileName, batchId)"
+    <button class="btn btn-link ml-2" style="cursor: pointer;" [disabled]="filterService.hasNextLink(fileName, batchId)"
       [routerLink]="filterService.getNextLink(fileName, batchId)" [tooltip]="t('Next File')">
       <i class="fas fa-chevron-right"></i>
     </button>
