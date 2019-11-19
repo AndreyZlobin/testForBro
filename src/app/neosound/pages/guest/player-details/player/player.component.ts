@@ -76,16 +76,18 @@ export class PlayerComponent implements OnDestroy, OnInit {
   fetchFile() {
     this.id = makeid(10);
     this.filePeeksService.peeks.subscribe(data => {
-      if (data.isLoading === false && data.peaks.length) {
-        this.peekCache = data.peaks;
-        this.isLoadingPeeks = data.isLoading;
+      if (data && data.length) {
+        console.log("peeks")
+        this.peekCache = data;
+        this.isLoadingPeeks = false;
         this.tryInit();
       }
     });
     this.fileInfoService.fileInfo.subscribe(data => {
-      if (data.isLoading === false) {
+      if (data && data.url && data.url.length) {
+        console.log("fileInfo")
         this.fileUrl = data.url;
-        this.isLoadingInfo = data.isLoading;
+        this.isLoadingInfo = false;
         this.tryInit();
       }
     });
@@ -98,6 +100,8 @@ export class PlayerComponent implements OnDestroy, OnInit {
 
   tryInit() {
     if (this.isLoadingInfo === false && this.isLoadingPeeks === false) {
+      console.log("tryInit")
+      console.log(this.fileUrl, this.peekCache.length);
       this.init(this.fileUrl, this.peekCache);
     }
   }

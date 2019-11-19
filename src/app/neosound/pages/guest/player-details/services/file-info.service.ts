@@ -21,14 +21,10 @@ export class FileInfoService {
 
   constructor(private filesService: FilesService) {}
   public getInfo(batchId: string, fileName: string) {
-    if (fileName !== this.fileName) {
-      this.isLoading = true;
+    if (fileName && batchId) {
       this.fileName = fileName;
       this.batchId = batchId;
-      this.fileInfoStore.bytes = 0;
-      this.fileInfoStore.url = null;
-      this.fileInfoStore.isLoading = true;
-      this.fileInfoSubject.next(this.fileInfoStore);
+      this.fileInfoSubject.next({url: null});
       this.filesService
         .getFile({
           batchid: batchId,
@@ -36,10 +32,7 @@ export class FileInfoService {
         })
         .subscribe(data => {
           if (data) {
-            this.fileInfoStore.bytes = data.bytes;
-            this.fileInfoStore.url = data.url;
-            this.fileInfoStore.isLoading = false;
-            this.fileInfoSubject.next(this.fileInfoStore);
+            this.fileInfoSubject.next({url: data.url});
           }
         });
     }
