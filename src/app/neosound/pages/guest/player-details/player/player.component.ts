@@ -8,8 +8,6 @@ import {
   SimpleChanges,
   EventEmitter
 } from "@angular/core";
-import { FilesService } from "../../../../services/files.service";
-import { FilterService } from "../../../../services/filter.service";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
 import RegionsPlugin from "./region-plugin";
@@ -22,13 +20,12 @@ import { FileInfoService } from "../services/file-info.service";
 
 import CanvasDrawer from "./canvas-drawer";
 
-
 function makeid(length) {
-  var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  var result = "";
+  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
 }
@@ -51,6 +48,7 @@ export class PlayerComponent implements OnDestroy, OnInit {
   @Input() batchId: string;
   public regions = [];
   private color;
+  private shouldInit = false;
   playing: boolean = false;
   id: string;
   constructor(
@@ -76,8 +74,9 @@ export class PlayerComponent implements OnDestroy, OnInit {
   }
 
   fetchFile() {
+    this.id = makeid(10);
     this.filePeeksService.peeks.subscribe(data => {
-      if (data.isLoading === false) {
+      if (data.isLoading === false && data.peaks.length) {
         this.peekCache = data.peaks;
         this.isLoadingPeeks = data.isLoading;
         this.tryInit();
@@ -99,10 +98,7 @@ export class PlayerComponent implements OnDestroy, OnInit {
 
   tryInit() {
     if (this.isLoadingInfo === false && this.isLoadingPeeks === false) {
-      this.id = makeid(10);
-      setTimeout(() => {
-        this.init(this.fileUrl, this.peekCache);
-      }, 500);
+      this.init(this.fileUrl, this.peekCache);
     }
   }
 
@@ -157,5 +153,7 @@ export class PlayerComponent implements OnDestroy, OnInit {
     this.wavesurfer && this.wavesurfer.clearRegions();
   }
   ngOnDestroy() {
+    this.wavesurfer && this.wavesurfer.clearRegions();
+    this.wavesurfer && this.wavesurfer.destroy();
   }
 }

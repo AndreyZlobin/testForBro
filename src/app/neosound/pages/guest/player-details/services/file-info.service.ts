@@ -42,8 +42,6 @@ export class FileInfoService {
             this.fileInfoSubject.next(this.fileInfoStore);
           }
         });
-    } else {
-      this.fileInfoSubject.next(this.fileInfoStore);
     }
   }
 }
