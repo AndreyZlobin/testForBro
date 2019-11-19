@@ -76,7 +76,7 @@ export class PlayerComponent implements OnDestroy, OnInit {
   fetchFile() {
     this.id = makeid(10);
     this.filePeeksService.peeks.subscribe(data => {
-      if (data.isLoading === false) {
+      if (data.isLoading === false && data.peaks.length) {
         this.peekCache = data.peaks;
         this.isLoadingPeeks = data.isLoading;
         this.tryInit();
@@ -152,5 +152,8 @@ export class PlayerComponent implements OnDestroy, OnInit {
   removeRegions() {
     this.wavesurfer && this.wavesurfer.clearRegions();
   }
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.wavesurfer && this.wavesurfer.clearRegions();
+    this.wavesurfer && this.wavesurfer.destroy();
+  }
 }
