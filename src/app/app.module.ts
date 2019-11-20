@@ -90,6 +90,8 @@ import { FileDropModule } from "ngx-file-drop";
 
 import { PlayerComponent } from "./neosound/pages/guest/player-details/player/player.component";
 import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/player-details.component";
+import { AnalyticDetailsComponent } from "./neosound/pages/guest/analytic-details/analytic-details.component";
+
 import { TextLogComponent } from "./neosound/pages/guest/player-details/cards/text-log/text-log.component";
 import { TextComplianceComponent } from "./neosound/pages/guest/player-details/cards/text-compliance/text-compliance.component";
 import { FullTextComponent } from "./neosound/pages/guest/player-details/cards/full-text/full-text.component";
@@ -154,6 +156,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     SensitiveDataComponent,
     AboutComponent,
     PlayerDetailsComponent,
+    AnalyticDetailsComponent,
     TextLogComponent,
     TextComplianceComponent,
     TextStopwordsComponent,
