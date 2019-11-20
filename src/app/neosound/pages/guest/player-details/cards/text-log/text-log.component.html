@@ -1,6 +1,6 @@
 <table class="table" *ngIf="!isLoading; else loading">
   <ng-container *ngFor="let item of data">
-    <tr class="d-flex" (click)="emitEvent(item[0])" interval [timeInterval]="[item[0], item[1], item[4]]"
+    <tr class="d-flex" (click)="emitEvent(item[0])" style="cursor: pointer;" interval [timeInterval]="[item[0], item[1], item[4]]"
       [ngClass]="{'grey': item[5] && greySpeaker && item[5] == greySpeaker}">
       <td class="col-1">
         {{ getDateVal(item[0]) | date: "mm:ss" }} -
