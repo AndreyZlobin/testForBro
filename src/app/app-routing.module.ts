@@ -110,7 +110,7 @@ const routes: Routes = [
         component: PlayerDetailsComponent
       },
       {
-        path: "file/analytic/:batchid/:filename",
+        path: "analytic/:batchid/:filename",
         canActivate: [AuthGuard],
         component: AnalyticDetailsComponent
       },

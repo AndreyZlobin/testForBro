@@ -17,7 +17,7 @@
       </ul>
     </div>
     <div class="d-flex flex-column" *ngIf="currentView === 'player'">
-      <ng-container *ngIf="filename && batchid; else loading">
+      <ng-container *ngIf="filename && batchid && !isLoading; else loading">
         <ngx-player [fileName]="filename" [batchId]="batchid"></ngx-player>
       </ng-container>
       <div style="overflow-y: auto;">
