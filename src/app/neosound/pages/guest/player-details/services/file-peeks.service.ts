@@ -26,25 +26,25 @@ export class FilePeeksService {
         })
         .subscribe(meta => {
           if (meta.ContentRange) {
-            this.loadChunks(meta);
+            this.loadChunks(batchId, fileName, meta);
           } else {
             this.peeksSubject.next(this.getPeaks(meta));
           }
         });
     }
   }
-  loadChunks(meta) {
+  loadChunks(batchId, fileName, meta) {
     this.filesService
       .getAudioWaveForm({
-        filename: this.fileName,
-        batchid: this.batchId,
+        filename: fileName,
+        batchid: batchId,
         ContentRange: meta.ContentRange
       })
       .subscribe(res => {
         meta.data = meta.data + res.data;
         meta.ContentRange = res.ContentRange;
         if (meta.ContentRange) {
-          this.loadChunks(meta);
+          this.loadChunks(batchId, fileName, meta);
         } else {
           this.peeksSubject.next(this.getPeaks(meta));
         }
