@@ -56,9 +56,6 @@ export class PlayerDetailsComponent {
             this.route.snapshot.params["filename"]
           );
           if (this.batchid !== batchid || this.filename !== filename) {
-            this.fileResultService.getResult(batchid, filename);
-            this.filePeeksService.getAudioWaveForm(batchid, filename);
-            this.fileInfoService.getInfo(batchid, filename);
             this.filename = filename;
             this.batchid = batchid;
           }
@@ -72,6 +69,9 @@ export class PlayerDetailsComponent {
       return;
     }
     if (!this.currentView || this.currentView === "analytic") {
+      this.fileResultService.getResult(this.batchid, this.filename);
+      this.filePeeksService.getAudioWaveForm(this.batchid, this.filename);
+      this.fileInfoService.getInfo(this.batchid, this.filename);
       this.currentView = "player";
       return;
     }

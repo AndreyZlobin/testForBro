@@ -96,7 +96,6 @@ export class PlayerComponent implements OnDestroy, OnInit {
 
   tryInit() {
     if (this.isLoadingInfo === false && this.isLoadingPeeks === false) {
-      console.log(this.fileUrl, this.peekCache.length);
       this.init(this.fileUrl, this.peekCache);
     }
   }
