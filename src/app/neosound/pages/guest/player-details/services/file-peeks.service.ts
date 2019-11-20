@@ -46,7 +46,6 @@ export class FilePeeksService {
         if (meta.ContentRange) {
           this.loadChunks(meta);
         } else {
-          this.filePeaksStore.isLoading = false;
           this.peeksSubject.next(this.getPeaks(meta));
         }
       });
