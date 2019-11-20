@@ -17,8 +17,8 @@
       {{file.batchid}}
     </div>
   </div>
-  <div class="d-flex flex-column  justify-content-between align-self-scratch" style="width: 20%;">
-    <div>
+  <div class="d-flex flex-column  justify-content-between align-self-scratch px-4" style="width: 20%;">
+    <div class="d-flex flex-row justify-content-end align-items-center">
       <span class="badge badge-secondary mr-1" *ngFor="let tag of file.tags">{{tag}}</span>
       <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, file)"
         tooltip="{{t('Edit tags')}}">
@@ -50,7 +50,7 @@
   </div>
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;">
     <div class="d-flex flex-column px-2">
-      <div style="font-size: x-small;" class="font-weight-bold">{{t('Compliance')}}:</div>
+      <div style="font-size: x-small;" class="mb-3 font-weight-bold">{{t('Compliance')}}:</div>
       <div class="d-flex flex-row">
         <div class="align-self-center text-center mr-1">
           <i class="fa fa-shield-alt"></i>
@@ -63,7 +63,7 @@
   </div>
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;">
     <div class="d-flex flex-column px-2">
-      <div style="font-size: x-small;" class="font-weight-bold">{{t('Sentiment trend')}}:</div>
+      <div style="font-size: x-small;" class="mb-3 font-weight-bold">{{t('Sentiment trend')}}:</div>
       <ng-container *ngIf="hasTrend(file.sentimentTrend); else emptyTrend">
         <div class="d-flex flex-row align-self-center mt-1">
           <i class="far " [ngClass]='getTrend(file.sentimentTrend.start)' [tooltip]="file.sentimentTrend.start"></i>
@@ -82,8 +82,8 @@
   </div>
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;"
     [ngStyle]="{'background': getOpacityLevelAnger(file.angertop)}">
-    <div class="d-flex flex-column px-2">
-      <div style="font-size: x-small;" class="font-weight-bold">{{t('Average emotional level')}}:
+    <div class="d-flex flex-column pt-2">
+      <div style="font-size: x-small;" class="mb-3 font-weight-bold">{{t('Average emotional level')}}:
       </div>
       <div class="d-flex flex-row">
         <div class="align-self-center text-center mr-1"><i class="fa fa-thermometer-empty"></i>
@@ -100,7 +100,7 @@
     </div>
   </div>
   <div class="d-flex flex-column" style="width: 10%;">
-    <div class="d-inline-block text-muted text-center font-weight-bold">
+    <div class="d-inline-block text-center">
       {{fileIndex + 1}} out of {{filterService.totalcount}}
     </div>
   </div>

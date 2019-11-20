@@ -55,30 +55,45 @@ export class PlayerDetailsComponent {
           const filename = decodeURIComponent(
             this.route.snapshot.params["filename"]
           );
-          if (this.batchid !== batchid || this.filename !== filename) {
-            this.filename = filename;
-            this.batchid = batchid;
-          }
+          this.currentView = "";
+          setTimeout(() => {
+            if (this.batchid !== batchid || this.filename !== filename) {
+              this.filename = filename;
+              this.batchid = batchid;
+              this.currentView = "player";
+              this.fileResultService.getResult(this.batchid, this.filename);
+              this.filePeeksService.getAudioWaveForm(
+                this.batchid,
+                this.filename
+              );
+              this.fileInfoService.getInfo(this.batchid, this.filename);
+            }
+          }, 10);
         }
       });
   }
 
-  changeTab(event: any): void {
+  changeTab(): void {
     if (this.currentView === "player") {
       this.currentView = "analytic";
       return;
     }
     if (!this.currentView || this.currentView === "analytic") {
-      this.fileResultService.getResult(this.batchid, this.filename);
-      this.filePeeksService.getAudioWaveForm(this.batchid, this.filename);
-      this.fileInfoService.getInfo(this.batchid, this.filename);
       this.currentView = "player";
+      setTimeout(() => {
+        this.fileResultService.getResult(this.batchid, this.filename);
+        this.filePeeksService.getAudioWaveForm(this.batchid, this.filename);
+        this.fileInfoService.getInfo(this.batchid, this.filename);
+      }, 10);
       return;
     }
   }
 
   public goToRegion(time: any) {
     this.player && this.player.seekTo(time);
+  }
+  getLink() {
+    return '/file/analytic/' + encodeURIComponent(this.batchid) + "/" + encodeURIComponent(this.filename);
   }
 
   t(v) {

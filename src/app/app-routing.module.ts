@@ -39,6 +39,7 @@ import { AboutComponent } from "./neosound/pages/about/about.component";
 
 import { PagesComponent } from "./pages/pages.component";
 import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/player-details.component";
+import { AnalyticDetailsComponent } from "./neosound/pages/guest/analytic-details/analytic-details.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
 import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-found.component";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
@@ -107,6 +108,11 @@ const routes: Routes = [
         path: "file/:batchid/:filename",
         canActivate: [AuthGuard],
         component: PlayerDetailsComponent
+      },
+      {
+        path: "file/analytic/:batchid/:filename",
+        canActivate: [AuthGuard],
+        component: AnalyticDetailsComponent
       },
       {
         path: "text/:id",
