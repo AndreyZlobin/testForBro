@@ -31,8 +31,8 @@ export class PlayerDetailsComponent {
   player: PlayerComponent;
   currentView: string;
   isLoading: boolean = true;
-  filename: string;
-  batchid: string;
+  filename: string = "";
+  batchid: string = "";
   subRoute: Subscription;
   routeSub: Subscription;
   file: any;
@@ -55,12 +55,12 @@ export class PlayerDetailsComponent {
           const filename = decodeURIComponent(
             this.route.snapshot.params["filename"]
           );
-          if (this.filename !== filename && this.batchid !== batchid) {
+          if (this.batchid !== batchid || this.filename !== filename) {
+            this.fileResultService.getResult(batchid, filename);
+            this.filePeeksService.getAudioWaveForm(batchid, filename);
+            this.fileInfoService.getInfo(batchid, filename);
             this.filename = filename;
             this.batchid = batchid;
-            this.fileResultService.getResult(this.batchid, this.filename);
-            this.filePeeksService.getAudioWaveForm(this.batchid, this.filename);
-            this.fileInfoService.getInfo(this.batchid, this.filename);
           }
         }
       });
