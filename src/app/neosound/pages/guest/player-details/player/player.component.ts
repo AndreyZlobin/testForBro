@@ -6,7 +6,8 @@ import {
   OnDestroy,
   OnChanges,
   SimpleChanges,
-  EventEmitter
+  EventEmitter,
+  HostListener,
 } from "@angular/core";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
@@ -36,6 +37,13 @@ function makeid(length) {
   styleUrls: ["./player.component.scss"]
 })
 export class PlayerComponent implements OnDestroy, OnInit {
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+
+    if (event.keyCode === 32) {
+      this.play();
+    }
+  }
   public wavesurfer: any;
   public waveFormData: any;
   public peekCache: any;

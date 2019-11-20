@@ -44,7 +44,7 @@ export class AnalyticDetailsComponent {
     router.events
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
-        if (event.url.startsWith("/file/analytic/")) {
+        if (event.url.startsWith("/analytic/")) {
           this.currentView = null;
           const batchid = decodeURIComponent(
             this.route.snapshot.params["batchid"]

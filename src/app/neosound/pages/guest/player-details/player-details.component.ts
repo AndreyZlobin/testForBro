@@ -48,7 +48,6 @@ export class PlayerDetailsComponent {
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
         if (event.url.startsWith("/file/")) {
-          this.currentView = null;
           const batchid = decodeURIComponent(
             this.route.snapshot.params["batchid"]
           );
@@ -56,11 +55,13 @@ export class PlayerDetailsComponent {
             this.route.snapshot.params["filename"]
           );
           this.currentView = "";
+          this.isLoading = true;
           setTimeout(() => {
             if (this.batchid !== batchid || this.filename !== filename) {
               this.filename = filename;
               this.batchid = batchid;
               this.currentView = "player";
+              this.isLoading = false;
               this.fileResultService.getResult(this.batchid, this.filename);
               this.filePeeksService.getAudioWaveForm(
                 this.batchid,
@@ -73,27 +74,13 @@ export class PlayerDetailsComponent {
       });
   }
 
-  changeTab(): void {
-    if (this.currentView === "player") {
-      this.currentView = "analytic";
-      return;
-    }
-    if (!this.currentView || this.currentView === "analytic") {
-      this.currentView = "player";
-      setTimeout(() => {
-        this.fileResultService.getResult(this.batchid, this.filename);
-        this.filePeeksService.getAudioWaveForm(this.batchid, this.filename);
-        this.fileInfoService.getInfo(this.batchid, this.filename);
-      }, 10);
-      return;
-    }
-  }
-
-  public goToRegion(time: any) {
-    this.player && this.player.seekTo(time);
-  }
   getLink() {
-    return '/file/analytic/' + encodeURIComponent(this.batchid) + "/" + encodeURIComponent(this.filename);
+    return (
+      "/analytic/" +
+      encodeURIComponent(this.batchid) +
+      "/" +
+      encodeURIComponent(this.filename)
+    );
   }
 
   t(v) {
