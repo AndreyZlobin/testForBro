@@ -483,24 +483,64 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
       if (this.dataService.config["sFtpHost"]) {
         this.host = this.dataService.config["sFtpHost"];
       }
+      var dataShadow = [];
+      let yMax = 0;
+      sortedKeywords.forEach(v => {
+        if (v.value > yMax) {
+          yMax = v.value;
+        }
+      });
+      for (var i = 0; i < data.length; i++) {
+        dataShadow.push(yMax);
+      }
       this.topicChart = {
         color: [this.primiryColor],
-        grid: {
-          left: 100
-        },
+        grid: {},
         legend: {
           data: ["Topics"]
         },
         yAxis: {
           type: "category",
           name: this.t("Topics"),
-          data: sortedKeywords.map(i => i.name)
+          data: sortedKeywords.map(i => i.name),
+          axisLabel: {
+            inside: true,
+            textStyle: {
+              color: "#2a2a2a"
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          z: 10
         },
         xAxis: {
-          type: "value",
-          name: this.t("Hits")
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            textStyle: {
+              color: "#2a2a2a"
+            }
+          }
         },
         series: [
+          {
+            // For shadow
+            type: "bar",
+            itemStyle: {
+              normal: { color: "rgba(0,0,0,0.05)" }
+            },
+            barGap: "-100%",
+            data: dataShadow,
+            animation: false
+          },
           {
             name: "%",
             type: "bar",
@@ -508,7 +548,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
             label: {
               normal: {
                 position: "right",
-                show: true
+                show: false,
               }
             }
           }
