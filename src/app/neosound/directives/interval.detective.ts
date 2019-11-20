@@ -1,5 +1,6 @@
 import { Directive, Input, ElementRef, OnInit } from "@angular/core";
 import { PlayerService } from "../services/player.service";
+import { ToastrService } from "ngx-toastr";
 
 @Directive({
   selector: "[interval]"
@@ -9,7 +10,11 @@ export class IntervalDirective implements OnInit {
   timeInterval = [];
   private start = 0;
   private end = 0;
-  constructor(private playerService: PlayerService, private el: ElementRef) {}
+  constructor(
+    private playerService: PlayerService,
+    private el: ElementRef,
+    private toastrService: ToastrService
+  ) {}
   ngOnInit() {
     this.start = parseFloat(this.timeInterval[0]);
     this.end = parseFloat(this.timeInterval[1]);

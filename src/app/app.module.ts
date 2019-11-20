@@ -90,6 +90,8 @@ import { FileDropModule } from "ngx-file-drop";
 
 import { PlayerComponent } from "./neosound/pages/guest/player-details/player/player.component";
 import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/player-details.component";
+import { AnalyticDetailsComponent } from "./neosound/pages/guest/analytic-details/analytic-details.component";
+
 import { TextLogComponent } from "./neosound/pages/guest/player-details/cards/text-log/text-log.component";
 import { TextComplianceComponent } from "./neosound/pages/guest/player-details/cards/text-compliance/text-compliance.component";
 import { FullTextComponent } from "./neosound/pages/guest/player-details/cards/full-text/full-text.component";
@@ -98,11 +100,13 @@ import { TextSankeyComponent } from "./neosound/pages/guest/player-details/cards
 import { TextKeywordsComponent } from "./neosound/pages/guest/player-details/cards/text-keywords/text-keywords.component";
 import { TextTagCloudComponent } from "./neosound/pages/guest/player-details/cards/text-tag-cloud/text-tag-cloud.component";
 import { TextHitsWordsComponent } from "./neosound/pages/guest/player-details/cards/text-hits-words/text-hits-words.component";
+import { FileInfoComponent } from "./neosound/pages/guest/player-details/cards/file-info/file-info.component";
 
 import { FileChartDataService } from "./neosound/pages/guest/player-details/services/file-chart-data.service";
 import { FileResultService } from "./neosound/pages/guest/player-details/services/file-result.service";
 import { FileInfoService } from "./neosound/pages/guest/player-details/services/file-info.service";
 import { FileStatsService } from "./neosound/pages/guest/player-details/services/file-stats.service";
+import { FilePeeksService } from "./neosound/pages/guest/player-details/services/file-peeks.service";
 
 import { PieChartComponent } from "./neosound/components/pie-chart/pie-chart.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
@@ -152,6 +156,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     SensitiveDataComponent,
     AboutComponent,
     PlayerDetailsComponent,
+    AnalyticDetailsComponent,
     TextLogComponent,
     TextComplianceComponent,
     TextStopwordsComponent,
@@ -175,6 +180,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     KeywordsRadialTreeComponent,
     CallsDashboardComponent,
     TextsDashboardComponent,
+    FileInfoComponent,
     TagifyComponent
   ],
   imports: [
@@ -223,6 +229,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     FileChartDataService,
     FileInfoService,
     FileStatsService,
+    FilePeeksService,
     FileResultService,
     UploadService,
     TextFilterService,

@@ -7,9 +7,8 @@ import {
   OnChanges,
   SimpleChanges,
   EventEmitter,
+  HostListener,
 } from "@angular/core";
-import { FilesService } from "../../../../services/files.service";
-import { FilterService } from "../../../../services/filter.service";
 import * as WaveSurfer from "wavesurfer.js";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js";
 import RegionsPlugin from "./region-plugin";
@@ -17,33 +16,55 @@ import { PlayerService } from "../../../../services/player.service";
 import { LanguageService } from "../../../../services/language.service";
 import { DataService } from "../../../../shared";
 import { FileResultService } from "../services/file-result.service";
+import { FilePeeksService } from "../services/file-peeks.service";
+import { FileInfoService } from "../services/file-info.service";
 
 import CanvasDrawer from "./canvas-drawer";
+
+function makeid(length) {
+  var result = "";
+  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 
 @Component({
   selector: "ngx-player",
   templateUrl: "./player.component.html",
-  styleUrls: ["./player.component.scss"],
+  styleUrls: ["./player.component.scss"]
 })
-export class PlayerComponent implements OnDestroy, OnChanges {
+export class PlayerComponent implements OnDestroy, OnInit {
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+
+    if (event.keyCode === 32) {
+      this.play();
+    }
+  }
   public wavesurfer: any;
   public waveFormData: any;
   public peekCache: any;
-  public isLoading: boolean = false;
+  public isLoadingInfo: boolean = true;
+  public isLoadingPeeks: boolean = true;
+  public isLoading: boolean = true;
   private fileUrl: string;
-
+  public waveFormInitted: boolean = false;
   @Input() fileName: string;
   @Input() batchId: string;
   public regions = [];
   private color;
+  private shouldInit = false;
   playing: boolean = false;
-
+  id: string;
   constructor(
-    private filesService: FilesService,
-    private filterService: FilterService,
+    private filePeeksService: FilePeeksService,
     private playerService: PlayerService,
     private dataService: DataService,
-    private fileResultService: FileResultService
+    private fileResultService: FileResultService,
+    private fileInfoService: FileInfoService
   ) {
     if (
       dataService.config["colors"] &&
@@ -55,81 +76,41 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnInit() {
+    this.id = null;
     this.fetchFile();
   }
 
   fetchFile() {
-    this.isLoading = true;
-    this.filesService
-      .getFile({ batchid: this.batchId, filename: this.fileName })
-      .subscribe(data => {
-        if (data) {
-          this.fileUrl = data.url;
-          this.filesService
-            .getAudioWaveForm({
-              filename: this.fileName,
-              batchid: this.batchId
-            })
-            .subscribe(meta => {
-              if (meta.ContentRange) {
-                this.loadChunks(meta);
-              } else {
-                this.init(this.fileUrl, this.getPeaks(meta));
-              }
-            });
-        }
-      });
+    this.id = makeid(10);
+    this.filePeeksService.peeks.subscribe(data => {
+      if (data && data.length) {
+        this.peekCache = data;
+        this.isLoadingPeeks = false;
+        this.tryInit();
+      }
+    });
+    this.fileInfoService.fileInfo.subscribe(data => {
+      if (data && data.url && data.url.length) {
+        this.fileUrl = data.url;
+        this.isLoadingInfo = false;
+        this.tryInit();
+      }
+    });
   }
   t(v) {
     return LanguageService.t(v);
   }
 
-  loadChunks(meta) {
-    this.filesService
-      .getAudioWaveForm({
-        filename: this.fileName,
-        batchid: this.batchId,
-        ContentRange: meta.ContentRange
-      })
-      .subscribe(res => {
-        meta.data = meta.data + res.data;
-        meta.ContentRange = res.ContentRange;
-        if (meta.ContentRange) {
-          this.loadChunks(meta);
-        } else {
-          this.init(this.fileUrl, this.getPeaks(meta));
-        }
-      });
-  }
-
-  getPeaks(meta) {
-    const data = JSON.parse(meta.data);
-    let peaks = [];
-    if (data.data[0] instanceof Array || data.channels === 1) {
-      peaks = data.data;
-    } else {
-      peaks = [[], []];
-      const datalen = data.data.length;
-      for (let i = 0; i < datalen / 2; i++) {
-        if (i % 2) {
-          peaks[1].push(data.data[2 * i]);
-          peaks[1].push(data.data[2 * i + 1]);
-        } else {
-          peaks[0].push(data.data[2 * i]);
-          peaks[0].push(data.data[2 * i + 1]);
-        }
-      }
+  tryInit() {
+    if (this.isLoadingInfo === false && this.isLoadingPeeks === false) {
+      this.init(this.fileUrl, this.peekCache);
     }
-    return peaks;
   }
 
   init(fileUrl, peaks) {
-    if(this.wavesurfer) {
-      this.wavesurfer.destroy();
-    }
     this.wavesurfer = WaveSurfer.create({
-      container: "#waveform",
+      container: "#" + this.id,
       waveColor: this.color,
       progressColor: "#a4abb3",
       normalize: true,
@@ -147,13 +128,12 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     this.wavesurfer.load(fileUrl, peaks, "auto");
     this.wavesurfer.on("ready", () => {
       this.isLoading = false;
+      this.waveFormInitted = true;
       this.fileResultService.fileResult.subscribe(data => {
-        this.removeRegions();
-        if(data.regions) {
+        if (data.regions) {
           this.setRegions(data.regions);
         }
       });
-      this.fileResultService.getResult(this.batchId, this.fileName);
     });
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActive(time);
@@ -178,6 +158,7 @@ export class PlayerComponent implements OnDestroy, OnChanges {
     this.wavesurfer && this.wavesurfer.clearRegions();
   }
   ngOnDestroy() {
+    this.wavesurfer && this.wavesurfer.clearRegions();
     this.wavesurfer && this.wavesurfer.destroy();
   }
 }

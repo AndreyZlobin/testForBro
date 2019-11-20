@@ -174,6 +174,29 @@ angular-tag-cloud > span {
   color: var(--color-secondary) !important;
 }
 
+.nb-theme-default .btn.c-normal {
+	color: #2a2a2a;
+}
+.nb-theme-default .btn.btn-link {
+  cursor: pointer;
+  border-color: transparent;
+  color: #2a2a2a;
+  padding: 0;
+  &:active:focus,
+  &:active,
+  &:focus,
+  &:hover {
+    opacity: 0.8;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+  &:active:focus,
+  &:active {
+    opacity: 0.9;
+  }
+
+}
 .nb-theme-default .btn.btn-primary {
   cursor: pointer;
   background-color: var(--color-secondary);
@@ -265,4 +288,82 @@ typeahead-container {
       background-color: var(--color-secondary);
     }
   }
+}
+
+.grey {
+  background-color: #dee2e6;
+}
+
+.nb-theme-default .tabset ul li a {
+  display: flex;
+  position: relative;
+  text-decoration: none;
+  padding: 1.25rem;
+  color: #a4abb3;
+}
+
+.nb-theme-default .tabset ul {
+  font-family: Roboto;
+  font-size: 1.125rem;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid #ebeef2;
+}
+
+.nb-theme-default .tabset ul li {
+  cursor: pointer;
+  margin-bottom: -1px;
+  text-align: center;
+  position: relative;
+}
+
+.nb-theme-default .tabset ul {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+}
+
+.nb-theme-default .tabset ul li {
+  background: rgba(0,0,0,0);
+}
+
+.nb-theme-default .tabset ul li.active {
+  background: rgba(0,0,0,0);
+}
+
+.nb-theme-default .tabset ul li.active a {
+  pointer-events: none;
+  font-weight: 600;
+  color: #2a2a2a;
+}
+
+.nb-theme-default .tabset ul li a::before {
+  display: none;
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  bottom: -2px;
+  left: 0;
+  background-color: #2a2a2a;
+}
+
+.nb-theme-default .tabset ul li a::before {
+  background-color: var(--color-secondary);
+}
+
+.nb-theme-default .tabset li.active a::before {
+  display: block;
+}
+.nb-theme-default .tabset li a::before {
+  display: none;
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--color-secondary);
 }

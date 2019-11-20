@@ -314,6 +314,22 @@ export class FilterService {
       this.filesService.updateFileInfo(params).subscribe();
     }
   }
+  public getFile(batchid, filename) {
+    const index = this.fileStore.findIndex(
+      item => item.batchid === batchid && item.filename === filename
+    );
+    if (index !== -1) {
+      return this.fileStore[index];
+    } else {
+      return null;
+    }
+  }
+  public getIndex(batchid, filename) {
+    const index = this.fileStore.findIndex(
+      item => item.batchid === batchid && item.filename === filename
+    );
+    return index;
+  }
   public setTags(index, tags) {
     if (index !== -1) {
       const pin = `${!(this.fileStore[index].pin === "true")}`;
@@ -342,7 +358,9 @@ export class FilterService {
       );
 
       if (index !== -1 && this.fileStore[index + 1]) {
-        return `/file/${this.fileStore[index + 1].batchid}/${this.fileStore[index + 1].filename}`;
+        return `/file/${this.fileStore[index + 1].batchid}/${
+          this.fileStore[index + 1].filename
+        }`;
       }
       return "";
     } else {
@@ -355,7 +373,9 @@ export class FilterService {
         file => file.filename === fileName && file.batchid === batchId
       );
       if (index !== -1 && this.fileStore[index - 1]) {
-        return `/file/${this.fileStore[index - 1].batchid}/${this.fileStore[index - 1].filename}`;
+        return `/file/${this.fileStore[index - 1].batchid}/${
+          this.fileStore[index - 1].filename
+        }`;
       }
       return "";
     } else {

@@ -112,6 +112,23 @@
       </div>
     </div>
     <div class="col-6 mb-3">
+        <div class="card card-block d-flex h-100">
+          <div class="card-header">{{t('Topics')}}</div>
+          <div class="card-body align-items-center d-flex justify-content-center" *ngIf="topics">
+            <angular-tag-cloud [data]="topics" width="300" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false">
+            </angular-tag-cloud>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3" *ngIf="topicChart">
+        <div class="card" style="min-height: calc(100% - 15px);">
+          <div class="card-header">{{t('Topics')}}</div>
+          <div class="card-body pl-0 pr-0">
+            <div echarts [options]="topicChart"></div>
+          </div>
+        </div>
+      </div>
+    <div class="col-6 mb-3">
       <ngx-total-minutes-plus-batches-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat"
         [apiStatData]="apiStat" [colorsData]="colors">
       </ngx-total-minutes-plus-batches-chart-bar>

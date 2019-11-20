@@ -92,6 +92,9 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   allCallsCount: any;
   batchesUploaded: any;
 
+  public topicChart: any;
+  public topics = [];
+
   fileStat: any = {};
   minutesStat: any = {};
   apiStat: any = {};
@@ -446,6 +449,106 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
               normal: {
                 position: "right",
                 show: true
+              }
+            }
+          }
+        ]
+      };
+    });
+  }
+  getTopicClowd(param: any = {}) {
+    this.filesService.getTopicCloud(param).subscribe(data => {
+      this.topics = Object.keys(data.topics).map(key => {
+        return {
+          text: key,
+          weight: data.topics[key]
+        };
+      });
+      const sortedKeywords = Object.keys(data.topics)
+        .map(key => {
+          return {
+            name: key,
+            value: data.topics[key]
+          };
+        })
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 10)
+        .reverse();
+      if (this.dataService.config["colors"].secondary) {
+        this.primiryColor = this.dataService.config["colors"].secondary;
+        this.host = this.dataService.config["sFtpHost"];
+      } else {
+        this.primiryColor = "#0098d9";
+      }
+      if (this.dataService.config["sFtpHost"]) {
+        this.host = this.dataService.config["sFtpHost"];
+      }
+      var dataShadow = [];
+      let yMax = 0;
+      sortedKeywords.forEach(v => {
+        if (v.value > yMax) {
+          yMax = v.value;
+        }
+      });
+      for (var i = 0; i < data.length; i++) {
+        dataShadow.push(yMax);
+      }
+      this.topicChart = {
+        color: [this.primiryColor],
+        grid: {},
+        legend: {
+          data: ["Topics"]
+        },
+        yAxis: {
+          type: "category",
+          name: this.t("Topics"),
+          data: sortedKeywords.map(i => i.name),
+          axisLabel: {
+            inside: true,
+            textStyle: {
+              color: "#2a2a2a"
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          z: 10
+        },
+        xAxis: {
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            textStyle: {
+              color: "#2a2a2a"
+            }
+          }
+        },
+        series: [
+          {
+            // For shadow
+            type: "bar",
+            itemStyle: {
+              normal: { color: "rgba(0,0,0,0.05)" }
+            },
+            barGap: "-100%",
+            data: dataShadow,
+            animation: false
+          },
+          {
+            name: "%",
+            type: "bar",
+            data: sortedKeywords.map(i => i.value),
+            label: {
+              normal: {
+                position: "right",
+                show: false,
               }
             }
           }
@@ -829,6 +932,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     this.getApiCallsStats(params);
     this.getFileStats(params);
     this.getTagClowd(params);
+    this.getTopicClowd({});
     this.getEchartData(params);
   }
 

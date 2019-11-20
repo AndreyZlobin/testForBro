@@ -33,10 +33,6 @@ export class FullTextComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit() {
-    this.fileResultService.getResult(
-      this.batchId,
-      this.fileName
-    );
   }
   ngOnDestroy() {
     if (this.dataSub) {
