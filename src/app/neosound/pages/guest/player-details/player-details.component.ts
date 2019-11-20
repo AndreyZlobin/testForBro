@@ -48,7 +48,6 @@ export class PlayerDetailsComponent {
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
         if (event.url.startsWith("/file/")) {
-          this.currentView = null;
           const batchid = decodeURIComponent(
             this.route.snapshot.params["batchid"]
           );
@@ -56,11 +55,13 @@ export class PlayerDetailsComponent {
             this.route.snapshot.params["filename"]
           );
           this.currentView = "";
+          this.isLoading = true;
           setTimeout(() => {
             if (this.batchid !== batchid || this.filename !== filename) {
               this.filename = filename;
               this.batchid = batchid;
               this.currentView = "player";
+              this.isLoading = false;
               this.fileResultService.getResult(this.batchid, this.filename);
               this.filePeeksService.getAudioWaveForm(
                 this.batchid,
