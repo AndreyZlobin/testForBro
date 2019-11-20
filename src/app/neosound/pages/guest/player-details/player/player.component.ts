@@ -77,7 +77,6 @@ export class PlayerComponent implements OnDestroy, OnInit {
     this.id = makeid(10);
     this.filePeeksService.peeks.subscribe(data => {
       if (data && data.length) {
-        console.log("peeks")
         this.peekCache = data;
         this.isLoadingPeeks = false;
         this.tryInit();
@@ -85,14 +84,11 @@ export class PlayerComponent implements OnDestroy, OnInit {
     });
     this.fileInfoService.fileInfo.subscribe(data => {
       if (data && data.url && data.url.length) {
-        console.log("fileInfo")
         this.fileUrl = data.url;
         this.isLoadingInfo = false;
         this.tryInit();
       }
     });
-    this.filePeeksService.getAudioWaveForm(this.batchId, this.fileName);
-    this.fileInfoService.getInfo(this.batchId, this.fileName);
   }
   t(v) {
     return LanguageService.t(v);
@@ -100,7 +96,6 @@ export class PlayerComponent implements OnDestroy, OnInit {
 
   tryInit() {
     if (this.isLoadingInfo === false && this.isLoadingPeeks === false) {
-      console.log("tryInit")
       console.log(this.fileUrl, this.peekCache.length);
       this.init(this.fileUrl, this.peekCache);
     }
@@ -132,7 +127,6 @@ export class PlayerComponent implements OnDestroy, OnInit {
           this.setRegions(data.regions);
         }
       });
-      this.fileResultService.getResult(this.batchId, this.fileName);
     });
     this.wavesurfer.on("audioprocess", time => {
       this.playerService.setActive(time);

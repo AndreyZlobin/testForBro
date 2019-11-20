@@ -5,6 +5,9 @@ import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
 import { PlayerComponent } from "./player/player.component";
 import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
+import { FileResultService } from "./services/file-result.service";
+import { FileInfoService } from "./services/file-info.service";
+import { FilePeeksService } from "./services/file-peeks.service";
 import "rxjs/add/operator/filter";
 
 export const colors = [
@@ -36,18 +39,28 @@ export class PlayerDetailsComponent {
   constructor(
     public filterService: FilterService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public fileResultService: FileResultService,
+    public fileInfoService: FileInfoService,
+    public filePeeksService: FilePeeksService
   ) {
     router.events
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
         if (event.url.startsWith("/file/")) {
           this.currentView = null;
-          const batchid = this.route.snapshot.params["batchid"];
-          const filename = this.route.snapshot.params["filename"];
-          if (filename && batchid) {
-            this.filename = decodeURIComponent(filename);
-            this.batchid = decodeURIComponent(batchid);
+          const batchid = decodeURIComponent(
+            this.route.snapshot.params["batchid"]
+          );
+          const filename = decodeURIComponent(
+            this.route.snapshot.params["filename"]
+          );
+          if (this.filename !== filename && this.batchid !== batchid) {
+            this.filename = filename;
+            this.batchid = batchid;
+            this.fileResultService.getResult(this.batchid, this.filename);
+            this.filePeeksService.getAudioWaveForm(this.batchid, this.filename);
+            this.fileInfoService.getInfo(this.batchid, this.filename);
           }
         }
       });

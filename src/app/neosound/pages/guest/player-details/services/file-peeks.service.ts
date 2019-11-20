@@ -7,17 +7,16 @@ export class FilePeeksService {
   private batchId: string;
   private fileName: string;
   private filePeaksStore: {
-    isLoading: boolean;
     peaks: any;
   } = {
-    isLoading: true,
-    peaks: null,
+    peaks: null
   };
   private peeksSubject = new BehaviorSubject<any>({});
   public peeks = this.peeksSubject.asObservable();
 
   constructor(private filesService: FilesService) {}
   public getAudioWaveForm(batchId: string, fileName: string) {
+    this.peeksSubject.next(null);
     if (fileName && batchId) {
       this.peeksSubject.next(null);
       this.filesService
@@ -32,9 +31,6 @@ export class FilePeeksService {
             this.peeksSubject.next(this.getPeaks(meta));
           }
         });
-    } else {
-      this.filePeaksStore.isLoading = false;
-      this.peeksSubject.next(null);
     }
   }
   loadChunks(meta) {
