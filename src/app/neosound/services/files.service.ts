@@ -189,4 +189,8 @@ export class FilesService {
   getDetailsEchartData(params): Observable<any> {
     return this.http.post(`${environment.api}/getDetailsEchartData`, params);
   }
+
+  listTopics(): Observable<any> {
+    return this.http.post(`${environment.api}/listTopics`, {});
+  }
 }

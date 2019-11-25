@@ -58,7 +58,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-4 mb-3">
+    <div class="col-6 mb-3">
       <div class="card h-100">
         <div class="card-header">{{t('Processed calls')}}</div>
         <div class="card-body" *ngIf="totals">
@@ -77,15 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="col-4 mb-3">
-      <div class="card  card-block d-flex h-100">
-        <div class="card-header">{{t('Performance by agent, by calls')}}</div>
-        <div class="card-body">
-          <div echarts [options]="options2"></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-4 mb-3">
+    <div class="col-6 mb-3">
       <div class="card card-block d-flex h-100">
         <div class="card-header">{{t('Performance by agent, by %')}}</div>
         <div class="card-body">
@@ -115,7 +107,7 @@
         <div class="card card-block d-flex h-100">
           <div class="card-header">{{t('Topics')}}</div>
           <div class="card-body align-items-center d-flex justify-content-center" *ngIf="topics">
-            <angular-tag-cloud [data]="topics" width="300" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false">
+            <angular-tag-cloud [data]="topics" (clicked)="topicClicked($event)" width="300" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false">
             </angular-tag-cloud>
           </div>
         </div>
