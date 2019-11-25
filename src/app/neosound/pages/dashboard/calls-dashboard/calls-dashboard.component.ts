@@ -254,6 +254,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
         };
 
         this.totals = data.totals;
+
         this.options = {
           color: this.colors,
           backgroundColor: "#fff",
@@ -975,6 +976,11 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     this.filterService.filter.keywordsContain = [
       { display: clicked.text, value: clicked.text }
     ];
+    this.router.navigateByUrl("/user/files");
+  }
+  topicClicked(clicked: CloudData) {
+    this.analyticsService.trackEvent("user", "topicClicked");
+    this.filterService.filter.topics = clicked.text;
     this.router.navigateByUrl("/user/files");
   }
 
