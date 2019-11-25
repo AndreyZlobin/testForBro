@@ -490,7 +490,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
           yMax = v.value;
         }
       });
-      for (var i = 0; i < data.length; i++) {
+      for (var i = 0; i < sortedKeywords.length; i++) {
         dataShadow.push(yMax);
       }
       this.topicChart = {
@@ -537,7 +537,8 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
             itemStyle: {
               normal: { color: "rgba(0,0,0,0.05)" }
             },
-            barGap: "-100%",
+            barGap:'-100%',
+            barCategoryGap:'40%',
             data: dataShadow,
             animation: false
           },

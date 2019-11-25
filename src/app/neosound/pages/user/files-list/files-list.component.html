@@ -106,6 +106,21 @@
                 secondaryPlaceholder="{{t('Tags')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
                 (onBlur)="onItemAdd($event, 'tagsContain')"></tag-input>
             </div>
+            <div class="col-12 pt-3">
+              <div class="mb-2">{{t('Topics')}}</div>
+              <input type="text" class="form-control" [(ngModel)]="selectedTopic" [typeahead]="topics"
+                [typeaheadMinLength]="0" class="form-control form-control-lg" [ngModelOptions]="{standalone: true}"
+                (typeaheadOnSelect)="onSelectTopic($event)">
+            </div>
+            <div class="col-12 pt-3" *ngIf="selectedTopics">
+              <ul class="list-group pl-0">
+                <li class="list-group-item d-flex justify-content-between align-items-center w-100"
+                  *ngFor="let topic of selectedTopics">{{topic}}<button type="button" class="close ml-2"
+                    (click)="onRemoveTopic(topic)">
+                    <span aria-hidden="true">&times;</span>
+                  </button></li>
+              </ul>
+            </div>
             <div class="col-12">
               <div class="my-2">{{t('Sentiment trend')}}</div>
               <div ngbDropdown class="ghost-dropdown dropdown w-100">

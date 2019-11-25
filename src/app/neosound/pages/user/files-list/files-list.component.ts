@@ -66,6 +66,9 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   modalRef: BsModalRef;
   editedFileItem;
   currentTagEditIndex;
+  topics: string[] = [];
+  selectedTopics: string[] = [];
+  selectedTopic: string = "";
 
   constructor(
     private filesService: FilesService,
@@ -78,6 +81,14 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.filterService.updateFileList();
+    this.filesService.listTopics().subscribe((data) => {
+      if(data && data.topics) {
+        this.topics = data.topics;
+      }
+      if(this.filterService.filter.topics) {
+        this.selectedTopics = this.filterService.filter.topics.split(",");
+      }
+    });
   }
   ngAfterViewInit() {
   }
@@ -207,6 +218,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   resetFilter() {
     this.filterService.resetFilter();
+    this.selectedTopics = [];
   }
 
   exportCSV() {
@@ -374,5 +386,20 @@ export class FilesListComponent implements OnInit, AfterViewInit {
         return `${minutes}:${formatedSeconds}`;
       }
     }
+  }
+
+  onSelectTopic(event: any) {
+    this.selectedTopic = '';
+    const deduplicate = new Set([
+      ...this.selectedTopics,
+      event.value
+    ]);
+    this.selectedTopics = Array.from(deduplicate);
+    this.filterService.filter.topics = this.selectedTopics.join(",");
+  }
+
+  onRemoveTopic(topic: string) {
+    this.selectedTopics = this.selectedTopics.filter((t) => t !== topic);
+    this.filterService.filter.topics = this.selectedTopics.join(",");
   }
 }
