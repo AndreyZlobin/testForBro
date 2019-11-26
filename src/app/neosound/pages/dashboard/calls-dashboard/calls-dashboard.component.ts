@@ -78,6 +78,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   public loading = true;
   public sentimentData;
   public sentimentTreeRadialData;
+  public avgSentimentsByBatches;
   hasSankey = false;
   sankey1: any;
   sankey2: any;
@@ -280,7 +281,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
               formatter: "{value}"
             },
             min: 0,
-            max: Math.ceil(maxX / maxR * 140)
+            max: Math.ceil((maxX / maxR) * 140)
           },
           yAxis: {
             splitLine: {
@@ -298,7 +299,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
               formatter: "{value}"
             },
             min: 0,
-            max: Math.ceil(maxY / maxR * 140)
+            max: Math.ceil((maxY / maxR) * 140)
           },
           tooltip: {
             show: true,
@@ -394,8 +395,22 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
       } else {
         this.hasData = false;
       }
+      if (data) {
+        this.avgSentimentsByBatches = Object.keys(data.batches).map(
+          (batch, index) => {
+            return {
+              name: batch,
+              Negative: data.batches[batch].sentimentAvg.Negative,
+              Neutral: data.batches[batch].sentimentAvg.Neutral,
+              Positive: data.batches[batch].sentimentAvg.Positive,
+              notAvalable: data.batches[batch].sentimentAvg["n/a"]
+            };
+          }
+        );
+      }
     });
   }
+
   getTagClowd(param: any = {}) {
     this.filesService.getTagClowd(param).subscribe(data => {
       this.keywords = Object.keys(data.keywords).map(key => {
@@ -537,8 +552,8 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
             itemStyle: {
               normal: { color: "rgba(0,0,0,0.05)" }
             },
-            barGap:'-100%',
-            barCategoryGap:'40%',
+            barGap: "-100%",
+            barCategoryGap: "40%",
             data: dataShadow,
             animation: false
           },
@@ -549,7 +564,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
             label: {
               normal: {
                 position: "right",
-                show: false,
+                show: false
               }
             }
           }
