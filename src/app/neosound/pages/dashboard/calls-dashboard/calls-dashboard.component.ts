@@ -398,7 +398,6 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
       if (data) {
         this.avgSentimentsByBatches = Object.keys(data.batches).map(
           (batch, index) => {
-            debugger
             return {
               name: batch,
               Negative: data.batches[batch].sentimentAvg.Negative,
