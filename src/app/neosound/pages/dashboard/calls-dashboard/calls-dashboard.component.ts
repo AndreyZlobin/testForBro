@@ -400,10 +400,10 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
           (batch, index) => {
             return {
               name: batch,
-              Negative: data.batches[batch].sentimentAvg.Negative,
-              Neutral: data.batches[batch].sentimentAvg.Neutral,
-              Positive: data.batches[batch].sentimentAvg.Positive,
-              notAvalable: data.batches[batch].sentimentAvg["n/a"]
+              Negative: data.batches[batch].sentimentCount.Negative,
+              Neutral: data.batches[batch].sentimentCount.Neutral,
+              Positive: data.batches[batch].sentimentCount.Positive,
+              notAvalable: data.batches[batch].sentimentCount["n/a"]
             };
           }
         );
