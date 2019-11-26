@@ -254,7 +254,6 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
         };
 
         this.totals = data.totals;
-
         this.options = {
           color: this.colors,
           backgroundColor: "#fff",
@@ -281,7 +280,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
               formatter: "{value}"
             },
             min: 0,
-            max: 140
+            max: Math.ceil(maxX / maxR * 140)
           },
           yAxis: {
             splitLine: {
@@ -299,7 +298,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
               formatter: "{value}"
             },
             min: 0,
-            max: 40
+            max: Math.ceil(maxY / maxR * 140)
           },
           tooltip: {
             show: true,

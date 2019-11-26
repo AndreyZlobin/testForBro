@@ -128,6 +128,9 @@
                   id="dropdownBasic1"
                   ngbDropdownToggle>{{t(filterService.filter.sentimentTrend ? filterService.filter.sentimentTrend : "Select trend")}}</button>
                 <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend(null)">
+                    No trend
+                  </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Negative')">
                     <i class="far fa-angry text-danger" tooltip="Negative"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
