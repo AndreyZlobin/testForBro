@@ -10,7 +10,7 @@ import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { TooltipModule } from "ngx-bootstrap/tooltip";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { TypeaheadModule } from "ngx-bootstrap/typeahead";
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { ThemeModule } from "./@theme/theme.module";
@@ -213,7 +213,8 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     ToastrModule.forRoot(),
     NgDatepickerModule,
     NgxPaginationModule,
-    TagInputModule
+    TagInputModule,
+    BsDatepickerModule.forRoot(),
   ],
   bootstrap: [AppComponent],
   providers: [
