@@ -104,6 +104,7 @@ export class DashboardComponent implements OnInit {
     this.listCallsBatches();
     this.listTextBatches();
   }
+
   listCallsBatches() {
     this.filesService.listBatches().subscribe(data => {
       if (data && data.batches) {
