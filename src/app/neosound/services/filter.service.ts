@@ -14,8 +14,7 @@ export class FilterService {
   public isLoading: boolean = false;
   public label: string = "";
   public filter: {
-    datefrom;
-    dateto;
+    uploadDate;
     angerfrom;
     angerto;
     keywordsContain: any;
@@ -49,8 +48,7 @@ export class FilterService {
     sentimentTrend: string;
     topics: string;
   } = {
-    datefrom: null,
-    dateto: null,
+    uploadDate: null,
     angerfrom: null,
     angerto: null,
     keywordsContain: null,
@@ -92,8 +90,8 @@ export class FilterService {
       pagen: `${this.filter.pagen}`,
       batchid: (this.filter.batchid && "" + this.filter.batchid) || "",
       filename: this.filter.filename,
-      datetimefrom: this.filter.datefrom || "",
-      datetimeto: this.filter.dateto || "",
+      datetimefrom: this.filter.uploadDate && this.filter.uploadDate[0] || "",
+      datetimeto: this.filter.uploadDate && this.filter.uploadDate[1] || "",
       angervolfrom:
         this.filter.angerfrom == null ? "" : this.filter.angerfrom + "",
       angervolto:
@@ -258,8 +256,7 @@ export class FilterService {
   }
   public resetFilter() {
     this.filter = {
-      datefrom: null,
-      dateto: null,
+      uploadDate: null,
       angerfrom: null,
       angerto: null,
       keywordsContain: [],

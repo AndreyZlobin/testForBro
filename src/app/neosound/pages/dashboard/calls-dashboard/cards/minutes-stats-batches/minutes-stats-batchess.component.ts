@@ -1,63 +1,63 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { LanguageService } from '../../../services/language.service';
+import {
+  Component,
+  Input,
+  OnInit,
+  SimpleChanges,
+  OnDestroy
+} from "@angular/core";
+import { LanguageService } from "../../../../../services/language.service";
+import { MinutesStatsService } from "../../services/minutes-stats.service";
+import { DataService } from "../../../../../shared";
 
 @Component({
-  selector: 'ngx-total-minutes-plus-batches-chart-bar',
-  templateUrl: './total-minutes-plus-batches-chart-bar.component.html',
-  styleUrls: ['./total-minutes-plus-batches-chart-bar.component.scss']
+  selector: "ngx-minutes-stats-batches",
+  templateUrl: "./minutes-stats-batches.component.html"
 })
-export class TotalMinutesPlusBatchesChartBarComponent implements OnInit {
-
-  option8: any = {};
-  echartsInstance8;
-
-  isLoading = true;
-  fileStatLoaded = false;
-  minutesStatLoaded = false;
-  apiStatLoaded = false;
-
-  fileStat: any = {};
-  minutesStat: any = {};
-  apiStat: any = {};
-
-  config = {};
-  colors = ['#c12e34', '#0098d9', '#e6b600', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487']; //shine
-
-  @Input() set minutesStatData(data) {
-    this.minutesStat = data;
-    this.minutesStatLoaded = true;
-    this.init();
+export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
+  stats: any = 0;
+  dataSub1: any;
+  hasData: boolean = false;
+  public zoomOptions = {
+    scale: 1.3,
+    transitionTime: 1.2,
+    delay: 0.1
+  };
+  constructor(
+    private dataService: MinutesStatsService,
+    private userData: DataService
+  ) {
+    this.dataSub1 = this.dataService.data.subscribe(data => {
+      if (data) {
+        this.init(data);
+        this.hasData = true;
+      } else {
+        this.hasData = false;
+      }
+    });
   }
-  @Input() set colorsData(data) {
-    this.colors = data;
-    this.init();
-  }
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  init() {
-    if (!this.minutesStatLoaded) {
-      return;
+  ngOnInit() {}
+  ngOnDestroy() {
+    if (this.dataSub1) {
+      this.dataSub1.unsubscribe();
     }
-    this.isLoading = false;
-    this.initChart();
   }
-
-  initChart() {
-    this.setTotalMinutesBatches();
-  }
-
   t(v) {
     return LanguageService.t(v);
   }
-
-  setTotalMinutesBatches() {
+  private colors = [
+    "#c12e34",
+    "#0098d9",
+    "#e6b600",
+    "#2b821d",
+    "#005eaa",
+    "#339ca8",
+    "#cda819",
+    "#32a487"
+  ];
+  init(data) {
     const maxrows = 6;
-    let rawdata = this.minutesStat.totals && this.minutesStat.totals.batchesdurdata || [];
-    const rawbatches = this.minutesStat.totals && this.minutesStat.totals.batchesnames || [];
+    let rawdata = data.totals && data.totals.batchesdurdata || [];
+    const rawbatches = data.totals && data.totals.batchesnames || [];
     let sortedbatches = [];
 
     if (rawbatches.length > maxrows) {
@@ -71,7 +71,7 @@ export class TotalMinutesPlusBatchesChartBarComponent implements OnInit {
       sortedbatches = rawbatches;
     }
 
-    const legendData = this.minutesStat.totals && this.minutesStat.totals.legenddata || [];
+    const legendData = data.totals && data.totals.legenddata || [];
     const y_data = sortedbatches;
     const _data = rawdata;
     // const minX = Math.min(..._data[0]) < 1 ? -0.5 : 0;
@@ -83,9 +83,9 @@ export class TotalMinutesPlusBatchesChartBarComponent implements OnInit {
     // const total_data = _data.map(x => Math.round(x.reduce((a, b) => a + b, 0) * 100) / 100);
 
     const total_data = [
-      this.minutesStat.totals && this.minutesStat.totals.angerdur,
-      this.minutesStat.totals && this.minutesStat.totals.calmdur,
-      this.minutesStat.totals && this.minutesStat.totals.silentdur
+      data.totals && data.totals.angerdur,
+      data.totals && data.totals.calmdur,
+      data.totals && data.totals.silentdur
     ];
     const ylabel = function(v) {
       return (v.value/Math.max(...total_data) < 0.05) ? '' : v.value
@@ -148,7 +148,7 @@ export class TotalMinutesPlusBatchesChartBarComponent implements OnInit {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: this.minutesStat.totals && this.minutesStat.totals.legenddata[0],
+        name: data.totals && data.totals.legenddata[0],
         type: 'bar',
         stack: 'stack',
         barWidth: 30,
@@ -158,7 +158,7 @@ export class TotalMinutesPlusBatchesChartBarComponent implements OnInit {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: this.minutesStat.totals && this.minutesStat.totals.legenddata[1],
+        name: data.totals && data.totals.legenddata[1],
         type: 'bar',
         stack: 'stack',
         barWidth: 30,
@@ -168,7 +168,7 @@ export class TotalMinutesPlusBatchesChartBarComponent implements OnInit {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: this.minutesStat.totals && this.minutesStat.totals.legenddata[2],
+        name: data.totals && data.totals.legenddata[2],
         type: 'bar',
         stack: 'stack',
         barWidth: 30,
@@ -177,7 +177,7 @@ export class TotalMinutesPlusBatchesChartBarComponent implements OnInit {
       }
     ];
 
-    this.option8 = {
+    this.stats = {
       color: ['#c12e34', '#e6b600', '#0098d9'],
       // color: [this.colors[0], this.colors[6], this.colors[1]],
       //   backgroundColor: '#ffffff',
@@ -274,9 +274,4 @@ export class TotalMinutesPlusBatchesChartBarComponent implements OnInit {
       series: series,
     };
   }
-
-  onChartInit8(ec) {
-    this.echartsInstance8 = ec;
-  }
-
 }

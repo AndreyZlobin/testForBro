@@ -1,0 +1,20 @@
+<div class="card h-100">
+  <div class="card-header">{{t('Processed calls')}}</div>
+  <div class="card-body" *ngIf="hasData; else loading">
+    <div class="title">{{t('Calls')}}</div>
+    <div class="value">{{ allcallscount }}</div>
+    <nb-progress-bar [value]="100"></nb-progress-bar>
+    <div class="description">{{t('Total number of calls')}}</div>
+    <div class="title mt-4">{{t('Emotional calls')}}</div>
+    <div class="value">{{ angercallscount }}</div>
+    <nb-progress-bar [value]="(angercallscount / allcallscount) * 100"></nb-progress-bar>
+    <div class="description">{{t('Number of calls with the emotion level above a threshold')}}</div>
+    <div class="title mt-4">{{t('Silent calls')}}</div>
+    <div class="value">{{ silentcallscount }}</div>
+    <nb-progress-bar [value]="(silentcallscount / allcallscount) * 100"></nb-progress-bar>
+    <div class="description">{{t('Number of calls with the average pause longer than a threshold')}}</div>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="card-body d-flex h-100">loading...</div>
+</ng-template>

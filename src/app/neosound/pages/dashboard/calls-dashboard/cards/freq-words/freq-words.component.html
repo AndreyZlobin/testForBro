@@ -1,0 +1,14 @@
+<div class="card card-block d-flex h-100">
+  <div class="card-header">{{t('Stopwords')}}</div>
+  <div class="card-body" *ngIf="hasData; else loading">
+    <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
+      <li class="list-group-item d-flex" *ngFor="let freqWord of freqWords" style="color: #211b19">
+        <span>{{freqWord.name}}</span>
+        <span class="ml-auto">{{freqWord.value}}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="card-body d-flex h-100">loading...</div>
+</ng-template>
