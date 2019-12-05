@@ -7,13 +7,13 @@
     <ngx-performance-by-agent></ngx-performance-by-agent>
   </div>
   <div class="col-6 mb-3">
-    <ngx-stopwords></ngx-stopwords>
+    <ngx-stopwords (onClick)="keywordClicked($event)"></ngx-stopwords>
   </div>
   <div class="col-6 mb-3">
     <ngx-hits-stopwords></ngx-hits-stopwords>
   </div>
   <div class="col-6 mb-3">
-    <ngx-topics></ngx-topics>
+    <ngx-topics (onClick)="topicClicked($event)"></ngx-topics>
   </div>
   <div class="col-6 mb-3">
     <ngx-hits-topics></ngx-hits-topics>
@@ -28,7 +28,10 @@
     <ngx-calls-by-day></ngx-calls-by-day>
   </div>
   <div class="col-6 mb-3">
-    <ngx-popular-words></ngx-popular-words>
+    <ngx-number-of-calls></ngx-number-of-calls>
+  </div>
+  <div class="col-6 mb-3">
+    <ngx-popular-words (onClick)="keywordClicked($event)"></ngx-popular-words>
   </div>
   <div class="col-6 mb-3">
     <ngx-freq-words></ngx-freq-words>

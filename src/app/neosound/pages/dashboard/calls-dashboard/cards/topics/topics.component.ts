@@ -1,9 +1,9 @@
 
 import {
   Component,
-  Input,
   OnInit,
-  SimpleChanges,
+  EventEmitter,
+  Output,
   OnDestroy
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
@@ -15,6 +15,7 @@ import { DataService } from "../../../../../shared";
   templateUrl: "./topics.component.html"
 })
 export class TopicComponent implements OnInit, OnDestroy {
+  @Output() onClick = new EventEmitter<string>();
   topics: any = 0;
   dataSub1: any;
   hasData: boolean = false;
@@ -55,5 +56,8 @@ export class TopicComponent implements OnInit, OnDestroy {
   }
   t(v) {
     return LanguageService.t(v);
+  }
+  clicked(clicked: any) {
+    this.onClick.emit(clicked.text);
   }
 }

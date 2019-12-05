@@ -21,8 +21,10 @@ import { LoginComponent } from "./neosound/pages/auth/login/login.component";
 import { DashboardComponent } from "./neosound/pages/dashboard/dashboard.component";
 import { StopwordsComponent } from "./neosound/pages/dashboard/details/stopwords/stopwords.component";
 
+import { CardSpinnerComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/card-spinner/card-spinner.component";
 import { CallsDashboardComponent } from "./neosound/pages/dashboard/calls-dashboard/calls-dashboard.component";
 import { InfoBarComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/info-bar/info-bar.component";
+import { NumberOfCallsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/number-of-calls/number-of-calls.component";
 import { ProcessedCallsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/processed-calls/processed-calls.component";
 import { PerformanceByAgentComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/performance-by-agent/performance-by-agent.component";
 import { StopWordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/stopwords/stopwords.component";
@@ -221,6 +223,8 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     CallsDashboardComponent,
     StopWordsComponent,
     InfoBarComponent,
+    CardSpinnerComponent,
+    NumberOfCallsComponent,
     PerformanceByAgentComponent,
     ProcessedCallsComponent,
     TextsDashboardComponent,

@@ -1,9 +1,9 @@
 import {
   Component,
-  Input,
   OnInit,
-  SimpleChanges,
-  OnDestroy
+  OnDestroy,
+  EventEmitter,
+  Output,
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { ChartDataService } from "../../services/chart-data.service";
@@ -14,6 +14,7 @@ import { DataService } from "../../../../../shared";
   templateUrl: "./popular-words.component.html"
 })
 export class PopularWordsComponent implements OnInit, OnDestroy {
+  @Output() onClick = new EventEmitter<string>();
   words: any = 0;
   dataSub1: any;
   hasData: boolean = false;
@@ -44,5 +45,8 @@ export class PopularWordsComponent implements OnInit, OnDestroy {
   }
   t(v) {
     return LanguageService.t(v);
+  }
+  clicked(clicked: any) {
+    this.onClick.emit(clicked.text);
   }
 }

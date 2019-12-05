@@ -1,8 +1,8 @@
 import {
   Component,
-  Input,
   OnInit,
-  SimpleChanges,
+  EventEmitter,
+  Output,
   OnDestroy
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
@@ -14,6 +14,7 @@ import { DataService } from "../../../../../shared";
   templateUrl: "./stopwords.component.html"
 })
 export class StopWordsComponent implements OnInit, OnDestroy {
+  @Output() onClick = new EventEmitter<string>();
   keywords: any = 0;
   dataSub1: any;
   hasData: boolean = false;
@@ -67,5 +68,8 @@ export class StopWordsComponent implements OnInit, OnDestroy {
       "#32a487"
     ];
     return colors[i];
+  }
+  clicked(clicked: any) {
+    this.onClick.emit(clicked.text);
   }
 }

@@ -101,16 +101,16 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     this.tagCloudService.load(source, dateFrom, dateTo, batches);
     this.topicCloudService.load(source, dateFrom, dateTo, batches);
   }
-  keywordClicked(clicked: CloudData) {
+  keywordClicked(clicked: string) {
     this.analyticsService.trackEvent("user", "keywordClicked");
     this.filterService.filter.keywordsContain = [
-      { display: clicked.text, value: clicked.text }
+      { display: clicked, value: clicked }
     ];
     this.router.navigateByUrl("/user/files");
   }
-  topicClicked(clicked: CloudData) {
+  topicClicked(clicked: string) {
     this.analyticsService.trackEvent("user", "topicClicked");
-    this.filterService.filter.topics = clicked.text;
+    this.filterService.filter.topics = clicked;
     this.router.navigateByUrl("/user/files");
   }
 
