@@ -1,57 +1,57 @@
-<ngx-info-bar></ngx-info-bar>
+<ngx-info-bar *ngIf="settings['welcome'].show"></ngx-info-bar>
 <div class="row">
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['processedCalls'].show">
     <ngx-processed-calls></ngx-processed-calls>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['performanceByAgent'].show">
     <ngx-performance-by-agent></ngx-performance-by-agent>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['stopwordsTagCloud'].show">
     <ngx-stopwords (onClick)="keywordClicked($event)"></ngx-stopwords>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['hitVsStopword'].show">
     <ngx-hits-stopwords></ngx-hits-stopwords>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['topicsTagCloud'].show">
     <ngx-topics (onClick)="topicClicked($event)"></ngx-topics>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['hitVsTopics'].show">
     <ngx-hits-topics></ngx-hits-topics>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['totalMinutesByBatches'].show">
     <ngx-minutes-stats-batches></ngx-minutes-stats-batches>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['totalMinutesByDay'].show">
     <ngx-minutes-stats-minutes></ngx-minutes-stats-minutes>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['nCallsByDay'].show">
     <ngx-calls-by-day></ngx-calls-by-day>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['nCallsByTopBatches'].show">
     <ngx-number-of-calls></ngx-number-of-calls>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['popularWordsTagCloud'].show">
     <ngx-popular-words (onClick)="keywordClicked($event)"></ngx-popular-words>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['hitVsPopularWord'].show">
     <ngx-freq-words></ngx-freq-words>
   </div>
-  <div class="col-12 mb-3">
+  <div class="col-12 mb-3"  *ngIf="settings['sentimentRadial'].show">
     <ngx-average-sentiments></ngx-average-sentiments>
   </div>
-  <div class="col-12 mb-3">
+  <div class="col-12 mb-3"  *ngIf="settings['sentimentSankey'].show">
     <ngx-sentimental-sankey></ngx-sentimental-sankey>
   </div>
-  <div class="col-12 mb-3">
+  <div class="col-12 mb-3" *ngIf="settings['sentimentRadial'].show">
     <ngx-sentiment-tree></ngx-sentiment-tree>
   </div>
-  <div class="col-12 mb-3">
+  <div class="col-12 mb-3"  *ngIf="settings['keywordsPhrasesRadial'].show">
     <ngx-keywords-phrases></ngx-keywords-phrases>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['welcome'].show">
     <ngx-upload-instructions></ngx-upload-instructions>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['totalByQueries'].show">
     <ngx-queries-chart></ngx-queries-chart>
   </div>
 </div>

@@ -61,6 +61,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   @Input() dateFrom: string;
   @Input() dateTo: string;
   @Input() batches: string[];
+  settings: any = {};
   constructor(
     private router: Router,
     private analyticsService: AnalyticsService,
@@ -73,6 +74,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     private tagCloudService: TagCloudService,
     private topicCloudService: TopicCloudService
   ) {
+    this.settings = JSON.parse(localStorage.getItem("settings")).dashboardcards;
   }
 
   ngOnInit() {}
