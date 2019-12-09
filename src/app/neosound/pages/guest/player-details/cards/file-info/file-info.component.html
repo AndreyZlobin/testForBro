@@ -18,17 +18,17 @@
     </div>
   </div>
   <div class="d-flex flex-column  justify-content-between align-self-scratch px-4" style="width: 20%;">
-    <div class="d-flex flex-row justify-content-end align-items-center">
-      <span class="badge badge-secondary mr-1" *ngFor="let tag of file.tags">{{tag}}</span>
-      <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, file)"
-        tooltip="{{t('Edit tags')}}">
-        <i class="fa fa-pencil-alt"></i>
-      </button>
-    </div>
     <div class="mt-1" *ngIf="file.topic">
       <i class="fas fa-quote-left mr-1"></i>{{file.topic.topic}}<span
         class="font-weight-bold ml-1">{{file.topic.confidence}} %</span>
     </div>
+    <div class="d-flex flex-row justify-content-end align-items-center">
+        <span class="badge badge-secondary mr-1" *ngFor="let tag of file.tags">{{tag}}</span>
+        <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, file)"
+          tooltip="{{t('Edit tags')}}">
+          <i class="fa fa-pencil-alt"></i>
+        </button>
+      </div>
   </div>
   <div class="d-flex flex-row justify-content-start" style="width: 10%;">
     <div class="pr-4" style="font-size: xx-small;">

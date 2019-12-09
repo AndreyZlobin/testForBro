@@ -78,6 +78,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   public loading = true;
   public sentimentData;
   public sentimentTreeRadialData;
+  public avgSentimentsByBatches;
   hasSankey = false;
   sankey1: any;
   sankey2: any;
@@ -280,7 +281,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
               formatter: "{value}"
             },
             min: 0,
-            max: 140
+            max: Math.ceil((maxX / maxR) * 140)
           },
           yAxis: {
             splitLine: {
@@ -298,7 +299,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
               formatter: "{value}"
             },
             min: 0,
-            max: 40
+            max: Math.ceil((maxY / maxR) * 140)
           },
           tooltip: {
             show: true,
@@ -394,8 +395,22 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
       } else {
         this.hasData = false;
       }
+      if (data) {
+        this.avgSentimentsByBatches = Object.keys(data.batches).map(
+          (batch, index) => {
+            return {
+              name: batch,
+              Negative: data.batches[batch].sentimentCount.Negative,
+              Neutral: data.batches[batch].sentimentCount.Neutral,
+              Positive: data.batches[batch].sentimentCount.Positive,
+              notAvalable: data.batches[batch].sentimentCount["n/a"]
+            };
+          }
+        );
+      }
     });
   }
+
   getTagClowd(param: any = {}) {
     this.filesService.getTagClowd(param).subscribe(data => {
       this.keywords = Object.keys(data.keywords).map(key => {
@@ -490,7 +505,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
           yMax = v.value;
         }
       });
-      for (var i = 0; i < data.length; i++) {
+      for (var i = 0; i < sortedKeywords.length; i++) {
         dataShadow.push(yMax);
       }
       this.topicChart = {
@@ -538,6 +553,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
               normal: { color: "rgba(0,0,0,0.05)" }
             },
             barGap: "-100%",
+            barCategoryGap: "40%",
             data: dataShadow,
             animation: false
           },
@@ -548,7 +564,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
             label: {
               normal: {
                 position: "right",
-                show: false,
+                show: false
               }
             }
           }
@@ -974,6 +990,11 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     this.filterService.filter.keywordsContain = [
       { display: clicked.text, value: clicked.text }
     ];
+    this.router.navigateByUrl("/user/files");
+  }
+  topicClicked(clicked: CloudData) {
+    this.analyticsService.trackEvent("user", "topicClicked");
+    this.filterService.filter.topics = clicked.text;
     this.router.navigateByUrl("/user/files");
   }
 

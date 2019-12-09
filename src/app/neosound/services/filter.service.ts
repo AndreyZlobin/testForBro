@@ -47,6 +47,7 @@ export class FilterService {
     sortby: string;
     sortorder: string;
     sentimentTrend: string;
+    topics: string;
   } = {
     datefrom: null,
     dateto: null,
@@ -80,7 +81,8 @@ export class FilterService {
     itemsn: 100,
     pagen: 1,
     sortby: "",
-    sortorder: ""
+    sortorder: "",
+    topics: "",
   };
   constructor(private filesService: FilesService) {}
 
@@ -146,6 +148,9 @@ export class FilterService {
     }
     if (this.filter.sentimentTrend) {
       params["sentimentTrend"] = this.filter.sentimentTrend;
+    }
+    if (this.filter.topics) {
+      params["topicsContain"] = this.filter.topics;
     }
     if (
       this.filter.keywordsNotContain &&
@@ -285,7 +290,9 @@ export class FilterService {
       itemsn: 100,
       pagen: 1,
       sortby: "",
-      sortorder: ""
+      sortorder: "",
+      topics: "",
+
     };
     this.updateFileList();
   }

@@ -37,7 +37,8 @@
           <div class="col-12 py-3">
             <div class="mb-2">{{t('Batch name')}}</div>
             <input type="text" class="form-control" [(ngModel)]="selectedBatchId" [typeahead]="batches"
-              [typeaheadMinLength]="0" class="form-control form-control-lg" [ngModelOptions]="{standalone: true}">
+              [typeaheadMinLength]="0" class="form-control form-control-lg" [ngModelOptions]="{standalone: true}"
+              >
           </div>
         </div>
         <div class="alert alert-info">{{t('Maximum file size: 200 MB')}}</div>

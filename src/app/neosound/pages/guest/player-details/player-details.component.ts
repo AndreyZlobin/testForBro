@@ -86,4 +86,8 @@ export class PlayerDetailsComponent {
   t(v) {
     return LanguageService.t(v);
   }
+
+  public goToRegion(time: any) {
+    this.player && this.player.seekTo(time);
+  }
 }

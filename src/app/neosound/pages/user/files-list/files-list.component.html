@@ -106,6 +106,21 @@
                 secondaryPlaceholder="{{t('Tags')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
                 (onBlur)="onItemAdd($event, 'tagsContain')"></tag-input>
             </div>
+            <div class="col-12 pt-3">
+              <div class="mb-2">{{t('Topics')}}</div>
+              <input type="text" class="form-control" [(ngModel)]="selectedTopic" [typeahead]="topics"
+                [typeaheadMinLength]="0" class="form-control form-control-lg" [ngModelOptions]="{standalone: true}"
+                (typeaheadOnSelect)="onSelectTopic($event)">
+            </div>
+            <div class="col-12 pt-3" *ngIf="selectedTopics">
+              <ul class="list-group pl-0">
+                <li class="list-group-item d-flex justify-content-between align-items-center w-100"
+                  *ngFor="let topic of selectedTopics">{{topic}}<button type="button" class="close ml-2"
+                    (click)="onRemoveTopic(topic)">
+                    <span aria-hidden="true">&times;</span>
+                  </button></li>
+              </ul>
+            </div>
             <div class="col-12">
               <div class="my-2">{{t('Sentiment trend')}}</div>
               <div ngbDropdown class="ghost-dropdown dropdown w-100">
@@ -113,49 +128,52 @@
                   id="dropdownBasic1"
                   ngbDropdownToggle>{{t(filterService.filter.sentimentTrend ? filterService.filter.sentimentTrend : "Select trend")}}</button>
                 <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend(null)">
+                    No trend
+                  </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Negative')">
-                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="far fa-angry text-danger" ></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="far fa-angry text-danger"></i>
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Neutral')">
-                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="far fa-angry text-danger" ></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="far fa-meh text-info" ></i>
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Positive')">
-                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="far fa-angry text-danger"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="far fa-grin text-success"></i>
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Negative')">
-                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="far fa-meh text-info"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="far fa-angry text-danger" ></i>
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Neutral')">
-                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="far fa-meh text-info"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="far fa-meh text-info"></i>
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Positive')">
-                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="far fa-meh text-info"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-grin text-success" tooltip="Positive"></i></li>
+                    <i class="far fa-grin text-success"></i></li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Positive-Negative')">
-                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="far fa-grin text-success"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-angry text-danger" tooltip="Negative"></i>
+                    <i class="far fa-angry text-danger"></i>
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Positive-Neutral')">
-                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="far fa-grin text-success"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-meh text-info" tooltip="Neutral"></i>
+                    <i class="far fa-meh text-info"></i>
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Positive-Positive')">
-                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="far fa-grin text-success"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-grin text-success" tooltip="Positive"></i>
+                    <i class="far fa-grin text-success"></i>
                   </li>
                 </ul>
               </div>
