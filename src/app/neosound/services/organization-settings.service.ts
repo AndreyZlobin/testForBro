@@ -19,6 +19,11 @@ export class OrganizationSettingsService {
     return this.http.post(`${environment.api}/getRedoKeywordsStatus`, params);
   }
 
+  getRedoReductAudioStatus(): Observable<any> {
+    const params = {};
+    return this.http.post(`${environment.api}/getRedoReductAudioStatus`, params);
+  }
+
   updateSettings(nameSpace: string, settings: any): Observable<any> {
     const params = {
       settings: {}
@@ -36,5 +41,8 @@ export class OrganizationSettingsService {
 
   launchRedo() {
     return this.http.post(`${environment.api}/redoKeywords`, {});
+  }
+  launchRedoReductAudio () {
+    return this.http.post(`${environment.api}/redoReductAudio`, {});
   }
 }

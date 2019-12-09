@@ -22,7 +22,9 @@ export class OrganizationSettingsComponent implements OnInit {
   public unsavedLabel: string = "";
   public hasUnsaved: boolean = false;
   public showMessage: boolean = false;
+  public audioShowMessage: boolean = false;
   public postDate: any;
+  public audioPostDate: any;
   constructor(
     private organizationSettingsService: OrganizationSettingsService,
     private toastrService: ToastrService
@@ -56,6 +58,15 @@ export class OrganizationSettingsComponent implements OnInit {
         this.postDate = "";
       }
     });
+    this.organizationSettingsService.getRedoReductAudioStatus().subscribe(res => {
+      if (res && res.data && res.data.postDate) {
+        this.audioShowMessage = true;
+        this.audioPostDate = res.data.postDate;
+      } else {
+        this.audioShowMessage = false;
+        this.audioPostDate = "";
+      }
+    });
   }
   changeTab() {
     this.checkStatus();
@@ -72,6 +83,20 @@ export class OrganizationSettingsComponent implements OnInit {
       }
     });
   }
+
+  public launchRedoReductAudio(): void {
+    this.organizationSettingsService.launchRedoReductAudio().subscribe((res: any) => {
+      if (res && res.error) {
+        this.toastrService.error(res.error.message, res.error.code);
+        this.checkStatus();
+      } else {
+        this.audioShowMessage = true;
+        this.audioPostDate = Date.now().toString();
+        this.checkStatus();
+      }
+    });
+  }
+
 
   onChange($event) {
     this.hasUnsaved = $event.changed;
