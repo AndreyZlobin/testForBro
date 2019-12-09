@@ -53,6 +53,8 @@ export class UsersService {
       const helper = new JwtHelperService();
       const token = helper.decodeToken(user.token);
       token && localStorage.setItem('apikey', JSON.stringify(token.apikey));
+      const { settings } = user;
+      settings && localStorage.setItem('settings', JSON.stringify(settings));
       setTimeout(() => {
         localStorage.removeItem('apikey');
         localStorage.removeItem('user');

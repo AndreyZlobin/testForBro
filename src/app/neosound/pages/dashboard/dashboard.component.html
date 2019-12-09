@@ -47,11 +47,8 @@
       <div class="col-12 py-3">
         <div class="mb-2">{{t('Date range')}}</div>
         <div class="input-group">
-          <ng-datepicker [(ngModel)]="dateFromModel" [options]="datePickerFromOptions"
-            class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
-          </ng-datepicker>
-          <ng-datepicker [(ngModel)]="dateToModel" [options]="datePickerToOptions"
-            class="form-control-bak form-control-lg-bak form-gr-last"></ng-datepicker>
+            <input bsDaterangepicker [(ngModel)]="dateModel" [ngModelOptions]="{standalone: true}" type="text" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+            placeholder="">
         </div>
       </div>
     </div>

@@ -87,8 +87,7 @@ export class DashboardComponent implements OnInit {
   public selectedBatches: string[] = [];
   public dateFrom: any;
   public dateTo: any;
-  public dateFromModel: any;
-  public dateToModel: any;
+  public dateModel: any = [];
   public loading: boolean = true;
   constructor(
     private router: Router,
@@ -104,6 +103,7 @@ export class DashboardComponent implements OnInit {
     this.listCallsBatches();
     this.listTextBatches();
   }
+
   listCallsBatches() {
     this.filesService.listBatches().subscribe(data => {
       if (data && data.batches) {
@@ -130,16 +130,21 @@ export class DashboardComponent implements OnInit {
     if(this.selectedBatches) {
       this.batches = this.selectedBatches;
     }
-    if (this.dateFromModel) {
-      this.dateFrom = moment(this.dateFromModel).format("YYYY-MM-DD");
+    if (this.dateModel && this.dateModel[0]) {
+      this.dateFrom = moment(this.dateModel[0]).format("YYYY-MM-DD");
     }
-    if (this.dateToModel) {
-      this.dateTo = moment(this.dateToModel).format("YYYY-MM-DD");
+    if (this.dateModel && this.dateModel[1]) {
+      this.dateTo = moment(this.dateModel[1]).format("YYYY-MM-DD");
     }
     setTimeout(() => {
       this.loading = false;
     }, 10);
   }
+  reset() {
+    this.batches = [];
+    this.dateModel = null;
+  }
+
   t(v) {
     return LanguageService.t(v);
   }
@@ -158,9 +163,14 @@ export class DashboardComponent implements OnInit {
       this.modalRef.hide();
     }
   }
-  clearDates() {
-    this.dateToModel = undefined;
-    this.dateFromModel = undefined;
+  lastMonth() {
+    this.dateModel[0] = moment().subtract(1, 'weeks').startOf('isoWeek')
+    this.dateModel[0] = moment().subtract(1, 'weeks').endOf('isoWeek')
+  }
+
+  lastWeek() {
+    this.dateModel[0] = moment().subtract(1, 'month').startOf('isoWeek')
+    this.dateModel[0] = moment().subtract(1, 'month').endOf('isoWeek')
   }
 
   onSelect(tag: any) {

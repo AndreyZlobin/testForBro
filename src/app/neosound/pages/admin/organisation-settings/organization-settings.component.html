@@ -39,7 +39,7 @@
               <app-sensitive-data></app-sensitive-data>
             </nb-tab>
             <nb-tab tabTitle="Names dictionary">
-              <app-keywords [showMessage]="showMessage" [postDate]="postDate" (launch)="launch()"
+              <app-keywords [showMessage]="audioShowMessage" [postDate]="audioPostDate" (launch)="launchRedoReductAudio()"
                 (changed)="onChange($event)" nameSpace='dictNames' singularLabel="name"
                 descriptionLabel="Input the names separated by comma or add the names by uploading CSV"
                 totalLabel="Total names words"></app-keywords>
