@@ -78,7 +78,7 @@ export class SentimentStatsDayComponent implements OnInit, OnDestroy {
 
     this.stats = {
       // color: [this.colors[0], this.colors[6], this.colors[1]],
-      color: ['#c12e34', '#e6b600', '#0098d9'],
+      color: ['#c12e34', '#e6b600', '#0098d9',  "#2b821d"],
       tooltip : {
           trigger: 'axis',
           axisPointer: {

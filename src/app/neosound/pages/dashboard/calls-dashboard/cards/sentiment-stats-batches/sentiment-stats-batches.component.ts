@@ -209,9 +209,7 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
     ];
 
     this.stats = {
-      color: ["#c12e34", "#e6b600", "#0098d9"],
-      // color: [this.colors[0], this.colors[6], this.colors[1]],
-      //   backgroundColor: '#ffffff',
+      color: ["#c12e34", "#e6b600", "#0098d9", "#2b821d"],
       legend: {
         data: legendData
       },
