@@ -195,7 +195,7 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
         barWidth: 30,
         label: total_label,
         data: [total_data[2]]
-      }
+      },
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
