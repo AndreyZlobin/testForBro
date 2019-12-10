@@ -43,37 +43,6 @@ const fullColorHex = (r, g, b) => {
 })
 export class DashboardComponent implements OnInit {
   selectedValue;
-  datePickerFromOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("from"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-first", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
-
-  datePickerToOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("to"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-last", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
   modalType: string = "calls";
   type: string = "calls";
   modalRef: BsModalRef;
@@ -88,13 +57,8 @@ export class DashboardComponent implements OnInit {
   public dateModel: any = [];
   public loading: boolean = true;
   constructor(
-    private router: Router,
     private filesService: FilesService,
-    private http: HttpClient,
-    private lang: LanguageService,
-    private analyticsService: AnalyticsService,
     public dataService: DataService,
-    private filterService: FilterService,
     private modalService: BsModalService
   ) {}
   ngOnInit() {
