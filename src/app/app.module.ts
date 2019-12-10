@@ -42,6 +42,10 @@ import { SentimentalTreeComponent } from "./neosound/pages/dashboard/calls-dashb
 import { KeywordsPhrasesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/keywords-phrases/keywords-phrases.component";
 import { UploadInstructionsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/upload-instructions/upload-instructions.component";
 import { QueriesChartComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/queries-chart/queries-chart.component";
+import { SentimentStatsBatchesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentiment-stats-batches/sentiment-stats-batches.component";
+import { SentimentalOfCallsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentimental-of-calls/sentimental-of-calls.component";
+import { SentimentStatsDayComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentiment-stats-day/sentiment-stats-day.component";
+import { SentimentalCallsByDayComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentimental-calls-by-day/sentimental-calls-by-day.component";
 
 import { TextsDashboardComponent } from "./neosound/pages/dashboard/texts-dashboard/texts-dashboard.component";
 
@@ -171,6 +175,10 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     HitsTopicsComponent,
     MinutesStatsBatchesComponent,
     MinutesStatsMinutesComponent,
+    SentimentStatsBatchesComponent,
+    SentimentalCallsByDayComponent,
+    SentimentStatsDayComponent,
+    SentimentalOfCallsComponent,
     CallsByDayComponent,
     SignupLinkComponent,
     SignupDetailedComponent,

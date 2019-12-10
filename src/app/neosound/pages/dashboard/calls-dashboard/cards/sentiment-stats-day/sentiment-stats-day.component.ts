@@ -6,14 +6,14 @@ import {
   OnDestroy
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
-import { MinutesStatsService } from "../../services/minutes-stats.service";
+import { DashboardFileStatsService } from "../../services/file-stats.service";
 import { DataService } from "../../../../../shared";
 
 @Component({
-  selector: "ngx-minutes-stats-minutes",
-  templateUrl: "./minutes-stats-minutes.component.html"
+  selector: "ngx-sentiment-stats-day",
+  templateUrl: "./sentiment-stats-day.component.html"
 })
-export class MinutesStatsMinutesComponent implements OnInit, OnDestroy {
+export class SentimentStatsDayComponent implements OnInit, OnDestroy {
   stats: any = 0;
   dataSub1: any;
   hasData: boolean = false;
@@ -23,7 +23,7 @@ export class MinutesStatsMinutesComponent implements OnInit, OnDestroy {
     delay: 0.1
   };
   constructor(
-    private dataService: MinutesStatsService,
+    private dataService: DashboardFileStatsService,
     private userData: DataService
   ) {
     this.dataSub1 = this.dataService.data.subscribe(data => {
@@ -56,7 +56,7 @@ export class MinutesStatsMinutesComponent implements OnInit, OnDestroy {
   ];
   init(data) {
     const series = [];
-    data.totals && data.totals.durdata && data.totals.durdata.series.map(v => {
+    data.totals && data.totals.sentimentCountData && data.totals.sentimentCountData.series.map(v => {
         series.push({
             name: 'Name',
             type: 'line',
@@ -72,7 +72,7 @@ export class MinutesStatsMinutesComponent implements OnInit, OnDestroy {
         });
     });
     data.totals
-        && data.totals.legenddata.map((v, i) => {
+        && data.totals.sentimentLegendData.map((v, i) => {
         series[i].name = v;
     });
 
@@ -89,7 +89,7 @@ export class MinutesStatsMinutesComponent implements OnInit, OnDestroy {
           }
       },
       legend: {
-          data: data.totals && data.totals.legenddata || []
+          data: data.totals && data.totals.sentimentLegendData || []
       },
       grid: {
           left: '2%',

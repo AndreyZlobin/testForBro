@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { CloudData } from "angular-tag-cloud-module";
 import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import { DatepickerOptions } from "ng2-datepicker";
 import { FilesService } from "../../services/files.service";

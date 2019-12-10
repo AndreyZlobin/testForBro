@@ -17,10 +17,9 @@
       {{file.batchid}}
     </div>
   </div>
-  <div class="d-flex flex-column  justify-content-between align-self-scratch px-4" style="width: 20%;">
-    <div class="mt-1" *ngIf="file.topic">
-      <i class="fas fa-quote-left mr-1"></i>{{file.topic.topic}}<span
-        class="font-weight-bold ml-1">{{file.topic.confidence}} %</span>
+  <div class="d-flex flex-column  justify-content-end align-self-scratch px-4" style="width: 20%;">
+    <div class="mt-1 ml-auto" *ngIf="file.topic">
+      <div><i class="fas fa-quote-left mr-1"></i><span>{{file.topic.topic}}</span><span class="font-weight-bold ml-1">{{file.topic.confidence}} %</span></div>
     </div>
     <div class="d-flex flex-row justify-content-end align-items-center">
         <span class="badge badge-secondary mr-1" *ngFor="let tag of file.tags">{{tag}}</span>
@@ -49,10 +48,10 @@
     </div>
   </div>
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;">
-    <div class="d-flex flex-column">
-      <div style="font-size: x-small;" class="mb-3 font-weight-bold">{{t('Compliance')}}:</div>
-      <div class="d-flex flex-row">
-        <div class="align-self-center text-center mr-1">
+    <div class="d-flex flex-column px-2">
+      <div style="font-size: x-small;" class="">{{t('Compliance')}}:</div>
+      <div class="d-flex flex-row  align-self-center mt-1" style="font-size: 20px;">
+        <div class="align-self-center mr-1">
           <i class="fa fa-shield-alt"></i>
         </div>
         <div class="m-0" [ngStyle]="{'color': getOpacityLevelCompliance(file.compliancepercent), 'width': '4rem'}">
@@ -63,16 +62,16 @@
   </div>
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;">
     <div class="d-flex flex-column px-2">
-      <div style="font-size: x-small;" class="mb-3 font-weight-bold">{{t('Sentiment trend')}}:</div>
+      <div style="font-size: x-small;" class="">{{t('Sentiment trend')}}:</div>
       <ng-container *ngIf="hasTrend(file.sentimentTrend); else emptyTrend">
-        <div class="d-flex flex-row align-self-center mt-1">
+        <div class="d-flex flex-row  align-self-center mt-1" style="font-size: 20px;">
           <i class="far " [ngClass]='getTrend(file.sentimentTrend.start)' [tooltip]="file.sentimentTrend.start"></i>
           <i class="fas fa-long-arrow-alt-right mx-2"></i>
           <i [ngClass]='getTrend(file.sentimentTrend.end)' [tooltip]="file.sentimentTrend.end" class="far "></i>
         </div>
       </ng-container>
       <ng-template #emptyTrend>
-        <div class="d-flex flex-row align-self-start">
+        <div class="d-flex flex-row align-self-start" style="font-size: 20px;">
           <div style="width: 4rem">
             -
           </div>
@@ -83,9 +82,9 @@
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;"
     [ngStyle]="{'background': getOpacityLevelAnger(file.angertop)}">
     <div class="d-flex flex-column">
-      <div style="font-size: x-small;" class="mb-3 font-weight-bold">{{t('Average emotional level')}}:
+      <div style="font-size: x-small;" class="">{{t('Average emotional level')}}:
       </div>
-      <div class="d-flex flex-row">
+      <div class="d-flex flex-row" style="font-size: 20px;">
         <div class="align-self-center text-center mr-1"><i class="fa fa-thermometer-empty"></i>
         </div>
         <div class="m-0" *ngIf="file.angertop && file.angertop.anger; else empty">

@@ -30,22 +30,34 @@
   <div class="col-6 mb-3" *ngIf="settings['nCallsByTopBatches'].show">
     <ngx-number-of-calls></ngx-number-of-calls>
   </div>
+  <div class="col-6 mb-3">
+    <ngx-sentiment-stats-batches></ngx-sentiment-stats-batches>
+  </div>
+  <div class="col-6 mb-3">
+    <ngx-sentimental-of-calls></ngx-sentimental-of-calls>
+  </div>
+  <div class="col-6 mb-3">
+    <ngx-sentiment-stats-day></ngx-sentiment-stats-day>
+  </div>
+  <div class="col-6 mb-3">
+    <ngx-sentimental-calls-by-day></ngx-sentimental-calls-by-day>
+  </div>
   <div class="col-6 mb-3" *ngIf="settings['popularWordsTagCloud'].show">
     <ngx-popular-words (onClick)="keywordClicked($event)"></ngx-popular-words>
   </div>
   <div class="col-6 mb-3" *ngIf="settings['hitVsPopularWord'].show">
     <ngx-freq-words></ngx-freq-words>
   </div>
-  <div class="col-12 mb-3"  *ngIf="settings['sentimentRadial'].show">
+  <div class="col-12 mb-3" *ngIf="settings['sentimentRadial'].show">
     <ngx-average-sentiments></ngx-average-sentiments>
   </div>
-  <div class="col-12 mb-3"  *ngIf="settings['sentimentSankey'].show">
+  <div class="col-12 mb-3" *ngIf="settings['sentimentSankey'].show">
     <ngx-sentimental-sankey></ngx-sentimental-sankey>
   </div>
   <div class="col-12 mb-3" *ngIf="settings['sentimentRadial'].show">
     <ngx-sentiment-tree></ngx-sentiment-tree>
   </div>
-  <div class="col-12 mb-3"  *ngIf="settings['keywordsPhrasesRadial'].show">
+  <div class="col-12 mb-3" *ngIf="settings['keywordsPhrasesRadial'].show">
     <ngx-keywords-phrases></ngx-keywords-phrases>
   </div>
   <div class="col-6 mb-3" *ngIf="settings['welcome'].show">

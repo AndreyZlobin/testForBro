@@ -6,14 +6,14 @@ import {
   OnDestroy
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
-import { MinutesStatsService } from "../../services/minutes-stats.service";
+import { DashboardFileStatsService } from "../../services/file-stats.service";
 import { DataService } from "../../../../../shared";
 
 @Component({
-  selector: "ngx-minutes-stats-batches",
-  templateUrl: "./minutes-stats-batches.component.html"
+  selector: "ngx-sentiment-stats-batches",
+  templateUrl: "./sentiment-stats-batches.component.html"
 })
-export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
+export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
   stats: any = 0;
   dataSub1: any;
   hasData: boolean = false;
@@ -23,11 +23,11 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
     delay: 0.1
   };
   constructor(
-    private dataService: MinutesStatsService,
+    private dataService: DashboardFileStatsService,
     private userData: DataService
   ) {
     this.dataSub1 = this.dataService.data.subscribe(data => {
-      if (data && data.totals) {
+      if (data && data.totals && data.batches) {
         this.init(data);
         this.hasData = true;
       } else {
@@ -56,8 +56,8 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
   ];
   init(data) {
     const maxrows = 6;
-    let rawdata = data.totals && data.totals.batchesdurdata || [];
-    const rawbatches = data.totals && data.totals.batchesnames || [];
+    let rawdata = data.totals && data.totals.sentimentCountData || [];
+    const rawbatches = Object.keys(data.batches);
     let sortedbatches = [];
 
     if (rawbatches.length > maxrows) {
@@ -71,22 +71,15 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
       sortedbatches = rawbatches;
     }
 
-    const legendData = data.totals && data.totals.legenddata || [];
+    const legendData = data.totals && data.totals.sentimentLegendData || [];
     const y_data = sortedbatches;
     const _data = rawdata;
-    // const minX = Math.min(..._data[0]) < 1 ? -0.5 : 0;
     const total_y_data = ['All batches'];
     const batches_len = Math.max(...y_data.map(x => x.length));
     const y_label_len = total_y_data[0].length;
     const max_len = Math.round(Math.max(batches_len, y_label_len) * 1.1);
     const max_width = 100 - Math.round(max_len * 0.8);
-    // const total_data = _data.map(x => Math.round(x.reduce((a, b) => a + b, 0) * 100) / 100);
-
-    const total_data = [
-      data.totals && data.totals.angerdur,
-      data.totals && data.totals.calmdur,
-      data.totals && data.totals.silentdur
-    ];
+    const total_data = data.totals && data.totals.sentimentAvgData;
     const ylabel = function(v) {
       return (v.value/Math.max(...total_data) < 0.05) ? '' : v.value
     };
@@ -148,7 +141,7 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: data.totals && data.totals.legenddata[0],
+        name: data.totals && data.totals.sentimentLegendData[0],
         type: 'bar',
         stack: 'stack',
         barWidth: 30,
@@ -158,7 +151,7 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: data.totals && data.totals.legenddata[1],
+        name: data.totals && data.totals.sentimentLegendData[1],
         type: 'bar',
         stack: 'stack',
         barWidth: 30,
@@ -168,7 +161,7 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: data.totals && data.totals.legenddata[2],
+        name: data.totals && data.totals.sentimentLegendData[2],
         type: 'bar',
         stack: 'stack',
         barWidth: 30,
