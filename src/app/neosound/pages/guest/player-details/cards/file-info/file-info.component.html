@@ -49,12 +49,12 @@
   </div>
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;">
     <div class="d-flex flex-column px-2">
-      <div style="font-size: x-small;" class="">{{t('Compliance')}}:</div>
-      <div class="d-flex flex-row  align-self-center mt-1" style="font-size: 20px;">
+      <div style="font-size: x-small;" class="text-center">{{t('Compliance')}}:</div>
+      <div class="d-flex flex-row justify-content-center align-self-center mt-1" style="font-size: 20px;">
         <div class="align-self-center mr-1">
           <i class="fa fa-shield-alt"></i>
         </div>
-        <div class="m-0" [ngStyle]="{'color': getOpacityLevelCompliance(file.compliancepercent), 'width': '4rem'}">
+        <div class="m-0" [ngStyle]="{'color': getOpacityLevelCompliance(file.compliancepercent)}">
           {{file.compliancepercent !== '-' ? abs(file.compliancepercent) + '%' : '-  ' }}
         </div>
       </div>
@@ -81,10 +81,10 @@
   </div>
   <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;"
     [ngStyle]="{'background': getOpacityLevelAnger(file.angertop)}">
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column justify-content-center">
       <div style="font-size: x-small;" class="">{{t('Average emotional level')}}:
       </div>
-      <div class="d-flex flex-row" style="font-size: 20px;">
+      <div class="d-flex flex-row justify-content-center" style="font-size: 20px;">
         <div class="align-self-center text-center mr-1"><i class="fa fa-thermometer-empty"></i>
         </div>
         <div class="m-0" *ngIf="file.angertop && file.angertop.anger; else empty">
