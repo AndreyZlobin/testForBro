@@ -77,7 +77,7 @@ export class SentimentalCallsByDayComponent implements OnInit, OnDestroy {
         containLabel: true
       },
       legend: {
-        data: [legenddata[1], legenddata[2], legenddata[0]]
+        data: [legenddata[1], legenddata[2], legenddata[3], legenddata[0]]
       },
       xAxis: {
         type: "category",
@@ -109,6 +109,12 @@ export class SentimentalCallsByDayComponent implements OnInit, OnDestroy {
           smooth: true
         },
         {
+          name: legenddata[3] || "",
+          data: series[3] || [],
+          type: "line",
+          smooth: true
+        },
+        {
           name: legenddata[0] || "",
           data: series[0] || [],
           type: "line",
@@ -119,7 +125,7 @@ export class SentimentalCallsByDayComponent implements OnInit, OnDestroy {
               position: "top"
             }
           }
-        }
+        },
       ]
     };
   }
