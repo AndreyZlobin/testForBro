@@ -30,16 +30,16 @@
   <div class="col-6 mb-3" *ngIf="settings['nCallsByTopBatches'].show">
     <ngx-number-of-calls></ngx-number-of-calls>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['AvgSentByBatches'].show">
     <ngx-sentiment-stats-batches></ngx-sentiment-stats-batches>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['nSentCallsByTopBatches'].show">
     <ngx-sentimental-of-calls></ngx-sentimental-of-calls>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['AvgSentByDay'].show">
     <ngx-sentiment-stats-day></ngx-sentiment-stats-day>
   </div>
-  <div class="col-6 mb-3">
+  <div class="col-6 mb-3" *ngIf="settings['nSentCallsByDay'].show">
     <ngx-sentimental-calls-by-day></ngx-sentimental-calls-by-day>
   </div>
   <div class="col-6 mb-3" *ngIf="settings['popularWordsTagCloud'].show">
