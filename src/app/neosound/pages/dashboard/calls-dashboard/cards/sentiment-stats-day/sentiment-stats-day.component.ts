@@ -56,7 +56,7 @@ export class SentimentStatsDayComponent implements OnInit, OnDestroy {
   ];
   init(data) {
     const series = [];
-    data.totals && data.totals.sentimentCountData && data.totals.sentimentCountData.series.map(v => {
+    data.totals && data.totals.sentimentAvgData && data.totals.sentimentAvgData.series.map(v => {
         series.push({
             name: 'Name',
             type: 'line',
@@ -77,7 +77,6 @@ export class SentimentStatsDayComponent implements OnInit, OnDestroy {
     });
 
     this.stats = {
-      // color: [this.colors[0], this.colors[6], this.colors[1]],
       color: ['#c12e34', '#e6b600', '#0098d9',  "#2b821d"],
       tooltip : {
           trigger: 'axis',
