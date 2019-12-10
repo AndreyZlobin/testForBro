@@ -379,3 +379,10 @@ typeahead-container {
 ngx-card-spinner {
   width: 100%;
 }
+
+.ngx-file-drop__drop-zone {
+  border: 2px dotted var(--color-secondary) !important;
+}
+.ngx-file-drop__content {
+  color: var(--color-secondary) !important;
+}
