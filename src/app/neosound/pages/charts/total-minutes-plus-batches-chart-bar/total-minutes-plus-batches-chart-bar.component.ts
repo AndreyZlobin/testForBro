@@ -23,19 +23,9 @@ export class TotalMinutesPlusBatchesChartBarComponent implements OnInit {
   config = {};
   colors = ['#c12e34', '#0098d9', '#e6b600', '#2b821d', '#005eaa', '#339ca8', '#cda819', '#32a487']; //shine
 
-  @Input() set fileStatData(data) {
-    this.fileStat = data;
-    this.fileStatLoaded = true;
-    this.init();
-  }
   @Input() set minutesStatData(data) {
     this.minutesStat = data;
     this.minutesStatLoaded = true;
-    this.init();
-  }
-  @Input() set apiStatData(data) {
-    this.apiStat = data;
-    this.apiStatLoaded = true;
     this.init();
   }
   @Input() set colorsData(data) {
@@ -49,7 +39,7 @@ export class TotalMinutesPlusBatchesChartBarComponent implements OnInit {
   }
 
   init() {
-    if (!this.fileStatLoaded || !this.minutesStatLoaded || !this.apiStatLoaded) {
+    if (!this.minutesStatLoaded) {
       return;
     }
     this.isLoading = false;

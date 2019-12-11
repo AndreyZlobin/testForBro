@@ -10,7 +10,7 @@ import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { TooltipModule } from "ngx-bootstrap/tooltip";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { TypeaheadModule } from "ngx-bootstrap/typeahead";
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { ThemeModule } from "./@theme/theme.module";
@@ -21,8 +21,40 @@ import { LoginComponent } from "./neosound/pages/auth/login/login.component";
 import { DashboardComponent } from "./neosound/pages/dashboard/dashboard.component";
 import { StopwordsComponent } from "./neosound/pages/dashboard/details/stopwords/stopwords.component";
 
+import { CardSpinnerComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/card-spinner/card-spinner.component";
 import { CallsDashboardComponent } from "./neosound/pages/dashboard/calls-dashboard/calls-dashboard.component";
+import { InfoBarComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/info-bar/info-bar.component";
+import { NumberOfCallsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/number-of-calls/number-of-calls.component";
+import { ProcessedCallsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/processed-calls/processed-calls.component";
+import { PerformanceByAgentComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/performance-by-agent/performance-by-agent.component";
+import { StopWordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/stopwords/stopwords.component";
+import { HitsStopwordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/hits-stopwords/hits-stopwords.component";
+import { TopicComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/topics/topics.component";
+import { HitsTopicsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/hits-topics/hits-topics.component";
+import { MinutesStatsBatchesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/minutes-stats-batches/minutes-stats-batchess.component";
+import { MinutesStatsMinutesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/minutes-stats-minutes/minutes-stats-minutes.component";
+import { CallsByDayComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/calls-by-day/calls-by-day.component";
+import { PopularWordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/popular-words/popular-words.component";
+import { FreqWordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/freq-words/freq-words.component";
+import { AverageSentimentsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/average-sentiments/average-sentiments.component";
+import { SentimentalSankeyComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentimental-sankey/sentimental-sankey.component";
+import { SentimentalTreeComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentiment-tree/sentiment-tree.component";
+import { KeywordsPhrasesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/keywords-phrases/keywords-phrases.component";
+import { UploadInstructionsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/upload-instructions/upload-instructions.component";
+import { QueriesChartComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/queries-chart/queries-chart.component";
+import { SentimentStatsBatchesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentiment-stats-batches/sentiment-stats-batches.component";
+import { SentimentalOfCallsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentimental-of-calls/sentimental-of-calls.component";
+import { SentimentStatsDayComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentiment-stats-day/sentiment-stats-day.component";
+import { SentimentalCallsByDayComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentimental-calls-by-day/sentimental-calls-by-day.component";
+
 import { TextsDashboardComponent } from "./neosound/pages/dashboard/texts-dashboard/texts-dashboard.component";
+
+import { ApiCallsStatsService } from "./neosound/pages/dashboard/calls-dashboard/services/api-calls-stats.service";
+import { ChartDataService } from "./neosound/pages/dashboard/calls-dashboard/services/chart-data.service";
+import { DashboardFileStatsService } from "./neosound/pages/dashboard/calls-dashboard/services/file-stats.service";
+import { MinutesStatsService } from "./neosound/pages/dashboard/calls-dashboard/services/minutes-stats.service";
+import { TagCloudService } from "./neosound/pages/dashboard/calls-dashboard/services/tag-cloud.service";
+import { TopicCloudService } from "./neosound/pages/dashboard/calls-dashboard/services/topic-cloud.service";
 
 import { SignupLinkComponent } from "./neosound/pages/auth/signup-link/signup-link.component";
 import { SignupDetailedComponent } from "./neosound/pages/auth/signup-detailed/signup-detailed.component";
@@ -136,6 +168,18 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     LoginComponent,
     DashboardComponent,
     StopwordsComponent,
+    HitsStopwordsComponent,
+    PopularWordsComponent,
+    FreqWordsComponent,
+    TopicComponent,
+    HitsTopicsComponent,
+    MinutesStatsBatchesComponent,
+    MinutesStatsMinutesComponent,
+    SentimentStatsBatchesComponent,
+    SentimentalCallsByDayComponent,
+    SentimentStatsDayComponent,
+    SentimentalOfCallsComponent,
+    CallsByDayComponent,
     SignupLinkComponent,
     SignupDetailedComponent,
     TermsComponent,
@@ -160,6 +204,12 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     TextLogComponent,
     TextComplianceComponent,
     TextStopwordsComponent,
+    AverageSentimentsComponent,
+    SentimentalSankeyComponent,
+    SentimentalTreeComponent,
+    KeywordsPhrasesComponent,
+    UploadInstructionsComponent,
+    QueriesChartComponent,
     TextSankeyComponent,
     TextKeywordsComponent,
     TextTagCloudComponent,
@@ -179,6 +229,12 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     TotalMinutesPlusBatchesChartBarComponent,
     KeywordsRadialTreeComponent,
     CallsDashboardComponent,
+    StopWordsComponent,
+    InfoBarComponent,
+    CardSpinnerComponent,
+    NumberOfCallsComponent,
+    PerformanceByAgentComponent,
+    ProcessedCallsComponent,
     TextsDashboardComponent,
     FileInfoComponent,
     TagifyComponent
@@ -214,7 +270,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     NgDatepickerModule,
     NgxPaginationModule,
     TagInputModule,
-    BsDatepickerModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -230,6 +286,12 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     FileChartDataService,
     FileInfoService,
     FileStatsService,
+    ApiCallsStatsService,
+    ChartDataService,
+    DashboardFileStatsService,
+    MinutesStatsService,
+    TagCloudService,
+    TopicCloudService,
     FilePeeksService,
     FileResultService,
     UploadService,

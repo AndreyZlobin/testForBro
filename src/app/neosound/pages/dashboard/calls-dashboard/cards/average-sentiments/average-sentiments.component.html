@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-header">{{t('Sentiments by batches')}}</div>
+  <div class="card-body pl-0 pr-0" *ngIf="hasData; else loading">
+    <table class="table">
+      <th>Name</th>
+      <th>Negative</th>
+      <th>Neutral</th>
+      <th>Positive</th>
+      <th>N/A</th>
+      <tr *ngFor="let sentiment of sentiments">
+        <td>{{sentiment.name}}</td>
+        <td>{{sentiment.Negative}}</td>
+        <td>{{sentiment.Neutral}}</td>
+        <td>{{sentiment.Positive}}</td>
+        <td>{{sentiment.notAvalable}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<ng-template #loading>
+    <div class="card-body d-flex h-100"><ngx-card-spinner></ngx-card-spinner></div>
+</ng-template>

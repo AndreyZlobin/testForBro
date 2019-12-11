@@ -20,11 +20,9 @@
             <div class="col-12 pt-3">
               <div class="mb-2">{{t('Uploaded')}}</div>
               <div class="input-group">
-                <ng-datepicker [(ngModel)]="filterService.filter.datefrom" [options]="datePickerFromOptions"
-                  class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
-                </ng-datepicker>
-                <ng-datepicker [(ngModel)]="filterService.filter.dateto" [options]="datePickerToOptions"
-                  class="form-control-bak form-control-lg-bak form-gr-last"></ng-datepicker>
+                <input bsDaterangepicker [(ngModel)]="filterService.filter.uploadDate"
+                  [ngModelOptions]="{standalone: true}" type="text" class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="">
               </div>
             </div>
             <div class="col-12 pt-3">
@@ -132,14 +130,14 @@
                     No trend
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Negative')">
-                    <i class="far fa-angry text-danger" ></i>
+                    <i class="far fa-angry text-danger"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
                     <i class="far fa-angry text-danger"></i>
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Neutral')">
-                    <i class="far fa-angry text-danger" ></i>
+                    <i class="far fa-angry text-danger"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-meh text-info" ></i>
+                    <i class="far fa-meh text-info"></i>
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Positive')">
                     <i class="far fa-angry text-danger"></i>
@@ -149,7 +147,7 @@
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Negative')">
                     <i class="far fa-meh text-info"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-angry text-danger" ></i>
+                    <i class="far fa-angry text-danger"></i>
                   </li>
                   <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Neutral')">
                     <i class="far fa-meh text-info"></i>
@@ -217,28 +215,23 @@
         </div>
       </div>
       <div class="col col-md-10 pl-4 border-left">
-        <div class="row mb-1" *ngIf="!filterService.isLoading">
-          <div class="col-3">
-            <h1>{{t('Files')}}</h1>
+        <div class="d-flex flex-row justify-content-between align-items-center" *ngIf="!filterService.isLoading">
+          <div class="">
+            <h3 class="mb-0">{{t('Calls')}}</h3>
+            <span>{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
+              {{filterService.totalcount}}</span>
           </div>
-          <div class="col-6">
-            <div class="btn-toolbar mb-3 mt-3">
-              <div class="btn-group mr-2 mb-2">
-                <div
-                  *ngFor="let pageItem of filterService.fileStore | paginate: { itemsPerPage: filterService.filter.itemsn, currentPage: filterService.filter.pagen, totalItems: filterService.totalcount }">
-                </div>
-                <pagination-controls (pageChange)="getPage($event)" previousLabel="{{t('previous')}}"
-                  nextLabel="{{t('next')}}"></pagination-controls>
+          <div class="btn-toolbar">
+            <div class="btn-group">
+              <div
+                *ngFor="let pageItem of filterService.fileStore | paginate: { itemsPerPage: filterService.filter.itemsn, currentPage: filterService.filter.pagen, totalItems: filterService.totalcount }">
               </div>
+              <pagination-controls (pageChange)="getPage($event)" previousLabel="{{t('previous')}}"
+                nextLabel="{{t('next')}}"></pagination-controls>
             </div>
           </div>
-          <div class="col-3">
-            <div class="row mb-1">
-              <div class="col text-right pl-0" *ngIf="!filterService.isLoading">
-                <button class="btn btn-primary ml-5 pull-right mt-1 btn-sm"
-                  (click)="exportCSV()">{{t('Export to CSV')}}</button>
-              </div>
-            </div>
+          <div class="">
+            <button class="btn btn-primary pull-right btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
           </div>
         </div>
         <div class="file-list" *ngIf="!filterService.isLoading; else spinner">

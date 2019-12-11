@@ -367,3 +367,22 @@ typeahead-container {
   left: 0;
   background-color: var(--color-secondary);
 }
+
+.theme-green .bs-datepicker-head {
+  background-color: var(--color-secondary);
+}
+
+.theme-green .bs-datepicker-body table td span.selected, .theme-green .bs-datepicker-body table td.selected span, .theme-green .bs-datepicker-body table td span[class*="select-"]:after, .theme-green .bs-datepicker-body table td[class*="select-"] span:after{
+  background-color: var(--color-secondary);
+}
+
+ngx-card-spinner {
+  width: 100%;
+}
+
+.ngx-file-drop__drop-zone {
+  border: 2px dotted var(--color-secondary) !important;
+}
+.ngx-file-drop__content {
+  color: var(--color-secondary) !important;
+}

@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { CloudData } from "angular-tag-cloud-module";
 import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import { DatepickerOptions } from "ng2-datepicker";
 import { FilesService } from "../../services/files.service";
@@ -45,37 +43,6 @@ const fullColorHex = (r, g, b) => {
 })
 export class DashboardComponent implements OnInit {
   selectedValue;
-  datePickerFromOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("from"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-first", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
-
-  datePickerToOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("to"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-last", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
   modalType: string = "calls";
   type: string = "calls";
   modalRef: BsModalRef;
@@ -87,23 +54,18 @@ export class DashboardComponent implements OnInit {
   public selectedBatches: string[] = [];
   public dateFrom: any;
   public dateTo: any;
-  public dateFromModel: any;
-  public dateToModel: any;
+  public dateModel: any = [];
   public loading: boolean = true;
   constructor(
-    private router: Router,
     private filesService: FilesService,
-    private http: HttpClient,
-    private lang: LanguageService,
-    private analyticsService: AnalyticsService,
     public dataService: DataService,
-    private filterService: FilterService,
     private modalService: BsModalService
   ) {}
   ngOnInit() {
     this.listCallsBatches();
     this.listTextBatches();
   }
+
   listCallsBatches() {
     this.filesService.listBatches().subscribe(data => {
       if (data && data.batches) {
@@ -130,16 +92,25 @@ export class DashboardComponent implements OnInit {
     if(this.selectedBatches) {
       this.batches = this.selectedBatches;
     }
-    if (this.dateFromModel) {
-      this.dateFrom = moment(this.dateFromModel).format("YYYY-MM-DD");
+    if (this.dateModel && this.dateModel[0]) {
+      this.dateFrom = moment(this.dateModel[0]).format("YYYY-MM-DD");
+    }  else {
+      this.dateFrom = null;
     }
-    if (this.dateToModel) {
-      this.dateTo = moment(this.dateToModel).format("YYYY-MM-DD");
+    if (this.dateModel && this.dateModel[1]) {
+      this.dateTo = moment(this.dateModel[1]).format("YYYY-MM-DD");
+    } else {
+      this.dateTo = null;
     }
     setTimeout(() => {
       this.loading = false;
     }, 10);
   }
+  reset() {
+    this.batches = [];
+    this.dateModel = null;
+  }
+
   t(v) {
     return LanguageService.t(v);
   }
@@ -158,9 +129,14 @@ export class DashboardComponent implements OnInit {
       this.modalRef.hide();
     }
   }
-  clearDates() {
-    this.dateToModel = undefined;
-    this.dateFromModel = undefined;
+  lastMonth() {
+    this.dateModel[0] = moment().subtract(1, 'weeks').startOf('isoWeek')
+    this.dateModel[0] = moment().subtract(1, 'weeks').endOf('isoWeek')
+  }
+
+  lastWeek() {
+    this.dateModel[0] = moment().subtract(1, 'month').startOf('isoWeek')
+    this.dateModel[0] = moment().subtract(1, 'month').endOf('isoWeek')
   }
 
   onSelect(tag: any) {

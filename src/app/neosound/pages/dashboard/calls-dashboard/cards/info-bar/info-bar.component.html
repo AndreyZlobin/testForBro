@@ -1,0 +1,62 @@
+<div>
+  <div class="row">
+    <div class="col-3 mb-3">
+      <div class="card dasboard-card" [ngStyle]="{'background': getColor(0)}">
+        <div class="card-body">
+          <div class="d-flex align-items-center flex-row m-t-30">
+            <div>
+              <i class="fa fa-phone-volume fa-3x" style="margin-right: 10px;"></i>
+            </div>
+            <div class="ml-auto">
+              <h4>{{allCallsCount}}</h4>
+              <h6>{{t('Calls processed')}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 mb-3">
+      <div class="card dasboard-card" [ngStyle]="{'background': getColor(1)}">
+        <div class="card-body">
+          <div class="d-flex align-items-center flex-row m-t-30">
+            <div>
+              <i class="fa fa-clock fa-3x" style="margin-right: 10px;"></i>
+            </div>
+            <div class="ml-auto">
+              <h4>{{totalMinutes}}</h4>
+              <h6 style="font-size: 0.9rem;">{{t('Call duration, minutes')}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 mb-3">
+      <div class="card dasboard-card" [ngStyle]="{'background': getColor(2)}">
+        <div class="card-body">
+          <div class="d-flex align-items-center flex-row m-t-30">
+            <div><i class="fa fa-users fa-3x" style="margin-right: 10px;"></i></div>
+            <div class="ml-auto">
+              <h4>{{batchesUploaded}}</h4>
+              <h6>{{t('Batches uploaded')}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 mb-3">
+      <div class="card dasboard-card" [ngStyle]="{'background': getColor(3)}">
+        <div class="card-body">
+          <div class="d-flex align-items-center flex-row m-t-30">
+            <div><i class="fa fa-cloud fa-3x" style="margin-right: 10px;"></i></div>
+            <div class="ml-auto">
+              <h4>{{apiCallsCount}}</h4>
+              <h6>{{t('API calls done')}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #loading>
+      <div class="card-body d-flex h-100">loading...</div>
+  </ng-template>
