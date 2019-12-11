@@ -56,8 +56,8 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
   ];
   init(data) {
     const maxrows = 6;
-    let rawdata = (data.totals && data.totals.sentimentAvgData.series) || [];
-    const rawbatches = Object.keys(data.batches);
+    let rawdata = (data.totals && data.totals.sentimentAvgDataBatches) || [];
+    const rawbatches = data.totals.batchesnames || [];
     let sortedbatches = [];
 
     if (rawbatches.length > maxrows) {
