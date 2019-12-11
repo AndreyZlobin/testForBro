@@ -95,7 +95,9 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
     const max_width = 100 - Math.round(max_len * 0.8);
     // const total_data = _data.map(x => Math.round(x.reduce((a, b) => a + b, 0) * 100) / 100);
 
-    const total_data = Object.keys(data.totals.sentimentAvg).map((key) => data.totals.sentimentAvg[key]);
+    const total_data = Object.keys(data.totals.sentimentAvg).map(
+      key => data.totals.sentimentAvg[key]
+    );
     const ylabel = function(v) {
       return v.value / Math.max(...total_data) < 0.05 ? "" : v.value;
     };
