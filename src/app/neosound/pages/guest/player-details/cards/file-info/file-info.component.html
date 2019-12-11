@@ -9,7 +9,7 @@
     <i *ngIf="getBool(file.pin)" class="fa fa-star"></i>
     <i *ngIf="!getBool(file.pin)" class="far fa-star"></i>
   </div>
-  <div class="d-flex flex-column  justify-content-between align-self-scratch" style="width: 20%;">
+  <div class="d-flex flex-column  justify-content-between align-self-start" style="width: 20%;">
     <div class="d-inline-block font-weight-bold text-truncate">
       {{file.filename}}
     </div>
@@ -17,11 +17,11 @@
       {{file.batchid}}
     </div>
   </div>
-  <div class="d-flex flex-column  justify-content-end align-self-scratch px-4" style="width: 20%;">
-    <div class="mt-1 ml-auto" *ngIf="file.topic">
+  <div class="d-flex flex-column  justify-content-end align-self-start px-4" style="width: 20%;">
+    <div class="ml-auto" *ngIf="file.topic">
       <div><i class="fas fa-quote-left mr-1"></i><span>{{file.topic.topic}}</span><span class="font-weight-bold ml-1">{{file.topic.confidence}} %</span></div>
     </div>
-    <div class="d-flex flex-row justify-content-end align-items-center">
+    <div class="d-flex flex-row justify-content-end align-items-center mt-1">
         <span class="badge badge-secondary mr-1" *ngFor="let tag of file.tags">{{tag}}</span>
         <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, file)"
           tooltip="{{t('Edit tags')}}">
@@ -29,7 +29,7 @@
         </button>
       </div>
   </div>
-  <div class="d-flex flex-row justify-content-start" style="width: 10%;">
+  <div class="d-flex flex-row justify-content-start align-self-start" style="width: 10%;">
     <div class="pr-4" style="font-size: xx-small;">
       <div class="mb-1">
         <span class="mr-2">{{t('Uploaded')}}</span>
@@ -47,10 +47,10 @@
       </div>
     </div>
   </div>
-  <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;">
-    <div class="d-flex flex-column px-2">
+  <div class="d-flex justify-content-center align-self-start" style="width: 10%;">
+    <div class="d-flex flex-column justify-content-center">
       <div style="font-size: x-small;" class="text-center">{{t('Compliance')}}:</div>
-      <div class="d-flex flex-row justify-content-center align-self-center mt-1" style="font-size: 20px;">
+      <div class="d-flex flex-row justify-content-center align-self-center mt-2" style="font-size: 17px;">
         <div class="align-self-center mr-1">
           <i class="fa fa-shield-alt"></i>
         </div>
@@ -60,18 +60,18 @@
       </div>
     </div>
   </div>
-  <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;">
-    <div class="d-flex flex-column px-2">
+  <div class="d-flex justify-content-center align-self-start" style="width: 10%;">
+    <div class="d-flex flex-column">
       <div style="font-size: x-small;" class="">{{t('Sentiment trend')}}:</div>
       <ng-container *ngIf="hasTrend(file.sentimentTrend); else emptyTrend">
-        <div class="d-flex flex-row  align-self-center mt-1" style="font-size: 20px;">
+        <div class="d-flex flex-row  align-self-center mt-2" style="font-size: 17px;">
           <i class="far " [ngClass]='getTrend(file.sentimentTrend.start)' [tooltip]="file.sentimentTrend.start"></i>
           <i class="fas fa-long-arrow-alt-right mx-2"></i>
           <i [ngClass]='getTrend(file.sentimentTrend.end)' [tooltip]="file.sentimentTrend.end" class="far "></i>
         </div>
       </ng-container>
       <ng-template #emptyTrend>
-        <div class="d-flex flex-row align-self-start" style="font-size: 20px;">
+        <div class="d-flex flex-row align-self-start mt-2" style="font-size: 17px;">
           <div style="width: 4rem">
             -
           </div>
@@ -79,12 +79,12 @@
       </ng-template>
     </div>
   </div>
-  <div class="d-flex justify-content-center align-self-scratch" style="width: 10%;"
+  <div class="d-flex justify-content-center align-self-start" style="width: 10%;"
     [ngStyle]="{'background': getOpacityLevelAnger(file.angertop)}">
     <div class="d-flex flex-column justify-content-center">
       <div style="font-size: x-small;" class="">{{t('Average emotional level')}}:
       </div>
-      <div class="d-flex flex-row justify-content-center" style="font-size: 20px;">
+      <div class="d-flex flex-row justify-content-center mt-2" style="font-size: 17px;">
         <div class="align-self-center text-center mr-1"><i class="fa fa-thermometer-empty"></i>
         </div>
         <div class="m-0" *ngIf="file.angertop && file.angertop.anger; else empty">
