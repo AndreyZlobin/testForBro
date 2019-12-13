@@ -6,6 +6,9 @@
         <div class="" id="side-filter">
           <div class="row">
             <div class="col-12">
+              <h3 class="my-2">{{t('Text files')}}</h3>
+            </div>
+            <div class="col-12">
               <div class="mb-2">{{t('Name')}}</div>
               <input [(ngModel)]="filterService.filter.filename" [ngModelOptions]="{standalone: true}" type="text"
                 class="" placeholder="" class="form-control form-control-lg"
@@ -15,16 +18,14 @@
               <div class="mb-2">{{t('Batch Id')}}</div>
               <input [(ngModel)]="filterService.filter.batchid" [ngModelOptions]="{standalone: true}" type="text"
                 step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
-                placeholder="">
+                placeholder="" [typeahead]="batches" [typeaheadMinLength]="0">
             </div>
             <div class="col-12 pt-3">
               <div class="mb-2">{{t('Uploaded')}}</div>
               <div class="input-group">
-                <ng-datepicker [(ngModel)]="filterService.filter.datefrom" [options]="datePickerFromOptions"
-                  class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
-                </ng-datepicker>
-                <ng-datepicker [(ngModel)]="filterService.filter.dateto" [options]="datePickerToOptions"
-                  class="form-control-bak form-control-lg-bak form-gr-last"></ng-datepicker>
+                <input bsDaterangepicker [(ngModel)]="filterService.filter.uploadDate"
+                  [ngModelOptions]="{standalone: true}" type="text" class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="">
               </div>
             </div>
             <div class="col-12 pt-3">
@@ -86,12 +87,10 @@
           </div>
         </div>
       </div>
-      <div class="col col-md-10 pl-4 border-left">
-        <div class="d-flex flex-row justify-content-between align-items-center" *ngIf="!filterService.isLoading">
-          <div class="">
-            <h3 class="mb-0">{{t('Text files')}}</h3>
-            <span>{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
-              {{filterService.totalcount}}</span>
+      <div class="col col-md-10 border-left">
+        <div class="d-flex flex-row justify-content-between align-items-center my-2" *ngIf="!filterService.isLoading">
+          <div class="">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
+            {{filterService.totalcount}}
           </div>
           <div class="btn-toolbar">
             <div class="btn-group">
@@ -103,9 +102,8 @@
             </div>
           </div>
           <div class="">
-            <div class="col text-right" *ngIf="!filterService.isLoading">
-              <button class="btn btn-primary pull-right btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
-            </div>
+            <button *ngIf="!filterService.isLoading" class="btn btn-primary btn-sm"
+              (click)="exportCSV()">{{t('Export to CSV')}}</button>
           </div>
         </div>
         <div class="file-list" *ngIf="!filterService.isLoading; else spinner">
