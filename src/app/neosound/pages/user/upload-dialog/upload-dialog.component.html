@@ -41,7 +41,7 @@
               >
           </div>
         </div>
-        <div class="alert alert-info">{{t('Maximum file size: 200 MB')}}</div>
+        <div class="alert alert-info">{{t('Maximum file size: 10 MB')}}</div>
         <div class="center">
           <div class="drop-zone-wrap">
             <file-drop   accept="wav,mp3" *ngIf="!files.length" (onFileDrop)="dropped($event)" accept="mp3,wav">
@@ -78,7 +78,7 @@
               [typeahead]="textBatches" [typeaheadMinLength]="0" [ngModelOptions]="{standalone: true}">
           </div>
         </div>
-        <div class="alert alert-info">{{t('Maximum file size: 200 MB')}}</div>
+        <div class="alert alert-info">{{t('Maximum file size: 10 MB')}}</div>
         <div class="center">
           <div class="drop-zone-wrap">
             <file-drop  accept="txt,eml,json" *ngIf="!files.length" (onFileDrop)="dropped($event)">
