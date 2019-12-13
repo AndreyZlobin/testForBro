@@ -18,7 +18,7 @@
               <div class="mb-2">{{t('Batch Id')}}</div>
               <input [(ngModel)]="filterService.filter.batchid" [ngModelOptions]="{standalone: true}" type="text"
                 step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
-                placeholder="">
+                placeholder="" [typeahead]="batches" [typeaheadMinLength]="0">
             </div>
             <div class="col-12 pt-3">
               <div class="mb-2">{{t('Uploaded')}}</div>

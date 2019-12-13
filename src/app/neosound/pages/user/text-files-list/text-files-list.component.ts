@@ -28,42 +28,11 @@ export class TextFilesListComponent implements OnInit, AfterViewInit {
   isLoadingSpinner = false;
   lastFile: any;
   itemTags: any;
-
-  datePickerFromOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("from"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-first", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
-
-  datePickerToOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("to"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-last", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
   private sideFilterHasClass = false;
   modalRef: BsModalRef;
   editedFileItem;
   currentTagEditIndex;
+  batches: string[] = [];
 
   constructor(
     private filesService: FilesService,
@@ -76,6 +45,14 @@ export class TextFilesListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.filterService.updateFileList();
+    this.getBatches();
+  }
+  getBatches() {
+    this.filesService.listTextBatches().subscribe(data => {
+      if (data && data.batches) {
+        this.batches = data.batches;
+      }
+    });
   }
   ngAfterViewInit() {
     if (this.filterService.lastFileId) {
