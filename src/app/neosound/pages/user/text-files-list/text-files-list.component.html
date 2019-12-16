@@ -89,10 +89,10 @@
       </div>
       <div class="col col-md-10 border-left">
         <div class="d-flex flex-row justify-content-between align-items-start" *ngIf="!filterService.isLoading">
-          <div class="">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
+          <div class="mt-2">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
             {{filterService.totalcount}}
           </div>
-          <div class="btn-toolbar">
+          <div class="btn-toolbar mt-1">
             <div class="btn-group">
               <div
                 *ngFor="let pageItem of filterService.fileStore | paginate: { itemsPerPage: filterService.filter.itemsn, currentPage: filterService.filter.pagen, totalItems: filterService.totalcount }">
@@ -106,7 +106,7 @@
               (click)="exportCSV()">{{t('Export to CSV')}}</button>
           </div>
         </div>
-        <div class="file-list" *ngIf="!filterService.isLoading; else spinner">
+        <div class="file-list mt-2" *ngIf="!filterService.isLoading; else spinner">
           <div>
             <table class="table" *ngIf="!isLoadingSpinner; else spinner">
               <thead>
