@@ -42,10 +42,8 @@ import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch
 import { ChartPageComponent } from "./neosound/pages/charts/chart-page/chart-page.component";
 
 const routes: Routes = [
-  { path: "pages", loadChildren: "app/pages/pages.module#PagesModule" },
   {
     path: "",
-    // canActivate: [ AuthGuard ],
     component: MainComponent,
     children: [
       {
