@@ -93,11 +93,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    const el = document.getElementsByTagName('nb-card-header');
-    const logo = document.getElementById('loginLogo');
-    if (el && el[0] && logo) {
-      el[0].removeChild(logo);
-    }
   }
 
   public login() {

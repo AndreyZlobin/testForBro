@@ -298,8 +298,8 @@
               (click)="sortTable('Compliance')">{{t('Compliance')}}
               <i *ngIf="filterService.filter.sortby === 'Compliance' && filterService.filter.sortorder ==='desc'"
                 class="fas fa-sort-up"></i><i
-                *ngIf="filterService.filter.sortby === 'Compliance' && filterService.filter.sort ==='asc'"
-                class="fas fa-sort-down"></i><i *ngIf="sortby !== 'Compliance'" style="color: #bbbbbb"
+                *ngIf="filterService.filter.sortby === 'Compliance' && filterService.filter.sortorder ==='asc'"
+                class="fas fa-sort-down"></i><i *ngIf="filterService.filter.sortby !== 'Compliance'" style="color: #bbbbbb"
                 class="fas fa-sort"></i>
             </button>
             <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
