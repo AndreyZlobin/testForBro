@@ -465,7 +465,7 @@
                       <i class="fa fa-sync"></i>
                     </button>
                     <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
-                      (click)="delete(item.batchid, item.fileid)" tooltip="{{t('Delete')}}">
+                      (click)="showDeleteModal(confirm, item, i)" tooltip="{{t('Delete')}}">
                       <i class="fa fa-trash-alt"></i>
                     </button>
                   </div>
@@ -511,6 +511,13 @@
       <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
       <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>
     </div>
+  </div>
+</ng-template>
+<ng-template #confirm>
+  <div class="modal-body text-center">
+      <p>Please confirm.</p>
+      <button type="button" class="btn btn-primary mr-2" (click)="deleteFile()">Yes</button>
+      <button type="button" class="btn btn-secondary" (click)="hideModal()">No</button>
   </div>
 </ng-template>
 
