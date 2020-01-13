@@ -119,4 +119,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   t(v) {
     return LanguageService.t(v);
   }
+  show(name: string) {
+    return this.settings && this.settings[name] && this.settings[name].show
+  }
 }

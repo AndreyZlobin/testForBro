@@ -23,7 +23,7 @@ import { DataService } from "../../../shared";
 })
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild("scroll") scrollTo: ElementRef;
-  trends= [ "fa-angry text-danger",  "fa-grin text-success", "fa-meh text-info"];
+  trends = ["fa-angry text-danger", "fa-grin text-success", "fa-meh text-info"];
   errorMessage = "";
   isLoading = true;
   pagesArr = [1];
@@ -50,18 +50,17 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.filterService.updateFileList();
-    this.filesService.listTopics().subscribe((data) => {
-      if(data && data.topics) {
+    this.filesService.listTopics().subscribe(data => {
+      if (data && data.topics) {
         this.topics = data.topics;
       }
-      if(this.filterService.filter.topics) {
+      if (this.filterService.filter.topics) {
         this.selectedTopics = this.filterService.filter.topics.split(",");
       }
     });
     this.getBatches();
   }
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
   scrollToElement() {
     if (this.scrollTo) {
       this.scrollTo.nativeElement.scrollIntoView({ behavior: "smooth" });
@@ -161,14 +160,14 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   getTrend(itemTrend) {
-    if(itemTrend === "Negative") {
-      return  "fa-angry text-danger";
+    if (itemTrend === "Negative") {
+      return "fa-angry text-danger";
     }
-    if(itemTrend === "Positive") {
-      return  "fa-grin text-success"
+    if (itemTrend === "Positive") {
+      return "fa-grin text-success";
     }
-    if(itemTrend === "Neutral") {
-      return  "fa-meh text-info"
+    if (itemTrend === "Neutral") {
+      return "fa-meh text-info";
     }
     return "fa-meh";
   }
@@ -294,6 +293,23 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  showDeleteModal(ref, item, index) {
+    this.analyticsService.trackEvent("fileList", "showDeleteModal");
+    this.currentTagEditIndex = index;
+    this.editedFileItem = item;
+    this.hideModal();
+    this.modalRef = this.modalService.show(ref, {
+      class: "modal-xl"
+    });
+  }
+
+  deleteFile() {
+    this.delete(this.editedFileItem.batchid, this.editedFileItem.filename);
+    this.editedFileItem = null;
+    this.currentTagEditIndex = -1;
+    this.hideModal();
+  }
+
   hideModal() {
     this.analyticsService.trackEvent("fileList", "hideModal");
     if (this.modalRef) {
@@ -366,17 +382,14 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   onSelectTopic(event: any) {
-    this.selectedTopic = '';
-    const deduplicate = new Set([
-      ...this.selectedTopics,
-      event.value
-    ]);
+    this.selectedTopic = "";
+    const deduplicate = new Set([...this.selectedTopics, event.value]);
     this.selectedTopics = Array.from(deduplicate);
     this.filterService.filter.topics = this.selectedTopics.join(",");
   }
 
   onRemoveTopic(topic: string) {
-    this.selectedTopics = this.selectedTopics.filter((t) => t !== topic);
+    this.selectedTopics = this.selectedTopics.filter(t => t !== topic);
     this.filterService.filter.topics = this.selectedTopics.join(",");
   }
 }
