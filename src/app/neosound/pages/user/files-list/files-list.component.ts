@@ -298,9 +298,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.currentTagEditIndex = index;
     this.editedFileItem = item;
     this.hideModal();
-    this.modalRef = this.modalService.show(ref, {
-      class: "modal-xl"
-    });
+    this.modalRef = this.modalService.show(ref, {});
   }
 
   deleteFile() {
