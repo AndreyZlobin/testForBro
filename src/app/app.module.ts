@@ -61,15 +61,11 @@ import { SignupDetailedComponent } from "./neosound/pages/auth/signup-detailed/s
 import { TermsComponent } from "./neosound/pages/auth/terms/terms.component";
 import { ForgotPasswordComponent } from "./neosound/pages/auth/forgot-password/forgot-password.component";
 
-import { UserDetailsComponent } from "./neosound/pages/admin/user-details/user-details.component";
-import { QuickTestComponent } from "./neosound/pages/guest/quick-test/quick-test.component";
-import { ResultsComponent } from "./neosound/pages/guest/results/results.component";
 import { AccountDetailsComponent } from "./neosound/pages/user/account-details/account-details.component";
 import { FilesListComponent } from "./neosound/pages/user/files-list/files-list.component";
 import { TextFilesListComponent } from "./neosound/pages/user/text-files-list/text-files-list.component";
 import { FileResultsComponent } from "./neosound/pages/user/file-results/file-results.component";
 import { LandingComponent } from "./neosound/pages/landing/landing.component";
-import { AdminDashboardComponent } from "./neosound/pages/admin/dashboard/dashboard.component";
 import { OrganizationSettingsComponent } from "./neosound/pages/admin/organisation-settings/organization-settings.component";
 import { KeywordsComponent } from "./neosound/pages/admin/organisation-settings/components/keywords/keywords.component";
 import { SensitiveDataComponent } from "./neosound/pages/admin/organisation-settings/components/sensitive-data/sensitive-data.component";
@@ -90,33 +86,34 @@ import { AnalyticsService } from "./neosound/services/analytics.service";
 import { MediaRecorderService } from "./neosound/services/media-recorder.service";
 import { UsersService } from "./neosound/services/users.service";
 import { RequestsHttpInterceptor } from "./neosound/shared/requests-http.interceptor";
-import { NbPasswordAuthStrategy, NbAuthModule } from "@nebular/auth";
-import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
 import { TagCloudModule } from "angular-tag-cloud-module";
-import {
-  NgxChartsModule,
-  PieChartModule,
-  BarChartModule
-} from "@swimlane/ngx-charts";
-import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbRegisterComponent,
-  NbLogoutComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
-  NbAuthBlockComponent
-} from "@nebular/auth";
 import { NbAlertModule, NbInputModule } from "@nebular/theme";
 import { ToastrModule } from "ngx-toastr";
 import { NgDatepickerModule } from "ng2-datepicker";
 import { TagInputModule } from "ngx-chips";
-const formSetting: any = {
-  redirectDelay: 0,
-  showMessages: {
-    success: true
-  }
-};
+
+import {
+  FooterComponent,
+  HeaderComponent,
+  SearchInputComponent,
+  ThemeSettingsComponent,
+  SwitcherComponent,
+  LayoutDirectionSwitcherComponent,
+  ThemeSwitcherComponent,
+  TinyMCEComponent,
+  ThemeSwitcherListComponent,
+} from './@theme/components';
+
+import {
+  OneColumnLayoutComponent,
+  SampleLayoutComponent,
+  ThreeColumnsLayoutComponent,
+  TwoColumnsLayoutComponent,
+} from './@theme/layouts';
+
+import { UploadDialogComponent } from './neosound/pages/user/upload-dialog/upload-dialog.component';
+import { UploadProgressComponent } from './neosound/pages/user/upload-progress/upload-progress.component';
+
 
 import { FileDropModule } from "ngx-file-drop";
 
@@ -140,14 +137,11 @@ import { FileInfoService } from "./neosound/pages/guest/player-details/services/
 import { FileStatsService } from "./neosound/pages/guest/player-details/services/file-stats.service";
 import { FilePeeksService } from "./neosound/pages/guest/player-details/services/file-peeks.service";
 
-import { PieChartComponent } from "./neosound/components/pie-chart/pie-chart.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
 import { NgxEchartsModule } from "ngx-echarts";
-import { ChartModule } from "angular2-chartjs";
 import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-found.component";
 import { LanguageService } from "./neosound/services/language.service";
 import { NgxPaginationModule } from "ngx-pagination";
-// import { ForbiddenPasswordDirective } from './neosound/directives/forbidden-password.directive';
 import { IntervalDirective } from "./neosound/directives/interval.detective";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
@@ -161,9 +155,27 @@ import { TotalMinutesPlusBatchesChartBarComponent } from "./neosound/pages/chart
 import { KeywordsRadialTreeComponent } from "./neosound/pages/charts/keywords-radial-tree/keywords-radial-tree.component";
 import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.component";
 
+const COMPONENTS = [
+  SwitcherComponent,
+  LayoutDirectionSwitcherComponent,
+  ThemeSwitcherComponent,
+  ThemeSwitcherListComponent,
+  HeaderComponent,
+  FooterComponent,
+  SearchInputComponent,
+  ThemeSettingsComponent,
+  TinyMCEComponent,
+  OneColumnLayoutComponent,
+  SampleLayoutComponent,
+  ThreeColumnsLayoutComponent,
+  TwoColumnsLayoutComponent,
+];
+
 @NgModule({
   declarations: [
+    ...COMPONENTS,
     AppComponent,
+    MinutesSecondsPipe,
     MainComponent,
     LoginComponent,
     DashboardComponent,
@@ -180,21 +192,19 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     SentimentStatsDayComponent,
     SentimentalOfCallsComponent,
     CallsByDayComponent,
+    UploadDialogComponent,
     SignupLinkComponent,
     SignupDetailedComponent,
+    UploadProgressComponent,
     TermsComponent,
     ForgotPasswordComponent,
     PlayerComponent,
     TagifyComponent,
-    UserDetailsComponent,
-    QuickTestComponent,
-    ResultsComponent,
     AccountDetailsComponent,
     FilesListComponent,
     TextFilesListComponent,
     FileResultsComponent,
     LandingComponent,
-    AdminDashboardComponent,
     OrganizationSettingsComponent,
     KeywordsComponent,
     SensitiveDataComponent,
@@ -215,7 +225,6 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     TextTagCloudComponent,
     TextHitsWordsComponent,
     FullTextComponent,
-    PieChartComponent,
     ApiPageComponent,
     PageNotFoundComponent,
     IntervalDirective,
@@ -237,7 +246,8 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     ProcessedCallsComponent,
     TextsDashboardComponent,
     FileInfoComponent,
-    TagifyComponent
+    TagifyComponent,
+    MinutesSecondsPipe
   ],
   imports: [
     BrowserModule,
@@ -264,8 +274,6 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     CoreModule.forRoot(),
 
     FileDropModule,
-    NgxChartsModule,
-    BarChartModule,
     ToastrModule.forRoot(),
     NgDatepickerModule,
     NgxPaginationModule,

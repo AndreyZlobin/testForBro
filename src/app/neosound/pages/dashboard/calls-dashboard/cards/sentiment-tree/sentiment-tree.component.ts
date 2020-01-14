@@ -61,7 +61,7 @@ export class SentimentalTreeComponent implements OnInit, OnDestroy {
           layout: "radial",
           symbol: "emptyCircle",
           symbolSize: 7,
-          initialTreeDepth: 1,
+          initialTreeDepth: 2,
           animationDurationUpdate: 750
         }
       ]

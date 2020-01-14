@@ -25,12 +25,29 @@ export class InfoBarComponent implements OnInit, OnDestroy {
   hasData: boolean = false;
   constructor(
     private dataService: DashboardFileStatsService,
+    private minutesStatsService: MinutesStatsService,
+    private apiCallsStatsService: ApiCallsStatsService
   ) {
     this.dataSub1 = this.dataService.data.subscribe(data => {
       if (data && data.totals) {
         this.allCallsCount = data.totals.allcallscount;
         this.batchesUploaded = data.totals.batchcount;
         this.hasData = true;
+      } else {
+        this.hasData = false;
+      }
+    });
+    this.dataSub2 = this.minutesStatsService.data.subscribe(data => {
+      if (data && data.totalMinutes) {
+        this.totalMinutes = data.totalMinutes;
+        this.hasData = true;
+      } else {
+        this.hasData = false;
+      }
+    });
+    this.dataSub3 = this.apiCallsStatsService.data.subscribe(data => {
+      if (data && data.apiCallsCount) {
+        this.apiCallsCount = data.apiCallsCount;
       } else {
         this.hasData = false;
       }

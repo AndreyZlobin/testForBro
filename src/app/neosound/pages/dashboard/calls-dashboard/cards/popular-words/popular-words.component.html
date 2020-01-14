@@ -1,8 +1,7 @@
 <div class="card card-block d-flex h-100">
   <div class="card-header">{{t('Hits vs. Word')}}</div>
   <div class="card-body align-items-center d-flex justify-content-center" *ngIf="hasData; else loading">
-    <angular-tag-cloud [data]="words" width="300" height="300" [zoomOnHover]="zoomOptions" [overflow]="false"
-      (clicked)="clicked($event)">
+    <angular-tag-cloud [data]="words" width="300" height="300" [overflow]="false">
     </angular-tag-cloud>
   </div>
 </div>

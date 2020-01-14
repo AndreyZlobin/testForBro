@@ -83,7 +83,7 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
     private userService: UsersService,
     private router: Router,
     private modalService: BsModalService,
-    private mediaRecorderService: MediaRecorderService,
+    public mediaRecorderService: MediaRecorderService,
     private filesService: FilesService,
     private textFilterService: TextFilterService,
     private filterService: FilterService,

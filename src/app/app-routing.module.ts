@@ -23,21 +23,16 @@ import { SignupDetailedComponent } from "./neosound/pages/auth/signup-detailed/s
 import { TermsComponent } from "./neosound/pages/auth/terms/terms.component";
 import { ForgotPasswordComponent } from "./neosound/pages/auth/forgot-password/forgot-password.component";
 
-import { UserDetailsComponent } from "./neosound/pages/admin/user-details/user-details.component";
-import { QuickTestComponent } from "./neosound/pages/guest/quick-test/quick-test.component";
-import { ResultsComponent } from "./neosound/pages/guest/results/results.component";
 import { AccountDetailsComponent } from "./neosound/pages/user/account-details/account-details.component";
 import { FilesListComponent } from "./neosound/pages/user/files-list/files-list.component";
 import { TextFilesListComponent } from "./neosound/pages/user/text-files-list/text-files-list.component";
 import { FileResultsComponent } from "./neosound/pages/user/file-results/file-results.component";
 import { LandingComponent } from "./neosound/pages/landing/landing.component";
-import { AdminDashboardComponent } from "./neosound/pages/admin/dashboard/dashboard.component";
 import { OrganizationSettingsComponent } from "./neosound/pages/admin/organisation-settings/organization-settings.component";
 import { AuthGuard } from "./neosound/shared/auth-guard";
 import { CanDeactivateGuard } from "./neosound/shared/can-deactivate";
 import { AboutComponent } from "./neosound/pages/about/about.component";
 
-import { PagesComponent } from "./pages/pages.component";
 import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/player-details.component";
 import { AnalyticDetailsComponent } from "./neosound/pages/guest/analytic-details/analytic-details.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
@@ -47,10 +42,8 @@ import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch
 import { ChartPageComponent } from "./neosound/pages/charts/chart-page/chart-page.component";
 
 const routes: Routes = [
-  { path: "pages", loadChildren: "app/pages/pages.module#PagesModule" },
   {
     path: "",
-    // canActivate: [ AuthGuard ],
     component: MainComponent,
     children: [
       {
@@ -68,20 +61,10 @@ const routes: Routes = [
         component: AboutComponent
       },
       {
-        path: "admin",
-        canActivate: [AuthGuard],
-        component: AdminDashboardComponent
-      },
-      {
         path: "admin/settings",
         canActivate: [AuthGuard],
         canDeactivate: [CanDeactivateGuard],
         component: OrganizationSettingsComponent
-      },
-      {
-        path: "admin/user/:id",
-        canActivate: [AuthGuard],
-        component: UserDetailsComponent
       },
       {
         path: "user/details",
@@ -97,12 +80,6 @@ const routes: Routes = [
         path: "user/text-files",
         canActivate: [AuthGuard],
         component: TextFilesListComponent,
-      },
-      {
-        path: "user/files/reload",
-        data: { reload: true },
-        canActivate: [AuthGuard],
-        component: FilesListComponent
       },
       {
         path: "file/:batchid/:filename",
@@ -133,16 +110,6 @@ const routes: Routes = [
         path: "user/api",
         canActivate: [AuthGuard],
         component: ApiPageComponent
-      },
-      {
-        path: "guest/results",
-        canActivate: [AuthGuard],
-        component: ResultsComponent
-      },
-      {
-        path: "guest/quicktest",
-        canActivate: [AuthGuard],
-        component: QuickTestComponent
       },
       {
         path: "guest/player-details",
@@ -211,7 +178,6 @@ const routes: Routes = [
       }
     ]
   },
-  // { path: '**', redirectTo: 'guest/quicktest' },
   {
     path: "**",
     component: MainComponent,
