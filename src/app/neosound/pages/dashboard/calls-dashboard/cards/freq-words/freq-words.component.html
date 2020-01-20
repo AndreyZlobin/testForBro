@@ -1,8 +1,8 @@
 <div class="card card-block d-flex h-100">
   <div class="card-header">{{t('Most frequently used words')}}</div>
   <div class="card-body" *ngIf="hasData; else loading">
-    <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
-      <li class="list-group-item d-flex" *ngFor="let freqWord of freqWords" style="color: #211b19">
+    <ul class="list-group list-group-flush pl-0" style="height: 300px; overflow-y: auto">
+      <li class="list-group-item d-flex border-0" *ngFor="let freqWord of freqWords" style="color: #211b19">
         <span>{{freqWord.name}}</span>
         <span class="ml-auto">{{freqWord.value}}</span>
       </li>
