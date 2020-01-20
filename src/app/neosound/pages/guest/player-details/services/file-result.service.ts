@@ -105,9 +105,8 @@ export class FileResultService {
             }
 
             if (data.result.merged) {
-              if (data.result.merged.intprobs) {
-                this.fileResultStore.emotionsSttAnger =
-                  data.result.merged.intprobs;
+              if (data.result.merged.intervalprobs) {
+                this.fileResultStore.emotionsSttAnger = data.result.merged.intprobs;
                 this.fileResultStore.emotions = this.fileResultStore.emotionsSttAnger;
               }
             }
