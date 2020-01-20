@@ -218,15 +218,15 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
       grid: [
         {
           show: false,
-          width: max_width + "%",
           top: "4%",
-          left: max_len + "%",
+          left:  "2%",
+          right:  "2%",
           bottom: "15%"
         },
         {
           show: false,
-          width: max_width + "%",
-          left: max_len + "%",
+          left:  "2%",
+          right:  "2%",
           top: "90%",
           bottom: "0%"
         }
@@ -276,8 +276,12 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
           gridIndex: 0,
           data: y_data,
           axisLabel: {
-            show: true
+            inside: true,
+            textStyle: {
+              color: "#2a2a2a"
+            }
           },
+          z: 10,
           axisLine: {
             show: false
           },
@@ -292,8 +296,12 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
           gridIndex: 1,
           data: total_y_data,
           axisLabel: {
-            show: true
+            inside: true,
+            textStyle: {
+              color: "#2a2a2a"
+            }
           },
+          z: 10,
           axisLine: {
             show: false
           },
