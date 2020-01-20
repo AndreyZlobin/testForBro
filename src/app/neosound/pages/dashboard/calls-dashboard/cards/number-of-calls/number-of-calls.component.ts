@@ -99,9 +99,6 @@ export class NumberOfCallsComponent implements OnInit, OnDestroy {
     ];
     return {
       color: this.colors,
-      grid: {
-        left: 100
-      },
       tooltip: {
         trigger: "axis",
         axisPointer: {
@@ -114,7 +111,17 @@ export class NumberOfCallsComponent implements OnInit, OnDestroy {
       yAxis: {
         type: "category",
         axisTick: { show: false },
-        data: batches.slice(0, 6).reverse()
+        data: batches.slice(0, 6).reverse(),
+        axisLabel: {
+          inside: true,
+          textStyle: {
+            color: "#2a2a2a"
+          }
+        },
+        axisLine: {
+          show: false
+        },
+        z: 10
       },
       xAxis: {
         type: "value",

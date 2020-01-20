@@ -46,16 +46,26 @@ export class HitsStopwordsComponent implements OnInit, OnDestroy {
           .reverse();
         this.keyWordChart = {
           color: [this.primaryColor],
-          grid: {
-            left: 100
-          },
           legend: {
             data: ["Keywords"]
           },
           yAxis: {
             type: "category",
             name: this.t("Stopwords"),
-            data: sortedKeywords.map(i => i.name)
+            data: sortedKeywords.map(i => i.name),
+            axisLabel: {
+              inside: true,
+              textStyle: {
+                color: "#2a2a2a"
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            z: 10
           },
           xAxis: {
             type: "value",

@@ -61,6 +61,7 @@ export class SentimentalOfCallsComponent implements OnInit, OnDestroy {
     const neutral = [];
     const na = [];
     const all = [];
+    const dataShadow = [];
     let maxR = 0;
     batches.map((batchName, index) => {
       if (maxR < data.batches[batchName].allCallsN) {
@@ -84,6 +85,9 @@ export class SentimentalOfCallsComponent implements OnInit, OnDestroy {
         neutral.push(data.batches[batchName].sentimentCount["Neutral"]);
         na.push(data.batches[batchName].sentimentCount["n/a"]);
       });
+      for (var i = 0; i < all.length; i++) {
+        dataShadow.push(maxR);
+      }
     const chartData = [
       {
         name: this.t("Positive"),
@@ -108,9 +112,6 @@ export class SentimentalOfCallsComponent implements OnInit, OnDestroy {
     ];
     return {
       color: ["#c12e34", "#e6b600", "#0098d9", "#2b821d"],
-      grid: {
-        left: 100
-      },
       tooltip: {
         trigger: "axis",
         axisPointer: {
@@ -123,7 +124,17 @@ export class SentimentalOfCallsComponent implements OnInit, OnDestroy {
       yAxis: {
         type: "category",
         axisTick: { show: false },
-        data: batches.slice(0, 6).reverse()
+        data: batches.slice(0, 6).reverse(),
+        axisLabel: {
+          inside: true,
+          textStyle: {
+            color: "#2a2a2a"
+          }
+        },
+        axisLine: {
+          show: false
+        },
+        z: 10
       },
       xAxis: {
         type: "value",

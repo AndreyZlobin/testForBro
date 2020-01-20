@@ -56,7 +56,6 @@ export class HitsTopicsComponent implements OnInit, OnDestroy {
         }
         this.topicChart = {
           color: [this.primaryColor],
-          grid: {},
           legend: {
             data: ["Topics"]
           },
