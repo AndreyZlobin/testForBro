@@ -46,9 +46,6 @@ export class HitsStopwordsComponent implements OnInit, OnDestroy {
           .reverse();
         this.keyWordChart = {
           color: [this.primaryColor],
-          grid: {
-            left: 100
-          },
           legend: {
             data: ["Keywords"]
           },

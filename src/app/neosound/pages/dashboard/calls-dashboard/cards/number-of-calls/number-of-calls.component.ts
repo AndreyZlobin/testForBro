@@ -99,9 +99,6 @@ export class NumberOfCallsComponent implements OnInit, OnDestroy {
     ];
     return {
       color: this.colors,
-      grid: {
-        left: 100
-      },
       tooltip: {
         trigger: "axis",
         axisPointer: {
