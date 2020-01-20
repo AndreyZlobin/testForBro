@@ -112,6 +112,11 @@ export class SentimentalOfCallsComponent implements OnInit, OnDestroy {
     ];
     return {
       color: ["#c12e34", "#e6b600", "#0098d9", "#2b821d"],
+      grid: {
+        show: false,
+        left:  "2%",
+        right:  "2%",
+      },
       tooltip: {
         trigger: "axis",
         axisPointer: {

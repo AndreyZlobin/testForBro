@@ -6,17 +6,17 @@
   <div class="col-6 mb-3" *ngIf="show('performanceByAgent')">
     <ngx-performance-by-agent></ngx-performance-by-agent>
   </div>
-  <div class="col-6 mb-3" *ngIf="show('stopwordsTagCloud')">
-    <ngx-stopwords (onClick)="keywordClicked($event)"></ngx-stopwords>
-  </div>
-  <div class="col-6 mb-3" *ngIf="show('hitVsStopword')">
-    <ngx-hits-stopwords></ngx-hits-stopwords>
-  </div>
   <div class="col-6 mb-3" *ngIf="show('popularWordsTagCloud')">
     <ngx-popular-words></ngx-popular-words>
   </div>
   <div class="col-6 mb-3" *ngIf="show('hitVsPopularWord')">
     <ngx-freq-words></ngx-freq-words>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('stopwordsTagCloud')">
+    <ngx-stopwords (onClick)="keywordClicked($event)"></ngx-stopwords>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('hitVsStopword')">
+    <ngx-hits-stopwords></ngx-hits-stopwords>
   </div>
   <div class="col-6 mb-3" *ngIf="show('topicsTagCloud')">
     <ngx-topics (onClick)="topicClicked($event)"></ngx-topics>
