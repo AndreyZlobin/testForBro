@@ -4,7 +4,7 @@
     <ngx-processed-calls></ngx-processed-calls>
   </div>
   <div class="col-6 mb-3" *ngIf="show('performanceByAgent')">
-    <ngx-performance-by-agent></ngx-performance-by-agent>
+    <ngx-performance-by-agent (onClick)="batchClicked($event)"></ngx-performance-by-agent>
   </div>
   <div class="col-6 mb-3" *ngIf="show('popularWordsTagCloud')">
     <ngx-popular-words></ngx-popular-words>

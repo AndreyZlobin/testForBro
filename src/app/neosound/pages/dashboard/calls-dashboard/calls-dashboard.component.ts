@@ -116,10 +116,17 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     this.router.navigateByUrl("/user/files");
   }
 
+  batchClicked(batchId: string) {
+    this.analyticsService.trackEvent("user", "batchClicked");
+    this.filterService.filter.batchid = batchId;
+    this.router.navigateByUrl("/user/files");
+  }
+
   t(v) {
     return LanguageService.t(v);
   }
   show(name: string) {
     return this.settings && this.settings[name] && this.settings[name].show
   }
+
 }

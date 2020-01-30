@@ -1,7 +1,7 @@
 <div class="card card-block d-flex h-100">
   <div class="card-header">{{t('Performance by agent, by %')}}</div>
   <div class="card-body" *ngIf="hasData; else loading">
-    <div echarts [options]="options"></div>
+    <div echarts [options]="options" (chartClick)="onChartEvent($event)"></div>
   </div>
   <ng-template #loading>
     <div class="card-body d-flex h-100"><ngx-card-spinner></ngx-card-spinner></div>

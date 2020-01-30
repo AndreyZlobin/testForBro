@@ -3,7 +3,9 @@ import {
   Input,
   OnInit,
   SimpleChanges,
-  OnDestroy
+  OnDestroy,
+  Output,
+  EventEmitter,
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { DashboardFileStatsService } from "../../services/file-stats.service";
@@ -13,6 +15,7 @@ import { DashboardFileStatsService } from "../../services/file-stats.service";
   templateUrl: "./performance-by-agent.component.html"
 })
 export class PerformanceByAgentComponent implements OnInit, OnDestroy {
+  @Output() onClick = new EventEmitter<string>();
   options: any = 0;
   angercallscount: any = 0;
   silentcallscount: any = 0;
@@ -196,5 +199,8 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
     } else {
       return Math.floor(20 + (40 * r) / maxR);
     }
+  }
+  onChartEvent($event) {
+    this.onClick.emit($event.seriesName);
   }
 }
