@@ -24,7 +24,6 @@
   <div class="col-6 mb-3" *ngIf="show('hitVsTopics')">
     <ngx-hits-topics></ngx-hits-topics>
   </div>
-
   <div class="col-6 mb-3" *ngIf="show('totalMinutesByBatches')">
     <ngx-minutes-stats-batches></ngx-minutes-stats-batches>
   </div>
@@ -49,11 +48,8 @@
   <div class="col-6 mb-3" *ngIf="show('nSentCallsByDay')">
     <ngx-sentimental-calls-by-day></ngx-sentimental-calls-by-day>
   </div>
-  <div class="col-6 mb-3" *ngIf="show('sentimentRadial')">
-    <ngx-average-sentiments (onClick)="batchClicked($event)"></ngx-average-sentiments>
-  </div>
-  <div class="col-6 mb-3" *ngIf="show('sentimentRadial')">
-    <ngx-count-sentiments (onClick)="sentimentTrendClicked($event)"></ngx-count-sentiments>
+  <div class="col-12 mb-3" *ngIf="show('sentimentTrendByBatchesTable')">
+    <ngx-average-sentiments (onClickBatch)="batchClicked($event)" (onClickTrend)="sentimentTrendClicked($event)"></ngx-average-sentiments>
   </div>
   <div class="col-12 mb-3" *ngIf="show('sentimentSankey')">
     <ngx-sentimental-sankey></ngx-sentimental-sankey>

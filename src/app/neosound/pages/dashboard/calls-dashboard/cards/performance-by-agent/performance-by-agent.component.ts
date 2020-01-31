@@ -136,13 +136,16 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
 
       options = {
         color: this.colors,
+        grid: {
+          bottom: 90,
+          top: 10,
+        },
         backgroundColor: "#fff",
         legend: {
           type: "scroll",
-          orient: "vertical",
-          right: 10,
-          top: 20,
-          bottom: 80,
+          orient: "horizontal",
+          left: 10,
+          bottom: 10,
           data: batches
         },
         xAxis: {
