@@ -59,4 +59,8 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
   onChartEvent(batchId: string) {
     this.onClick.emit(batchId);
   }
+  isMax(sentiment: any, type: string) {
+    const vals = Object.values(sentiment) as any;
+    return Math.max(vals[1], vals[2], vals[3], vals[4]) === sentiment[type];
+  }
 }

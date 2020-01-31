@@ -11,10 +11,10 @@
         <tr *ngFor="let sentiment of sentiments">
           <td><a style="text-decoration: underline; cursor: pointer;"
               (click)="onChartEvent(sentiment.name)">{{sentiment.name}}</a></td>
-          <td>{{sentiment.Negative}}</td>
-          <td>{{sentiment.Neutral}}</td>
-          <td>{{sentiment.Positive}}</td>
-          <td>{{sentiment.notAvalable}}</td>
+          <td><span [ngClass]="{'text-danger': isMax(sentiment, 'Negative')}">{{sentiment.Negative}}</span></td>
+          <td><span [ngClass]="{'text-danger': isMax(sentiment, 'Neutral')}">{{sentiment.Neutral}}</span></td>
+          <td><span [ngClass]="{'text-danger': isMax(sentiment, 'Positive')}">{{sentiment.Positive}}</span></td>
+          <td><span [ngClass]="{'text-danger': isMax(sentiment, 'notAvalable')}">{{sentiment.notAvalable}}</span></td>
         </tr>
       </table>
     </div>
