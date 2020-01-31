@@ -37,6 +37,8 @@ import { CallsByDayComponent } from "./neosound/pages/dashboard/calls-dashboard/
 import { PopularWordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/popular-words/popular-words.component";
 import { FreqWordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/freq-words/freq-words.component";
 import { AverageSentimentsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/average-sentiments/average-sentiments.component";
+import { CountSentimentsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/count-sentiments/count-sentiments.component";
+
 import { SentimentalSankeyComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentimental-sankey/sentimental-sankey.component";
 import { SentimentalTreeComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentiment-tree/sentiment-tree.component";
 import { KeywordsPhrasesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/keywords-phrases/keywords-phrases.component";
@@ -215,6 +217,7 @@ const COMPONENTS = [
     TextComplianceComponent,
     TextStopwordsComponent,
     AverageSentimentsComponent,
+    CountSentimentsComponent,
     SentimentalSankeyComponent,
     SentimentalTreeComponent,
     KeywordsPhrasesComponent,

@@ -49,8 +49,11 @@
   <div class="col-6 mb-3" *ngIf="show('nSentCallsByDay')">
     <ngx-sentimental-calls-by-day></ngx-sentimental-calls-by-day>
   </div>
-  <div class="col-12 mb-3" *ngIf="show('sentimentRadial')">
-    <ngx-average-sentiments></ngx-average-sentiments>
+  <div class="col-6 mb-3" *ngIf="show('sentimentRadial')">
+    <ngx-average-sentiments (onClick)="batchClicked($event)"></ngx-average-sentiments>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('sentimentTrend')">
+    <ngx-count-sentiments (onClick)="sentimentTrendClicked($event)"></ngx-count-sentiments>
   </div>
   <div class="col-12 mb-3" *ngIf="show('sentimentSankey')">
     <ngx-sentimental-sankey></ngx-sentimental-sankey>

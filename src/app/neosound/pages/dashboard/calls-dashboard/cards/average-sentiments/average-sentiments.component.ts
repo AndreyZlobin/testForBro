@@ -1,9 +1,9 @@
 import {
   Component,
-  Input,
   OnInit,
-  SimpleChanges,
-  OnDestroy
+  OnDestroy,
+  EventEmitter,
+  Output
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { DashboardFileStatsService } from "../../services/file-stats.service";
@@ -14,6 +14,7 @@ import { DataService } from "../../../../../shared";
   templateUrl: "./average-sentiments.component.html"
 })
 export class AverageSentimentsComponent implements OnInit, OnDestroy {
+  @Output() onClick = new EventEmitter<string>();
   sentiments: any = 0;
   dataSub1: any;
   hasData: boolean = false;
@@ -54,5 +55,8 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
   }
   t(v) {
     return LanguageService.t(v);
+  }
+  onChartEvent(batchId: string) {
+    this.onClick.emit(batchId);
   }
 }

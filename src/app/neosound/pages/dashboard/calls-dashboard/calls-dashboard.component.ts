@@ -121,6 +121,11 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     this.filterService.filter.batchid = batchId;
     this.router.navigateByUrl("/user/files");
   }
+  sentimentTrendClicked(trendName: string) {
+    this.analyticsService.trackEvent("user", "sentimentTrendClicked");
+    this.filterService.filter.sentimentTrend = trendName;
+    this.router.navigateByUrl("/user/files");
+  }
 
   t(v) {
     return LanguageService.t(v);
