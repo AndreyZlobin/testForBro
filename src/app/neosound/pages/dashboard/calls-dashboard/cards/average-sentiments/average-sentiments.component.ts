@@ -14,33 +14,52 @@ import { DataService } from "../../../../../shared";
   templateUrl: "./average-sentiments.component.html"
 })
 export class AverageSentimentsComponent implements OnInit, OnDestroy {
-  @Output() onClick = new EventEmitter<string>();
+  @Output() onClickBatch = new EventEmitter<string>();
+  @Output() onClickTrend = new EventEmitter<string>();
+  textColors = {
+    "Positive-Positive": "text-success",
+    "Positive-Negative": "text-danger",
+    "Positive-Neutral": "text-info",
+    "Negative-Positive": "text-success",
+    "Negative-Negative": "text-danger",
+    "Negative-Neutral": "text-info",
+    "Neutral-Positive": "text-success",
+    "Neutral-Negative": "text-danger",
+    "Neutral-Neutral": "text-info"
+  };
   sentiments: any = 0;
   dataSub1: any;
   hasData: boolean = false;
   primaryColor: string;
-  public zoomOptions = {
-    scale: 1.3,
-    transitionTime: 1.2,
-    delay: 0.1
-  };
   constructor(
     private dataService: DashboardFileStatsService,
     private userData: DataService
   ) {
     this.dataSub1 = this.dataService.data.subscribe(data => {
       if (data && data.batches) {
-        this.sentiments = Object.keys(data.batches).map(
-          (batch, index) => {
-            return {
-              name: batch,
-              Negative: data.batches[batch].sentimentCount.Negative,
-              Neutral: data.batches[batch].sentimentCount.Neutral,
-              Positive: data.batches[batch].sentimentCount.Positive,
-              notAvalable: data.batches[batch].sentimentCount["n/a"]
-            };
-          }
-        );
+        this.sentiments = Object.keys(data.batches).map((batch, index) => {
+          return {
+            name: batch,
+            "Positive-Positive":
+              data.batches[batch].sentimentTrendCount["Positive-Positive"],
+            "Positive-Negative":
+              data.batches[batch].sentimentTrendCount["Positive-Negative"],
+            "Positive-Neutral":
+              data.batches[batch].sentimentTrendCount["Positive-Neutral"],
+            "Negative-Positive":
+              data.batches[batch].sentimentTrendCount["Negative-Positive"],
+            "Negative-Negative":
+              data.batches[batch].sentimentTrendCount["Negative-Negative"],
+            "Negative-Neutral":
+              data.batches[batch].sentimentTrendCount["Negative-Neutral"],
+            "Neutral-Positive":
+              data.batches[batch].sentimentTrendCount["Neutral-Positive"],
+            "Neutral-Negative":
+              data.batches[batch].sentimentTrendCount["Neutral-Negative"],
+            "Neutral-Neutral":
+              data.batches[batch].sentimentTrendCount["Neutral-Neutral"]
+          };
+        });
         this.hasData = true;
       } else {
         this.hasData = false;
@@ -57,10 +76,48 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
     return LanguageService.t(v);
   }
   onChartEvent(batchId: string) {
-    this.onClick.emit(batchId);
+    this.onClickBatch.emit(batchId);
+  }
+  onValueClick(batchId: string, trend: string) {
+    this.onClickTrend.emit(trend);
   }
   isMax(sentiment: any, type: string) {
     const vals = Object.values(sentiment) as any;
-    return Math.max(vals[1], vals[2], vals[3], vals[4]) === sentiment[type];
+    return (
+      Math.max(
+        vals[1],
+        vals[2],
+        vals[3],
+        vals[4],
+        vals[5],
+        vals[6],
+        vals[7],
+        vals[8],
+        vals[9]
+      ) === sentiment[type]
+    );
+  }
+  isMaxValue(sentiment: any[]) {
+    return false;
+  }
+  getClass(name: string, sentiments: any[]) {
+    const className = this.textColors[name];
+    return this.isMax(sentiments, name) ? className : "";
+  }
+  getClassBatch(sentiments: any[]) {
+    const vlues = Object.values(sentiments);
+    const vals = [
+      vlues[1],
+      vlues[2],
+      vlues[3],
+      vlues[4],
+      vlues[5],
+      vlues[6],
+      vlues[7],
+      vlues[8],
+      vlues[9]
+    ];
+    let i = vals.indexOf(Math.max(...vals));
+    return this.textColors[Object.keys(this.textColors)[i]];
   }
 }
