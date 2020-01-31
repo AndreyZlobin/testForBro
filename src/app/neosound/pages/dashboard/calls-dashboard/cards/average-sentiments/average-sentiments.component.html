@@ -16,31 +16,31 @@
         <tr *ngFor="let sentiment of sentiments">
           <td><a style="text-decoration: underline; cursor: pointer;" [ngClass]="getClassBatch(sentiment)"
               (click)="onChartEvent(sentiment.name)">{{sentiment.name}}</a></td>
-          <td><a [ngClass]="getClass('Positive-Positive', sentiment)" style="text-decoration: none; cursor: pointer;"
+          <td class="text-center"><a [ngClass]="getClass('Positive-Positive', sentiment)" style="text-decoration: none; cursor: pointer;"
               (click)="onValueClick(sentiment.name, 'Positive-Positive')">{{sentiment['Positive-Positive']}}</a>
           </td>
-          <td><a [ngClass]="getClass('Positive-Negative', sentiment)" style="text-decoration: none; cursor: pointer;"
+          <td class="text-center"><a [ngClass]="getClass('Positive-Negative', sentiment)" style="text-decoration: none; cursor: pointer;"
               (click)="onValueClick(sentiment.name, 'Positive-Negative')">{{sentiment['Positive-Negative']}}</a>
           </td>
-          <td><a [ngClass]="getClass('Positive-Neutral', sentiment)" style="text-decoration: none; cursor: pointer;"
+          <td class="text-center"><a [ngClass]="getClass('Positive-Neutral', sentiment)" style="text-decoration: none; cursor: pointer;"
               (click)="onValueClick(sentiment.name, 'Positive-Neutral')">{{sentiment['Positive-Neutral']}}</a>
           </td>
-          <td><a [ngClass]="getClass('Negative-Positive', sentiment)" style="text-decoration: none; cursor: pointer;"
+          <td class="text-center"><a [ngClass]="getClass('Negative-Positive', sentiment)" style="text-decoration: none; cursor: pointer;"
               (click)="onValueClick(sentiment.name, 'Negative-Positive')">{{sentiment['Negative-Positive']}}</a>
           </td>
-          <td><a [ngClass]="getClass('Negative-Negative', sentiment)" style="text-decoration: none; cursor: pointer;"
+          <td class="text-center"><a [ngClass]="getClass('Negative-Negative', sentiment)" style="text-decoration: none; cursor: pointer;"
               (click)="onValueClick(sentiment.name, 'Negative-Negative')">{{sentiment['Negative-Negative']}}</a>
           </td>
-          <td><a [ngClass]="getClass('Negative-Neutral', sentiment)" style="text-decoration: none; cursor: pointer;"
+          <td class="text-center"><a [ngClass]="getClass('Negative-Neutral', sentiment)" style="text-decoration: none; cursor: pointer;"
               (click)="onValueClick(sentiment.name, 'Negative-Neutral')">{{sentiment['Negative-Neutral']}}</a>
           </td>
-          <td><a [ngClass]="getClass('Neutral-Positive', sentiment)" style="text-decoration: none; cursor: pointer;"
+          <td class="text-center"><a [ngClass]="getClass('Neutral-Positive', sentiment)" style="text-decoration: none; cursor: pointer;"
               (click)="onValueClick(sentiment.name, 'Neutral-Positive')">{{sentiment['Neutral-Positive']}}</a>
           </td>
-          <td><a [ngClass]="getClass('Neutral-Negative', sentiment)" style="text-decoration: none; cursor: pointer;"
+          <td class="text-center"><a [ngClass]="getClass('Neutral-Negative', sentiment)" style="text-decoration: none; cursor: pointer;"
               (click)="onValueClick(sentiment.name, 'Neutral-Negative')">{{sentiment['Neutral-Negative']}}</a>
           </td>
-          <td><a [ngClass]="getClass('Neutral-Neutral', sentiment)" style="text-decoration: none; cursor: pointer;"
+          <td class="text-center"><a [ngClass]="getClass('Neutral-Neutral', sentiment)" style="text-decoration: none; cursor: pointer;"
               (click)="onValueClick(sentiment.name, 'Neutral-Neutral')">{{sentiment['Neutral-Neutral']}}</a>
           </td>
         </tr>

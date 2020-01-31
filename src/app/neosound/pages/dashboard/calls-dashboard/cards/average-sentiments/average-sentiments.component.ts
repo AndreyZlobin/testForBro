@@ -27,6 +27,17 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
     "Neutral-Negative": "text-danger",
     "Neutral-Neutral": "text-info"
   };
+  maxSentiment = {
+    "Positive-Positive": 0,
+    "Positive-Negative": 0,
+    "Positive-Neutral": 0,
+    "Negative-Positive": 0,
+    "Negative-Negative": 0,
+    "Negative-Neutral": 0,
+    "Neutral-Positive": 0,
+    "Neutral-Negative": 0,
+    "Neutral-Neutral": 0
+  };
   sentiments: any = 0;
   dataSub1: any;
   hasData: boolean = false;
@@ -60,6 +71,15 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
               data.batches[batch].sentimentTrendCount["Neutral-Neutral"]
           };
         });
+        this.sentiments.forEach(element => {
+          Object.keys(element).map((key, index) => {
+            if(index > 0) {
+              if(element[key] > this.maxSentiment[key]) {
+                this.maxSentiment[key] = element[key];
+              }
+            }
+          })
+        });
         this.hasData = true;
       } else {
         this.hasData = false;
@@ -84,17 +104,7 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
   isMax(sentiment: any, type: string) {
     const vals = Object.values(sentiment) as any;
     return (
-      Math.max(
-        vals[1],
-        vals[2],
-        vals[3],
-        vals[4],
-        vals[5],
-        vals[6],
-        vals[7],
-        vals[8],
-        vals[9]
-      ) === sentiment[type]
+      this.maxSentiment[type] === sentiment[type] && this.maxSentiment[type] !== 0
     );
   }
   isMaxValue(sentiment: any[]) {
@@ -105,19 +115,8 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
     return this.isMax(sentiments, name) ? className : "";
   }
   getClassBatch(sentiments: any[]) {
-    const vlues = Object.values(sentiments);
-    const vals = [
-      vlues[1],
-      vlues[2],
-      vlues[3],
-      vlues[4],
-      vlues[5],
-      vlues[6],
-      vlues[7],
-      vlues[8],
-      vlues[9]
-    ];
-    let i = vals.indexOf(Math.max(...vals));
-    return this.textColors[Object.keys(this.textColors)[i]];
+    const vlues = Object.values(this.maxSentiment);
+    let i = vlues.indexOf(Math.max(...vlues));
+    return this.textColors[Object.keys(this.textColors)[i]] !== 0 ? this.textColors[Object.keys(this.textColors)[i]] : 0;
   }
 }
