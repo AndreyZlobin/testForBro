@@ -14,8 +14,8 @@ import { DataService } from "../../../../../shared";
   templateUrl: "./average-sentiments.component.html"
 })
 export class AverageSentimentsComponent implements OnInit, OnDestroy {
-  @Output() onClickBatch = new EventEmitter<string>();
-  @Output() onClickTrend = new EventEmitter<string>();
+  @Output() onClickBatch = new EventEmitter<any>();
+  @Output() onClickTrend = new EventEmitter<any>();
   textColors = {
     "Positive-Positive": "text-success",
     "Positive-Negative": "text-danger",
@@ -73,12 +73,12 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
         });
         this.sentiments.forEach(element => {
           Object.keys(element).map((key, index) => {
-            if(index > 0) {
-              if(element[key] > this.maxSentiment[key]) {
+            if (index > 0) {
+              if (element[key] > this.maxSentiment[key]) {
                 this.maxSentiment[key] = element[key];
               }
             }
-          })
+          });
         });
         this.hasData = true;
       } else {
@@ -99,12 +99,13 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
     this.onClickBatch.emit(batchId);
   }
   onValueClick(batchId: string, trend: string) {
-    this.onClickTrend.emit(trend);
+    this.onClickTrend.emit({ batchId: batchId, trend: trend });
   }
   isMax(sentiment: any, type: string) {
     const vals = Object.values(sentiment) as any;
     return (
-      this.maxSentiment[type] === sentiment[type] && this.maxSentiment[type] !== 0
+      this.maxSentiment[type] === sentiment[type] &&
+      this.maxSentiment[type] !== 0
     );
   }
   isMaxValue(sentiment: any[]) {
@@ -117,6 +118,8 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
   getClassBatch(sentiments: any[]) {
     const vlues = Object.values(this.maxSentiment);
     let i = vlues.indexOf(Math.max(...vlues));
-    return this.textColors[Object.keys(this.textColors)[i]] !== 0 ? this.textColors[Object.keys(this.textColors)[i]] : 0;
+    return this.textColors[Object.keys(this.textColors)[i]] !== 0
+      ? this.textColors[Object.keys(this.textColors)[i]]
+      : 0;
   }
 }
