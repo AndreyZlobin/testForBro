@@ -134,6 +134,7 @@ import { FileInfoComponent } from "./neosound/pages/guest/player-details/cards/f
 import { FileChartDataService } from "./neosound/pages/guest/player-details/services/file-chart-data.service";
 import { FileResultService } from "./neosound/pages/guest/player-details/services/file-result.service";
 import { FileInfoService } from "./neosound/pages/guest/player-details/services/file-info.service";
+import { WaveSurferService } from "./neosound/pages/guest/player-details/player/wave-surfer.service";
 import { FileStatsService } from "./neosound/pages/guest/player-details/services/file-stats.service";
 import { FilePeeksService } from "./neosound/pages/guest/player-details/services/file-peeks.service";
 
@@ -308,6 +309,7 @@ const COMPONENTS = [
     PlayerService,
     AnalyticsService,
     MediaRecorderService,
+    WaveSurferService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestsHttpInterceptor,

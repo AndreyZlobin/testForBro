@@ -52,6 +52,9 @@ export class FilesService {
   getFile(params): Observable<any> {
     return this.http.post(`${environment.api}/getFile`, params);
   }
+  getRegions(params): Observable<any> {
+    return this.http.post(`${environment.api}/getFileResultDetails`, params);
+  }
   getAudioWaveForm(params): Observable<any> {
     params = params;
     return this.http.post(`${environment.api}/getAudioWaveForm`, params);
