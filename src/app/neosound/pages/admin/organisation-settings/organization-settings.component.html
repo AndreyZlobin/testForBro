@@ -46,6 +46,9 @@
             </nb-tab>
           </nb-tabset>
         </ng-container>
+        <ng-container *ngIf="activeItem === items[2].key">
+          Check list
+        </ng-container>
       </div>
     </div>
   </nb-card-body>
