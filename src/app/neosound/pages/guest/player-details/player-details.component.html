@@ -16,18 +16,9 @@
         </li>
       </ul>
     </div>
-    <div class="d-flex flex-column" *ngIf="currentView === 'player'">
-      <ng-container *ngIf="filename && batchid && !isLoading; else loading">
-        <ngx-player [fileName]="filename" [batchId]="batchid"></ngx-player>
-      </ng-container>
-      <div style="overflow-y: auto;">
-        <div style="height: 54vh;">
-          <ngx-text-log [batchId]="batchid" [fileName]="filename" (goToRegion)="goToRegion($event)"></ngx-text-log>
-        </div>
-      </div>
+    <div class="d-flex flex-column">
+      <ngx-player [fileName]="filename" [batchId]="batchid"></ngx-player>
+      <ngx-text-log [batchId]="batchid" [fileName]="filename" (goToRegion)="goToRegion($event)"></ngx-text-log>
     </div>
-    <ng-template #loading>
-      {{ t("Loading...") }}
-    </ng-template>
   </nb-card-body>
 </nb-card>
