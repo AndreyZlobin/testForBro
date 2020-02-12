@@ -18,11 +18,7 @@
     </div>
     <div class="d-flex flex-column">
       <ngx-player [fileName]="filename" [batchId]="batchid"></ngx-player>
-      <div style="overflow-y: auto;">
-        <div style="height: 54vh;">
-          <ngx-text-log [batchId]="batchid" [fileName]="filename" (goToRegion)="goToRegion($event)"></ngx-text-log>
-        </div>
-      </div>
+      <ngx-text-log [batchId]="batchid" [fileName]="filename" (goToRegion)="goToRegion($event)"></ngx-text-log>
     </div>
   </nb-card-body>
 </nb-card>

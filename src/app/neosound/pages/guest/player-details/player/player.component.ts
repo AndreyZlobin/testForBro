@@ -40,12 +40,14 @@ export class PlayerComponent implements OnDestroy, OnChanges {
 
   ngOnDestroy() {
     if (this.fileName && this.batchId) {
+      this.playing = false;
       this.waveSurferService.destroyAll();
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.fileName && this.batchId) {
+      this.playing = false;
       this.waveSurferService.init(this.id, this.batchId, this.fileName);
     }
   }

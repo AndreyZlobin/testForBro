@@ -1,6 +1,6 @@
-<div class="row" style="height: 128px;">
+<div class="row my-2">
     <div *ngIf="waveSurferService.loading" class="d-flex"
-        style="position: absolute;width: 100%;height: 128px; background-color: #fff; z-index: 600;">
+        style="position: absolute;width: 100%; background-color: #fff; z-index: 600;">
         <ngx-card-spinner></ngx-card-spinner>
     </div>
     <div class="col-1 d-flex align-items-center justify-content-center">
@@ -12,7 +12,7 @@
             <i *ngIf="playing" class="fa fa-pause"></i>
         </button>
     </div>
-    <div class="col-11 my-2">
+    <div class="col-11">
         <div id="player">
         </div>
         <div id="timelineContainer"></div>
