@@ -59,16 +59,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
   }
 
   setAnswer(index: number, answer: string) {
-    console.log(
-      this.data[index].s,
-      answer,
-      this.data[index].s.includes(answer)
-    );
-    if (this.data[index].s.includes(answer)) {
-      this.data[index].s = this.data[index].s.filter(v => v !== answer);
-    } else {
-      this.data[index].s = [answer];
-    }
+    this.data[index].s = [answer];
     this.data = [...this.data];
   }
   save() {
