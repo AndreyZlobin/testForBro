@@ -5,7 +5,7 @@ import { NgModule, LOCALE_ID } from "@angular/core";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CoreModule } from "./@core/core.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
+import { DragulaModule } from "ng2-dragula";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { TooltipModule } from "ngx-bootstrap/tooltip";
 import { ModalModule } from "ngx-bootstrap/modal";
@@ -71,6 +71,7 @@ import { LandingComponent } from "./neosound/pages/landing/landing.component";
 import { OrganizationSettingsComponent } from "./neosound/pages/admin/organisation-settings/organization-settings.component";
 import { KeywordsComponent } from "./neosound/pages/admin/organisation-settings/components/keywords/keywords.component";
 import { SensitiveDataComponent } from "./neosound/pages/admin/organisation-settings/components/sensitive-data/sensitive-data.component";
+import { CheckListComponent } from "./neosound/pages/admin/organisation-settings/components/check-list/check-list.component";
 
 import { AuthGuard } from "./neosound/shared/auth-guard";
 import { CanDeactivateGuard } from "./neosound/shared/can-deactivate";
@@ -103,19 +104,18 @@ import {
   LayoutDirectionSwitcherComponent,
   ThemeSwitcherComponent,
   TinyMCEComponent,
-  ThemeSwitcherListComponent,
-} from './@theme/components';
+  ThemeSwitcherListComponent
+} from "./@theme/components";
 
 import {
   OneColumnLayoutComponent,
   SampleLayoutComponent,
   ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent,
-} from './@theme/layouts';
+  TwoColumnsLayoutComponent
+} from "./@theme/layouts";
 
-import { UploadDialogComponent } from './neosound/pages/user/upload-dialog/upload-dialog.component';
-import { UploadProgressComponent } from './neosound/pages/user/upload-progress/upload-progress.component';
-
+import { UploadDialogComponent } from "./neosound/pages/user/upload-dialog/upload-dialog.component";
+import { UploadProgressComponent } from "./neosound/pages/user/upload-progress/upload-progress.component";
 
 import { FileDropModule } from "ngx-file-drop";
 
@@ -124,6 +124,7 @@ import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/pl
 import { AnalyticDetailsComponent } from "./neosound/pages/guest/analytic-details/analytic-details.component";
 
 import { TextLogComponent } from "./neosound/pages/guest/player-details/cards/text-log/text-log.component";
+import { CheckListFormComponent } from "./neosound/pages/guest/player-details/cards/check-list/check-list.component";
 import { TextComplianceComponent } from "./neosound/pages/guest/player-details/cards/text-compliance/text-compliance.component";
 import { FullTextComponent } from "./neosound/pages/guest/player-details/cards/full-text/full-text.component";
 import { TextStopwordsComponent } from "./neosound/pages/guest/player-details/cards/text-stopwords/text-stopwords.component";
@@ -171,7 +172,7 @@ const COMPONENTS = [
   OneColumnLayoutComponent,
   SampleLayoutComponent,
   ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent,
+  TwoColumnsLayoutComponent
 ];
 
 @NgModule({
@@ -211,10 +212,12 @@ const COMPONENTS = [
     OrganizationSettingsComponent,
     KeywordsComponent,
     SensitiveDataComponent,
+    CheckListComponent,
     AboutComponent,
     PlayerDetailsComponent,
     AnalyticDetailsComponent,
     TextLogComponent,
+    CheckListFormComponent,
     TextComplianceComponent,
     TextStopwordsComponent,
     AverageSentimentsComponent,
@@ -266,7 +269,7 @@ const COMPONENTS = [
     NbInputModule,
     NgxEchartsModule,
     TagCloudModule,
-
+    DragulaModule.forRoot(),
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),

@@ -1,0 +1,41 @@
+<div class="loader" *ngIf="isLoading">Loading...</div>
+<div class="row" *ngIf="!isLoading">
+    <div class="col-12">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Check-list</span>
+            <span>
+                <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;" (click)="addQuestion()">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </span>
+        </h4>
+        <div dragula="HANDLES">
+            <div *ngFor="let question of checklist; let i = index">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted" contenteditable="true"
+                        (input)="onChange($event.target.innerHTML, i)">{{question.q}}</span>
+                    <div>
+                        <button class="btn p-2 c-normal align-self-center" style="cursor: move;">
+                            <i class="fa fa-arrows-alt"></i>
+                        </button>
+                        <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
+                            (click)="removeQuestion(i)">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </h4>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed"
+                        *ngFor="let answer of question.as">
+                        <div>
+                            {{answer}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end align-items-center mb-3">
+        <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+    </div>
+</div>
