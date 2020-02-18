@@ -17,11 +17,7 @@ export class CheckListComponent implements OnInit {
     private organizationSettingsService: OrganizationSettingsService,
     private dragulaService: DragulaService
   ) {
-    // dragulaService.createGroup("HANDLES", {
-    //   moves: (el, container, handle) => {
-    //     return handle.className === "handle";
-    //   }
-    // });
+
   }
 
   ngOnInit() {

@@ -9,9 +9,9 @@
     <div class="d-flex flex-column">
       <div class="mb-3" *ngFor="let question of data; let i = index">
         <h5>
-          {{question.q}}
+          {{i+1}}. {{question.q}}
         </h5>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <div class="btn-group btn-group-toggle ml-auto" data-toggle="buttons">
           <ng-container *ngFor="let answer of question.as">
             <label style="cursor: pointer;" (click)="setAnswer(i, answer)"
               [ngClass]="{'btn btn-secondary': true, 'active': isActive(question, answer)}">

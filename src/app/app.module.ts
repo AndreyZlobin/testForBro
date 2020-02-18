@@ -147,6 +147,7 @@ import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-
 import { LanguageService } from "./neosound/services/language.service";
 import { NgxPaginationModule } from "ngx-pagination";
 import { IntervalDirective } from "./neosound/directives/interval.detective";
+import { ContenteditableDirective } from "./neosound/directives/contenteditable.directive";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
 import { DataService } from "./neosound/shared";
@@ -235,6 +236,7 @@ const COMPONENTS = [
     ApiPageComponent,
     PageNotFoundComponent,
     IntervalDirective,
+    ContenteditableDirective,
     BatchListComponent,
     BatchDetailsComponent,
     ChartPageComponent,
