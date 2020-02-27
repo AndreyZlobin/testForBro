@@ -9,11 +9,11 @@
                 </button>
             </span>
         </h4>
-        <div dragula="HANDLES">
+        <div dragula="HANDLES" [(dragulaModel)]="checklist">
             <div *ngFor="let question of checklist; let i = index">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted" contenteditable="true"
-                        (input)="onChange($event.target.innerHTML, i)">{{question.q}}</span>
+                    [(ngModel)]="checklist[i].q"></span>
                     <div>
                         <button class="btn p-2 c-normal align-self-center" style="cursor: move;">
                             <i class="fa fa-arrows-alt"></i>

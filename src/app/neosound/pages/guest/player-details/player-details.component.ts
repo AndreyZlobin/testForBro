@@ -13,6 +13,7 @@ export class PlayerDetailsComponent {
   player: PlayerComponent;
   filename: string = "";
   batchid: string = "";
+  showComments: boolean = false;
   constructor(private router: Router, private route: ActivatedRoute) {
     router.events
       .filter(event => event instanceof NavigationEnd)
@@ -48,4 +49,5 @@ export class PlayerDetailsComponent {
   public goToRegion(time: any) {
     this.player && this.player.seekTo(time);
   }
+
 }

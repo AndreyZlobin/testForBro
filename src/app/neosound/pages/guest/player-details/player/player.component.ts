@@ -22,6 +22,8 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   @HostListener("window:keyup", ["$event"])
   keyEvent(event: KeyboardEvent) {
     if (event.keyCode === 32) {
+      event.preventDefault();
+      event.stopPropagation();
       this.play();
     }
   }

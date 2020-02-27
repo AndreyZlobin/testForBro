@@ -1,7 +1,6 @@
-import { APP_BASE_HREF } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule, LOCALE_ID } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CoreModule } from "./@core/core.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -31,6 +30,8 @@ import { StopWordsComponent } from "./neosound/pages/dashboard/calls-dashboard/c
 import { HitsStopwordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/hits-stopwords/hits-stopwords.component";
 import { TopicComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/topics/topics.component";
 import { HitsTopicsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/hits-topics/hits-topics.component";
+import { AssessmentByAgentComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/assessment-by-agent/assessment-by-agent.component";
+
 import { MinutesStatsBatchesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/minutes-stats-batches/minutes-stats-batchess.component";
 import { MinutesStatsMinutesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/minutes-stats-minutes/minutes-stats-minutes.component";
 import { CallsByDayComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/calls-by-day/calls-by-day.component";
@@ -98,20 +99,10 @@ import { TagInputModule } from "ngx-chips";
 import {
   FooterComponent,
   HeaderComponent,
-  SearchInputComponent,
-  ThemeSettingsComponent,
-  SwitcherComponent,
-  LayoutDirectionSwitcherComponent,
-  ThemeSwitcherComponent,
-  TinyMCEComponent,
-  ThemeSwitcherListComponent
 } from "./@theme/components";
 
 import {
   OneColumnLayoutComponent,
-  SampleLayoutComponent,
-  ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent
 } from "./@theme/layouts";
 
 import { UploadDialogComponent } from "./neosound/pages/user/upload-dialog/upload-dialog.component";
@@ -147,6 +138,7 @@ import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-
 import { LanguageService } from "./neosound/services/language.service";
 import { NgxPaginationModule } from "ngx-pagination";
 import { IntervalDirective } from "./neosound/directives/interval.detective";
+import { ContenteditableDirective } from "./neosound/directives/contenteditable.directive";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
 import { DataService } from "./neosound/shared";
@@ -159,25 +151,11 @@ import { TotalMinutesPlusBatchesChartBarComponent } from "./neosound/pages/chart
 import { KeywordsRadialTreeComponent } from "./neosound/pages/charts/keywords-radial-tree/keywords-radial-tree.component";
 import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.component";
 
-const COMPONENTS = [
-  SwitcherComponent,
-  LayoutDirectionSwitcherComponent,
-  ThemeSwitcherComponent,
-  ThemeSwitcherListComponent,
-  HeaderComponent,
-  FooterComponent,
-  SearchInputComponent,
-  ThemeSettingsComponent,
-  TinyMCEComponent,
-  OneColumnLayoutComponent,
-  SampleLayoutComponent,
-  ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent
-];
-
 @NgModule({
   declarations: [
-    ...COMPONENTS,
+    HeaderComponent,
+    FooterComponent,
+    OneColumnLayoutComponent,
     AppComponent,
     MinutesSecondsPipe,
     MainComponent,
@@ -189,6 +167,7 @@ const COMPONENTS = [
     FreqWordsComponent,
     TopicComponent,
     HitsTopicsComponent,
+    AssessmentByAgentComponent,
     MinutesStatsBatchesComponent,
     MinutesStatsMinutesComponent,
     SentimentStatsBatchesComponent,
@@ -235,6 +214,7 @@ const COMPONENTS = [
     ApiPageComponent,
     PageNotFoundComponent,
     IntervalDirective,
+    ContenteditableDirective,
     BatchListComponent,
     BatchDetailsComponent,
     ChartPageComponent,
@@ -258,11 +238,9 @@ const COMPONENTS = [
   ],
   imports: [
     BrowserModule,
-
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-
     NbAlertModule,
     FormsModule,
     ReactiveFormsModule,
@@ -289,10 +267,6 @@ const COMPONENTS = [
   ],
   bootstrap: [AppComponent],
   providers: [
-    {
-      provide: LOCALE_ID,
-      useValue: "de-de"
-    },
     AuthGuard,
     CanDeactivateGuard,
     UsersService,
