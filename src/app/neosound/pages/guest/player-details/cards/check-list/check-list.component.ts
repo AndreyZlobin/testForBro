@@ -19,6 +19,8 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
   data: any[];
   dataSub: any;
   isLoading: boolean;
+  view: string = "assessment";
+  comment: string = "Somme comment"
 
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
@@ -70,5 +72,8 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
         checklist: this.data
       })
       .subscribe();
+  }
+  switchView(view: string) {
+    this.view = view;
   }
 }

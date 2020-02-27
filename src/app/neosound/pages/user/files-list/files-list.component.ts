@@ -24,6 +24,7 @@ import { DataService } from "../../../shared";
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild("scroll") scrollTo: ElementRef;
   trends = ["fa-angry text-danger", "fa-grin text-success", "fa-meh text-info"];
+  filterName: string;
   errorMessage = "";
   isLoading = true;
   pagesArr = [1];
@@ -117,15 +118,12 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   getOpacityLevelAnger(val) {
-    if (!val) {
-      return "";
-    }
-    let result;
-    if (val.anger < 1) {
-      result = 0;
-    }
-    result = val.anger / 2 / 100;
-    return "rgba(255, 5, 5, " + result + ")";
+    const a = val.anger / 100;
+    const b = 100 * a;
+    const c = b + 0;
+
+    // Return a CSS HSL string
+    return "hsl(" + c + ", 50%, 50%)";
   }
 
   getOpacityLevelCompliance(percent) {
@@ -172,19 +170,11 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     return "fa-meh";
   }
 
-  sortTable(sortBy) {
+  sortTable(filterName: string, sortBy: string, direction: string) {
     this.analyticsService.trackEvent("sortTable", sortBy);
-    if (sortBy !== this.filterService.filter.sortby) {
-      this.filterService.filter.sortorder = "asc";
-    } else {
-      if (this.filterService.filter.sortorder === "desc") {
-        this.filterService.filter.sortorder = "asc";
-      } else {
-        this.filterService.filter.sortorder = "desc";
-      }
-    }
-
+    this.filterService.filter.sortorder = direction;
     this.filterService.filter.sortby = sortBy;
+    this.filterName = filterName;
     this.filterService.updateFileList();
   }
 

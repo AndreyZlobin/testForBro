@@ -18,14 +18,15 @@
     </div>
     <div class="d-flex flex-column">
       <ngx-player [fileName]="filename" [batchId]="batchid"></ngx-player>
-      <div class="row">
-        <div class="col-8">
-          <ngx-text-log [batchId]="batchid" [fileName]="filename" (goToRegion)="goToRegion($event)"></ngx-text-log>
-        </div>
-        <div class="col-4">
+      <div class="d-flex flex-row justify-content-between">
+        <ngx-text-log style="width: 100%;" [batchId]="batchid" [fileName]="filename" (goToRegion)="goToRegion($event)"></ngx-text-log>
+        <div class="w-25" *ngIf="showComments">
           <ngx-check-list [batchId]="batchid" [fileName]="filename"></ngx-check-list>
         </div>
       </div>
     </div>
   </nb-card-body>
 </nb-card>
+<div style="position: absolute; top: 50%; right: 0; background-color: white;     z-index: 999;" class="border">
+  <button class="btn p-2 m-2" style="cursor: pointer; color: #2a2a2a;z-index: 99;" (click)="showComments = !showComments"><i class="far fa-comment-alt"></i></button>
+</div>

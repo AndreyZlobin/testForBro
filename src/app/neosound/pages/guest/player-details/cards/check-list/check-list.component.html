@@ -1,29 +1,53 @@
-<h4 class="d-flex justify-content-between align-items-center mb-3">
-  <span class="text-muted">Check-list</span>
-  <button class="btn p-2 c-normal border" style="cursor: pointer;" (click)="save()">
-    Save
+<div class="d-flex justify-content-end align-items-center mb-3">
+  <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;" (click)="switchView('comments')">
+    <i class="far fa-sticky-note"></i>
   </button>
-</h4>
-<div style="overflow-y: auto;">
-  <div style="height: 55vh;">
-    <div class="d-flex flex-column">
-      <div class="mb-3" *ngFor="let question of data; let i = index">
-        <h5>
+  <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;" (click)="switchView('assessment')">
+    <i class="fas fa-tasks"></i>
+  </button>
+</div>
+<ng-container *ngIf="view === 'assessment'">
+  <div style="overflow-y: auto;">
+    <div style="height: 53vh;">
+      <div class="d-flex flex-column border-bottom p-2 mb-3" *ngFor="let question of data; let i = index">
+        <div>
           {{i+1}}. {{question.q}}
-        </h5>
-        <div class="btn-group btn-group-toggle ml-auto" data-toggle="buttons">
-          <ng-container *ngFor="let answer of question.as">
-            <label style="cursor: pointer;" (click)="setAnswer(i, answer)"
-              [ngClass]="{'btn btn-secondary': true, 'active': isActive(question, answer)}">
-              <input type="radio" name="options" id={{question+answer}}>{{answer}}
-            </label>
-          </ng-container>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div class="btn-group btn-group-toggle ml-auto" data-toggle="buttons">
+            <ng-container *ngFor="let answer of question.as">
+              <label style="cursor: pointer; padding: .5rem .75rem;" (click)="setAnswer(i, answer)"
+                [ngClass]="{'btn btn-secondary': true, 'btn-primary': isActive(question, answer)}">
+                <input type="radio" name="options" id={{question+answer}}>{{answer}}
+              </label>
+            </ng-container>
+          </div>
         </div>
       </div>
     </div>
-    <ng-template #loading>
-      <div class="d-flex align-items-center justify-content-center">
+    <div class="d-flex justify-content-around align-items-center py-2">
+      <div>Total scrore: 87%</div>
+      <div class="d-flex flex-row justify-content-end ml-4">
+        <button type="button" class="btn c-normal primary border " style="padding: .5rem .75rem;"
+          (click)="save()">Reset</button>
+        <button type="button" class="btn ml-1 border btn-primary" style="padding: .5rem .75rem;"
+          (click)="save()">Save</button>
       </div>
-    </ng-template>
+    </div>
   </div>
-</div>
+</ng-container>
+<ng-container *ngIf="view === 'comments'">
+  <div style="overflow-y: auto;">
+    <div style="height: 53vh;" class="border p-0" contenteditable="true" [(ngModel)]="comment">
+    </div>
+  </div>
+  <div class="d-flex ">
+    <div class="d-flex flex-row justify-content-end ml-auto">
+      <button type="button" class="btn ml-1 border btn-primary" (click)="saveComment()">Save</button>
+    </div>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <div class="d-flex align-items-center justify-content-center">
+  </div>
+</ng-template>
