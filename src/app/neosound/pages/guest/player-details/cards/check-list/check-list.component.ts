@@ -10,6 +10,7 @@ import {
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { FilesService } from "../../../../../services/files.service";
+import { FilterService } from "../../../../../services/filter.service";
 
 @Component({
   selector: "ngx-check-list",
@@ -20,11 +21,15 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
   dataSub: any;
   isLoading: boolean;
   view: string = "assessment";
-  comment: string = "Somme comment"
+  comment: string;
 
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
-  constructor(public filesService: FilesService) {}
+  file: any;
+  constructor(
+    public filesService: FilesService,
+    public filterService: FilterService
+  ) {}
   ngOnInit() {}
   ngOnDestroy() {
     if (this.dataSub) {
@@ -53,6 +58,14 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
             this.data = null;
           }
         });
+      this.filterService.files.subscribe(() => {
+        this.file = this.filterService.getFile(this.batchId, this.fileName);
+        this.comment =
+          this.file.comment.length > 0 ? this.file.comment[0].text : "";
+      });
+      this.file = this.filterService.getFile(this.batchId, this.fileName);
+      this.comment =
+        this.file.comment.length > 0 ? this.file.comment[0].text : "";
     }
   }
 
@@ -70,6 +83,32 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
         batchid: this.batchId,
         filename: this.fileName,
         checklist: this.data
+      })
+      .subscribe();
+    const index = this.filterService.getIndex(this.batchId, this.fileName);
+    this.filterService.setAssessment(index, this.getAssessment(this.data));
+  }
+  getAssessment(data: any) {
+    if (data) {
+      const yes = data.filter(i => i.s[0] === "yes");
+      return Math.round((yes.length / data.length) * 100);
+    }
+    return 0;
+  }
+  saveComment() {
+    this.filesService
+      .updateFileComment({
+        fileid: {
+          batchid: this.batchId,
+          fileid: this.fileName
+        },
+        fileinfo: {
+          comment: [
+            {
+              text: this.comment
+            }
+          ]
+        }
       })
       .subscribe();
   }

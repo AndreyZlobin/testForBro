@@ -300,8 +300,8 @@
                   </div>
                 </div>
                 <div class="d-flex flex-column" style="width: 55%;">
-                  <div class="d-flex flex-row justify-content-between">
-                    <div class="d-flex">
+                  <div class="d-flex flex-row justify-content-start">
+                    <div class="d-flex mx-2">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small;" class="font-weight-bold">{{t('Compliance')}}</div>
                         <div class="d-flex flex-row font-weight-bold mt-1"
@@ -315,7 +315,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start align-self-scratch">
+                    <div class="d-flex justify-content-start align-self-scratch mx-2">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small;" class="font-weight-bold">{{t('Sentiment trend')}}</div>
                         <ng-container *ngIf="hasTrend(item.sentimentTrend); else emptyTrend">
@@ -336,7 +336,7 @@
                         </ng-template>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start align-self-scratch">
+                    <div class="d-flex justify-content-start align-self-scratch mx-2">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small;" class="font-weight-bold">
                           {{t('Average emotional level')}}
@@ -357,7 +357,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start align-self-scratch mr-2">
+                    <div class="d-flex justify-content-start align-self-scratch mx-2">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small;" class="font-weight-bold">
                           {{t('Comments')}}
@@ -369,7 +369,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start align-self-scratch">
+                    <div class="d-flex justify-content-start align-self-scratch mx-2">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small;" class="font-weight-bold">
                           {{t('Assessment')}}
@@ -389,38 +389,38 @@
                           </ng-template>
                         </div>
                       </div>
-                      <div class="d-flex flex-row ml-2">
-                        <div class="pr-2" style="font-size: xx-small;">
-                          <div class="mb-1">
-                            <span class="mr-2">{{t('Uploaded')}}</span>
-                            <span class="float-right font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</span>
-                          </div>
-                          <div class="mb-1">
-                            <span class="mr-2">{{t('Duration')}}</span>
-                            <span class="float-right font-weight-bold">{{ getFormatedTime(item.duration)}}</span>
-                          </div>
-                          <div class="mb-1">
-                            <span class="mr-2"> {{t('Silence')}}</span>
-                            <span *ngIf="item.pause && item.pause.dur"
-                              class="float-right font-weight-bold">{{getFormatedTime(item.pause.dur)}}
-                              ({{item.pause.dur / item.duration | percent}})</span>
-                          </div>
+                    </div>
+                    <div class="d-flex flex-row ml-auto">
+                      <div class="pr-2" style="font-size: xx-small;">
+                        <div class="mb-1">
+                          <span class="mr-2">{{t('Uploaded')}}</span>
+                          <span class="float-right font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</span>
                         </div>
-                        <div style="font-size: xx-small;">
-                          <div class="mb-1">
-                            <span class="mr-2">{{t('Pauses')}}</span>
-                            <span class="float-right font-weight-bold"></span>
-                          </div>
-                          <div class="mb-1">
-                            <span class="mr-2">{{t('Max.')}}</span>
-                            <span class="float-right font-weight-bold"
-                              *ngIf="item.pause && item.pause.max">{{getFormatedTime(item.pause.max)}}</span>
-                          </div>
-                          <div class="mb-1">
-                            <span class="mr-2">{{t('Avg.')}}</span>
-                            <span *ngIf="item.pause && item.pause.avg"
-                              class="float-right font-weight-bold">{{getFormatedTime(item.pause.avg)}}</span>
-                          </div>
+                        <div class="mb-1">
+                          <span class="mr-2">{{t('Duration')}}</span>
+                          <span class="float-right font-weight-bold">{{ getFormatedTime(item.duration)}}</span>
+                        </div>
+                        <div class="mb-1">
+                          <span class="mr-2"> {{t('Silence')}}</span>
+                          <span *ngIf="item.pause && item.pause.dur"
+                            class="float-right font-weight-bold">{{getFormatedTime(item.pause.dur)}}
+                            ({{item.pause.dur / item.duration | percent}})</span>
+                        </div>
+                      </div>
+                      <div style="font-size: xx-small;">
+                        <div class="mb-1">
+                          <span class="mr-2">{{t('Pauses')}}</span>
+                          <span class="float-right font-weight-bold"></span>
+                        </div>
+                        <div class="mb-1">
+                          <span class="mr-2">{{t('Max.')}}</span>
+                          <span class="float-right font-weight-bold"
+                            *ngIf="item.pause && item.pause.max">{{getFormatedTime(item.pause.max)}}</span>
+                        </div>
+                        <div class="mb-1">
+                          <span class="mr-2">{{t('Avg.')}}</span>
+                          <span *ngIf="item.pause && item.pause.avg"
+                            class="float-right font-weight-bold">{{getFormatedTime(item.pause.avg)}}</span>
                         </div>
                       </div>
                     </div>
@@ -431,27 +431,25 @@
                       (click)="showModal(tagModal, item, i)" tooltip="{{t('Edit tags')}}">
                       <i class="fa fa-pencil-alt"></i>
                     </button>
-                    <span dropdown>
-                      <button class="btn p-0 c-normal align-self-center" id="basic-link" dropdownToggle (click)="false"
-                        aria-controls="basic-link-dropdown">
+                    <div class="btn p-0 c-normal align-self-center action-select" ngbDropdown>
+                      <button type="button" class="btn btn-sm" ngbDropdownToggle>
                         <i class="fas fa-ellipsis-h"></i>
                       </button>
-                      <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu" role="menu"
-                        aria-labelledby="basic-link">
+                      <ul ngbDropdownMenu class="dropdown-menu">
                         <li>
                           <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
                             (click)="proccessFile(item)" tooltip="{{t('Refresh')}}{{item.proccessing ? '...' : ''}}">
-                            <i class="fa fa-sync"></i>
+                            <i class="fa fa-sync mr-2"></i> {{t('Refresh')}}
                           </button>
                         </li>
                         <li>
                           <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
                             (click)="showDeleteModal(confirm, item, i)" tooltip="{{t('Delete')}}">
-                            <i class="fa fa-trash-alt"></i>
+                            <i class="fa fa-trash-alt mr-2"></i>{{t('Delete')}}
                           </button>
                         </li>
                       </ul>
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>

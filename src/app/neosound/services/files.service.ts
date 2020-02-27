@@ -203,5 +203,9 @@ export class FilesService {
   updateFileChecklist(params): Observable<any> {
     return this.http.post(`${environment.api}/updateFileChecklist`, params);
   }
+  updateFileComment(params): Observable<any> {
+    return this.http.post(`${environment.api}/updateFileInfo`, params);
+  }
+
 
 }
