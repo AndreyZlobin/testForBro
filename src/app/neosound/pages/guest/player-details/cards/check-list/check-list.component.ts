@@ -90,7 +90,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
   }
   getAssessment(data: any) {
     if (data) {
-      const yes = data.filter(i => i.s[0] === "Yes");
+      const yes = data.filter(i => i.s[0] === "Yes" || i.s[0] === "yes");
       return Math.round((yes.length / data.length) * 100);
     }
     return 0;
