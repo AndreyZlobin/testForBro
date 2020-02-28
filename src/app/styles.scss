@@ -433,7 +433,7 @@ h6[contenteditable="true"] {
 }
 
 .c-primary {
-  color: var(--color-secondary);
+  color: var(--color-secondary) !important;
 }
 
 app-files-list ul.dropdown-menu.show {
