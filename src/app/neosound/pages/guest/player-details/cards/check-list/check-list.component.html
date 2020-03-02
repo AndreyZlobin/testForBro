@@ -1,5 +1,4 @@
 <div class="d-flex justify-content-end align-items-around mb-2 border-bottom">
-  <h4 class="align-self-center ml-2">{{!isLoading && view !== 'comments' ? "Checklist" : "Comment"}}</h4>
   <button class="btn p-2 align-self-center ml-auto"
     [ngClass]="{'c-primary': view === 'comments', 'c-normal': view !== 'comments'}"
     style="cursor: pointer;outline: none; " (click)="switchView('comments')">
@@ -42,8 +41,8 @@
   </div>
 </ng-container>
 <ng-container *ngIf="!isLoading && view === 'comments'">
-  <div style="overflow-y: auto;" class="py-2 pl-2">
-    <div style="height: 38.5vh;" class="border p-3" contenteditable="true" [(ngModel)]="comment">
+  <div style="overflow-y: auto;" class="py-2 pl-2 pb-3">
+    <div style="height: 38vh;" class="border p-3" contenteditable="true" [(ngModel)]="comment">
     </div>
   </div>
   <div class="d-flex flex-row justify-content-end pt-1 border-top">
