@@ -19,7 +19,7 @@ import { FilterService } from "../../../../../services/filter.service";
 export class CheckListFormComponent implements OnInit, OnDestroy {
   data: any[];
   dataSub: any;
-  isLoading: boolean;
+  isLoading: boolean = true;
   view: string = "assessment";
   comment: string;
 
@@ -47,6 +47,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
     this.data = null;
     this.comment = null;
+    this.isLoading = true;
     if (this.fileName && this.batchId) {
       this.filesService
         .getFileChecklist({
@@ -54,6 +55,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
           filename: this.fileName
         })
         .subscribe(data => {
+          this.isLoading = false;
           if (data && data.result) {
             this.data = data.result;
           } else {
@@ -117,19 +119,18 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
       .subscribe();
   }
   switchView(view: string) {
+    this.isLoading = true;
     this.view = view;
+    setTimeout(() => (this.isLoading = false), 1);
   }
   reset() {
     this.data = null;
-    this.filesService
-      .resetFileChecklist()
-      .subscribe((res) => {
-        if(res && res.result) {
-          const index = this.filterService.getIndex(this.batchId, this.fileName);
-          this.data = res.result;
-          this.filterService.setAssessment(index, this.getAssessment(this.data));
-        }
-      });
-
+    this.filesService.resetFileChecklist().subscribe(res => {
+      if (res && res.result) {
+        const index = this.filterService.getIndex(this.batchId, this.fileName);
+        this.data = res.result;
+        this.filterService.setAssessment(index, this.getAssessment(this.data));
+      }
+    });
   }
 }
