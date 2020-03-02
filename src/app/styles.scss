@@ -442,6 +442,9 @@ h4[contenteditable="true"],
 h5[contenteditable="true"],
 h6[contenteditable="true"] {
   cursor:text;
+  &:focus {
+    outline: none;
+  }
 }
 
 .c-primary {
