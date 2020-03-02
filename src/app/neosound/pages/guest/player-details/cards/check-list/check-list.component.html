@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-end align-items-around mb-2 border-bottom">
-  <h4 class="align-self-center ml-2">{{view !== 'comments' ? "Checklist" : "Comment"}}</h4>
+  <h4 class="align-self-center ml-2">{{!isLoading && view !== 'comments' ? "Checklist" : "Comment"}}</h4>
   <button class="btn p-2 align-self-center ml-auto"
     [ngClass]="{'c-primary': view === 'comments', 'c-normal': view !== 'comments'}"
     style="cursor: pointer;outline: none; " (click)="switchView('comments')">
@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="d-flex align-items-center mt-2 border-top pt-1">
-    <div>Total score: <strong>{{getAssessment(data)}}%</strong></div>
+    <div class="ml-2">Total score: <strong>{{getAssessment(data)}}%</strong></div>
     <div class="d-flex flex-row ml-auto">
       <button type="button" class="btn c-normal primary border mr-1" style="padding: .5rem .75rem;"
         (click)="reset()">Reset</button>
@@ -41,7 +41,7 @@
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="view === 'comments'">
+<ng-container *ngIf="!isLoading && view === 'comments'">
   <div style="overflow-y: auto;" class="py-2">
     <div style="height: 46.5vh;" class="border p-3" contenteditable="true" [(ngModel)]="comment">
     </div>
