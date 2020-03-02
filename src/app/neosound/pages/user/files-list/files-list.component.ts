@@ -19,7 +19,7 @@ import { DataService } from "../../../shared";
 @Component({
   selector: "app-files-list",
   templateUrl: "./files-list.component.html",
-  styleUrls: ["./files-list.component.scss"]
+  styleUrls: ["./files-list.component.scss"],
 })
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild("scroll") scrollTo: ElementRef;
@@ -46,8 +46,9 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     private cd: ChangeDetectorRef,
     private dataService: DataService,
     private modalService: BsModalService,
-    private analyticsService: AnalyticsService
-  ) {}
+    private analyticsService: AnalyticsService,
+  ) {
+  }
 
   ngOnInit() {
     this.filterService.updateFileList();
