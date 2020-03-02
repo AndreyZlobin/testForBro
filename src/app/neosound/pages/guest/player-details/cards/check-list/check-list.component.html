@@ -1,5 +1,4 @@
 <div class="d-flex justify-content-end align-items-around mb-2 border-bottom">
-  <h5 class="align-self-center ml-2">{{!isLoading && view !== 'comments' ? "Checklist" : "Comment"}}</h5>
   <button class="btn p-2 align-self-center ml-auto"
     [ngClass]="{'c-primary': view === 'comments', 'c-normal': view !== 'comments'}"
     style="cursor: pointer;outline: none; " (click)="switchView('comments')">
