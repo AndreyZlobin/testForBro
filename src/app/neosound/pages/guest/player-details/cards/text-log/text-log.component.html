@@ -1,5 +1,5 @@
 <div style="overflow-y: auto;">
-  <div style="height: 57vh;">
+  <div style="height: 55vh;">
     <table class="table" *ngIf="!isLoading; else loading">
       <ng-container *ngFor="let item of data">
         <tr class="d-flex" (click)="emitEvent(item[0])" style="cursor: pointer;" interval
