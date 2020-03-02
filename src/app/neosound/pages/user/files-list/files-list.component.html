@@ -269,13 +269,13 @@
                   <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
                   <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
                 </div>
-                <div class="d-flex flex-column align-self-scratch" style="width: 35%">
+                <div class="d-flex flex-column align-self-stretch justify-content-between" style="width: 35%">
                   <a [routerLink]="getLink(item)" tooltip="{{item.filename}}">
                     <span class="d-inline-block text-truncate font-weight-bold" style="max-width: 100%;">
                       {{item.filename}}
                     </span>
                   </a>
-                  <a class="text-truncate mb-auto mt-auto" style="cursor: pointer;"
+                  <a class="text-truncate" style="cursor: pointer;"
                     (click)="filterByBatch(item.batchid)">{{item.batchid}}</a>
                   <div class="" *ngIf="item.topic">
                     <i class="fas fa-quote-left mr-1"></i>{{item.topic.topic}}<span
@@ -426,30 +426,31 @@
                     </div>
                   </div>
                   <div class="d-flex w-100">
-                    <span class="badge badge-secondary mr-1" *ngFor="let tag of item.tags">{{tag}}</span>
-                    <button class="btn p-0 c-normal mr-auto" style="cursor: pointer;"
+                    <span class="badge badge-secondary mr-1 mt-1" *ngFor="let tag of item.tags">{{tag}}</span>
+                    <button class="btn p-0 c-normal mr-auto mt-1" style="cursor: pointer;"
                       (click)="showModal(tagModal, item, i)" tooltip="{{t('Edit tags')}}">
                       <i class="fa fa-pencil-alt"></i>
                     </button>
-                    <div class="btn p-0 c-normal align-self-center action-select" ngbDropdown>
+                    <button class="btn p-0 c-normal align-self-center" style="cursor: pointer;"
+                      (click)="proccessFile(item)" tooltip="{{t('Refresh')}}{{item.proccessing ? '...' : ''}}">
+                      <i class="fa fa-sync mr-2"></i>
+                    </button>
+                    <button class="btn p-0 c-normal align-self-center" style="cursor: pointer;"
+                      (click)="showDeleteModal(confirm, item, i)" tooltip="{{t('Delete')}}">
+                      <i class="fa fa-trash-alt mr-2"></i>
+                    </button>
+                    <!-- <div class="btn p-0 c-normal align-self-center action-select " ngbDropdown display="dynamic" placement="right right-bottom" container="body">
                       <button type="button" class="btn btn-sm" ngbDropdownToggle>
                         <i class="fas fa-ellipsis-h"></i>
                       </button>
                       <ul ngbDropdownMenu class="dropdown-menu">
                         <li>
-                          <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
-                            (click)="proccessFile(item)" tooltip="{{t('Refresh')}}{{item.proccessing ? '...' : ''}}">
-                            <i class="fa fa-sync mr-2"></i> {{t('Refresh')}}
-                          </button>
+
                         </li>
                         <li>
-                          <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
-                            (click)="showDeleteModal(confirm, item, i)" tooltip="{{t('Delete')}}">
-                            <i class="fa fa-trash-alt mr-2"></i>{{t('Delete')}}
-                          </button>
                         </li>
                       </ul>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>

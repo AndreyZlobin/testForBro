@@ -45,6 +45,8 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
     return d;
   }
   ngOnChanges(changes: SimpleChanges) {
+    this.data = null;
+    this.comment = null;
     if (this.fileName && this.batchId) {
       this.filesService
         .getFileChecklist({
@@ -96,6 +98,8 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
     return 0;
   }
   saveComment() {
+    const index = this.filterService.getIndex(this.batchId, this.fileName);
+    this.filterService.setComment(index, this.comment);
     this.filesService
       .updateFileComment({
         fileid: {
@@ -114,5 +118,18 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
   }
   switchView(view: string) {
     this.view = view;
+  }
+  reset() {
+    this.data = null;
+    this.filesService
+      .resetFileChecklist()
+      .subscribe((res) => {
+        if(res && res.result) {
+          const index = this.filterService.getIndex(this.batchId, this.fileName);
+          this.data = res.result;
+          this.filterService.setAssessment(index, this.getAssessment(this.data));
+        }
+      });
+
   }
 }

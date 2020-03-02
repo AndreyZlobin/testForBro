@@ -69,6 +69,9 @@ a:not([href]):not([tabindex]) {
   .player-details {
     .btn {
       padding: 5px 1.5rem;
+      &:focus {
+        outline-color: transparent;
+      }
     }
   }
 }
@@ -178,7 +181,8 @@ angular-tag-cloud > span {
   color: #2a2a2a;
 }
 .badge {
-  padding: 0.5em 0.4em;
+  padding: 0.4em 0.4em;
+  vertical-align: middle;
 }
 .nb-theme-default .btn.btn-link {
   cursor: pointer;
@@ -190,6 +194,8 @@ angular-tag-cloud > span {
   &:focus,
   &:hover {
     opacity: 0.8;
+    outline: none;
+    outline-color: transparent;
     &:disabled {
       opacity: 0.3;
     }
@@ -208,12 +214,16 @@ angular-tag-cloud > span {
   &:hover {
     background-color: var(--color-secondary);
     opacity: 0.8;
+    outline: none;
+    outline-color: transparent;
     &:disabled {
       opacity: 0.3;
     }
   }
   &:active:focus,
   &:active {
+    outline: none;
+    outline-color: transparent;
     opacity: 0.9;
   }
 }
@@ -224,6 +234,8 @@ angular-tag-cloud > span {
   &:hover {
     color: var(--color-secondary);
     opacity: 0.8;
+    outline: none;
+    outline-color: transparent;
     &:disabled {
       opacity: 0.3;
     }
@@ -442,7 +454,7 @@ app-files-list ul.dropdown-menu.show {
 }
 
 .action-select > button {
-    padding: .1rem .1rem !important;
+    padding: .01rem .01rem !important;
     color: #2a2a2a !important;
     &:after {
       content: "";
@@ -450,6 +462,9 @@ app-files-list ul.dropdown-menu.show {
 }
 
 .action-select > .dropdown-menu.show {
-
   z-index: 9999 !important
+}
+
+.action-select .dropdown-toggle::after {
+  display: none;
 }
