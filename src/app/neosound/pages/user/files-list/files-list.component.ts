@@ -19,12 +19,11 @@ import { DataService } from "../../../shared";
 @Component({
   selector: "app-files-list",
   templateUrl: "./files-list.component.html",
-  styleUrls: ["./files-list.component.scss"],
+  styleUrls: ["./files-list.component.scss"]
 })
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild("scroll") scrollTo: ElementRef;
   trends = ["fa-angry text-danger", "fa-grin text-success", "fa-meh text-info"];
-  filterName: string;
   errorMessage = "";
   isLoading = true;
   pagesArr = [1];
@@ -46,9 +45,8 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     private cd: ChangeDetectorRef,
     private dataService: DataService,
     private modalService: BsModalService,
-    private analyticsService: AnalyticsService,
-  ) {
-  }
+    private analyticsService: AnalyticsService
+  ) {}
 
   ngOnInit() {
     this.filterService.updateFileList();
@@ -119,13 +117,15 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   getOpacityLevelAnger(val) {
-    let color = 100;
-    const max = 25;
-    const parsed = parseFloat(val.anger);
-    if(parsed < max) {
-      color = (parsed * 100) / max;
+    if (!val) {
+      return "";
     }
-    return "hsl(" + Math.ceil(100 - color) + ", 50%, 50%)";
+    let result;
+    if (val.anger < 1) {
+      result = 0;
+    }
+    result = val.anger / 2 / 100;
+    return "rgba(255, 5, 5, " + result + ")";
   }
 
   getOpacityLevelCompliance(percent) {
@@ -139,11 +139,6 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   abc(percent: number): string {
     return percent.toFixed();
-  }
-
-  abcStr(percent: string): string {
-    const val = parseFloat(percent)
-    return val.toFixed();
   }
 
   getOpacityLevelPause(val) {
@@ -177,11 +172,19 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     return "fa-meh";
   }
 
-  sortTable(filterName: string, sortBy: string, direction: string) {
+  sortTable(sortBy) {
     this.analyticsService.trackEvent("sortTable", sortBy);
-    this.filterService.filter.sortorder = direction;
+    if (sortBy !== this.filterService.filter.sortby) {
+      this.filterService.filter.sortorder = "asc";
+    } else {
+      if (this.filterService.filter.sortorder === "desc") {
+        this.filterService.filter.sortorder = "asc";
+      } else {
+        this.filterService.filter.sortorder = "desc";
+      }
+    }
+
     this.filterService.filter.sortby = sortBy;
-    this.filterName = filterName;
     this.filterService.updateFileList();
   }
 

@@ -1,19 +1,19 @@
-<div class="row my-2">
-    <div *ngIf="waveSurferService.loading" class="d-flex"
-        style="position: absolute;width: 100%; background-color: #fff; z-index: 600;">
-        <ngx-card-spinner></ngx-card-spinner>
-    </div>
+<div class="loader-wrapper" *ngIf="isLoading">
+    <div class="loader">Loading...</div>
+</div>
+
+<div class="row">
     <div class="col-1 d-flex align-items-center justify-content-center">
-        <button [disabled]="waveSurferService.loading" class="btn btm-sm btn-primary mx-2" (click)="play()" style="border-radius: 20px;
+        <button [disabled]="isLoading" class="btn btm-sm btn-primary mx-2" (click)="play()" style="border-radius: 20px;
                 height: 40px;
                 width: 40px;
                 padding: 11px;">
             <i *ngIf="!playing" class="fa fa-play"></i>
             <i *ngIf="playing" class="fa fa-pause"></i>
-        </button>
-    </div>
-    <div class="col-11">
-        <div id="player">
+        </button></div>
+
+    <div *ngIf="id" class="col-11 my-2">
+        <div [id]="id">
         </div>
         <div id="timelineContainer"></div>
     </div>

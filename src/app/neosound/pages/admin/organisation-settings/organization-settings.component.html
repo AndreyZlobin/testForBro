@@ -1,7 +1,7 @@
 <nb-card>
   <nb-card-body>
     <div class="row">
-      <div class="col-2">
+      <div class="col-2" style="height: 77vh">
         <ul class="nav flex-column border-right h-100">
           <ng-container *ngFor="let item of items">
             <li class="nav-item" [ngClass]="{'bg-light': item.key === activeItem }">
@@ -45,9 +45,6 @@
                 totalLabel="Total names words"></app-keywords>
             </nb-tab>
           </nb-tabset>
-        </ng-container>
-        <ng-container *ngIf="activeItem === items[2].key">
-          <app-check-list></app-check-list>
         </ng-container>
       </div>
     </div>

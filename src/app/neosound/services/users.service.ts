@@ -33,10 +33,11 @@ export class UsersService {
   getToken(): string {
     const user = this.getUserLocal();
     return user && user.token
+      || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZyb250dHJ1c3QiLCJhcGlrZXkiOiJHUUJpOFFGTFZQYUlQcnJNbUNwRE5CV3F3UGZNWWRNMnRlUFRpcFNoIiwiaWF0IjoxNTM2NTE1ODQ5Njg2LCJleHAiOiIyMDIzLTA5LTA4VDE3OjU3OjI5LjY4NloifQ.rfygroLBG_7p_R-EiPUL8nsc3wDUcGE2cfNiCHv1uDA';
   }
   getApiKey(): string {
     const apikey = localStorage.getItem('apikey');
-    return apikey;
+    return apikey || 'GQBi8QFLVPaIPrrMmCpDNBWqwPfMYdM2tePTipSh';
   }
   getUserLocal() {
     const user = localStorage.getItem('user');
