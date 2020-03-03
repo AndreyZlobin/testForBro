@@ -340,7 +340,7 @@
                     <div class="d-flex justify-content-start">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
-                          {{t('Average emotional level')}}
+                          {{t('Average emotion')}}
                         </div>
                         <div class="d-flex flex-row font-weight-bold"
                           [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.7rem', 'color': getOpacityLevelAnger(item.angertop)}">
@@ -460,7 +460,6 @@
         </div>
         <h6 *ngIf="!filterService.isLoading">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
           {{filterService.totalcount}}</h6>
-        <button *ngIf="!filterService.isLoading" class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
       </div>
       <ng-template #loading>
         {{t('Loading...')}}
