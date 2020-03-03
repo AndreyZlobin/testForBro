@@ -52,6 +52,9 @@ export class FilesService {
   getFile(params): Observable<any> {
     return this.http.post(`${environment.api}/getFile`, params);
   }
+  getRegions(params): Observable<any> {
+    return this.http.post(`${environment.api}/getFileResultDetails`, params);
+  }
   getAudioWaveForm(params): Observable<any> {
     params = params;
     return this.http.post(`${environment.api}/getAudioWaveForm`, params);
@@ -193,4 +196,19 @@ export class FilesService {
   listTopics(): Observable<any> {
     return this.http.post(`${environment.api}/listTopics`, {});
   }
+
+  getFileChecklist(params): Observable<any> {
+    return this.http.post(`${environment.api}/getFileChecklist`, params);
+  }
+  updateFileChecklist(params): Observable<any> {
+    return this.http.post(`${environment.api}/updateFileChecklist`, params);
+  }
+  resetFileChecklist(): Observable<any> {
+    return this.http.get(`${environment.api}/resetFileChecklist`);
+  }
+  updateFileComment(params): Observable<any> {
+    return this.http.post(`${environment.api}/updateFileInfo`, params);
+  }
+
+
 }

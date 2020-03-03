@@ -221,7 +221,7 @@
       <div class="col col-md-10 border-left">
         <div class="d-flex flex-row justify-content-between align-items-start" *ngIf="!filterService.isLoading">
           <div class="mt-2">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
-            {{filterService.totalcount}}
+            {{filterService.totalcount}}<a *ngIf="!filterService.isLoading" class="p-0 ml-2 c-normal font-weight-bold" (click)="refresh()">Refresh</a>
           </div>
           <div class="btn-toolbar mt-1">
             <div class="btn-group">
@@ -232,248 +232,220 @@
                 nextLabel="{{t('next')}}"></pagination-controls>
             </div>
           </div>
-          <div class="mb-1">
-            <button class="btn btn-primary btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
+          <div class="d-flex flex-row mb-1">
+            <div class="dropdown ghost-dropdown" ngbDropdown>
+              <button type="button" class="btn btn-sm mr-2"  ngbDropdownToggle>
+                Sort: {{filterName}}
+              </button>
+              <ul ngbDropdownMenu class="dropdown-menu">
+                <li class="dropdown-item" (click)="sortTable('Agent: A..Z', 'BatchId', 'desc')">Agent: A..Z</li>
+                <li class="dropdown-item" (click)="sortTable('Agent: Z..A', 'BatchId', 'asc')">Agent: Z..A</li>
+                <li class="dropdown-item" (click)="sortTable('Date and time: Newly Uploaded', 'Uploaded', 'asc')">Date
+                  and time: Newly Uploaded</li>
+                <li class="dropdown-item" (click)="sortTable('Avg. Pause: Short to Long', 'AvgPause', 'asc')">Avg.
+                  Pause: Short to Long</li>
+                <li class="dropdown-item" (click)="sortTable('Tot. Pause: Long to Short', 'PauseDur', 'asc')">Tot.
+                  Pause: Long to Short</li>
+                <li class="dropdown-item" (click)="sortTable('Stopwords: Max to Min', 'Stopwords', 'desc')">
+                  <span>Stopwords:
+                    Max to Min</span></li>
+                <li class="dropdown-item" (click)="sortTable('Compliance: Low to High', 'Compliance', 'desc')">
+                  Compliance: Low to High</li>
+                <li class="dropdown-item" (click)="sortTable('Compliance: High to Low', 'Compliance', 'desc')">
+                  Compliance: High to Low</li>
+                <li class="dropdown-item" (click)="sortTable('Emotion: High to Low', 'Emotion', 'desc')">Emotion: High
+                  to Low</li>
+              </ul>
+            </div>
+            <button class="btn c-normal btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
           </div>
         </div>
         <div class="file-list mt-2" *ngIf="!filterService.isLoading; else spinner">
-          <div class="d-flex border-top border-bottom sort-bar">
-            <span class="mt-2 pt-1">Sort:</span>
-            <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb" (click)="sortTable('BatchId')">
-              {{t('Batch Id')}}
-              <i *ngIf="filterService.filter.sortby === 'BatchId' && filterService.filter.sortorder ==='asc'"
-                class="fas fa-sort-up"></i>
-              <i *ngIf="filterService.filter.sortby === 'BatchId' && filterService.filter.sortorder ==='desc'"
-                class="fas fa-sort-down"></i>
-              <i *ngIf="filterService.filter.sortby !== 'BatchId'" style="color: #bbbbbb" class="fas fa-sort"></i>
-            </button>
-            <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-              (click)="sortTable('Name')">{{t('Name')}}
-              <i *ngIf="filterService.filter.sortby === 'Name' && filterService.filter.sortorder ==='asc'"
-                class="fas fa-sort-up"></i><i
-                *ngIf="filterService.filter.sortby === 'Name' && filterService.filter.sortorder ==='desc'"
-                class="fas fa-sort-down"></i><i *ngIf="filterService.filter.sortby !== 'Name'" style="color: #bbbbbb"
-                class="fas fa-sort"></i>
-            </button>
-            <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-              (click)="sortTable('Uploaded')">{{t('Uploaded')}}
-              <i *ngIf="filterService.filter.sortby === 'Uploaded' && filterService.filter.sortorder ==='asc'"
-                class="fas fa-sort-up"></i><i
-                *ngIf="filterService.filter.sortby === 'Uploaded' && filterService.filter.sortorder ==='desc'"
-                class="fas fa-sort-down"></i><i *ngIf="filterService.filter.sortby !== 'Uploaded'"
-                style="color: #bbbbbb" class="fas fa-sort"></i>
-            </button>
-            <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-              (click)="sortTable('Duration')">{{t('Duration')}}
-              <i *ngIf="filterService.filter.sortby === 'Duration' && filterService.filter.sortorder ==='asc'"
-                class="fas fa-sort-up"></i><i
-                *ngIf="filterService.filter.sortby === 'Duration' && filterService.filter.sortorder ==='desc'"
-                class="fas fa-sort-down"></i><i *ngIf="filterService.filter.sortby !== 'Duration'"
-                style="color: #bbbbbb" class="fas fa-sort"></i>
-            </button>
-            <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-              (click)="sortTable('AvgPause')">{{t('Avg.Pause')}}
-              <i *ngIf="filterService.filter.sortby === 'AvgPause' && filterService.filter.sortorder ==='desc'"
-                class="fas fa-sort-up"></i><i
-                *ngIf="filterService.filter.sortby === 'AvgPause' && filterService.filter.sortorder ==='asc'"
-                class="fas fa-sort-down"></i><i *ngIf="filterService.filter.sortby !== 'AvgPause'"
-                style="color: #bbbbbb" class="fas fa-sort"></i>
-            </button>
-            <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-              (click)="sortTable('PauseDur')">{{t('Tot.Pause')}}
-              <i *ngIf="filterService.filter.sortby === 'PauseDur' && filterService.filter.sortorder ==='desc'"
-                class="fas fa-sort-up"></i><i
-                *ngIf="filterService.filter.sortby === 'PauseDur' && filterService.filter.sortorder ==='asc'"
-                class="fas fa-sort-down"></i><i *ngIf="filterService.filter.sortby !== 'PauseDur'"
-                style="color: #bbbbbb" class="fas fa-sort"></i>
-            </button>
-            <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-              (click)="sortTable('Stopwords')">{{t('Stopwords')}}
-              <i *ngIf="filterService.filter.sortby === 'Stopwords' && filterService.filter.sortorder ==='desc'"
-                class="fas fa-sort-up"></i><i
-                *ngIf="filterService.filter.sortby === 'Stopwords' && filterService.filter.sortorder ==='asc'"
-                class="fas fa-sort-down"></i><i *ngIf="filterService.filter.sortby !== 'Stopwords'"
-                style="color: #bbbbbb" class="fas fa-sort"></i>
-            </button>
-            <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-              (click)="sortTable('Compliance')">{{t('Compliance')}}
-              <i *ngIf="filterService.filter.sortby === 'Compliance' && filterService.filter.sortorder ==='desc'"
-                class="fas fa-sort-up"></i><i
-                *ngIf="filterService.filter.sortby === 'Compliance' && filterService.filter.sortorder ==='asc'"
-                class="fas fa-sort-down"></i><i *ngIf="filterService.filter.sortby !== 'Compliance'"
-                style="color: #bbbbbb" class="fas fa-sort"></i>
-            </button>
-            <button type="button" class="btn btn-link btn-sm" style="color: #bbbbbb"
-              (click)="sortTable('Emotion')">{{t('Emotion')}}
-              <i *ngIf="filterService.filter.sortby === 'Emotion' && filterService.filter.sortorder ==='desc'"
-                class="fas fa-sort-up"></i><i
-                *ngIf="filterService.filter.sortby === 'Emotion' && filterService.filter.sortorder ==='asc'"
-                class="fas fa-sort-down"></i><i *ngIf="filterService.filter.sortby !== 'Emotion'" style="color: #bbbbbb"
-                class="fas fa-sort"></i>
-            </button>
-          </div>
-          <div>
-            <div class="d-flex flex-column w-100">
-              <ng-container *ngIf="(filterService.files | async) as files">
-                <div class="d-flex flex-row border-top border-bottom align-items-stretch justify-content-start"
-                  *ngFor="let item of files; let i = index">
-                  <div (click)="markFavorite(item)" style="cursor: pointer; width: 2%;" class="align-self-center">
-                    <span *ngIf="filterService.lastFileId === item.filename" #scroll></span>
-                    <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
-                    <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
+          <div class="d-flex flex-column w-100">
+            <ng-container *ngIf="(filterService.files | async) as files">
+              <div class="d-flex justify-content-start flex-row border-top border-bottom align-self-scratch py-2"
+                *ngFor="let item of files; let i = index">
+                <div (click)="markFavorite(item)" style="cursor: pointer; width: 2%;" class="align-self-start">
+                  <span *ngIf="filterService.lastFileId === item.filename" #scroll></span>
+                  <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
+                  <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
+                </div>
+                <div class="d-flex flex-column align-self-stretch justify-content-between" style="width: 38%">
+                  <a [routerLink]="getLink(item)" tooltip="{{item.filename}}">
+                    <span class="font-weight-bold text-truncate" style="max-width: 100%; display: block;">
+                      {{item.filename}}
+                    </span>
+                  </a>
+                  <a class="text-truncate mb-1" style="cursor: pointer; text-decoration: underline;"
+                    (click)="filterByBatch(item.batchid)">{{item.batchid}}</a>
+                  <div class="d-flex flex-row flex-start" *ngIf="item.topic">
+                    <i class="fas fa-quote-left mr-1"></i>
+                    <span class="text-truncate" tooltip="{{item.topic.topic}}" style="max-width: 85%; display: inline-block;">{{item.topic.topic}}</span>
+                    <span class="font-weight-bold ml-1" >{{item.topic.confidence}}%</span>
                   </div>
-                  <div style="width: 44%">
-                    <div class="d-flex flex-column">
-                      <div class="w-100 mt-1">
-                        <a [routerLink]="getLink(item)" tooltip="{{item.filename}}">
-                          <span class="d-inline-block text-truncate font-weight-bold" style="max-width: 100%;">
-                            {{item.filename}}
-                          </span>
-                        </a>
-                      </div>
-                      <div class="w-100">
-                        <div class="d-flex flex-row justify-content-start">
-                          <div class="w-50 align-self-center ">
-                            <div class="w-100 my-1">
-                              <a style="text-decoration: underline; cursor: pointer;"
-                                (click)="filterByBatch(item.batchid)">{{item.batchid}}</a>
-                            </div>
-                          </div>
-                          <div class="pr-4" style="font-size: xx-small;">
-                            <div class="mb-1">
-                              <span class="mr-2">{{t('Uploaded')}}</span>
-                              <span class="float-right font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</span>
-                            </div>
-                            <div class="mb-1">
-                              <span class="mr-2">{{t('Duration')}}</span>
-                              <span class="float-right font-weight-bold">{{ getFormatedTime(item.duration)}}</span>
-                            </div>
-                            <div class="mb-1">
-                              <span class="mr-2"> {{t('Silence')}}</span>
-                              <span *ngIf="item.pause && item.pause.dur"
-                                class="float-right font-weight-bold">{{getFormatedTime(item.pause.dur)}}
-                                ({{item.pause.dur / item.duration | percent}})</span>
-                            </div>
-                          </div>
-                          <div style="font-size: xx-small;">
-                            <div class="mb-1">
-                              <span class="mr-2">{{t('Pauses')}}</span>
-                              <span class="float-right font-weight-bold"></span>
-                            </div>
-                            <div class="mb-1">
-                              <span class="mr-2">{{t('Max.')}}</span>
-                              <span class="float-right font-weight-bold"
-                                *ngIf="item.pause && item.pause.max">{{getFormatedTime(item.pause.max)}}</span>
-                            </div>
-                            <div class="mb-1">
-                              <span class="mr-2">{{t('Avg.')}}</span>
-                              <span *ngIf="item.pause && item.pause.avg"
-                                class="float-right font-weight-bold">{{getFormatedTime(item.pause.avg)}}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="w-100 mb-1">
-                        <span class="badge badge-secondary mr-1" *ngFor="let tag of item.tags">{{tag}}</span>
-                        <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, item, i)"
-                          tooltip="{{t('Edit tags')}}">
-                          <i class="fa fa-pencil-alt"></i>
-                        </button>
-                      </div>
-                    </div>
+                </div>
+                <div class="d-flex flex-column align-self-stretch justify-content-between" style="width:5%">
+                  <div class="d-flex flex-row align-items-center">
+                    <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-auto"></i>
+                    <span tooltip="{{getStopwords(item)}}" class="badge badge-danger mr-4"
+                      style="border-radius: 0px; padding: 0.3rem 0.4rem;">{{item.stopwordcount ? item.stopwordcount : 0}}</span>
                   </div>
-                  <div class="d-flex flex-column  align-self-center" style="width:15%">
-                    <div class="d-flex flex-row justify-content-between align-self-scratch mb-2">
-                      <div>
-                        <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-2"></i>
-                        <span tooltip="{{getStopwords(item)}}"
-                          class="badge badge-danger">{{item.stopwordcount ? item.stopwordcount : 0}}</span>
-                      </div>
-                      <div>
-                        <i class="fa fa-headset mr-2" tooltip="{{t('Agent')}}"></i>
-                        <span tooltip="{{getAgentStopwords(item)}}"
-                          class="badge badge-danger">{{item.agentstopwordcount ? item.agentstopwordcount : 0 }}</span>
-                      </div>
-                      <div class="mr-4">
-                        <i tooltip="{{t('Client')}}" class="fa fa-user-tie mr-2"></i>
-                        <span tooltip="{{getCustomerStopword(item)}}"
-                          class="badge badge-danger">{{item.customerstopwordcount ? item.customerstopwordcount : 0}}</span>
-                      </div>
-                    </div>
-                    <div class="" *ngIf="item.topic">
-                      <i class="fas fa-quote-left mr-1"></i>{{item.topic.topic}}<span
-                        class="font-weight-bold ml-1">{{item.topic.confidence}} %</span>
-                    </div>
+                  <div class="d-flex flex-row ">
+                    <i class="fa fa-headset mr-auto" tooltip="{{t('Agent')}}"></i>
+                    <span tooltip="{{getAgentStopwords(item)}}" class="badge badge-danger mr-4"
+                      style="border-radius: 0px; padding: 0.3rem 0.4rem;">{{item.agentstopwordcount ? item.agentstopwordcount : 0 }}</span>
                   </div>
-                  <div class="d-flex flex-row justify-content-around align-self-scratch" style="width: 30%">
-                    <div class="d-flex justify-content-center align-self-scratch">
-                      <div class="d-flex flex-column  p-2">
-                        <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Compliance')}}:</div>
-                        <div class="d-flex flex-row">
+                  <div class="d-flex flex-row">
+                    <i tooltip="{{t('Client')}}" class="fa fa-user-tie mr-auto"></i>
+                    <span tooltip="{{getCustomerStopword(item)}}" class="badge badge-danger mr-4"
+                      style="border-radius: 0px; padding: 0.3rem 0.4rem;">{{item.customerstopwordcount ? item.customerstopwordcount : 0}}</span>
+                  </div>
+                </div>
+                <div class="d-flex flex-column" style="width: 55%;">
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex">
+                      <div class="d-flex flex-column">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">{{t('Compliance')}}</div>
+                        <div class="d-flex flex-row font-weight-bold"
+                          [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.6rem', 'color': getOpacityLevelCompliance(item.compliancepercent)}">
                           <div class="align-self-center text-center mr-1">
-                            <i class="fa fa-2x fa-shield-alt"></i>
+                            <i class="fa fa-shield-alt"></i>
                           </div>
-                          <h2 class="m-0"
-                            [ngStyle]="{'color': getOpacityLevelCompliance(item.compliancepercent), 'width': '4rem'}">
-                            {{item.compliancepercent !== '-' ? abc(item.compliancepercent) + '%' : '-    ' }}
-                          </h2>
+                          <span class="m-0">
+                            {{item.compliancepercent !== '-' ? abc(item.compliancepercent) + '%' : '-' }}
+                          </span>
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-center align-self-scratch">
-                      <div class="d-flex flex-column  p-2">
-                        <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Sentiment trend')}}:</div>
+                    <div class="d-flex justify-content-start">
+                      <div class="d-flex flex-column align-items-center">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">{{t('Sentiment trend')}}</div>
                         <ng-container *ngIf="hasTrend(item.sentimentTrend); else emptyTrend">
-                          <div class="d-flex flex-row align-self-center mt-1">
-                            <i class="far fa-2x" [ngClass]='getTrend(item.sentimentTrend.start)'
+                          <div class="d-flex flex-row font-weight-bold" style="font-size: 1.3rem; margin-top: 0.7rem">
+                            <i class="far" [ngClass]='getTrend(item.sentimentTrend.start)'
                               [tooltip]="item.sentimentTrend.start"></i>
-                            <i class="fas fa-long-arrow-alt-right fa-2x mx-2"></i>
+                            <i class="fas fa-long-arrow-alt-right mx-2"></i>
                             <i [ngClass]='getTrend(item.sentimentTrend.end)' [tooltip]="item.sentimentTrend.end"
-                              class="far fa-2x"></i>
+                              class="far"></i>
                           </div>
                         </ng-container>
                         <ng-template #emptyTrend>
                           <div class="d-flex flex-row align-self-start">
-                            <h2 style="width: 4rem">
+                            <span style="width: 4rem">
                               -
-                            </h2>
+                            </span>
                           </div>
                         </ng-template>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-center align-self-scratch"
-                      [ngStyle]="{'background': getOpacityLevelAnger(item.angertop)}">
-                      <div class="d-flex flex-column p-2">
-                        <div style="font-size: x-small;" class="my-2 font-weight-bold">{{t('Average emotional level')}}:
+                    <div class="d-flex justify-content-start">
+                      <div class="d-flex flex-column">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">
+                          {{t('Average emotion')}}
                         </div>
-                        <div class="d-flex flex-row">
-                          <div class="align-self-center text-center mr-1"><i class="fa fa-2x fa-thermometer-empty"></i>
+                        <div class="d-flex flex-row font-weight-bold"
+                          [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.7rem', 'color': getOpacityLevelAnger(item.angertop)}">
+                          <div class="align-self-center text-center mr-1">
+                            <i class="fa fa-thermometer-empty"></i>
                           </div>
-                          <h2 class="m-0" *ngIf="item.angertop && item.angertop.anger; else empty">
-                            {{item.angertop && item.angertop.anger}}%
-                          </h2>
+                          <span class="m-0">
+                            {{item.angertop && item.angertop.anger ? abcStr(item.angertop.anger) + '%' : '-' }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                      <div class="d-flex flex-column">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">
+                          {{t('Comments')}}
+                        </div>
+                        <div class="d-flex flex-row font-weight-bold" style="font-size: 1.3rem; margin-top: 0.7rem">
+                          <div class="align-self-center text-center mr-1">
+                            <i class="far fa-sticky-note" [ngClass]="{'c-primary': item.comment.length > 0}"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                      <div class="d-flex flex-column">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">
+                          {{t('Assessment')}}
+                        </div>
+                        <div class="d-flex flex-row"
+                          [ngStyle]="{'font-size': '1.3rem','margin-top': '0.7rem', 'color': getOpacityLevelCompliance(item.checklistScore)}">
+                          <div class="text-center mr-1">
+                            <i class="fas fa-tasks" [ngClass]="{'c-primary': item.checklist}"></i>
+                          </div>
+                          <span class="m-0" *ngIf="item.checklistScore; else empty">
+                            {{abc(item.checklistScore)}}%
+                          </span>
                           <ng-template #empty>
-                            <h2 style="width: 4rem;">
+                            <span class="m-0">
                               -
-                            </h2>
+                            </span>
                           </ng-template>
                         </div>
                       </div>
                     </div>
+                    <div class="d-flex flex-row">
+                      <div class="pr-2" style="font-size: xx-small; margin-top: 0.3rem;">
+                        <div class="mb-1">
+                          <span class="mr-2">{{t('Uploaded')}}</span>
+                          <span class="float-right font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                        <div class="mb-1">
+                          <span class="mr-2">{{t('Duration')}}</span>
+                          <span class="float-right font-weight-bold">{{ getFormatedTime(item.duration)}}</span>
+                        </div>
+                        <div class="mb-1">
+                          <span class="mr-2"> {{t('Silence')}}</span>
+                          <span *ngIf="item.pause && item.pause.dur"
+                            class="float-right font-weight-bold">{{getFormatedTime(item.pause.dur)}}
+                            ({{item.pause.dur / item.duration | percent}})</span>
+                        </div>
+                      </div>
+                      <div style="font-size: xx-small; margin-top: 0.3rem;">
+                        <div class="mb-1">
+                          <span class="mr-2">{{t('Pauses')}}</span>
+                          <span class="float-right font-weight-bold"></span>
+                        </div>
+                        <div class="mb-1">
+                          <span class="mr-2">{{t('Max.')}}</span>
+                          <span class="float-right font-weight-bold"
+                            *ngIf="item.pause && item.pause.max">{{getFormatedTime(item.pause.max)}}</span>
+                        </div>
+                        <div class="mb-1">
+                          <span class="mr-2">{{t('Avg.')}}</span>
+                          <span *ngIf="item.pause && item.pause.avg"
+                            class="float-right font-weight-bold">{{getFormatedTime(item.pause.avg)}}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="d-flex justify-content-around" style="width: 7%">
-                    <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
-                      (click)="proccessFile(item)" tooltip="{{t('Refresh')}}{{item.proccessing ? '...' : ''}}">
-                      <i class="fa fa-sync"></i>
-                    </button>
-                    <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;"
-                      (click)="showDeleteModal(confirm, item, i)" tooltip="{{t('Delete')}}">
-                      <i class="fa fa-trash-alt"></i>
-                    </button>
+                  <div class="d-flex align-items-end w-100">
+                    <div>
+                      <span class="badge badge-secondary mr-1" *ngFor="let tag of item.tags">{{tag}}</span>
+                    </div>
+                    <div class="mr-auto">
+                      <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, item, i)"
+                        tooltip="{{t('Edit tags')}}">
+                        <i class="fa fa-pencil-alt"></i>
+                      </button>
+                    </div>
+                    <div>
+                      <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="proccessFile(item)"
+                        tooltip="{{t('Refresh')}}{{item.proccessing ? '...' : ''}}">
+                        <i class="fa fa-sync mr-2"></i>
+                      </button>
+                      <button class="btn p-0 c-normal" style="cursor: pointer;"
+                        (click)="showDeleteModal(confirm, item, i)" tooltip="{{t('Delete')}}">
+                        <i class="fa fa-trash-alt mr-2"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </ng-container>
-            </div>
+              </div>
+            </ng-container>
           </div>
         </div>
         <div class="d-flex justify-content-around" *ngIf="!filterService.isLoading">
@@ -489,7 +461,6 @@
         </div>
         <h6 *ngIf="!filterService.isLoading">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
           {{filterService.totalcount}}</h6>
-        <button *ngIf="!filterService.isLoading" class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
       </div>
       <ng-template #loading>
         {{t('Loading...')}}
