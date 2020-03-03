@@ -32,7 +32,6 @@ export class HeaderComponent implements OnInit {
               private analyticsService: AnalyticsService,
               private layoutService: LayoutService,
               private router: Router,
-              private userServ: UsersService,
               private dataService: DataService,
               private http: HttpClient,
             ) {

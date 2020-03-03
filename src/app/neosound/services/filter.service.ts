@@ -336,7 +336,6 @@ export class FilterService {
   }
   public setTags(index, tags) {
     if (index !== -1) {
-      const pin = `${!(this.fileStore[index].pin === "true")}`;
       this.fileStore[index].tags = tags;
       this.filesSubject.next(this.fileStore);
       const params = {
@@ -352,6 +351,20 @@ export class FilterService {
         }
       };
       this.filesService.updateFileInfo(params).subscribe();
+    }
+  }
+
+  public setComment(index, comments) {
+    if (index !== -1) {
+      this.fileStore[index].comment = [{text: comments}];
+      this.filesSubject.next(this.fileStore);
+    }
+  }
+  public setAssessment(index, value) {
+    if (index !== -1) {
+      this.fileStore[index].checklist = true;
+      this.fileStore[index].checklistScore = value;
+      this.filesSubject.next(this.fileStore);
     }
   }
 

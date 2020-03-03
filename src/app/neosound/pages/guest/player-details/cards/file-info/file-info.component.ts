@@ -49,15 +49,10 @@ export class FileInfoComponent implements OnChanges {
       : "";
   }
   getOpacityLevelAnger(val) {
-    if (!val) {
-      return "";
-    }
-    let result;
-    if (val.anger < 1) {
-      result = 0;
-    }
-    result = val.anger / 2 / 100;
-    return "rgba(255, 5, 5, " + result + ")";
+    const a = val.anger / 100;
+    const b = 100 * a;
+    const c = b + 0;
+    return "hsl(" + c + ", 50%, 50%)";
   }
   hasTrend(sentimentTrend) {
     return sentimentTrend.start && sentimentTrend.end;
@@ -156,5 +151,9 @@ export class FileInfoComponent implements OnChanges {
 
   markFavorite(item) {
     this.filterService.markFavorite(item.batchid, item.filename);
+  }
+
+  abc(percent: number): string {
+    return percent.toFixed();
   }
 }
