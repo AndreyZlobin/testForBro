@@ -460,7 +460,6 @@
         </div>
         <h6 *ngIf="!filterService.isLoading">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
           {{filterService.totalcount}}</h6>
-        <button *ngIf="!filterService.isLoading" class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
       </div>
       <ng-template #loading>
         {{t('Loading...')}}
