@@ -220,7 +220,7 @@
       <div class="col col-md-10 border-left">
         <div class="d-flex flex-row justify-content-between align-items-start" *ngIf="!filterService.isLoading">
           <div class="mt-2">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
-            {{filterService.totalcount}}
+            {{filterService.totalcount}}<a *ngIf="!filterService.isLoading" class="p-0 ml-2 c-normal font-weight-bold" (click)="refresh()">Refresh</a>
           </div>
           <div class="btn-toolbar mt-1">
             <div class="btn-group">
@@ -233,7 +233,7 @@
           </div>
           <div class="d-flex flex-row mb-1">
             <div class="dropdown ghost-dropdown" ngbDropdown>
-              <button type="button" class="btn btn-sm" ngbDropdownToggle>
+              <button type="button" class="btn btn-sm mr-2"  ngbDropdownToggle>
                 Sort: {{filterName}}
               </button>
               <ul ngbDropdownMenu class="dropdown-menu">
@@ -271,15 +271,16 @@
                 </div>
                 <div class="d-flex flex-column align-self-stretch justify-content-between" style="width: 40%">
                   <a [routerLink]="getLink(item)" tooltip="{{item.filename}}">
-                    <span class="font-weight-bold text-truncate" style="max-width: 100%;">
+                    <span class="font-weight-bold text-truncate" style="max-width: 100%; display: block;">
                       {{item.filename}}
                     </span>
                   </a>
                   <a class="text-truncate mb-1" style="cursor: pointer; text-decoration: underline;"
                     (click)="filterByBatch(item.batchid)">{{item.batchid}}</a>
-                  <div class="" *ngIf="item.topic">
-                    <i class="fas fa-quote-left mr-1"></i>{{item.topic.topic}}<span
-                      class="font-weight-bold ml-1">{{item.topic.confidence}} %</span>
+                  <div class="d-flex flex-row flex-start" *ngIf="item.topic">
+                    <i class="fas fa-quote-left mr-1"></i>
+                    <span class="text-truncate" style="max-width: 70%; display: inline-block;">{{item.topic.topic}}</span>
+                    <span class="font-weight-bold ml-1" >{{item.topic.confidence}}%</span>
                   </div>
                 </div>
                 <div class="d-flex flex-column align-self-stretch justify-content-between" style="width:5%">
@@ -305,7 +306,7 @@
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">{{t('Compliance')}}</div>
                         <div class="d-flex flex-row font-weight-bold"
-                          [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.4rem', 'color': getOpacityLevelCompliance(item.compliancepercent)}">
+                          [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.6rem', 'color': getOpacityLevelCompliance(item.compliancepercent)}">
                           <div class="align-self-center text-center mr-1">
                             <i class="fa fa-shield-alt"></i>
                           </div>
@@ -319,7 +320,7 @@
                       <div class="d-flex flex-column align-items-center">
                         <div style="font-size: x-small; margin-top: 0.3rem;">{{t('Sentiment trend')}}</div>
                         <ng-container *ngIf="hasTrend(item.sentimentTrend); else emptyTrend">
-                          <div class="d-flex flex-row font-weight-bold" style="font-size: 1.3rem; margin-top: 0.5rem">
+                          <div class="d-flex flex-row font-weight-bold" style="font-size: 1.3rem; margin-top: 0.7rem">
                             <i class="far" [ngClass]='getTrend(item.sentimentTrend.start)'
                               [tooltip]="item.sentimentTrend.start"></i>
                             <i class="fas fa-long-arrow-alt-right mx-2"></i>
@@ -342,7 +343,7 @@
                           {{t('Average emotional level')}}
                         </div>
                         <div class="d-flex flex-row font-weight-bold"
-                          [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.4rem', 'color': getOpacityLevelAnger(item.angertop)}">
+                          [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.7rem', 'color': getOpacityLevelAnger(item.angertop)}">
                           <div class="align-self-center text-center mr-1">
                             <i class="fa fa-thermometer-empty"></i>
                           </div>
@@ -362,7 +363,7 @@
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{t('Comments')}}
                         </div>
-                        <div class="d-flex flex-row font-weight-bold" style="font-size: 1.3rem; margin-top: 0.4rem">
+                        <div class="d-flex flex-row font-weight-bold" style="font-size: 1.3rem; margin-top: 0.7rem">
                           <div class="align-self-center text-center mr-1">
                             <i class="far fa-sticky-note" [ngClass]="{'c-primary': item.comment.length > 0}"></i>
                           </div>
@@ -375,7 +376,7 @@
                           {{t('Assessment')}}
                         </div>
                         <div class="d-flex flex-row"
-                          [ngStyle]="{'font-size': '1.3rem','margin-top': '0.4rem', 'color': getOpacityLevelCompliance(item.checklistScore)}">
+                          [ngStyle]="{'font-size': '1.3rem','margin-top': '0.7rem', 'color': getOpacityLevelCompliance(item.checklistScore)}">
                           <div class="text-center mr-1">
                             <i class="fas fa-tasks" [ngClass]="{'c-primary': item.checklist}"></i>
                           </div>
