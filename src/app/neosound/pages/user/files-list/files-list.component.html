@@ -269,13 +269,13 @@
                   <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
                   <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
                 </div>
-                <div class="d-flex flex-column align-self-stretch justify-content-between" style="width: 35%">
+                <div class="d-flex flex-column align-self-stretch justify-content-between" style="width: 40%">
                   <a [routerLink]="getLink(item)" tooltip="{{item.filename}}">
-                    <span class="d-inline-block text-truncate font-weight-bold" style="max-width: 100%;">
+                    <span class="font-weight-bold text-truncate" style="max-width: 100%;">
                       {{item.filename}}
                     </span>
                   </a>
-                  <a class="text-truncate" style="cursor: pointer;"
+                  <a class="text-truncate mb-1" style="cursor: pointer; text-decoration: underline;"
                     (click)="filterByBatch(item.batchid)">{{item.batchid}}</a>
                   <div class="" *ngIf="item.topic">
                     <i class="fas fa-quote-left mr-1"></i>{{item.topic.topic}}<span
@@ -283,29 +283,29 @@
                   </div>
                 </div>
                 <div class="d-flex flex-column align-self-stretch justify-content-between" style="width:5%">
-                  <div class="d-flex flex-row">
+                  <div class="d-flex flex-row align-items-center">
                     <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-auto"></i>
-                    <span tooltip="{{getStopwords(item)}}"
-                      class="badge badge-danger mr-4">{{item.stopwordcount ? item.stopwordcount : 0}}</span>
+                    <span tooltip="{{getStopwords(item)}}" class="badge badge-danger mr-4"
+                      style="border-radius: 0px; padding: 0.3rem 0.4rem;">{{item.stopwordcount ? item.stopwordcount : 0}}</span>
                   </div>
-                  <div class="d-flex flex-row">
+                  <div class="d-flex flex-row ">
                     <i class="fa fa-headset mr-auto" tooltip="{{t('Agent')}}"></i>
-                    <span tooltip="{{getAgentStopwords(item)}}"
-                      class="badge badge-danger mr-4">{{item.agentstopwordcount ? item.agentstopwordcount : 0 }}</span>
+                    <span tooltip="{{getAgentStopwords(item)}}" class="badge badge-danger mr-4"
+                      style="border-radius: 0px; padding: 0.3rem 0.4rem;">{{item.agentstopwordcount ? item.agentstopwordcount : 0 }}</span>
                   </div>
                   <div class="d-flex flex-row">
                     <i tooltip="{{t('Client')}}" class="fa fa-user-tie mr-auto"></i>
-                    <span tooltip="{{getCustomerStopword(item)}}"
-                      class="badge badge-danger mr-4">{{item.customerstopwordcount ? item.customerstopwordcount : 0}}</span>
+                    <span tooltip="{{getCustomerStopword(item)}}" class="badge badge-danger mr-4"
+                      style="border-radius: 0px; padding: 0.3rem 0.4rem;">{{item.customerstopwordcount ? item.customerstopwordcount : 0}}</span>
                   </div>
                 </div>
                 <div class="d-flex flex-column" style="width: 55%;">
-                  <div class="d-flex flex-row justify-content-start">
-                    <div class="d-flex mx-2">
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex">
                       <div class="d-flex flex-column">
-                        <div style="font-size: x-small;" class="font-weight-bold">{{t('Compliance')}}</div>
-                        <div class="d-flex flex-row font-weight-bold mt-1"
-                          [ngStyle]="{'font-size': '1.5rem', 'color': getOpacityLevelCompliance(item.compliancepercent)}">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">{{t('Compliance')}}</div>
+                        <div class="d-flex flex-row font-weight-bold"
+                          [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.4rem', 'color': getOpacityLevelCompliance(item.compliancepercent)}">
                           <div class="align-self-center text-center mr-1">
                             <i class="fa fa-shield-alt"></i>
                           </div>
@@ -315,11 +315,11 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start align-self-scratch mx-2">
-                      <div class="d-flex flex-column">
-                        <div style="font-size: x-small;" class="font-weight-bold">{{t('Sentiment trend')}}</div>
+                    <div class="d-flex justify-content-start">
+                      <div class="d-flex flex-column align-items-center">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">{{t('Sentiment trend')}}</div>
                         <ng-container *ngIf="hasTrend(item.sentimentTrend); else emptyTrend">
-                          <div class="d-flex flex-row font-weight-bold mt-1" style="font-size: 1.5rem;">
+                          <div class="d-flex flex-row font-weight-bold" style="font-size: 1.3rem; margin-top: 0.5rem">
                             <i class="far" [ngClass]='getTrend(item.sentimentTrend.start)'
                               [tooltip]="item.sentimentTrend.start"></i>
                             <i class="fas fa-long-arrow-alt-right mx-2"></i>
@@ -336,13 +336,13 @@
                         </ng-template>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start align-self-scratch mx-2">
+                    <div class="d-flex justify-content-start">
                       <div class="d-flex flex-column">
-                        <div style="font-size: x-small;" class="font-weight-bold">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{t('Average emotional level')}}
                         </div>
-                        <div class="d-flex flex-row font-weight-bold mt-1"
-                          [ngStyle]="{'font-size': '1.5rem', 'color': getOpacityLevelAnger(item.angertop)}">
+                        <div class="d-flex flex-row font-weight-bold"
+                          [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.4rem', 'color': getOpacityLevelAnger(item.angertop)}">
                           <div class="align-self-center text-center mr-1">
                             <i class="fa fa-thermometer-empty"></i>
                           </div>
@@ -357,25 +357,25 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start align-self-scratch mx-2">
+                    <div class="d-flex justify-content-start">
                       <div class="d-flex flex-column">
-                        <div style="font-size: x-small;" class="font-weight-bold">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{t('Comments')}}
                         </div>
-                        <div class="d-flex flex-row font-weight-bold mt-1" style="font-size: 1.5rem;">
+                        <div class="d-flex flex-row font-weight-bold" style="font-size: 1.3rem; margin-top: 0.4rem">
                           <div class="align-self-center text-center mr-1">
                             <i class="far fa-sticky-note" [ngClass]="{'c-primary': item.comment.length > 0}"></i>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start align-self-scratch mx-2">
+                    <div class="d-flex justify-content-start">
                       <div class="d-flex flex-column">
-                        <div style="font-size: x-small;" class="font-weight-bold">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{t('Assessment')}}
                         </div>
-                        <div class="d-flex flex-row mt-1"
-                          [ngStyle]="{'font-size': '1.5rem', 'color': getOpacityLevelCompliance(item.checklistScore)}">
+                        <div class="d-flex flex-row"
+                          [ngStyle]="{'font-size': '1.3rem','margin-top': '0.4rem', 'color': getOpacityLevelCompliance(item.checklistScore)}">
                           <div class="text-center mr-1">
                             <i class="fas fa-tasks" [ngClass]="{'c-primary': item.checklist}"></i>
                           </div>
@@ -390,8 +390,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex flex-row ml-auto">
-                      <div class="pr-2" style="font-size: xx-small;">
+                    <div class="d-flex flex-row">
+                      <div class="pr-2" style="font-size: xx-small; margin-top: 0.3rem;">
                         <div class="mb-1">
                           <span class="mr-2">{{t('Uploaded')}}</span>
                           <span class="float-right font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</span>
@@ -407,7 +407,7 @@
                             ({{item.pause.dur / item.duration | percent}})</span>
                         </div>
                       </div>
-                      <div style="font-size: xx-small;">
+                      <div style="font-size: xx-small; margin-top: 0.3rem;">
                         <div class="mb-1">
                           <span class="mr-2">{{t('Pauses')}}</span>
                           <span class="float-right font-weight-bold"></span>
@@ -425,32 +425,26 @@
                       </div>
                     </div>
                   </div>
-                  <div class="d-flex w-100">
-                    <span class="badge badge-secondary mr-1 mt-1" *ngFor="let tag of item.tags">{{tag}}</span>
-                    <button class="btn p-0 c-normal mr-auto mt-1" style="cursor: pointer;"
-                      (click)="showModal(tagModal, item, i)" tooltip="{{t('Edit tags')}}">
-                      <i class="fa fa-pencil-alt"></i>
-                    </button>
-                    <button class="btn p-0 c-normal align-self-center" style="cursor: pointer;"
-                      (click)="proccessFile(item)" tooltip="{{t('Refresh')}}{{item.proccessing ? '...' : ''}}">
-                      <i class="fa fa-sync mr-2"></i>
-                    </button>
-                    <button class="btn p-0 c-normal align-self-center" style="cursor: pointer;"
-                      (click)="showDeleteModal(confirm, item, i)" tooltip="{{t('Delete')}}">
-                      <i class="fa fa-trash-alt mr-2"></i>
-                    </button>
-                    <!-- <div class="btn p-0 c-normal align-self-center action-select " ngbDropdown display="dynamic" placement="right right-bottom" container="body">
-                      <button type="button" class="btn btn-sm" ngbDropdownToggle>
-                        <i class="fas fa-ellipsis-h"></i>
+                  <div class="d-flex align-items-end w-100">
+                    <div>
+                      <span class="badge badge-secondary mr-1" *ngFor="let tag of item.tags">{{tag}}</span>
+                    </div>
+                    <div class="mr-auto">
+                      <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, item, i)"
+                        tooltip="{{t('Edit tags')}}">
+                        <i class="fa fa-pencil-alt"></i>
                       </button>
-                      <ul ngbDropdownMenu class="dropdown-menu">
-                        <li>
-
-                        </li>
-                        <li>
-                        </li>
-                      </ul>
-                    </div> -->
+                    </div>
+                    <div>
+                      <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="proccessFile(item)"
+                        tooltip="{{t('Refresh')}}{{item.proccessing ? '...' : ''}}">
+                        <i class="fa fa-sync mr-2"></i>
+                      </button>
+                      <button class="btn p-0 c-normal" style="cursor: pointer;"
+                        (click)="showDeleteModal(confirm, item, i)" tooltip="{{t('Delete')}}">
+                        <i class="fa fa-trash-alt mr-2"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
