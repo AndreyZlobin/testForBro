@@ -125,7 +125,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     if(parsed < max) {
       color = (parsed * 100) / max;
     }
-    return "hsl(" + Math.ceil(100 - color) + ", 100%, 35%)";
+    return "hsl(" + Math.ceil(100 - color) + ", 50%, 50%)";
   }
 
   getOpacityLevelCompliance(percent) {
