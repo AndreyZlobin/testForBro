@@ -119,12 +119,13 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   getOpacityLevelAnger(val) {
-    const a = val.anger / 100;
-    const b = 100 * a;
-    const c = b + 0;
-
-    // Return a CSS HSL string
-    return "hsl(" + c + ", 50%, 50%)";
+    let color = 100;
+    const max = 25;
+    const parsed = parseFloat(val.anger);
+    if(parsed < max) {
+      color = (parsed * 100) / max;
+    }
+    return "hsl(" + Math.ceil(100 - color) + ", 100%, 35%)";
   }
 
   getOpacityLevelCompliance(percent) {
@@ -138,6 +139,11 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   abc(percent: number): string {
     return percent.toFixed();
+  }
+
+  abcStr(percent: string): string {
+    const val = parseFloat(percent)
+    return val.toFixed();
   }
 
   getOpacityLevelPause(val) {
