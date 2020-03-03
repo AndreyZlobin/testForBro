@@ -21,10 +21,7 @@ export class OrganizationSettingsService {
 
   getRedoReductAudioStatus(): Observable<any> {
     const params = {};
-    return this.http.post(
-      `${environment.api}/getRedoReductAudioStatus`,
-      params
-    );
+    return this.http.post(`${environment.api}/getRedoReductAudioStatus`, params);
   }
 
   updateSettings(nameSpace: string, settings: any): Observable<any> {
@@ -42,17 +39,10 @@ export class OrganizationSettingsService {
     return this.http.post(`${environment.api}/getMyCompanySettings`, params);
   }
 
-  getChecklistSettings(): Observable<any> {
-    const params = {
-      setting: "checklist"
-    };
-    return this.http.post(`${environment.api}/getMyCompanySettings`, params);
-  }
-
   launchRedo() {
     return this.http.post(`${environment.api}/redoKeywords`, {});
   }
-  launchRedoReductAudio() {
+  launchRedoReductAudio () {
     return this.http.post(`${environment.api}/redoReductAudio`, {});
   }
 }

@@ -55,6 +55,7 @@ export class AnalyticDetailsComponent {
           if (this.batchid !== batchid || this.filename !== filename) {
             this.filename = filename;
             this.batchid = batchid;
+            this.fileInfoService.getInfo(this.batchid, this.filename);
             this.fileResultService.getResult(this.batchid, this.filename);
           }
         }

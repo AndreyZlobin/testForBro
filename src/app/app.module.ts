@@ -1,10 +1,11 @@
+import { APP_BASE_HREF } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from "@angular/core";
+import { NgModule, LOCALE_ID } from "@angular/core";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CoreModule } from "./@core/core.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { DragulaModule } from "ng2-dragula";
+
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { TooltipModule } from "ngx-bootstrap/tooltip";
 import { ModalModule } from "ngx-bootstrap/modal";
@@ -30,16 +31,12 @@ import { StopWordsComponent } from "./neosound/pages/dashboard/calls-dashboard/c
 import { HitsStopwordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/hits-stopwords/hits-stopwords.component";
 import { TopicComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/topics/topics.component";
 import { HitsTopicsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/hits-topics/hits-topics.component";
-import { AssessmentByAgentComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/assessment-by-agent/assessment-by-agent.component";
-
 import { MinutesStatsBatchesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/minutes-stats-batches/minutes-stats-batchess.component";
 import { MinutesStatsMinutesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/minutes-stats-minutes/minutes-stats-minutes.component";
 import { CallsByDayComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/calls-by-day/calls-by-day.component";
 import { PopularWordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/popular-words/popular-words.component";
 import { FreqWordsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/freq-words/freq-words.component";
 import { AverageSentimentsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/average-sentiments/average-sentiments.component";
-import { CountSentimentsComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/count-sentiments/count-sentiments.component";
-
 import { SentimentalSankeyComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentimental-sankey/sentimental-sankey.component";
 import { SentimentalTreeComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/sentiment-tree/sentiment-tree.component";
 import { KeywordsPhrasesComponent } from "./neosound/pages/dashboard/calls-dashboard/cards/keywords-phrases/keywords-phrases.component";
@@ -72,7 +69,6 @@ import { LandingComponent } from "./neosound/pages/landing/landing.component";
 import { OrganizationSettingsComponent } from "./neosound/pages/admin/organisation-settings/organization-settings.component";
 import { KeywordsComponent } from "./neosound/pages/admin/organisation-settings/components/keywords/keywords.component";
 import { SensitiveDataComponent } from "./neosound/pages/admin/organisation-settings/components/sensitive-data/sensitive-data.component";
-import { CheckListComponent } from "./neosound/pages/admin/organisation-settings/components/check-list/check-list.component";
 
 import { AuthGuard } from "./neosound/shared/auth-guard";
 import { CanDeactivateGuard } from "./neosound/shared/can-deactivate";
@@ -99,14 +95,25 @@ import { TagInputModule } from "ngx-chips";
 import {
   FooterComponent,
   HeaderComponent,
-} from "./@theme/components";
+  SearchInputComponent,
+  ThemeSettingsComponent,
+  SwitcherComponent,
+  LayoutDirectionSwitcherComponent,
+  ThemeSwitcherComponent,
+  TinyMCEComponent,
+  ThemeSwitcherListComponent,
+} from './@theme/components';
 
 import {
   OneColumnLayoutComponent,
-} from "./@theme/layouts";
+  SampleLayoutComponent,
+  ThreeColumnsLayoutComponent,
+  TwoColumnsLayoutComponent,
+} from './@theme/layouts';
 
-import { UploadDialogComponent } from "./neosound/pages/user/upload-dialog/upload-dialog.component";
-import { UploadProgressComponent } from "./neosound/pages/user/upload-progress/upload-progress.component";
+import { UploadDialogComponent } from './neosound/pages/user/upload-dialog/upload-dialog.component';
+import { UploadProgressComponent } from './neosound/pages/user/upload-progress/upload-progress.component';
+
 
 import { FileDropModule } from "ngx-file-drop";
 
@@ -115,7 +122,6 @@ import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/pl
 import { AnalyticDetailsComponent } from "./neosound/pages/guest/analytic-details/analytic-details.component";
 
 import { TextLogComponent } from "./neosound/pages/guest/player-details/cards/text-log/text-log.component";
-import { CheckListFormComponent } from "./neosound/pages/guest/player-details/cards/check-list/check-list.component";
 import { TextComplianceComponent } from "./neosound/pages/guest/player-details/cards/text-compliance/text-compliance.component";
 import { FullTextComponent } from "./neosound/pages/guest/player-details/cards/full-text/full-text.component";
 import { TextStopwordsComponent } from "./neosound/pages/guest/player-details/cards/text-stopwords/text-stopwords.component";
@@ -128,7 +134,6 @@ import { FileInfoComponent } from "./neosound/pages/guest/player-details/cards/f
 import { FileChartDataService } from "./neosound/pages/guest/player-details/services/file-chart-data.service";
 import { FileResultService } from "./neosound/pages/guest/player-details/services/file-result.service";
 import { FileInfoService } from "./neosound/pages/guest/player-details/services/file-info.service";
-import { WaveSurferService } from "./neosound/pages/guest/player-details/player/wave-surfer.service";
 import { FileStatsService } from "./neosound/pages/guest/player-details/services/file-stats.service";
 import { FilePeeksService } from "./neosound/pages/guest/player-details/services/file-peeks.service";
 
@@ -138,7 +143,6 @@ import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-
 import { LanguageService } from "./neosound/services/language.service";
 import { NgxPaginationModule } from "ngx-pagination";
 import { IntervalDirective } from "./neosound/directives/interval.detective";
-import { ContenteditableDirective } from "./neosound/directives/contenteditable.directive";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
 import { DataService } from "./neosound/shared";
@@ -151,11 +155,25 @@ import { TotalMinutesPlusBatchesChartBarComponent } from "./neosound/pages/chart
 import { KeywordsRadialTreeComponent } from "./neosound/pages/charts/keywords-radial-tree/keywords-radial-tree.component";
 import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.component";
 
+const COMPONENTS = [
+  SwitcherComponent,
+  LayoutDirectionSwitcherComponent,
+  ThemeSwitcherComponent,
+  ThemeSwitcherListComponent,
+  HeaderComponent,
+  FooterComponent,
+  SearchInputComponent,
+  ThemeSettingsComponent,
+  TinyMCEComponent,
+  OneColumnLayoutComponent,
+  SampleLayoutComponent,
+  ThreeColumnsLayoutComponent,
+  TwoColumnsLayoutComponent,
+];
+
 @NgModule({
   declarations: [
-    HeaderComponent,
-    FooterComponent,
-    OneColumnLayoutComponent,
+    ...COMPONENTS,
     AppComponent,
     MinutesSecondsPipe,
     MainComponent,
@@ -167,7 +185,6 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     FreqWordsComponent,
     TopicComponent,
     HitsTopicsComponent,
-    AssessmentByAgentComponent,
     MinutesStatsBatchesComponent,
     MinutesStatsMinutesComponent,
     SentimentStatsBatchesComponent,
@@ -191,16 +208,13 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     OrganizationSettingsComponent,
     KeywordsComponent,
     SensitiveDataComponent,
-    CheckListComponent,
     AboutComponent,
     PlayerDetailsComponent,
     AnalyticDetailsComponent,
     TextLogComponent,
-    CheckListFormComponent,
     TextComplianceComponent,
     TextStopwordsComponent,
     AverageSentimentsComponent,
-    CountSentimentsComponent,
     SentimentalSankeyComponent,
     SentimentalTreeComponent,
     KeywordsPhrasesComponent,
@@ -214,7 +228,6 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     ApiPageComponent,
     PageNotFoundComponent,
     IntervalDirective,
-    ContenteditableDirective,
     BatchListComponent,
     BatchDetailsComponent,
     ChartPageComponent,
@@ -238,16 +251,18 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
   ],
   imports: [
     BrowserModule,
+
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+
     NbAlertModule,
     FormsModule,
     ReactiveFormsModule,
     NbInputModule,
     NgxEchartsModule,
     TagCloudModule,
-    DragulaModule.forRoot(),
+
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
@@ -267,6 +282,10 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
   ],
   bootstrap: [AppComponent],
   providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: "de-de"
+    },
     AuthGuard,
     CanDeactivateGuard,
     UsersService,
@@ -289,7 +308,6 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     PlayerService,
     AnalyticsService,
     MediaRecorderService,
-    WaveSurferService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestsHttpInterceptor,

@@ -53,9 +53,4 @@ export class TextLogComponent implements OnInit, OnDestroy {
   emitEvent(time: any) {
     this.goToRegion.emit(time);
   }
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.fileName && this.batchId) {
-      this.fileResultService.getResult(this.batchId, this.fileName);
-    }
-  }
 }

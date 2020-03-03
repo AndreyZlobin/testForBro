@@ -69,9 +69,6 @@ a:not([href]):not([tabindex]) {
   .player-details {
     .btn {
       padding: 5px 1.5rem;
-      &:focus {
-        outline-color: transparent;
-      }
     }
   }
 }
@@ -178,10 +175,7 @@ angular-tag-cloud > span {
 }
 
 .nb-theme-default .btn.c-normal {
-  color: #2a2a2a;
-}
-.badge {
-  padding: 0.4em 0.5em;
+	color: #2a2a2a;
 }
 .nb-theme-default .btn.btn-link {
   cursor: pointer;
@@ -193,8 +187,6 @@ angular-tag-cloud > span {
   &:focus,
   &:hover {
     opacity: 0.8;
-    outline: none;
-    outline-color: transparent;
     &:disabled {
       opacity: 0.3;
     }
@@ -203,6 +195,7 @@ angular-tag-cloud > span {
   &:active {
     opacity: 0.9;
   }
+
 }
 .nb-theme-default .btn.btn-primary {
   cursor: pointer;
@@ -213,16 +206,12 @@ angular-tag-cloud > span {
   &:hover {
     background-color: var(--color-secondary);
     opacity: 0.8;
-    outline: none;
-    outline-color: transparent;
     &:disabled {
       opacity: 0.3;
     }
   }
   &:active:focus,
   &:active {
-    outline: none;
-    outline-color: transparent;
     opacity: 0.9;
   }
 }
@@ -233,8 +222,6 @@ angular-tag-cloud > span {
   &:hover {
     color: var(--color-secondary);
     opacity: 0.8;
-    outline: none;
-    outline-color: transparent;
     &:disabled {
       opacity: 0.3;
     }
@@ -337,11 +324,11 @@ typeahead-container {
 }
 
 .nb-theme-default .tabset ul li {
-  background: rgba(0, 0, 0, 0);
+  background: rgba(0,0,0,0);
 }
 
 .nb-theme-default .tabset ul li.active {
-  background: rgba(0, 0, 0, 0);
+  background: rgba(0,0,0,0);
 }
 
 .nb-theme-default .tabset ul li.active a {
@@ -353,7 +340,7 @@ typeahead-container {
 .nb-theme-default .tabset ul li a::before {
   display: none;
   position: absolute;
-  content: "";
+  content: '';
   width: 100%;
   height: 6px;
   border-radius: 3px;
@@ -372,7 +359,7 @@ typeahead-container {
 .nb-theme-default .tabset li a::before {
   display: none;
   position: absolute;
-  content: "";
+  content: '';
   width: 100%;
   height: 6px;
   border-radius: 3px;
@@ -385,10 +372,7 @@ typeahead-container {
   background-color: var(--color-secondary);
 }
 
-.theme-green .bs-datepicker-body table td span.selected,
-.theme-green .bs-datepicker-body table td.selected span,
-.theme-green .bs-datepicker-body table td span[class*="select-"]:after,
-.theme-green .bs-datepicker-body table td[class*="select-"] span:after {
+.theme-green .bs-datepicker-body table td span.selected, .theme-green .bs-datepicker-body table td.selected span, .theme-green .bs-datepicker-body table td span[class*="select-"]:after, .theme-green .bs-datepicker-body table td[class*="select-"] span:after{
   background-color: var(--color-secondary);
 }
 
@@ -401,72 +385,4 @@ ngx-card-spinner {
 }
 .ngx-file-drop__content {
   color: var(--color-secondary) !important;
-}
-
-/* in-flight clone */
-.gu-mirror {
-  position: fixed !important;
-  margin: 0 !important;
-  z-index: 9999 !important;
-  opacity: 0.8;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-  filter: alpha(opacity=80);
-  pointer-events: none;
-}
-/* high-performance display:none; helper */
-.gu-hide {
-  left: -9999px !important;
-}
-/* added to mirrorContainer (default = body) while dragging */
-.gu-unselectable {
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
-}
-/* added to the source element while its mirror is dragged */
-.gu-transit {
-  opacity: 0.2;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-  filter: alpha(opacity=20);
-}
-
-div[contenteditable="true"],
-span[contenteditable="true"],
-p[contenteditable="true"],
-h1[contenteditable="true"],
-h2[contenteditable="true"],
-h3[contenteditable="true"],
-h4[contenteditable="true"],
-h5[contenteditable="true"],
-h6[contenteditable="true"] {
-  cursor:text;
-  &:focus {
-    outline: none;
-  }
-}
-
-.c-primary {
-  color: var(--color-secondary) !important;
-}
-
-app-files-list ul.dropdown-menu.show {
-  width: 220px !important;
-  min-width: 220px !important;
-}
-
-.action-select > button {
-    padding: .01rem .01rem !important;
-    color: #2a2a2a !important;
-    &:after {
-      content: "";
-    }
-}
-
-.action-select > .dropdown-menu.show {
-  z-index: 9999 !important
-}
-
-.action-select .dropdown-toggle::after {
-  display: none;
 }

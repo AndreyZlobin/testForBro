@@ -16,10 +16,6 @@ export class OrganizationSettingsComponent implements OnInit {
     {
       key: "sensitive-data",
       name: "Setup Sensitive Data"
-    },
-    {
-      key: "check-list",
-      name: "Setup Checklist"
     }
   ];
   public activeItem: string = "keywords";
