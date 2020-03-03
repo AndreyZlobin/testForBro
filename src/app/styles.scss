@@ -1,43 +1,472 @@
 .nb-arrow-thin-left {
-	display: none;
+  display: none;
+}
+
+a:not([href]):not([tabindex]) {
+  color: inherit;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .chart-legend .legend-wrap {
-	width: 100% !important;
+  width: 100% !important;
 }
 .chart-legend {
-	display: block;
-	padding: 0;
-	width: 100% !important;
-	& div, & ul {
-		width: 100% !important;
-		background: none;
-	}
-	.legend-labels {
-		background: none;
-	}
-	margin-bottom: 1rem;
+  display: block;
+  padding: 0;
+  width: 100% !important;
+  & div,
+  & ul {
+    width: 100% !important;
+    background: none;
+  }
+  .legend-labels {
+    background: none;
+  }
+  margin-bottom: 1rem;
 }
 .nb-theme-default nb-layout.window-mode .layout nb-layout-header nav {
-	z-index: 9999;
+  z-index: 9999;
 }
 .ngx-datepicker-container {
-	z-index: 9;
+  z-index: 9;
 }
 .input-group .form-gr-first {
-	border-top-left-radius: 0.375rem;
-	border-bottom-left-radius: 0.375rem;
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .input-group .form-gr-last {
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
-	border-top-right-radius: 0.375rem;
-	border-bottom-right-radius: 0.375rem;
-	margin-left: -1px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+  margin-left: -1px;
 }
 .loginLogo {
-	width: 200px;
-	max-height: 90px;
+  width: 200px;
+  max-height: 90px;
+}
+.nb-theme-default nb-card {
+  margin-bottom: 0;
+}
+.nb-theme-default
+  nb-layout
+  .layout
+  .layout-container
+  .content
+  .columns
+  nb-layout-column {
+  padding: 0.75rem 2.25rem 0.75rem;
+}
+.nb-theme-default nb-card-body {
+  min-height: calc(100vh - 147px);
+}
+.nb-theme-default {
+  .player-details {
+    .btn {
+      padding: 5px 1.5rem;
+      &:focus {
+        outline-color: transparent;
+      }
+    }
+  }
+}
+
+#side-filter {
+  .ng2-tags-container {
+    & {
+      font-size: 1rem;
+      padding: 0.01rem 0rem;
+      border: 1px solid #dfe3e9;
+      color: #2a2a2a;
+      background-color: #ffffff;
+      font-family: Roboto;
+      border-radius: 0.375rem;
+      line-height: 1.5;
+      background-clip: padding-box;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    .ng2-tag-input__text-input {
+      padding: 0 0.3rem;
+    }
+  }
+}
+
+.nb-theme-default .progress-container {
+  height: 0.5rem;
+  border-radius: 0;
+}
+
+.nb-theme-default .progress-value {
+  background-color: var(--color-secondary);
+}
+angular-tag-cloud > span {
+  cursor: pointer;
+  &.w11,
+  &.w12,
+  &.w13,
+  &.w10 {
+    color: var(--color-secondary) !important;
+  }
+  &.w1,
+  &.w2,
+  &.w3,
+  &.w4,
+  &.w5,
+  &.w6,
+  &.w7,
+  &.w8,
+  &.w9 {
+    color: var(--color-primary) !important;
+  }
+}
+
+.card {
+  border: none;
+  border-radius: 0px;
+}
+
+.card-header {
+  background: none;
+  font-size: 1.5rem;
+  border: none;
+}
+
+.card-header:after {
+  content: "";
+  background: linear-gradient(
+    to right,
+    var(--color-secondary) 0%,
+    var(--color-primary) 100%
+  );
+  display: block;
+  height: 3px;
+  width: 100%;
+  position: absolute;
+  top: 2.3em;
+  left: 0;
+}
+
+.gradient-text {
+  background: linear-gradient(
+    to right,
+    var(--color-secondary) 0%,
+    var(--color-primary) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dasboard-card {
+  color: #fff; //var(--color-secondary);
+  background-color: #fff;
+}
+
+.dasboard-card h6,
+.dasboard-card h4 {
+  // color: var(--color-secondary);
+  color: #fff;
+  text-align: right;
+}
+
+.nb-theme-default .text-primary {
+  color: var(--color-secondary) !important;
+}
+
+.nb-theme-default .btn.c-normal {
+  color: #2a2a2a;
+}
+.badge {
+  padding: 0.4em 0.5em;
+}
+.nb-theme-default .btn.btn-link {
+  cursor: pointer;
+  border-color: transparent;
+  color: #2a2a2a;
+  padding: 0;
+  &:active:focus,
+  &:active,
+  &:focus,
+  &:hover {
+    opacity: 0.8;
+    outline: none;
+    outline-color: transparent;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+  &:active:focus,
+  &:active {
+    opacity: 0.9;
+  }
+}
+.nb-theme-default .btn.btn-primary {
+  cursor: pointer;
+  background-color: var(--color-secondary);
+  &:active:focus,
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: var(--color-secondary);
+    opacity: 0.8;
+    outline: none;
+    outline-color: transparent;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+  &:active:focus,
+  &:active {
+    outline: none;
+    outline-color: transparent;
+    opacity: 0.9;
+  }
+}
+.nb-theme-default a {
+  color: var(--color-secondary);
+  &:active,
+  &:focus,
+  &:hover {
+    color: var(--color-secondary);
+    opacity: 0.8;
+    outline: none;
+    outline-color: transparent;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+}
+.file-list a {
+  &:active,
+  &:hover,
+  &:visited {
+    color: var(--color-secondary);
+  }
+  &:not([href]):not([tabindex]),
+  &:not([href]):not([tabindex]):hover,
+  &:not([href]):not([tabindex]):focus {
+    color: var(--color-secondary);
+    opacity: 0.8;
+  }
+}
+
+.sort-bar .btn.btn-sm {
+  padding: 0.625rem 0.5rem;
+}
+.nb-theme-default mark {
+  background-color: var(--color-secondary);
+}
+
+.card-body {
+  angular-tag-cloud {
+    overflow: visible;
+    // position: initial;
+  }
+}
+
+.btn-group .ngx-pagination .current {
+  background-color: var(--color-secondary);
+}
+
+.tagsModal .ng2-tag-input.minimal {
+  border: 1px solid #cccccc !important;
+  padding: 5px;
+  border-radius: 3px;
+  margin-bottom: 15px;
+}
+
+.stopbackcolor {
+  background-color: rgb(204, 121, 169);
+}
+.missbackcolor {
+  background-color: var(--color-primary);
+}
+
+.left-border {
+  border-left: 1px solid #ebeef2 !important;
+}
+
+.nb-theme-default nb-tabset ul li a::before {
+  background-color: var(--color-secondary);
+}
+
+typeahead-container {
+  .dropdown-item {
+    &.active {
+      color: #ebeef2 !important;
+      background-color: var(--color-secondary);
+    }
+  }
+}
+
+.grey {
+  background-color: #dee2e6;
+}
+
+.nb-theme-default .tabset ul li a {
+  display: flex;
+  position: relative;
+  text-decoration: none;
+  padding: 1.25rem;
+  color: #a4abb3;
+}
+
+.nb-theme-default .tabset ul {
+  font-family: Roboto;
+  font-size: 1.125rem;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid #ebeef2;
+}
+
+.nb-theme-default .tabset ul li {
+  cursor: pointer;
+  margin-bottom: -1px;
+  text-align: center;
+  position: relative;
+}
+
+.nb-theme-default .tabset ul {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+}
+
+.nb-theme-default .tabset ul li {
+  background: rgba(0, 0, 0, 0);
+}
+
+.nb-theme-default .tabset ul li.active {
+  background: rgba(0, 0, 0, 0);
+}
+
+.nb-theme-default .tabset ul li.active a {
+  pointer-events: none;
+  font-weight: 600;
+  color: #2a2a2a;
+}
+
+.nb-theme-default .tabset ul li a::before {
+  display: none;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  bottom: -2px;
+  left: 0;
+  background-color: #2a2a2a;
+}
+
+.nb-theme-default .tabset ul li a::before {
+  background-color: var(--color-secondary);
+}
+
+.nb-theme-default .tabset li.active a::before {
+  display: block;
+}
+.nb-theme-default .tabset li a::before {
+  display: none;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--color-secondary);
+}
+
+.theme-green .bs-datepicker-head {
+  background-color: var(--color-secondary);
+}
+
+.theme-green .bs-datepicker-body table td span.selected,
+.theme-green .bs-datepicker-body table td.selected span,
+.theme-green .bs-datepicker-body table td span[class*="select-"]:after,
+.theme-green .bs-datepicker-body table td[class*="select-"] span:after {
+  background-color: var(--color-secondary);
+}
+
+ngx-card-spinner {
+  width: 100%;
+}
+
+.ngx-file-drop__drop-zone {
+  border: 2px dotted var(--color-secondary) !important;
+}
+.ngx-file-drop__content {
+  color: var(--color-secondary) !important;
+}
+
+/* in-flight clone */
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+  pointer-events: none;
+}
+/* high-performance display:none; helper */
+.gu-hide {
+  left: -9999px !important;
+}
+/* added to mirrorContainer (default = body) while dragging */
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+/* added to the source element while its mirror is dragged */
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
+div[contenteditable="true"],
+span[contenteditable="true"],
+p[contenteditable="true"],
+h1[contenteditable="true"],
+h2[contenteditable="true"],
+h3[contenteditable="true"],
+h4[contenteditable="true"],
+h5[contenteditable="true"],
+h6[contenteditable="true"] {
+  cursor:text;
+  &:focus {
+    outline: none;
+  }
+}
+
+.c-primary {
+  color: var(--color-secondary) !important;
+}
+
+app-files-list ul.dropdown-menu.show {
+  width: 220px !important;
+  min-width: 220px !important;
+}
+
+.action-select > button {
+    padding: .01rem .01rem !important;
+    color: #2a2a2a !important;
+    &:after {
+      content: "";
+    }
+}
+
+.action-select > .dropdown-menu.show {
+  z-index: 9999 !important
+}
+
+.action-select .dropdown-toggle::after {
+  display: none;
 }

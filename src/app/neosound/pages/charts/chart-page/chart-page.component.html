@@ -1,0 +1,106 @@
+<hr>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('default');">default</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('macarons'); initCharts();">macarons</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('dark');">dark</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('shine');">shine</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('infografic'); initCharts();">infografic</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('roma');">roma</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('vintage');">vintage</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('walden'); initCharts();">walden</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('westeros');">westeros</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setColors('wonderland');">wonderland</button>
+<hr>
+<hr>
+  <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data4');">data4</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data5');">data5</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data6');">data6</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data7');">data7</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setKeywordsRadialTreeData('data8');">data8</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setLevelRadialTreeData(1);">level1</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setLevelRadialTreeData(2);">level2</button>
+  <button class="btn btn-outline-primary ml-4" (click)="setLevelRadialTreeData(3);">level3</button>
+<hr>
+
+<div class="row" *ngIf="!isLoading; else spinner">
+  <div class="col-12 col-lg-6 mb-3">
+    <!-- <ngx-keywords-radial-tree [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors"
+                              [optionData]="radialTreeData.data" [optionLevel]="radialTreeData.level">
+    </ngx-keywords-radial-tree> -->
+  </div>
+
+
+  <div class="col-12 col-lg-6 mb-3">
+    <div class="card h-100">
+      <div class="card-header">
+        Sankey diagram
+      </div>
+      <div class="card-body">
+          <div echarts
+            [options]="option1"
+            class="echart"
+            (chartInit)="onChartInit1($event)">
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6 mb-3">
+    <ngx-calls-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-calls-by-day-chart-line>
+  </div>
+
+  <div class="col-12 col-lg-6 mb-3">
+    <div class="card h-100">
+      <div class="card-header">
+          Calls distributed by days and time
+      </div>
+      <div class="card-body">
+          <div echarts
+            [options]="option3"
+            class="echart"
+            (chartInit)="onChartInit3($event)">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6 mb-3">
+      <ngx-total-minutes-by-day-chart-line [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+      </ngx-total-minutes-by-day-chart-line>
+  </div>
+
+  <div class="col-12 col-lg-6 mb-3">
+    <ngx-total-by-queries-chart-pie [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-total-by-queries-chart-pie>
+  </div>
+
+  <div class="col-12 col-lg-6 mb-3">
+    <div class="card h-100">
+      <div class="card-header">
+          Total minutes
+      </div>
+      <div class="card-body">
+          <div echarts
+            [options]="option6"
+            class="echart"
+            (chartInit)="onChartInit6($event)">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6 mb-3">
+    <ngx-total-minutes-chart-bar [fileStatData]="fileStat" [minutesStatData]="minutesStat" [apiStatData]="apiStat" [colorsData]="colors">
+    </ngx-total-minutes-chart-bar>
+  </div>
+
+  <div class="col-12 col-lg-6 mb-3">
+    <ngx-total-minutes-plus-batches-chart-bar [minutesStatData]="minutesStat"  [colorsData]="colors">
+    </ngx-total-minutes-plus-batches-chart-bar>
+  </div>
+</div>
+
+<ng-template #spinner>
+  <div class="load-container load1">
+    <div class="loader">{{ t("Loading...") }}</div>
+  </div>
+</ng-template>

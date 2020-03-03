@@ -1,0 +1,130 @@
+<div *ngIf="!loading; else loadingTemplate">
+  <div class="row">
+    <div class="col-4 mb-3">
+      <div class="card dasboard-card" [ngStyle]="{'background': getColor(0)}">
+        <div class="card-body">
+          <div class="d-flex align-items-center flex-row m-t-30">
+            <div>
+              <i class="fa fa-envelope fa-3x" style="margin-right: 10px;"></i>
+            </div>
+            <div class="ml-auto">
+              <h4>{{filesCount}}</h4>
+              <h6>{{t('Emails processed')}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 mb-3">
+      <div class="card dasboard-card" [ngStyle]="{'background': getColor(2)}">
+        <div class="card-body">
+          <div class="d-flex align-items-center flex-row m-t-30">
+            <div><i class="fa fa-users fa-3x" style="margin-right: 10px;"></i></div>
+            <div class="ml-auto">
+              <h4>{{batchCount}}</h4>
+              <h6>{{t('Batches uploaded')}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 mb-3">
+      <div class="card dasboard-card" [ngStyle]="{'background': getColor(3)}">
+        <div class="card-body">
+          <div class="d-flex align-items-center flex-row m-t-30">
+            <div><i class="fa fa-cloud fa-3x" style="margin-right: 10px;"></i></div>
+            <div class="ml-auto">
+              <h4>{{apiCalls}}</h4>
+              <h6>{{t('API calls done')}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-6 mb-3">
+      <div class="card card-block d-flex h-100">
+        <div class="card-header">{{t('Stopwords')}}</div>
+        <div class="card-body align-items-center d-flex justify-content-center" *ngIf="stopwords">
+          <angular-tag-cloud [data]="stopwords" width="300" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false"
+            (clicked)="keywordClicked($event)">
+          </angular-tag-cloud>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 mb-3" *ngIf="keyWordChart">
+      <div class="card" style="min-height: calc(100% - 15px);">
+        <div class="card-header">{{t('Hits vs. Stopwords')}}</div>
+        <div class="card-body pl-0 pr-0">
+          <div echarts [options]="keyWordChart"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 mb-3" *ngIf="barChart">
+      <div class="card" style="min-height: calc(100% - 15px);">
+        <div class="card-header">{{t('Number of emails by top 6 batches')}}</div>
+        <div class="card-body pl-0 pr-0">
+          <div echarts [options]="barChart"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 mb-3" *ngIf="byDay">
+      <div class="card">
+        <div class="card-header">
+          {{t('Total emails by days')}}
+        </div>
+        <div class="card-body">
+          <div echarts [options]="byDay">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 mb-3" *ngIf="keywords2.length > 0">
+      <div class="card  card-block d-flex h-100">
+        <div class="card-header">{{t('Most frequently used words')}}</div>
+        <div class="card-body align-items-center d-flex justify-content-center" *ngIf="keywords2">
+          <angular-tag-cloud [data]="keywords2" width="500" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false">
+          </angular-tag-cloud>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 mb-3" *ngIf="showHitsVsStopwors">
+        <div class="card" style="min-height: calc(100% - 15px);">
+          <div class="card-header">{{t('Hits vs. Word')}}</div>
+          <div class="card-body pl-0 pr-0">
+            <ul class="list-group list-group-flush" style="height: 300px; overflow-y: auto">
+              <li class="list-group-item d-flex" *ngFor="let freqWord of freqWords" style="color: #211b19">
+                <span>{{freqWord.name}}</span>
+                <span class="ml-auto">{{freqWord.value}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <div class="col-12 mb-3" *ngIf="showRadialTreeData">
+        <ngx-keywords-radial-tree [treeRadialData]="radialTreeData" [colors]="colors">
+        </ngx-keywords-radial-tree>
+      </div>
+    <div class="col-6 mb-3" *ngIf="sankey6">
+        <div class="card  card-block d-flex h-100">
+          <div class="card-header">{{t('Popular Words Sentiment')}}</div>
+          <div class="card-body">
+            <div echarts [options]="sankey6"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mb-3" *ngIf="sankey3">
+        <div class="card  card-block d-flex h-100" *ngIf="hasSankey">
+          <div class="card-header">{{t('Popular Adjectives')}}</div>
+          <div class="card-body">
+            <div echarts [options]="sankey3"></div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<ng-template #loadingTemplate>
+  {{ t("Loading...") }}
+</ng-template>

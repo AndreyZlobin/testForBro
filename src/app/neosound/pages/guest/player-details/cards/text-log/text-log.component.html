@@ -1,0 +1,32 @@
+<div style="overflow-y: auto;">
+  <div style="height: 49vh;">
+    <table class="table" *ngIf="!isLoading; else loading">
+      <ng-container *ngFor="let item of data">
+        <tr class="d-flex" (click)="emitEvent(item[0])" style="cursor: pointer;" interval
+          [timeInterval]="[item[0], item[1], item[4]]"
+          [ngClass]="{'grey': item[5] && greySpeaker && item[5] == greySpeaker}">
+          <td class="col-2">
+            {{ getDateVal(item[0]) | date: "mm:ss" }} -
+            {{ getDateVal(item[1]) | date: "mm:ss" }}
+          </td>
+          <td class="col-8"><span [innerHTML]=t(item[2])></span></td>
+          <td class="col-1">
+            <span *ngIf="item[3]">
+              {{ item[3] | currency: "%":"symbol":"1.2-2" }}
+            </span>
+          </td>
+          <td class="col-1">
+            <i class="far fa-angry text-danger" tooltip="Negative" *ngIf="item[4] === 'Negative'"></i>
+            <i class="far fa-grin text-success" tooltip="Positive" *ngIf="item[4] === 'Positive'"></i>
+            <i class="far fa-meh text-info" tooltip="Neutral" *ngIf="item[4] === 'Neutral'"></i>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+    <ng-template #loading>
+      <div class="d-flex align-items-center justify-content-center">
+
+      </div>
+    </ng-template>
+  </div>
+</div>

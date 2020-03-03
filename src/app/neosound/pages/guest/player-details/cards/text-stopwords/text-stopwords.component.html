@@ -1,0 +1,10 @@
+<div *ngIf="!isLoading; else loading">
+  <ul class="list-group mt-3" style="height: 300px; overflow-y: auto">
+    <li class="list-group-item" *ngFor="let word of data">
+      {{word}}
+    </li>
+  </ul>
+</div>
+<ng-template #loading>
+  loading...
+</ng-template>

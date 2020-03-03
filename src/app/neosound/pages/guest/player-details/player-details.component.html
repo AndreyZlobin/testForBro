@@ -1,177 +1,32 @@
-<div>
-  <button
-    class="btn btn-secondary pull-right"
-    routerLink="/user/files"
-    style="float: right"
-  >
-    Back
-  </button>
-  <h2>
-    {{ t("Details") }} <span>{{ fileParams.filename }}</span>
-  </h2>
-  <ul class="nav nav-tabs mt-2 mb-2">
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [ngClass]="{ active: currentTab === 'anger', disabled: tabsDisabled }"
-        (click)="setTab('anger')"
-        >{{ t("Emotion") }}</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [ngClass]="{
-          active: currentTab === 'sounds',
-          disabled: tabsDisabled
-        }"
-        (click)="setTab('sounds')"
-        >{{ t("On-hold") }}</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [ngClass]="{ active: currentTab === 'text', disabled: tabsDisabled }"
-        (click)="setTab('text')"
-        >{{ t("Text") }}</a
-      >
-    </li>
-  </ul>
-  <div class="alert alert-danger" *ngIf="errorMessage">
-    {{ t("Error:") }} {{ t(errorMessage) }}
-  </div>
-  <div [ngClass]="{ 'd-none': currentTab === 'results' }">
-    <div id="myWavesurferContainer">
-      <div class="load-container load1" *ngIf="isLoading"><div class="loader">{{ t("Loading...") }}</div></div>
+<nb-card>
+  <nb-card-body>
+    <ng-container *ngIf="filename && batchid">
+      <ngx-file-info [batchId]="batchid" [fileName]="filename"></ngx-file-info>
+    </ng-container>
+    <div class="tabset">
+      <ul>
+        <li class="active">
+          <a href="">
+            Transcript
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="getLink()">Analytics
+          </a>
+        </li>
+      </ul>
     </div>
-    <div id="timelineContainer"></div>
-    <div
-      class="d-flex justify-content-start my-2"
-      *ngIf="currentTab !== 'results'"
-    >
-      <button
-        class="btn btn-primary mr-2 my-2"
-        (click)="play()"
-        style="background-color: #009ad2"
-      >
-        <i class="fa fa-play"></i>/<i class="fa fa-pause"></i>
-      </button>
-          <div class="btn-group mt-2" *ngIf="emotions && currentTab === 'text'">
-            <label
-              class="btn btn-secondary"
-              [(ngModel)]="radioModel"
-              btnRadio="Log"
-              tabindex="0"
-              role="button"
-              >Log</label
-            >
-            <label
-              class="btn btn-secondary"
-              [(ngModel)]="radioModel"
-              btnRadio="Text"
-              tabindex="0"
-              role="button"
-              >Text</label
-            >
-            <label
-              class="btn btn-secondary"
-              [(ngModel)]="radioModel"
-              btnRadio="KeyWords"
-              tabindex="0"
-              role="button"
-              >Keywords</label
-            >
-          </div>
-      <div class="d-flex justify-content-start ml-auto">
-        <span class="font-weight-bold purple-text mr-3 mt-1"
-          ><i class="fa fa-search-plus"></i
-        ></span>
-        <form class="range-field mt-1 float-right">
-          <input
-            data-action="zoom"
-            type="range"
-            min="1"
-            max="200"
-            value="0"
-            style="width: 100%"
-            (input)="zoom($event)"
-          />
-        </form>
-        <span class="font-weight-bold purple-text ml-2 mt-1"
-          ><i class="fa fa-search-minus"></i
-        ></span>
+    <div class="d-flex flex-column">
+      <ngx-player [fileName]="filename" [batchId]="batchid"></ngx-player>
+      <div class="d-flex flex-row justify-content-between">
+        <ngx-text-log style="width: 100%;" [batchId]="batchid" [fileName]="filename" (goToRegion)="goToRegion($event)"></ngx-text-log>
+        <div class="w-25" *ngIf="showComments">
+          <ngx-check-list [batchId]="batchid" [fileName]="filename"></ngx-check-list>
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    *ngIf="emotions && currentTab !== 'results' && currentTab !== 'text'"
-    class="mt-2"
-  >
-    <div class="scrollable-list table-responsive">
-      <table class="table table-striped" style="overflow-x:auto">
-        <ng-container *ngFor="let item of emotions">
-          <tr (click)="gotoPosition(item[0])"  class="d-flex">
-            <td class="col-1">
-              {{ getDateVal(item[0]) | date: "mm:ss" }} -
-              {{ getDateVal(item[1]) | date: "mm:ss" }}
-            </td>
-            <td class="col-10">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-            <td class="col-1">{{ item[3] | currency: "%":"symbol":"1.2-2" }}</td>
-          </tr></ng-container
-        >
-      </table>
-    </div>
-  </div>
-
-  <div *ngIf="emotions && currentTab === 'text'" class="mt-2">
-    <div class="scrollable-list table-responsive">
-      <ng-container *ngIf="radioModel === 'Log'">
-        <table class="table table-striped" style="overflow-x:auto">
-          <ng-container *ngFor="let item of emotions">
-            <tr
-              class="d-flex"
-              (click)="gotoPosition(item[0])"
-              interval
-              [timeInterval]="[item[0], item[1]]"
-            >
-              <td class="col-1">
-                {{ getDateVal(item[0]) | date: "mm:ss" }} -
-                {{ getDateVal(item[1]) | date: "mm:ss" }}
-              </td>
-              <td class="col-10">{{ t(item[2] == "anger" ? "emotion" : item[2]) }}</td>
-              <td class="col-1">
-                {{
-                  item[3] | currency: "%":"symbol":"1.2-2"
-                }}
-              </td>
-            </tr>
-          </ng-container>
-        </table>
-      </ng-container>
-      <ng-container *ngIf="radioModel === 'Text'">
-        <div class="mt-2">
-          <button
-            type="button"
-            class="btn btn-dark"
-            (click)="copyToClipboard(sttfulltext)"
-            style="position: absolute; right: 20px;bottom: 20px;"
-          >
-            Copy
-          </button>
-          {{ sttfulltext }}
-        </div>
-      </ng-container>
-      <ng-container *ngIf="radioModel === 'KeyWords'">
-          <div class="mt-2">
-            <ul class="list-group">
-                <li class="list-group-item" *ngFor="let keyword of keywords">{{keyword}}</li>
-            </ul>
-          </div>
-        </ng-container>
-    </div>
-  </div>
-  <ng-template #loading>
-    {{ t("Loading...") }}
-  </ng-template>
+  </nb-card-body>
+</nb-card>
+<div style="position: absolute; top: 50%; right: 0; background-color: white;     z-index: 999;" class="border">
+  <button class="btn p-2 m-2" style="cursor: pointer; color: #2a2a2a;z-index: 99;" (click)="showComments = !showComments"><i class="far fa-comment-alt"></i></button>
 </div>

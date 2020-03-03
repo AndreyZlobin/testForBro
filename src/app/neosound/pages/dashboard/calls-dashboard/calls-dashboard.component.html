@@ -1,0 +1,72 @@
+<ngx-info-bar *ngIf="show('welcome')"></ngx-info-bar>
+<div class="row">
+  <div class="col-6 mb-3" *ngIf="show('processedCalls')">
+    <ngx-processed-calls></ngx-processed-calls>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('performanceByAgent')">
+    <ngx-performance-by-agent (onClick)="batchClicked($event)"></ngx-performance-by-agent>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('popularWordsTagCloud')">
+    <ngx-popular-words></ngx-popular-words>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('hitVsPopularWord')">
+    <ngx-freq-words></ngx-freq-words>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('stopwordsTagCloud')">
+    <ngx-stopwords (onClick)="keywordClicked($event)"></ngx-stopwords>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('hitVsStopword')">
+    <ngx-hits-stopwords></ngx-hits-stopwords>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('topicsTagCloud')">
+    <ngx-topics (onClick)="topicClicked($event)"></ngx-topics>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('hitVsTopics')">
+    <ngx-hits-topics></ngx-hits-topics>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('totalMinutesByBatches')">
+    <ngx-minutes-stats-batches></ngx-minutes-stats-batches>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('totalMinutesByDay')">
+    <ngx-minutes-stats-minutes></ngx-minutes-stats-minutes>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('nCallsByDay')">
+    <ngx-calls-by-day></ngx-calls-by-day>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('nCallsByTopBatches')">
+    <ngx-number-of-calls></ngx-number-of-calls>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('AvgSentByBatches')">
+    <ngx-sentiment-stats-batches></ngx-sentiment-stats-batches>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('nSentCallsByTopBatches')">
+    <ngx-sentimental-of-calls></ngx-sentimental-of-calls>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('AvgSentByDay')">
+    <ngx-sentiment-stats-day></ngx-sentiment-stats-day>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('nSentCallsByDay')">
+    <ngx-sentimental-calls-by-day></ngx-sentimental-calls-by-day>
+  </div>
+  <div class="col-12 mb-3" *ngIf="show('hitVsTopics')">
+    <ngx-assessment-by-agent></ngx-assessment-by-agent>
+  </div>
+  <div class="col-12 mb-3" *ngIf="show('sentimentTrendByBatchesTable')">
+    <ngx-average-sentiments (onClickBatch)="batchClicked($event)" (onClickTrend)="sentimentTrendClicked($event)"></ngx-average-sentiments>
+  </div>
+  <div class="col-12 mb-3" *ngIf="show('sentimentSankey')">
+    <ngx-sentimental-sankey></ngx-sentimental-sankey>
+  </div>
+  <div class="col-12 mb-3" *ngIf="show('sentimentRadial')">
+    <ngx-sentiment-tree></ngx-sentiment-tree>
+  </div>
+  <div class="col-12 mb-3" *ngIf="show('keywordsPhrasesRadial')">
+    <ngx-keywords-phrases></ngx-keywords-phrases>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('welcome')">
+    <ngx-upload-instructions></ngx-upload-instructions>
+  </div>
+  <div class="col-6 mb-3" *ngIf="show('totalByQueries')">
+    <ngx-queries-chart></ngx-queries-chart>
+  </div>
+</div>

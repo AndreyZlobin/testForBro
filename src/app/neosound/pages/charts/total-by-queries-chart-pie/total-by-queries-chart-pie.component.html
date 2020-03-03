@@ -1,0 +1,19 @@
+<ng-container *ngIf="!isLoading; else spinner"></ng-container>
+<div class="card h-100">
+  <div class="card-header">
+    {{t('Totals by queries')}}
+  </div>
+  <div class="card-body">
+    <div echarts
+         [options]="option5"
+         class="echart"
+         (chartInit)="onChartInit5($event)">
+    </div>
+  </div>
+</div>
+
+<ng-template #spinner>
+  <div class="load-container load1">
+    <div class="loader">{{ t("Loading...") }}</div>
+  </div>
+</ng-template>

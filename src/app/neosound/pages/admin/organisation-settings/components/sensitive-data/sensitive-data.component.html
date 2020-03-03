@@ -1,0 +1,31 @@
+<div style="overflow-y: auto">
+    <div style="height: 41vh">
+        <div class="loader" *ngIf="isLoading">Loading...</div>
+        <div *ngIf="!isLoading">
+            <div class="mt-3">
+                <button class="btn btn-primary btn-sm" (click)="save()">Save</button>
+            </div>
+            <!-- <div class="mt-3">
+                <label>
+                    <input [(ngModel)]="setting.reductNumber" [ngModelOptions]="{standalone: true}" type="checkbox"
+                        class="" />
+                    {{t('Enable reduction numbers')}}
+                </label>
+            </div>
+            <div class="mt-3">
+                <label>
+                    <input [(ngModel)]="setting.reductName" [ngModelOptions]="{standalone: true}" type="checkbox"
+                        class="" />
+                    {{t('Enable reduction detected names')}}
+                </label>
+            </div> -->
+            <div class="mt-3">
+                <label>
+                    <input [(ngModel)]="setting.reductDictName" [ngModelOptions]="{standalone: true}" type="checkbox"
+                        class="" />
+                    {{t('Enable reduction Dictionary names')}}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

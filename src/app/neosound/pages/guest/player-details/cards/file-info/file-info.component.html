@@ -1,0 +1,206 @@
+<div class="d-flex flex-row align-self-scratch py-2" *ngIf="file">
+  <div style="width: 5%;">
+    <button class="btn btn-link" style="cursor: pointer;" [routerLink]="'/user/files'" [tooltip]="t(' Back to List')">
+      <i class="fas fa-long-arrow-alt-left"></i>
+    </button>
+  </div>
+  <div (click)="markFavorite(file)" style="cursor: pointer; width: 2%;" class="align-self-start">
+    <i *ngIf="getBool(file.pin)" class="fa fa-star"></i>
+    <i *ngIf="!getBool(file.pin)" class="far fa-star"></i>
+  </div>
+  <div class="d-flex flex-column align-self-scratch" style="width: 35%">
+    <a  tooltip="{{file.filename}}">
+      <span class="d-inline-block text-truncate font-weight-bold" style="max-width: 100%;">
+        {{file.filename}}
+      </span>
+    </a>
+    <a class="text-truncate mb-auto mt-auto" style="cursor: pointer;">{{file.batchid}}</a>
+    <div class="" *ngIf="file.topic">
+      <i class="fas fa-quote-left mr-1"></i>{{file.topic.topic}}<span
+        class="font-weight-bold ml-1">{{file.topic.confidence}} %</span>
+    </div>
+  </div>
+  <div class="d-flex flex-column align-self-stretch justify-content-between" style="width:5%">
+    <div class="d-flex flex-row">
+      <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-auto"></i>
+      <span tooltip="{{getStopwords(file)}}"
+        class="badge badge-danger mr-4">{{file.stopwordcount ? file.stopwordcount : 0}}</span>
+    </div>
+    <div class="d-flex flex-row">
+      <i class="fa fa-headset mr-auto" tooltip="{{t('Agent')}}"></i>
+      <span tooltip="{{getAgentStopwords(file)}}"
+        class="badge badge-danger mr-4">{{file.agentstopwordcount ? file.agentstopwordcount : 0 }}</span>
+    </div>
+    <div class="d-flex flex-row">
+      <i tooltip="{{t('Client')}}" class="fa fa-user-tie mr-auto"></i>
+      <span tooltip="{{getCustomerStopword(file)}}"
+        class="badge badge-danger mr-4">{{file.customerstopwordcount ? file.customerstopwordcount : 0}}</span>
+    </div>
+  </div>
+  <div class="d-flex flex-column" style="width: 55%;">
+    <div class="d-flex flex-row justify-content-between">
+      <div class="d-flex">
+        <div class="d-flex flex-column">
+          <div style="font-size: x-small;" class="font-weight-bold">{{t('Compliance')}}</div>
+          <div class="d-flex flex-row font-weight-bold mt-1"
+            [ngStyle]="{'font-size': '1.5rem', 'color': getOpacityLevelCompliance(file.compliancepercent)}">
+            <div class="align-self-center text-center mr-1">
+              <i class="fa fa-shield-alt"></i>
+            </div>
+            <span class="m-0">
+              {{file.compliancepercent !== '-' ? abc(file.compliancepercent) + '%' : '-    ' }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-start align-self-scratch">
+        <div class="d-flex flex-column">
+          <div style="font-size: x-small;" class="font-weight-bold">{{t('Sentiment trend')}}</div>
+          <ng-container *ngIf="hasTrend(file.sentimentTrend); else emptyTrend">
+            <div class="d-flex flex-row font-weight-bold mt-1" style="font-size: 1.5rem;">
+              <i class="far" [ngClass]='getTrend(file.sentimentTrend.start)' [tooltip]="file.sentimentTrend.start"></i>
+              <i class="fas fa-long-arrow-alt-right mx-2"></i>
+              <i [ngClass]='getTrend(file.sentimentTrend.end)' [tooltip]="file.sentimentTrend.end" class="far"></i>
+            </div>
+          </ng-container>
+          <ng-template #emptyTrend>
+            <div class="d-flex flex-row align-self-start">
+              <span style="width: 4rem">
+                -
+              </span>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="d-flex justify-content-start align-self-scratch">
+        <div class="d-flex flex-column">
+          <div style="font-size: x-small;" class="font-weight-bold">
+            {{t('Average emotional level')}}
+          </div>
+          <div class="d-flex flex-row font-weight-bold mt-1"
+            [ngStyle]="{'font-size': '1.5rem', 'color': getOpacityLevelAnger(file.angertop)}">
+            <div class="align-self-center text-center mr-1">
+              <i class="fa fa-thermometer-empty"></i>
+            </div>
+            <span class="m-0" *ngIf="file.angertop && file.angertop.anger; else empty">
+              {{file.angertop && file.angertop.anger}}%
+            </span>
+            <ng-template #empty>
+              <span class="m-0">
+                -
+              </span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-start align-self-scratch mr-2">
+        <div class="d-flex flex-column">
+          <div style="font-size: x-small;" class="font-weight-bold">
+            {{t('Comments')}}
+          </div>
+          <div class="d-flex flex-row font-weight-bold mt-1" style="font-size: 1.5rem;">
+            <div class="align-self-center text-center mr-1">
+              <i class="far fa-sticky-note" [ngClass]="{'c-primary': file.comment.length > 0}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-start align-self-scratch">
+        <div class="d-flex flex-column">
+          <div style="font-size: x-small;" class="font-weight-bold">
+            {{t('Assessment')}}
+          </div>
+          <div class="d-flex flex-row mt-1"
+            [ngStyle]="{'font-size': '1.5rem', 'color': getOpacityLevelCompliance(file.checklistScore)}">
+            <div class="text-center mr-1">
+              <i class="fas fa-tasks" [ngClass]="{'c-primary': file.checklist}"></i>
+            </div>
+            <span class="m-0" *ngIf="file.checklistScore; else empty">
+              {{abc(file.checklistScore)}}%
+            </span>
+            <ng-template #empty>
+              <span class="m-0">
+                -
+              </span>
+            </ng-template>
+          </div>
+        </div>
+        <div class="d-flex flex-row ml-2">
+          <div class="pr-2" style="font-size: xx-small;">
+            <div class="mb-1">
+              <span class="mr-2">{{t('Uploaded')}}</span>
+              <span class="float-right font-weight-bold">{{file.uploaddate | date: 'dd/MM/yyyy'}}</span>
+            </div>
+            <div class="mb-1">
+              <span class="mr-2">{{t('Duration')}}</span>
+              <span class="float-right font-weight-bold">{{ getFormatedTime(file.duration)}}</span>
+            </div>
+            <div class="mb-1">
+              <span class="mr-2"> {{t('Silence')}}</span>
+              <span *ngIf="file.pause && file.pause.dur"
+                class="float-right font-weight-bold">{{getFormatedTime(file.pause.dur)}}
+                ({{file.pause.dur / file.duration | percent}})</span>
+            </div>
+          </div>
+          <div style="font-size: xx-small;">
+            <div class="mb-1">
+              <span class="mr-2">{{t('Pauses')}}</span>
+              <span class="float-right font-weight-bold"></span>
+            </div>
+            <div class="mb-1">
+              <span class="mr-2">{{t('Max.')}}</span>
+              <span class="float-right font-weight-bold"
+                *ngIf="file.pause && file.pause.max">{{getFormatedTime(file.pause.max)}}</span>
+            </div>
+            <div class="mb-1">
+              <span class="mr-2">{{t('Avg.')}}</span>
+              <span *ngIf="file.pause && file.pause.avg"
+                class="float-right font-weight-bold">{{getFormatedTime(file.pause.avg)}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex w-100">
+      <span class="badge badge-secondary mr-1" *ngFor="let tag of file.tags">{{tag}}</span>
+      <button class="btn p-0 c-normal mr-auto" style="cursor: pointer;" (click)="showModal(tagModal, file)"
+        tooltip="{{t('Edit tags')}}">
+        <i class="fa fa-pencil-alt"></i>
+      </button>
+    </div>
+  </div>
+  <div class="d-flex flex-column" style="width: 10%;">
+    <div class="d-inline-block text-center">
+      {{fileIndex + 1}} out of {{filterService.totalcount}}
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-start align-items-start" style="width: 5%;">
+    <button class="btn btn-link" style="cursor: pointer;" [disabled]="filterService.hasPrevLink(fileName, batchId)"
+      [routerLink]="filterService.getPrevLink(fileName, batchId)" [tooltip]="t('Previous File')">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="btn btn-link ml-2" style="cursor: pointer;" [disabled]="filterService.hasNextLink(fileName, batchId)"
+      [routerLink]="filterService.getNextLink(fileName, batchId)" [tooltip]="t('Next File')">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>
+<ng-template #loading>
+  loading...
+</ng-template>
+<ng-template #tagModal>
+  <div class="modal-header">
+    {{t('Tags')}}
+    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body tagsModal">
+    <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal" placeholder="{{t('Add Tag')}}"
+      secondaryPlaceholder="{{t('Add Tag')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"></tag-input>
+    <div class="text-right">
+      <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
+      <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>
+    </div>
+  </div>
+</ng-template>

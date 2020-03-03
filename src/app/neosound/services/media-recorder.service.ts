@@ -17,7 +17,7 @@ export class MediaRecorderService<T extends AudioMedia = AudioMedia> {
   private mediaRecorder: any;
   private mediaStream: any;
   public isRecording = false;
-  private isRecorded = false;
+  public isRecorded = false;
   private timerSub: Subscription;
   private audioChunks: any[] = [];
   private blob: Blob;

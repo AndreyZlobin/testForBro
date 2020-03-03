@@ -1,103 +1,64 @@
-<div class="row" *ngIf="loading; else loading">
-  <div class="col-8 mb-3">
-    <div class="card h-100">
-      <div class="card-header">Calls</div>
-      <div class="card-body">
-        <div style="display:flex; height: 280px;">
-          <ngx-charts-bar-horizontal-2d
-            [results]="barches"
-            animations="true"
-            [scheme]="colorScheme"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [legend]="showLegend"
-            [legendTitle]="legendTitle"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [tooltipDisabled]="tooltipDisabled"
-            [yAxisLabel]="'Operator'"
-            [xAxisLabel]="'Number Of Calls'"
-            [showGridLines]="showGridLines"
-            [barPadding]="barPadding"
-            [roundDomains]="true"
-            [roundEdges]="true"
-            [xScaleMax]="xScaleMax"
-          >
-          </ngx-charts-bar-horizontal-2d>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-4 mb-3">
-    <div class="card h-100">
-      <div class="card-body" *ngIf="totals">
-        <div class="title">Total calls</div>
-        <div class="value">{{ totals.allcallscount }}</div>
-        <nb-progress-bar [value]="totals.allcallscount"></nb-progress-bar>
-        <div class="title mt-4">Emotional calls</div>
-        <div class="value">{{ totals.angercallscount }}</div>
-        <nb-progress-bar
-          [value]="(totals.angercallscount / totals.allcallscount) * 100"
-        ></nb-progress-bar>
-        <div class="title mt-4">Silent calls</div>
-        <div class="value">{{ totals.silentcallscount }}</div>
-        <nb-progress-bar
-          [value]="(totals.angercallscount / totals.allcallscount) * 100"
-        ></nb-progress-bar>
-      </div>
-    </div>
-  </div>
-  <!-- <div class="col-4  mb-3">
-    <div class="card">
-      <div class="card-header">Totals By Minutes:</div>
-      <div class="card-body">
-        <div class="value">Total minutes</div>
-        <nb-progress-bar value="20"></nb-progress-bar>
-        <div class="description">111</div>
-        <div class="value">Speech</div>
-        <nb-progress-bar value="20"></nb-progress-bar>
-        <div class="description">111</div>
-        <div class="value">On-holde</div>
-        <nb-progress-bar value="20"></nb-progress-bar>
-        <div class="description">111</div>
-        <div class="value">Silence</div>
-        <nb-progress-bar value="20"></nb-progress-bar>
-        <div class="description">111</div>
-      </div>
-    </div>
-  </div>
-  <div class="col-4  mb-3">
-    <div class="card">
-      <div class="card-header">Totals by queries:</div>
-      <div class="card-body"></div>
-    </div>
-  </div>
-  <div class="col-4  mb-3">
-    <div class="card">
-      <div class="card-header">Totals</div>
-      <div class="card-body"></div>
-    </div>
-  </div> -->
-  <ng-template #empty>
-    <div class="row">
-      <div class="col-8">
-        <div class="card text-center">
-          <div class="card-body">
-            <h5 class="card-title">Some Text to eplore this app</h5>
-            <p class="card-text">
-              With supporting text below as a natural lead-in to additional
-              content.
-            </p>
-            <a routerLink="/guest/quicktest" class="btn btn-primary"
-              >Go To Try</a
-            >
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-template>
+<div *ngIf="!loading; else loadingTemplate">
+  <app-calls-dashboard *ngIf="type === 'calls'" [batches]="batches" [dateTo]="dateTo" [dateFrom]="dateFrom">
+  </app-calls-dashboard>
+  <app-texts-dashboard *ngIf="type === 'texts'" [batches]="batches" [dateTo]="dateTo" [dateFrom]="dateFrom">
+  </app-texts-dashboard>
 </div>
-<ng-template #loading>
+<ng-template #loadingTemplate>
   {{ t("Loading...") }}
+</ng-template>
+<div class="border" style="position: absolute; top: 50%; right: 0; background-color: white;">
+  <button (click)="showModal(configModal)" class="btn p-2 m-2" style="color: #2a2a2a;"><i
+      class="fas fa-cog"></i></button>
+</div>
+
+<ng-template #configModal>
+  <div class="modal-header">
+    {{t('Dashboard config')}}
+    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'calls'}"
+        (click)="switchTabs('calls')">{{t('Calls')}}</button>
+      <button type="button" class="btn btn-secondary" [ngClass]="{'active': modalType === 'texts'}"
+        (click)="switchTabs('texts')">{{t('Texts')}}</button>
+    </div>
+    <div class="row">
+      <div class="col-12 py-3" *ngIf="modalType === 'calls'">
+        <input type="text" placeholder="Batch name" class="form-control" [typeahead]="batchesCalls" [typeaheadMinLength]="0"
+          class="form-control form-control-lg" [(ngModel)]="selectedValue" (typeaheadOnSelect)="onSelect($event)"
+          [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="col-12 py-3" *ngIf="modalType === 'texts'">
+        <input type="text" class="form-control" [typeahead]="batchesTexts" [typeaheadMinLength]="0"
+          class="form-control form-control-lg" [(ngModel)]="selectedValue" (typeaheadOnSelect)="onSelect($event)"
+          [ngModelOptions]="{standalone: true}">
+      </div>
+      <ul class="col-12 py-3 list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center w-100"
+          *ngFor="let id of selectedBatches">{{id}}<button type="button" class="close ml-2" aria-label="Close"
+            (click)="onRemove(id)">
+            <span aria-hidden="true">&times;</span>
+          </button></li>
+      </ul>
+      <div class="col-12 py-3">
+        <div class="mb-2">{{t('Date range')}}</div>
+        <div class="input-group">
+            <input bsDaterangepicker [(ngModel)]="dateModel" [ngModelOptions]="{standalone: true}" type="text" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+            placeholder="">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="text-right">
+          <button class="btn btn-primary mr-3" (click)="updateData()">{{t('Apply')}}</button>
+          <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-template>

@@ -46,14 +46,18 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
         }
       }, (err: any) => {
         if (err instanceof HttpErrorResponse) {
-          if (err.status === 401) {
+          if (err.status === 401 || err.status === 403 || err.status === 0) {
             // redirect to the login route
             // or show a modal
             this.router.navigateByUrl('/auth/login');
+            return;
+          }
+          if (err.status === 400 && err.url && err.url.indexOf('loginUser') >= 0) {
+            return;
           }
           let msg = err.error.message ? err.error.message : 'Server Error';
           msg = err.message ? err.message : msg;
-          this.toastrService.error(LanguageService.t(msg), LanguageService.t('Error'), {
+          this.toastrService.error(LanguageService.t(msg), err.status + ' ' + LanguageService.t('Error'), {
             timeOut: 3000,
           });
         }

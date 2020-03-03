@@ -1,3 +1,4 @@
+
 [![Build Status](https://travis-ci.org/akveo/ngx-admin.svg?branch=master)](https://travis-ci.org/akveo/ngx-admin)
 [![Join the chat at https://gitter.im/ng2-admin/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ng2-admin/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Dependency Status](https://david-dm.org/akveo/ngx-admin/status.svg)](https://david-dm.org/akveo/ng2-admin)
@@ -45,7 +46,7 @@
   - Maps
   - Charts
   - Editors
-  
+
 And many more!
 
 ### Hot Themes Reload
@@ -79,7 +80,7 @@ This project runs its tests on multiple desktop and mobile browsers using [Brows
 - Follow us on [Twitter](https://twitter.com/akveo_inc) :feet:
 - Like our page on [Facebook](https://www.facebook.com/akveo/) :thumbsup:
 
-### Looking for engineering services? 
+### Looking for engineering services?
 Visit [our homepage](http://akveo.com/) or simply leave us a message to [contact@akveo.com](mailto:contact@akveo.com). We will be happy to work with you!
 
 ### From Akveo

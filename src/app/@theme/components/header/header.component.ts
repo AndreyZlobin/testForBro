@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
-import { AnalyticsService } from '../../../@core/utils/analytics.service';
+import { AnalyticsService } from '../../../neosound/services/analytics.service';
 import { LayoutService } from '../../../@core/data/layout.service';
 import { Router } from '@angular/router';
 import { UsersService } from '../../../neosound/services/users.service';
@@ -32,7 +32,6 @@ export class HeaderComponent implements OnInit {
               private analyticsService: AnalyticsService,
               private layoutService: LayoutService,
               private router: Router,
-              private userServ: UsersService,
               private dataService: DataService,
               private http: HttpClient,
             ) {
@@ -65,7 +64,6 @@ export class HeaderComponent implements OnInit {
   }
 
   startSearch() {
-    this.analyticsService.trackEvent('startSearch');
   }
 
   navigate(url) {
@@ -74,6 +72,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    this.analyticsService.trackEvent('user', 'logout');
     localStorage.removeItem('user');
     localStorage.removeItem('apikey');
     this.navigate('/auth/login');
@@ -91,12 +90,19 @@ export class HeaderComponent implements OnInit {
     return data && user && user.username;
   }
 
+  company() {
+    const data = localStorage.getItem('user');
+    const user = data && JSON.parse(data);
+    return data && user && user.companyname;
+  }
+
   getLanguage(ln) {
     const lang = localStorage.getItem('lang');
     return lang && (lang === ln) || !lang && ln === 'en';
   }
 
   setLanguage(val = 'en') {
+    this.analyticsService.trackEvent('user', 'setLanguage', val);
     localStorage.setItem('lang', val);
   }
 
@@ -113,6 +119,10 @@ export class HeaderComponent implements OnInit {
       default:
         return 'English';
     }
+  }
+  showUpload() {
+    this.analyticsService.trackEvent('user', 'upload');
+    this.showUploadDialog = !this.showUploadDialog;
   }
 
   t(v) {

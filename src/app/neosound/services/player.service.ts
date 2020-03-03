@@ -7,11 +7,11 @@ export class PlayerService {
   public time: any;
   public tick$: Subject<any> = new Subject();
   public events$: any = merge(
-    this.tick$.pipe(map(value => ({ name: "tick", value }))),
+    this.tick$.pipe(map(value => ({ name: "tick", value })))
   );
 
   constructor() {}
-  setActtive(time) {
+  setActive(time) {
     this.time = time;
     this.tick$.next(time);
   }

@@ -1,0 +1,9 @@
+<div class="p-4 d-flex align-items-center justify-content-center" *ngIf="!isLoading; else loading">
+  <angular-tag-cloud [data]="popularWords" width="500" height="300" [zoomOnHover]="zoomOPtions" [overflow]="false">
+  </angular-tag-cloud>
+</div>
+<ng-template #loading>
+  <div class="d-flex align-items-center justify-content-center">
+    loading...
+  </div>
+</ng-template>

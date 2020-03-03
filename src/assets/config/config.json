@@ -1,9 +1,10 @@
 {
-	"title": "NeoSound - Turn emotions into data!",
-	"metaDescription": "NeoSound - Turn emotions into data!",
+  "title": "NeoSound - Turn emotions into data!",
+  "metaDescription": "NeoSound - Turn emotions into data!",
   "logofilename": "logo.jpg",
   "legalName": "NeoSound",
   "legalNameFull": "NeoSound Intelligence B.V.",
+  "sFtpHost": "sftp.neosound.eu",
   "companyMainUrl": "https://NeoSound.eu",
 	"footer": {
 		"title": {
@@ -37,5 +38,9 @@
 		"language": {
 			"show": true
 		}
-	}
+    },
+  "colors": {
+      "primary": "rgb(51, 153, 204)",
+      "secondary": "rgb(51, 153, 204)"
+  }
 }
