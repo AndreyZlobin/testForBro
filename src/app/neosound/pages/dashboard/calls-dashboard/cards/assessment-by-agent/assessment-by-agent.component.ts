@@ -43,12 +43,7 @@ export class AssessmentByAgentComponent implements OnInit, OnDestroy {
         .slice(0, 10)
         .reverse();
         var dataShadow = [];
-        let yMax = 0;
-        sorted.forEach(v => {
-          if (v.value > yMax) {
-            yMax = v.value;
-          }
-        });
+        let yMax = 100;
         for (var i = 0; i < sorted.length; i++) {
           dataShadow.push(yMax);
         }
