@@ -158,6 +158,42 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     return "rgba(5, 5, 255, " + result + ")";
   }
 
+  setTagsFilter() {
+    this.filterService.filter.noTags = null;
+    this.filterService.filter.tagsOnly = true;
+    this.filterService.updateFileList();
+  }
+
+  setNoTagsFilter() {
+    this.filterService.filter.noTags = true;
+    this.filterService.filter.tagsOnly = null;
+    this.filterService.updateFileList();
+  }
+
+  setChecklistOnlyFilter() {
+    this.filterService.filter.noChecklist = null;
+    this.filterService.filter.checklistOnly = true;
+    this.filterService.updateFileList();
+  }
+
+  setNoChecklistFilter() {
+    this.filterService.filter.noChecklist = true;
+    this.filterService.filter.checklistOnly = null;
+    this.filterService.updateFileList();
+  }
+
+  setCommentsOnlyFilter() {
+    this.filterService.filter.noComments = null;
+    this.filterService.filter.commentsOnly = true;
+    this.filterService.updateFileList();
+  }
+
+  setNoCommentFilter() {
+    this.filterService.filter.noComments = true;
+    this.filterService.filter.commentsOnly = null;
+    this.filterService.updateFileList();
+  }
+
   getDateVal(val) {
     const d = new Date(1, 1, 1);
     d.setMilliseconds(val * 1000);
