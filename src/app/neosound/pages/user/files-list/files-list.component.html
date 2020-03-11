@@ -124,7 +124,7 @@
               </ul>
             </div>
             <div class="col-12">
-              <div class="mb-2">{{t('Sentiment trend')}}</div>
+              <div class="my-2">{{t('Sentiment trend')}}</div>
               <div ngbDropdown class="ghost-dropdown dropdown w-100">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" style="border: 1px solid #dfe3e9;"
                   id="dropdownBasic1"
@@ -178,6 +178,57 @@
                     <i class="far fa-grin text-success"></i>
                   </li>
                 </ul>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mt-3">
+                <div class="mb-2">{{t('Tags')}}</div>
+                <div class="btn-group w-100 d-flex" data-toggle="buttons">
+                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                    (click)="setTagsFilter()"
+                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.tagsOnly, 'btn-secondary': !filterService.filter.tagsOnly}">
+                    Yes
+                  </button>
+                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                    (click)="setNoTagsFilter()"
+                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.noTags, 'btn-secondary': !filterService.filter.noTags}">
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mt-3">
+                <div class="mb-2">{{t('Assessment')}}</div>
+                <div class="btn-group w-100 d-flex" data-toggle="buttons">
+                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                    (click)="setChecklistOnlyFilter()"
+                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.checklistOnly, 'btn-secondary': !filterService.filter.checklistOnly}">
+                    Yes
+                  </button>
+                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                    (click)="setNoChecklistFilter()"
+                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.noChecklist, 'btn-secondary': !filterService.filter.noChecklist}">
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mt-3">
+                <div class="mb-2">{{t('Comments')}}</div>
+                <div class="btn-group w-100 d-flex" data-toggle="buttons">
+                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                    (click)="setCommentsOnlyFilter()"
+                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.commentsOnly, 'btn-secondary': !filterService.filter.commentsOnly}">
+                    Yes
+                  </button>
+                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                    (click)="setNoCommentFilter()"
+                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.noComments, 'btn-secondary': !filterService.filter.noComments}">
+                    No
+                  </button>
+                </div>
               </div>
             </div>
             <div class="col-12">
@@ -238,18 +289,18 @@
                 Sort: {{filterName}}
               </button>
               <ul ngbDropdownMenu class="dropdown-menu">
-                <li class="dropdown-item" (click)="sortTable('Agent: A..Z', 'BatchId', 'desc')">Agent: A..Z</li>
-                <li class="dropdown-item" (click)="sortTable('Agent: Z..A', 'BatchId', 'asc')">Agent: Z..A</li>
-                <li class="dropdown-item" (click)="sortTable('Date and time: Newly Uploaded', 'Uploaded', 'asc')">Date
+                <li class="dropdown-item" (click)="sortTable('Agent: A..Z', 'BatchId', 'asc')">Agent: A..Z</li>
+                <li class="dropdown-item" (click)="sortTable('Agent: Z..A', 'BatchId', 'desc')">Agent: Z..A</li>
+                <li class="dropdown-item" (click)="sortTable('Date and time: Newly Uploaded', 'Uploaded', 'desc')">Date
                   and time: Newly Uploaded</li>
                 <li class="dropdown-item" (click)="sortTable('Avg. Pause: Short to Long', 'AvgPause', 'asc')">Avg.
                   Pause: Short to Long</li>
-                <li class="dropdown-item" (click)="sortTable('Tot. Pause: Long to Short', 'PauseDur', 'asc')">Tot.
+                <li class="dropdown-item" (click)="sortTable('Tot. Pause: Long to Short', 'PauseDur', 'desc')">Tot.
                   Pause: Long to Short</li>
                 <li class="dropdown-item" (click)="sortTable('Stopwords: Max to Min', 'Stopwords', 'desc')">
                   <span>Stopwords:
                     Max to Min</span></li>
-                <li class="dropdown-item" (click)="sortTable('Compliance: Low to High', 'Compliance', 'desc')">
+                <li class="dropdown-item" (click)="sortTable('Compliance: Low to High', 'Compliance', 'asc')">
                   Compliance: Low to High</li>
                 <li class="dropdown-item" (click)="sortTable('Compliance: High to Low', 'Compliance', 'desc')">
                   Compliance: High to Low</li>

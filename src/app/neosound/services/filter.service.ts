@@ -37,7 +37,6 @@ export class FilterService {
     pausetoAll: boolean;
     stopOnly: boolean;
     stopwordLooking: string;
-    tagsOnly: boolean;
     missingOnly: boolean;
     favoriteOnly: boolean;
     filename: string;
@@ -47,6 +46,12 @@ export class FilterService {
     sortorder: string;
     sentimentTrend: string;
     topics: string;
+    tagsOnly: boolean;
+    noTags: boolean;
+    checklistOnly: boolean;
+    noChecklist: boolean;
+    commentsOnly: boolean;
+    noComments: boolean;
   } = {
     uploadDate: null,
     angerfrom: null,
@@ -72,7 +77,6 @@ export class FilterService {
     stopOnly: false,
     stopwordLooking: "Everywhere",
     sentimentTrend: null,
-    tagsOnly: false,
     missingOnly: false,
     favoriteOnly: false,
     filename: "",
@@ -81,6 +85,12 @@ export class FilterService {
     sortby: "",
     sortorder: "",
     topics: "",
+    tagsOnly: null,
+    noTags: null,
+    checklistOnly: null,
+    noChecklist: null,
+    commentsOnly: null,
+    noComments: null
   };
   constructor(private filesService: FilesService) {}
 
@@ -90,8 +100,8 @@ export class FilterService {
       pagen: `${this.filter.pagen}`,
       batchid: (this.filter.batchid && "" + this.filter.batchid) || "",
       filename: this.filter.filename,
-      datetimefrom: this.filter.uploadDate && this.filter.uploadDate[0] || "",
-      datetimeto: this.filter.uploadDate && this.filter.uploadDate[1] || "",
+      datetimefrom: (this.filter.uploadDate && this.filter.uploadDate[0]) || "",
+      datetimeto: (this.filter.uploadDate && this.filter.uploadDate[1]) || "",
       angervolfrom:
         this.filter.angerfrom == null ? "" : this.filter.angerfrom + "",
       angervolto:
@@ -127,11 +137,18 @@ export class FilterService {
           ? "10000"
           : this.filter.callto + "",
       stopOnly: this.filter.stopOnly,
-      tagsOnly: this.filter.tagsOnly,
       missingOnly: this.filter.missingOnly,
       favoriteOnly: this.filter.favoriteOnly,
       sortorder: this.filter.sortorder,
-      sortby: this.filter.sortby
+      sortby: this.filter.sortby,
+      tagsOnly: this.filter.tagsOnly ? this.filter.tagsOnly : null,
+      noTags: this.filter.noTags ? this.filter.noTags : null,
+      checklistOnly: this.filter.checklistOnly
+        ? this.filter.checklistOnly
+        : null,
+      noChecklist: this.filter.noChecklist ? this.filter.noChecklist : null,
+      commentsOnly: this.filter.commentsOnly ? this.filter.commentsOnly : null,
+      noComments: this.filter.noComments ? this.filter.noComments : null
     };
     if (this.filter.keywordsContain && this.filter.keywordsContain.length) {
       params["keywordsContain"] = this.filter.keywordsContain
@@ -280,7 +297,6 @@ export class FilterService {
       stopOnly: false,
       stopwordLooking: "Everywhere",
       sentimentTrend: null,
-      tagsOnly: false,
       missingOnly: false,
       favoriteOnly: false,
       filename: "",
@@ -289,7 +305,12 @@ export class FilterService {
       sortby: "",
       sortorder: "",
       topics: "",
-
+      noTags: null,
+      tagsOnly: null,
+      checklistOnly: null,
+      noChecklist: null,
+      commentsOnly: null,
+      noComments: null
     };
     this.updateFileList();
   }
@@ -356,7 +377,7 @@ export class FilterService {
 
   public setComment(index, comments) {
     if (index !== -1) {
-      this.fileStore[index].comment = [{text: comments}];
+      this.fileStore[index].comment = [{ text: comments }];
       this.filesSubject.next(this.fileStore);
     }
   }

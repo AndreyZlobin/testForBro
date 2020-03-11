@@ -19,7 +19,7 @@ import { DataService } from "../../../shared";
 @Component({
   selector: "app-files-list",
   templateUrl: "./files-list.component.html",
-  styleUrls: ["./files-list.component.scss"],
+  styleUrls: ["./files-list.component.scss"]
 })
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild("scroll") scrollTo: ElementRef;
@@ -46,9 +46,8 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     private cd: ChangeDetectorRef,
     private dataService: DataService,
     private modalService: BsModalService,
-    private analyticsService: AnalyticsService,
-  ) {
-  }
+    private analyticsService: AnalyticsService
+  ) {}
 
   ngOnInit() {
     this.filterService.updateFileList();
@@ -122,7 +121,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     let color = 100;
     const max = 25;
     const parsed = parseFloat(val.anger);
-    if(parsed < max) {
+    if (parsed < max) {
       color = (parsed * 100) / max;
     }
     return "hsl(" + Math.ceil(100 - color) + ", 50%, 50%)";
@@ -142,7 +141,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   abcStr(percent: string): string {
-    const val = parseFloat(percent)
+    const val = parseFloat(percent);
     return val.toFixed();
   }
 
@@ -156,6 +155,72 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     }
     result = val / 50;
     return "rgba(5, 5, 255, " + result + ")";
+  }
+
+  setTagsFilter() {
+    if (!!this.filterService.filter.tagsOnly) {
+      this.filterService.filter.tagsOnly = null;
+      this.filterService.filter.noTags = null;
+    } else {
+      this.filterService.filter.tagsOnly = true;
+      this.filterService.filter.noTags = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoTagsFilter() {
+    if (!!this.filterService.filter.noTags) {
+      this.filterService.filter.noTags = null;
+      this.filterService.filter.tagsOnly = null;
+    } else {
+      this.filterService.filter.noTags = true;
+      this.filterService.filter.tagsOnly = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setChecklistOnlyFilter() {
+    if (!!this.filterService.filter.checklistOnly) {
+      this.filterService.filter.checklistOnly = null;
+      this.filterService.filter.noChecklist = null;
+    } else {
+      this.filterService.filter.checklistOnly = true;
+      this.filterService.filter.noChecklist = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoChecklistFilter() {
+    if (!!this.filterService.filter.noChecklist) {
+      this.filterService.filter.noChecklist = null;
+      this.filterService.filter.checklistOnly = null;
+    } else {
+      this.filterService.filter.noChecklist = true;
+      this.filterService.filter.checklistOnly = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setCommentsOnlyFilter() {
+    if (!!this.filterService.filter.commentsOnly) {
+      this.filterService.filter.commentsOnly = null;
+      this.filterService.filter.noComments = null;
+    } else {
+      this.filterService.filter.commentsOnly = true;
+      this.filterService.filter.noComments = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoCommentFilter() {
+    if (!!this.filterService.filter.noComments) {
+      this.filterService.filter.noComments = null;
+      this.filterService.filter.commentsOnly = null;
+    } else {
+      this.filterService.filter.noComments = true;
+      this.filterService.filter.commentsOnly = null;
+    }
+    this.filterService.updateFileList();
   }
 
   getDateVal(val) {
