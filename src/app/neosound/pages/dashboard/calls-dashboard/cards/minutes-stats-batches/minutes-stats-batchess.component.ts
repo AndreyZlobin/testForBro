@@ -8,7 +8,6 @@ import {
 import { LanguageService } from "../../../../../services/language.service";
 import { MinutesStatsService } from "../../services/minutes-stats.service";
 import { DataService } from "../../../../../shared";
-import {t} from "@angular/core/src/render3";
 
 @Component({
   selector: "ngx-minutes-stats-batches",
