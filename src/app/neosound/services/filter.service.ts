@@ -36,8 +36,10 @@ export class FilterService {
     pausefromAll: boolean;
     pausetoAll: boolean;
     stopOnly: boolean;
+    noStop: boolean;
     stopwordLooking: string;
     missingOnly: boolean;
+    noMissing: boolean;
     favoriteOnly: boolean;
     filename: string;
     itemsn: number;
@@ -74,10 +76,12 @@ export class FilterService {
     angertoAll: true,
     pausefromAll: true,
     pausetoAll: true,
-    stopOnly: false,
+    stopOnly: null,
+    noStop: null,
     stopwordLooking: "Everywhere",
     sentimentTrend: null,
-    missingOnly: false,
+    missingOnly: null,
+    noMissing: null,
     favoriteOnly: false,
     filename: "",
     itemsn: 100,
@@ -137,7 +141,11 @@ export class FilterService {
           ? "10000"
           : this.filter.callto + "",
       stopOnly: this.filter.stopOnly,
+      noStop: this.filter.noStop,
+
       missingOnly: this.filter.missingOnly,
+      noMissing: this.filter.noMissing,
+
       favoriteOnly: this.filter.favoriteOnly,
       sortorder: this.filter.sortorder,
       sortby: this.filter.sortby,
@@ -294,10 +302,12 @@ export class FilterService {
       angertoAll: true,
       pausefromAll: true,
       pausetoAll: true,
-      stopOnly: false,
+      stopOnly: null,
+      noStop: null,
       stopwordLooking: "Everywhere",
       sentimentTrend: null,
-      missingOnly: false,
+      missingOnly: null,
+      noMissing: null,
       favoriteOnly: false,
       filename: "",
       itemsn: 100,

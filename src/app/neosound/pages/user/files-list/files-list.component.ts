@@ -223,6 +223,50 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.filterService.updateFileList();
   }
 
+  setStopOnlyFilter() {
+    if (!!this.filterService.filter.stopOnly) {
+      this.filterService.filter.stopOnly = null;
+      this.filterService.filter.noStop = null;
+    } else {
+      this.filterService.filter.stopOnly = true;
+      this.filterService.filter.noStop = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoStopFilter() {
+    if (!!this.filterService.filter.noStop) {
+      this.filterService.filter.noStop = null;
+      this.filterService.filter.stopOnly = null;
+    } else {
+      this.filterService.filter.noStop = true;
+      this.filterService.filter.stopOnly = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setMissedOnlyFilter() {
+    if (!!this.filterService.filter.missingOnly) {
+      this.filterService.filter.missingOnly = null;
+      this.filterService.filter.noMissing = null;
+    } else {
+      this.filterService.filter.missingOnly = true;
+      this.filterService.filter.noMissing = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoMissedFilter() {
+    if (!!this.filterService.filter.noMissing) {
+      this.filterService.filter.noMissing = null;
+      this.filterService.filter.missingOnly = null;
+    } else {
+      this.filterService.filter.noMissing = true;
+      this.filterService.filter.missingOnly = null;
+    }
+    this.filterService.updateFileList();
+  }
+
   getDateVal(val) {
     const d = new Date(1, 1, 1);
     d.setMilliseconds(val * 1000);
@@ -442,6 +486,13 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   onSelectTopic(event: any) {
+    this.selectedTopic = "";
+    const deduplicate = new Set([...this.selectedTopics, event.value]);
+    this.selectedTopics = Array.from(deduplicate);
+    this.filterService.filter.topics = this.selectedTopics.join(",");
+  }
+
+  onSelectBatchId(event: any) {
     this.selectedTopic = "";
     const deduplicate = new Set([...this.selectedTopics, event.value]);
     this.selectedTopics = Array.from(deduplicate);
