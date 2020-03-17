@@ -84,11 +84,11 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
       sortedbatches = rawbatches;
     }
 
-    const legendData = (data.totals && data.totals.sentimentLegendData) || [];
+    const legendData = (data.totals && data.totals.sentimentLegendData.map(x => this.t(x))) || [];
     const y_data = sortedbatches;
     const _data = rawdata;
     // const minX = Math.min(..._data[0]) < 1 ? -0.5 : 0;
-    const total_y_data = ["All batches"];
+    const total_y_data = [this.t("All agents")];
     const batches_len = Math.max(...y_data.map(x => x.length));
     const y_label_len = total_y_data[0].length;
     const max_len = Math.round(Math.max(batches_len, y_label_len) * 1.1);
@@ -171,7 +171,7 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: data.totals && data.totals.sentimentLegendData[0],
+        name: legendData[0],
         type: "bar",
         stack: "stack",
         barWidth: 30,
@@ -181,7 +181,7 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: data.totals && data.totals.sentimentLegendData[1],
+        name: legendData[1],
         type: "bar",
         stack: "stack",
         barWidth: 30,
@@ -191,7 +191,7 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: data.totals && data.totals.sentimentLegendData[2],
+        name: legendData[2],
         type: "bar",
         stack: "stack",
         barWidth: 30,
@@ -201,7 +201,7 @@ export class SentimentStatsBatchesComponent implements OnInit, OnDestroy {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: data.totals && data.totals.sentimentLegendData[3],
+        name: legendData[3],
         type: "bar",
         stack: "stack",
         barWidth: 30,

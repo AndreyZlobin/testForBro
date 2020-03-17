@@ -8,6 +8,7 @@ import {
 import { LanguageService } from "../../../../../services/language.service";
 import { MinutesStatsService } from "../../services/minutes-stats.service";
 import { DataService } from "../../../../../shared";
+import {t} from "@angular/core/src/render3";
 
 @Component({
   selector: "ngx-minutes-stats-batches",
@@ -84,11 +85,11 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
       sortedbatches = rawbatches;
     }
 
-    const legendData = (data.totals && data.totals.legenddata) || [];
+    const legendData = (data.totals && data.totals.legenddata.map(v => this.t(v))) || [];
     const y_data = sortedbatches;
     const _data = rawdata;
     // const minX = Math.min(..._data[0]) < 1 ? -0.5 : 0;
-    const total_y_data = ["All batches"];
+    const total_y_data = [this.t("All agents")];
     const batches_len = Math.max(...y_data.map(x => x.length));
     const y_label_len = total_y_data[0].length;
     const max_len = Math.round(Math.max(batches_len, y_label_len));
@@ -134,7 +135,7 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
         yAxisIndex: 0,
         xAxisIndex: 0,
         type: "bar",
-        name: legendData[0],
+        name: legendData[0] || '',
         stack: "2",
         label: _label,
         barWidth: 30,
@@ -144,7 +145,7 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
         yAxisIndex: 0,
         xAxisIndex: 0,
         type: "bar",
-        name: legendData[1],
+        name: legendData[1] || '',
         stack: "2",
         barWidth: 30,
         label: _label,
@@ -155,7 +156,7 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
         xAxisIndex: 0,
         type: "bar",
         stack: "2",
-        name: legendData[2],
+        name: legendData[2] || '',
         barWidth: 30,
         label: _label,
         data: _data[2]
@@ -163,7 +164,7 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: data.totals && data.totals.legenddata[0],
+        name: legendData[0] || '',
         type: "bar",
         stack: "stack",
         barWidth: 30,
@@ -173,7 +174,7 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: data.totals && data.totals.legenddata[1],
+        name: legendData[1] || '',
         type: "bar",
         stack: "stack",
         barWidth: 30,
@@ -183,7 +184,7 @@ export class MinutesStatsBatchesComponent implements OnInit, OnDestroy {
       {
         yAxisIndex: 1,
         xAxisIndex: 1,
-        name: data.totals && data.totals.legenddata[2],
+        name: legendData[2] || '',
         type: "bar",
         stack: "stack",
         barWidth: 30,

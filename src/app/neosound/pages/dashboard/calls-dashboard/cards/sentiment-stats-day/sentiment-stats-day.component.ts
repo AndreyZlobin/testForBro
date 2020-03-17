@@ -73,7 +73,7 @@ export class SentimentStatsDayComponent implements OnInit, OnDestroy {
     });
     data.totals
         && data.totals.sentimentLegendData.map((v, i) => {
-        series[i].name = v;
+        series[i].name = this.t(v);
     });
 
     this.stats = {
@@ -88,7 +88,7 @@ export class SentimentStatsDayComponent implements OnInit, OnDestroy {
           }
       },
       legend: {
-          data: data.totals && data.totals.sentimentLegendData || []
+          data: data.totals && data.totals.sentimentLegendData.map(v => this.t(v)) || []
       },
       grid: {
           left: '2%',

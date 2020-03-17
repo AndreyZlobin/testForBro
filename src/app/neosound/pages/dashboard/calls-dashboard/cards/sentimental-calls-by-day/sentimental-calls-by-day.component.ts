@@ -58,7 +58,7 @@ export class SentimentalCallsByDayComponent implements OnInit, OnDestroy {
     const series =
       (data.totals && data.totals.sentimentCountData && data.totals.sentimentCountData.series) ||
       [];
-    const legenddata = (data.totals && data.totals.sentimentLegendData) || [];
+    const legenddata = (data.totals && data.totals.sentimentLegendData.map(v => this.t(v))) || [];
     this.stats = {
       color: ["#c12e34", "#0098d9", "#e6b600", "#2b821d"],
       tooltip: {
