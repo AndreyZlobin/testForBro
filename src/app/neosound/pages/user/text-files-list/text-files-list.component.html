@@ -11,11 +11,11 @@
             <div class="col-12">
               <div class="mb-2">{{t('Name')}}</div>
               <input [(ngModel)]="filterService.filter.filename" [ngModelOptions]="{standalone: true}" type="text"
-                class="" placeholder="" class="form-control form-control-lg"
+                placeholder="" class="form-control form-control-lg"
                 style="padding: 5px 10px; border: 1px solid #dfe3e9;" />
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Batch Id')}}</div>
+              <div class="mb-2">{{t('Agent Id')}}</div>
               <input [(ngModel)]="filterService.filter.batchid" [ngModelOptions]="{standalone: true}" type="text"
                 step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
                 placeholder="" [typeahead]="batches" [typeaheadMinLength]="0">
@@ -113,7 +113,7 @@
                 <th></th>
                 <th class="text-one-line">
                   <a (click)="sortTable('BatchId')">
-                    {{t('Batch Id')}}
+                    {{t('Agent Id')}}
                     <ng-container *ngIf="filterService.filter.sortby === 'BatchId'">
                       <i *ngIf="filterService.filter.sortorder ==='asc'" class="fas fa-sort-up"></i>
                       <i *ngIf="filterService.filter.sortorder ==='desc'" class="fas fa-sort-down"></i>

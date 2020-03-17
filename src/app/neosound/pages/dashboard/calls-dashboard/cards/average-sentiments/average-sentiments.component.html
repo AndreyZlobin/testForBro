@@ -3,16 +3,16 @@
   <div class="card-body pl-0 pr-0" *ngIf="hasData; else loading">
     <div style="height: 600px; overflow-y: auto">
       <table class="table">
-        <th>Name</th>
-        <th>Positive-Positive</th>
-        <th>Positive-Negative</th>
-        <th>Positive-Neutral</th>
-        <th>Negative-Positive</th>
-        <th>Negative-Negative</th>
-        <th>Negative-Neutral</th>
-        <th>Neutral-Positive</th>
-        <th>Neutral-Negative</th>
-        <th>Neutral-Neutral</th>
+        <th>{{t('Agent Id')}}</th>
+        <th>{{t('Positive')}}-{{t('Positive')}}</th>
+        <th>{{t('Positive')}}-{{t('Negative')}}</th>
+        <th>{{t('Positive')}}-{{t('Neutral')}}</th>
+        <th>{{t('Negative')}}-{{t('Positive')}}</th>
+        <th>{{t('Negative')}}-{{t('Negative')}}</th>
+        <th>{{t('Negative')}}-{{t('Neutral')}}</th>
+        <th>{{t('Neutral')}}-{{t('Positive')}}</th>
+        <th>{{t('Neutral')}}-{{t('Negative')}}</th>
+        <th>{{t('Neutral')}}-{{t('Neutral')}}</th>
         <tr *ngFor="let sentiment of sentiments">
           <td><a style="text-decoration: underline; cursor: pointer;" [ngClass]="getClassBatch(sentiment)"
               (click)="onChartEvent(sentiment.name)">{{sentiment.name}}</a></td>

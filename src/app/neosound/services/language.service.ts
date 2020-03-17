@@ -23,7 +23,7 @@ const translationsSp = {
   'Reset Filter': 'Reiniciar filtro',
   'Reset': 'Reiniciar',
   'Export to CSV': 'Exportar a CSV',
-  'Batch Id': 'Id de lote',
+  'Agent Id': 'Agente',
   'Batches': 'De lote',
   'Name': 'Nombre',
   'Uploaded': 'Cargado',
@@ -58,6 +58,10 @@ const translationsSp = {
   'Record': 'Grabar',
   'UPLOAD': 'Cargar',
   'RECORD': 'Grabar',
+  'Upload Audio': 'Subir audio',
+  'Upload Text': 'Subir texto',
+  'Maximum file size': 'Tamaño máximo de archivo',
+  'Agent name': 'Nombre del agente',
   'Recording': 'Grabando',
   'You can upload only one file a time': 'Los ficheros se cargan de uno en uno',
   'Drop file here or click to browse': 'Suelte el fichero aquí o haga clic para abrir el explorador',
@@ -128,15 +132,15 @@ const translationsSp = {
   // dashboard start
   'Welcome on board': "Bienvenido a bordo",
   'How to upload files': `Como subir archivos`,
-  'Number of calls by top 6 batches': `Número de llamadas por top 6 lotes`,
+  'Number of calls by top 6 agents': `Número de llamadas por top 6 agentes`,
   'Processed calls': `Llamadas procesadas`,
   'Calls': `Llamadas`,
   'Total number of calls': `Número total de llamadas`,
   'Emotional calls': `Llamadas emocionales`,
   'Number of calls with the emotion level above a threshold': `Número de llamadas con el nivel de emoción por encima de un umbral`,
-  'Silent calls': `Llamadas con demasiados silencio`,
+  'Silent calls': `Llamadas silenciosas`,
   'Number of calls with the average pause longer than a threshold': `Número de llamadas con la pausa promedio más larga que un umbral`,
-  'Performance by agent': "Rendimiento por agente",
+  'Performance by agent, by %': "Rendimiento por agente",
   'Popular Words': "Palabras Populares",
   'Popular Nouns': `Nombres populares`,
   'Popular Adjectives': "Adjetivos populares",
@@ -150,39 +154,10 @@ const translationsSp = {
   'Silence': 'Silencio',
   'Negative': 'Negativo',
   'Positive': 'Positivo',
-  // 'Neutral': '',
   'Calls processed': 'Llamadas procesadas',
-  'Batches uploaded': 'Lotes cargados',
+  'Total agents': 'Agentes totales',
   'API calls done': 'Llamadas hechas a la API',
   'Popular Words Sentiment': 'Emoción en palabras populares',
-
-
-'To upload multiple the files please use any SFTP client application and the following credentials': `Para subir varios archivos, por favor use cualquier cliente SFTP
-              Solicitud y las siguientes credenciales.`,
-'Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.': `Una vez conectado, abra los archivos de la carpeta y cree / cargue subcarpetas separadas dentro de la carpeta ‘/ archivos", por ejemplo, "/ files / batch_agent_X". Luego sube las grabaciones dentro de la subcarpeta de nueva creación.`,
-'Please, keep in mind, we support only the audio files in .wav and .mp3 formats at the moment. The files of any other formats will not be processed.': `Por favor, tenga en cuenta que solo admitimos los archivos de audio en .wav
-                y formatos .mp3 en este momento. Los archivos de cualquier otro formato.
-                no será procesado`,
-'ATTENTION': 'ATENCIÓN',
-'the files uploaded to the root of "/files" folder will not be processed. Make sure that they uploaded inside another subfolder, e.g. "/files/batch_agent_X". A batch name is required for successful processing. This way you will be able to filter on UI them as separate batches per agents.': `los archivos subidos a la raíz de
-                La carpeta ‘/ files" no se procesará. Asegúrese de que
-                cargado dentro de otra subcarpeta, por ejemplo, '/ files / batch_agent_X'.
-                Se requiere un nombre de lote para un procesamiento exitoso. De esta manera usted
-                será capaz de filtrarlos en la interfaz de usuario como lotes separados por
-                agentes`,
-'The files will start processing soon after uploading.': `Los archivos comenzarán a procesarse poco después de la carga.`,
-'Once the files are processed they will appear on the UI and disappear from the files folder on SFTP.': `Una vez procesados los archivos, aparecerán en la interfaz de usuario y
-                desaparecer de la carpeta de archivos en SFTP.`,
-'To upload the files one by one,': `Para subir los archivos uno por uno,`,
-'please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.': `por favor use
-                "Enlace" en el menú superior. Cuando un archivo es subido usted será
-                Redirigido a la lista de archivos. Sin embargo, tomará unos pocos
-                Minutos antes de que el archivo se esté procesando y los datos estén
-                disponible. El tiempo de procesamiento depende de la duración del archivo de audio.
-                Para ver el texto, vaya a los detalles del archivo haciendo clic en el archivo
-                nombre, a continuación, vaya a la pestaña "Texto". Para fines de demostración, sugerimos utilizar
-                archivos máximo de 4 minutos con nombres cortos de archivos amigables para el usuario.`,
-  // dashboard end
   'Stopwords': 'Palabras prohibidas',
   'Missing': 'Faltan',
   'Containing words': 'Contiene palabras',
@@ -196,7 +171,36 @@ const translationsSp = {
   'Save': 'Guardar',
   'Add Tag': 'Añadir etiqueta',
   'Compliance': 'Conformidad',
+  'Hits vs. Stopwords': 'Palabras prohibidas por popularidad',
+  'Hits vs. Word': 'Palabras por popularidad',
+  'Total minutes by agents': 'Volumen de audio, por agente',
+  'Calls by days': 'Tipos de llamadas diarias',
+  'Totals by queries': 'Consultas',
+  'Total minutes by days': 'Volumen de audio diario',
+  'SFTP Upload': 'Subir archivos a SFTP',
+  'All agents': 'Total',
+  'Avg sentiments by agents': 'Sentimientos promedio, por agente',
+  'Sentiment calls by top 6 agents': 'Llamadas de sentimiento por top 6 agentes',
+  'n/a': 'n/a',
+  'Avg sentiments by days': 'Sentimientos promedio por días',
+  'Sentiment calls by days': 'Llamadas de sentimiento por días',
+  'Assessment by Agents': 'Valoración por agentes',
+  'Assessment': 'Valoración',
+  'Sentiment trends and Agents': 'Tendencias de sentimiento y agentes',
+  'Sentiment Sankey': 'Sentimientos Sankey',
+  'Sentiment Category': 'Categoría de sentimiento',
+  'Key Term': 'Término clave',
+  'File Upload Instructions': 'Instrucciones para cargar archivos',
+  'Silent': 'Silenciosas',
+  'Topics': 'Temas',
+  'emotional speech': 'discurso emocional',
+  'calm speech': 'discurso tranquilo',
+  'silence': 'silencio'
+
+  // dashboard end
 };
+
+
 const translationsRu = {
   'Error:': 'Ошибка:',
   'Try': 'Попробовать',
@@ -217,7 +221,7 @@ const translationsRu = {
   'Reset Filter': 'Сбросить фильтр',
   'Reset': 'Сбросить',
   'Export to CSV': 'Экспорт в CSV',
-  'Batch Id': 'Батч (агент)',
+  'Agent Id': 'Агент',
   'Batches': 'Батчи (агенты)',
   'Name': 'Имя',
   'Uploaded': 'Загружено',
@@ -233,7 +237,7 @@ const translationsRu = {
   'Fit into window': 'Вписать в окно',
   'Happiness': 'Счастье',
   'Sadness': 'Грусть',
-  'Neutral': 'Нейтрально',
+  'Neutral': 'Нейтральность',
   'Dominant emotion detected': 'Доминирующая эмоция определена',
   'Male': 'Мужской',
   'Female': 'Женский',
@@ -252,6 +256,10 @@ const translationsRu = {
   'Record': 'Запись',
   'UPLOAD': 'ЗАГРУЗКА',
   'RECORD': 'ЗАПИСЬ',
+  'Upload Audio': 'Загрузить аудио',
+  'Upload Text': 'Загрузить текст',
+  'Maximum file size': 'Максимальный размер файла',
+  'Agent name': 'Имя агента',
   'Recording': 'Идет запись',
   'You can upload only one file a time': 'Возможно загрузить только 1 файл за раз',
   'Drop file here or click to browse': 'Перетащите файлы сюда или нажмите для выбора',
@@ -323,7 +331,7 @@ const translationsRu = {
   // dashboard start
   'Welcome on board': "Добро пожаловать",
   'How to upload files': `Как загружать файлы`,
-  'Number of calls by top 6 batches': `Количество звонков по топ 6 агентам`,
+  'Number of calls by top 6 agents': `Количество звонков по топ 6 агентам`,
   'Processed calls': `Обработанные звонки`,
   'Calls': 'Звонки',
   'Total number of calls': `Общее количество звонков`,
@@ -331,7 +339,7 @@ const translationsRu = {
   'Number of calls with the emotion level above a threshold': `Количество вызовов с уровнем эмоций выше порога`,
   'Silent calls': `Тихие звонки`,
   'Number of calls with the average pause longer than a threshold': `Количество вызовов со средней паузой, превышающей порог`,
-  'Performance by agent': "Производительность по агенту",
+  'Performance by agent, by %': "Производительность по агенту",
   'Popular Words': "Популярные слова",
   'Popular Nouns': `Популярные существительные`,
   'Popular Adjectives': "Популярные прилагательные",
@@ -339,65 +347,53 @@ const translationsRu = {
   'Popular Words 2': `Популярные слова 2`,
   'Common keywords': 'Общие ключевые слова',
   'Use your username and password.': 'Введите имя пользователя и пароль',
+  'Emotional': 'Эмоции',
+  'Silence': 'Тишина',
+  'Negative': 'Негатив',
+  'Positive': 'Позитив',
+  'Calls processed': 'Обработано звонков',
+  'Total agents': 'Всего агентов',
+  'API calls done': 'Звонков через API',
+  'Popular Words Sentiment': 'Популярные сочетания слов',
+  'Stopwords': 'Стоп-слова',
+  'Containing words': 'Содержащие слова',
+  'Missing words': 'Недостающие слова',
+  'Filter calls with stopwords': 'Показывать только звонки со стоп-словами',
+  'Words': 'Слова',
+  'Filter calls with missing words': 'Показывать только звонки с пропущенными словами',
+  'Filter favorite calls': 'Только отмеченные',
+  'Tags': 'Метки',
+  'Close': 'Закрыть',
+  'Save': 'Сохранить',
+  'Add Tag': 'Добавить метку',
+  'Compliance': 'Соответствие',
+  'Hits vs. Stopwords': 'Стоп-слова по популярности',
+  'Hits vs. Word': 'Слова по популярности',
+  'Total minutes by agents': 'Объём аудио, по агентам',
+  'Calls by days': 'Типы звонков загруженные по дням',
+  'Totals by queries': 'Запросы',
+  'Total minutes by days': 'Объём аудио, загруженное по дням',
+  'SFTP Upload': 'Загрузка файлов на SFTP',
+  'All agents': 'Все агенты',
+  'Avg sentiments by agents': 'Среднее по сентиментам, по агентам',
+  'Sentiment calls by top 6 agents': 'Сентиментальные звонки по топ 6 агентам',
+  'n/a': 'н/о',
+  'Avg sentiments by days': 'Среднее по сентиментам, по дням',
+  'Sentiment calls by days': 'Сентиментальные звонки по дням',
+  'Assessment by Agents': 'Оценка агентов',
+  'Assessment': 'Оценка',
+  'Sentiment trends and Agents': 'Тренды сентиментов и агенты',
+  'Sentiment Sankey': 'Сентименты, sankey',
+  'Sentiment Category': 'Дерево сентиментов',
+  'Key Term': 'Дерево ключевых слов',
+  'File Upload Instructions': 'Инструкции по загрузке файлов',
+  'Silent': 'Тихие',
+  'Topics': 'Топики',
+  'emotional speech': 'эмоциональная речь',
+  'calm speech': 'спокойная речь',
+  'silence': 'тишина'
 
-  'To upload multiple the files please use any SFTP client application and the following credentials': `Чтобы загрузить несколько файлов, пожалуйста, используйте любой SFTP-клиент
-    приложение и следующие полномочия`,
-'Once connected, please open folder files, and create/upload the separate subfolders inside the folder "/files", e.g. "/files/batch_agent_X". Then upload the recordings inside the newly created subfolder.': `После подключения, пожалуйста, откройте папку с файлами и создайте / загрузите
-                  отдельные подпапки внутри папки «/ files», например
-                  «/ Файлы / batch_agent_X». Затем загрузите записи внутри
-                  недавно созданная подпапка.`,
-  'Please, keep in mind, we support only the audio files in .wav and .mp3 formats at the moment. The files of any other formats will not be processed.': `Пожалуйста, имейте в виду, мы поддерживаем только аудио файлы в .wav
-                  и форматы .mp3 на данный момент. Файлы любых других форматов
-                  не будет обработан.`,
-  'ATTENTION': 'ВНИМАНИЕ',
-  'the files uploaded to the root of "/files" folder will not be processed. Make sure that they uploaded inside another subfolder, e.g. "/files/batch_agent_X". A batch name is required for successful processing. This way you will be able to filter on UI them as separate batches per agents.': `файлы загружены в корень
-                 Папка «/ files» не будет обработана. Убедитесь, что они
-                  загружены в другую подпапку, например, «/ Файлы / batch_agent_X».
-                  Имя партии требуется для успешной обработки. Таким образом, вы
-                  сможет фильтровать их по интерфейсу как отдельные
-                  агенты.`,
-  'The files will start processing soon after uploading.': `Файлы начнут обрабатываться вскоре после загрузки.`,
-  'Once the files are processed they will appear on the UI and disappear from the files folder on SFTP.': `После обработки файлов они появятся в интерфейсе пользователя и
-                  исчезнуть из папки с файлами на SFTP.`,
-  'To upload the files one by one,': `Чтобы загрузить файлы по одному,`,
-  'please use "Upload" link in the top menu. When a file is uploaded you will be redirected to the list of files. However, it will take a few minutes before the file is being processed and the data is available. The processing time depends on the audio file duration. To see the text, please go to file details by clicking the file name, then go the "Text" tab. For demo purposes, we suggest using files maximum of 4 minutes with human-friendly short file names.': `пожалуйста, используйте
-                Ссылка «Загрузить» в верхнем меню. Когда файл загружен, вы будете
-                перенаправлен в список файлов. Тем не менее, это займет несколько
-                минут, прежде чем файл обрабатывается и данные
-                имеется в наличии. Время обработки зависит от продолжительности аудио файла.
-                Чтобы увидеть текст, пожалуйста, перейдите к деталям файла, нажав на файл
-                имя, затем перейдите на вкладку «Текст». В демонстрационных целях мы предлагаем использовать
-                максимум 4 минуты с понятными для человека короткими именами файлов.`,
-    'Emotional': 'Эмоции',
-    'Silence': 'Тишина',
-    'Negative': 'Негатив',
-    'Positive': 'Положительные',
-    // 'Neutral': 'Нейтральные',
-    'Calls processed': 'Обработано звонков',
-    'Batches uploaded': 'Загружено агентов',
-    'API calls done': 'Звонков через API',
-    'Popular Words Sentiment': 'Популярные сочетания слов',
-    // dashboard end
-
-    'Stopwords': 'Стоп-слова',
-    'Containing words': 'Содержащие слова',
-    'Missing words': 'Недостающие слова',
-    'Filter calls with stopwords': 'Показывать только звонки со стоп-словами',
-    'Words': 'Слова',
-    'Filter calls with missing words': 'Показывать только звонки с пропущенными словами',
-    'Filter favorite calls': 'Только отмеченные',
-    'Tags': 'Метки',
-    'Close': 'Закрыть',
-    'Save': 'Сохранить',
-    'Add Tag': 'Добавить метку',
-    'Compliance': 'Соответствие',
-    'Hits vs. Stopwords': 'Стоп-слова по популярности',
-    'Hits vs. Word': 'Слова по популярности',
-    'Total minutes by batches': 'Объём аудио, по группам',
-    'Calls by days': 'Типы звонков загруженные по дням',
-    'Totals by queries': 'Запросы',
-    'Total minutes by days': 'Объём аудио, загруженное по дням',
-    'SFTP Upload': 'Загрузка файлов на SFTP',
+  // dashboard end
 };
 
 @Injectable()

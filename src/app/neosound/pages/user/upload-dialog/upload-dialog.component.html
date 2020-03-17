@@ -34,16 +34,16 @@
       <div *ngIf="modalType === 'upload'">
         <div class="row">
           <div class="col-12 py-3">
-            <div class="mb-2">{{t('Batch name')}}</div>
-            <input type="text" class="form-control" [(ngModel)]="selectedBatchId" [typeahead]="batches"
+            <div class="mb-2">{{t('Agent name')}}</div>
+            <input type="text" [(ngModel)]="selectedBatchId" [typeahead]="batches"
               [typeaheadMinLength]="0" class="form-control form-control-lg" [ngModelOptions]="{standalone: true}"
               >
           </div>
         </div>
-        <div class="alert alert-info">{{t('Maximum file size: 10 MB')}}</div>
+        <div class="alert alert-info">{{t('Maximum file size')}}: 10 MB</div>
         <div class="center">
           <div class="drop-zone-wrap">
-            <file-drop   accept="wav,mp3" *ngIf="!files.length" (onFileDrop)="dropped($event)" accept="mp3,wav">
+            <file-drop  accept="wav,mp3" *ngIf="!files.length" (onFileDrop)="dropped($event)">
               <span>{{t('Drop file here or click to browse')}}</span>
               <input type="file"  accept="txt,eml" id="file" (change)="handleFileInput($event.target.files)" multiple>
             </file-drop>
@@ -72,12 +72,12 @@
       <div *ngIf="modalType === 'text'">
         <div class="row">
           <div class="col-12 py-3">
-            <div class="mb-2">{{t('Batch name')}}</div>
-            <input type="text" class="form-control" [(ngModel)]="selectedBatchId" class="form-control form-control-lg"
+            <div class="mb-2">{{t('Agent name')}}</div>
+            <input type="text" [(ngModel)]="selectedBatchId" class="form-control form-control-lg"
               [typeahead]="textBatches" [typeaheadMinLength]="0" [ngModelOptions]="{standalone: true}">
           </div>
         </div>
-        <div class="alert alert-info">{{t('Maximum file size: 10 MB')}}</div>
+        <div class="alert alert-info">{{t('Maximum file size')}}: 10 MB</div>
         <div class="center">
           <div class="drop-zone-wrap">
             <file-drop  accept="txt,eml,json" *ngIf="!files.length" (onFileDrop)="dropped($event)">
