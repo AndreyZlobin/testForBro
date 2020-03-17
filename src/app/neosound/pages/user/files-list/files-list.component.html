@@ -1,177 +1,362 @@
 <nb-card>
   <nb-card-body>
-    <div class="alert alert-danger" *ngIf="errorMessage">{{t('Error:')}}' {{errorMessage}}</div>
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      {{ t("Error:") }}' {{ errorMessage }}
+    </div>
     <div class="row">
       <div class="col-2">
         <div class="" id="side-filter">
           <div class="row">
             <div class="col-12">
-              <h3 class="mb-2">{{t('Calls')}}</h3>
+              <h3 class="mb-2">{{ t("Calls") }}</h3>
             </div>
             <div class="col-12">
-              <div class="mb-2">{{t('Name')}}</div>
-              <input [(ngModel)]="filterService.filter.filename" [ngModelOptions]="{standalone: true}" type="text"
-                class="" placeholder="" class="form-control form-control-lg"
-                style="padding: 5px 10px; border: 1px solid #dfe3e9;" />
+              <div class="mb-2">{{ t("Name") }}</div>
+              <input
+                [(ngModel)]="filterService.filter.filename"
+                [ngModelOptions]="{ standalone: true }"
+                type="text"
+                class=""
+                placeholder=""
+                class="form-control form-control-lg"
+                style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+              />
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Batch Id')}}</div>
-              <input [(ngModel)]="filterService.filter.batchid" [ngModelOptions]="{standalone: true}" type="text"
-                step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
-                placeholder="">
+              <div class="mb-2">{{ t("Batch Id") }}</div>
+              <input
+                [(ngModel)]="filterService.filter.batchid"
+                [ngModelOptions]="{ standalone: true }"
+                type="text"
+                step="0.01"
+                class="form-control form-control-lg"
+                style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                placeholder=""
+              />
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Uploaded')}}</div>
+              <div class="mb-2">{{ t("Uploaded") }}</div>
               <div class="input-group">
-                <input bsDaterangepicker [(ngModel)]="filterService.filter.uploadDate"
-                  [ngModelOptions]="{standalone: true}" type="text" class="form-control form-control-lg"
-                  style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="">
+                <input
+                  bsDaterangepicker
+                  [(ngModel)]="filterService.filter.uploadDate"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="text"
+                  class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                  placeholder=""
+                />
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Emotion')}}</div>
+              <div class="mb-2">{{ t("Emotion") }}</div>
               <div class="input-group">
-                <input [(ngModel)]="filterService.filter.angerfrom" [ngModelOptions]="{standalone: true}" type="number"
-                  step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
-                  placeholder="{{t('from')}}">
-                <input [(ngModel)]="filterService.filter.angerto" [ngModelOptions]="{standalone: true}" type="number"
-                  step="0.01" class="form-control form-control-lg"
-                  style="padding: 5px 10px; border: 1px solid #dfe3e9; " placeholder="{{t('to')}}">
+                <input
+                  [(ngModel)]="filterService.filter.angerfrom"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="number"
+                  step="0.01"
+                  class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                  placeholder="{{ t('from') }}"
+                />
+                <input
+                  [(ngModel)]="filterService.filter.angerto"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="number"
+                  step="0.01"
+                  class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9; "
+                  placeholder="{{ t('to') }}"
+                />
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Avg.Pause')}}</div>
+              <div class="mb-2">{{ t("Avg.Pause") }}</div>
               <div class="input-group">
-                <input [(ngModel)]="filterService.filter.pauseAvgFrom" [ngModelOptions]="{standalone: true}"
-                  type="number" step="0.01" class="form-control form-control-lg"
-                  style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}">
-                <input [(ngModel)]="filterService.filter.pauseAvgTo" [ngModelOptions]="{standalone: true}" type="number"
-                  step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
-                  placeholder="{{t('to')}}">
+                <input
+                  [(ngModel)]="filterService.filter.pauseAvgFrom"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="number"
+                  step="0.01"
+                  class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                  placeholder="{{ t('from') }}"
+                />
+                <input
+                  [(ngModel)]="filterService.filter.pauseAvgTo"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="number"
+                  step="0.01"
+                  class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                  placeholder="{{ t('to') }}"
+                />
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Tot.Pause, minutes')}}</div>
+              <div class="mb-2">{{ t("Tot.Pause, minutes") }}</div>
               <div class="input-group">
-                <input [(ngModel)]="filterService.filter.pauseDurFrom" [ngModelOptions]="{standalone: true}"
-                  type="number" step="0.01" class="form-control form-control-lg"
-                  style="padding: 5px 10px; border: 1px solid #dfe3e9;" placeholder="{{t('from')}}">
-                <input [(ngModel)]="filterService.filter.pauseDurTo" [ngModelOptions]="{standalone: true}" type="number"
-                  step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
-                  placeholder="{{t('to')}}">
+                <input
+                  [(ngModel)]="filterService.filter.pauseDurFrom"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="number"
+                  step="0.01"
+                  class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                  placeholder="{{ t('from') }}"
+                />
+                <input
+                  [(ngModel)]="filterService.filter.pauseDurTo"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="number"
+                  step="0.01"
+                  class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                  placeholder="{{ t('to') }}"
+                />
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Call Duration, minutes')}}</div>
+              <div class="mb-2">{{ t("Call Duration, minutes") }}</div>
               <div class="input-group">
-                <input [(ngModel)]="filterService.filter.callfrom" [ngModelOptions]="{standalone: true}" type="number"
-                  step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
-                  placeholder="{{t('from')}}">
-                <input [(ngModel)]="filterService.filter.callto" [ngModelOptions]="{standalone: true}" type="number"
-                  step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
-                  placeholder="{{t('to')}}">
+                <input
+                  [(ngModel)]="filterService.filter.callfrom"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="number"
+                  step="0.01"
+                  class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                  placeholder="{{ t('from') }}"
+                />
+                <input
+                  [(ngModel)]="filterService.filter.callto"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="number"
+                  step="0.01"
+                  class="form-control form-control-lg"
+                  style="padding: 5px 10px; border: 1px solid #dfe3e9;"
+                  placeholder="{{ t('to') }}"
+                />
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Containing words')}}</div>
-              <tag-input [(ngModel)]="filterService.filter.keywordsContain" [editable]="true" theme="minimal"
-                (onAdd)="onItemAdd($event, 'keywordsContain')" placeholder="{{t('Words')}}"
-                secondaryPlaceholder="{{t('Words')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
-                (onBlur)="onItemAdd($event, 'keywordsContain')"></tag-input>
+              <div class="mb-2">{{ t("Containing words") }}</div>
+              <tag-input
+                [(ngModel)]="filterService.filter.keywordsContain"
+                [editable]="true"
+                theme="minimal"
+                (onAdd)="onItemAdd($event, 'keywordsContain')"
+                placeholder="{{ t('Words') }}"
+                secondaryPlaceholder="{{ t('Words') }}"
+                [separatorKeys]="[',']"
+                [separatorKeyCodes]="[13]"
+                (onBlur)="onItemAdd($event, 'keywordsContain')"
+              ></tag-input>
             </div>
             <div class="col-12">
               <div ngbDropdown class="ghost-dropdown dropdown w-100">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" style="border: 1px solid #dfe3e9;"
-                  id="dropdownBasic1" ngbDropdownToggle>{{t(filterService.filter.stopwordLooking)}}</button>
-                <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
-                  <li class="dropdown-item" ngbDropdownItem (click)="setStopwordLooking('Everywhere')">
-                    {{t('Everywhere')}}</li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setStopwordLooking('Agent')">{{t('Agent')}}
+                <button
+                  class="btn btn-secondary btn-sm dropdown-toggle"
+                  style="border: 1px solid #dfe3e9;"
+                  id="dropdownBasic1"
+                  ngbDropdownToggle
+                >
+                  {{ t(filterService.filter.stopwordLooking) }}
+                </button>
+                <ul
+                  ngbDropdownMenu
+                  aria-labelledby="dropdownBasic1"
+                  class="dropdown-menu"
+                >
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setStopwordLooking('Everywhere')"
+                  >
+                    {{ t("Everywhere") }}
                   </li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setStopwordLooking('Customer')">
-                    {{t('Customer')}}</li>
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setStopwordLooking('Agent')"
+                  >
+                    {{ t("Agent") }}
+                  </li>
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setStopwordLooking('Customer')"
+                  >
+                    {{ t("Customer") }}
+                  </li>
                 </ul>
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Missing words')}}</div>
-              <tag-input [(ngModel)]="filterService.filter.keywordsNotContain" [editable]="true" theme="minimal"
-                (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Missing words')}}"
-                secondaryPlaceholder="{{t('Words')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
-                (onBlur)="onItemAdd($event, 'keywordsNotContain')"></tag-input>
+              <div class="mb-2">{{ t("Missing words") }}</div>
+              <tag-input
+                [(ngModel)]="filterService.filter.keywordsNotContain"
+                [editable]="true"
+                theme="minimal"
+                (onAdd)="onItemAdd($event, 'keywordsNotContain')"
+                placeholder="{{ t('Missing words') }}"
+                secondaryPlaceholder="{{ t('Words') }}"
+                [separatorKeys]="[',']"
+                [separatorKeyCodes]="[13]"
+                (onBlur)="onItemAdd($event, 'keywordsNotContain')"
+              ></tag-input>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Tags')}}</div>
-              <tag-input [(ngModel)]="filterService.filter.tagsContain" [editable]="true" theme="minimal"
-                (onAdd)="onItemAdd($event, 'tagsContain')" placeholder="{{t('Tags')}}"
-                secondaryPlaceholder="{{t('Tags')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
-                (onBlur)="onItemAdd($event, 'tagsContain')"></tag-input>
+              <div class="mb-2">{{ t("Tags") }}</div>
+              <tag-input
+                [(ngModel)]="filterService.filter.tagsContain"
+                [editable]="true"
+                theme="minimal"
+                (onAdd)="onItemAdd($event, 'tagsContain')"
+                placeholder="{{ t('Tags') }}"
+                secondaryPlaceholder="{{ t('Tags') }}"
+                [separatorKeys]="[',']"
+                [separatorKeyCodes]="[13]"
+                (onBlur)="onItemAdd($event, 'tagsContain')"
+              ></tag-input>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Topics')}}</div>
-              <input type="text" class="form-control" [(ngModel)]="selectedTopic" [typeahead]="topics"
-                [typeaheadMinLength]="0" class="form-control form-control-lg" [ngModelOptions]="{standalone: true}"
-                (typeaheadOnSelect)="onSelectTopic($event)">
+              <div class="mb-2">{{ t("Topics") }}</div>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="selectedTopic"
+                [typeahead]="topics"
+                [typeaheadMinLength]="0"
+                class="form-control form-control-lg"
+                [ngModelOptions]="{ standalone: true }"
+                (typeaheadOnSelect)="onSelectTopic($event)"
+              />
             </div>
             <div class="col-12 pt-3" *ngIf="selectedTopics">
               <ul class="list-group pl-0">
-                <li class="list-group-item d-flex justify-content-between align-items-center w-100"
-                  *ngFor="let topic of selectedTopics">{{topic}}<button type="button" class="close ml-2"
-                    (click)="onRemoveTopic(topic)">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center w-100"
+                  *ngFor="let topic of selectedTopics"
+                >
+                  {{ topic
+                  }}<button
+                    type="button"
+                    class="close ml-2"
+                    (click)="onRemoveTopic(topic)"
+                  >
                     <span aria-hidden="true">&times;</span>
-                  </button></li>
+                  </button>
+                </li>
               </ul>
             </div>
             <div class="col-12">
-              <div class="my-2">{{t('Sentiment trend')}}</div>
+              <div class="my-2">{{ t("Sentiment trend") }}</div>
               <div ngbDropdown class="ghost-dropdown dropdown w-100">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" style="border: 1px solid #dfe3e9;"
+                <button
+                  class="btn btn-secondary btn-sm dropdown-toggle"
+                  style="border: 1px solid #dfe3e9;"
                   id="dropdownBasic1"
-                  ngbDropdownToggle>{{t(filterService.filter.sentimentTrend ? filterService.filter.sentimentTrend : "Select trend")}}</button>
-                <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
-                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend(null)">
+                  ngbDropdownToggle
+                >
+                  {{
+                    t(
+                      filterService.filter.sentimentTrend
+                        ? filterService.filter.sentimentTrend
+                        : "Select trend"
+                    )
+                  }}
+                </button>
+                <ul
+                  ngbDropdownMenu
+                  aria-labelledby="dropdownBasic1"
+                  class="dropdown-menu"
+                >
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setEmotionalTrend(null)"
+                  >
                     No trend
                   </li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Negative')">
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setEmotionalTrend('Negative-Negative')"
+                  >
                     <i class="far fa-angry text-danger"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
                     <i class="far fa-angry text-danger"></i>
                   </li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Neutral')">
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setEmotionalTrend('Negative-Neutral')"
+                  >
                     <i class="far fa-angry text-danger"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
                     <i class="far fa-meh text-info"></i>
                   </li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Negative-Positive')">
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setEmotionalTrend('Negative-Positive')"
+                  >
                     <i class="far fa-angry text-danger"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
                     <i class="far fa-grin text-success"></i>
                   </li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Negative')">
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setEmotionalTrend('Neutral-Negative')"
+                  >
                     <i class="far fa-meh text-info"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
                     <i class="far fa-angry text-danger"></i>
                   </li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Neutral')">
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setEmotionalTrend('Neutral-Neutral')"
+                  >
                     <i class="far fa-meh text-info"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
                     <i class="far fa-meh text-info"></i>
                   </li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Neutral-Positive')">
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setEmotionalTrend('Neutral-Positive')"
+                  >
                     <i class="far fa-meh text-info"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                    <i class="far fa-grin text-success"></i></li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Positive-Negative')">
+                    <i class="far fa-grin text-success"></i>
+                  </li>
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setEmotionalTrend('Positive-Negative')"
+                  >
                     <i class="far fa-grin text-success"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
                     <i class="far fa-angry text-danger"></i>
                   </li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Positive-Neutral')">
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setEmotionalTrend('Positive-Neutral')"
+                  >
                     <i class="far fa-grin text-success"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
                     <i class="far fa-meh text-info"></i>
                   </li>
-                  <li class="dropdown-item" ngbDropdownItem (click)="setEmotionalTrend('Positive-Positive')">
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setEmotionalTrend('Positive-Positive')"
+                  >
                     <i class="far fa-grin text-success"></i>
                     <i class="fas fa-long-arrow-alt-right mx-2"></i>
                     <i class="far fa-grin text-success"></i>
@@ -181,16 +366,32 @@
             </div>
             <div class="col-12">
               <div class="mt-3">
-                <div class="mb-2">{{t('Tags')}}</div>
+                <div class="mb-2">{{ t("Tags") }}</div>
                 <div class="btn-group w-100 d-flex" data-toggle="buttons">
-                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
                     (click)="setTagsFilter()"
-                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.tagsOnly, 'btn-secondary': !filterService.filter.tagsOnly}">
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.tagsOnly,
+                      'btn-secondary': !filterService.filter.tagsOnly
+                    }"
+                  >
                     Yes
                   </button>
-                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
                     (click)="setNoTagsFilter()"
-                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.noTags, 'btn-secondary': !filterService.filter.noTags}">
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.noTags,
+                      'btn-secondary': !filterService.filter.noTags
+                    }"
+                  >
                     No
                   </button>
                 </div>
@@ -198,16 +399,32 @@
             </div>
             <div class="col-12">
               <div class="mt-3">
-                <div class="mb-2">{{t('Assessment')}}</div>
+                <div class="mb-2">{{ t("Assessment") }}</div>
                 <div class="btn-group w-100 d-flex" data-toggle="buttons">
-                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
                     (click)="setChecklistOnlyFilter()"
-                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.checklistOnly, 'btn-secondary': !filterService.filter.checklistOnly}">
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.checklistOnly,
+                      'btn-secondary': !filterService.filter.checklistOnly
+                    }"
+                  >
                     Yes
                   </button>
-                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
                     (click)="setNoChecklistFilter()"
-                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.noChecklist, 'btn-secondary': !filterService.filter.noChecklist}">
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.noChecklist,
+                      'btn-secondary': !filterService.filter.noChecklist
+                    }"
+                  >
                     No
                   </button>
                 </div>
@@ -215,16 +432,98 @@
             </div>
             <div class="col-12">
               <div class="mt-3">
-                <div class="mb-2">{{t('Comments')}}</div>
+                <div class="mb-2">{{ t("Comments") }}</div>
                 <div class="btn-group w-100 d-flex" data-toggle="buttons">
-                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
                     (click)="setCommentsOnlyFilter()"
-                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.commentsOnly, 'btn-secondary': !filterService.filter.commentsOnly}">
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.commentsOnly,
+                      'btn-secondary': !filterService.filter.commentsOnly
+                    }"
+                  >
                     Yes
                   </button>
-                  <button type="button" class="btn c-normal primary border w-50" style="padding: .5rem .75rem;"
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
                     (click)="setNoCommentFilter()"
-                    [ngClass]="{'btn': true, 'btn-primary': filterService.filter.noComments, 'btn-secondary': !filterService.filter.noComments}">
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.noComments,
+                      'btn-secondary': !filterService.filter.noComments
+                    }"
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mt-3">
+                <div class="mb-2">{{ t("Stopwords") }}</div>
+                <div class="btn-group w-100 d-flex" data-toggle="buttons">
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
+                    (click)="setStopOnlyFilter()"
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.stopOnly,
+                      'btn-secondary': !filterService.filter.noStop
+                    }"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
+                    (click)="setNoStopFilter()"
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.noStop,
+                      'btn-secondary': !filterService.filter.stopOnly
+                    }"
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mt-3">
+                <div class="mb-2">{{ t("Missing words") }}</div>
+                <div class="btn-group w-100 d-flex" data-toggle="buttons">
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
+                    (click)="setMissedOnlyFilter()"
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.missingOnly,
+                      'btn-secondary': !filterService.filter.noMissing
+                    }"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
+                    (click)="setNoMissedFilter()"
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.noMissing,
+                      'btn-secondary': !filterService.filter.missingOnly
+                    }"
+                  >
                     No
                   </button>
                 </div>
@@ -233,150 +532,308 @@
             <div class="col-12">
               <div class="mt-3">
                 <label>
-                  <input [(ngModel)]="filterService.filter.stopOnly" [ngModelOptions]="{standalone: true}"
-                    type="checkbox" class="" />
-                  {{t('Filter calls with stopwords')}}
+                  <input
+                    [(ngModel)]="filterService.filter.favoriteOnly"
+                    [ngModelOptions]="{ standalone: true }"
+                    type="checkbox"
+                    class=""
+                  />
+                  {{ t("Filter favorite calls") }}
                 </label>
               </div>
             </div>
             <div class="col-12">
-              <div class="mt-3">
-                <label>
-                  <input [(ngModel)]="filterService.filter.missingOnly" [ngModelOptions]="{standalone: true}"
-                    type="checkbox" class="" />
-                  {{t('Filter calls with missing words')}}
-                </label>
-              </div>
+              <button
+                class="btn btn-primary mt-4 w-100"
+                style="cursor: pointer;"
+                (click)="filterIt()"
+              >
+                {{ t("Apply") }}
+              </button>
             </div>
             <div class="col-12">
-              <div class="mt-3">
-                <label>
-                  <input [(ngModel)]="filterService.filter.favoriteOnly" [ngModelOptions]="{standalone: true}"
-                    type="checkbox" class="" />
-                  {{t('Filter favorite calls')}}
-                </label>
-              </div>
-            </div>
-            <div class="col-12">
-              <button class="btn btn-primary mt-4 w-100" style="cursor: pointer;"
-                (click)="filterIt()">{{t('Apply')}}</button>
-            </div>
-            <div class="col-12">
-              <button class="btn btn-secondary mt-2 w-100" style="cursor: pointer;"
-                (click)="resetFilter()">{{t('Reset')}}</button>
+              <button
+                class="btn btn-secondary mt-2 w-100"
+                style="cursor: pointer;"
+                (click)="resetFilter()"
+              >
+                {{ t("Reset") }}
+              </button>
             </div>
           </div>
         </div>
       </div>
       <div class="col col-md-10 border-left">
-        <div class="d-flex flex-row justify-content-between align-items-start" *ngIf="!filterService.isLoading">
-          <div class="mt-2">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
-            {{filterService.totalcount}}<a *ngIf="!filterService.isLoading" class="p-0 ml-2 c-normal font-weight-bold" (click)="refresh()">Refresh</a>
+        <div
+          class="d-flex flex-row justify-content-between align-items-start"
+          *ngIf="!filterService.isLoading"
+        >
+          <div class="mt-2">
+            {{ t("Total files on page") }} {{ filterService.label }}
+            {{ t("out of") }} {{ filterService.totalcount
+            }}<a
+              *ngIf="!filterService.isLoading"
+              class="p-0 ml-2 c-normal font-weight-bold"
+              (click)="refresh()"
+              >Refresh</a
+            >
           </div>
           <div class="btn-toolbar mt-1">
             <div class="btn-group">
               <div
-                *ngFor="let pageItem of filterService.fileStore | paginate: { itemsPerPage: filterService.filter.itemsn, currentPage: filterService.filter.pagen, totalItems: filterService.totalcount }">
-              </div>
-              <pagination-controls (pageChange)="getPage($event)" previousLabel="{{t('previous')}}"
-                nextLabel="{{t('next')}}"></pagination-controls>
+                *ngFor="
+                  let pageItem of filterService.fileStore
+                    | paginate
+                      : {
+                          itemsPerPage: filterService.filter.itemsn,
+                          currentPage: filterService.filter.pagen,
+                          totalItems: filterService.totalcount
+                        }
+                "
+              ></div>
+              <pagination-controls
+                (pageChange)="getPage($event)"
+                previousLabel="{{ t('previous') }}"
+                nextLabel="{{ t('next') }}"
+              ></pagination-controls>
             </div>
           </div>
           <div class="d-flex flex-row mb-1">
             <div class="dropdown ghost-dropdown" ngbDropdown>
-              <button type="button" class="btn btn-sm mr-2"  ngbDropdownToggle>
-                Sort: {{filterName}}
+              <button type="button" class="btn btn-sm mr-2" ngbDropdownToggle>
+                Sort: {{ filterName }}
               </button>
               <ul ngbDropdownMenu class="dropdown-menu">
-                <li class="dropdown-item" (click)="sortTable('Agent: A..Z', 'BatchId', 'asc')">Agent: A..Z</li>
-                <li class="dropdown-item" (click)="sortTable('Agent: Z..A', 'BatchId', 'desc')">Agent: Z..A</li>
-                <li class="dropdown-item" (click)="sortTable('Date and time: Newly Uploaded', 'Uploaded', 'desc')">Date
-                  and time: Newly Uploaded</li>
-                <li class="dropdown-item" (click)="sortTable('Avg. Pause: Short to Long', 'AvgPause', 'asc')">Avg.
-                  Pause: Short to Long</li>
-                <li class="dropdown-item" (click)="sortTable('Tot. Pause: Long to Short', 'PauseDur', 'desc')">Tot.
-                  Pause: Long to Short</li>
-                <li class="dropdown-item" (click)="sortTable('Stopwords: Max to Min', 'Stopwords', 'desc')">
-                  <span>Stopwords:
-                    Max to Min</span></li>
-                <li class="dropdown-item" (click)="sortTable('Compliance: Low to High', 'Compliance', 'asc')">
-                  Compliance: Low to High</li>
-                <li class="dropdown-item" (click)="sortTable('Compliance: High to Low', 'Compliance', 'desc')">
-                  Compliance: High to Low</li>
-                <li class="dropdown-item" (click)="sortTable('Emotion: High to Low', 'Emotion', 'desc')">Emotion: High
-                  to Low</li>
+                <li
+                  class="dropdown-item"
+                  (click)="sortTable('Agent: A..Z', 'BatchId', 'asc')"
+                >
+                  Agent: A..Z
+                </li>
+                <li
+                  class="dropdown-item"
+                  (click)="sortTable('Agent: Z..A', 'BatchId', 'desc')"
+                >
+                  Agent: Z..A
+                </li>
+                <li
+                  class="dropdown-item"
+                  (click)="
+                    sortTable(
+                      'Date and time: Newly Uploaded',
+                      'Uploaded',
+                      'desc'
+                    )
+                  "
+                >
+                  Date and time: Newly Uploaded
+                </li>
+                <li
+                  class="dropdown-item"
+                  (click)="
+                    sortTable('Avg. Pause: Short to Long', 'AvgPause', 'asc')
+                  "
+                >
+                  Avg. Pause: Short to Long
+                </li>
+                <li
+                  class="dropdown-item"
+                  (click)="
+                    sortTable('Tot. Pause: Long to Short', 'PauseDur', 'desc')
+                  "
+                >
+                  Tot. Pause: Long to Short
+                </li>
+                <li
+                  class="dropdown-item"
+                  (click)="
+                    sortTable('Stopwords: Max to Min', 'Stopwords', 'desc')
+                  "
+                >
+                  <span>Stopwords: Max to Min</span>
+                </li>
+                <li
+                  class="dropdown-item"
+                  (click)="
+                    sortTable('Compliance: Low to High', 'Compliance', 'asc')
+                  "
+                >
+                  Compliance: Low to High
+                </li>
+                <li
+                  class="dropdown-item"
+                  (click)="
+                    sortTable('Compliance: High to Low', 'Compliance', 'desc')
+                  "
+                >
+                  Compliance: High to Low
+                </li>
+                <li
+                  class="dropdown-item"
+                  (click)="sortTable('Emotion: High to Low', 'Emotion', 'desc')"
+                >
+                  Emotion: High to Low
+                </li>
               </ul>
             </div>
-            <button class="btn c-normal btn-sm" (click)="exportCSV()">{{t('Export to CSV')}}</button>
+            <button class="btn c-normal btn-sm" (click)="exportCSV()">
+              {{ t("Export to CSV") }}
+            </button>
           </div>
         </div>
-        <div class="file-list mt-2" *ngIf="!filterService.isLoading; else spinner">
+        <div
+          class="file-list mt-2"
+          *ngIf="!filterService.isLoading; else spinner"
+        >
           <div class="d-flex flex-column w-100">
-            <ng-container *ngIf="(filterService.files | async) as files">
-              <div class="d-flex justify-content-start flex-row border-top border-bottom align-self-scratch py-2"
-                *ngFor="let item of files; let i = index">
-                <div (click)="markFavorite(item)" style="cursor: pointer; width: 2%;" class="align-self-start">
-                  <span *ngIf="filterService.lastFileId === item.filename" #scroll></span>
+            <ng-container *ngIf="filterService.files | async as files">
+              <div
+                class="d-flex justify-content-start flex-row border-top border-bottom align-self-scratch py-2"
+                *ngFor="let item of files; let i = index"
+              >
+                <div
+                  (click)="markFavorite(item)"
+                  style="cursor: pointer; width: 2%;"
+                  class="align-self-start"
+                >
+                  <span
+                    *ngIf="filterService.lastFileId === item.filename"
+                    #scroll
+                  ></span>
                   <i *ngIf="getBool(item.pin)" class="fa fa-star"></i>
                   <i *ngIf="!getBool(item.pin)" class="far fa-star"></i>
                 </div>
-                <div class="d-flex flex-column align-self-stretch justify-content-between" style="width: 38%">
-                  <a [routerLink]="getLink(item)" tooltip="{{item.filename}}">
-                    <span class="font-weight-bold text-truncate" style="max-width: 100%; display: block;">
-                      {{item.filename}}
+                <div
+                  class="d-flex flex-column align-self-stretch justify-content-between"
+                  style="width: 38%"
+                >
+                  <a [routerLink]="getLink(item)" tooltip="{{ item.filename }}">
+                    <span
+                      class="font-weight-bold text-truncate"
+                      style="max-width: 100%; display: block;"
+                    >
+                      {{ item.filename }}
                     </span>
                   </a>
-                  <a class="text-truncate mb-1" style="cursor: pointer; text-decoration: underline;"
-                    (click)="filterByBatch(item.batchid)">{{item.batchid}}</a>
+                  <a
+                    class="text-truncate mb-1"
+                    style="cursor: pointer; text-decoration: underline;"
+                    (click)="filterByBatch(item.batchid)"
+                    >{{ item.batchid }}</a
+                  >
                   <div class="d-flex flex-row flex-start" *ngIf="item.topic">
                     <i class="fas fa-quote-left mr-1"></i>
-                    <span class="text-truncate" tooltip="{{item.topic.topic}}" style="max-width: 85%; display: inline-block;">{{item.topic.topic}}</span>
-                    <span class="font-weight-bold ml-1" >{{item.topic.confidence}}%</span>
+                    <span
+                      class="text-truncate"
+                      tooltip="{{ item.topic.topic }}"
+                      style="max-width: 85%; display: inline-block;"
+                      >{{ item.topic.topic }}</span
+                    >
+                    <span class="font-weight-bold ml-1"
+                      >{{ item.topic.confidence }}%</span
+                    >
                   </div>
                 </div>
-                <div class="d-flex flex-column align-self-stretch justify-content-between" style="width:5%">
+                <div
+                  class="d-flex flex-column align-self-stretch justify-content-between"
+                  style="width:5%"
+                >
                   <div class="d-flex flex-row align-items-center">
-                    <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-auto"></i>
-                    <span tooltip="{{getStopwords(item)}}" class="badge badge-danger mr-4"
-                      style="border-radius: 0px; padding: 0.3rem 0.4rem;">{{item.stopwordcount ? item.stopwordcount : 0}}</span>
+                    <i
+                      tooltip="{{ t('All') }}"
+                      class="fa fa-user-friends mr-auto"
+                    ></i>
+                    <span
+                      tooltip="{{ getStopwords(item) }}"
+                      class="badge badge-danger mr-4"
+                      style="border-radius: 0px; padding: 0.3rem 0.4rem;"
+                      >{{ item.stopwordcount ? item.stopwordcount : 0 }}</span
+                    >
                   </div>
                   <div class="d-flex flex-row ">
-                    <i class="fa fa-headset mr-auto" tooltip="{{t('Agent')}}"></i>
-                    <span tooltip="{{getAgentStopwords(item)}}" class="badge badge-danger mr-4"
-                      style="border-radius: 0px; padding: 0.3rem 0.4rem;">{{item.agentstopwordcount ? item.agentstopwordcount : 0 }}</span>
+                    <i
+                      class="fa fa-headset mr-auto"
+                      tooltip="{{ t('Agent') }}"
+                    ></i>
+                    <span
+                      tooltip="{{ getAgentStopwords(item) }}"
+                      class="badge badge-danger mr-4"
+                      style="border-radius: 0px; padding: 0.3rem 0.4rem;"
+                      >{{
+                        item.agentstopwordcount ? item.agentstopwordcount : 0
+                      }}</span
+                    >
                   </div>
                   <div class="d-flex flex-row">
-                    <i tooltip="{{t('Client')}}" class="fa fa-user-tie mr-auto"></i>
-                    <span tooltip="{{getCustomerStopword(item)}}" class="badge badge-danger mr-4"
-                      style="border-radius: 0px; padding: 0.3rem 0.4rem;">{{item.customerstopwordcount ? item.customerstopwordcount : 0}}</span>
+                    <i
+                      tooltip="{{ t('Client') }}"
+                      class="fa fa-user-tie mr-auto"
+                    ></i>
+                    <span
+                      tooltip="{{ getCustomerStopword(item) }}"
+                      class="badge badge-danger mr-4"
+                      style="border-radius: 0px; padding: 0.3rem 0.4rem;"
+                      >{{
+                        item.customerstopwordcount
+                          ? item.customerstopwordcount
+                          : 0
+                      }}</span
+                    >
                   </div>
                 </div>
                 <div class="d-flex flex-column" style="width: 55%;">
                   <div class="d-flex flex-row justify-content-between">
                     <div class="d-flex">
                       <div class="d-flex flex-column">
-                        <div style="font-size: x-small; margin-top: 0.3rem;">{{t('Compliance')}}</div>
-                        <div class="d-flex flex-row font-weight-bold"
-                          [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.6rem', 'color': getOpacityLevelCompliance(item.compliancepercent)}">
+                        <div style="font-size: x-small; margin-top: 0.3rem;">
+                          {{ t("Compliance") }}
+                        </div>
+                        <div
+                          class="d-flex flex-row font-weight-bold"
+                          [ngStyle]="{
+                            'font-size': '1.3rem',
+                            'margin-top': '0.6rem',
+                            color: getOpacityLevelCompliance(
+                              item.compliancepercent
+                            )
+                          }"
+                        >
                           <div class="align-self-center text-center mr-1">
                             <i class="fa fa-shield-alt"></i>
                           </div>
                           <span class="m-0">
-                            {{item.compliancepercent !== '-' ? abc(item.compliancepercent) + '%' : '-' }}
+                            {{
+                              item.compliancepercent !== "-"
+                                ? abc(item.compliancepercent) + "%"
+                                : "-"
+                            }}
                           </span>
                         </div>
                       </div>
                     </div>
                     <div class="d-flex justify-content-start">
                       <div class="d-flex flex-column align-items-center">
-                        <div style="font-size: x-small; margin-top: 0.3rem;">{{t('Sentiment trend')}}</div>
-                        <ng-container *ngIf="hasTrend(item.sentimentTrend); else emptyTrend">
-                          <div class="d-flex flex-row font-weight-bold" style="font-size: 1.3rem; margin-top: 0.7rem">
-                            <i class="far" [ngClass]='getTrend(item.sentimentTrend.start)'
-                              [tooltip]="item.sentimentTrend.start"></i>
+                        <div style="font-size: x-small; margin-top: 0.3rem;">
+                          {{ t("Sentiment trend") }}
+                        </div>
+                        <ng-container
+                          *ngIf="hasTrend(item.sentimentTrend); else emptyTrend"
+                        >
+                          <div
+                            class="d-flex flex-row font-weight-bold"
+                            style="font-size: 1.3rem; margin-top: 0.7rem"
+                          >
+                            <i
+                              class="far"
+                              [ngClass]="getTrend(item.sentimentTrend.start)"
+                              [tooltip]="item.sentimentTrend.start"
+                            ></i>
                             <i class="fas fa-long-arrow-alt-right mx-2"></i>
-                            <i [ngClass]='getTrend(item.sentimentTrend.end)' [tooltip]="item.sentimentTrend.end"
-                              class="far"></i>
+                            <i
+                              [ngClass]="getTrend(item.sentimentTrend.end)"
+                              [tooltip]="item.sentimentTrend.end"
+                              class="far"
+                            ></i>
                           </div>
                         </ng-container>
                         <ng-template #emptyTrend>
@@ -391,15 +848,25 @@
                     <div class="d-flex justify-content-start">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
-                          {{t('Average emotion')}}
+                          {{ t("Average emotion") }}
                         </div>
-                        <div class="d-flex flex-row font-weight-bold"
-                          [ngStyle]="{'font-size': '1.3rem', 'margin-top': '0.7rem', 'color': getOpacityLevelAnger(item.angertop)}">
+                        <div
+                          class="d-flex flex-row font-weight-bold"
+                          [ngStyle]="{
+                            'font-size': '1.3rem',
+                            'margin-top': '0.7rem',
+                            color: getOpacityLevelAnger(item.angertop)
+                          }"
+                        >
                           <div class="align-self-center text-center mr-1">
                             <i class="fa fa-thermometer-empty"></i>
                           </div>
                           <span class="m-0">
-                            {{item.angertop && item.angertop.anger ? abcStr(item.angertop.anger) + '%' : '-' }}
+                            {{
+                              item.angertop && item.angertop.anger
+                                ? abcStr(item.angertop.anger) + "%"
+                                : "-"
+                            }}
                           </span>
                         </div>
                       </div>
@@ -407,11 +874,19 @@
                     <div class="d-flex justify-content-start">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
-                          {{t('Comments')}}
+                          {{ t("Comments") }}
                         </div>
-                        <div class="d-flex flex-row font-weight-bold" style="font-size: 1.3rem; margin-top: 0.7rem">
+                        <div
+                          class="d-flex flex-row font-weight-bold"
+                          style="font-size: 1.3rem; margin-top: 0.7rem"
+                        >
                           <div class="align-self-center text-center mr-1">
-                            <i class="far fa-sticky-note" [ngClass]="{'c-primary': item.comment.length > 0}"></i>
+                            <i
+                              class="far fa-sticky-note"
+                              [ngClass]="{
+                                'c-primary': item.comment.length > 0
+                              }"
+                            ></i>
                           </div>
                         </div>
                       </div>
@@ -419,15 +894,29 @@
                     <div class="d-flex justify-content-start">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
-                          {{t('Assessment')}}
+                          {{ t("Assessment") }}
                         </div>
-                        <div class="d-flex flex-row"
-                          [ngStyle]="{'font-size': '1.3rem','margin-top': '0.7rem', 'color': getOpacityLevelCompliance(item.checklistScore)}">
+                        <div
+                          class="d-flex flex-row"
+                          [ngStyle]="{
+                            'font-size': '1.3rem',
+                            'margin-top': '0.7rem',
+                            color: getOpacityLevelCompliance(
+                              item.checklistScore
+                            )
+                          }"
+                        >
                           <div class="text-center mr-1">
-                            <i class="fas fa-tasks" [ngClass]="{'c-primary': item.checklist}"></i>
+                            <i
+                              class="fas fa-tasks"
+                              [ngClass]="{ 'c-primary': item.checklist }"
+                            ></i>
                           </div>
-                          <span class="m-0" *ngIf="item.checklistScore; else empty">
-                            {{abc(item.checklistScore)}}%
+                          <span
+                            class="m-0"
+                            *ngIf="item.checklistScore; else empty"
+                          >
+                            {{ abc(item.checklistScore) }}%
                           </span>
                           <ng-template #empty>
                             <span class="m-0">
@@ -438,57 +927,92 @@
                       </div>
                     </div>
                     <div class="d-flex flex-row">
-                      <div class="pr-2" style="font-size: xx-small; margin-top: 0.3rem;">
+                      <div
+                        class="pr-2"
+                        style="font-size: xx-small; margin-top: 0.3rem;"
+                      >
                         <div class="mb-1">
-                          <span class="mr-2">{{t('Uploaded')}}</span>
-                          <span class="float-right font-weight-bold">{{item.uploaddate | date: 'dd/MM/yyyy'}}</span>
+                          <span class="mr-2">{{ t("Uploaded") }}</span>
+                          <span class="float-right font-weight-bold">{{
+                            item.uploaddate | date: "dd/MM/yyyy"
+                          }}</span>
                         </div>
                         <div class="mb-1">
-                          <span class="mr-2">{{t('Duration')}}</span>
-                          <span class="float-right font-weight-bold">{{ getFormatedTime(item.duration)}}</span>
+                          <span class="mr-2">{{ t("Duration") }}</span>
+                          <span class="float-right font-weight-bold">{{
+                            getFormatedTime(item.duration)
+                          }}</span>
                         </div>
                         <div class="mb-1">
-                          <span class="mr-2"> {{t('Silence')}}</span>
-                          <span *ngIf="item.pause && item.pause.dur"
-                            class="float-right font-weight-bold">{{getFormatedTime(item.pause.dur)}}
-                            ({{item.pause.dur / item.duration | percent}})</span>
+                          <span class="mr-2"> {{ t("Silence") }}</span>
+                          <span
+                            *ngIf="item.pause && item.pause.dur"
+                            class="float-right font-weight-bold"
+                            >{{ getFormatedTime(item.pause.dur) }} ({{
+                              item.pause.dur / item.duration | percent
+                            }})</span
+                          >
                         </div>
                       </div>
                       <div style="font-size: xx-small; margin-top: 0.3rem;">
                         <div class="mb-1">
-                          <span class="mr-2">{{t('Pauses')}}</span>
+                          <span class="mr-2">{{ t("Pauses") }}</span>
                           <span class="float-right font-weight-bold"></span>
                         </div>
                         <div class="mb-1">
-                          <span class="mr-2">{{t('Max.')}}</span>
-                          <span class="float-right font-weight-bold"
-                            *ngIf="item.pause && item.pause.max">{{getFormatedTime(item.pause.max)}}</span>
+                          <span class="mr-2">{{ t("Max.") }}</span>
+                          <span
+                            class="float-right font-weight-bold"
+                            *ngIf="item.pause && item.pause.max"
+                            >{{ getFormatedTime(item.pause.max) }}</span
+                          >
                         </div>
                         <div class="mb-1">
-                          <span class="mr-2">{{t('Avg.')}}</span>
-                          <span *ngIf="item.pause && item.pause.avg"
-                            class="float-right font-weight-bold">{{getFormatedTime(item.pause.avg)}}</span>
+                          <span class="mr-2">{{ t("Avg.") }}</span>
+                          <span
+                            *ngIf="item.pause && item.pause.avg"
+                            class="float-right font-weight-bold"
+                            >{{ getFormatedTime(item.pause.avg) }}</span
+                          >
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="d-flex align-items-end w-100">
                     <div>
-                      <span class="badge badge-secondary mr-1" *ngFor="let tag of item.tags">{{tag}}</span>
+                      <span
+                        class="badge badge-secondary mr-1"
+                        *ngFor="let tag of item.tags"
+                        >{{ tag }}</span
+                      >
                     </div>
                     <div class="mr-auto">
-                      <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="showModal(tagModal, item, i)"
-                        tooltip="{{t('Edit tags')}}">
+                      <button
+                        class="btn p-0 c-normal"
+                        style="cursor: pointer;"
+                        (click)="showModal(tagModal, item, i)"
+                        tooltip="{{ t('Edit tags') }}"
+                      >
                         <i class="fa fa-pencil-alt"></i>
                       </button>
                     </div>
                     <div>
-                      <button class="btn p-0 c-normal" style="cursor: pointer;" (click)="proccessFile(item)"
-                        tooltip="{{t('Refresh')}}{{item.proccessing ? '...' : ''}}">
+                      <button
+                        class="btn p-0 c-normal"
+                        style="cursor: pointer;"
+                        (click)="proccessFile(item)"
+                        tooltip="{{ t('Refresh') }}{{
+                          item.proccessing ? '...' : ''
+                        }}"
+                      >
                         <i class="fa fa-sync mr-2"></i>
                       </button>
-                      <button class="btn p-0 c-normal" style="cursor: pointer;"
-                        (click)="showDeleteModal(confirm, item, i)" tooltip="{{t('Delete')}}">
+                      <button
+                        class="btn p-0 c-normal"
+                        style="cursor: pointer;"
+                        (click)="showDeleteModal(confirm, item, i)"
+                        tooltip="{{ t('Delete') }}"
+                      >
                         <i class="fa fa-trash-alt mr-2"></i>
                       </button>
                     </div>
@@ -498,22 +1022,38 @@
             </ng-container>
           </div>
         </div>
-        <div class="d-flex justify-content-around" *ngIf="!filterService.isLoading">
+        <div
+          class="d-flex justify-content-around"
+          *ngIf="!filterService.isLoading"
+        >
           <div class="btn-toolbar mb-3 mt-3">
             <div class="btn-group mr-2 mb-2">
               <div
-                *ngFor="let pageItem of filterService.fileStore | paginate: { itemsPerPage: filterService.filter.itemsn, currentPage: filterService.filter.pagen, totalItems: filterService.totalcount }">
-              </div>
-              <pagination-controls (pageChange)="getPage($event)" previousLabel="{{t('previous')}}"
-                nextLabel="{{t('next')}}"></pagination-controls>
+                *ngFor="
+                  let pageItem of filterService.fileStore
+                    | paginate
+                      : {
+                          itemsPerPage: filterService.filter.itemsn,
+                          currentPage: filterService.filter.pagen,
+                          totalItems: filterService.totalcount
+                        }
+                "
+              ></div>
+              <pagination-controls
+                (pageChange)="getPage($event)"
+                previousLabel="{{ t('previous') }}"
+                nextLabel="{{ t('next') }}"
+              ></pagination-controls>
             </div>
           </div>
         </div>
-        <h6 *ngIf="!filterService.isLoading">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
-          {{filterService.totalcount}}</h6>
+        <h6 *ngIf="!filterService.isLoading">
+          {{ t("Total files on page") }} {{ filterService.label }}
+          {{ t("out of") }} {{ filterService.totalcount }}
+        </h6>
       </div>
       <ng-template #loading>
-        {{t('Loading...')}}
+        {{ t("Loading...") }}
       </ng-template>
     </div>
   </nb-card-body>
@@ -521,18 +1061,35 @@
 
 <ng-template #tagModal>
   <div class="modal-header">
-    {{t('Tags')}}
-    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+    {{ t("Tags") }}
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="hideModal()"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body tagsModal">
-    <tag-input [(ngModel)]="itemTags" [editable]="true" theme="minimal" (onAdd)="onItemAdd($event, 'itemTags')"
-      placeholder="{{t('Add Tag')}}" secondaryPlaceholder="{{t('Add Tag')}}" [separatorKeys]="[',']"
-      [separatorKeyCodes]="[13]" (onBlur)="onItemAdd($event, 'itemTags')"></tag-input>
+    <tag-input
+      [(ngModel)]="itemTags"
+      [editable]="true"
+      theme="minimal"
+      (onAdd)="onItemAdd($event, 'itemTags')"
+      placeholder="{{ t('Add Tag') }}"
+      secondaryPlaceholder="{{ t('Add Tag') }}"
+      [separatorKeys]="[',']"
+      [separatorKeyCodes]="[13]"
+      (onBlur)="onItemAdd($event, 'itemTags')"
+    ></tag-input>
     <div class="text-right">
-      <button class="btn btn-primary mr-3" (click)="saveTags()">{{t('Save')}}</button>
-      <button class="btn btn-link btn-secondary" (click)="hideModal()">{{t('Close')}}</button>
+      <button class="btn btn-primary mr-3" (click)="saveTags()">
+        {{ t("Save") }}
+      </button>
+      <button class="btn btn-link btn-secondary" (click)="hideModal()">
+        {{ t("Close") }}
+      </button>
     </div>
   </div>
 </ng-template>
@@ -540,8 +1097,12 @@
   <div class="modal-body text-center">
     <p>Are you sure you want to delete the file?</p>
     <p>Please click Yes to confirm or No to cancel.</p>
-    <button type="button" class="btn btn-primary mr-2" (click)="deleteFile()">Yes</button>
-    <button type="button" class="btn btn-secondary" (click)="hideModal()">No</button>
+    <button type="button" class="btn btn-primary mr-2" (click)="deleteFile()">
+      Yes
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="hideModal()">
+      No
+    </button>
   </div>
 </ng-template>
 
