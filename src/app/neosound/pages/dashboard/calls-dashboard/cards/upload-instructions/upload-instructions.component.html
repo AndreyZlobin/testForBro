@@ -11,10 +11,10 @@
             {{t("Once connected, please go to folder ‘/files', and create or upload the separate sub-folders inside the folder ‘/files’,  per each agent, e.g. '/files/’.")}}
           </li>
           <li>
-            {{t("The recorded calls should be upload to an agent folder inside the folder ‘/files’, e.g. '/files/agent_name. ")}}
+            {{t("The recorded calls should be upload to an agent folder inside the folder ‘/files’, e.g. '/files/agent_id. ")}}
             <div class="card-text my-3" style="line-height: 2.0;">
               <h6>{{t('IMPORTANT')}}</h6>
-              {{t("The files uploaded to the root folder ‘/files’ folder will NOT be processed! So, please, make sure that the files are being uploaded inside sub-folder, e.g. '/files/agent_name. This is the only way to build statistics per agents.")}}
+              {{t("The files uploaded to the root folder ‘/files’ folder will NOT be processed! So, please, make sure that the files are being uploaded inside sub-folder, e.g. '/files/agent_id. This is the only way to build statistics per agents.")}}
             </div>
           </li>
           <li>{{t('The files will start processing soon after uploading.')}}</li>
@@ -24,7 +24,7 @@
         </ul>
         <h4 class="card-text" style="line-height: 2.0;">{{t('Audio format')}}</h4>
         <p class="card-text" style="line-height: 2.0;">
-          {{t('For best results, the audio source should be captured and transmitted using a lossless encoding (FLACor LINEAR16). The accuracy of the speech recognition can be reduced if lossy codecs are used to capture or transmit audio, particularly if background noise is present. Lossy codecs include MULAW, AMR, AMR_WB, OGG_OPUS, and SPEEX_WITH_HEADER_BYTE.')}}
+          {{t('For best results, the audio source should be captured and transmitted using a lossless encoding (FLAC or LINEAR16). The accuracy of the speech recognition can be reduced if lossy codecs are used to capture or transmit audio, particularly if background noise is present. Lossy codecs include MULAW, AMR, AMR_WB, OGG_OPUS, and SPEEX_WITH_HEADER_BYTE.')}}
         </p>
       </div>
       <div *ngIf="isRussian()">
@@ -38,11 +38,11 @@
           </li>
           <li>
             Записанные вызовы должны быть загружены в папку агента внутри папки "/files", например,
-            "/files/agent_name".
+            "/files/agent_id".
             <div class="card-text my-3" style="line-height: 2.0;">
               <h6>{{t('ВАЖНО')}}</h6>
               Файлы, загруженные в корневую папку '/files', НЕ будут обрабатываться! Поэтому, пожалуйста,
-              убедитесь, что файлы загружены в подпапку, например, '/files/agent_name'. Это единственный способ
+              убедитесь, что файлы загружены в подпапку, например, '/files/agent_id'. Это единственный способ
               получения статистики по агентам.
             </div>
           </li>
@@ -53,49 +53,61 @@
         </ul>
         <h4 class="card-text" style="line-height: 2.0;">Аудио формат</h4>
         <p class="card-text" style="line-height: 2.0;">
-          Для достижения наилучших результатов аудио должно быть записано с помощью без потерь качества (lossless
-          encoding FLACor LINEAR16). Точность распознавания речи может быть снижена, если используются кодеки с
+          Для достижения наилучших результатов аудио должно быть записано с помощью кодека без потерь качества (lossless
+          encoding FLAC or LINEAR16). Точность распознавания речи может быть снижена, если используются кодеки с
           потерями качества, особенно если присутствуют фоновые шумы. Примеры не подходящих кодеков: MULAW, AMR,
           AMR_WB, OGG_OPUS и SPEEX_WITH_HEADER_BYTE.</p>
       </div>
       <div *ngIf="isSpanish()">
-        <!-- <h4 class="card-text" style="line-height: 2.0;">{{t('How to upload files')}}</h4> -->
-        <p class="card-text" style="line-height: 2.0;">
-          Para subir varios archivos, por favor use cualquier cliente SFTP y las siguientes indicaciones.
-        </p>
+        <h4 class="card-text" style="line-height: 2.0;">Carga de SFTP</h4>
         <ul style="line-height: 2.0;">
           <li>Host: <strong>{{host}}, port: 22</strong></li>
-          <li>Use su nombre de usuario y contraseña.</li>
+          <li>Nombre de usuario y contraseña: las credenciales de su cuenta.</li>
           <li>
-            Una vez conectado, abra los archivos de la carpeta y cree/cargue subcarpetas separadas dentro de la
-            carpeta ‘/files", por ejemplo, "/files/lote_agente_X". Luego suba las grabaciones dentro de la
-            subcarpeta de nueva creación.
+            Una vez conectado, vaya a la carpeta "/files" y cree o cargue las subcarpetas separadas dentro de la carpeta "/files", por cada agente, p. "/files/".
           </li>
           <li>
-            Por favor, tenga en cuenta que, de momento, solo se pueden procesar archivos de audio en formato GSM,
-            WAV y MP3. No se podrá procesar cualquier otro formato.
+            Las llamadas grabadas deben cargarse en una carpeta de agente dentro de la carpeta "/files", p. "/files/agent_id".
+            <div class="card-text my-3" style="line-height: 2.0;">
+              <h6>IMPORTANTE</h6>
+              ¡Los archivos cargados en la carpeta raíz "/files" NO serán procesados! Por lo tanto, asegúrese de que los archivos se carguen dentro de la subcarpeta, p. "/files/agent_id". Esta es la única forma de generar estadísticas por agentes.
+            </div>
           </li>
+          <li>Los archivos comenzarán a procesarse poco después de cargarlos.</li>
           <li>
-            <strong>ATENCIÓN:</strong>
-            los archivos subidos directamente a la carpeta ‘/files" no se procesarán. Asegúrese de que se carguen
-            dentro de otra subcarpeta, por ejemplo, '/files/lote_agente_X'. Se requiere un nombre de lote para un
-            procesamiento exitoso. Así usted podrá filtrarlos en la interfaz de usuario como lotes separados por
-            agentes
-          </li>
-          <li>Los archivos comenzarán a procesarse poco después de la carga.</li>
-          <li>
-            Una vez procesados los archivos, aparecerán en la interfaz de usuario y desaparecer de la carpeta de
-            archivos en SFTP.
+            Una vez que se procesan los archivos, desaparecerán de la carpeta SFTP, para que nadie pueda descargar los archivos desde SFTP.
           </li>
         </ul>
+        <h4 class="card-text" style="line-height: 2.0;">Formato de audio</h4>
         <p class="card-text" style="line-height: 2.0;">
-          Para subir los archivos uno por uno, por favor haga clic sobre "Cargar" en el menú superior. Tras
-          completarse la subida del archivo usted será redirigido a la lista de archivos. Sin embargo, tomará unos
-          pocos minutos antes de que el archivo se esté procesando y los datos estén disponibles. El tiempo de
-          procesamiento depende de la duración del archivo de audio. Para ver el texto, vaya a los detalles del
-          archivo haciendo clic en el archivo nombre, a continuación, vaya a la pestaña "Texto". Para fines de
-          demostración, sugerimos utilizar archivos con una duración máxima de 4 minutos con nombres cortos de
-          archivos.
+          Para obtener los mejores resultados, la fuente de audio debe capturarse y transmitirse utilizando una codificación sin pérdidas (FLAC o LINEAR16). La precisión del reconocimiento de voz se puede reducir si se utilizan códecs con pérdida para capturar o transmitir audio, especialmente si hay ruido de fondo. Los códecs con pérdida incluyen MULAW, AMR, AMR_WB, OGG_OPUS y SPEEX_WITH_HEADER_BYTE.
+        </p>
+      </div>
+      <div *ngIf="isPorto()">
+        <h4 class="card-text" style="line-height: 2.0;">Upload de SFTP</h4>
+        <ul style="line-height: 2.0;">
+          <li>Host: <strong>{{host}}, port: 22</strong></li>
+          <li>Nome de usuário e senha: as credenciais da sua conta.</li>
+          <li>
+            Uma vez conectado, vá para a pasta "/files" e crie ou carregue subpastas separadas dentro da pasta "/files", para cada agente, por exemplo. "/files/".
+          </li>
+          <li>
+            As chamadas gravadas devem ser carregadas em uma pasta do agente dentro da pasta "/files", por exemplo. "/files/agent_id".
+            <div class="card-text my-3" style="line-height: 2.0;">
+              <h6>IMPORTANTE</h6>
+              Os arquivos enviados para a pasta raiz "/files" NÃO serão processados! Portanto, verifique se os arquivos estão carregados na subpasta, por exemplo. "/files/agent_id". Essa é a única maneira de gerar estatísticas por agentes.
+            </div>
+          </li>
+          <li>
+            Os arquivos começarão a ser processados logo após o upload.
+          </li>
+          <li>
+            Depois que os arquivos são processados, eles desaparecem da pasta SFTP, para que ninguém possa baixar os arquivos do SFTP.
+          </li>
+        </ul>
+        <h4 class="card-text" style="line-height: 2.0;">Formato de áudio</h4>
+        <p class="card-text" style="line-height: 2.0;">
+          Para melhores resultados, a fonte de áudio deve ser capturada e transmitida usando a codificação sem perdas (FLAC ou LINEAR16). A precisão do reconhecimento de fala pode ser reduzida se codecs com perda forem usados para capturar ou transmitir áudio, especialmente se houver ruído de fundo. Codecs com perdas incluem MULAW, AMR, AMR_WB, OGG_OPUS e SPEEX_WITH_HEADER_BYTE.
         </p>
       </div>
     </div>
