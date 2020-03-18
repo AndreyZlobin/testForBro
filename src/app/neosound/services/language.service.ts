@@ -58,9 +58,9 @@ const translationsSp = {
   'Record': 'Grabar',
   'UPLOAD': 'Cargar',
   'RECORD': 'Grabar',
-  'Upload Audio': 'Subir audio',
-  'Upload Text': 'Subir texto',
-  'Maximum file size': 'Tamaño máximo de archivo',
+  'Upload Audio': 'Cargar audio',
+  'Upload Text': 'Cargar texto',
+  'Maximum file size': 'Tamaño máximo del archivo',
   'Agent name': 'Nombre del agente',
   'Recording': 'Grabando',
   'You can upload only one file a time': 'Los ficheros se cargan de uno en uno',
@@ -89,9 +89,12 @@ const translationsSp = {
   'Login': 'Inicie sesión',
   // 'All': 'Todos',
   'Terms of Use': 'Términos de Uso',
+
+  // file list
   'Selected files total count': 'Cantidad total de archivos seleccionados',
   '0 Files': '0 archivos',
   'Avg.Pause': 'Pausa media',
+  'Tot.Pause, minutes': 'Pausa total (minutos)',
   'Search': 'Buscar',
   'Music': 'Música',
   'Merged': 'Fusionado',
@@ -122,25 +125,37 @@ const translationsSp = {
   'Show only calls with keywords': 'Mostrar solo llamadas con palabras clave',
   'Missing keywords': 'Palabras clave que faltan',
   'Containing keywords': 'Que contienen palabras clave',
+  'Everywhere': 'En todos',
+  'Agent': 'Agente',
+  'Customer': 'Cliente',
+  'Log': 'Registro',
+  'Back': 'Volver',
+  'Sort': 'Ordenar',
+  'Sentiment trend': 'Tendencia del sentimiento',
+  'Average emotion': 'Emoción media',
+  'Comments': 'Comentarios',
+  'Pauses': 'Pausas',
+  'Edit tags': 'Editar etiquetas',
+
+  // file result
+  'Back to List': 'Volver a la lista',
+
+  // dashboard start
   'Call Duration, minutes': 'Duración de llamada, minutos',
   'Call duration, minutes': 'Duración de llamada, minutos',
   'Dashboard': 'Tablero',
-  'Log': 'Registro',
-  'Back': 'Volver',
   'Most frequently used words': 'Palabras más utilizadas',
-
-  // dashboard start
   'Welcome on board': "Bienvenido a bordo",
   'How to upload files': `Como subir archivos`,
   'Number of calls by top 6 agents': `Número de llamadas por top 6 agentes`,
   'Processed calls': `Llamadas procesadas`,
   'Calls': `Llamadas`,
   'Total number of calls': `Número total de llamadas`,
-  'Emotional calls': `Llamadas emocionales`,
+  'Emotional calls, %': `Llamadas emocionales (%)`,
   'Number of calls with the emotion level above a threshold': `Número de llamadas con el nivel de emoción por encima de un umbral`,
-  'Silent calls': `Llamadas silenciosas`,
+  'Silent calls, %': `Llamadas con silencios (%)`,
   'Number of calls with the average pause longer than a threshold': `Número de llamadas con la pausa promedio más larga que un umbral`,
-  'Performance by agent, by %': "Rendimiento por agente",
+  'Performance by agent, by %': "Rendimiento por agente, por porcentaje",
   'Popular Words': "Palabras Populares",
   'Popular Nouns': `Nombres populares`,
   'Popular Adjectives': "Adjetivos populares",
@@ -173,10 +188,10 @@ const translationsSp = {
   'Compliance': 'Conformidad',
   'Hits vs. Stopwords': 'Palabras prohibidas por popularidad',
   'Hits vs. Word': 'Palabras por popularidad',
-  'Total minutes by agents': 'Volumen de audio, por agente',
-  'Calls by days': 'Tipos de llamadas diarias',
-  'Totals by queries': 'Consultas',
-  'Total minutes by days': 'Volumen de audio diario',
+  'Total minutes by agents': 'Total de minutos por agente',
+  'Calls by days': 'Llamadas por día',
+  'Totals by queries': 'Total por consultas',
+  'Total minutes by days': 'Total minutos por día',
   'SFTP Upload': 'Subir archivos a SFTP',
   'All agents': 'Total',
   'Avg sentiments by agents': 'Sentimientos promedio, por agente',
@@ -193,9 +208,14 @@ const translationsSp = {
   'File Upload Instructions': 'Instrucciones para cargar archivos',
   'Silent': 'Silenciosas',
   'Topics': 'Temas',
-  'emotional speech': 'discurso emocional',
-  'calm speech': 'discurso tranquilo',
-  'silence': 'silencio'
+  'emotional speech': 'conversación emocional',
+  'calm speech': 'conversación tranquila',
+  'silence': 'silencio',
+
+  // config pop-up
+  'Dashboard config': 'Configuración del tablero',
+  'Texts': 'Textos',
+  'Date range': 'Rango de fechas'
 
   // dashboard end
 };
@@ -287,9 +307,12 @@ const translationsRu = {
   'Login': 'Войти',
   'All': 'Все',
   'Terms of Use': 'Правила использования',
+
+  // file list
   'Selected files total count': 'Количество выбранных файлов',
   '0 Files': '0 Файлов',
   'Avg.Pause': 'Сред.Пауза',
+  'Tot.Pause, minutes': 'Общая длина пауз, в минутах',
   'Search': 'Поиск',
   'Music': 'Музыка',
   'Merged': 'Объединен.',
@@ -321,23 +344,35 @@ const translationsRu = {
   'Missing keywords': 'Не содержат ключ.слова',
   'Missing': 'Ключ.слова',
   'Containing keywords': 'Содержат ключ.слова',
+  'Everywhere': 'Вcюду',
+  'Agent': 'Оператор',
+  'Customer': 'Клиент',
+  'Log': 'Журнал',
+  'Sort': 'Сортировка',
+  'Sentiment trend': 'Тренд сентиментов',
+  'Average emotion': 'Уровень эмоций',
+  'Comments': 'Комментарии',
+  'Pauses': 'Паузы',
+  'Edit tags': 'Изменить метки',
+
+  // file result
+  'Back to List': 'Обратно к списку файлов',
+
+  // dashboard start
   'Call Duration, minutes': 'Продолжительность звонка, минут',
   'Call duration, minutes': 'Продолжительность звонка, минут',
   'Dashboard': 'Панель управления',
-  'Log': 'Журнал',
   'Number Of Calls': 'Кол-во звонков',
   'Most frequently used words': 'Наиболее часто используемые слова',
-
-  // dashboard start
   'Welcome on board': "Добро пожаловать",
   'How to upload files': `Как загружать файлы`,
   'Number of calls by top 6 agents': `Количество звонков по топ 6 агентам`,
   'Processed calls': `Обработанные звонки`,
   'Calls': 'Звонки',
   'Total number of calls': `Общее количество звонков`,
-  'Emotional calls': `Эмоциональные звонки`,
+  'Emotional calls, %': `Эмоциональные звонки, %`,
   'Number of calls with the emotion level above a threshold': `Количество вызовов с уровнем эмоций выше порога`,
-  'Silent calls': `Тихие звонки`,
+  'Silent calls, %': `Тихие звонки, %`,
   'Number of calls with the average pause longer than a threshold': `Количество вызовов со средней паузой, превышающей порог`,
   'Performance by agent, by %': "Производительность по агенту",
   'Popular Words': "Популярные слова",
@@ -391,7 +426,12 @@ const translationsRu = {
   'Topics': 'Топики',
   'emotional speech': 'эмоциональная речь',
   'calm speech': 'спокойная речь',
-  'silence': 'тишина'
+  'silence': 'тишина',
+
+  // config pop-up
+  'Dashboard config': 'Конфигурация панели управления',
+  'Texts': 'Текста',
+  'Date range': 'Диапазон дат'
 
   // dashboard end
 };
@@ -483,9 +523,12 @@ const translationsPt = {
   'Login': 'Conecte-se',
   // 'All': 'Todos',
   'Terms of Use': 'Termos de uso',
+
+  // file list
   'Selected files total count': 'Contagem total de arquivos selecionados',
   '0 Files': '0 arquivos',
   'Avg.Pause': 'Pausa média',
+  'Tot.Pause, minutes': 'Intervalo total (minutos)',
   'Search': 'Procurar',
   'Music': 'Música',
   'Merged': 'Fundido',
@@ -516,23 +559,35 @@ const translationsPt = {
   'Show only calls with keywords': 'Mostrar apenas chamadas com palavras-chave',
   'Missing keywords': 'Palavras-chave ausentes',
   'Containing keywords': 'Contendo palavras-chave',
+  'Everywhere': 'Em todos',
+  'Agent': 'Agente',
+  'Customer': 'Cliente',
+  'Log': 'Registro',
+  'Back': 'Costas',
+  'Sort': 'Ordenar',
+  'Sentiment trend': 'Tendência de sentimentos',
+  'Average emotion': 'Emoção média',
+  'Comments': 'Comentários',
+  'Pauses': 'Pausas',
+  'Edit tags': 'Editar etiquetas',
+
+  // file result
+  'Back to List': 'De volta à lista',
+
+  // dashboard start
   'Call Duration, minutes': 'Duração da chamada, minutos',
   'Call duration, minutes': 'Duração da chamada, minutos',
   'Dashboard': 'Conselho',
-  'Log': 'Registro',
-  'Back': 'Costas',
   'Most frequently used words': 'Palavras usadas com mais frequência',
-
-  // dashboard start
   'Welcome on board': 'Bem-vindo a bordo',
   'How to upload files': `Como fazer upload de arquivos`,
   'Number of calls by top 6 agents': `Número de chamadas pelos 6 principais agentes`,
   'Processed calls': `Chamadas processadas`,
   'Calls': `Chamadas`,
   'Total number of calls': `Número total de chamadas`,
-  'Emotional calls': `Chamadas emocionais`,
+  'Emotional calls, %': `Chamadas emocionais, %`,
   'Number of calls with the emotion level above a threshold': `Número de chamadas com o nível de emoção acima de um limite`,
-  'Silent calls': `Chamadas silenciosas`,
+  'Silent calls, %': `Chamadas silenciosas, %`,
   'Number of calls with the average pause longer than a threshold': `Número de chamadas com uma pausa média maior que um limite`,
   'Performance by agent, by %': 'Rendimento por agente',
   'Popular Words': 'Palavras Populares',
@@ -565,12 +620,12 @@ const translationsPt = {
   'Save': 'Salvar',
   'Add Tag': 'Adicionar etiqueta',
   'Compliance': 'Conformidade',
-  'Hits vs. Stopwords': 'Palavras banidas pela popularidade',
+  'Hits vs. Stopwords': 'Repeticiones de palabras prohibidas',
   'Hits vs. Word': 'Palavras por popularidade',
-  'Total minutes by agents': 'Volume de áudio, por agente',
-  'Calls by days': 'Tipos de chamadas diárias',
-  'Totals by queries': 'Inquéritos',
-  'Total minutes by days': 'Volume diário de áudio',
+  'Total minutes by agents': 'Total de minutos por agente',
+  'Calls by days': 'Chamadas por dia',
+  'Totals by queries': 'Total para consultas',
+  'Total minutes by days': 'Total de minutos por dia',
   'SFTP Upload': 'Carregar arquivos para SFTP',
   'All agents': 'Total',
   'Avg sentiments by agents': 'Média de sentimentos, por agente',
@@ -587,9 +642,14 @@ const translationsPt = {
   'File Upload Instructions': 'Instruções para Upload de Arquivos',
   'Silent': 'Silencioso',
   'Topics': 'Tópicos',
-  'emotional speech': 'discurso emocional',
-  'calm speech': 'discurso calma',
-  'silence': 'silêncio'
+  'emotional speech': 'conversa emocional',
+  'calm speech': 'conversa tranquila',
+  'silence': 'silêncio',
+
+  // config pop-up
+  'Dashboard config': 'Configuração do painel',
+  'Texts': 'Textos',
+  'Date range': 'Período'
 
   // dashboard end
 };
