@@ -116,6 +116,8 @@ export class HeaderComponent implements OnInit {
         return 'Español';
       case 'ru':
         return 'Русский';
+      case 'pt':
+        return 'Português';
       default:
         return 'English';
     }
