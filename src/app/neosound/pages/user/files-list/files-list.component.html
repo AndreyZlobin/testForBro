@@ -141,7 +141,7 @@
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{ t("Containing words") }}</div>
+              <div class="mb-2">{{ t("With stop words") }}</div>
               <tag-input
                 [(ngModel)]="filterService.filter.keywordsContain"
                 [editable]="true"
@@ -194,7 +194,7 @@
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{ t("Missing words") }}</div>
+              <div class="mb-2">{{ t("Without compliance words") }}</div>
               <tag-input
                 [(ngModel)]="filterService.filter.keywordsNotContain"
                 [editable]="true"
