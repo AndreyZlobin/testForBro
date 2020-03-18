@@ -140,7 +140,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
             }
           },
           type: "value",
-          name: this.t("Silent calls") + ', %',
+          name: this.t("Silent calls, %"),
           nameLocation: "middle",
           nameGap: 30,
           // axisLabel: {
@@ -160,7 +160,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           type: "value",
           nameLocation: "middle",
           nameGap: 30,
-          name: this.t("Emotional calls") + ', %',
+          name: this.t("Emotional calls, %"),
           // axisLabel: {
           //   formatter: "{value}"
           // },

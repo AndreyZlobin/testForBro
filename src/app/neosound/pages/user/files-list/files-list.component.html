@@ -141,7 +141,7 @@
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{ t("Containing words") }}</div>
+              <div class="mb-2">{{ t("With stop words") }}</div>
               <tag-input
                 [(ngModel)]="filterService.filter.keywordsContain"
                 [editable]="true"
@@ -194,7 +194,7 @@
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{ t("Missing words") }}</div>
+              <div class="mb-2">{{ t("Without compliance words") }}</div>
               <tag-input
                 [(ngModel)]="filterService.filter.keywordsNotContain"
                 [editable]="true"
@@ -575,7 +575,7 @@
               *ngIf="!filterService.isLoading"
               class="p-0 ml-2 c-normal font-weight-bold"
               (click)="refresh()"
-              >Refresh</a
+              >{{ t('Refresh') }}</a
             >
           </div>
           <div class="btn-toolbar mt-1">
@@ -601,7 +601,7 @@
           <div class="d-flex flex-row mb-1">
             <div class="dropdown ghost-dropdown" ngbDropdown>
               <button type="button" class="btn btn-sm mr-2" ngbDropdownToggle>
-                Sort: {{ filterName }}
+                {{ t('Sort') }}: {{ filterName }}
               </button>
               <ul ngbDropdownMenu class="dropdown-menu">
                 <li
