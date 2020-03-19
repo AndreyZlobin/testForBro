@@ -475,7 +475,7 @@
                     [ngClass]="{
                       btn: true,
                       'btn-primary': filterService.filter.stopOnly,
-                      'btn-secondary': !filterService.filter.noStop
+                      'btn-secondary': !filterService.filter.stopOnly
                     }"
                   >
                     {{ t('Yes') }}
@@ -488,7 +488,7 @@
                     [ngClass]="{
                       btn: true,
                       'btn-primary': filterService.filter.noStop,
-                      'btn-secondary': !filterService.filter.stopOnly
+                      'btn-secondary': !filterService.filter.noStop
                     }"
                   >
                     {{ t('No') }}
@@ -508,7 +508,7 @@
                     [ngClass]="{
                       btn: true,
                       'btn-primary': filterService.filter.missingOnly,
-                      'btn-secondary': !filterService.filter.noMissing
+                      'btn-secondary': !filterService.filter.missingOnly
                     }"
                   >
                     {{ t('Yes') }}
@@ -521,7 +521,7 @@
                     [ngClass]="{
                       btn: true,
                       'btn-primary': filterService.filter.noMissing,
-                      'btn-secondary': !filterService.filter.missingOnly
+                      'btn-secondary': !filterService.filter.noMissing
                     }"
                   >
                     {{ t('No') }}
@@ -531,15 +531,35 @@
             </div>
             <div class="col-12">
               <div class="mt-3">
-                <label>
-                  <input
-                    [(ngModel)]="filterService.filter.favoriteOnly"
-                    [ngModelOptions]="{ standalone: true }"
-                    type="checkbox"
-                    class=""
-                  />
-                  {{ t("Filter favorite calls") }}
-                </label>
+                <div class="mb-2">{{ t("Favorite calls") }}</div>
+                <div class="btn-group w-100 d-flex" data-toggle="buttons">
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
+                    (click)="setFavoriteOnlyFilter()"
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.favoriteOnly,
+                      'btn-secondary': !filterService.filter.favoriteOnly
+                    }"
+                  >
+                    {{ t('Yes') }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn c-normal primary border w-50"
+                    style="padding: .5rem .75rem;"
+                    (click)="setNoFavoriteFilter()"
+                    [ngClass]="{
+                      btn: true,
+                      'btn-primary': filterService.filter.noFavorite,
+                      'btn-secondary': !filterService.filter.noFavorite
+                    }"
+                  >
+                    {{ t('No') }}
+                  </button>
+                </div>
               </div>
             </div>
             <div class="col-12">

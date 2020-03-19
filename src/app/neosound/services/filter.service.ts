@@ -41,6 +41,7 @@ export class FilterService {
     missingOnly: boolean;
     noMissing: boolean;
     favoriteOnly: boolean;
+    noFavorite: boolean;
     filename: string;
     itemsn: number;
     pagen: number;
@@ -83,6 +84,7 @@ export class FilterService {
     missingOnly: null,
     noMissing: null,
     favoriteOnly: false,
+    noFavorite: false,
     filename: "",
     itemsn: 100,
     pagen: 1,
@@ -147,6 +149,7 @@ export class FilterService {
       noMissing: this.filter.noMissing,
 
       favoriteOnly: this.filter.favoriteOnly,
+      noFavorite: this.filter.noFavorite,
       sortorder: this.filter.sortorder,
       sortby: this.filter.sortby,
       tagsOnly: this.filter.tagsOnly ? this.filter.tagsOnly : null,
@@ -309,6 +312,7 @@ export class FilterService {
       missingOnly: null,
       noMissing: null,
       favoriteOnly: false,
+      noFavorite: false,
       filename: "",
       itemsn: 100,
       pagen: 1,
