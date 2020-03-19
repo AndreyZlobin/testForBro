@@ -60,6 +60,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
     "#cda819",
     "#32a487"
   ];
+
   getOptions(data: any): any {
     let options = {};
     const batches = Object.keys(data.batches);
@@ -77,23 +78,6 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           anger.push(data.batches[batchName].angerCallsN);
           silence.push(data.batches[batchName].silentCallsN);
         });
-      const chartData = [
-        {
-          name: this.t("emotional"),
-          type: "bar",
-          data: anger
-        },
-        {
-          name: this.t("silence"),
-          type: "bar",
-          data: silence
-        },
-        {
-          name: this.t("all"),
-          type: "bar",
-          data: all
-        }
-      ];
       let maxX = 0;
       let maxY = 0;
       let maxR = 0;
@@ -156,12 +140,12 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
             }
           },
           type: "value",
-          name: this.t("Silent Calls, %"),
+          name: this.t("Silent calls, %"),
           nameLocation: "middle",
           nameGap: 30,
-          axisLabel: {
-            formatter: "{value}"
-          },
+          // axisLabel: {
+          //   formatter: "{value}"
+          // },
           min: 0,
           max: Math.ceil((maxX / maxR) * 140)
         },
@@ -176,17 +160,20 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           type: "value",
           nameLocation: "middle",
           nameGap: 30,
-          name: this.t("Emotional Calls, %"),
-          axisLabel: {
-            formatter: "{value}"
-          },
+          name: this.t("Emotional calls, %"),
+          // axisLabel: {
+          //   formatter: "{value}"
+          // },
           min: 0,
           max: Math.ceil((maxY / maxR) * 140)
         },
         tooltip: {
           show: true,
           formatter: function(param) {
-            return `${param.data[3]}<br>Calls: ${param.data[2]}<br> Silent: ${param.data[4]}<br> Emotional: ${param.data[5]}`;
+            return `${param.data[3]}<br>` +
+              LanguageService.t('Calls') + `: ${param.data[2]}<br>` +
+              LanguageService.t('Silent') + `: ${param.data[4]}<br>` +
+              LanguageService.t('Emotional') + `: ${param.data[5]}`;
           }
         },
         series: buble

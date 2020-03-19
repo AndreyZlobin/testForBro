@@ -82,17 +82,17 @@ export class NumberOfCallsComponent implements OnInit, OnDestroy {
       });
     const chartData = [
       {
-        name: this.t("emotional"),
+        name: this.t("Emotional"),
         type: "bar",
         data: anger
       },
       {
-        name: this.t("silence"),
+        name: this.t("Silence"),
         type: "bar",
         data: silence
       },
       {
-        name: this.t("all"),
+        name: this.t("All"),
         type: "bar",
         data: all
       }
@@ -110,7 +110,7 @@ export class NumberOfCallsComponent implements OnInit, OnDestroy {
         }
       },
       legend: {
-        data: ["emotional", "silence", "all"]
+        data: [this.t("Emotional"), this.t("Silence"), this.t("All")]
       },
       yAxis: {
         type: "category",

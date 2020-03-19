@@ -73,7 +73,7 @@ export class MinutesStatsMinutesComponent implements OnInit, OnDestroy {
     });
     data.totals
         && data.totals.legenddata.map((v, i) => {
-        series[i].name = v;
+        series[i].name = this.t(v);
     });
 
     this.stats = {
@@ -89,7 +89,7 @@ export class MinutesStatsMinutesComponent implements OnInit, OnDestroy {
           }
       },
       legend: {
-          data: data.totals && data.totals.legenddata || []
+          data: data.totals && data.totals.legenddata.map(v => this.t(v)) || []
       },
       grid: {
           left: '2%',

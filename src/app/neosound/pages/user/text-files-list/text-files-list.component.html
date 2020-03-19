@@ -11,11 +11,11 @@
             <div class="col-12">
               <div class="mb-2">{{t('Name')}}</div>
               <input [(ngModel)]="filterService.filter.filename" [ngModelOptions]="{standalone: true}" type="text"
-                class="" placeholder="" class="form-control form-control-lg"
+                placeholder="" class="form-control form-control-lg"
                 style="padding: 5px 10px; border: 1px solid #dfe3e9;" />
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Batch Id')}}</div>
+              <div class="mb-2">{{t('Agent Id')}}</div>
               <input [(ngModel)]="filterService.filter.batchid" [ngModelOptions]="{standalone: true}" type="text"
                 step="0.01" class="form-control form-control-lg" style="padding: 5px 10px; border: 1px solid #dfe3e9;"
                 placeholder="" [typeahead]="batches" [typeaheadMinLength]="0">
@@ -29,14 +29,14 @@
               </div>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Containing words')}}</div>
+              <div class="mb-2">{{t('With stop words')}}</div>
               <tag-input [(ngModel)]="filterService.filter.keywordsContain" [editable]="true" theme="minimal"
                 (onAdd)="onItemAdd($event, 'keywordsContain')" placeholder="{{t('Words')}}"
                 secondaryPlaceholder="{{t('Words')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
                 (onBlur)="onItemAdd($event, 'keywordsContain')"></tag-input>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{t('Missing words')}}</div>
+              <div class="mb-2">{{t('Without compliance words')}}</div>
               <tag-input [(ngModel)]="filterService.filter.keywordsNotContain" [editable]="true" theme="minimal"
                 (onAdd)="onItemAdd($event, 'keywordsNotContain')" placeholder="{{t('Missing words')}}"
                 secondaryPlaceholder="{{t('Words')}}" [separatorKeys]="[',']" [separatorKeyCodes]="[13]"
@@ -113,7 +113,7 @@
                 <th></th>
                 <th class="text-one-line">
                   <a (click)="sortTable('BatchId')">
-                    {{t('Batch Id')}}
+                    {{t('Agent Id')}}
                     <ng-container *ngIf="filterService.filter.sortby === 'BatchId'">
                       <i *ngIf="filterService.filter.sortorder ==='asc'" class="fas fa-sort-up"></i>
                       <i *ngIf="filterService.filter.sortorder ==='desc'" class="fas fa-sort-down"></i>
@@ -240,7 +240,7 @@
         </div>
         <h6 *ngIf="!filterService.isLoading">{{t('Total files on page')}} {{filterService.label}} {{t('out of')}}
           {{filterService.totalcount}}</h6>
-        <button *ngIf="!filterService.isLoading" class="btn mt-3 btn-secondary" (click)="refresh()">Refresh</button>
+        <button *ngIf="!filterService.isLoading" class="btn mt-3 btn-secondary" (click)="refresh()">{{ t('Refresh') }}</button>
       </div>
       <ng-template #loading>
         {{t('Loading...')}}
