@@ -267,6 +267,28 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.filterService.updateFileList();
   }
 
+  setFavoriteOnlyFilter() {
+    if (!!this.filterService.filter.favoriteOnly) {
+      this.filterService.filter.favoriteOnly = null;
+      this.filterService.filter.noFavorite = null;
+    } else {
+      this.filterService.filter.favoriteOnly = true;
+      this.filterService.filter.noFavorite = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoFavoriteFilter() {
+    if (!!this.filterService.filter.noFavorite) {
+      this.filterService.filter.noFavorite = null;
+      this.filterService.filter.favoriteOnly = null;
+    } else {
+      this.filterService.filter.noFavorite = true;
+      this.filterService.filter.favoriteOnly = null;
+    }
+    this.filterService.updateFileList();
+  }
+
   getDateVal(val) {
     const d = new Date(1, 1, 1);
     d.setMilliseconds(val * 1000);
