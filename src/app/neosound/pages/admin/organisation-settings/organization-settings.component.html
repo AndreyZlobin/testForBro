@@ -5,7 +5,7 @@
         <ul class="nav flex-column border-right h-100">
           <ng-container *ngFor="let item of items">
             <li class="nav-item" [ngClass]="{'bg-light': item.key === activeItem }">
-              <a class="nav-link" (click)="setView(item.key)">{{item.name}}</a>
+              <a class="nav-link" (click)="setView(item.key)">{{ t(item.name) }}</a>
             </li>
           </ng-container>
         </ul>
@@ -13,36 +13,48 @@
       <div class="col-10">
         <ng-container *ngIf="activeItem === items[0].key">
           <nb-tabset (changeTab)="changeTab()">
-            <nb-tab tabTitle="Stopwords">
-              <app-keywords [showMessage]="showMessage" [postDate]="postDate" (launch)="launch()" nameSpace='stop'
-                singularLabel="stopword"
-                descriptionLabel="Input the stopwords separated by comma or add the stopwords by uploading CSV"
-                totalLabel="Total stopwords" (changed)="onChange($event)"></app-keywords>
-            </nb-tab>
-            <nb-tab tabTitle="Compliance words">
+            <nb-tab tabTitle="{{ t('Stopwords') }}">
               <app-keywords [showMessage]="showMessage" [postDate]="postDate" (launch)="launch()"
-                (changed)="onChange($event)" nameSpace='compliance' singularLabel="compliance word"
-                descriptionLabel="Input the compliance words separated by comma or add the compliance words by uploading CSV"
-                totalLabel="Total compliance words"></app-keywords>
+                            nameSpace='stop'
+                            pluralLabel="stopwords"
+                            descriptionLabel="Input stopwords separated by comma or add stopwords by uploading CSV"
+                            totalLabel="Total stopwords"
+                            (changed)="onChange($event)">
+              </app-keywords>
             </nb-tab>
-            <nb-tab tabTitle="Sentiment words">
+            <nb-tab tabTitle="{{ t('Compliance words') }}">
               <app-keywords [showMessage]="showMessage" [postDate]="postDate" (launch)="launch()"
-                (changed)="onChange($event)" nameSpace='sentiment' singularLabel="sentiment word"
-                descriptionLabel="Input the sentiment words separated by comma or add the compliance words by uploading CSV"
-                totalLabel="Total sentiment words"></app-keywords>
+                            nameSpace='compliance'
+                            pluralLabel="compliance words"
+                            descriptionLabel="Input compliance words separated by comma or add compliance words by uploading CSV"
+                            totalLabel="Total compliance words"
+                            (changed)="onChange($event)">
+              </app-keywords>
+            </nb-tab>
+            <nb-tab tabTitle="{{ t('Sentiment words') }}">
+              <app-keywords [showMessage]="showMessage" [postDate]="postDate" (launch)="launch()"
+                            nameSpace='sentiment'
+                            pluralLabel="sentiment words"
+                            descriptionLabel="Input sentiment words separated by comma or add compliance words by uploading CSV"
+                            totalLabel="Total sentiment words"
+                            (changed)="onChange($event)">
+              </app-keywords>
             </nb-tab>
           </nb-tabset>
         </ng-container>
         <ng-container *ngIf="activeItem === items[1].key">
           <nb-tabset>
-            <nb-tab tabTitle="Settings">
+            <nb-tab tabTitle="{{ t('Settings') }}">
               <app-sensitive-data></app-sensitive-data>
             </nb-tab>
-            <nb-tab tabTitle="Names dictionary">
+            <nb-tab tabTitle="{{ t('Names dictionary') }}">
               <app-keywords [showMessage]="audioShowMessage" [postDate]="audioPostDate" (launch)="launchRedoReductAudio()"
-                (changed)="onChange($event)" nameSpace='dictNames' singularLabel="name"
-                descriptionLabel="Input the names separated by comma or add the names by uploading CSV"
-                totalLabel="Total names words"></app-keywords>
+                            nameSpace='dictNames'
+                            pluralLabel="names"
+                            descriptionLabel="Input names separated by comma or add names by uploading CSV"
+                            totalLabel="Total names words"
+                            (changed)="onChange($event)">
+              </app-keywords>
             </nb-tab>
           </nb-tabset>
         </ng-container>

@@ -120,6 +120,7 @@ const translationsSp = {
   'Avg.': 'promedio',
   'Med.': 'Medio',
   'Keywords': 'Palabras Clave',
+  'Missing compliance words': 'Faltan palabras de cumplimiento',
   'Show only keywords': 'Mostrar solo palabras clave',
   'Apply': 'Aplicar',
   'Show only calls with keywords': 'Mostrar solo llamadas con palabras clave',
@@ -136,6 +137,17 @@ const translationsSp = {
   'Comments': 'Comentarios',
   'Pauses': 'Pausas',
   'Edit tags': 'Editar etiquetas',
+  'Select trend': 'Seleccionar tendencia',
+  'No trend': 'Sin tendencia',
+  'Agent: A..Z': 'Agente: A..Z',
+  'Agent: Z..A': 'Agente: Z..A',
+  'Date and time: Newly Uploaded': 'Fecha y hora: recién subido',
+  'Avg. Pause: Short to Long': 'Media Pausa: corta a larga',
+  'Tot. Pause: Long to Short': 'Pausa total: larga a corta',
+  'Stopwords: Max to Min': 'Palabras clave: máx a mín',
+  'Compliance: Low to High': 'Cumplimiento: bajo a alto',
+  'Compliance: High to Low': 'Cumplimiento: alto a bajo',
+  'Emotion: High to Low': 'Emoción: alto a bajo',
 
   // file result
   'Back to List': 'Volver a la lista',
@@ -177,10 +189,8 @@ const translationsSp = {
   'Missing': 'Faltan',
   'With stop words': 'Con palabras de parada',
   'Without compliance words': 'Sin palabras de cumplimiento',
-  'Filter calls with stopwords': 'Mostrar solo llamadas con palabras de parada',
   'Words': 'Palabras',
-  'Filter calls with missing words': 'Mostrar solo llamadas con palabras faltantes',
-  'Filter favorite calls': 'Mostrar solo llamadas favoritas',
+  'Favorite calls': 'Llamadas favoritas',
   'Tags': 'Etiquetas',
   'Close': 'Cerrar',
   'Save': 'Guardar',
@@ -215,9 +225,69 @@ const translationsSp = {
   // config pop-up
   'Dashboard config': 'Configuración del tablero',
   'Texts': 'Textos',
-  'Date range': 'Rango de fechas'
-
+  'Date range': 'Rango de fechas',
   // dashboard end
+
+  // company settings
+  'Setup Keywords': 'Configuración de palabras clave',
+  'Setup Sensitive Data': 'Configuración de datos sensibles',
+  'Setup Checklist': 'Configuración de lista de verificación',
+  'Compliance words': 'Palabras de conformidad',
+  'Sentiment words': 'Palabras de sentimiento',
+  'Settings': 'Configuración',
+  'Names dictionary': 'Diccionario de nombres',
+  'Enable reduction Dictionary names': 'Permitir reducción de nombres de diccionario',
+  'stopword': 'palabra de prohibida',
+  'stopwords': 'palabras prohibidas',
+  'Input stopwords separated by comma or add stopwords by uploading CSV':
+    'Introduzca las palabras prohibidas separadas por comas o añádalas cargando un fichero CSV',
+  'Total stopwords': 'Total palabras prohibidas',
+  'compliance word': 'palabra de conformidad',
+  'compliance words': 'palabras de conformidad',
+  'Input compliance words separated by comma or add compliance words by uploading CSV':
+    'Introduzca las palabras de conformidad separadas por comas o añádalas cargando un fichero CSV',
+  'Total compliance words': 'Total palabras de conformidad',
+  'sentiment word': 'palabra de sentimiento',
+  'sentiment words': 'palabras de sentimiento',
+  'Input sentiment words separated by comma or ad compliance words by uploading CSV':
+    'Introduzca las palabras de sentimiento separadas por comas o añádalas cargando un fichero CSV',
+  'Total sentiment words': 'Total palabras de sentimiento',
+  'name': 'nombre',
+  'names': 'nombres',
+  'Input names separated by comma or add names by uploading CSV':
+    'Introduzca los nombres separados por coma o añádalos cargando un fichero CSV',
+  'Total names words': 'Total nombres',
+
+  // company settings, keywords component
+  'Download as CSV': 'Descargar como CSV',
+  'Import as CSV': 'Importar como CSV',
+  'just': 'recién',
+  'removed': 'quitadas',
+  'added': 'añadidas',
+  'Re-indexing is working now. Started: ': 'La reindexación está funcionando ahora. Empezado: ',
+  'Redaction is working now. Started: ': 'La redacción está funcionando ahora. Empezado: ',
+  'Relaunch files processing': 'Relanzar procesado de archivos',
+  'Remove All': 'Quitar Todas',
+  'Please confirm, all ': 'Confirme que todos ',
+  ' will be eliminated from the company settings.': ' serán eliminados de la configuración de la compañía.',
+  'You will not be able to perform the next re-indexing until this request is completed. Please click Confirm to proceed or Cancel to review the settings.':
+    'No podrá realizar la próxima reindexación hasta que se complete esta solicitud. Haga clic en Confirmar para continuar o en Cancelar para revisar la configuración.',
+  'This action involves audio data redaction. Depending on the volume of the stored audio data, this operation can take up to a few days.You will not be able to perform the next redaction until this request is completed. Please click Confirm to proceed or Cancel to review the settings.':
+    'Esta acción implica la redacción de datos de audio. Dependiendo del volumen de los datos de audio almacenados, esta operación puede demorar algunos días. No podrá realizar la próxima redacción hasta que se complete esta solicitud. Haga clic en Confirmar para continuar o en Cancelar para revisar la configuración.',
+  'Confirm': 'Confirmar',
+  'Cancel': 'Cancelar',
+  'Just ': 'Recién ',
+  'This updated set of ': 'Este conjunto actualizado de ',
+  ' will be applied automatically to all new uploaded calls': ' se aplicará automáticamente a todas las nuevas llamadas cargadas',
+  'Saved': 'Salvado',
+  'You have unsaved ': 'Tiene ',
+  '. If you leave, your changes will be lost.': ' sin guardar. Si sale perderá los cambios.',
+
+  // company settings, check-list component
+  'Check-list': 'Lista de verificación',
+
+  // text files list
+  'Text files': 'Archivos de texto'
 };
 
 
@@ -338,6 +408,7 @@ const translationsRu = {
   'Avg.': 'Средн.',
   'Med.': 'Медиана',
   'Keywords': 'Ключевые слова',
+  'Missing compliance words': 'Пропущены обязательные слова',
   'Show only keywords': 'Показать только ключевые слова',
   'Apply': 'Применить',
   'Show only calls with keywords': 'Только звонки с ключ.словами',
@@ -354,6 +425,17 @@ const translationsRu = {
   'Comments': 'Комментарии',
   'Pauses': 'Паузы',
   'Edit tags': 'Изменить метки',
+  'Select trend': 'Выбрать тренд',
+  'No trend': 'Без тренда',
+  'Agent: A..Z': 'Агент: А..Я',
+  'Agent: Z..A': 'Агент: Я..А',
+  'Date and time: Newly Uploaded': 'Время загрузки: Новые сверху',
+  'Avg. Pause: Short to Long': 'Средняя пауза: мин - макс',
+  'Tot. Pause: Long to Short': 'Общая пауза: макс - мин',
+  'Stopwords: Max to Min': 'Кол-во стоп-слов: макс - мин',
+  'Compliance: Low to High': 'Соответствие: мин - макс',
+  'Compliance: High to Low': 'Соответствие: макс - мин',
+  'Emotion: High to Low': 'Эмоции: макс - мин',
 
   // file result
   'Back to List': 'Обратно к списку файлов',
@@ -393,10 +475,8 @@ const translationsRu = {
   'Stopwords': 'Стоп-слова',
   'With stop words': 'Со стоп-словами',
   'Without compliance words': 'Без пропущенных слов',
-  'Filter calls with stopwords': 'Показывать только звонки со стоп-словами',
   'Words': 'Слова',
-  'Filter calls with missing words': 'Показывать только звонки с пропущенными словами',
-  'Filter favorite calls': 'Только отмеченные',
+  'Favorite calls': 'Только отмеченные',
   'Tags': 'Метки',
   'Close': 'Закрыть',
   'Save': 'Сохранить',
@@ -431,9 +511,69 @@ const translationsRu = {
   // config pop-up
   'Dashboard config': 'Конфигурация панели управления',
   'Texts': 'Текста',
-  'Date range': 'Диапазон дат'
-
+  'Date range': 'Диапазон дат',
   // dashboard end
+
+  // company settings
+  'Setup Keywords': 'Настройка стоп-слов',
+  'Setup Sensitive Data': 'Настройка конфиденциальных данных',
+  'Setup Checklist': 'Настройка чек листа',
+  'Compliance words': 'Обязательные слова',
+  'Sentiment words': 'Слова Сентиментов',
+  'Settings': 'Настройка',
+  'Names dictionary': 'Словарь имен',
+  'Enable reduction Dictionary names': 'Включить скрытие имен из словаря',
+  'stopword': 'стоп-слово',
+  'stopwords': 'стоп-слова',
+  'Input stopwords separated by comma or add stopwords by uploading CSV':
+    'Введите стоп-слова, разделенные запятой, или загрузите CSV файл со стоп-словами',
+  'Total stopwords': 'Количество стоп-слов',
+  'compliance word': 'обязательное слово',
+  'compliance words': 'обязательные слова',
+  'Input compliance words separated by comma or add compliance words by uploading CSV':
+    'Введите обязательные слова, разделенные запятой, или загрузите CSV файл с обязательными словами',
+  'Total compliance words': 'Количество обязательных слов',
+  'sentiment word': 'сентимент-слово',
+  'sentiment words': 'слова сентиментов',
+  'Input sentiment words separated by comma or add compliance words by uploading CSV':
+    'Введите слова сентиментов, разделенные запятой, или загрузите CSV файл со словами сентиментов',
+  'Total sentiment words': 'Количество слов сентиментов',
+  'name': 'имя',
+  'names': 'имена',
+  'Input names separated by comma or add names by uploading CSV':
+    'Введите имена, разделенные запятой, или загрузите CSV файл с именами',
+  'Total names words': 'Количество имен',
+
+  // company settings, keywords component
+  'Download as CSV': 'Скачать в CSV',
+  'Import as CSV': 'Загрузить CSV',
+  'just': 'Просто',
+  'removed': 'удалены',
+  'added': 'добавлены',
+  'Re-indexing is working now. Started: ': 'Процесс индексации запущен. Время начала: ',
+  'Redaction is working now. Started: ': 'Процесс сокрытия имен запущен. Время начала: ',
+  'Relaunch files processing': 'Перезапустить обработку файлов',
+  'Remove All': 'Удалить Все',
+  'Please confirm, all ': 'Пожалуйста подтвердите, все ',
+  ' will be eliminated from the company settings.': ' будут удалены из настроек компании.',
+  'You will not be able to perform the next re-indexing until this request is completed. Please click Confirm to proceed or Cancel to review the settings.':
+    'Вы не можете выполнить переиндексацию, пока текущий запрос не будет выполнен. Нажмите Подтвердить, чтобы продолжить, или Отмена, чтобы просмотреть настройки.',
+  'This action involves audio data redaction. Depending on the volume of the stored audio data, this operation can take up to a few days.You will not be able to perform the next redaction until this request is completed. Please click Confirm to proceed or Cancel to review the settings.':
+    'Это действие включает редактирование аудиоданных. В зависимости от объема хранимых аудиоданных эта операция может занять до нескольких дней. Вы не сможете выполнить следующее редактирование, пока этот запрос не будет выполнен. Пожалуйста, нажмите Подтвердить, чтобы продолжить, или Отмена, чтобы просмотреть настройки.',
+  'Confirm': 'Подтвердить',
+  'Cancel': 'Отмена',
+  'Just ': 'Просто ',
+  'This updated set of ': 'Обновленный набор ',
+  ' will be applied automatically to all new uploaded calls': ' будет применен ко всем новым загруженным звонкам',
+  'Saved': 'Сохранено',
+  'You have unsaved ': 'Вы не сохранили ',
+  '. If you leave, your changes will be lost.': ' . Если вы покинете страницу, то изменения будут потеряны.',
+
+  // company settings, check-list component
+  'Check-list': 'Чек лист',
+
+  // text files list
+  'Text files': 'Текстовые файлы'
 };
 
 
@@ -554,6 +694,7 @@ const translationsPt = {
   'Avg.': 'Média',
   'Med.': 'Médio',
   'Keywords': 'Palavras-chave',
+  'Missing compliance words': 'Faltam palavras de conformidade',
   'Show only keywords': 'Mostrar apenas palavras-chave',
   'Apply': 'Aplique',
   'Show only calls with keywords': 'Mostrar apenas chamadas com palavras-chave',
@@ -570,6 +711,17 @@ const translationsPt = {
   'Comments': 'Comentários',
   'Pauses': 'Pausas',
   'Edit tags': 'Editar etiquetas',
+  'Select trend': 'Selecionar tendência',
+  'No trend': 'Nenhuma tendência',
+  'Agent: A..Z': 'Agente: A..Z',
+  'Agent: Z..A': 'Agente: Z..A',
+  'Date and time: Newly Uploaded': 'Data e hora: recém-carregado',
+  'Avg. Pause: Short to Long': 'Meia pausa: curta a longa',
+  'Tot. Pause: Long to Short': 'Pausa completa: longa a curta',
+  'Stopwords: Max to Min': 'Palavras-chave: max to min',
+  'Compliance: Low to High': 'Conformidade: baixo para alto',
+  'Compliance: High to Low': 'Conformidade: alto para baixo',
+  'Emotion: High to Low': 'Emoção: alta para baixa',
 
   // file result
   'Back to List': 'De volta à lista',
@@ -611,10 +763,8 @@ const translationsPt = {
   'Missing': 'Ausência de',
   'With stop words': 'Com palavras de parada',
   'Without compliance words': 'Sem palavras de conformidade',
-  'Filter calls with stopwords': 'Filtrar chamadas com palavras irrelevantes',
   'Words': 'Palavras',
-  'Filter calls with missing words': 'Filtrar chamadas com palavras ausentes',
-  'Filter favorite calls': 'Filtrar chamadas favoritas',
+  'Favorite calls': 'Chamadas favoritas',
   'Tags': 'Etiquetas',
   'Close': 'Fechar',
   'Save': 'Salvar',
@@ -649,9 +799,69 @@ const translationsPt = {
   // config pop-up
   'Dashboard config': 'Configuração do painel',
   'Texts': 'Textos',
-  'Date range': 'Período'
-
+  'Date range': 'Período',
   // dashboard end
+
+  // company settings
+  'Setup Keywords': 'Configurações de palavras-chave',
+  'Setup Sensitive Data': 'Configurações de dados confidenciais',
+  'Setup Checklist': 'Configurações da lista de verificação',
+  'Compliance words': 'Palavras de conformidade',
+  'Sentiment words': 'Palavras de sentimento',
+  'Settings': 'Configuração',
+  'Names dictionary': 'Dicionário de nomes',
+  'Enable reduction Dictionary names': 'Permitir redução de nomes de dicionário',
+  'stopword': 'palavra proibida',
+  'stopwords': 'palavras proibidas',
+  'Input stopwords separated by comma or add stopwords by uploading CSV':
+    'Digite as palavras proibidas separadas por vírgulas ou adicione-as carregando um arquivo CSV',
+  'Total stopwords': 'Total de palavras proibidas',
+  'compliance word': 'palavra de conformidade',
+  'compliance words': 'palavras de conformidade',
+  'Input compliance words separated by comma or add compliance words by uploading CSV':
+    'Digite as palavras de conformidade separadas por vírgulas ou adicione-as carregando um arquivo CSV',
+  'Total compliance words': 'Total de palavras de conformidade',
+  'sentiment word': 'sentindo a palavra',
+  'sentiment words': 'sentindo palavras',
+  'Input sentiment words separated by comma or add compliance words by uploading CSV':
+    'Digite as palavras de sentimento separadas por vírgulas ou adicione-as carregando um arquivo CSV',
+  'Total sentiment words': 'Total de palavras de sentimento',
+  'name': 'nome',
+  'names': 'nomes',
+  'Input names separated by comma or add names by uploading CSV':
+    'Digite os nomes separados por vírgulas ou adicione-os carregando um arquivo CSV',
+  'Total names words': 'Total de nomes',
+
+  // company settings, keywords component
+  'Download as CSV': 'Transferir como CSV',
+  'Import as CSV': 'Importar como CSV',
+  'just': 'apenas',
+  'removed': 'quitadas',
+  'added': 'adicionado',
+  'Re-indexing is working now. Started: ': 'A re-indexação está funcionando agora. Iniciado:',
+  'Redaction is working now. Started: ': 'A redação está trabalhando agora. Iniciado:',
+  'Relaunch files processing': 'Repita o processamento do arquivo',
+  'Remove All': 'Remover tudo',
+  'Please confirm, all ': 'Confirme se todos ',
+  ' will be eliminated from the company settings.': ' eles serão removidos das configurações da empresa.',
+  'You will not be able to perform the next re-indexing until this request is completed. Please click Confirm to proceed or Cancel to review the settings.':
+    'Você não poderá executar a próxima reindexação até que esta solicitação seja concluída. Clique em Confirmar para continuar ou Cancelar para revisar as configurações.',
+  'This action involves audio data redaction. Depending on the volume of the stored audio data, this operation can take up to a few days.You will not be able to perform the next redaction until this request is completed. Please click Confirm to proceed or Cancel to review the settings.':
+    'Esta ação envolve a gravação de dados de áudio. Dependendo do volume dos dados de áudio armazenados, esta operação pode demorar alguns dias. Você não poderá fazer a próxima edição até que este aplicativo seja concluído. Clique em Confirmar para continuar ou Cancelar para revisar as configurações.',
+  'Confirm': 'Confirme',
+  'Cancel': 'Cancelar',
+  'Just ': 'Apenas ',
+  'This updated set of ': 'Este conjunto atualizado de ',
+  ' will be applied automatically to all new uploaded calls': ' ele será aplicado automaticamente a todas as novas chamadas carregadas',
+  'Saved': 'Bran',
+  'You have unsaved ': 'Tenha ',
+  '. If you leave, your changes will be lost.': ' sem salvar. Se você sair, perderá as alterações.',
+
+  // company settings, check-list component
+  'Check-list': 'Lista de verificação',
+
+  // text files list
+  'Text files': 'Arquivos de texto'
 };
 
 @Injectable()

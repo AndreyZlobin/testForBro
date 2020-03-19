@@ -278,7 +278,7 @@
                     ngbDropdownItem
                     (click)="setEmotionalTrend(null)"
                   >
-                    No trend
+                    {{ t('No trend') }}
                   </li>
                   <li
                     class="dropdown-item"
@@ -379,7 +379,7 @@
                       'btn-secondary': !filterService.filter.tagsOnly
                     }"
                   >
-                    Yes
+                    {{ t('Yes') }}
                   </button>
                   <button
                     type="button"
@@ -392,7 +392,7 @@
                       'btn-secondary': !filterService.filter.noTags
                     }"
                   >
-                    No
+                    {{ t('No') }}
                   </button>
                 </div>
               </div>
@@ -412,7 +412,7 @@
                       'btn-secondary': !filterService.filter.checklistOnly
                     }"
                   >
-                    Yes
+                    {{ t('Yes') }}
                   </button>
                   <button
                     type="button"
@@ -425,7 +425,7 @@
                       'btn-secondary': !filterService.filter.noChecklist
                     }"
                   >
-                    No
+                    {{ t('No') }}
                   </button>
                 </div>
               </div>
@@ -445,7 +445,7 @@
                       'btn-secondary': !filterService.filter.commentsOnly
                     }"
                   >
-                    Yes
+                    {{ t('Yes') }}
                   </button>
                   <button
                     type="button"
@@ -458,7 +458,7 @@
                       'btn-secondary': !filterService.filter.noComments
                     }"
                   >
-                    No
+                    {{ t('No') }}
                   </button>
                 </div>
               </div>
@@ -478,7 +478,7 @@
                       'btn-secondary': !filterService.filter.noStop
                     }"
                   >
-                    Yes
+                    {{ t('Yes') }}
                   </button>
                   <button
                     type="button"
@@ -491,14 +491,14 @@
                       'btn-secondary': !filterService.filter.stopOnly
                     }"
                   >
-                    No
+                    {{ t('No') }}
                   </button>
                 </div>
               </div>
             </div>
             <div class="col-12">
               <div class="mt-3">
-                <div class="mb-2">{{ t("Missing words") }}</div>
+                <div class="mb-2">{{ t("Missing compliance words") }}</div>
                 <div class="btn-group w-100 d-flex" data-toggle="buttons">
                   <button
                     type="button"
@@ -511,7 +511,7 @@
                       'btn-secondary': !filterService.filter.noMissing
                     }"
                   >
-                    Yes
+                    {{ t('Yes') }}
                   </button>
                   <button
                     type="button"
@@ -524,7 +524,7 @@
                       'btn-secondary': !filterService.filter.missingOnly
                     }"
                   >
-                    No
+                    {{ t('No') }}
                   </button>
                 </div>
               </div>
@@ -608,71 +608,55 @@
                   class="dropdown-item"
                   (click)="sortTable('Agent: A..Z', 'BatchId', 'asc')"
                 >
-                  Agent: A..Z
+                  {{ t('Agent: A..Z') }}
                 </li>
                 <li
                   class="dropdown-item"
                   (click)="sortTable('Agent: Z..A', 'BatchId', 'desc')"
                 >
-                  Agent: Z..A
+                  {{ t('Agent: Z..A') }}
                 </li>
                 <li
                   class="dropdown-item"
-                  (click)="
-                    sortTable(
-                      'Date and time: Newly Uploaded',
-                      'Uploaded',
-                      'desc'
-                    )
-                  "
+                  (click)="sortTable('Date and time: Newly Uploaded', 'Uploaded', 'desc')"
                 >
-                  Date and time: Newly Uploaded
+                  {{ t('Date and time: Newly Uploaded') }}
                 </li>
                 <li
                   class="dropdown-item"
-                  (click)="
-                    sortTable('Avg. Pause: Short to Long', 'AvgPause', 'asc')
-                  "
+                  (click)="sortTable('Avg. Pause: Short to Long', 'AvgPause', 'asc')"
                 >
-                  Avg. Pause: Short to Long
+                  {{ t('Avg. Pause: Short to Long') }}
                 </li>
                 <li
                   class="dropdown-item"
-                  (click)="
-                    sortTable('Tot. Pause: Long to Short', 'PauseDur', 'desc')
-                  "
+                  (click)="sortTable('Tot. Pause: Long to Short', 'PauseDur', 'desc')"
                 >
-                  Tot. Pause: Long to Short
+                  {{ t('Tot. Pause: Long to Short') }}
                 </li>
                 <li
                   class="dropdown-item"
-                  (click)="
-                    sortTable('Stopwords: Max to Min', 'Stopwords', 'desc')
-                  "
+                  (click)="sortTable('Stopwords: Max to Min', 'Stopwords', 'desc')"
                 >
-                  <span>Stopwords: Max to Min</span>
+                  {{ t('Stopwords: Max to Min') }}
                 </li>
                 <li
                   class="dropdown-item"
-                  (click)="
-                    sortTable('Compliance: Low to High', 'Compliance', 'asc')
-                  "
+                  (click)="sortTable('Compliance: Low to High', 'Compliance', 'asc')"
                 >
-                  Compliance: Low to High
+                  {{ t('Compliance: Low to High') }}
                 </li>
                 <li
                   class="dropdown-item"
-                  (click)="
-                    sortTable('Compliance: High to Low', 'Compliance', 'desc')
-                  "
+                  (click)="sortTable('Compliance: High to Low', 'Compliance', 'desc')"
                 >
-                  Compliance: High to Low
+                  {{ t('Compliance: High to Low') }}
                 </li>
                 <li
                   class="dropdown-item"
                   (click)="sortTable('Emotion: High to Low', 'Emotion', 'desc')"
                 >
-                  Emotion: High to Low
+                  {{ t('Emotion: High to Low') }}
                 </li>
               </ul>
             </div>

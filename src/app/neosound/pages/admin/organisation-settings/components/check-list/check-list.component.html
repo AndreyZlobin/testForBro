@@ -1,8 +1,8 @@
-<div class="loader" *ngIf="isLoading">Loading...</div>
+<div class="loader" *ngIf="isLoading">{{ t('Loading...') }}</div>
 <div class="row" *ngIf="!isLoading">
     <div class="col-12">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Check-list</span>
+            <span class="text-muted">{{ t('Check-list') }}</span>
             <span>
                 <button class="btn p-2 c-normal align-self-center" style="cursor: pointer;" (click)="addQuestion()">
                     <i class="fa fa-plus"></i>
@@ -36,6 +36,6 @@
         </div>
     </div>
     <div class="d-flex justify-content-end align-items-center mb-3">
-        <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+        <button type="button" class="btn btn-primary" (click)="save()">{{ t('Save') }}</button>
     </div>
 </div>

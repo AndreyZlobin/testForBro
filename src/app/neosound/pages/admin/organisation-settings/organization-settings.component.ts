@@ -1,29 +1,30 @@
 import { Component, OnInit } from "@angular/core";
 import { OrganizationSettingsService } from "../../../services/organization-settings.service";
 import { ToastrService } from "ngx-toastr";
+import { LanguageService } from "../../../services/language.service";
 
 @Component({
-  selector: "app-organization-settings",
-  templateUrl: "./organization-settings.component.html",
-  styleUrls: ["./organization-settings.component.scss"]
+  selector: 'app-organization-settings',
+  templateUrl: './organization-settings.component.html',
+  styleUrls: ['./organization-settings.component.scss']
 })
 export class OrganizationSettingsComponent implements OnInit {
   public items: any[] = [
     {
-      name: "Setup Keywords",
-      key: "keywords"
+      key: 'keywords',
+      name: 'Setup Keywords'
     },
     {
-      key: "sensitive-data",
-      name: "Setup Sensitive Data"
+      key: 'sensitive-data',
+      name: 'Setup Sensitive Data'
     },
     {
-      key: "check-list",
-      name: "Setup Checklist"
+      key: 'check-list',
+      name: 'Setup Checklist'
     }
   ];
-  public activeItem: string = "keywords";
-  public unsavedLabel: string = "";
+  public activeItem: string = 'keywords';
+  public unsavedLabel: string = '';
   public hasUnsaved: boolean = false;
   public showMessage: boolean = false;
   public audioShowMessage: boolean = false;
@@ -43,7 +44,7 @@ export class OrganizationSettingsComponent implements OnInit {
     if (this.hasUnsaved) {
       if (
         confirm(
-          `You have unsaved ${this.unsavedLabel}s If you leave, your changes will be lost.`
+          this.t('You have unsaved ') + this.t(this.unsavedLabel) + this.t('. If you leave, your changes will be lost.')
         )
       ) {
         this.activeItem = view;
@@ -52,6 +53,7 @@ export class OrganizationSettingsComponent implements OnInit {
       this.activeItem = view;
     }
   }
+
   checkStatus() {
     this.organizationSettingsService.getRedoKeywordsStatus().subscribe(res => {
       if (res && res.data && res.data.postDate) {
@@ -59,7 +61,7 @@ export class OrganizationSettingsComponent implements OnInit {
         this.postDate = res.data.postDate;
       } else {
         this.showMessage = false;
-        this.postDate = "";
+        this.postDate = '';
       }
     });
     this.organizationSettingsService.getRedoReductAudioStatus().subscribe(res => {
@@ -68,13 +70,15 @@ export class OrganizationSettingsComponent implements OnInit {
         this.audioPostDate = res.data.postDate;
       } else {
         this.audioShowMessage = false;
-        this.audioPostDate = "";
+        this.audioPostDate = '';
       }
     });
   }
+
   changeTab() {
     this.checkStatus();
   }
+
   public launch(): void {
     this.organizationSettingsService.launchRedo().subscribe((res: any) => {
       if (res && res.error) {
@@ -105,5 +109,9 @@ export class OrganizationSettingsComponent implements OnInit {
   onChange($event) {
     this.hasUnsaved = $event.changed;
     this.unsavedLabel = $event.name;
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 }

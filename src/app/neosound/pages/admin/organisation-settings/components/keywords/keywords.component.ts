@@ -12,6 +12,7 @@ import {
 import { OrganizationSettingsService } from "../../../../../services/organization-settings.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { ToastrService } from "ngx-toastr";
+import { LanguageService } from "../../../../../services/language.service";
 
 @Component({
   selector: "app-keywords",
@@ -19,20 +20,20 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./keywords.component.scss"]
 })
 export class KeywordsComponent implements OnChanges {
-  @Input() nameSpace: string = "";
-  @Input() descriptionLabel: string = "";
-  @Input() totalLabel: string = "";
-  @Input() singularLabel: string = "";
+  @Input() nameSpace: string = '';
+  @Input() descriptionLabel: string = '';
+  @Input() totalLabel: string = '';
   @Input() showMessage = false;
-  @Input() postDate: string = "";
+  @Input() postDate: string = '';
+  @Input() pluralLabel: string = '';
 
   @Output() changed = new EventEmitter<{ changed: boolean; name: string }>();
   @Output() launch = new EventEmitter<any>();
 
-  @ViewChild("cvsUpload") cvsUpload: ElementRef;
+  @ViewChild('cvsUpload') cvsUpload: ElementRef;
   modalRef: BsModalRef;
 
-  @HostListener("window:beforeunload", ["$event"])
+  @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (this.hasChanges) {
       $event.returnValue = true;
@@ -69,6 +70,7 @@ export class KeywordsComponent implements OnChanges {
         });
     }
   }
+
   fileImport() {
     this.cvsUpload.nativeElement.click();
   }
@@ -76,7 +78,7 @@ export class KeywordsComponent implements OnChanges {
   handleFileInput(files: any[]) {
     const file = files[0];
     const self = this;
-    if (file && file.name && file.name.endsWith(".csv")) {
+    if (file && file.name && file.name.endsWith('.csv')) {
       this.isLoading = true;
       const reader = new FileReader();
       reader.onload = function() {
@@ -91,10 +93,10 @@ export class KeywordsComponent implements OnChanges {
         self.hasChanges = true;
         self.changed.emit({
           changed: self.hasChanges,
-          name: self.singularLabel
+          name: self.pluralLabel
         });
         self.tags = result.sort((a, b) => a.value.localeCompare(b.value));
-        self.cvsUpload.nativeElement.value = "";
+        self.cvsUpload.nativeElement.value = '';
       };
       reader.readAsText(file);
     }
@@ -104,12 +106,12 @@ export class KeywordsComponent implements OnChanges {
     let data = [this.nameSpace];
     data.push(...this.tags.map(i => `"${i.value}"`));
     let content = data.join(",\n");
-    this.download(content, "template.csv", "text/csv;encoding:utf-8");
+    this.download(content, 'template.csv', 'text/csv;encoding:utf-8');
   }
 
   private download(content, fileName, mimeType) {
-    let a = document.createElement("a");
-    mimeType = mimeType || "application/octet-stream";
+    let a = document.createElement('a');
+    mimeType = mimeType || 'application/octet-stream';
 
     if (navigator.msSaveBlob) {
       navigator.msSaveBlob(
@@ -118,31 +120,31 @@ export class KeywordsComponent implements OnChanges {
         }),
         fileName
       );
-    } else if (URL && "download" in a) {
+    } else if (URL && 'download' in a) {
       a.href = URL.createObjectURL(
         new Blob([content], {
           type: mimeType
         })
       );
-      a.setAttribute("download", fileName);
+      a.setAttribute('download', fileName);
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
     } else {
       location.href =
-        "data:application/octet-stream," + encodeURIComponent(content);
+        'data:application/octet-stream,' + encodeURIComponent(content);
     }
   }
 
   private csvtoArray(text) {
     const a = text.split(/\r?\n|\r/);
     return a
-      .map(v => v.replace(/[\",\,,;]/gm, ""))
+      .map(v => v.replace(/[\",\,,;]/gm, ''))
       .filter((value, index) => index !== 0 || value.length > 0);
   }
 
   public openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { class: "modal-md" });
+    this.modalRef = this.modalService.show(template, { class: 'modal-md' });
   }
 
   public deleteAll(): void {
@@ -167,22 +169,22 @@ export class KeywordsComponent implements OnChanges {
         this.tags = this.tags.sort((a, b) => a.value.localeCompare(b.value));
         //{{tags.length - initialLength < 0 ? 'removed' : 'added'}}{{abs(tags.length - initialLength)}}
         this.toastrService.success(
-          `Just ${
-            this.tags.length - this.initialLength < 0 ? "removed" : "added"
-          } ${this.singularLabel}s: ${this.abs(
+          `${this.t('Just ')}
+          ${this.tags.length - this.initialLength < 0 ? this.t('removed') : this.t('added')
+          } ${this.t(this.pluralLabel)}: ${this.abs(
             this.tags.length - this.initialLength
           )}.
-          <br>This updated set of ${
-            this.singularLabel
-          }s will be applied automatically to all new uploaded calls`,
-          "Saved",
+          <br>${this.t('This updated set of ')}${
+            this.pluralLabel
+          }${this.t(' will be applied automatically to all new uploaded calls')}`,
+          this.t('Saved'),
           { timeOut: 10000, enableHtml: true }
         );
         this.isLoading = false;
         this.hasChanges = false;
         this.changed.emit({
           changed: this.hasChanges,
-          name: this.singularLabel
+          name: this.pluralLabel
         });
         this.initialLength = this.tags.length;
       });
@@ -193,14 +195,14 @@ export class KeywordsComponent implements OnChanges {
 
   public onItemAdd(tag): void {
     this.hasChanges = true;
-    this.changed.emit({ changed: this.hasChanges, name: this.singularLabel });
+    this.changed.emit({ changed: this.hasChanges, name: this.pluralLabel });
     let c = [];
     const tagVal = (tag && tag.value) || tag;
-    if (tagVal === "") {
+    if (tagVal === '') {
       return;
     }
     this.tags = this.tags.filter(a => a.value !== tagVal);
-    const val = tagVal.split(",").map(v => v.trim());
+    const val = tagVal.split(',').map(v => v.trim());
     val.map(v =>
       c.push({
         value: v,
@@ -223,5 +225,9 @@ export class KeywordsComponent implements OnChanges {
   onItemRemove(tag): void {
     this.tags = this.tags.filter(t => t.value !== tag.value);
     this.hasChanges = true;
+  }
+
+  t(v) {
+    return LanguageService.t(v);
   }
 }
