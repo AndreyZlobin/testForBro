@@ -101,13 +101,37 @@ export class FilterService {
   constructor(private filesService: FilesService) {}
 
   public getFilterParams(): any {
+    let startDate: Date = null;
+    let endDate: Date = null;
+    if (this.filter.uploadDate) {
+      if (this.filter.uploadDate[0]) {
+        startDate = new Date();
+        startDate.setUTCFullYear(this.filter.uploadDate[0].getFullYear());
+        startDate.setUTCMonth(this.filter.uploadDate[0].getMonth());
+        startDate.setUTCDate(this.filter.uploadDate[0].getDate());
+        startDate.setUTCHours(0);
+        startDate.setUTCMinutes(0);
+        startDate.setUTCSeconds(0);
+        startDate.setUTCMilliseconds(0);
+      }
+      if (this.filter.uploadDate[1]) {
+        endDate = new Date();
+        endDate.setUTCFullYear(this.filter.uploadDate[1].getFullYear());
+        endDate.setUTCMonth(this.filter.uploadDate[1].getMonth());
+        endDate.setUTCDate(this.filter.uploadDate[1].getDate());
+        endDate.setUTCHours(23);
+        endDate.setUTCMinutes(59);
+        endDate.setUTCSeconds(59);
+        endDate.setUTCMilliseconds(999);
+      }
+    }
     const params = {
       itemsn: `${this.filter.itemsn}`,
       pagen: `${this.filter.pagen}`,
       batchid: (this.filter.batchid && "" + this.filter.batchid) || "",
       filename: this.filter.filename,
-      datetimefrom: (this.filter.uploadDate && this.filter.uploadDate[0]) || "",
-      datetimeto: (this.filter.uploadDate && this.filter.uploadDate[1]) || "",
+      datetimefrom: startDate,
+      datetimeto: endDate,
       angervolfrom:
         this.filter.angerfrom == null ? "" : this.filter.angerfrom + "",
       angervolto:
