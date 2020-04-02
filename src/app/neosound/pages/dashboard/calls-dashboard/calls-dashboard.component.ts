@@ -78,6 +78,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {}
+
   ngOnChanges(changes: SimpleChanges) {
     const params = {
       source: "audio"
