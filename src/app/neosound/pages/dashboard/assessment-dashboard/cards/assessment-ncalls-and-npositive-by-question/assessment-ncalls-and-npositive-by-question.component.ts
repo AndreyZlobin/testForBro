@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChecklistStatsService} from "../../services/checklist-stats.service";
 import {LanguageService} from "../../../../../services/language.service";
 import {DataService} from "../../../../../shared";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'ngx-assessment-ncalls-and-npositive-by-question',
@@ -87,8 +88,12 @@ export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, 
     const xAxisFontSize = 10;
     const xLabelMargin = 20;
     const xLabelRotate = 40;
+    const legendData = ['Stage reached', 'Used script'];
 
     this.stats = {
+      legend: {
+        data: legendData
+      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -96,8 +101,11 @@ export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, 
         },
         formatter: function(params){
           let res = tooltipNames[params[0].name];
-          res += '<br/>' + params[0].seriesName + ': ' + params[0].value +
-            '<br/>' + params[1].seriesName + ': ' + params[1].value;
+          params.forEach(function (param) {
+            res += '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;' +
+              'background-color:' + param.color + ';"></span>' +
+              param.seriesName + ': ' + param.value;
+          });
           return res;
         }
       },
@@ -131,17 +139,17 @@ export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, 
       ],
       series: [
         {
-          name: 'answered times',
+          name: legendData[0],
           type: 'bar',
           barWidth: '60%',
           color: this.primaryColor,
           data: seriesDataBar
         },
         {
-          name: 'positive answered times',
+          name: legendData[1],
           type: 'line',
+          color: this.colors[0],
           data: seriesDataLine,
-          color: this.colors[0]
         }
       ]
     };
