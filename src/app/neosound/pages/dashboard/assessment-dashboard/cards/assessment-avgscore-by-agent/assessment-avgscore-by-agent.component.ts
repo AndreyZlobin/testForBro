@@ -52,32 +52,9 @@ export class AssessmentAvgscoreByAgentComponent implements OnInit, OnDestroy {
       const vals = Object.values(batches[batchId].questionsScoreByQs) || [];
       const avg = Number(vals.reduce((a: number, b: number) => a + b, 0)) / vals.length || 0;
       seriesData.push(Math.round(avg * 100) / 100);
-      // const avg = arr => arr.reduce((a,b) => a + b, 0) / arr.length
     });
 
-    // const questionNamesShort = [];
-    // const tooltipNames = {};
-    // const seriesData = [];
-    // Object.keys(answeredQuestionsCountByQs).forEach(function(question){
-    //   const qCount = answeredQuestionsCountByQs[question];
-    //   const max_len = 20;
-    //   const qparts = Math.ceil(question.length / max_len);
-    //   let x = question.slice(0, max_len);
-    //   for (let i = 1; i <= Math.min(qparts, 4); i++) {
-    //     x += '\n' + question.slice(max_len * i, Math.min(max_len * (i + 1), question.length));
-    //   }
-      // x += '\n' + question.slice(max_len, max_len * 2) +
-      //      '\n' + question.slice(max_len * 2, max_len * 3);
-      // if (question.length > max_len * 3) {
-      //   x += '\n...';
-      // }
-    //   tooltipNames[x] = question;
-    //   questionNamesShort.push(x);
-    //   seriesData.push(qCount);
-    // });
     const xAxisFontSize = 12;
-    // const xLabelMargin = 20;
-    // const xLabelRotate = 40;
 
     this.stats = {
       color: ['#3398DB'],
@@ -114,9 +91,7 @@ export class AssessmentAvgscoreByAgentComponent implements OnInit, OnDestroy {
           data: batchNames,
           axisLabel: {
             fontSize: xAxisFontSize,
-            interval: 0,
-            // rotate: xLabelRotate,
-            // margin: xLabelMargin
+            interval: 0
           },
           axisTick: {
             alignWithLabel: true
