@@ -1,23 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChecklistStatsService} from "../../services/checklist-stats.service";
 import {LanguageService} from "../../../../../services/language.service";
-import {DataService} from "../../../../../shared";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
-  selector: 'ngx-assessment-ncalls-and-npositive-by-question',
-  templateUrl: './assessment-ncalls-and-npositive-by-question.component.html',
-  styleUrls: ['./assessment-ncalls-and-npositive-by-question.component.scss']
+  selector: 'ngx-assessment-reached-stages-bar',
+  templateUrl: './assessment-reached-stages-bar.component.html',
+  styleUrls: ['./assessment-reached-stages-bar.component.scss']
 })
-export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, OnDestroy {
+export class AssessmentReachedStagesBarComponent implements OnInit, OnDestroy {
 
   stats: any = 0;
   dataSub1: any;
   hasData: boolean = false;
-  primaryColor: string;
   colors = [
-    "#c12e34",
     "#0098d9",
+    "#c12e34",
     "#e6b600",
     "#2b821d",
     "#005eaa",
@@ -27,14 +24,8 @@ export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, 
   ]; //shine
 
   constructor(
-    private dataService: ChecklistStatsService,
-    private userData: DataService,
+    private dataService: ChecklistStatsService
   ) {
-    if (this.userData.config["colors"].secondary) {
-      this.primaryColor = this.userData.config["colors"].secondary;
-    } else {
-      this.primaryColor = "#0098d9";
-    }
     this.dataSub1 = this.dataService.data.subscribe(data => {
       if (data) {
         this.init(data);
@@ -61,33 +52,45 @@ export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, 
     const answeredQuestionsCountByQs = data.totals.answeredQuestionsCountByQs || {};
     const questionNamesShort = [];
     const tooltipNames = {};
-    const seriesDataBar = [];
-    const seriesDataLine = Object.values(data.totals.positiveAnsweredQuestionsCountByQs) || [];
     Object.keys(answeredQuestionsCountByQs).forEach(function(question){
-      const qCount = answeredQuestionsCountByQs[question];
       const max_len = 20;
       const qparts = Math.ceil(question.length / max_len);
       let x = question.slice(0, max_len);
       for (let i = 1; i <= Math.min(qparts, 4); i++) {
         x += '\n' + question.slice(max_len * i, Math.min(max_len * (i + 1), question.length));
       }
-      // x += '\n' + question.slice(max_len, max_len * 2) +
-      //      '\n' + question.slice(max_len * 2, max_len * 3);
-      // if (question.length > max_len * 3) {
-      //   x += '\n...';
-      // }
       tooltipNames[x] = question;
       questionNamesShort.push(x);
-      seriesDataBar.push(qCount);
     });
+
+    const batches = data.batches || {};
+    const batchNames = [];
+    const series = [];
+    Object.keys(batches).forEach(function (batchId) {
+      batchNames.push(batchId);
+      const item = {
+        name: batchId,
+        type: 'bar',
+        barGap: 0,
+        label: {
+          show: true,
+          position: 'insideBottom',
+          distance: 10,
+          rotate: 90
+        },
+        data: Object.values(batches[batchId].answeredQuestionsCountByQs)
+      };
+      series.push(item);
+    });
+
     const xAxisFontSize = 10;
     const xLabelMargin = 20;
     const xLabelRotate = 40;
-    const legendData = ['Stage reached', 'Used script'];
 
     this.stats = {
+      color: this.colors,
       legend: {
-        data: legendData
+        data: batchNames
       },
       tooltip: {
         trigger: 'axis',
@@ -132,21 +135,7 @@ export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, 
           nameLocation: 'center'
         }
       ],
-      series: [
-        {
-          name: legendData[0],
-          type: 'bar',
-          barWidth: '60%',
-          color: this.primaryColor,
-          data: seriesDataBar
-        },
-        {
-          name: legendData[1],
-          type: 'line',
-          color: this.colors[0],
-          data: seriesDataLine,
-        }
-      ]
+      series: series
     };
   }
 
