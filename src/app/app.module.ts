@@ -154,6 +154,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
 import { AssessmentDashboardComponent } from './neosound/pages/dashboard/assessment-dashboard/assessment-dashboard.component';
 import { AssessmentNcallsByQuestionComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-ncalls-by-question/assessment-ncalls-by-question.component';
 import { AssessmentNcallsAndNpositiveByQuestionComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-ncalls-and-npositive-by-question/assessment-ncalls-and-npositive-by-question.component';
+import { AssessmentAvgscoreByAgentComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent/assessment-avgscore-by-agent.component';
 
 @NgModule({
   declarations: [
@@ -241,7 +242,8 @@ import { AssessmentNcallsAndNpositiveByQuestionComponent } from './neosound/page
     MinutesSecondsPipe,
     AssessmentDashboardComponent,
     AssessmentNcallsByQuestionComponent,
-    AssessmentNcallsAndNpositiveByQuestionComponent
+    AssessmentNcallsAndNpositiveByQuestionComponent,
+    AssessmentAvgscoreByAgentComponent
   ],
   imports: [
     BrowserModule,

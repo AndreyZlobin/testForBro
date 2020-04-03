@@ -77,7 +77,9 @@ export class AssessmentNcallsByQuestionComponent implements OnInit, OnDestroy {
         },
         formatter: function(params){
           let res = tooltipNames[params[0].name];
-          res += '<br/>' + params[0].seriesName + ': ' + params[0].value;
+          res += '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;' +
+            'background-color:' + params[0].color + ';"></span>' +
+            params[0].seriesName + ': ' + params[0].value;
           return res;
         }
       },
