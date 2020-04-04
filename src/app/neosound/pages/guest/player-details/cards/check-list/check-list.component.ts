@@ -1,16 +1,7 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  OnDestroy,
-  Output,
-  OnInit,
-  EventEmitter
-} from "@angular/core";
-import { LanguageService } from "../../../../../services/language.service";
-import { FilesService } from "../../../../../services/files.service";
-import { FilterService } from "../../../../../services/filter.service";
+import {Component, Input, OnDestroy, OnInit, SimpleChanges} from "@angular/core";
+import {LanguageService} from "../../../../../services/language.service";
+import {FilesService} from "../../../../../services/files.service";
+import {FilterService} from "../../../../../services/filter.service";
 
 @Component({
   selector: "ngx-check-list",
@@ -94,8 +85,9 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
   }
   getAssessment(data: any) {
     if (data) {
-      const yes = data.filter(i => i.s[0] === "Yes" || i.s[0] === "yes");
-      return Math.round((yes.length / data.length) * 100);
+      const yes = data.filter(i => i.s[0] === "Yes" || i.s[0] === "yes" || i.s[0] === "YES");
+      const answered_count = data.filter(i => 's' in i && i.s.length).length;
+      return answered_count === 0 ? '-' : Math.round((yes.length / answered_count) * 100);
     }
     return 0;
   }
