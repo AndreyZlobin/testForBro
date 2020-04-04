@@ -132,6 +132,8 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     const b = 100 * a;
     const c = b + 0;
 
+    const val = "hsl(" + c + ", 50%, 50%)";
+
     // Return a CSS HSL string
     return "hsl(" + c + ", 50%, 50%)";
   }
