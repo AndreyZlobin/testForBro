@@ -157,6 +157,8 @@ import { AssessmentNcallsAndNpositiveByQuestionComponent } from './neosound/page
 import { AssessmentAvgscoreByAgentComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent/assessment-avgscore-by-agent.component';
 import { AssessmentReachedStagesBarComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-reached-stages-bar/assessment-reached-stages-bar.component';
 import { AssessmentReachedStagesBarStackedComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-reached-stages-bar-stacked/assessment-reached-stages-bar-stacked.component';
+import { AssessmentAvgscoreByAgentQuestionBarComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent-question-bar/assessment-avgscore-by-agent-question-bar.component';
+import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent-question-bar-stacked/assessment-avgscore-by-agent-question-bar-stacked.component';
 
 @NgModule({
   declarations: [
@@ -247,7 +249,9 @@ import { AssessmentReachedStagesBarStackedComponent } from './neosound/pages/das
     AssessmentNcallsAndNpositiveByQuestionComponent,
     AssessmentAvgscoreByAgentComponent,
     AssessmentReachedStagesBarComponent,
-    AssessmentReachedStagesBarStackedComponent
+    AssessmentReachedStagesBarStackedComponent,
+    AssessmentAvgscoreByAgentQuestionBarComponent,
+    AssessmentAvgscoreByAgentQuestionBarStackedComponent
   ],
   imports: [
     BrowserModule,
