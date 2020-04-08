@@ -65,7 +65,7 @@ export class AssessmentNcallsByQuestionComponent implements OnInit, OnDestroy {
       seriesData.push(qCount);
     });
     const xAxisFontSize = 10;
-    const xLabelMargin = 20;
+    const xLabelMargin = 15;
     const xLabelRotate = 40;
 
     this.stats = {
@@ -97,7 +97,8 @@ export class AssessmentNcallsByQuestionComponent implements OnInit, OnDestroy {
             fontSize: xAxisFontSize,
             interval: 0,
             rotate: xLabelRotate,
-            margin: xLabelMargin
+            margin: xLabelMargin,
+            padding: [xLabelMargin,0,0,0]
           },
           axisTick: {
             alignWithLabel: true
@@ -107,13 +108,14 @@ export class AssessmentNcallsByQuestionComponent implements OnInit, OnDestroy {
       yAxis: [
         {
           type: 'value',
-          name: 'times',
-          nameLocation: 'center'
+          name: this.t('Times'),
+          nameLocation: 'center',
+          nameGap: 20
         }
       ],
       series: [
         {
-          name: 'times',
+          name: this.t('Times'),
           type: 'bar',
           barWidth: '60%',
           data: seriesData

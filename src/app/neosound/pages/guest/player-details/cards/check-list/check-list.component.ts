@@ -63,14 +63,17 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
         this.file.comment.length > 0 ? this.file.comment[0].text : "";
     }
   }
-
   isActive(question: any, answer: string) {
-    return question.s.includes(answer);
+    return !!question.s && question.s.includes(answer);
   }
-
   setAnswer(index: number, answer: string) {
-    this.data[index].s = [answer];
-    this.data = [...this.data];
+    if (!this.data[index].s || !this.data[index].s.includes(answer)) {
+      this.data[index].s = [answer];
+      this.data = [...this.data];
+    } else {
+      delete this.data[index].s;
+      this.data = [...this.data];
+    }
   }
   save() {
     this.filesService
@@ -85,7 +88,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy {
   }
   getAssessment(data: any) {
     if (data) {
-      const yes = data.filter(i => i.s[0] === "Yes" || i.s[0] === "yes" || i.s[0] === "YES");
+      const yes = data.filter(i => 's' in i && (i.s[0] === "Yes" || i.s[0] === "yes" || i.s[0] === "YES"));
       const answered_count = data.filter(i => 's' in i && i.s.length).length;
       return answered_count === 0 ? '-' : Math.round((yes.length / answered_count) * 100);
     }

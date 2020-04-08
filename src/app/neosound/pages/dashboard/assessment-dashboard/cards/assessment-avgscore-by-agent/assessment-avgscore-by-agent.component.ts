@@ -4,8 +4,7 @@ import {LanguageService} from "../../../../../services/language.service";
 
 @Component({
   selector: 'ngx-assessment-avgscore-by-agent',
-  templateUrl: './assessment-avgscore-by-agent.component.html',
-  styleUrls: ['./assessment-avgscore-by-agent.component.scss']
+  templateUrl: './assessment-avgscore-by-agent.component.html'
 })
 export class AssessmentAvgscoreByAgentComponent implements OnInit, OnDestroy {
 
@@ -80,7 +79,7 @@ export class AssessmentAvgscoreByAgentComponent implements OnInit, OnDestroy {
       xAxis: [
         {
           type: 'value',
-          name: 'Score, %',
+          name: this.t('Score, %'),
           nameLocation: 'center',
           nameGap: 20
         }
@@ -90,8 +89,9 @@ export class AssessmentAvgscoreByAgentComponent implements OnInit, OnDestroy {
           type: 'category',
           data: batchNames,
           axisLabel: {
-            fontSize: xAxisFontSize,
-            interval: 0
+            show: false
+            // fontSize: xAxisFontSize,
+            // interval: 0
           },
           axisTick: {
             alignWithLabel: true
@@ -100,10 +100,15 @@ export class AssessmentAvgscoreByAgentComponent implements OnInit, OnDestroy {
       ],
       series: [
         {
-          name: 'Score',
+          name: this.t('Score'),
           type: 'bar',
           barWidth: '60%',
-          data: seriesData
+          data: seriesData,
+          label: {
+            show: true,
+            position: 'insideLeft',
+            formatter: '{b}'
+          }
         }
       ]
     };

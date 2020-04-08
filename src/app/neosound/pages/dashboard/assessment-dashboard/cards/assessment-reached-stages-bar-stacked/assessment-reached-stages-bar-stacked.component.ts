@@ -4,8 +4,7 @@ import {LanguageService} from "../../../../../services/language.service";
 
 @Component({
   selector: 'ngx-assessment-reached-stages-bar-stacked',
-  templateUrl: './assessment-reached-stages-bar-stacked.component.html',
-  styleUrls: ['./assessment-reached-stages-bar-stacked.component.scss']
+  templateUrl: './assessment-reached-stages-bar-stacked.component.html'
 })
 export class AssessmentReachedStagesBarStackedComponent implements OnInit, OnDestroy {
 
@@ -79,7 +78,7 @@ export class AssessmentReachedStagesBarStackedComponent implements OnInit, OnDes
     });
 
     const xAxisFontSize = 10;
-    const xLabelMargin = 20;
+    const xLabelMargin = 15;
     const xLabelRotate = 40;
 
     this.stats = {
@@ -116,7 +115,8 @@ export class AssessmentReachedStagesBarStackedComponent implements OnInit, OnDes
             fontSize: xAxisFontSize,
             interval: 0,
             rotate: xLabelRotate,
-            margin: xLabelMargin
+            margin: xLabelMargin,
+            padding: [xLabelMargin,0,0,0]
           },
           axisTick: {
             alignWithLabel: true
@@ -127,8 +127,9 @@ export class AssessmentReachedStagesBarStackedComponent implements OnInit, OnDes
       yAxis: [
         {
           type: 'value',
-          name: 'times',
-          nameLocation: 'center'
+          name: this.t('Times'),
+          nameLocation: 'center',
+          nameGap: 20
         }
       ],
       series: series
