@@ -4,8 +4,7 @@ import {LanguageService} from "../../../../../services/language.service";
 
 @Component({
   selector: 'ngx-assessment-avgscore-by-agent-question-bar',
-  templateUrl: './assessment-avgscore-by-agent-question-bar.component.html',
-  styleUrls: ['./assessment-avgscore-by-agent-question-bar.component.scss']
+  templateUrl: './assessment-avgscore-by-agent-question-bar.component.html'
 })
 export class AssessmentAvgscoreByAgentQuestionBarComponent implements OnInit, OnDestroy {
 
@@ -84,7 +83,7 @@ export class AssessmentAvgscoreByAgentQuestionBarComponent implements OnInit, On
     });
 
     const xAxisFontSize = 10;
-    const xLabelMargin = 20;
+    const xLabelMargin = 15;
     const xLabelRotate = 40;
 
     this.stats = {
@@ -121,7 +120,8 @@ export class AssessmentAvgscoreByAgentQuestionBarComponent implements OnInit, On
             fontSize: xAxisFontSize,
             interval: 0,
             rotate: xLabelRotate,
-            margin: xLabelMargin
+            margin: xLabelMargin,
+            padding: [xLabelMargin,0,0,0]
           },
           axisTick: {
             alignWithLabel: true
@@ -131,8 +131,9 @@ export class AssessmentAvgscoreByAgentQuestionBarComponent implements OnInit, On
       yAxis: [
         {
           type: 'value',
-          name: 'times',
-          nameLocation: 'center'
+          name: this.t('Times'),
+          nameLocation: 'center',
+          nameGap: 30
         }
       ],
       series: series

@@ -229,9 +229,20 @@ const translationsSp = {
   'Date range': 'Rango de fechas',
   // dashboard end
 
-  // assessment dashboard start
+  // assessment dashboard
   'Assessment Dashboard': 'Panel de evaluación',
-  // assessment dashboard end
+  'Assessment average score by all calls': 'Puntaje promedio de evaluación de todas las llamadas',
+  'Score, %': 'Puntuación, %',
+  'Score': 'Puntuación',
+  'Assessments by stages': 'Evaluaciones por etapas',
+  'Times': 'Veces',
+  'Assessment score by stages': 'Puntaje de evaluación por etapas',
+  'Total calls / Used scripts': 'Total de llamadas / Scripts usados',
+  'Stage reached': 'Etapa alcanzada',
+  'Used script': 'Script usado',
+  'Total calls': 'Llamadas totales',
+  'Number of stages reached': 'Número de etapas alcanzadas',
+  'Stages reached by agents': 'Etapas alcanzadas por los agentes',
 
   // company settings
   'Setup Keywords': 'Configuración de palabras clave',
@@ -520,9 +531,20 @@ const translationsRu = {
   'Date range': 'Диапазон дат',
   // dashboard end
 
-  // assessment dashboard start
+  // assessment dashboard
   'Assessment Dashboard': 'Панель оценки',
-  // assessment dashboard end
+  'Assessment average score by all calls': 'Общая средняя оценка',
+  'Score, %': 'Оценка, %',
+  'Score': 'Оценка',
+  'Assessments by stages': 'Средняя оценка по этапам',
+  'Times': 'Количество',
+  'Assessment score by stages': 'Суммарная средняя оценка по этапам',
+  'Total calls / Used scripts': 'Звонки / Следование скрипту',
+  'Stage reached': 'Наличие этапа',
+  'Used script': 'Следование скрипту',
+  'Total calls': 'В общем по звонкам',
+  'Number of stages reached': 'Количество достигнутых этапов',
+  'Stages reached by agents': 'Общее количество достигнутых этапов',
 
   // company settings
   'Setup Keywords': 'Настройка стоп-слов',
@@ -813,9 +835,20 @@ const translationsPt = {
   'Date range': 'Período',
   // dashboard end
 
-  // assessment dashboard start
+  // assessment dashboard
   'Assessment Dashboard': 'Painel de Avaliação',
-  // assessment dashboard end
+  'Assessment average score by all calls': 'Pontuação média de avaliação de todas as chamadas',
+  'Score, %': 'Pontuação, %',
+  'Score': 'Pontuação',
+  'Assessments by stages': 'Avaliações de estágio',
+  'Times': 'Vezes',
+  'Assessment score by stages': 'Escore de avaliação faseada',
+  'Total calls / Used scripts': 'Total de chamadas / scripts usados',
+  'Stage reached': 'Estágio alcançado',
+  'Used script': 'Script usado',
+  'Total calls': 'Total de chamadas',
+  'Number of stages reached': 'Número de etapas atingidas',
+  'Stages reached by agents': 'Etapas alcançadas pelos agentes',
 
   // company settings
   'Setup Keywords': 'Configurações de palavras-chave',

@@ -2,12 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChecklistStatsService} from "../../services/checklist-stats.service";
 import {LanguageService} from "../../../../../services/language.service";
 import {DataService} from "../../../../../shared";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'ngx-assessment-ncalls-and-npositive-by-question',
-  templateUrl: './assessment-ncalls-and-npositive-by-question.component.html',
-  styleUrls: ['./assessment-ncalls-and-npositive-by-question.component.scss']
+  templateUrl: './assessment-ncalls-and-npositive-by-question.component.html'
 })
 export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, OnDestroy {
 
@@ -81,9 +79,9 @@ export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, 
       seriesDataBar.push(qCount);
     });
     const xAxisFontSize = 10;
-    const xLabelMargin = 20;
+    const xLabelMargin = 15;
     const xLabelRotate = 40;
-    const legendData = ['Stage reached', 'Used script'];
+    const legendData = [this.t('Stage reached'), this.t('Used script')];
 
     this.stats = {
       legend: {
@@ -118,7 +116,8 @@ export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, 
             fontSize: xAxisFontSize,
             interval: 0,
             rotate: xLabelRotate,
-            margin: xLabelMargin
+            margin: xLabelMargin,
+            padding: [xLabelMargin,0,0,0]
           },
           axisTick: {
             alignWithLabel: true
@@ -128,8 +127,9 @@ export class AssessmentNcallsAndNpositiveByQuestionComponent implements OnInit, 
       yAxis: [
         {
           type: 'value',
-          name: 'times',
-          nameLocation: 'center'
+          name: this.t('Times'),
+          nameLocation: 'center',
+          nameGap: 20
         }
       ],
       series: [
