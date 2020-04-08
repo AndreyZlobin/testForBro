@@ -229,6 +229,10 @@ const translationsSp = {
   'Date range': 'Rango de fechas',
   // dashboard end
 
+  // assessment dashboard start
+  'Assessment Dashboard': 'Panel de evaluación',
+  // assessment dashboard end
+
   // company settings
   'Setup Keywords': 'Configuración de palabras clave',
   'Setup Sensitive Data': 'Configuración de datos sensibles',
@@ -515,6 +519,10 @@ const translationsRu = {
   'Texts': 'Текста',
   'Date range': 'Диапазон дат',
   // dashboard end
+
+  // assessment dashboard start
+  'Assessment Dashboard': 'Панель оценки',
+  // assessment dashboard end
 
   // company settings
   'Setup Keywords': 'Настройка стоп-слов',
@@ -804,6 +812,10 @@ const translationsPt = {
   'Texts': 'Textos',
   'Date range': 'Período',
   // dashboard end
+
+  // assessment dashboard start
+  'Assessment Dashboard': 'Painel de Avaliação',
+  // assessment dashboard end
 
   // company settings
   'Setup Keywords': 'Configurações de palavras-chave',
