@@ -62,6 +62,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   @Input() dateTo: string;
   @Input() batches: string[];
   settings: any = {};
+
   constructor(
     private router: Router,
     private analyticsService: AnalyticsService,

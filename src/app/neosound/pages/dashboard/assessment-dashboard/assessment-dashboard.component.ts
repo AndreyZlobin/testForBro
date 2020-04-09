@@ -1,42 +1,15 @@
-import {Component, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {FilesService} from "../../../services/files.service";
 import * as moment from "moment";
 import {LanguageService} from "../../../services/language.service";
 import {ChecklistStatsService} from "./services/checklist-stats.service";
 
-/*export const colors = [
-  "#c12e34",
-  "#0098d9",
-  "#e6b600",
-  "#2b821d",
-  "#005eaa",
-  "#339ca8",
-  "#cda819",
-  "#32a487"
-]; //shine*/
-
-/*const rgbToHex = rgb => {
-  let hex = Number(rgb).toString(16);
-  if (hex.length < 2) {
-    hex = "0" + hex;
-  }
-  return hex;
-};
-
-const fullColorHex = (r, g, b) => {
-  var red = rgbToHex(r);
-  var green = rgbToHex(g);
-  var blue = rgbToHex(b);
-  return red + green + blue;
-};*/
-
 @Component({
   selector: 'ngx-assessment-dashboard',
-  templateUrl: './assessment-dashboard.component.html',
-  styleUrls: ['./assessment-dashboard.component.scss']
+  templateUrl: './assessment-dashboard.component.html'
 })
-export class AssessmentDashboardComponent implements OnInit, OnChanges {
+export class AssessmentDashboardComponent implements OnInit {
 
   selectedValue;
   modalRef: BsModalRef;
@@ -63,20 +36,6 @@ export class AssessmentDashboardComponent implements OnInit, OnChanges {
     this.loading = false;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    const params = {};
-    if (changes.dateFrom.currentValue) {
-      params["dateFrom"] = changes.dateFrom.currentValue;
-    }
-    if (changes.dateFrom.currentValue) {
-      params["dateTo"] = changes.dateTo.currentValue;
-    }
-    if (changes.batches.currentValue) {
-      params["batches"] = changes.batches.currentValue;
-    }
-    this.loadData(params["dateFrom"], params["dateTo"], params["batches"]);
-  }
-
   loadData(dateFrom, dateTo, batches) {
     this.checklistStatsService.load(dateFrom, dateTo, batches);
   }
@@ -93,7 +52,6 @@ export class AssessmentDashboardComponent implements OnInit, OnChanges {
   updateData() {
     this.hideModal();
     this.loading = true;
-    // this.type = this.modalType;
     if (this.selectedBatches) {
       this.batches = this.selectedBatches;
     }
@@ -108,6 +66,7 @@ export class AssessmentDashboardComponent implements OnInit, OnChanges {
       this.dateTo = null;
     }
     setTimeout(() => {
+      this.loadData(this.dateFrom, this.dateTo, this.batches);
       this.loading = false;
     }, 10);
   }
