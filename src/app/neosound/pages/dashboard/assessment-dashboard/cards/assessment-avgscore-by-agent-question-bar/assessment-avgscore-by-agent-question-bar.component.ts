@@ -131,7 +131,7 @@ export class AssessmentAvgscoreByAgentQuestionBarComponent implements OnInit, On
       yAxis: [
         {
           type: 'value',
-          name: this.t('Times'),
+          name: this.t('Score, %'),
           nameLocation: 'center',
           nameGap: 30
         }

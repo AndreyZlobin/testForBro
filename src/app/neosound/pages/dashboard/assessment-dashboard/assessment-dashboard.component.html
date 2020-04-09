@@ -1,24 +1,24 @@
 <div *ngIf="!loading; else loadingTemplate">
   <div class="row">
-    <div class="col-6 mb-3" *ngIf="show('ngx-assessment-ncalls-by-question')">
+    <div class="col-6 mb-3" *ngIf="show('assTotalCalls')">
       <ngx-assessment-ncalls-by-question></ngx-assessment-ncalls-by-question>
     </div>
-    <div class="col-6 mb-3" *ngIf="show('ngx-assessment-ncalls-and-npositive-by-question')">
+    <div class="col-6 mb-3" *ngIf="show('assTotalCallsUsedScripts')">
       <ngx-assessment-ncalls-and-npositive-by-question></ngx-assessment-ncalls-and-npositive-by-question>
     </div>
-    <div class="col-6 mb-3" *ngIf="show('ngx-assessment-reached-stages-bar')">
+    <div class="col-6 mb-3" *ngIf="show('assNStagesReached')">
       <ngx-assessment-reached-stages-bar></ngx-assessment-reached-stages-bar>
     </div>
-    <div class="col-6 mb-3" *ngIf="show('ngx-assessment-reached-stages-bar-stacked')">
+    <div class="col-6 mb-3" *ngIf="show('assNStagesReachedStack')">
       <ngx-assessment-reached-stages-bar-stacked></ngx-assessment-reached-stages-bar-stacked>
     </div>
-    <div class="col-6 mb-3" *ngIf="show('ngx-assessment-avgscore-by-agent-question-bar')">
+    <div class="col-6 mb-3" *ngIf="show('assScoreByStages')">
       <ngx-assessment-avgscore-by-agent-question-bar></ngx-assessment-avgscore-by-agent-question-bar>
     </div>
-    <div class="col-6 mb-3" *ngIf="show('assessment-avgscore-by-agent-question-bar-stacked')">
+    <div class="col-6 mb-3" *ngIf="show('assScoreByStagesStack')">
       <ngx-assessment-avgscore-by-agent-question-bar-stacked></ngx-assessment-avgscore-by-agent-question-bar-stacked>
     </div>
-    <div class="col-6 mb-3" *ngIf="show('ngx-assessment-avgscore-by-agent')">
+    <div class="col-6 mb-3" *ngIf="show('assScoreByAgent')">
       <ngx-assessment-avgscore-by-agent></ngx-assessment-avgscore-by-agent>
     </div>
   </div>

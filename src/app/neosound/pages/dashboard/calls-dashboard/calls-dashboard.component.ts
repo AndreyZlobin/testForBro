@@ -62,6 +62,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   @Input() dateTo: string;
   @Input() batches: string[];
   settings: any = {};
+
   constructor(
     private router: Router,
     private analyticsService: AnalyticsService,
@@ -133,7 +134,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     return LanguageService.t(v);
   }
   show(name: string) {
-    return this.settings && this.settings[name] && this.settings[name].show
+    return this.settings && this.settings[name] && this.settings[name].show;
   }
 
 }
