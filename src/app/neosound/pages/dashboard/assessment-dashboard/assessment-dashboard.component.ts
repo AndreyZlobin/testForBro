@@ -47,12 +47,15 @@ export class AssessmentDashboardComponent implements OnInit, OnChanges {
   public dateTo: any;
   public dateModel: any = [];
   public loading: boolean = true;
+  settings: any = {};
 
   constructor(
     private filesService: FilesService,
     private checklistStatsService: ChecklistStatsService,
     private modalService: BsModalService
-  ) {}
+  ) {
+    this.settings = JSON.parse(localStorage.getItem("settings")).dashboardcards;
+  }
 
   ngOnInit() {
     this.listCallsBatches();
@@ -143,7 +146,6 @@ export class AssessmentDashboardComponent implements OnInit, OnChanges {
   }
 
   show(name: string) {
-    return true;
-    // return this.settings && this.settings[name] && this.settings[name].show
+    return this.settings && this.settings[name] && this.settings[name].show;
   }
 }
