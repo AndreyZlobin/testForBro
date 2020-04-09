@@ -127,7 +127,7 @@ export class AssessmentAvgscoreByAgentQuestionBarStackedComponent implements OnI
       yAxis: [
         {
           type: 'value',
-          name: this.t('Times'),
+          name: this.t('Score, %'),
           nameLocation: 'center',
           nameGap: 30
         }
