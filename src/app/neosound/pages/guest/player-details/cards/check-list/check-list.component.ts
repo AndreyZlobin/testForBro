@@ -94,6 +94,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit 
       delete this.data[index].s;
       this.data = [...this.data];
     }
+    this.save();
   }
   save() {
     this.filesService
