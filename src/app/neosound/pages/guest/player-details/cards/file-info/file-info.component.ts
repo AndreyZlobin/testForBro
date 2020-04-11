@@ -78,6 +78,9 @@ export class FileInfoComponent implements OnChanges {
 
 
   getOpacityLevelCompliance(percent) {
+    if (percent === '-') {
+      return "hsl(0, 10%, 10%)";
+    }
     const a = percent / 100;
     const b = 100 * a;
     const c = b + 0;

@@ -421,7 +421,7 @@ export class FilterService {
   }
   public setAssessment(index, value) {
     if (index !== -1) {
-      this.fileStore[index].checklist = true;
+      this.fileStore[index].checklist = value !== '-';
       this.fileStore[index].checklistScore = value;
       this.filesSubject.next(this.fileStore);
     }

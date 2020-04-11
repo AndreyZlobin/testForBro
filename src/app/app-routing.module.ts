@@ -40,6 +40,7 @@ import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
 import { ChartPageComponent } from "./neosound/pages/charts/chart-page/chart-page.component";
+import {AssessmentDashboardComponent} from "./neosound/pages/dashboard/assessment-dashboard/assessment-dashboard.component";
 
 const routes: Routes = [
   {
@@ -124,6 +125,11 @@ const routes: Routes = [
         path: "charts",
         canActivate: [AuthGuard],
         component: ChartPageComponent
+      },
+      {
+        path: "dashboard/assessment",
+        canActivate: [AuthGuard],
+        component: AssessmentDashboardComponent
       },
       {
         path: "",

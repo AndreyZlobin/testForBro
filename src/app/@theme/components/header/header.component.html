@@ -8,6 +8,9 @@
     <nb-actions>
       <nb-action class="control-item" *ngIf="isLoggedIn()"><a style="cursor: pointer;"
           (click)="navigate('/')">{{t('Dashboard')}}</a></nb-action>
+      <nb-action class="control-item" *ngIf="isLoggedIn()">
+        <a href="/dashboard/assessment"(click)="navigate('/dashboard/assessment')">{{t('Assessment Dashboard')}}</a>
+      </nb-action>
       <nb-action class="control-item" *ngIf="isLoggedIn()"><a style="cursor: pointer;"
           (click)="showUploadDialog = !showUploadDialog">{{t('Upload')}}</a></nb-action>
       <nb-action class="control-item" *ngIf="!isLoggedIn()"><a href="/auth/sign-up"
@@ -16,7 +19,7 @@
           (click)="navigate('/auth/login')">{{t('Login')}}</a></nb-action>
       <nb-action class="control-item" *ngIf="isLoggedIn()"><a href="/user/files"
           (click)="navigate('/user/files')">{{t('Calls')}}</a></nb-action>
-        <nb-action class="control-item" *ngIf="isLoggedIn()"><a href="/user/files"
+        <nb-action class="control-item" *ngIf="isLoggedIn()"><a href="/user/text-files"
           (click)="navigate('/user/text-files')">{{t('Texts')}}</a></nb-action>
        <nb-action *ngIf="isLoggedIn() && config.header.api.show" class="control-item"><a
           href="{{config.header.api.link}}" target="_blank"
