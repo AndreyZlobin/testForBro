@@ -46,11 +46,22 @@ export class AssessmentAvgscoreByAgentComponent implements OnInit, OnDestroy {
     const batches = data.batches || {};
     const batchNames = [];
     const seriesData = [];
-    Object.keys(batches).forEach(function (batchId) {
-      batchNames.push(batchId);
-      const vals = Object.values(batches[batchId].questionsScoreByQs) || [];
-      const avg = Number(vals.reduce((a: number, b: number) => a + b, 0)) / vals.length || 0;
-      seriesData.push(Math.round(avg * 100) / 100);
+
+    const sorted = Object.keys(batches)
+      .map(batchId => {
+        const vals = Object.values(batches[batchId].questionsScoreByQs) || [];
+        const avg = Number(vals.reduce((a: number, b: number) => a + b, 0)) / vals.length || 0;
+        return {
+          name: batchId,
+          value: Math.round(avg * 100) / 100
+        };
+      })
+      .sort((a, b) => b.value - a.value)
+      // .slice(0, 10)
+      .reverse();
+    sorted.forEach(function (el) {
+      batchNames.push(el.name);
+      seriesData.push(el.value);
     });
 
     const xAxisFontSize = 12;

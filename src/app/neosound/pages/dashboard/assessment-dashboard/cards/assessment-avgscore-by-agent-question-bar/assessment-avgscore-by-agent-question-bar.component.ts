@@ -71,12 +71,6 @@ export class AssessmentAvgscoreByAgentQuestionBarComponent implements OnInit, On
         name: batchId,
         type: 'bar',
         barGap: 0,
-        label: {
-          show: true,
-          position: 'insideBottom',
-          distance: 10,
-          rotate: 90
-        },
         data: Object.values(batches[batchId].questionsScoreByQs)
       };
       series.push(item);
