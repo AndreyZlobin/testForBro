@@ -50,7 +50,6 @@ export class AssessmentReachedStagesBarStackedComponent implements OnInit, OnDes
   init(data) {
     const answeredQuestionsCountByQs = data.totals.answeredQuestionsCountByQs || {};
     const questionNamesShort = [];
-    const tooltipNames = {};
     Object.keys(answeredQuestionsCountByQs).forEach(function(question){
       const max_len = 20;
       const qparts = Math.ceil(question.length / max_len);
@@ -58,7 +57,6 @@ export class AssessmentReachedStagesBarStackedComponent implements OnInit, OnDes
       for (let i = 1; i <= Math.min(qparts, 4); i++) {
         x += '\n' + question.slice(max_len * i, Math.min(max_len * (i + 1), question.length));
       }
-      tooltipNames[x] = question;
       questionNamesShort.push(x);
     });
 
@@ -92,7 +90,14 @@ export class AssessmentReachedStagesBarStackedComponent implements OnInit, OnDes
           type: 'line'
         },
         formatter: function(params){
-          let res = tooltipNames[params[0].name];
+          let res = params[0].name;
+          const max_len = 40;
+          const qparts = Math.ceil(res.length / max_len);
+          let x = res.slice(0, max_len);
+          for (let i = 1; i <= Math.min(qparts, 4); i++) {
+            x += '<br/>' + res.slice(max_len * i, Math.min(max_len * (i + 1), res.length));
+          }
+          res = x;
           params.forEach(function (param) {
             res += '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;' +
               'background-color:' + param.color + ';"></span>' +

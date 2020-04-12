@@ -45,7 +45,6 @@ export class AssessmentNcallsByQuestionComponent implements OnInit, OnDestroy {
   init(data) {
     const answeredQuestionsCountByQs = data.totals.answeredQuestionsCountByQs || {};
     const questionNamesShort = [];
-    const tooltipNames = {};
     const seriesData = [];
     Object.keys(answeredQuestionsCountByQs).forEach(function(question){
       const qCount = answeredQuestionsCountByQs[question];
@@ -55,12 +54,6 @@ export class AssessmentNcallsByQuestionComponent implements OnInit, OnDestroy {
       for (let i = 1; i <= Math.min(qparts, 4); i++) {
         x += '\n' + question.slice(max_len * i, Math.min(max_len * (i + 1), question.length));
       }
-      // x += '\n' + question.slice(max_len, max_len * 2) +
-      //      '\n' + question.slice(max_len * 2, max_len * 3);
-      // if (question.length > max_len * 3) {
-      //   x += '\n...';
-      // }
-      tooltipNames[x] = question;
       questionNamesShort.push(x);
       seriesData.push(qCount);
     });
@@ -76,8 +69,14 @@ export class AssessmentNcallsByQuestionComponent implements OnInit, OnDestroy {
           type: 'shadow'
         },
         formatter: function(params){
-          let res = tooltipNames[params[0].name];
-          res += '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;' +
+          let res = params[0].name;
+          const max_len = 40;
+          const qparts = Math.ceil(res.length / max_len);
+          let x = res.slice(0, max_len);
+          for (let i = 1; i <= Math.min(qparts, 4); i++) {
+            x += '<br/>' + res.slice(max_len * i, Math.min(max_len * (i + 1), res.length));
+          }
+          res = x + '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;' +
             'background-color:' + params[0].color + ';"></span>' +
             params[0].seriesName + ': ' + params[0].value;
           return res;
