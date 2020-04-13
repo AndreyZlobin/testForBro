@@ -24,7 +24,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit 
     public filesService: FilesService,
     public filterService: FilterService,
     private cd: ChangeDetectorRef,
-  ) {} 
+  ) {}
   ngOnInit() {}
   ngAfterViewInit() {
     setTimeout(() => {
@@ -147,6 +147,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit 
         const index = this.filterService.getIndex(this.batchId, this.fileName);
         this.data = res.result;
         this.filterService.setAssessment(index, this.getAssessment(this.data));
+        this.save();
       }
     });
   }
