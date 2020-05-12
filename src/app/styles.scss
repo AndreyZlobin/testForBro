@@ -282,10 +282,12 @@ angular-tag-cloud > span {
 }
 
 .stopbackcolor {
-  background-color: rgb(204, 121, 169);
+  background-color: #FF5964;
+  color: white;
 }
 .missbackcolor {
   background-color: var(--color-primary);
+  color: white;
 }
 
 .left-border {
