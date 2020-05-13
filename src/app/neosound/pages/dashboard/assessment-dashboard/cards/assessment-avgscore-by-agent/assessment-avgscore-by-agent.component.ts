@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChecklistStatsService} from "../../services/checklist-stats.service";
 import {LanguageService} from "../../../../../services/language.service";
+import {DataService} from "../../../../../shared";
 
 @Component({
   selector: 'ngx-assessment-avgscore-by-agent',
@@ -11,6 +12,7 @@ export class AssessmentAvgscoreByAgentComponent implements OnInit, OnDestroy {
   stats: any = 0;
   dataSub1: any;
   hasData: boolean = false;
+  primaryColor: string;
   // public zoomOptions = {
   //   scale: 1.3,
   //   transitionTime: 1.2,
@@ -18,8 +20,14 @@ export class AssessmentAvgscoreByAgentComponent implements OnInit, OnDestroy {
   // };
 
   constructor(
-    private dataService: ChecklistStatsService
+    private dataService: ChecklistStatsService,
+    private userData: DataService,
   ) {
+    if (this.userData.config["colors"].secondary) {
+      this.primaryColor = this.userData.config["colors"].secondary;
+    } else {
+      this.primaryColor = "#0098d9";
+    }
     this.dataSub1 = this.dataService.data.subscribe(data => {
       if (data) {
         this.init(data);
@@ -67,7 +75,7 @@ export class AssessmentAvgscoreByAgentComponent implements OnInit, OnDestroy {
     const xAxisFontSize = 12;
 
     this.stats = {
-      color: ['#3398DB'],
+      color: [this.primaryColor],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
