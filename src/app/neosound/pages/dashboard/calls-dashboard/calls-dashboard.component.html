@@ -48,9 +48,6 @@
   <div class="col-6 mb-3" *ngIf="show('nSentCallsByDay')">
     <ngx-sentimental-calls-by-day></ngx-sentimental-calls-by-day>
   </div>
-  <div class="col-12 mb-3" *ngIf="show('assessmentByAgent')">
-    <ngx-assessment-by-agent></ngx-assessment-by-agent>
-  </div>
   <div class="col-12 mb-3" *ngIf="show('sentimentTrendByBatchesTable')">
     <ngx-average-sentiments (onClickBatch)="batchClicked($event)" (onClickTrend)="sentimentTrendClicked($event)"></ngx-average-sentiments>
   </div>

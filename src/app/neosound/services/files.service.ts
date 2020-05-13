@@ -56,7 +56,7 @@ export class FilesService {
     return this.http.post(`${environment.api}/getFileResultDetails`, params);
   }
   getAudioWaveForm(params): Observable<any> {
-    params = params;
+    params = params || {};
     return this.http.post(`${environment.api}/getAudioWaveForm`, params);
   }
   getFileStats(params): Observable<any> {
@@ -93,6 +93,10 @@ export class FilesService {
     params = params || {};
     return this.http.post(`${environment.api}/textStopwords`, params);
   }
+  getChecklistStats(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/checklistStats`, params);
+  }
 
 
 
@@ -106,7 +110,7 @@ export class FilesService {
   listBatches(): Observable<any> {
     return this.http.post(`${environment.api}/listBatches`, {});
   }
-  listTextBatches() : Observable<any> {
+  listTextBatches(): Observable<any> {
     return this.http.post(`${environment.api}/listTextBatches`, {});
   }
   deleteTextFile(id): Observable<any> {

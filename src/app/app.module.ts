@@ -58,6 +58,7 @@ import { DashboardFileStatsService } from "./neosound/pages/dashboard/calls-dash
 import { MinutesStatsService } from "./neosound/pages/dashboard/calls-dashboard/services/minutes-stats.service";
 import { TagCloudService } from "./neosound/pages/dashboard/calls-dashboard/services/tag-cloud.service";
 import { TopicCloudService } from "./neosound/pages/dashboard/calls-dashboard/services/topic-cloud.service";
+import { ChecklistStatsService } from "./neosound/pages/dashboard/assessment-dashboard/services/checklist-stats.service";
 
 import { SignupLinkComponent } from "./neosound/pages/auth/signup-link/signup-link.component";
 import { SignupDetailedComponent } from "./neosound/pages/auth/signup-detailed/signup-detailed.component";
@@ -150,6 +151,14 @@ import { TotalByQueriesChartPieComponent } from "./neosound/pages/charts/total-b
 import { TotalMinutesPlusBatchesChartBarComponent } from "./neosound/pages/charts/total-minutes-plus-batches-chart-bar/total-minutes-plus-batches-chart-bar.component";
 import { KeywordsRadialTreeComponent } from "./neosound/pages/charts/keywords-radial-tree/keywords-radial-tree.component";
 import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.component";
+import { AssessmentDashboardComponent } from './neosound/pages/dashboard/assessment-dashboard/assessment-dashboard.component';
+import { AssessmentNcallsByQuestionComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-ncalls-by-question/assessment-ncalls-by-question.component';
+import { AssessmentNcallsAndNpositiveByQuestionComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-ncalls-and-npositive-by-question/assessment-ncalls-and-npositive-by-question.component';
+import { AssessmentAvgscoreByAgentComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent/assessment-avgscore-by-agent.component';
+import { AssessmentReachedStagesBarComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-reached-stages-bar/assessment-reached-stages-bar.component';
+import { AssessmentReachedStagesBarStackedComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-reached-stages-bar-stacked/assessment-reached-stages-bar-stacked.component';
+import { AssessmentAvgscoreByAgentQuestionBarComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent-question-bar/assessment-avgscore-by-agent-question-bar.component';
+import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent-question-bar-stacked/assessment-avgscore-by-agent-question-bar-stacked.component';
 
 @NgModule({
   declarations: [
@@ -234,7 +243,15 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     TextsDashboardComponent,
     FileInfoComponent,
     TagifyComponent,
-    MinutesSecondsPipe
+    MinutesSecondsPipe,
+    AssessmentDashboardComponent,
+    AssessmentNcallsByQuestionComponent,
+    AssessmentNcallsAndNpositiveByQuestionComponent,
+    AssessmentAvgscoreByAgentComponent,
+    AssessmentReachedStagesBarComponent,
+    AssessmentReachedStagesBarStackedComponent,
+    AssessmentAvgscoreByAgentQuestionBarComponent,
+    AssessmentAvgscoreByAgentQuestionBarStackedComponent
   ],
   imports: [
     BrowserModule,
@@ -281,6 +298,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     MinutesStatsService,
     TagCloudService,
     TopicCloudService,
+    ChecklistStatsService,
     FilePeeksService,
     FileResultService,
     UploadService,
