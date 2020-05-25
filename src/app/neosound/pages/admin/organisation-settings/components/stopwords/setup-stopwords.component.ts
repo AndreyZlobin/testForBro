@@ -32,6 +32,13 @@ export class SetupStopwordsComponent implements OnInit {
 
   public save() {
     this.isLoading = true;
+    this.rules =this.rules.map((rule) => {
+      const keywords = rule.keywords.map(v => v.value || v)
+      return {
+        result: rule.result,
+        keywords: keywords
+      }
+    })
     this.organizationSettingsService
       .updateSettings("keyword", this.rules)
       .subscribe((data) => {
@@ -59,13 +66,6 @@ export class SetupStopwordsComponent implements OnInit {
       ...this.rules[index].keywords.map((i) => i.value),
       ...c.map((i) => i.value),
     ]);
-
-    let buff = Array.from(deduplicate)
-      .map((v) => {
-        return { value: v, display: v };
-      })
-      .sort((a, b) => a.value.localeCompare(b.value));
-    this.rules[index].keywords = buff;
   }
 
   onItemRemove(tag, index): void {
