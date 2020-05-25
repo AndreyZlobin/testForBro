@@ -27,7 +27,7 @@
             [ngModelOptions]="{ standalone: true }"
             type="text"
             class=""
-            placeholder="{{ t('Search') }}"
+            placeholder="{{ t('Tag') }}"
             class="form-control form-control-lg mt-2"
           />
         </div>
@@ -41,6 +41,8 @@
                   theme="minimal"
                   [separatorKeys]="[',']"
                   [separatorKeyCodes]="[13]"
+                  [placeholder]="t('+ Keyword')"
+                  [secondaryPlaceholder]="t('Enter keywords here')"
                 >
                 </tag-input>
               </div>
