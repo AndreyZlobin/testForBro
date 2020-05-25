@@ -11,6 +11,10 @@ import { LanguageService } from "../../../services/language.service";
 export class OrganizationSettingsComponent implements OnInit {
   public items: any[] = [
     {
+      key: 'stopwords',
+      name: 'Setup Stopwords'
+    },
+    {
       key: 'keywords',
       name: 'Setup Keywords'
     },
@@ -23,7 +27,7 @@ export class OrganizationSettingsComponent implements OnInit {
       name: 'Setup Checklist'
     }
   ];
-  public activeItem: string = 'keywords';
+  public activeItem: string = 'stopwords';
   public unsavedLabel: string = '';
   public hasUnsaved: boolean = false;
   public showMessage: boolean = false;

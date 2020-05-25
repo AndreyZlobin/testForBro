@@ -75,6 +75,8 @@ import { KeywordsComponent } from "./neosound/pages/admin/organisation-settings/
 import { SensitiveDataComponent } from "./neosound/pages/admin/organisation-settings/components/sensitive-data/sensitive-data.component";
 import { CheckListComponent } from "./neosound/pages/admin/organisation-settings/components/check-list/check-list.component";
 
+import { SetupStopwordsComponent } from "./neosound/pages/admin/organisation-settings/components/stopwords/setup-stopwords.component";
+
 import { AuthGuard } from "./neosound/shared/auth-guard";
 import { CanDeactivateGuard } from "./neosound/shared/can-deactivate";
 
@@ -201,6 +203,7 @@ import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound
     KeywordsComponent,
     SensitiveDataComponent,
     CheckListComponent,
+    SetupStopwordsComponent,
     AboutComponent,
     PlayerDetailsComponent,
     AnalyticDetailsComponent,
