@@ -7,7 +7,8 @@ import {
   TemplateRef,
   HostListener,
   EventEmitter,
-  Output
+  Output,
+  OnInit,
 } from "@angular/core";
 import { OrganizationSettingsService } from "../../../../../services/organization-settings.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal"
