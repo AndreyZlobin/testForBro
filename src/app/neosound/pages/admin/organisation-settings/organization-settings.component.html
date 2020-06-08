@@ -12,7 +12,7 @@
       </div>
       <div class="col-10">
         <ng-container *ngIf="activeItem === items[0].key">
-          <app-setup-stopwords></app-setup-stopwords>
+          <app-setup-stopwords [showMessage]="showMessage" [postDate]="postDate" (launch)="launch()"></app-setup-stopwords>
         </ng-container>
         <ng-container *ngIf="activeItem === items[1].key">
           <nb-tabset (changeTab)="changeTab()">

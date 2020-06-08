@@ -1,5 +1,16 @@
-import { Component, OnInit, EventEmitter, Output } from "@angular/core";
+import {
+  Component,
+  OnChanges,
+  Input,
+  ViewChild,
+  ElementRef,
+  TemplateRef,
+  HostListener,
+  EventEmitter,
+  Output
+} from "@angular/core";
 import { OrganizationSettingsService } from "../../../../../services/organization-settings.service";
+import { BsModalService, BsModalRef } from "ngx-bootstrap/modal"
 import { LanguageService } from "../../../../../services/language.service";
 
 @Component({
@@ -10,9 +21,16 @@ import { LanguageService } from "../../../../../services/language.service";
 export class SetupStopwordsComponent implements OnInit {
   public isLoading: boolean = true;
   @Output() changed = new EventEmitter<boolean>();
+  @Input() showMessage = false;
+  @Input() postDate: string = '';
+  @Output() launch = new EventEmitter<any>();
+
+  public hasChanges: boolean = false;
+  modalRef: BsModalRef;
   public rules: any[] = [];
   constructor(
-    private organizationSettingsService: OrganizationSettingsService
+    private organizationSettingsService: OrganizationSettingsService,
+    private modalService: BsModalService,
   ) {}
 
   ngOnInit() {
@@ -80,5 +98,15 @@ export class SetupStopwordsComponent implements OnInit {
   addRule() {
     this.rules.push({ result: "", keywords: [] });
   }
-  
+  public launchRedo(): void {
+    this.modalRef.hide();
+    this.launch.emit();
+  }
+
+  public decline(): void {
+    this.modalRef.hide();
+  }
+  public openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-md' });
+  }
 }

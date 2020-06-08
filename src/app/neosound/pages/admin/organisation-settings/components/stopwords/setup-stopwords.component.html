@@ -3,7 +3,7 @@
     <button
       class="btn btn-secondary mt-2"
       style="cursor: pointer; padding: 0.5rem 0.75rem;"
-      (click)="relaunch()"
+      (click)="openModal(long)"
     >
       {{ t("Relaunch transcription processing") }}
     </button>
@@ -61,15 +61,48 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12 d-flex justify-content-end">
-        <button
-          class="btn btn-primary mt-2"
-          style="cursor: pointer; padding: 0.5rem 0.75rem;"
-          (click)="addRule()"
-        >
-          {{ t("Add Rule") }}
-        </button>
+      <div class="col-12 d-flex align-items-center">
+        <div *ngIf="showMessage">
+            {{ t("Redaction is working now. Started: ")
+            }}{{ postDate | date: "dd/MM/yyyy hh:mm" }}
+        </div>
+        <div class="ml-auto">
+          <button
+            class="btn btn-primary mt-2"
+            style="cursor: pointer; padding: 0.5rem 0.75rem;"
+            (click)="addRule()"
+          >
+            {{ t("Add Rule") }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<ng-template #long>
+  <div class="modal-body text-center">
+    <p *ngIf="nameSpace !== 'dictNames'">
+      {{
+        t(
+          "You will not be able to perform the next re-indexing until this " +
+            "request is completed. Please click Confirm to proceed or Cancel to review the settings."
+        )
+      }}
+    </p>
+    <p *ngIf="nameSpace === 'dictNames'">
+      {{
+        t(
+          "This action involves audio data redaction. Depending on the volume " +
+            "of the stored audio data, this operation can take up to a few days.You will not be able to perform the next " +
+            "redaction until this request is completed. Please click Confirm to proceed or Cancel to review the settings."
+        )
+      }}
+    </p>
+    <button type="button" class="btn btn-primary mr-2" (click)="launchRedo()">
+      {{ t("Confirm") }}
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="decline()">
+      {{ t("Cancel") }}
+    </button>
+  </div>
+</ng-template>
