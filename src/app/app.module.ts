@@ -117,6 +117,9 @@ import { PlayerComponent } from "./neosound/pages/guest/player-details/player/pl
 import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/player-details.component";
 import { AnalyticDetailsComponent } from "./neosound/pages/guest/analytic-details/analytic-details.component";
 
+import { VideoDetailsComponent } from "./neosound/pages/guest/video-details/video-details.component";
+import { VideoPlayerComponent } from "./neosound/pages/guest/video-details/video-player/video-player.component";
+import { VideoFileInfoService} from './neosound/pages/guest/video-details/services/video-file-info.service'
 import { TextLogComponent } from "./neosound/pages/guest/player-details/cards/text-log/text-log.component";
 import { CheckListFormComponent } from "./neosound/pages/guest/player-details/cards/check-list/check-list.component";
 import { TextComplianceComponent } from "./neosound/pages/guest/player-details/cards/text-compliance/text-compliance.component";
@@ -254,7 +257,9 @@ import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound
     AssessmentReachedStagesBarComponent,
     AssessmentReachedStagesBarStackedComponent,
     AssessmentAvgscoreByAgentQuestionBarComponent,
-    AssessmentAvgscoreByAgentQuestionBarStackedComponent
+    AssessmentAvgscoreByAgentQuestionBarStackedComponent,
+    VideoPlayerComponent, 
+    VideoDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -311,6 +316,7 @@ import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound
     AnalyticsService,
     MediaRecorderService,
     WaveSurferService,
+    VideoFileInfoService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestsHttpInterceptor,
