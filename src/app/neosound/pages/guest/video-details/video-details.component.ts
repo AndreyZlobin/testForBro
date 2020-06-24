@@ -46,4 +46,8 @@ export class VideoDetailsComponent {
     );
   }
 
+  public goToRegion(time: any) {
+    this.player.goToRegion(time);
+  }
+
 }
