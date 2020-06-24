@@ -37,4 +37,13 @@ export class VideoDetailsComponent {
     return LanguageService.t(v);
   }
 
+  getLink() {
+    return (
+      "/analytic/" +
+      encodeURIComponent(this.batchid) +
+      "/" +
+      encodeURIComponent(this.filename)
+    );
+  }
+
 }
