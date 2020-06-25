@@ -10,14 +10,14 @@
           [timeInterval]="[item[0], item[1], item[4]]"
           [ngClass]="{ grey: item[5] && greySpeaker && item[5] == greySpeaker }"
         >
+        <td class="col-2">
+          {{ getFormatedTime(item[0]) }} -
+          {{ getFormatedTime(item[1]) }}
+        </td>
           <td class="col-2">
             <span *ngIf="item[5]">
               {{ item[5] }}
             </span>
-          </td>
-          <td class="col-2">
-            {{ getFormatedTime(item[0]) }} -
-            {{ getFormatedTime(item[1]) }}
           </td>
           <td class="col-6"><span [innerHTML]="t(item[2])"></span></td>
           <td class="col-1">
