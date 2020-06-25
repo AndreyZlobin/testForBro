@@ -1,5 +1,5 @@
 <div style="overflow-y: auto;">
-  <div style="height: 49vh;">
+  <div [style.height]="height">
     <table class="table" *ngIf="!isLoading; else loading">
       <ng-container *ngFor="let item of data">
         <tr
@@ -16,8 +16,8 @@
             </span>
           </td>
           <td class="col-2">
-            {{ getDateVal(item[0]) | date: "mm:ss" }} -
-            {{ getDateVal(item[1]) | date: "mm:ss" }}
+            {{ getFormatedTime(item[0]) }} -
+            {{ getFormatedTime(item[1]) }}
           </td>
           <td class="col-6"><span [innerHTML]="t(item[2])"></span></td>
           <td class="col-1">

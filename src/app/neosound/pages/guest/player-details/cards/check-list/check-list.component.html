@@ -12,7 +12,7 @@
 </div>
 <ng-container *ngIf="view === 'assessment'">
   <div style="overflow-y: auto;" class="p-2 ml-2">
-    <div style="height: 37vh;">
+    <div [style.height]='height'>
       <div class="d-flex flex-column my-2" *ngFor="let question of data; let i = index">
         <div>
           {{i+1}}. {{question.q}}
