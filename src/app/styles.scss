@@ -1,5 +1,5 @@
 @import "./nb-reset.scss";
-@import '~video.js/dist/video-js.css';
+@import "~video.js/dist/video-js.css";
 .nb-arrow-thin-left {
   display: none;
 }
@@ -282,7 +282,7 @@ angular-tag-cloud > span {
 }
 
 .stopbackcolor {
-  background-color: #FF5964;
+  background-color: #ff5964;
   color: white;
 }
 .missbackcolor {
@@ -444,7 +444,7 @@ h3[contenteditable="true"],
 h4[contenteditable="true"],
 h5[contenteditable="true"],
 h6[contenteditable="true"] {
-  cursor:text;
+  cursor: text;
   &:focus {
     outline: none;
   }
@@ -460,15 +460,15 @@ app-files-list ul.dropdown-menu.show {
 }
 
 .action-select > button {
-    padding: .01rem .01rem !important;
-    color: #2a2a2a !important;
-    &:after {
-      content: "";
-    }
+  padding: 0.01rem 0.01rem !important;
+  color: #2a2a2a !important;
+  &:after {
+    content: "";
+  }
 }
 
 .action-select > .dropdown-menu.show {
-  z-index: 9999 !important
+  z-index: 9999 !important;
 }
 
 .action-select .dropdown-toggle::after {
@@ -486,4 +486,11 @@ body.nb-theme-default {
 .badge-autotag {
   background-color: var(--color-secondary);
   color: #fff;
+}
+
+.video-container video {
+  -webkit-media-controls-panel {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
 }
