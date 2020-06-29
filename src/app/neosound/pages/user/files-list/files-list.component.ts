@@ -5,7 +5,7 @@ import {
   ChangeDetectorRef,
   OnDestroy,
   ViewChild,
-  ElementRef
+  ElementRef,
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { FilterService } from "../../../services/filter.service";
@@ -19,7 +19,7 @@ import { DataService } from "../../../shared";
 @Component({
   selector: "app-files-list",
   templateUrl: "./files-list.component.html",
-  styleUrls: ["./files-list.component.scss"]
+  styleUrls: ["./files-list.component.scss"],
 })
 export class FilesListComponent implements OnInit, AfterViewInit {
   @ViewChild("scroll") scrollTo: ElementRef;
@@ -43,7 +43,6 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   constructor(
     private filesService: FilesService,
     public filterService: FilterService,
-    private cd: ChangeDetectorRef,
     private dataService: DataService,
     private modalService: BsModalService,
     private analyticsService: AnalyticsService
@@ -51,7 +50,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.filterService.updateFileList();
-    this.filesService.listTopics().subscribe(data => {
+    this.filesService.listTopics().subscribe((data) => {
       if (data && data.topics) {
         this.topics = data.topics;
       }
@@ -72,7 +71,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.filterService.filter.stopwordLooking = value;
   }
   getBatches() {
-    this.filesService.listBatches().subscribe(data => {
+    this.filesService.listBatches().subscribe((data) => {
       if (data && data.batches) {
         this.batches = data.batches;
       }
@@ -101,9 +100,15 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   getLink(item) {
-    return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
-      item.fileid
-    )}`;
+    if (item.fileType === "audio") {
+      return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
+        item.fileid
+      )}`;
+    } else {
+      return `/video/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
+        item.fileid
+      )}`;
+    }
   }
 
   proccessFile(item) {
@@ -331,14 +336,14 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.analyticsService.trackEvent("fileList", "exportCSV");
     const params = {
       ...this.filterService.getFilterParams(),
-      export: "csv"
+      export: "csv",
     };
     this.filesService.postListFilesPage(params).subscribe(
-      data =>
+      (data) =>
         // this.downloadFile(data)
         (window.location.href = data.url)
     ),
-      error => console.log("Error downloading the file."),
+      (error) => console.log("Error downloading the file."),
       () => console.info("OK");
   }
 
@@ -412,14 +417,14 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.editedFileItem = item;
     this.itemTags =
       (item.tags &&
-        item.tags.map(v => ({
+        item.tags.map((v) => ({
           value: v,
-          display: v
+          display: v,
         }))) ||
       [];
     this.hideModal();
     this.modalRef = this.modalService.show(ref, {
-      class: "modal-xl"
+      class: "modal-xl",
     });
   }
 
@@ -447,7 +452,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   saveTags() {
     this.analyticsService.trackEvent("fileList", "saveTags");
-    const tags = this.itemTags.map(v => v.value);
+    const tags = this.itemTags.map((v) => v.value);
     this.filterService.setTags(this.currentTagEditIndex, tags);
     this.currentTagEditIndex = -1;
     this.hideModal();
@@ -524,7 +529,32 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   onRemoveTopic(topic: string) {
-    this.selectedTopics = this.selectedTopics.filter(t => t !== topic);
+    this.selectedTopics = this.selectedTopics.filter((t) => t !== topic);
     this.filterService.filter.topics = this.selectedTopics.join(",");
+  }
+
+  tagClick(tag: string) {
+    if (this.filterService.filter.tagsContain) {
+      this.filterService.filter.tagsContain = [
+        ...this.filterService.filter.tagsContain,
+        { display: tag, value: tag },
+      ];
+    } else {
+      this.filterService.filter.tagsContain = [{ display: tag, value: tag }];
+    }
+
+    this.filterService.updateFileList();
+  }
+  autotagClick(tag: string) {
+    if (this.filterService.filter.tagsContain) {
+      this.filterService.filter.tagsContain = [
+        ...this.filterService.filter.tagsContain,
+        { display: tag, value: tag },
+      ];
+    } else {
+      this.filterService.filter.tagsContain = [{ display: tag, value: tag }];
+    }
+
+    this.filterService.updateFileList();
   }
 }

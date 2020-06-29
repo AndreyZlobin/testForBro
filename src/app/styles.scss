@@ -1,5 +1,5 @@
 @import "./nb-reset.scss";
-
+@import '~video.js/dist/video-js.css';
 .nb-arrow-thin-left {
   display: none;
 }
@@ -473,4 +473,17 @@ app-files-list ul.dropdown-menu.show {
 
 .action-select .dropdown-toggle::after {
   display: none;
+}
+body.nb-theme-default {
+  .file-info-container {
+    line-height: 1;
+    .btn {
+      height: auto;
+    }
+  }
+}
+
+.badge-autotag {
+  background-color: var(--color-secondary);
+  color: #fff;
 }
