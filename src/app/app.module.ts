@@ -205,7 +205,6 @@ import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound
     KeywordsComponent,
     SensitiveDataComponent,
     CheckListComponent,
-    SetupStopwordsComponent,
     AboutComponent,
     PlayerDetailsComponent,
     AnalyticDetailsComponent,
