@@ -223,6 +223,7 @@ const translationsSp = {
   'calm speech': 'conversación tranquila',
   'silence': 'silencio',
   'Categories': 'Categorias',
+  'Categories by days': 'Categorias por días',
 
   // config pop-up
   'Dashboard config': 'Configuración del tablero',
@@ -527,6 +528,7 @@ const translationsRu = {
   'calm speech': 'спокойная речь',
   'silence': 'тишина',
   'Categories': 'Категории',
+  'Categories by days': 'Категории по дням',
 
   // config pop-up
   'Dashboard config': 'Конфигурация панели управления',
@@ -833,6 +835,7 @@ const translationsPt = {
   'calm speech': 'conversa tranquila',
   'silence': 'silêncio',
   'Categories': 'Categorias',
+  'Categories by days': 'Categorias por dias',
 
   // config pop-up
   'Dashboard config': 'Configuração do painel',
@@ -1145,6 +1148,7 @@ const translationsGe = {
   "calm speech": "ruhige Rede",
   silence: "Pause",
   'Categories': 'Kategorien',
+  'Categories by days': 'Kategorien nach Tagen',
 
   // config pop-up
   "Dashboard config": "Übersicht-Konfiguration",

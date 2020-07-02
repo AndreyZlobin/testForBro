@@ -51,6 +51,9 @@
   <div class="col-6 mb-3" *ngIf="show('hitVsAutoTags')">
     <ngx-hits-autotags></ngx-hits-autotags>
   </div>
+  <div class="col-6 mb-3" *ngIf="show('autotagsByDay')">
+    <ngx-autotags-by-day></ngx-autotags-by-day>
+  </div>
   <div class="col-12 mb-3" *ngIf="show('sentimentTrendByBatchesTable')">
     <ngx-average-sentiments (onClickBatch)="batchClicked($event)" (onClickTrend)="sentimentTrendClicked($event)"></ngx-average-sentiments>
   </div>

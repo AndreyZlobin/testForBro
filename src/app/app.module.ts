@@ -166,6 +166,7 @@ import { AssessmentAvgscoreByAgentQuestionBarComponent } from './neosound/pages/
 import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent-question-bar-stacked/assessment-avgscore-by-agent-question-bar-stacked.component';
 import {AutoTagCloudService} from "./neosound/pages/dashboard/calls-dashboard/services/auto-tag-cloud.service";
 import { HitsAutotagsComponent } from './neosound/pages/dashboard/calls-dashboard/cards/hits-autotags/hits-autotags.component';
+import { AutotagsByDayComponent } from './neosound/pages/dashboard/calls-dashboard/cards/autotags-by-day/autotags-by-day.component';
 
 @NgModule({
   declarations: [
@@ -263,6 +264,7 @@ import { HitsAutotagsComponent } from './neosound/pages/dashboard/calls-dashboar
     VideoPlayerComponent,
     VideoDetailsComponent,
     HitsAutotagsComponent,
+    AutotagsByDayComponent,
   ],
   imports: [
     BrowserModule,
