@@ -57,7 +57,7 @@ export class HitsStopwordsComponent implements OnInit, OnDestroy {
             axisLabel: {
               inside: true,
               textStyle: {
-                color: "#2a2a2a"
+                color: "#ffffff"
               }
             },
             axisTick: {

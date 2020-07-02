@@ -41,6 +41,12 @@ export class OrganizationSettingsService {
     };
     return this.http.post(`${environment.api}/getMyCompanySettings`, params);
   }
+  getStopwordsSettings(): Observable<any> {
+    const params = {
+      setting: "keyword"
+    };
+    return this.http.post(`${environment.api}/getMyCompanySettings`, params);
+  } 
 
   getChecklistSettings(): Observable<any> {
     const params = {

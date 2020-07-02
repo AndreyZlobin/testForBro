@@ -12,6 +12,9 @@
       </div>
       <div class="col-10">
         <ng-container *ngIf="activeItem === items[0].key">
+          <app-setup-stopwords [showMessage]="showMessage" [postDate]="postDate" (launch)="launch()"></app-setup-stopwords>
+        </ng-container>
+        <ng-container *ngIf="activeItem === items[1].key">
           <nb-tabset (changeTab)="changeTab()">
             <nb-tab tabTitle="{{ t('Stopwords') }}">
               <app-keywords [showMessage]="showMessage" [postDate]="postDate" (launch)="launch()"
@@ -42,7 +45,7 @@
             </nb-tab>
           </nb-tabset>
         </ng-container>
-        <ng-container *ngIf="activeItem === items[1].key">
+        <ng-container *ngIf="activeItem === items[2].key">
           <nb-tabset>
             <nb-tab tabTitle="{{ t('Settings') }}">
               <app-sensitive-data></app-sensitive-data>
@@ -58,7 +61,7 @@
             </nb-tab>
           </nb-tabset>
         </ng-container>
-        <ng-container *ngIf="activeItem === items[2].key">
+        <ng-container *ngIf="activeItem === items[3].key">
           <app-check-list></app-check-list>
         </ng-container>
       </div>

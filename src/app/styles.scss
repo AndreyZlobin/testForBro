@@ -1,5 +1,5 @@
 @import "./nb-reset.scss";
-
+@import '~video.js/dist/video-js.css';
 .nb-arrow-thin-left {
   display: none;
 }
@@ -481,4 +481,9 @@ body.nb-theme-default {
       height: auto;
     }
   }
+}
+
+.badge-autotag {
+  background-color: var(--color-secondary);
+  color: #fff;
 }

@@ -245,6 +245,7 @@ const translationsSp = {
   'Stages reached by agents': 'Etapas alcanzadas por los agentes',
 
   // company settings
+  'Setup Keyword Rules': 'Configurar reglas de palabras clave',
   'Setup Keywords': 'Configuración de palabras clave',
   'Setup Sensitive Data': 'Configuración de datos sensibles',
   'Setup Checklist': 'Configuración de lista de verificación',
@@ -547,6 +548,7 @@ const translationsRu = {
   'Stages reached by agents': 'Общее количество достигнутых этапов',
 
   // company settings
+  'Setup Keyword Rules': 'Настройка авто-тэгов',
   'Setup Keywords': 'Настройка стоп-слов',
   'Setup Sensitive Data': 'Настройка конфиденциальных данных',
   'Setup Checklist': 'Настройка чек листа',
@@ -851,6 +853,7 @@ const translationsPt = {
   'Stages reached by agents': 'Etapas alcançadas pelos agentes',
 
   // company settings
+  'Setup Keyword Rules': 'Configurar regras de palavras-chave',
   'Setup Keywords': 'Configurações de palavras-chave',
   'Setup Sensitive Data': 'Configurações de dados confidenciais',
   'Setup Checklist': 'Configurações da lista de verificação',
@@ -1162,6 +1165,7 @@ const translationsGe = {
   "Stages reached by agents": "Von Agenten erreichte Stadien",
 
   // company settings
+  'Setup Keyword Rules': 'Einrichten von Schlüsselwortregeln',
   "Setup Keywords": "Setup-Schlüsselwörter",
   "Setup Sensitive Data": "Einrichten vertraulicher Daten",
   "Setup Checklist": "Einrichtungs-Checkliste",
