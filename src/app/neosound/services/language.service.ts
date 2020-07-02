@@ -222,6 +222,7 @@ const translationsSp = {
   'emotional speech': 'conversación emocional',
   'calm speech': 'conversación tranquila',
   'silence': 'silencio',
+  'Categories': 'Categorias',
 
   // config pop-up
   'Dashboard config': 'Configuración del tablero',
@@ -525,6 +526,7 @@ const translationsRu = {
   'emotional speech': 'эмоциональная речь',
   'calm speech': 'спокойная речь',
   'silence': 'тишина',
+  'Categories': 'Категории',
 
   // config pop-up
   'Dashboard config': 'Конфигурация панели управления',
@@ -830,6 +832,7 @@ const translationsPt = {
   'emotional speech': 'conversa emocional',
   'calm speech': 'conversa tranquila',
   'silence': 'silêncio',
+  'Categories': 'Categorias',
 
   // config pop-up
   'Dashboard config': 'Configuração do painel',
@@ -1141,6 +1144,7 @@ const translationsGe = {
   "emotional speech": "emotionale Rede",
   "calm speech": "ruhige Rede",
   silence: "Pause",
+  'Categories': 'Kategorien',
 
   // config pop-up
   "Dashboard config": "Übersicht-Konfiguration",
