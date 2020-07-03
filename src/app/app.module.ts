@@ -164,6 +164,11 @@ import { AssessmentReachedStagesBarComponent } from './neosound/pages/dashboard/
 import { AssessmentReachedStagesBarStackedComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-reached-stages-bar-stacked/assessment-reached-stages-bar-stacked.component';
 import { AssessmentAvgscoreByAgentQuestionBarComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent-question-bar/assessment-avgscore-by-agent-question-bar.component';
 import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent-question-bar-stacked/assessment-avgscore-by-agent-question-bar-stacked.component';
+import {AutoTagCloudService} from "./neosound/pages/dashboard/calls-dashboard/services/auto-tag-cloud.service";
+import { HitsAutotagsComponent } from './neosound/pages/dashboard/calls-dashboard/cards/hits-autotags/hits-autotags.component';
+import { AutotagsByDayComponent } from './neosound/pages/dashboard/calls-dashboard/cards/autotags-by-day/autotags-by-day.component';
+import { HitsBatchesComponent } from './neosound/pages/dashboard/calls-dashboard/cards/hits-batches/hits-batches.component';
+import { AgentCallsByDayComponent } from './neosound/pages/dashboard/calls-dashboard/cards/agent-calls-by-day/agent-calls-by-day.component';
 
 @NgModule({
   declarations: [
@@ -258,8 +263,12 @@ import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound
     AssessmentReachedStagesBarStackedComponent,
     AssessmentAvgscoreByAgentQuestionBarComponent,
     AssessmentAvgscoreByAgentQuestionBarStackedComponent,
-    VideoPlayerComponent, 
+    VideoPlayerComponent,
     VideoDetailsComponent,
+    HitsAutotagsComponent,
+    AutotagsByDayComponent,
+    HitsBatchesComponent,
+    AgentCallsByDayComponent,
   ],
   imports: [
     BrowserModule,
@@ -317,6 +326,7 @@ import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound
     MediaRecorderService,
     WaveSurferService,
     VideoFileInfoService,
+    AutoTagCloudService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestsHttpInterceptor,

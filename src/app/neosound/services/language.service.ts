@@ -222,6 +222,10 @@ const translationsSp = {
   'emotional speech': 'conversación emocional',
   'calm speech': 'conversación tranquila',
   'silence': 'silencio',
+  'Categories': 'Categorias',
+  'Categories by days': 'Categorias por días',
+  'Agent calls': 'Llamadas del agente',
+  'Agent calls by days': 'El agente llama por días',
 
   // config pop-up
   'Dashboard config': 'Configuración del tablero',
@@ -525,6 +529,10 @@ const translationsRu = {
   'emotional speech': 'эмоциональная речь',
   'calm speech': 'спокойная речь',
   'silence': 'тишина',
+  'Categories': 'Категории',
+  'Categories by days': 'Категории по дням',
+  'Agent calls': 'Звонки по агентам',
+  'Agent calls by days': 'Звонки агентов по дням',
 
   // config pop-up
   'Dashboard config': 'Конфигурация панели управления',
@@ -830,6 +838,10 @@ const translationsPt = {
   'emotional speech': 'conversa emocional',
   'calm speech': 'conversa tranquila',
   'silence': 'silêncio',
+  'Categories': 'Categorias',
+  'Categories by days': 'Categorias por dias',
+  'Agent calls': 'Chamadas de agente',
+  'Agent calls by days': 'Chamadas do agente por dias',
 
   // config pop-up
   'Dashboard config': 'Configuração do painel',
@@ -1141,6 +1153,10 @@ const translationsGe = {
   "emotional speech": "emotionale Rede",
   "calm speech": "ruhige Rede",
   silence: "Pause",
+  'Categories': 'Kategorien',
+  'Categories by days': 'Kategorien nach Tagen',
+  'Agent calls': 'Agentenanrufe',
+  'Agent calls by days': 'Agent ruft nach Tagen an',
 
   // config pop-up
   "Dashboard config": "Übersicht-Konfiguration",
