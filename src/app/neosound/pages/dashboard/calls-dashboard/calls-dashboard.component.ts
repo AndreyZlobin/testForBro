@@ -25,6 +25,7 @@ import { DashboardFileStatsService } from "./services/file-stats.service";
 import { MinutesStatsService } from "./services/minutes-stats.service";
 import { TagCloudService } from "./services/tag-cloud.service";
 import { TopicCloudService } from "./services/topic-cloud.service";
+import {AutoTagCloudService} from "./services/auto-tag-cloud.service";
 
 export const colors = [
   "#c12e34",
@@ -73,7 +74,8 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     private dashboardFileStatsService: DashboardFileStatsService,
     private minutesStatsService: MinutesStatsService,
     private tagCloudService: TagCloudService,
-    private topicCloudService: TopicCloudService
+    private topicCloudService: TopicCloudService,
+    private autoTagCloudService: AutoTagCloudService
   ) {
     this.settings = JSON.parse(localStorage.getItem("settings")).dashboardcards;
   }
@@ -104,6 +106,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     this.minutesStatsService.load(source, dateFrom, dateTo, batches);
     this.tagCloudService.load(source, dateFrom, dateTo, batches);
     this.topicCloudService.load(source, dateFrom, dateTo, batches);
+    this.autoTagCloudService.load(source, dateFrom, dateTo, batches);
   }
   keywordClicked(clicked: string) {
     this.analyticsService.trackEvent("user", "keywordClicked");

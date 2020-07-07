@@ -12,7 +12,7 @@ export class OrganizationSettingsComponent implements OnInit {
   public items: any[] = [
     {
       key: 'stopwords',
-      name: 'Setup Stopwords'
+      name: 'Setup Keyword Rules'
     },
     {
       key: 'keywords',

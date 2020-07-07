@@ -1,20 +1,14 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  SimpleChanges,
-  OnDestroy
-} from "@angular/core";
-import { LanguageService } from "../../../../../services/language.service";
-import { TagCloudService } from "../../services/tag-cloud.service";
-import { DataService } from "../../../../../shared";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {DataService} from "../../../../../shared";
+import {LanguageService} from "../../../../../services/language.service";
+import {DashboardFileStatsService} from "../../services/file-stats.service";
 
 @Component({
-  selector: "ngx-hits-stopwords",
-  templateUrl: "./hits-stopwords.component.html"
+  selector: 'ngx-hits-batches',
+  templateUrl: './hits-batches.component.html'
 })
-export class HitsStopwordsComponent implements OnInit, OnDestroy {
-  keyWordChart: any = 0;
+export class HitsBatchesComponent implements OnInit, OnDestroy {
+  agentChart: any = 0;
   dataSub1: any;
   hasData: boolean = false;
   primaryColor: string;
@@ -24,7 +18,7 @@ export class HitsStopwordsComponent implements OnInit, OnDestroy {
     delay: 0.1
   };
   constructor(
-    private dataService: TagCloudService,
+    private dataService: DashboardFileStatsService,
     private userData: DataService
   ) {
     if (this.userData.config["colors"].secondary) {
@@ -33,27 +27,27 @@ export class HitsStopwordsComponent implements OnInit, OnDestroy {
       this.primaryColor = "#0098d9";
     }
     this.dataSub1 = this.dataService.data.subscribe(data => {
-      if (data && data.keywords) {
-        const sortedKeywords = Object.keys(data.keywords)
+      if (data && data.batches) {
+        const sortedBatches = Object.keys(data.batches)
           .map(key => {
             return {
               name: key,
-              value: data.keywords[key]
+              value: data.batches[key].allCallsN
             };
           })
           .sort((a, b) => b.value - a.value)
           .slice(0, 10)
           .reverse();
-        this.keyWordChart = {
+        this.agentChart = {
           color: [this.primaryColor],
 
           legend: {
-            data: ["Keywords"]
+            data: ["Calls"]
           },
           yAxis: {
             type: "category",
-            name: this.t("Stopwords"),
-            data: sortedKeywords.map(i => i.name),
+            name: this.t("Calls"),
+            data: sortedBatches.map(i => i.name),
             axisLabel: {
               inside: true,
               textStyle: {
@@ -76,7 +70,7 @@ export class HitsStopwordsComponent implements OnInit, OnDestroy {
             {
               name: "%",
               type: "bar",
-              data: sortedKeywords.map(i => i.value),
+              data: sortedBatches.map(i => i.value),
               label: {
                 normal: {
                   position: "right",
