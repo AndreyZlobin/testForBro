@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, HostListener } from "@angular/core";
 import { OrganizationSettingsService } from "../../../services/organization-settings.service";
 import { ToastrService } from "ngx-toastr";
 import { LanguageService } from "../../../services/language.service";
@@ -34,6 +34,13 @@ export class OrganizationSettingsComponent implements OnInit {
   public audioShowMessage: boolean = false;
   public postDate: any;
   public audioPostDate: any;
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if (this.hasUnsaved) {
+      $event.returnValue = true;
+    }
+  }
+
   constructor(
     private organizationSettingsService: OrganizationSettingsService,
     private toastrService: ToastrService
@@ -48,7 +55,7 @@ export class OrganizationSettingsComponent implements OnInit {
     if (this.hasUnsaved) {
       if (
         confirm(
-          this.t('You have unsaved ') + this.t(this.unsavedLabel) + this.t('. If you leave, your changes will be lost.')
+          this.t('You have unsaved changes. If you leave, your changes will be lost.')
         )
       ) {
         this.activeItem = view;

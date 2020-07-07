@@ -21,12 +21,12 @@ import { LanguageService } from "../../../../../services/language.service";
 })
 export class SetupStopwordsComponent implements OnInit {
   public isLoading: boolean = true;
-  @Output() changed = new EventEmitter<boolean>();
+  public hasChanges: boolean = false;
+
+  @Output() changed = new EventEmitter<any>();
   @Input() showMessage = false;
   @Input() postDate: string = '';
   @Output() launch = new EventEmitter<any>();
-
-  public hasChanges: boolean = false;
   modalRef: BsModalRef;
   public rules: any[] = [];
   constructor(
@@ -51,6 +51,7 @@ export class SetupStopwordsComponent implements OnInit {
 
   public save() {
     this.isLoading = true;
+    this.hasChanges = false;
     this.rules =this.rules.map((rule) => {
       const keywords = rule.keywords.map(v => v.value || v)
       return {
@@ -62,41 +63,28 @@ export class SetupStopwordsComponent implements OnInit {
       .updateSettings("keyword", this.rules)
       .subscribe((data) => {
         this.isLoading = false;
+        this.changed.emit({changed: this.hasChanges});
       });
   }
 
   public onItemAdd(tag, index): void {
-    let c = [];
-    const tagVal = (tag && tag.value) || tag;
-    if (tagVal === "") {
-      return;
-    }
-    this.rules[index].keywords = this.rules[index].keywords.filter(
-      (a) => a.value !== tagVal
-    );
-    const val = tagVal.split(",").map((v) => v.trim());
-    val.map((v) =>
-      c.push({
-        value: v,
-        display: v,
-      })
-    );
-    let deduplicate = new Set([
-      ...this.rules[index].keywords.map((i) => i.value),
-      ...c.map((i) => i.value),
-    ]);
+    this.hasChanges = true;
+    this.changed.emit({changed: this.hasChanges});
   }
 
   onItemRemove(tag, index): void {
-    this.rules[index].keywords = this.rules[index].keywords.filter(
-      (t) => t.value !== tag.value
-    );
+    this.hasChanges = true;
+    this.changed.emit({changed: this.hasChanges});
   }
 
   removeRule(index) {
+    this.hasChanges = true;
+    this.changed.emit({changed: this.hasChanges});
     this.rules = this.rules.filter((v, i) => i !== index);
   }
   addRule() {
+    this.hasChanges = true;
+    this.changed.emit({changed: this.hasChanges});
     this.rules.push({ result: "", keywords: [] });
   }
   public launchRedo(): void {

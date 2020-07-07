@@ -281,7 +281,7 @@ const translationsSp = {
   'removed': 'quitadas',
   'added': 'añadidas',
   'Re-indexing is working now. Started: ': 'La reindexación está funcionando ahora. Empezado: ',
-  'Redaction is working now. Started: ': 'La redacción está funcionando ahora. Empezado: ',
+  'Transcriptions processing is working now. Started: ': 'La redacción está funcionando ahora. Empezado: ',
   'Relaunch files processing': 'Relanzar procesado de archivos',
   'Remove All': 'Quitar Todas',
   'Please confirm, all ': 'Confirme que todos ',
@@ -583,7 +583,7 @@ const translationsRu = {
   'removed': 'удалены',
   'added': 'добавлены',
   'Re-indexing is working now. Started: ': 'Процесс индексации запущен. Время начала: ',
-  'Redaction is working now. Started: ': 'Процесс сокрытия имен запущен. Время начала: ',
+  'Transcriptions processing is working now. Started: ': 'Процесс сокрытия имен запущен. Время начала: ',
   'Relaunch files processing': 'Перезапустить обработку файлов',
   'Remove All': 'Удалить Все',
   'Please confirm, all ': 'Пожалуйста подтвердите, все ',
@@ -887,7 +887,7 @@ const translationsPt = {
   'removed': 'quitadas',
   'added': 'adicionado',
   'Re-indexing is working now. Started: ': 'A re-indexação está funcionando agora. Iniciado:',
-  'Redaction is working now. Started: ': 'A redação está trabalhando agora. Iniciado:',
+  'Transcriptions processing is working now. Started: ': 'A redação está trabalhando agora. Iniciado:',
   'Relaunch files processing': 'Repita o processamento do arquivo',
   'Remove All': 'Remover tudo',
   'Please confirm, all ': 'Confirme se todos ',
@@ -1199,7 +1199,7 @@ const translationsGe = {
   added: "hinzugefügt",
   "Re-indexing is working now. Started: ":
     "Die Re-Indizierung funktioniert jetzt. Begonnen: ",
-  "Redaction is working now. Started: ":
+  "Transcriptions processing is working now. Started: ":
     "Die Redaktion funktioniert jetzt. Begonnen: ",
   "Relaunch files processing": "Wiederaufnahme der Dateiverarbeitung",
   "Remove All": "Alle entfernen",

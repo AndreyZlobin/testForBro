@@ -487,10 +487,3 @@ body.nb-theme-default {
   background-color: var(--color-secondary);
   color: #fff;
 }
-
-.video-container video {
-  -webkit-media-controls-panel {
-    background-color: transparent !important;
-    box-shadow: none !important;
-  }
-}
