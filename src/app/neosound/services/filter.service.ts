@@ -454,7 +454,7 @@ export class FilterService {
       );
       if (index !== -1 && this.fileStore[index - 1]) {
         let type = 'file';
-        if(this.fileStore[index + 1].fileType === 'video') {
+        if(this.fileStore[index - 1].fileType === 'video') {
           type = 'video';
         }
         return `/${type}/${this.fileStore[index - 1].batchid}/${
