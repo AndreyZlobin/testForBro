@@ -434,7 +434,11 @@ export class FilterService {
       );
 
       if (index !== -1 && this.fileStore[index + 1]) {
-        return `/file/${this.fileStore[index + 1].batchid}/${
+        let type = 'file';
+        if(this.fileStore[index + 1].fileType === 'video') {
+          type = 'video';
+        }
+        return `/${type}/${this.fileStore[index + 1].batchid}/${
           this.fileStore[index + 1].filename
         }`;
       }
@@ -449,7 +453,11 @@ export class FilterService {
         file => file.filename === fileName && file.batchid === batchId
       );
       if (index !== -1 && this.fileStore[index - 1]) {
-        return `/file/${this.fileStore[index - 1].batchid}/${
+        let type = 'file';
+        if(this.fileStore[index - 1].fileType === 'video') {
+          type = 'video';
+        }
+        return `/${type}/${this.fileStore[index - 1].batchid}/${
           this.fileStore[index - 1].filename
         }`;
       }

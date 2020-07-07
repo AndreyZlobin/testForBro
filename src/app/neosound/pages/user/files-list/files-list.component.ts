@@ -100,9 +100,15 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   getLink(item) {
-    return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
-      item.fileid
-    )}`;
+    if (item.fileType === "audio") {
+      return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
+        item.fileid
+      )}`;
+    } else {
+      return `/video/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
+        item.fileid
+      )}`;
+    }
   }
 
   proccessFile(item) {

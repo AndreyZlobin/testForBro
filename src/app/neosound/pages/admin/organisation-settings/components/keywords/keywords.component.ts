@@ -27,18 +27,11 @@ export class KeywordsComponent implements OnChanges {
   @Input() postDate: string = '';
   @Input() pluralLabel: string = '';
 
-  @Output() changed = new EventEmitter<{ changed: boolean; name: string }>();
+  @Output() changed = new EventEmitter<any>();
   @Output() launch = new EventEmitter<any>();
 
   @ViewChild('cvsUpload') cvsUpload: ElementRef;
   modalRef: BsModalRef;
-
-  @HostListener('window:beforeunload', ['$event'])
-  unloadNotification($event: any) {
-    if (this.hasChanges) {
-      $event.returnValue = true;
-    }
-  }
 
   public isLoading: boolean = true;
   public setting: any = {};
@@ -91,10 +84,7 @@ export class KeywordsComponent implements OnChanges {
         });
         self.isLoading = false;
         self.hasChanges = true;
-        self.changed.emit({
-          changed: self.hasChanges,
-          name: self.pluralLabel
-        });
+        self.changed.emit({changed: self.hasChanges});
         self.tags = result.sort((a, b) => a.value.localeCompare(b.value));
         self.cvsUpload.nativeElement.value = '';
       };
@@ -182,10 +172,7 @@ export class KeywordsComponent implements OnChanges {
         );
         this.isLoading = false;
         this.hasChanges = false;
-        this.changed.emit({
-          changed: this.hasChanges,
-          name: this.pluralLabel
-        });
+        this.changed.emit({changed: this.hasChanges});
         this.initialLength = this.tags.length;
       });
   }
@@ -195,7 +182,7 @@ export class KeywordsComponent implements OnChanges {
 
   public onItemAdd(tag): void {
     this.hasChanges = true;
-    this.changed.emit({ changed: this.hasChanges, name: this.pluralLabel });
+    this.changed.emit({changed: this.hasChanges});
     let c = [];
     const tagVal = (tag && tag.value) || tag;
     if (tagVal === '') {

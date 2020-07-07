@@ -1,23 +1,26 @@
 <div class="row">
   <div class="col-12 d-flex justify-content-end">
-    <button
-      class="btn btn-secondary mt-2"
-      style="cursor: pointer; padding: 0.5rem 0.75rem;"
-      (click)="openModal(long)"
-    >
-      {{ t("Relaunch transcription processing") }}
-    </button>
-    <button
-      class="btn btn-primary mt-2 ml-2"
-      style="cursor: pointer; padding: 0.5rem 0.75rem;"
-      (click)="save()"
-    >
-      {{ t("Save") }}
-    </button>
+    <div class="mr-4">
+      <button
+        class="btn btn-secondary mt-2"
+        style="cursor: pointer; padding: 0.5rem 0.75rem;"
+        (click)="openModal(long)"
+      >
+        {{ t("Relaunch transcription processing") }}
+      </button>
+      <button
+        class="btn btn-primary mt-2 ml-2"
+        style="cursor: pointer; padding: 0.5rem 0.75rem;"
+        (click)="save()"
+        [disabled]="!hasChanges"
+      >
+        {{ t("Save") }}
+      </button>
+    </div>
   </div>
 </div>
 <div style="overflow-y: auto; overflow-x: hidden;">
-  <div style="height: 80vh;">
+  <div style="height: 80vh; margin-right: 1.5em;">
     <div class="loader" *ngIf="isLoading">{{ t("Loading...") }}</div>
     <div *ngIf="rules && !isLoading">
       <div class="row mb-2" *ngFor="let rule of rules; let i = index">
@@ -43,6 +46,8 @@
                   [separatorKeyCodes]="[13]"
                   [placeholder]="t('+ Keyword')"
                   [secondaryPlaceholder]="t('Enter keywords here')"
+                  (onBlur)="onItemAdd($event)"
+                  (onAdd)="onItemAdd($event)"
                 >
                 </tag-input>
               </div>
@@ -63,8 +68,8 @@
     <div class="row">
       <div class="col-12 d-flex align-items-center">
         <div *ngIf="showMessage">
-            {{ t("Redaction is working now. Started: ")
-            }}{{ postDate | date: "dd/MM/yyyy hh:mm" }}
+          {{ t("Transcriptions processing is working now. Started: ")
+          }}{{ postDate | date: "dd/MM/yyyy hh:mm" }}
         </div>
         <div class="ml-auto">
           <button
