@@ -144,7 +144,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           //   formatter: "{value}"
           // },
           min: 0,
-          max: (minR / maxX) * 110,
+          max: Math.ceil((minR / maxX) * 110),
         },
         yAxis: {
           splitLine: {
@@ -162,7 +162,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           //   formatter: "{value}"
           // },
           min: 0,
-          max: (minR / maxY) * 110,
+          max: Math.ceil((minR / maxY) * 110),
         },
         tooltip: {
           show: true,
