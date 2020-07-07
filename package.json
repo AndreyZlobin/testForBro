@@ -133,7 +133,6 @@
     "ts-node": "3.2.2",
     "tslint": "5.7.0",
     "tslint-language-service": "0.9.6",
-    "typescript": "2.7.2",
-    "video.js": "^7.8.2"
+    "typescript": "2.7.2"
   }
 }
