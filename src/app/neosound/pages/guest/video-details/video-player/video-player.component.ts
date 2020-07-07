@@ -11,8 +11,8 @@ import {
 import { LanguageService } from "../../../../services/language.service";
 import { VideoFileInfoService } from "../services/video-file-info.service";
 import { FilesService } from "../../../../services/files.service";
-import videojs from "video.js";
-import { PlayerService } from "../../../../services/player.service";
+//import videojs from "video.js";
+//import { PlayerService } from "../../../../services/player.service";
 
 @Component({
   selector: "ngx-video-player",
@@ -36,7 +36,7 @@ export class VideoPlayerComponent implements OnDestroy, OnChanges {
   loading: boolean = true;
   @Input() fileName: string;
   @Input() batchId: string;
-  player: videojs.Player;
+  //player: videojs.Player;
   options: any = {
     autoplay: false,
     controls: true,
@@ -46,7 +46,7 @@ export class VideoPlayerComponent implements OnDestroy, OnChanges {
   constructor(
     private videoFileInfoService: VideoFileInfoService,
     private filesService: FilesService,
-    private playerService: PlayerService
+    // private playerService: PlayerService
   ) {}
 
   t(v) {
@@ -54,18 +54,18 @@ export class VideoPlayerComponent implements OnDestroy, OnChanges {
   }
   ngOnDestroy() {
     if (this.fileName && this.batchId) {
-      if (this.player) {
-        this.player.dispose();
-      }
+      // if (this.player) {
+      //   //this.player.dispose();
+      // }
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.fileName && this.batchId) {
       this.loading = true;
-      if (this.player) {
-        this.player.dispose();
-      }
+      // if (this.player) {
+      //   //this.player.dispose();
+      // }
       this.filesService
         .getFile({
           batchid: this.batchId,
@@ -74,25 +74,25 @@ export class VideoPlayerComponent implements OnDestroy, OnChanges {
         .subscribe((data) => {
           this.loading = false;
           this.options.sources = [{ src: data.url, type: "video/mp4" }];
-          this.player = videojs(this.target.nativeElement, this.options, () => {
-            this.player.on("progress", () => {
-              const time = this.player.currentTime();
-              this.playerService.setActive(time);
-            });
-          });
+          // this.player = videojs(this.target.nativeElement, this.options, () => {
+          //   this.player.on("progress", () => {
+          //     const time = this.player.currentTime();
+          //     this.playerService.setActive(time);
+          //   });
+          // });
         });
     }
   }
 
   init() {}
   public goToRegion(time: any) {
-    this.player && this.player.currentTime(time);
+    // this.player && this.player.currentTime(time);
   }
   play() {
-    if (this.player.paused() === true) {
-      this.player && this.player.play();
-    } else {
-      this.player && this.player.pause();
-    }
+    // if (this.player.paused() === true) {
+    //   // this.player && this.player.play();
+    // } else {
+    //   // this.player && this.player.pause();
+    // }
   }
 }
