@@ -59,7 +59,8 @@ export class OrganizationSettingsComponent implements OnInit {
         )
       ) {
         this.activeItem = view;
-      }
+        this.hasUnsaved = false;
+      } 
     } else {
       this.activeItem = view;
     }

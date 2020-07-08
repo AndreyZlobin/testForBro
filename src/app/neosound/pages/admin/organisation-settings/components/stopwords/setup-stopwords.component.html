@@ -2,13 +2,6 @@
   <div class="col-12 d-flex justify-content-end">
     <div class="mr-4">
       <button
-        class="btn btn-secondary mt-2"
-        style="cursor: pointer; padding: 0.5rem 0.75rem;"
-        (click)="openModal(long)"
-      >
-        {{ t("Relaunch transcription processing") }}
-      </button>
-      <button
         class="btn btn-primary mt-2 ml-2"
         style="cursor: pointer; padding: 0.5rem 0.75rem;"
         (click)="save()"
@@ -67,10 +60,6 @@
     </div>
     <div class="row">
       <div class="col-12 d-flex align-items-center">
-        <div *ngIf="showMessage">
-          {{ t("Transcriptions processing is working now. Started: ")
-          }}{{ postDate | date: "dd/MM/yyyy hh:mm" }}
-        </div>
         <div class="ml-auto">
           <button
             class="btn btn-primary mt-2"
@@ -80,6 +69,24 @@
             {{ t("Add Rule") }}
           </button>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 d-flex align-items-center mt-3">
+        <div *ngIf="showMessage">
+          {{ t("Transcriptions processing is working now. Started: ")
+          }}{{ postDate | date: "dd/MM/yyyy hh:mm" }}
+        </div>
+        <nb-action class="control-action ml-auto"
+          ><button
+            class="btn btn-secondary btn-sm"
+            (click)="openModal(long)"
+            [disabled]="showMessage"
+          >
+            <i class="fas fa-sync-alt mr-2"></i
+            >{{ t("Relaunch files processing") }}
+          </button>
+        </nb-action>
       </div>
     </div>
   </div>
