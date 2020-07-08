@@ -40,6 +40,7 @@
                   [placeholder]="t('+ Keyword')"
                   [secondaryPlaceholder]="t('Enter keywords here')"
                   (onBlur)="onItemAdd($event)"
+                  (onRemove)="onItemRemove($event)"
                   (onAdd)="onItemAdd($event)"
                 >
                 </tag-input>
