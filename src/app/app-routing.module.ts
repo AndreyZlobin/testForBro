@@ -34,7 +34,7 @@ import { CanDeactivateGuard } from "./neosound/shared/can-deactivate";
 import { AboutComponent } from "./neosound/pages/about/about.component";
 
 import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/player-details.component";
-import { VideoDetailsComponent } from "./neosound/pages/guest/video-details/video-details.component";
+// import { VideoDetailsComponent } from "./neosound/pages/guest/video-details/video-details.component";
 
 import { AnalyticDetailsComponent } from "./neosound/pages/guest/analytic-details/analytic-details.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
@@ -89,11 +89,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: PlayerDetailsComponent
       },
-      {
-        path: "video/:batchid/:filename",
-        canActivate: [AuthGuard],
-        component: VideoDetailsComponent
-      },
+      // {
+      //   path: "video/:batchid/:filename",
+      //   canActivate: [AuthGuard],
+      //   component: VideoDetailsComponent
+      // },
       {
         path: "analytic/:batchid/:filename",
         canActivate: [AuthGuard],

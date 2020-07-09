@@ -35,7 +35,7 @@
             <span class=" mr-2 ml-auto"> </span>
             <span class=" mr-2" *ngIf="showMessage" >
                 <p *ngIf="nameSpace !== 'dictNames'">{{ t('Re-indexing is working now. Started: ') }}{{postDate | date: 'dd/MM/yyyy hh:mm' }}</p>
-                <p *ngIf="nameSpace !== 'dictNames'">{{ t('Redaction is working now. Started: ') }}{{postDate | date: 'dd/MM/yyyy hh:mm' }}</p>
+                <p *ngIf="nameSpace === 'dictNames'">{{ t('Redaction is working now. Started: ') }}{{postDate | date: 'dd/MM/yyyy hh:mm' }}</p>
             </span>
             <nb-action class="control-action" *ngIf="nameSpace !== 'sentiment'"><button class="btn btn-secondary btn-sm mr-2" (click)="openModal(long)"
                     [disabled]="showMessage"><i class="fas fa-sync-alt mr-2"></i>{{ t('Relaunch files processing') }}</button>

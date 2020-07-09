@@ -12,7 +12,7 @@ import { DashboardFileStatsService } from "../../services/file-stats.service";
 
 @Component({
   selector: "ngx-performance-by-agent",
-  templateUrl: "./performance-by-agent.component.html"
+  templateUrl: "./performance-by-agent.component.html",
 })
 export class PerformanceByAgentComponent implements OnInit, OnDestroy {
   @Output() onClick = new EventEmitter<string>();
@@ -23,10 +23,8 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
   dataSub2: any;
   dataSub3: any;
   hasData: boolean = false;
-  constructor(
-    private dataService: DashboardFileStatsService,
-  ) {
-    this.dataSub1 = this.dataService.data.subscribe(data => {
+  constructor(private dataService: DashboardFileStatsService) {
+    this.dataSub1 = this.dataService.data.subscribe((data) => {
       if (data && data.batches) {
         this.options = this.getOptions(data);
         this.hasData = true;
@@ -58,7 +56,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
     "#005eaa",
     "#339ca8",
     "#cda819",
-    "#32a487"
+    "#32a487",
   ];
 
   getOptions(data: any): any {
@@ -73,7 +71,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
         .sort((a, b) => data.batches[b].allCallsN - data.batches[a].allCallsN)
         .slice(0, 6)
         .reverse()
-        .forEach(batchName => {
+        .forEach((batchName) => {
           all.push(data.batches[batchName].allCallsN);
           anger.push(data.batches[batchName].angerCallsN);
           silence.push(data.batches[batchName].silentCallsN);
@@ -108,16 +106,16 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
               data.batches[batchName].allCallsN,
               batchName,
               data.batches[batchName].silentCallsN,
-              data.batches[batchName].angerCallsN
-            ]
+              data.batches[batchName].angerCallsN,
+            ],
           ],
           type: "scatter",
-          symbolSize: data => {
+          symbolSize: (data) => {
             return this.getRadius(data[2], minR, maxR);
-          }
+          },
         };
       });
-
+      console.log(minR, maxY);
       options = {
         color: this.colors,
         grid: {
@@ -130,14 +128,14 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           orient: "horizontal",
           left: 10,
           bottom: 10,
-          data: batches
+          data: batches,
         },
         xAxis: {
           splitLine: {
             lineStyle: {
               type: "none",
-              opacity: 0
-            }
+              opacity: 0,
+            },
           },
           type: "value",
           name: this.t("Silent calls, %"),
@@ -147,14 +145,14 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           //   formatter: "{value}"
           // },
           min: 0,
-          max: Math.ceil((maxX / maxR) * 140)
+          max: Math.ceil((maxX /maxR * 100)) + 10,
         },
         yAxis: {
           splitLine: {
             lineStyle: {
               type: "none",
-              opacity: 0
-            }
+              opacity: 0,
+            },
           },
           scale: true,
           type: "value",
@@ -165,18 +163,23 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           //   formatter: "{value}"
           // },
           min: 0,
-          max: Math.ceil((maxY / maxR) * 140)
+          max: Math.ceil((maxY / maxY * 100)) + 10,
         },
         tooltip: {
           show: true,
-          formatter: function(param) {
-            return `${param.data[3]}<br>` +
-              LanguageService.t('Calls') + `: ${param.data[2]}<br>` +
-              LanguageService.t('Silent') + `: ${param.data[4]}<br>` +
-              LanguageService.t('Emotional') + `: ${param.data[5]}`;
-          }
+          formatter: function (param) {
+            return (
+              `${param.data[3]}<br>` +
+              LanguageService.t("Calls") +
+              `: ${param.data[2]}<br>` +
+              LanguageService.t("Silent") +
+              `: ${param.data[4]}<br>` +
+              LanguageService.t("Emotional") +
+              `: ${param.data[5]}`
+            );
+          },
         },
-        series: buble
+        series: buble,
       };
     }
     return options;
