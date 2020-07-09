@@ -115,6 +115,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           },
         };
       });
+      console.log(minR, maxY);
       options = {
         color: this.colors,
         grid: {
@@ -144,7 +145,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           //   formatter: "{value}"
           // },
           min: 0,
-          max: Math.ceil((minR / maxX) * 110),
+          max: Math.ceil((maxX /maxR * 100)) + 10,
         },
         yAxis: {
           splitLine: {
@@ -162,7 +163,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           //   formatter: "{value}"
           // },
           min: 0,
-          max: Math.ceil((minR / maxY) * 110),
+          max: Math.ceil((maxY / maxY * 100)) + 10,
         },
         tooltip: {
           show: true,
