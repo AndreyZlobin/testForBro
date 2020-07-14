@@ -97,6 +97,10 @@ export class FilesService {
     params = params || {};
     return this.http.post(`${environment.api}/checklistStats`, params);
   }
+  getAutoTagCloud(params): Observable<any> {
+    params = params || {};
+    return this.http.post(`${environment.api}/autoTagCloud`, params);
+  }
 
 
 

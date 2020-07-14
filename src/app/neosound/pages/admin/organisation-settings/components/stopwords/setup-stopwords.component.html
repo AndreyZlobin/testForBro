@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="col-12 d-flex justify-content-end">
+    <div class="mr-4">
+      <button
+        class="btn btn-primary mt-2 ml-2"
+        style="cursor: pointer; padding: 0.5rem 0.75rem;"
+        (click)="save()"
+        [disabled]="!hasChanges"
+      >
+        {{ t("Save") }}
+      </button>
+    </div>
+  </div>
+</div>
+<div style="overflow-y: auto; overflow-x: hidden;">
+  <div style="height: 80vh; margin-right: 1.5em;">
+    <div class="loader" *ngIf="isLoading">{{ t("Loading...") }}</div>
+    <div *ngIf="rules && !isLoading">
+      <div class="row mb-2" *ngFor="let rule of rules; let i = index">
+        <div class="col-2">
+          <input
+            [(ngModel)]="rules[i].result"
+            [ngModelOptions]="{ standalone: true }"
+            type="text"
+            class=""
+            placeholder="{{ t('Tag') }}"
+            class="form-control form-control-lg mt-2"
+          />
+        </div>
+        <div class="col-10">
+          <div class="border my-2">
+            <div style="overflow-y: auto;">
+              <div style="height: 15vh;">
+                <tag-input
+                  [(ngModel)]="rules[i].keywords"
+                  [editable]="true"
+                  theme="minimal"
+                  [separatorKeys]="[',']"
+                  [separatorKeyCodes]="[13]"
+                  [placeholder]="t('+ Keyword')"
+                  [secondaryPlaceholder]="t('Enter keywords here')"
+                  (onBlur)="onItemAdd($event)"
+                  (onRemove)="onItemRemove($event)"
+                  (onAdd)="onItemAdd($event)"
+                >
+                </tag-input>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+          <button
+            class="btn btn-secondary mt-2"
+            style="cursor: pointer; padding: 0.5rem 0.75rem;"
+            (click)="removeRule(i)"
+          >
+            {{ t("Remove rule") }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 d-flex align-items-center">
+        <div class="ml-auto">
+          <button
+            class="btn btn-primary mt-2"
+            style="cursor: pointer; padding: 0.5rem 0.75rem;"
+            (click)="addRule()"
+          >
+            {{ t("Add Rule") }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 d-flex align-items-center mt-3">
+        <div *ngIf="showMessage">
+          {{ t("Transcriptions processing is working now. Started: ")
+          }}{{ postDate | date: "dd/MM/yyyy hh:mm" }}
+        </div>
+        <nb-action class="control-action ml-auto"
+          ><button
+            class="btn btn-secondary btn-sm"
+            (click)="openModal(long)"
+            [disabled]="showMessage"
+          >
+            <i class="fas fa-sync-alt mr-2"></i
+            >{{ t("Relaunch files processing") }}
+          </button>
+        </nb-action>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #long>
+  <div class="modal-body text-center">
+    <p *ngIf="nameSpace !== 'dictNames'">
+      {{
+        t(
+          "You will not be able to perform the next re-indexing until this " +
+            "request is completed. Please click Confirm to proceed or Cancel to review the settings."
+        )
+      }}
+    </p>
+    <p *ngIf="nameSpace === 'dictNames'">
+      {{
+        t(
+          "This action involves audio data redaction. Depending on the volume " +
+            "of the stored audio data, this operation can take up to a few days.You will not be able to perform the next " +
+            "redaction until this request is completed. Please click Confirm to proceed or Cancel to review the settings."
+        )
+      }}
+    </p>
+    <button type="button" class="btn btn-primary mr-2" (click)="launchRedo()">
+      {{ t("Confirm") }}
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="decline()">
+      {{ t("Cancel") }}
+    </button>
+  </div>
+</ng-template>

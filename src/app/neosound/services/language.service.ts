@@ -222,6 +222,10 @@ const translationsSp = {
   'emotional speech': 'conversación emocional',
   'calm speech': 'conversación tranquila',
   'silence': 'silencio',
+  'Categories': 'Categorias',
+  'Categories by days': 'Categorias por días',
+  'Agent calls': 'Llamadas del agente',
+  'Agent calls by days': 'El agente llama por días',
 
   // config pop-up
   'Dashboard config': 'Configuración del tablero',
@@ -245,6 +249,7 @@ const translationsSp = {
   'Stages reached by agents': 'Etapas alcanzadas por los agentes',
 
   // company settings
+  'Setup Keyword Rules': 'Configurar reglas de palabras clave',
   'Setup Keywords': 'Configuración de palabras clave',
   'Setup Sensitive Data': 'Configuración de datos sensibles',
   'Setup Checklist': 'Configuración de lista de verificación',
@@ -281,7 +286,7 @@ const translationsSp = {
   'removed': 'quitadas',
   'added': 'añadidas',
   'Re-indexing is working now. Started: ': 'La reindexación está funcionando ahora. Empezado: ',
-  'Redaction is working now. Started: ': 'La redacción está funcionando ahora. Empezado: ',
+  'Transcriptions processing is working now. Started: ': 'La redacción está funcionando ahora. Empezado: ',
   'Relaunch files processing': 'Relanzar procesado de archivos',
   'Remove All': 'Quitar Todas',
   'Please confirm, all ': 'Confirme que todos ',
@@ -524,6 +529,10 @@ const translationsRu = {
   'emotional speech': 'эмоциональная речь',
   'calm speech': 'спокойная речь',
   'silence': 'тишина',
+  'Categories': 'Категории',
+  'Categories by days': 'Категории по дням',
+  'Agent calls': 'Звонки по агентам',
+  'Agent calls by days': 'Звонки агентов по дням',
 
   // config pop-up
   'Dashboard config': 'Конфигурация панели управления',
@@ -547,6 +556,7 @@ const translationsRu = {
   'Stages reached by agents': 'Общее количество достигнутых этапов',
 
   // company settings
+  'Setup Keyword Rules': 'Настройка авто-тэгов',
   'Setup Keywords': 'Настройка стоп-слов',
   'Setup Sensitive Data': 'Настройка конфиденциальных данных',
   'Setup Checklist': 'Настройка чек листа',
@@ -583,7 +593,7 @@ const translationsRu = {
   'removed': 'удалены',
   'added': 'добавлены',
   'Re-indexing is working now. Started: ': 'Процесс индексации запущен. Время начала: ',
-  'Redaction is working now. Started: ': 'Процесс сокрытия имен запущен. Время начала: ',
+  'Transcriptions processing is working now. Started: ': 'Процесс сокрытия имен запущен. Время начала: ',
   'Relaunch files processing': 'Перезапустить обработку файлов',
   'Remove All': 'Удалить Все',
   'Please confirm, all ': 'Пожалуйста подтвердите, все ',
@@ -828,6 +838,10 @@ const translationsPt = {
   'emotional speech': 'conversa emocional',
   'calm speech': 'conversa tranquila',
   'silence': 'silêncio',
+  'Categories': 'Categorias',
+  'Categories by days': 'Categorias por dias',
+  'Agent calls': 'Chamadas de agente',
+  'Agent calls by days': 'Chamadas do agente por dias',
 
   // config pop-up
   'Dashboard config': 'Configuração do painel',
@@ -851,6 +865,7 @@ const translationsPt = {
   'Stages reached by agents': 'Etapas alcançadas pelos agentes',
 
   // company settings
+  'Setup Keyword Rules': 'Configurar regras de palavras-chave',
   'Setup Keywords': 'Configurações de palavras-chave',
   'Setup Sensitive Data': 'Configurações de dados confidenciais',
   'Setup Checklist': 'Configurações da lista de verificação',
@@ -887,7 +902,7 @@ const translationsPt = {
   'removed': 'quitadas',
   'added': 'adicionado',
   'Re-indexing is working now. Started: ': 'A re-indexação está funcionando agora. Iniciado:',
-  'Redaction is working now. Started: ': 'A redação está trabalhando agora. Iniciado:',
+  'Transcriptions processing is working now. Started: ': 'A redação está trabalhando agora. Iniciado:',
   'Relaunch files processing': 'Repita o processamento do arquivo',
   'Remove All': 'Remover tudo',
   'Please confirm, all ': 'Confirme se todos ',
@@ -1138,6 +1153,10 @@ const translationsGe = {
   "emotional speech": "emotionale Rede",
   "calm speech": "ruhige Rede",
   silence: "Pause",
+  'Categories': 'Kategorien',
+  'Categories by days': 'Kategorien nach Tagen',
+  'Agent calls': 'Agentenanrufe',
+  'Agent calls by days': 'Agent ruft nach Tagen an',
 
   // config pop-up
   "Dashboard config": "Übersicht-Konfiguration",
@@ -1162,6 +1181,7 @@ const translationsGe = {
   "Stages reached by agents": "Von Agenten erreichte Stadien",
 
   // company settings
+  'Setup Keyword Rules': 'Einrichten von Schlüsselwortregeln',
   "Setup Keywords": "Setup-Schlüsselwörter",
   "Setup Sensitive Data": "Einrichten vertraulicher Daten",
   "Setup Checklist": "Einrichtungs-Checkliste",
@@ -1199,7 +1219,7 @@ const translationsGe = {
   added: "hinzugefügt",
   "Re-indexing is working now. Started: ":
     "Die Re-Indizierung funktioniert jetzt. Begonnen: ",
-  "Redaction is working now. Started: ":
+  "Transcriptions processing is working now. Started: ":
     "Die Redaktion funktioniert jetzt. Begonnen: ",
   "Relaunch files processing": "Wiederaufnahme der Dateiverarbeitung",
   "Remove All": "Alle entfernen",

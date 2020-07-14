@@ -1,20 +1,14 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  SimpleChanges,
-  OnDestroy
-} from "@angular/core";
-import { LanguageService } from "../../../../../services/language.service";
-import { TagCloudService } from "../../services/tag-cloud.service";
-import { DataService } from "../../../../../shared";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {DataService} from "../../../../../shared";
+import {LanguageService} from "../../../../../services/language.service";
+import {AutoTagCloudService} from "../../services/auto-tag-cloud.service";
 
 @Component({
-  selector: "ngx-hits-stopwords",
-  templateUrl: "./hits-stopwords.component.html"
+  selector: 'ngx-hits-autotags',
+  templateUrl: './hits-autotags.component.html'
 })
-export class HitsStopwordsComponent implements OnInit, OnDestroy {
-  keyWordChart: any = 0;
+export class HitsAutotagsComponent implements OnInit, OnDestroy {
+  autoTagChart: any = 0;
   dataSub1: any;
   hasData: boolean = false;
   primaryColor: string;
@@ -24,7 +18,7 @@ export class HitsStopwordsComponent implements OnInit, OnDestroy {
     delay: 0.1
   };
   constructor(
-    private dataService: TagCloudService,
+    private dataService: AutoTagCloudService,
     private userData: DataService
   ) {
     if (this.userData.config["colors"].secondary) {
@@ -33,26 +27,26 @@ export class HitsStopwordsComponent implements OnInit, OnDestroy {
       this.primaryColor = "#0098d9";
     }
     this.dataSub1 = this.dataService.data.subscribe(data => {
-      if (data && data.keywords) {
-        const sortedKeywords = Object.keys(data.keywords)
+      if (data && data.autotags) {
+        const sortedKeywords = Object.keys(data.autotags)
           .map(key => {
             return {
               name: key,
-              value: data.keywords[key]
+              value: data.autotags[key]
             };
           })
           .sort((a, b) => b.value - a.value)
           .slice(0, 10)
           .reverse();
-        this.keyWordChart = {
+        this.autoTagChart = {
           color: [this.primaryColor],
 
           legend: {
-            data: ["Keywords"]
+            data: ["Categories"]
           },
           yAxis: {
             type: "category",
-            name: this.t("Stopwords"),
+            name: this.t("Categories"),
             data: sortedKeywords.map(i => i.name),
             axisLabel: {
               inside: true,

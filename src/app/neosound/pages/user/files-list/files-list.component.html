@@ -987,6 +987,17 @@
                       <span
                         class="badge badge-secondary mr-1"
                         *ngFor="let tag of item.tags"
+                        style="cursor: pointer;"
+                        (click)="tagClick(tag)"
+                        >{{ tag }}</span
+                      >
+                    </div>
+                    <div>
+                      <span
+                        class="badge badge-autotag mr-1"
+                        *ngFor="let tag of item.autotags"
+                        (click)="autotagClick(tag)"
+                        style="cursor: pointer;"
                         >{{ tag }}</span
                       >
                     </div>
