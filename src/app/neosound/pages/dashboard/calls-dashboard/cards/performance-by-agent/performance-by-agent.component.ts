@@ -76,16 +76,20 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           anger.push(data.batches[batchName].angerCallsN);
           silence.push(data.batches[batchName].silentCallsN);
         });
+      let minX = 100;
       let maxX = 0;
+      let minY = 100;
       let maxY = 0;
       let maxR = 0;
       let minR = 1;
       const buble = batches.map((batchName, index) => {
-        if (maxX < data.batches[batchName].silentCallsN) {
-          maxX = data.batches[batchName].silentCallsN;
+        const silentP = Math.ceil(data.batches[batchName].silentCallsN * 100 / data.batches[batchName].allCallsN);
+        const emoP = Math.ceil(data.batches[batchName].angerCallsN * 100 / data.batches[batchName].allCallsN);
+        if (maxX < silentP) {
+          maxX = silentP;
         }
-        if (maxY < data.batches[batchName].angerCallsN) {
-          maxY = data.batches[batchName].angerCallsN;
+        if (maxY < emoP) {
+          maxY = emoP;
         }
         if (maxR < data.batches[batchName].allCallsN) {
           maxR = data.batches[batchName].allCallsN;
@@ -93,16 +97,22 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
         if (data.batches[batchName].allCallsN < minR) {
           minR = data.batches[batchName].allCallsN;
         }
+        if (silentP < minX) {
+          minX = silentP;
+        }
+        if (emoP < minY) {
+          minY = emoP;
+        }
         return {
           name: batchName,
           data: [
             [
               (data.batches[batchName].silentCallsN /
                 data.batches[batchName].allCallsN) *
-                100,
+              100,
               (data.batches[batchName].angerCallsN /
                 data.batches[batchName].allCallsN) *
-                100,
+              100,
               data.batches[batchName].allCallsN,
               batchName,
               data.batches[batchName].silentCallsN,
@@ -115,7 +125,7 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           },
         };
       });
-      console.log(minR, maxY);
+
       options = {
         color: this.colors,
         grid: {
@@ -144,8 +154,8 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           // axisLabel: {
           //   formatter: "{value}"
           // },
-          min: 0,
-          max: Math.ceil((maxX /maxR * 100)) + 10,
+          min: Math.max(0, minX - Math.ceil(10 * maxX / 100)),
+          max: maxX + Math.ceil(10 * maxX / 100),
         },
         yAxis: {
           splitLine: {
@@ -162,8 +172,8 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           // axisLabel: {
           //   formatter: "{value}"
           // },
-          min: 0,
-          max: Math.ceil((maxY / maxY * 100)) + 10,
+          min: Math.max(0, minY - Math.ceil(10 * maxY / 100)),
+          max: maxY + Math.ceil(10 * maxY / 100),
         },
         tooltip: {
           show: true,
