@@ -204,6 +204,9 @@ export class FilesService {
   listTopics(): Observable<any> {
     return this.http.post(`${environment.api}/listTopics`, {});
   }
+  listTags(): Observable<any> {
+    return this.http.post(`${environment.api}/listTags`, {});
+  }
 
   getFileChecklist(params): Observable<any> {
     return this.http.post(`${environment.api}/getFileChecklist`, params);
