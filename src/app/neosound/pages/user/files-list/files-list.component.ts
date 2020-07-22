@@ -40,6 +40,8 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   selectedTopic: string = "";
   batches: string[] = [];
   tags: string[] = [];
+  selectedTags: string[] = [];
+  selectedTag: string[] = [];
 
   constructor(
     private filesService: FilesService,
@@ -568,5 +570,17 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     }
 
     this.filterService.updateFileList();
+  }
+
+  onSelectTag(event: any) {
+    const deduplicate = new Set([...(Array.isArray(this.selectedTags) ? this.selectedTags : [this.selectedTags]), event.value]);
+    this.selectedTags = Array.from(deduplicate);
+    this.selectedTag = Array.from(deduplicate);
+    this.filterService.filter.tagsContain = this.selectedTags.map(v => ({ display: v, value: v }));
+  }
+  onRemoveTag(topic: string) {
+    this.selectedTags = this.selectedTags.filter((t) => t !== topic);
+    this.selectedTag = this.selectedTags;
+    this.filterService.filter.tagsContain = this.selectedTags.map(v => ({ display: v, value: v }));
   }
 }
