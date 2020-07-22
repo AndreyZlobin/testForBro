@@ -209,21 +209,25 @@
               ></tag-input>
             </div>
             <div class="col-12 pt-3">
-              <div class="mb-2">{{ t("Tags") }}</div>
+              <div class="mb-2">{{ t("Tags1") }}</div>
               <tag-input
-                [(ngModel)]="filterService.filter.tagsContain"
+                [(ngModel)]="selectedTag"
                 [editable]="true"
                 theme="minimal"
                 placeholder="{{ t('Tags') }}"
                 secondaryPlaceholder="{{ t('Tags') }}"
                 [separatorKeys]="[',']"
                 [separatorKeyCodes]="[13]"
+                [typeahead]="tags"
+                [typeaheadMinLength]="0"
+                (typeaheadOnSelect)="onSelectTag($event)"
+                [typeaheadLatinize]="false"
+                [typeaheadSelectFirstItem]="false"
+                [typeaheadScrollable]="true"
+                [typeaheadOptionsLimit]="10"
+                (onAdd)="onSelectTag($event)"
+                (onRemove)="onRemoveTag($event)"
               >
-                <tag-input-dropdown [autocompleteItems]="tags" [showDropdownIfEmpty]="true" [limitItemsTo]="10">
-                  <ng-template let-item="item" let-index="index">
-                    {{ item.display }}
-                  </ng-template>
-                </tag-input-dropdown>
               </tag-input>
             </div>
             <div class="col-12 pt-3">
