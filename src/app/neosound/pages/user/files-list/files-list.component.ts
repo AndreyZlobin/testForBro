@@ -39,6 +39,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   selectedTopics: string[] = [];
   selectedTopic: string = "";
   batches: string[] = [];
+  tags: string[] = [];
 
   constructor(
     private filesService: FilesService,
@@ -59,6 +60,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       }
     });
     this.getBatches();
+    this.getTags();
   }
   ngAfterViewInit() {}
   scrollToElement() {
@@ -70,6 +72,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   setStopwordLooking(value: string): void {
     this.filterService.filter.stopwordLooking = value;
   }
+
   getBatches() {
     this.filesService.listBatches().subscribe((data) => {
       if (data && data.batches) {
@@ -77,6 +80,15 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  getTags() {
+    this.filesService.listTags().subscribe((data) => {
+      if (data && data.tags) {
+        this.tags = data.tags;
+      }
+    });
+  }
+
   setEmotionalTrend(value: string): void {
     this.filterService.filter.sentimentTrend = value;
   }
@@ -480,7 +492,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
         c = this.itemTags;
         break;
       case "tagsContain":
-        c = this.itemTags;
+        c = this.filterService.filter.tagsContain;
         break;
     }
 

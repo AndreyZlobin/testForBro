@@ -214,13 +214,17 @@
                 [(ngModel)]="filterService.filter.tagsContain"
                 [editable]="true"
                 theme="minimal"
-                (onAdd)="onItemAdd($event, 'tagsContain')"
                 placeholder="{{ t('Tags') }}"
                 secondaryPlaceholder="{{ t('Tags') }}"
                 [separatorKeys]="[',']"
                 [separatorKeyCodes]="[13]"
-                (onBlur)="onItemAdd($event, 'tagsContain')"
-              ></tag-input>
+              >
+                <tag-input-dropdown [autocompleteItems]="tags" [showDropdownIfEmpty]="true" [limitItemsTo]="10">
+                  <ng-template let-item="item" let-index="index">
+                    {{ item.display }}
+                  </ng-template>
+                </tag-input-dropdown>
+              </tag-input>
             </div>
             <div class="col-12 pt-3">
               <div class="mb-2">{{ t("Topics") }}</div>
