@@ -242,6 +242,9 @@ angular-tag-cloud > span {
     }
   }
 }
+.file-list button {
+  background: transparent;
+}
 .file-list a {
   &:active,
   &:hover,
@@ -486,4 +489,16 @@ body.nb-theme-default {
 .badge-autotag {
   background-color: var(--color-secondary);
   color: #fff;
+}
+
+.rotating {
+  animation: rotation 2s infinite linear;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }

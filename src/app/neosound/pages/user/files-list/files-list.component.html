@@ -796,7 +796,7 @@
                 </div>
                 <div class="d-flex flex-column" style="width: 55%;">
                   <div class="d-flex flex-row justify-content-between">
-                    <div class="d-flex">
+                    <div class="d-flex" style="width: 65px;">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{ t("Compliance") }}
@@ -824,7 +824,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start" style="width: 92px;">
                       <div class="d-flex flex-column align-items-center">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{ t("Sentiment trend") }}
@@ -858,7 +858,7 @@
                         </ng-template>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start" style="width: 77px;">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{ t("Average emotion") }}
@@ -884,7 +884,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start" style="width: 65px;">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{ t("Comments") }}
@@ -904,7 +904,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start" style="width: 34px;">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{ t("Assessment") }}
@@ -939,7 +939,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row" style="width: 165px;">
                       <div
                         class="pr-2"
                         style="font-size: xx-small; margin-top: 0.3rem;"
@@ -1023,17 +1023,18 @@
                     <div>
                       <button
                         class="btn p-0 c-normal"
-                        style="cursor: pointer;"
+                        [class.rotating]="item.proccessing"
+                        style="cursor: pointer; width: 18px; height: 18px;"
                         (click)="proccessFile(item)"
                         tooltip="{{ t('Refresh') }}{{
                           item.proccessing ? '...' : ''
                         }}"
                       >
-                        <i class="fa fa-sync mr-2"></i>
+                        <i class="fa fa-sync"></i>
                       </button>
                       <button
                         class="btn p-0 c-normal"
-                        style="cursor: pointer;"
+                        style="cursor: pointer; margin-left: 5px;"
                         (click)="showDeleteModal(confirm, item, i)"
                         tooltip="{{ t('Delete') }}"
                       >
