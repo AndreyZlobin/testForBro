@@ -303,7 +303,9 @@ export class FilterService {
           batchid: batchid,
           filename: filename
         })
-        .subscribe();
+        .subscribe(v => {
+          this.fileStore[index].proccessing = false;
+        });
     }
   }
   public resetFilter() {
