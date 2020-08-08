@@ -46,7 +46,7 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
       left: "center",
       bottom: "0%",
       inRange: {
-        color: ["#339ca8", "#005eaa"], //From smaller to bigger value ->
+        color: ["#ffffff", "#0098d9"], //From smaller to bigger value ->
       },
     },
     grid: {
@@ -137,7 +137,7 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
             data: sentiments,
             label: {
               show: true,
-              color: "#fff",
+              color: "#005eaa",
             },
             itemStyle: {
               color: "#000",
