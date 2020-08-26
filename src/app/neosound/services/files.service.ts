@@ -155,7 +155,7 @@ export class FilesService {
   }
 
   uploadFile(params): Observable<any> {
-    return this.http.post(`${environment.api}/uploadFile`, params);
+    return this.http.post(`${environment.localapi}/audiofile/upload`, params);
   }
 
   listFileResults(params): Observable<any> {

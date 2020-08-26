@@ -134,7 +134,7 @@ export class UploadService {
     form.append("batchid", queueObj.batchId);
     form.append("file", queueObj.file);
 
-    const req = new HttpRequest("POST", `${environment.api}/uploadFile`, form, {
+    const req = new HttpRequest("POST", `${environment.localapi}/audiofile/upload`, form, {
       reportProgress: true
     });
 
