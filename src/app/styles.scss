@@ -502,3 +502,13 @@ body.nb-theme-default {
     transform: rotate(359deg);
   }
 }
+
+@media print {
+  .hide-on-print {
+    visibility: hidden;
+    display: none;
+  }
+  .nb-theme-default nb-layout.window-mode .scrollable-container {
+    height: fit-content;
+  }
+}

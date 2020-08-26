@@ -1,0 +1,15 @@
+:host {
+  .wrapper {
+    overflow-y: auto;
+    @media print {
+      overflow-y: auto;
+      & > div {
+       
+        height: auto !important;
+      }
+      div {
+        display: block;
+      }
+    }
+  }
+}

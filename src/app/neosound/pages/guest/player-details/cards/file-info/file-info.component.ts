@@ -5,7 +5,8 @@ import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 
 @Component({
   selector: "ngx-file-info",
-  templateUrl: "./file-info.component.html"
+  templateUrl: "./file-info.component.html",
+  styleUrls: ['./file-info.component.scss']
 })
 export class FileInfoComponent implements OnChanges {
   file: any;

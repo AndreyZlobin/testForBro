@@ -13,7 +13,8 @@ import { FileResultService } from "../../services/file-result.service";
 
 @Component({
   selector: "ngx-text-log",
-  templateUrl: "./text-log.component.html"
+  templateUrl: "./text-log.component.html",
+  styleUrls: ["./text-log.component.scss"]
 })
 export class TextLogComponent implements OnInit, OnDestroy {
   data: any[];
