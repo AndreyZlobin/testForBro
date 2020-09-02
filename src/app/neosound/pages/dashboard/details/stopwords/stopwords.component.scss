@@ -1,10 +1,5 @@
 :host {
-  .landscape {
-    @media print {
-      display: block;
-      canvas {
-        width: 100%;
-      }
-    }
+  a {
+    color: var(--color-secondary);
   }
 }

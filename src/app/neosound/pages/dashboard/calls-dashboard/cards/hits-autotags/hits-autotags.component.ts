@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService} from "../../../../../shared";
 import {LanguageService} from "../../../../../services/language.service";
 import {AutoTagCloudService} from "../../services/auto-tag-cloud.service";
+import { Router } from '@angular/router';
+import { FilterService } from '../../../../../services/filter.service';
 
 @Component({
   selector: 'ngx-hits-autotags',
@@ -19,7 +21,9 @@ export class HitsAutotagsComponent implements OnInit, OnDestroy {
   };
   constructor(
     private dataService: AutoTagCloudService,
-    private userData: DataService
+    private userData: DataService,
+    private router: Router,
+    private filterService: FilterService,
   ) {
     if (this.userData.config["colors"].secondary) {
       this.primaryColor = this.userData.config["colors"].secondary;
@@ -46,7 +50,6 @@ export class HitsAutotagsComponent implements OnInit, OnDestroy {
           },
           yAxis: {
             type: "category",
-            name: this.t("Categories"),
             data: sortedKeywords.map(i => i.name),
             axisLabel: {
               inside: true,
@@ -107,5 +110,9 @@ export class HitsAutotagsComponent implements OnInit, OnDestroy {
       "#32a487"
     ];
     return colors[i];
+  }
+  onChartEvent(event: any) {
+    this.filterService.filter.tagsContain = [{ display: event.name, value: event.name }];;
+    this.router.navigateByUrl("/user/files");
   }
 }
