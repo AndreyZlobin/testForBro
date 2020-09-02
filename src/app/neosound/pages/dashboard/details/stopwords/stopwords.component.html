@@ -1,19 +1,21 @@
 <div class="card">
   <div class="card-header">
     <a
-      class="btn btn-link"
-      style="cursor: pointer;"
       routerLink="/"
-      [tooltip]="t(' Back to Dashboard')"
+      [tooltip]="t('Back to Dashboard')"
     >
       <i class="fas fa-long-arrow-alt-left mr-1"></i>
-    
-    {{ t("Details: Categories") }}
-</a>
+
+      {{ t("Details") }}: {{t("Categories")}}
+    </a>
   </div>
   <div class="card-body">
     <div *ngIf="hasData; else loading">
-      <div echarts [options]="autoTagChart" (chartClick)="onChartEvent($event)"></div>
+      <div
+        echarts
+        [options]="autoTagChart"
+        (chartClick)="onChartEvent($event)"
+      ></div>
     </div>
   </div>
   <ng-template #loading>
