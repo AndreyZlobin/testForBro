@@ -1,22 +1,14 @@
 import {
   Component,
   OnInit,
-  ViewChild,
-  ElementRef,
   Input,
   OnChanges,
   SimpleChanges
 } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { CloudData } from "angular-tag-cloud-module";
-import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
-import { DatepickerOptions } from "ng2-datepicker";
-import { FilesService } from "../../../services/files.service";
 import { FilterService } from "../../../services/filter.service";
 import { DataService } from "../../../shared";
 import { AnalyticsService } from "../../../services/analytics.service";
-import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../../services/language.service";
 
 import { ApiCallsStatsService } from "./services/api-calls-stats.service";

@@ -211,7 +211,7 @@
             <div class="col-12 pt-3">
               <div class="mb-2">{{ t("Tags") }}</div>
               <tag-input
-                [(ngModel)]="selectedTag"
+                [(ngModel)]="filterService.filter.tagsContain"
                 [editable]="true"
                 theme="minimal"
                 placeholder="{{ t('Tags') }}"
