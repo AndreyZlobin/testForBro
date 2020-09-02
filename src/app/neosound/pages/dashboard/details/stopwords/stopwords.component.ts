@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { DataService } from "../../../../shared";
 import { LanguageService } from "../../../../services/language.service";
 import { AutoTagCloudService } from "../../../dashboard/calls-dashboard/services/auto-tag-cloud.service";
+import { Router } from "@angular/router";
+import { FilterService } from "../../../../services/filter.service";
 
 export const colors = [
   "#c12e34",
@@ -41,7 +43,9 @@ export class StopwordsComponent implements OnInit, OnDestroy {
   primaryColor: string;
   constructor(
     private dataService: AutoTagCloudService,
-    private userData: DataService
+    private userData: DataService,
+    private router: Router,
+    private filterService: FilterService,
   ) {
     this.dataSub1 = this.dataService.data.subscribe((data) => {
       if (data && data.autotags) {
@@ -61,19 +65,25 @@ export class StopwordsComponent implements OnInit, OnDestroy {
           .reverse();
         this.autoTagChart = {
           color: [this.primaryColor],
+          grid: {
+            left: 200,
+            right: 50,
+          },
           legend: {
             data: ["Categories"],
           },
           yAxis: {
             type: "category",
-            name: this.t("Categories"),
+            // name: this.t("Categories"),
             data: sortedKeywords.map((i) => i.name),
-            axisLabel: {
-              inside: true,
-              textStyle: {
-                color: "#ffffff",
-              },
-            },
+            // axisLabel: {
+            //   inside: true,
+            //   textStyle: {
+            //     color: "#ffffff",
+            //   },
+            // },
+            nameLocation: 'center',
+            nameRotate: '90',
             axisTick: {
               show: false,
             },
@@ -82,9 +92,11 @@ export class StopwordsComponent implements OnInit, OnDestroy {
             },
             z: 10,
           },
+
           xAxis: {
             type: "value",
             name: this.t("Hits"),
+            nameLocation: 'center',
           },
           series: [
             {
@@ -132,5 +144,9 @@ export class StopwordsComponent implements OnInit, OnDestroy {
   }
   print() {
     window.print();
+  }
+  onChartEvent(event: any) {
+    this.filterService.filter.tagsContain = [{ display: event.name, value: event.name }];;
+    this.router.navigateByUrl("/user/files");
   }
 }

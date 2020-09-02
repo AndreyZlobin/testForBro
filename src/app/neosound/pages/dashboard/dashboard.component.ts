@@ -1,12 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { Router } from "@angular/router";
-import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
-import { DatepickerOptions } from "ng2-datepicker";
+import { Component, OnInit } from "@angular/core";
+import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { FilesService } from "../../services/files.service";
-import { FilterService } from "../../services/filter.service";
 import { DataService } from "../../shared";
-import { AnalyticsService } from "../../services/analytics.service";
-import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../services/language.service";
 import * as moment from "moment";
 
@@ -19,7 +14,7 @@ export const colors = [
   "#339ca8",
   "#cda819",
   "#32a487"
-]; //shine
+];
 
 const rgbToHex = rgb => {
   let hex = Number(rgb).toString(16);
