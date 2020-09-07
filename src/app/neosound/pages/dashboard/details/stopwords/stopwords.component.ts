@@ -41,6 +41,7 @@ export class StopwordsComponent implements OnInit, OnDestroy {
   dataSub1: any;
   hasData: boolean = false;
   primaryColor: string;
+  height: string = '600px';
   constructor(
     private dataService: AutoTagCloudService,
     private userData: DataService,
@@ -63,6 +64,7 @@ export class StopwordsComponent implements OnInit, OnDestroy {
           })
           .sort((a, b) => b.value - a.value)
           .reverse();
+        this.height = 200 + 40 * sortedKeywords.length + 'px';
         this.autoTagChart = {
           color: [this.primaryColor],
           grid: {
@@ -74,14 +76,7 @@ export class StopwordsComponent implements OnInit, OnDestroy {
           },
           yAxis: {
             type: "category",
-            // name: this.t("Categories"),
             data: sortedKeywords.map((i) => i.name),
-            // axisLabel: {
-            //   inside: true,
-            //   textStyle: {
-            //     color: "#ffffff",
-            //   },
-            // },
             nameLocation: 'center',
             nameRotate: '90',
             axisTick: {
