@@ -231,6 +231,38 @@
               </tag-input>
             </div>
             <div class="col-12 pt-3">
+              <div ngbDropdown class="ghost-dropdown dropdown w-100">
+                <button
+                  class="btn btn-secondary btn-sm dropdown-toggle"
+                  style="border: 1px solid #dfe3e9;"
+                  id="dropdownBasic1"
+                  ngbDropdownToggle
+                >
+                  {{t(filterService.filter.tagCondition === 'or' ? 'Any tag matched' : 'All tag matched')}}
+                </button>
+                <ul
+                  ngbDropdownMenu
+                  aria-labelledby="dropdownBasic1"
+                  class="dropdown-menu"
+                >
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setTagCondition('or')"
+                  >
+                    {{ t('Any tag matched') }}
+                  </li>
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setTagCondition('and')"
+                  >
+                    {{ t('All tag matched') }}
+                  </li>
+                </ul>
+            </div>
+          </div>
+            <div class="col-12 pt-3">
               <div class="mb-2">{{ t("Topics") }}</div>
               <input
                 type="text"
