@@ -230,7 +230,7 @@
               >
               </tag-input>
             </div>
-            <div class="col-12 pt-3">
+            <div class="col-12">
               <div ngbDropdown class="ghost-dropdown dropdown w-100">
                 <button
                   class="btn btn-secondary btn-sm dropdown-toggle"
@@ -238,7 +238,7 @@
                   id="dropdownBasic1"
                   ngbDropdownToggle
                 >
-                  {{t(filterService.filter.tagCondition === 'or' ? 'Any tag matched' : 'All tag matched')}}
+                  {{t(filterService.filter.tagsCondition === 'or' ? 'Any tag matched' : 'All tags matched')}}
                 </button>
                 <ul
                   ngbDropdownMenu
@@ -257,7 +257,7 @@
                     ngbDropdownItem
                     (click)="setTagCondition('and')"
                   >
-                    {{ t('All tag matched') }}
+                    {{ t('All tags matched') }}
                   </li>
                 </ul>
             </div>
