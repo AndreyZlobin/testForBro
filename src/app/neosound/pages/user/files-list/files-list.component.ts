@@ -583,4 +583,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.selectedTag = this.selectedTags;
     this.filterService.filter.tagsContain = this.selectedTags.map(v => ({ display: v, value: v }));
   }
+  setTagCondition(con: string) {
+    this.filterService.filter.tagCondition = con;
+  }
 }

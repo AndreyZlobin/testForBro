@@ -1249,6 +1249,8 @@ const translationsGe = {
   "Filter texts with stopwords": "Texte mit Stoppwörtern filtern",
   "Filter texts with missing word": "Texte mit fehlendem Wort filtern",
   "Filter favorite texts": "Beliebte Texte filtern",
+  'Any tag matched': 'Jedes übereinstimmende Tag',
+  'All tag matched': 'Alle Tags stimmten überein',
 };
 
 

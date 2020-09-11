@@ -55,6 +55,7 @@ export class FilterService {
     noChecklist: boolean;
     commentsOnly: boolean;
     noComments: boolean;
+    tagCondition: string;
   } = {
     uploadDate: null,
     angerfrom: null,
@@ -96,7 +97,8 @@ export class FilterService {
     checklistOnly: null,
     noChecklist: null,
     commentsOnly: null,
-    noComments: null
+    noComments: null,
+    tagCondition: 'or',
   };
   constructor(private filesService: FilesService) {}
 
@@ -183,7 +185,8 @@ export class FilterService {
         : null,
       noChecklist: this.filter.noChecklist ? this.filter.noChecklist : null,
       commentsOnly: this.filter.commentsOnly ? this.filter.commentsOnly : null,
-      noComments: this.filter.noComments ? this.filter.noComments : null
+      noComments: this.filter.noComments ? this.filter.noComments : null,
+      tagCondition: this.filter.tagCondition ? this.filter.tagCondition : 'or',
     };
     if (this.filter.keywordsContain && this.filter.keywordsContain.length) {
       params["keywordsContain"] = this.filter.keywordsContain
@@ -350,7 +353,8 @@ export class FilterService {
       checklistOnly: null,
       noChecklist: null,
       commentsOnly: null,
-      noComments: null
+      noComments: null,
+      tagCondition: 'or',
     };
     this.updateFileList();
   }
