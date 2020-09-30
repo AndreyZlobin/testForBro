@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.http.get('assets/config/config.json').subscribe((data: any) => {
       this.config = this.dataService.config = data;
-      if (el && el[0] && this.config.logofilename) {
+      if (el && el[0] && this.config.logofilename && !document.getElementById('loginLogo')) {
         const logo = document.createElement('IMG');
         logo.setAttribute('src', `assets/config/${this.config.logofilename}`);
         logo.setAttribute('class', 'loginLogo');

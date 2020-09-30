@@ -32,4 +32,7 @@ export class TermsComponent implements OnInit {
   isEnglish() {
     return this.lang.checkLanguage('en');
   }
+  isSpanish() {
+    return this.lang.checkLanguage('sp');
+  }
 }

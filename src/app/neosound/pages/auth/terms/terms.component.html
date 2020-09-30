@@ -1,14 +1,13 @@
 <nb-card>
     <nb-card-body>
         <div id="main-content" class="wiki-content">
-            <div id="main-content" class="wiki-content" *ngIf="isEnglish()">
+            <div id="main-content" class="wiki-content" *ngIf="!isSpanish()">
 
                 <div class="confluence-information-macro confluence-information-macro-note conf-macro output-block"
                     data-hasbody="true" data-macro-name="note"><span
                         class="aui-icon aui-icon-small aui-iconfont-warning confluence-information-macro-icon"> </span>
                     <div class="confluence-information-macro-body"></div>
                 </div>
-                <p><br></p>
                 <p align="center"><strong>Terms and Conditions Applicable for Use of {{legalName}} Web API</strong></p>
                 <p>Each customer as a user (“User”) agrees to comply with all terms and conditions as stated below with
                     regards to a receipt of API delivery service (“Service”) on {{legalName}} Web API (“Software”), a
@@ -285,291 +284,369 @@
 
 
 
-            <div id="main-content" class="wiki-content" *ngIf="!isEnglish()">
+            <div id="main-content" class="wiki-content" *ngIf="isSpanish()">
+<p align="center"><strong>Términos y condiciones aplicables para el uso de la API web de {{legalName}}</strong></p>
+<p>
+Cada cliente como usuario (&quot;Usuario&quot;) acepta cumplir con todos los términos y condiciones que
+se indican a continuación con respecto a la recepción del servicio de entrega de API (&quot;Servicio&quot;)
+en la API web de NeoSound (&quot;Software&quot;), un producto de NeoSound Intelligence. B.V.
+(&quot;LICENCIANTE&quot;). A los fines del uso del Software, se considera que el Usuario ha aceptado que
+es vinculante con las disposiciones de los Términos y Condiciones Aplicables para el Uso de la
+API Web de NeoSound (&quot;Términos de Uso&quot;) durante la instalación o el primer uso de El Software
+por Usuario.
+</p><p>
+<strong>Sección 1 - Disposiciones generales</strong>
+</p><p>
+Los Términos de uso definen los términos y condiciones en la solicitud del Usuario para el
+Servicio en línea del LICENCIANTE entre el LICENCIANTE y el Usuario para registrarse como
+solicitante.
+</p><p>
+<strong>Sección 2 - Aplicación</strong>
+</p><p>
+1. Si el Usuario desea hacer uso del Servicio, debe entender y aceptar los Términos de uso y
+realizar la solicitud del Servicio de la manera especificada por el LICENCIANTE.
+</p><p>
+2. Si el LICENCIANTE acepta la solicitud por parte del Usuario como se indica en el párrafo
+anterior, El LICENCIANTE notificará al Usuario a tal efecto de la manera especificada por el
+LICENCIANTE.
+</p><p>
+3. Para los fines de la solicitud del Servicio como se indica en el párrafo 1 anterior, se requiere
+que el Usuario registre de antemano los artículos enumerados a continuación para el
+LICENCIANTE, y lo mismo se aplica a un cambio en los artículos a continuación. Los daños
+debidos a la ausencia del registro serán exclusivamente a cargo del Usuario.
+</p><p>
+( i ) nombre comercial (nombre comercial), nombre, nombre y dirección del representante;
+</p><p>
+(ii) nombre, dirección de correo electrónico o número de teléfono de una persona responsable
+del uso del Servicio u otros asuntos que especifique el LICENCIANTE;
+</p><p>
+(iii) propósito del uso del Software; y
+</p><p>
+(iv) otros asuntos relacionados con las operaciones del Usuario según lo especificado por el
+LICENCIANTE
+</p><p>
+<strong>Sección 3 - Derecho de uso del software</strong>
+</p><p>
+De acuerdo con los términos y condiciones especificados en los Términos de uso,
+LICENCIANTE otorga al Usuario el derecho no exclusivo de usar el Software, en un sistema
+informático específico y pre-registrado, con el único propósito de desarrollar un sistema de
+usuario que utilice el Software. Aunque el software está equipado con una funcionalidad para
+detectar emociones, los resultados de la detección y el reconocimiento de emociones pueden
+diferir según el entorno en el que se utiliza el software y el sistema operativo en el que se utiliza
+el software.
+</p><p>
+<strong>Sección 4 - Sistema de Ventas y Distribución de Desarrollo.</strong>
+</p><p>
+El usuario puede vender o distribuir a un tercero cualquier sistema creado por él mismo usando
+el Software de acuerdo con la Sección 3. El Usuario no puede, en ningún caso, sublicenciar,
+distribuir, arrendar o transferir el Software (consulte la Sección 7, artículo (ii)).
+</p><p>
 
-                <div class="confluence-information-macro confluence-information-macro-note conf-macro output-block"
-                    data-hasbody="true" data-macro-name="note"><span
-                        class="aui-icon aui-icon-small aui-iconfont-warning confluence-information-macro-icon"> </span>
-                    <div class="confluence-information-macro-body">
-                        <ul class="inline-task-list" data-inline-tasks-content-id="25069127"
-                            style="list-style-type: none;">
-                            <li data-inline-task-id="3">
-                                <input type="checkbox" checked /> He leído los términos y condiciones y la política de
-                                privacidad y estoy de acuerdo con ellos</li>
-                            <li data-inline-task-id="4"><input type="checkbox" checked /> Acepto que mis datos sean
-                                utilizados, guardados y procesados por {{legalNameFull}} para la utilización de mi
-                                cuenta.</li>
-                        </ul>
-                    </div>
-                </div>
-                <p><br></p>
-                <p align="center"><strong>Términos y condiciones aplicables para el uso de la&nbsp;API
-                        web&nbsp;de&nbsp;{{legalName}}</strong></p>
-                <p>Cada cliente como usuario ("Usuario") acepta cumplir con todos los términos y condiciones que se
-                    indican a continuación con respecto a la recepción del servicio de entrega de API ("Servicio") en la
-                    API web de {{legalName}} ("Software"), un producto de {{legalName}} Intelligence. B.V.
-                    ("LICENCIANTE"). A los fines del uso del Software, se considera que el Usuario ha aceptado que es
-                    vinculante con las disposiciones de los Términos y Condiciones Aplicables para el Uso de la API Web
-                    de {{legalName}} ("Términos de Uso") durante la instalación o el primer uso de El Software por
-                    Usuario.</p>
-                <p><strong>Sección 1 - Disposiciones generales</strong></p>
-                <p>Los Términos de uso definen los términos y condiciones en la solicitud del Usuario para el Servicio
-                    en línea del LICENCIANTE entre el LICENCIANTE&nbsp;y el Usuario para registrarse como solicitante.
-                </p>
-                <p>&nbsp;<strong>Sección 2 - Solicitud</strong></p>
-                <p>1. Si el Usuario desea hacer uso del Servicio, debe entender y aceptar los Términos de uso y realizar
-                    la solicitud del Servicio de la manera especificada por el LICENCIANTE.</p>
-                <p>2. Si el LICENCIANTE&nbsp;acepta la solicitud por parte del Usuario como se indica en el párrafo
-                    anterior, LICENCIANTE notificará al Usuario a tal efecto de la manera especificada por LICENCIANTE.
-                </p>
-                <p>3. Para los fines de la solicitud del Servicio como se indica en el párrafo 1 anterior, se requiere
-                    que el Usuario registre de antemano los artículos enumerados a continuación para el LICENCIANTE, y
-                    lo mismo se aplica a un cambio en los artículos a continuación. Los daños debidos a la ausencia del
-                    registro serán exclusivamente a cargo del Usuario.</p>
-                <p>( i ) nombre comercial (nombre comercial), nombre, nombre y dirección del representante;</p>
-                <p>(ii) nombre, dirección de correo electrónico o número de teléfono de una persona responsable del uso
-                    del Servicio u otros asuntos que especifique el LICENCIANTE;</p>
-                <p>(iii) propósito del uso del Software; y</p>
-                <p>(iv) otros asuntos relacionados con las operaciones del Usuario según lo especificado por el
-                    LICENCIANTE</p>
-                <p><strong>Sección 3 - Derecho de uso del software</strong></p>
-                <p>De acuerdo con los términos y condiciones especificados en los Términos de uso,
-                    LICENCIANTE&nbsp;otorga al Usuario el derecho no exclusivo de usar el Software, en un sistema
-                    informático específico y pre-registrado, con el único propósito de desarrollar un sistema de usuario
-                    que utilice el Software. Aunque el software está equipado con una funcionalidad para detectar
-                    emociones, los resultados de la detección y el reconocimiento de emociones pueden diferir según el
-                    entorno en el que se utiliza el software y el sistema operativo en el que se utiliza el software.
-                </p>
-                <p><strong>Sección 4 - Sistema de Ventas y Distribución de Desarrollo.</strong></p>
-                <p>El usuario puede vender o distribuir a un tercero cualquier sistema creado por él mismo usando el
-                    Software de acuerdo con la Sección 3. El Usuario no puede, en ningún caso, sub-licenciar,
-                    distribuir, arrendar o transferir el Software (consulte la Sección 7, artículo (ii)).</p>
-                <p><strong>Sección 5 - Protección de los derechos de propiedad intelectual del software</strong></p>
-                <p>1. Todos los derechos de propiedad intelectual, incluidos los derechos de autor, derechos de patente,
-                    marcas comerciales y otros derechos similares, relacionados con el Software son atribuibles al
-                    LICENCIANTE.</p>
-                <p>2. El Usuario acepta que todos los derechos de propiedad intelectual relacionados con el Software y
-                    sus copias no son transferibles al Usuario, de conformidad con las disposiciones de los Términos de
-                    uso y otras disposiciones de los documentos relacionados.</p>
-                <p><strong>Sección 6 - Confidencialidad</strong></p>
-                <p>El usuario reconoce que el software es información secreta y confidencial que es propiedad de
-                    LICENCIANTE. El Usuario acuerda mantener el secreto y la confidencialidad al no permitir el acceso
-                    al Software a terceros que no sean empleados y representantes del Usuario que tengan una necesidad
-                    legítima de acceder al Software para realizar sus tareas oficiales. El usuario implementará todas
-                    las medidas necesarias para proteger el Software del acceso y uso no autorizados.</p>
-                <p><strong>Sección 7 - Actos prohibidos</strong></p>
-                <p>El usuario tiene prohibido realizar cualquiera de los actos tal como se especifica en los siguientes
-                    artículos:</p>
-                <p>(i) Usar cualquier sistema informático que no sea el sistema informático designado que se haya
-                    registrado en el Software;</p>
-                <p>(ii) En cualquier caso, sub-licenciar, distribuir, arrendar o transferir el Software, y tomar
-                    cualquier acción para infringir los derechos del LICENCIANTE en relación con asuntos fuera del
-                    alcance que se especifican explícitamente en los Términos de uso, incluidos, entre otros, a
-                    duplicación, edición, modificación, análisis, publicación, difusión, exhibición, distribución,
-                    transferencia, alquiler, traducción, adaptación, transmisión, reimpresión, grabación, re-licencia,
-                    registro de derechos, y aplicaciones, etc .;</p>
-                <p>(iii) Intentar derivar o crear el programa fuente a partir del programa objeto, ya sea por
-                    compilación inversa, desensamblaje, ingeniería inversa o de otro tipo;</p>
-                <p>(iv) Copiar, o reproducir de otro modo, el Software en un sistema o medio que no sea el sistema
-                    informático especificado;</p>
-                <p>(v) Exportación de software a cualquier país extranjero;</p>
-                <p>(vi) Transferencia, préstamo o disposición de cualquier otra forma del Software a cualquier tercero;
-                </p>
-                <p>(vii) Utilizar software con el propósito de calumniar, discriminar o dañar a un tercero;</p>
-                <p>(viii) Utilizar software con el propósito de infringir la privacidad de un tercero; y</p>
-                <p>(ix) Usar el software para cualquier otro propósito que viole la ley o la política pública.</p>
-                <p><strong>Sección 8 - Responsabilidad</strong></p>
-                <p>El usuario acepta utilizar el Software a su propio riesgo. El Usuario será responsable de los daños
-                    sufridos por el LICENCIANTE si el Usuario utiliza el Software en violación de cualquier parte de los
-                    Términos de uso.</p>
-                <p><strong>Sección 9 - Adquisición de datos de voz</strong></p>
-                <p>El LICENCIANTE puede usar los datos de voz enviados desde el sistema de desarrollo creado por el
-                    Usuario únicamente con el propósito de mejorar la precisión del Software.</p>
-                <p>
-                    El LICENCIANTE se preocupa por la integridad y seguridad de los datos de voz del cliente así como
-                    otra información relacionada y datos personales. Usted reconoce que es el único responsable de
-                    cualquier daño personal o a la propiedad que surja de o esté relacionado con el uso del Software.
-                    Los datos de voz recopilados por el licenciante sólo podrían llegar a divulgarse bajo los siguientes
-                    supuestos:
-                </p>
-                <p><strong>Por Ley</strong></p>
-                <p>Si la divulgación de los datos de voz o cualquier información recopilada es para responder a un
-                    proceso legal, para investigar o remediar posibles violaciones de nuestra políticas, o para proteger
-                    los derechos, la propiedad y la seguridad de otros. En ese caso podemos compartir su información
-                    según lo requerido por cualquier ley, norma o reglamento aplicable.</p>
+<strong>Sección 5 - Protección de los derechos de propiedad intelectual del software</strong>
+</p><p>
+1. Todos los derechos de propiedad intelectual, incluidos los derechos de autor, derechos de
+patente, marcas comerciales y otros derechos similares, relacionados con el Software son
+atribuibles al LICENCIANTE.
+</p><p>
+2. El Usuario acepta que todos los derechos de propiedad intelectual relacionados con el
+Software y sus copias no son transferibles al Usuario, de conformidad con las disposiciones de
+los Términos de uso y otras disposiciones de los documentos relacionados.
+</p><p>
+<strong>Sección 6 - Confidencialidad</strong>
+</p><p>
+El usuario reconoce que el software es información secreta y confidencial que es propiedad de
+LICENCIANTE. El Usuario acuerda mantener el secreto y la confidencialidad al no permitir el
+acceso al Software a terceros que no sean empleados y representantes del Usuario que tengan
+una necesidad legítima de acceder al Software para realizar sus tareas oficiales. El usuario
+implementará todas las medidas necesarias para proteger el Software del acceso y uso no
+autorizados.
+</p><p>
+<strong>Sección 7 - Actos prohibidos</strong>
+</p><p>
+El usuario tiene prohibido realizar cualquiera de los actos tal como se especifica en los
+siguientes artículos:
+</p><p>
+(i) Usar cualquier sistema informático que no sea el sistema informático designado que se haya
+registrado en el Software;
+</p><p>
+(ii) En cualquier caso, sublicenciar, distribuir, arrendar o transferir el Software, y tomar cualquier
+acción para infringir los derechos del LICENCIANTE en relación con asuntos fuera del alcance
+que se especifican explícitamente en los Términos de uso, incluidos, entre otros, a duplicación,
+edición, modificación, análisis, publicación, difusión, exhibición, distribución, transferencia,
+alquiler, traducción, adaptación, transmisión, reimpresión, grabación, re-licencia, registro de
+derechos, y aplicaciones, etc .;
+</p><p>
+(iii) Intentar derivar o crear el programa fuente a partir del programa objeto, ya sea por
+compilación inversa, desensamblaje, ingeniería inversa o de otro tipo;
+</p><p>
+(iv) Copiar, o reproducir de otro modo, el Software en un sistema o medio que no sea el sistema
+informático especificado;
+</p><p>
+(v) Exportación de software a cualquier país extranjero;
+</p><p>
+(vi) Transferencia, préstamo o disposición de cualquier otra forma del Software a cualquier
+tercero;
+</p><p>
+(vii) Utilizar software con el propósito de calumniar, discriminar o dañar a un tercero;
+</p><p>
+(viii) Utilizar software con el propósito de infringir la privacidad de un tercero; y
+</p><p>
+(ix) Usar el software para cualquier otro propósito que viole la ley o la política pública.
+Sección 8 - Responsabilidad
+</p><p>
+El usuario acepta utilizar el Software a su propio riesgo. El Usuario será responsable de los
+daños sufridos por el LICENCIANTE si el Usuario utiliza el Software en violación de cualquier
+parte de los Términos de uso.
+</p><p>
 
-                <p><strong>Sección 10 - Tarifas de uso</strong></p>
-                <p>El método de cálculo y los montos de las tarifas de uso, tarifas opcionales y otras tarifas y gastos
-                    pagaderos por el Servicio, incluidos los no especificados en los Términos de uso, serán los
-                    especificados en el sitio web de LICENCIANTE para el Servicio (<a class="external-link"
-                        href="https://translate.google.com/translate?hl=es&amp;prev=_t&amp;sl=auto&amp;tl=es&amp;u={{companyUrl}}"
-                        rel="nofollow">{{companyUrl}}</a>) o como pueda ser notificado por el LICENCIANTE&nbsp;al
-                    Usuario de vez en cuando.</p>
-                <p><strong>Sección 11 - Método de pago de honorarios</strong></p>
-                <p>El usuario debe pagar las tarifas de la manera prescrita en los artículos respectivos a continuación:
-                </p>
-                <p>(i) Si opta por pagar en la factura, el Usuario paga las tarifas en la fecha especificada por el
-                    LICENCIANTE en la cuenta bancaria especificada por el LICENCIANTE. Los gastos de transferencia
-                    correrán a cargo del Usuario. Cuando el pago se realice en la factura, las tarifas se pagarán el
-                    último día del mes anterior al mes en que comience el uso del Servicio.</p>
-                <p>(ii) Si paga con tarjeta de crédito o PayPal, el Usuario pagará las tarifas conforme al contrato con
-                    una tarjeta de crédito o compañía de PayPal. En el caso de cualquier disputa entre o entre el
-                    Usuario, la tarjeta de crédito o la compañía de PayPal, una agencia de cobranza, una institución
-                    financiera y / u otra parte involucrada, dicha disputa se resolverá entre las partes involucradas,
-                    entre las partes involucradas, sin que el LICENCIANTE&nbsp;sea responsable Cualquier responsabilidad
-                    alguna. Cuando el pago se realice con tarjeta de crédito o PayPal, se pagará por adelantado la
-                    tarifa de un mes al inicio del uso del Servicio.</p>
-                <p>(iii) En el caso de un cambio en las tarifas según lo dispuesto en la Sección 10 de acuerdo con la
-                    situación de utilización, el soporte cargado también cambiará automáticamente.</p>
-                <p><strong>Sección 12 - Término aplicable del acuerdo</strong></p>
-                <p>1. A menos que se acuerde un término fijo para el uso del Servicio, el término del Acuerdo con
-                    respecto al Servicio comienza el día en que se completa el registro del Usuario y el Servicio se
-                    pone a disposición del Usuario.</p>
-                <p>2. A menos que se acuerde un término fijo para el uso del Servicio, el término del Acuerdo con
-                    respecto al Servicio finaliza el último día del mes siguiente al mes en que el Usuario notifique al
-                    LICENCIANTE&nbsp;su intención de finalizar el uso del Servicio. Servicio en el caso de pago según la
-                    Sección anterior, artículo (i), o finaliza el día en que el Usuario se retira del uso del Servicio
-                    en el caso de pago bajo la Sección anterior, artículo (ii).</p>
-                <p>3. Si se acuerda un término fijo para el uso del Servicio y ni el LICENCIANTE&nbsp;ni el Usuario
-                    notifican a la otra parte su intención de no renovar el término con respecto al Servicio antes del
-                    último día del mes anterior al mes en el que el el plazo expira, se considerará que el Acuerdo ha
-                    sido renovado con respecto al Servicio a voluntad propia del Usuario y las tarifas del plazo
-                    renovado serán pagaderas y no serán reembolsables.</p>
-                <p><strong>Sección 13 - Interés por defecto</strong></p>
-                <p>1. En el caso de que el Usuario no pague las tarifas de uso u otras obligaciones monetarias pagaderas
-                    por él en sus fechas de vencimiento, el Usuario pagará los intereses por defecto sobre cualquier
-                    monto vencido a una tasa del 14.6% anual. La cantidad del interés por defecto se pagará en una suma
-                    global junto con las tarifas de uso y otras cantidades pagaderas por el Usuario en o antes de la
-                    fecha y en la forma especificada por el LICENCIANTE.</p>
-                <p>2. La transferencia y otros cargos necesarios para el pago conforme al párrafo anterior serán
-                    únicamente por cuenta del Usuario.</p>
-                <p><strong>Sección 14 - Notificación de revisión de tarifa de servicio</strong></p>
-                <p>El LICENCIANTE&nbsp;puede, al notificar al Usuario de la manera especificada en la Sección 21 a más
-                    tardar treinta (30) días antes de dicha fecha, aumentar o disminuir las tarifas del Servicio,
-                    agregar una tarifa del servicio similar o imponer una tarifa por Servicio previamente gratuito.</p>
-                <p><strong>Sección 15 - Suspensión, uso restringido u otras condiciones de servicio debido a la razón
-                        del LICENCIANTE o fuerza mayor</strong></p>
-                <p>El LICENCIANTE&nbsp;puede, al caer bajo cualquiera de los siguientes artículos, suspender la
-                    prestación del Servicio o restringir el uso del mismo sin previo aviso:</p>
-                <p>(i) Cuando sea inevitable para el mantenimiento o construcción del equipo del LICENCIANTE;</p>
-                <p>(ii) Cuando sea inevitable por la ocurrencia o la prevención contra fallas u otros problemas del
-                    equipo del LICENCIANTE&nbsp;y/o del operador de telecomunicaciones;</p>
-                <p>(iii) En el caso de acciones reales o sospechosas, incluido el acceso no autorizado, craqueo o ataque
-                    al equipo del LICENCIANTE;</p>
-                <p>(iv) Cuando el LICENCIANTE&nbsp;determina que el uso del Servicio (incluyendo el mal uso de un
-                    tercero) podría causar potencialmente afecta negativamente en el servicio, contenido de Usuario, a
-                    terceros y otros;</p>
-                <p>(v) En caso de desastre natural u otras circunstancias inevitables; o</p>
-                <p>(vi) Cuando el LICENCIANTE&nbsp;determine lo contrario como sea necesario para la conservación del
-                    Servicio debido a razones inevitables.</p>
-                <p><strong>Sección 16 - Suspensión, uso restringido u otras condiciones de servicio debido a la razón
-                        del usuario</strong></p>
-                <p>Cuando el Usuario cae bajo cualquiera de los siguientes elementos, el LICENCIANTE puede, sin previo
-                    aviso o exigir, suspender la prestación del Servicio o restringir el uso del mismo. En estos casos,
-                    el LICENCIANTE&nbsp;no está obligado a revelar el motivo al Usuario.</p>
-                <p>(i) Cuando el Usuario ha fallado o potencialmente no cumplirá con sus obligaciones bajo este Acuerdo;
-                </p>
-                <p>(ii) cuando el Usuario ha interferido con las operaciones del Servicio;</p>
-                <p>(iii) cuando el Usuario haya declarado un hecho falso por el uso del Servicio;</p>
-                <p>(iv) Cuando el Usuario ha cometido cualquiera de las Leyes de Prohibición como se define en la
-                    Sección 7;</p>
-                <p>(v) Cuando la tarjeta de crédito especificada por el Usuario ya no está disponible para su uso,
-                    incluso debido a su invalidez; o</p>
-                <p>(vi) Cuando el LICENCIANTE haya rescindido al Usuario debido a su incumplimiento del contrato en
-                    otros servicios prestados por el LICENCIANTE.</p>
-                <p><strong>Sección 17 - Abolición del servicio</strong></p>
-                <p>El LICENCIANTE puede, a su propia discreción, abolir todo o parte del Servicio notificando al Usuario
-                    a tal efecto por correo electrónico a la dirección de correo electrónico registrada del Usuario, a
-                    más tardar noventa (90) días antes de la fecha de abolición. En este caso, luego de la notificación
-                    enviada al Usuario por parte del LICENCIANTE, este Acuerdo se terminará. Además, en el caso de que
-                    el Usuario, su cliente o un tercero incurra en daños por la supresión del Servicio basado en esta
-                    Sección, el LICENCIANTE&nbsp;no será responsable de dichos daños.</p>
-                <p><strong>Sección 18 - Compensación por daños y perjuicios</strong></p>
-                <p>En el caso de que el Usuario o su cliente causen daños al LICENCIANTE debido a una razón que se
-                    menciona en los siguientes artículos, el LICENCIANTE&nbsp;puede reclamar una compensación por los
-                    daños del Usuario.</p>
-                <p>(i) Violar este Acuerdo o las leyes y regulaciones; o</p>
-                <p>(ii) Infringir los derechos de propiedad intelectual, incluido el uso de la marca comercial del
-                    LICENCIANTE, sin obtener su consentimiento explícito.</p>
-                <p><strong>Sección 19 - Limitación de responsabilidad</strong></p>
-                <p>1. En cualquier caso, el LICENCIANTE no será responsable ante el Usuario por ningún tipo de daños
-                    directos, especiales, emergentes, indirectos o indirectos (incluida la pérdida de beneficios, la
-                    pérdida de datos y el costo de adquisición del equipo de reemplazo). La limitación de
-                    responsabilidad no se verá afectada independientemente de si el LICENCIANTE ha recibido una
-                    notificación de la probabilidad de daño o no, o si la ocurrencia de dicho daño es imputable a la
-                    violación o contradicción de cualquier contrato, acto fraudulento, incumplimiento de la garantía. ,
-                    negligencia, software inutilizable y cualquier otra causa. Además, si el LICENCIANTE&nbsp;compensará
-                    cualquier daño sufrido por el Usuario, independientemente de la naturaleza legal del daño, el monto
-                    de la compensación no deberá exceder el monto de las tarifas de uso realmente pagadas por el Usuario
-                    durante el período de seis (6) meses inmediatamente anterior al Mes en el que se produce la causa
-                    del daño.</p>
-                <p>2. A pesar de las cláusulas de exención de responsabilidad contenidas en el párrafo anterior y en
-                    otras partes de los Términos de uso, en los casos en que el Usuario se encuentre en la categoría de
-                    "Consumidor" definida en el Artículo 2, párrafo 1 de la Ley de Contratos con el Consumidor, la
-                    responsabilidad del LICENCIANTE&nbsp;contra los daños incluidos en Cada uno de los elementos
-                    enumerados a continuación será el siguiente:</p>
-                <p>(i) Si el LICENCIANTE causa daños (excepto los definidos en el siguiente artículo) al Usuario
-                    (considerado como "Consumidor") debido a su incumplimiento de su obligación, el
-                    LICENCIANTE&nbsp;debe pagar la cantidad del daño directo y ordinario, cantidad que deberá No
-                    excederá el monto de las tarifas pagadas por el Usuario.</p>
-                <p>(ii) Si el LICENCIANTE causa un daño al Usuario (considerado como "Consumidor") debido a su
-                    incumplimiento de su obligación (la responsabilidad del LICENCIANTE por dicho incumplimiento se
-                    limita a negligencia grave o mala conducta intencional de sí mismo, su representante y / o sus
-                    empleados), El LICENCIANTE&nbsp;está obligado a pagar la cantidad de los daños en que realmente
-                    incurrió el usuario.</p>
-                <p>(iii) La responsabilidad del LICENCIANTE&nbsp;en virtud de las disposiciones del Código Civil para
-                    compensar los daños causados al Usuario (considerado como "Consumidor") debido a su acto ilegal en
-                    el cumplimiento de la oferta del Software, el LICENCIANTE&nbsp;es responsable de pagar la cantidad
-                    del daño directo y ordinario. , que no exceda la cantidad de tarifas pagadas por el Usuario como
-                    límite superior.</p>
-                <p>(iv) La responsabilidad del LICENCIANTE en virtud de las disposiciones del Código Civil para
-                    compensar los daños causados al Usuario (considerado como "Consumidor") debido a su acto ilegal en
-                    el cumplimiento de la oferta de Software (La responsabilidad del LICENCIANTE&nbsp;por dicho
-                    incumplimiento se limita a negligencia grave o intencional mala conducta de sí mismo, su
-                    representante y / o sus empleados), el LICENCIANTE&nbsp;está obligado a pagar la cantidad de los
-                    daños en los que realmente incurrió el Usuario.</p>
-                <p>(v) En el caso de que la provisión del Software esté bajo un contrato oneroso y haya algún defecto
-                    oculto en el (los) producto (s) en cuestión, el daño causado al Usuario (considerado como
-                    "Consumidor") por el defecto será reemplazado por Los que no tienen defecto. Sin embargo, si no
-                    están disponibles, el LICENCIANTE&nbsp;está obligado a pagar la cantidad del daño, sin exceder la
-                    cantidad de las tarifas pagadas por el Usuario como límite superior.</p>
-                <p><strong>Sección 20 - Limitación del área de utilización y alcance</strong></p>
-                <p>El área de utilización y alcance del Software especificado por el LICENCIANTE están sujetos a cambios
-                    de vez en cuando dependiendo del contrato (s) que se puede introducir por y entre LICENCIANTE y un
-                    tercero. A partir del 1 de diciembre de 2016, el Software está disponible para su uso en todas las
-                    áreas regionales específicas, excepto en los Emiratos Árabes Unidos; en los Emiratos Árabes Unidos,
-                    el Software no está disponible para su uso independientemente de su alcance de uso. Si se produce
-                    algún cambio en las áreas regionales y el alcance del Software en el futuro, el
-                    LICENCIANTE&nbsp;notificará al Usuario de la manera especificada en la Sección 21.</p>
-                <p><strong>Sección 21 - Método de notificación, etc.</strong></p>
-                <p>1. Cualquier notificación, demanda u otra comunicación del LICENCIANTE al Usuario se enviará de vez
-                    en cuando de una manera que el LICENCIANTE&nbsp;considere apropiada, incluso por correo electrónico,
-                    por escrito o mediante publicación en el sitio web del Servicio (<a class="external-link"
-                        href="{{companyUrl}}/" rel="nofollow">{{companyUrl}}</a>).</p>
-                <p>2. Los avisos por correo electrónico en virtud del párrafo anterior se entregarán al Usuario en su
-                    dirección de correo electrónico registrada.</p>
-                <p>3. Si los avisos, etc., de acuerdo con los párrafos anteriores se entregarán mediante la publicación
-                    en el sitio web del Servicio, se considerará que los avisos, etc., se han entregado al Usuario el
-                    día en que se publican en el sitio web. Si los avisos, etc., se enviarán por correo electrónico, los
-                    avisos, etc., se considerarán entregados al Usuario tras la transmisión del correo electrónico.</p>
-                <p><strong>Sección 22 - Revisión de los Términos de Uso</strong></p>
-                <p>1. El LICENCIANTE&nbsp;puede revisar los Términos de uso en cualquier momento, y el Usuario acepta
-                    reconocerlo de antemano.</p>
-                <p>2. Al revisar los Términos de uso, el LICENCIANTE&nbsp;notificará al Usuario de dicha revisión de la
-                    manera especificada en la Sección 21.</p>
-                <p><strong>Sección 23 - Cumplimiento</strong></p>
-                <p>Además de las condiciones descritas en los Términos de uso, el Usuario acepta cumplir con todas las
-                    leyes, estatutos, reglamentos y ordenanzas aplicables al usar el Software.</p>
-                <p><strong>Sección 24 - Ley aplicable y tribunal competente</strong></p>
-                <p>Los Términos de uso se interpretarán y regirán por las leyes de los Países Bajos. El tribunal
-                    competente en Ámsterdam, Países Bajos, será el tribunal exclusivo de primera instancia con respecto
-                    a todas las disputas que surjan de o en relación con los Términos de uso y la oferta del Software.
-                </p>
-                <p><strong>Disposición complementaria</strong></p>
-                <p>Los Términos de uso se implementarán a partir del 23 de noviembre de 2018.</p>
-                <p>{{legalNameFull}}</p>
-                <p>&nbsp;</p>
-                <p><br></p>
+<strong>Sección 9 - Adquisición de datos de voz</strong>
+</p><p>
+El LICENCIANTE puede usar los datos de voz enviados desde el sistema de desarrollo creado
+por el Usuario únicamente con el propósito de mejorar la precisión del Software.
+</p><p>
+El LICENCIANTE se preocupa por la integridad y seguridad de los datos de voz del cliente, así
+como otra información relacionada y datos personales. Usted reconoce que es el único
+responsable de cualquier daño personal o a la propiedad que surja de o esté relacionado con el
+uso del Software. Los datos de voz recopilados por el licenciante sólo podrían llegar a
+divulgarse bajo los siguientes supuestos:
+</p><p>
+<strong>Por Ley</strong>
+</p><p>
+Si la divulgación de los datos de voz o cualquier información recopilada es para responder a un
+proceso legal, para investigar o remediar posibles violaciones de nuestras políticas, o para
+proteger los derechos, la propiedad y la seguridad de otros. En ese caso podemos compartir su
+información según lo requerido por cualquier ley, norma o reglamento aplicable.
+</p><p>
+<strong>Sección 10 - Tarifas de uso</strong>
+</p><p>
+El método de cálculo y los montos de las tarifas de uso, tarifas opcionales y otras tarifas y
+gastos pagaderos por el Servicio, incluidos los no especificados en los Términos de uso, serán
+los especificados en el sitio web de LICENCIANTE para el Servicio (<a class="external-link"
+href="https://NeoSound.eu" target="_blank">https://NeoSound.eu</a>) o
+como pueda ser notificado por el LICENCIANTE al Usuario de vez en cuando.
+</p><p>
+<strong>Sección 11 - Método de pago de honorarios</strong>
+</p><p>
+El usuario debe pagar las tarifas de la manera prescrita en los artículos respectivos a
+continuación:
+</p><p>
+(i) Si opta por pagar en la factura, el Usuario paga las tarifas en la fecha especificada por el
+LICENCIANTE en la cuenta bancaria especificada por el LICENCIANTE. Los gastos de
+transferencia correrán a cargo del Usuario. Cuando el pago se realice en la factura, las tarifas
+se pagarán el último día del mes anterior al mes en que comience el uso del Servicio.
+</p><p>
+(ii) Si paga con tarjeta de crédito o PayPal, el Usuario pagará las tarifas conforme al contrato
+con una tarjeta de crédito o compañía de PayPal. En el caso de cualquier disputa entre o entre
+el Usuario, la tarjeta de crédito o la compañía de PayPal, una agencia de cobranza, una
+institución financiera y / u otra parte involucrada, dicha disputa se resolverá entre las partes
+involucradas, entre las partes involucradas, sin que el LICENCIANTE sea responsable Cualquier
+responsabilidad alguna. Cuando el pago se realice con tarjeta de crédito o PayPal, se pagará
+por adelantado la tarifa de un mes al inicio del uso del Servicio.
+</p><p>
+(iii) En el caso de un cambio en las tarifas según lo dispuesto en la Sección 10 de acuerdo con
+la situación de utilización, el soporte cargado también cambiará automáticamente.
+</p><p>
+<strong>Sección 12 - Término aplicable del acuerdo</strong>
+</p><p>
+1. A menos que se acuerde un término fijo para el uso del Servicio, el término del Acuerdo con
+respecto al Servicio comienza el día en que se completa el registro del Usuario y el Servicio se
+pone a disposición del Usuario.
+</p><p>
+2. A menos que se acuerde un término fijo para el uso del Servicio, el término del Acuerdo con
+respecto al Servicio finaliza el último día del mes siguiente al mes en que el Usuario notifique al
+LICENCIANTE su intención de finalizar el uso del Servicio. Servicio en el caso de pago según la
+Sección anterior, artículo (i), o finaliza el día en que el Usuario se retira del uso del Servicio en el
+caso de pago bajo la Sección anterior, artículo (ii).
+</p><p>
+3. Si se acuerda un plazo fijo para el uso del Servicio y ni el LICENCIANTE ni el Usuario notifican
+a la otra parte su intención de no renovar el término con respecto al Servicio antes del último
+día del mes anterior al mes en el que el plazo expira, se considerará que el Acuerdo ha sido
+renovado con respecto al Servicio a voluntad propia del Usuario y las tarifas del plazo renovado
+serán pagaderas y no serán reembolsables.
+</p><p>
+<strong>Sección 13 - Interés por incumplimiento</strong>
+</p><p>
+1. En el caso de que el Usuario no pague las tarifas de uso u otras obligaciones monetarias
+pagaderas por él en sus fechas de vencimiento, el Usuario pagará los intereses por defecto
+sobre cualquier monto vencido a una tasa del 14.6% anual. La cantidad del interés por defecto
+se pagará en una suma global junto con las tarifas de uso y otras cantidades pagaderas por el
+Usuario en o antes de la fecha y en la forma especificada por el LICENCIANTE.
+</p><p>
+2. La transferencia y otros cargos necesarios para el pago conforme al párrafo anterior serán
+únicamente por cuenta del Usuario.
+</p><p>
+<strong>Sección 14 - Notificación de revisión de tarifa de servicio</strong>
+</p><p>
+El LICENCIANTE puede, al notificar al Usuario de la manera especificada en la Sección 21 a más
+tardar treinta (30) días antes de dicha fecha, aumentar o disminuir las tarifas del Servicio,
+agregar una tarifa del servicio similar o imponer una tarifa por Servicio previamente gratuito.
+</p><p>
+<strong>Sección 15 - Suspensión, uso restringido u otras condiciones de servicio debido a la razón del
+LICENCIANTE o fuerza mayor</strong>
+</p><p>
+El LICENCIANTE puede, al cumplirse las condiciones de cualquiera de los siguientes artículos,
+suspender la prestación del Servicio o restringir el uso del mismo sin previo aviso:
+</p><p>
+(i) Cuando sea inevitable para el mantenimiento o construcción del equipo del LICENCIANTE;
+</p><p>
+(ii) Cuando sea inevitable por la ocurrencia o la prevención contra fallas u otros problemas del
+equipo del LICENCIANTE y/o del operador de telecomunicaciones;
+</p><p>
+(iii) En el caso de acciones reales o sospechosas, incluido el acceso no autorizado, craqueo o
+ataque al equipo del LICENCIANTE;
+</p><p>
+(iv) Cuando el LICENCIANTE determina que el uso del Servicio (incluyendo el mal uso de un
+tercero) podría causar potencialmente afecta negativamente en el servicio, contenido de
+Usuario, a terceros y otros;
+</p><p>
+(v) En caso de desastre natural u otras circunstancias inevitables; o
+</p><p>
+(vi) Cuando el LICENCIANTE determine lo contrario como sea necesario para la conservación
+del Servicio debido a razones inevitables.
+</p><p>
+<strong>Sección 16 - Suspensión, uso restringido u otras condiciones de servicio debido a la razón del
+usuario</strong>
+</p><p>
+Cuando el Usuario cumpla cualquiera de los siguientes supuestos, el LICENCIANTE puede, sin
+previo aviso o exigir, suspender la prestación del Servicio o restringir el uso del mismo. En estos
+casos, el LICENCIANTE no está obligado a revelar el motivo al Usuario.
+</p><p>
+(i) Cuando el Usuario haya fallado o potencialmente no cumpa con sus obligaciones bajo este
+Acuerdo;
+</p><p>
+(ii) cuando el Usuario haya interferido con las operaciones del Servicio;
+</p><p>
+(iii) cuando el Usuario haya declarado un hecho falso por el uso del Servicio;
+</p><p>
+(iv) Cuando el Usuario haya cometido cualquiera de las Leyes de Prohibición como se define en
+la Sección 7;
+</p><p>
+(v) Cuando la tarjeta de crédito especificada por el Usuario ya no está disponible para su uso,
+incluso debido a su invalidez; o
+</p><p>
+(vi) Cuando el LICENCIANTE haya rescindido al Usuario debido a su incumplimiento del
+contrato en otros servicios prestados por el LICENCIANTE.
+</p><p>
+<strong>Sección 17 - Cancelación del servicio</strong>
+</p><p>
+El LICENCIANTE puede, a su propia discreción, cancelar todo o parte del Servicio notificando al
+Usuario a tal efecto por correo electrónico a la dirección de correo electrónico registrada del
+Usuario, a más tardar noventa (90) días antes de la fecha de abolición. En este caso, luego de la
+notificación enviada al Usuario por parte del LICENCIANTE, este Acuerdo se terminará. Además,
+en el caso de que el Usuario, su cliente o un tercero incurra en daños por la supresión del
+Servicio basado en esta Sección, el LICENCIANTE no será responsable de dichos daños.
+</p><p>
+<strong>Sección 18 - Compensación por daños y perjuicios</strong>
+</p><p>
+En el caso de que el Usuario o su cliente causen daños al LICENCIANTE debido a una razón que
+se menciona en los siguientes artículos, el LICENCIANTE puede reclamar una compensación
+por los daños del Usuario.
+</p><p>
+(i) Violar este Acuerdo o las leyes y regulaciones; o
+</p><p>
+(ii) Infringir los derechos de propiedad intelectual, incluido el uso de la marca comercial del
+LICENCIANTE, sin obtener su consentimiento explícito.
+</p><p>
+<strong>Sección 19 - Limitación de responsabilidad</strong>
+</p><p>
+1. En cualquier caso, el LICENCIANTE no será responsable ante el Usuario por ningún tipo de
+daños directos, especiales, emergentes, indirectos o indirectos (incluida la pérdida de
+beneficios, la pérdida de datos y el costo de adquisición del equipo de reemplazo). La limitación
+de responsabilidad no se verá afectada independientemente de si el LICENCIANTE ha recibido
+una notificación de la probabilidad de daño o no, o si la ocurrencia de dicho daño es imputable
+a la violación o contradicción de cualquier contrato, acto fraudulento, incumplimiento de la
+garantía., negligencia, software inutilizable y cualquier otra causa. Además, si el
+LICENCIANTE compensara cualquier daño sufrido por el Usuario, independientemente de la
+naturaleza legal del daño, el importe de la compensación no deberá exceder el importe de las
+tarifas de uso realmente pagadas por el Usuario durante el período de seis (6) meses
+inmediatamente anterior al Mes en el que se produce la causa del daño.
+</p><p>
+2. A pesar de las cláusulas de exención de responsabilidad contenidas en el párrafo anterior y
+en otras partes de los Términos de uso, en los casos en que el Usuario se encuentre en la
+categoría de &quot;Consumidor&quot; definida en el Artículo 2, párrafo 1 de la Ley de Contratos con el
+Consumidor, la responsabilidad del LICENCIANTE contra los daños incluidos en Cada uno de
+los elementos enumerados a continuación será el siguiente:
+</p><p>
+(i) Si el LICENCIANTE causa daños (excepto los definidos en el siguiente artículo) al Usuario
+(considerado como &quot;Consumidor&quot;) debido a su incumplimiento de su obligación, el
+LICENCIANTE debe pagar la cantidad del daño directo y ordinario, cantidad que deberá No
+excederá el monto de las tarifas pagadas por el Usuario.
+</p><p>
+
+(ii) Si el LICENCIANTE causa un daño al Usuario (considerado como &quot;Consumidor&quot;) debido a su
+incumplimiento de su obligación (la responsabilidad del LICENCIANTE por dicho
+incumplimiento se limita a negligencia grave o mala conducta intencional de sí mismo, su
+representante y / o sus empleados), El LICENCIANTE está obligado a pagar la cantidad de los
+daños en que realmente incurrió el usuario.
+</p><p>
+(iii) La responsabilidad del LICENCIANTE en virtud de las disposiciones del Código Civil para
+compensar los daños causados al Usuario (considerado como &quot;Consumidor&quot;) debido a su acto
+ilegal en el cumplimiento de la oferta del Software, el LICENCIANTE es responsable de pagar la
+cantidad del daño directo y ordinario. , que no exceda la cantidad de tarifas pagadas por el
+Usuario como límite superior.
+</p><p>
+(iv) La responsabilidad del LICENCIANTE en virtud de las disposiciones del Código Civil para
+compensar los daños causados al Usuario (considerado como &quot;Consumidor&quot;) debido a su acto
+ilegal en el cumplimiento de la oferta de Software (La responsabilidad del LICENCIANTE por
+dicho incumplimiento se limita a negligencia grave o intencional mala conducta de sí mismo, su
+representante y / o sus empleados), el LICENCIANTE está obligado a pagar la cantidad de los
+daños en los que realmente incurrió el Usuario.
+</p><p>
+(v) En el caso de que la provisión del Software esté bajo un contrato oneroso y haya algún
+defecto oculto en el (los) producto (s) en cuestión, el daño causado al Usuario (considerado
+como &quot;Consumidor&quot;) por el defecto será reemplazado por Los que no tienen defecto. Sin
+embargo, si no están disponibles, el LICENCIANTE está obligado a pagar la cantidad del daño,
+sin exceder la cantidad de las tarifas pagadas por el Usuario como límite superior.
+</p><p>
+<strong>Sección 20 - Limitación del área de utilización y alcance</strong>
+</p><p>
+El área de utilización y alcance del Software especificado por el LICENCIANTE están sujetos a
+cambios de vez en cuando dependiendo del contrato (s) que se puede introducir por y entre
+LICENCIANTE y un tercero. A partir del 1 de diciembre de 2016, el Software está disponible para
+su uso en todas las áreas regionales específicas, excepto en los Emiratos Árabes Unidos; en los
+Emiratos Árabes Unidos, el Software no está disponible para su uso independientemente de su
+alcance de uso. Si se produce algún cambio en las áreas regionales y el alcance del Software
+en el futuro, el LICENCIANTE notificará al Usuario de la manera especificada en la Sección 21.
+Sección 21 - Método de notificación, etc.
+</p><p>
+1. Cualquier notificación, demanda u otra comunicación del LICENCIANTE al Usuario se enviará
+de vez en cuando de una manera que el LICENCIANTE considere apropiada, incluso por correo
+electrónico, por escrito o mediante publicación en el sitio web del Servicio
+(https://NeoSound.eu).
+</p><p>
+2. Los avisos por correo electrónico en virtud del párrafo anterior se entregarán al Usuario en su
+dirección de correo electrónico registrada.
+</p><p>
+3. Si los avisos, etc., de acuerdo con los párrafos anteriores se entregarán mediante la
+publicación en el sitio web del Servicio, se considerará que los avisos, etc., se han entregado al
+Usuario el día en que se publican en el sitio web. Si los avisos, etc., se enviarán por correo
+electrónico, los avisos, etc., se considerarán entregados al Usuario tras la transmisión del
+correo electrónico.
+</p><p>
+<strong>Sección 22 - Revisión de los Términos de Uso</strong>
+</p><p>
+1. El LICENCIANTE puede revisar los Términos de uso en cualquier momento, y el Usuario
+acepta reconocerlo de antemano.
+</p><p>
+2. Al revisar los Términos de uso, el LICENCIANTE notificará al Usuario de dicha revisión de la
+manera especificada en la Sección 21.
+</p><p>
+<strong>Sección 23 - Cumplimiento</strong>
+</p><p>
+Además de las condiciones descritas en los Términos de uso, el Usuario acepta cumplir con
+todas las leyes, estatutos, reglamentos y ordenanzas aplicables al usar el Software.
+Sección 24 - Ley aplicable y tribunal competente
+Los Términos de uso se interpretarán y regirán por las leyes de los Países Bajos. El tribunal
+competente en Ámsterdam, Países Bajos, será el tribunal exclusivo de primera instancia con
+respecto a todas las disputas que surjan de o en relación con los Términos de uso y la oferta
+del Software.
+</p><p>
+<strong>Disposición complementaria</strong>
+</p><p>
+Los Términos de uso se implementarán a partir del 23 de noviembre de 2018.
+</p><p>
+NeoSound Intelligence B.V.
+</p>
             </div>
         </div>
     </nb-card-body>
