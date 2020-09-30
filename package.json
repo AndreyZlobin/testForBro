@@ -98,7 +98,8 @@
     "wavesurfer.js": "3.3.1",
     "web-animations-js": "2.2.5",
     "wordcloud": "^1.1.0",
-    "zone.js": "^0.8.29"
+    "zone.js": "^0.8.29",
+    "video.js": "^7.8.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.6.8",
