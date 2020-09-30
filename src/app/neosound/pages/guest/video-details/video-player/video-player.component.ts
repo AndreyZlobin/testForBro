@@ -162,8 +162,8 @@ export class VideoPlayerComponent implements OnDestroy, OnChanges {
         const name = obj && obj.name;
         const type = obj && obj.type;
         if (coords) {
-          const x = parseInt(coords[0]) * this.aspectX / 2;
-          const y = parseInt(coords[1]) * this.aspectY / 2;
+          const x = parseInt(coords[0]) * this.aspectX / 2.8;
+          const y = parseInt(coords[1]) * this.aspectY / 2.8;
 
           this.context.beginPath();
           this.context.lineWidth = 1;
