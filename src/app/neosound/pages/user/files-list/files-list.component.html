@@ -214,14 +214,54 @@
                 [(ngModel)]="filterService.filter.tagsContain"
                 [editable]="true"
                 theme="minimal"
-                (onAdd)="onItemAdd($event, 'tagsContain')"
                 placeholder="{{ t('Tags') }}"
                 secondaryPlaceholder="{{ t('Tags') }}"
                 [separatorKeys]="[',']"
                 [separatorKeyCodes]="[13]"
-                (onBlur)="onItemAdd($event, 'tagsContain')"
-              ></tag-input>
+                [typeahead]="tags"
+                [typeaheadMinLength]="0"
+                (typeaheadOnSelect)="onSelectTag($event)"
+                [typeaheadLatinize]="false"
+                [typeaheadSelectFirstItem]="false"
+                [typeaheadScrollable]="true"
+                [typeaheadOptionsLimit]="10"
+                (onAdd)="onSelectTag($event)"
+                (onRemove)="onRemoveTag($event)"
+              >
+              </tag-input>
             </div>
+            <div class="col-12">
+              <div ngbDropdown class="ghost-dropdown dropdown w-100">
+                <button
+                  class="btn btn-secondary btn-sm dropdown-toggle"
+                  style="border: 1px solid #dfe3e9;"
+                  id="dropdownBasic1"
+                  ngbDropdownToggle
+                >
+                  {{t(filterService.filter.tagsCondition === 'or' ? 'Any tag matched' : 'All tags matched')}}
+                </button>
+                <ul
+                  ngbDropdownMenu
+                  aria-labelledby="dropdownBasic1"
+                  class="dropdown-menu"
+                >
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setTagCondition('or')"
+                  >
+                    {{ t('Any tag matched') }}
+                  </li>
+                  <li
+                    class="dropdown-item"
+                    ngbDropdownItem
+                    (click)="setTagCondition('and')"
+                  >
+                    {{ t('All tags matched') }}
+                  </li>
+                </ul>
+            </div>
+          </div>
             <div class="col-12 pt-3">
               <div class="mb-2">{{ t("Topics") }}</div>
               <input
@@ -710,7 +750,7 @@
                 </div>
                 <div
                   class="d-flex flex-column align-self-stretch justify-content-between"
-                  style="width: 38%"
+                  style="width: 35%;overflow: hidden;"
                 >
                   <a [routerLink]="getLink(item)" tooltip="{{ item.filename }}">
                     <span
@@ -786,9 +826,9 @@
                     >
                   </div>
                 </div>
-                <div class="d-flex flex-column" style="width: 55%;">
+                <div class="d-flex flex-column" style="width: 65%;">
                   <div class="d-flex flex-row justify-content-between">
-                    <div class="d-flex">
+                    <div class="d-flex" style="width: 65px;">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{ t("Compliance") }}
@@ -816,7 +856,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start" style="width: 117px;">
                       <div class="d-flex flex-column align-items-center">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{ t("Sentiment trend") }}
@@ -850,7 +890,7 @@
                         </ng-template>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start" style="width: 77px;">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{ t("Average emotion") }}
@@ -876,7 +916,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start" style="width: 65px;">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{ t("Comments") }}
@@ -896,7 +936,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start" style="width: 59px;">
                       <div class="d-flex flex-column">
                         <div style="font-size: x-small; margin-top: 0.3rem;">
                           {{ t("Assessment") }}
@@ -931,7 +971,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row" style="width: 185px;">
                       <div
                         class="pr-2"
                         style="font-size: xx-small; margin-top: 0.3rem;"
@@ -1015,17 +1055,18 @@
                     <div>
                       <button
                         class="btn p-0 c-normal"
-                        style="cursor: pointer;"
+                        [class.rotating]="item.proccessing"
+                        style="cursor: pointer; width: 18px; height: 18px;"
                         (click)="proccessFile(item)"
                         tooltip="{{ t('Refresh') }}{{
                           item.proccessing ? '...' : ''
                         }}"
                       >
-                        <i class="fa fa-sync mr-2"></i>
+                        <i class="fa fa-sync"></i>
                       </button>
                       <button
                         class="btn p-0 c-normal"
-                        style="cursor: pointer;"
+                        style="cursor: pointer; margin-left: 5px;"
                         (click)="showDeleteModal(confirm, item, i)"
                         tooltip="{{ t('Delete') }}"
                       >

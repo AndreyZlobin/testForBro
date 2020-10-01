@@ -1,51 +1,47 @@
-<nb-card>
-    <nb-card-body>
-        <div class="row mb-1">
-            <div class="col-6">
-                <h1>{{t('"Hits vs. Stopwords" Details')}}</h1>
-            </div>
-            <div class="col-6">
-                <button class="btn btm-sm btn-secondary ml-auto" style="cursor: pointer; float: right;" routerLink="/">
-                    {{ t("Back to Dashboard") }}
-                </button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-3 pt-3">
-                <div class="mb-2"><i class="fas fa-exchange-alt mr-2" [style.color]="colors[0]"></i>{{t('Range 1')}}</div>
-                <div class="input-group">
-                    <ng-datepicker [(ngModel)]="rangeFirstFrom" [options]="datePickerFromOptions"
-                        class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
-                    </ng-datepicker>
-                    <ng-datepicker [(ngModel)]="rangeFirstTo" [options]="datePickerToOptions"
-                        class="form-control-bak form-control-lg-bak form-gr-last">
-                    </ng-datepicker>
-                </div>
-            </div>
-            <div class="col-3 pt-3">
-                <div class="mb-2"><i class="fas fa-exchange-alt mr-2" [style.color]="colors[1]"></i>{{t('Range 2')}}</div>
-                <div class="input-group">
-                    <ng-datepicker [(ngModel)]="rangeSecondFrom" [options]="datePickerFromOptions"
-                        class="form-control-bak form-control-lg-bak form-gr-first" style="padding-right: 0px;">
-                    </ng-datepicker>
-                    <ng-datepicker [(ngModel)]="rangeSecondTo" [options]="datePickerToOptions"
-                        class="form-control-bak form-control-lg-bak form-gr-last">
-                    </ng-datepicker>
-                </div>
-            </div>
-            <div class="col-3 pt-3">
-                <button class="btn btn-primary btn-sm align-bottom mt-4" (click)="update()">Apply</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col my-3" *ngIf="data && !isLoadingFirst && !isLoadingSecond; else spinner">
-                <div style="height: calc(70vh - 20px)" echarts [options]="data"></div>
-            </div>
-        </div>
-    </nb-card-body>
-</nb-card>
-<ng-template #spinner>
-    <div class="load-container load1 w-100 h-100">
-        <div class="loader">{{ t("Loading...") }}</div>
+<div class="card">
+  <div class="card-header">
+    <a
+      routerLink="/"
+      [tooltip]="t('Back to Dashboard')"
+    >
+      <i class="fas fa-long-arrow-alt-left mr-1"></i>
+
+      {{ t("Details") }}: {{t("Categories")}}
+    </a>
+  </div>
+  <div class="card-body">
+    <div *ngIf="hasData; else loading">
+      <div
+        echarts
+        [options]="autoTagChart"
+        (chartClick)="onChartEvent($event)"
+        [style.height]="height"
+      ></div>
     </div>
-</ng-template>
+  </div>
+  <ng-template #loading>
+    <div class="card-body d-flex h-100">
+      <ngx-card-spinner></ngx-card-spinner>
+    </div>
+  </ng-template>
+  <!-- <div
+    style="
+      position: absolute;
+      top: 50%;
+      right: 0;
+      background-color: white;
+      z-index: 999;
+      display: flex;
+      flex-flow: column;
+    "
+    class="border hide-on-print"
+  >
+    <button
+      class="btn p-2 m-2"
+      style="cursor: pointer; color: #2a2a2a; z-index: 99;"
+      (click)="print()"
+    >
+      <i class="fas fa-print"></i>
+    </button>
+  </div> -->
+</div>

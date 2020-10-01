@@ -39,6 +39,9 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   selectedTopics: string[] = [];
   selectedTopic: string = "";
   batches: string[] = [];
+  tags: string[] = [];
+  selectedTags: string[] = [];
+  selectedTag: string[] = [];
 
   constructor(
     private filesService: FilesService,
@@ -59,6 +62,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       }
     });
     this.getBatches();
+    this.getTags();
   }
   ngAfterViewInit() {}
   scrollToElement() {
@@ -70,6 +74,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   setStopwordLooking(value: string): void {
     this.filterService.filter.stopwordLooking = value;
   }
+
   getBatches() {
     this.filesService.listBatches().subscribe((data) => {
       if (data && data.batches) {
@@ -77,6 +82,15 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  getTags() {
+    this.filesService.listTags().subscribe((data) => {
+      if (data && data.tags) {
+        this.tags = data.tags;
+      }
+    });
+  }
+
   setEmotionalTrend(value: string): void {
     this.filterService.filter.sentimentTrend = value;
   }
@@ -480,7 +494,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
         c = this.itemTags;
         break;
       case "tagsContain":
-        c = this.itemTags;
+        c = this.filterService.filter.tagsContain;
         break;
     }
 
@@ -556,5 +570,20 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     }
 
     this.filterService.updateFileList();
+  }
+
+  onSelectTag(event: any) {
+    const deduplicate = new Set([...(Array.isArray(this.selectedTags) ? this.selectedTags : [this.selectedTags]), event.value]);
+    this.selectedTags = Array.from(deduplicate);
+    this.selectedTag = Array.from(deduplicate);
+    this.filterService.filter.tagsContain = this.selectedTags.map(v => ({ display: v, value: v }));
+  }
+  onRemoveTag(topic: string) {
+    this.selectedTags = this.selectedTags.filter((t) => t !== topic);
+    this.selectedTag = this.selectedTags;
+    this.filterService.filter.tagsContain = this.selectedTags.map(v => ({ display: v, value: v }));
+  }
+  setTagCondition(con: string) {
+    this.filterService.filter.tagsCondition = con;
   }
 }

@@ -1,11 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { DatepickerOptions } from "ng2-datepicker";
-import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { DataService } from "../../../../shared";
 import { LanguageService } from "../../../../services/language.service";
-import { FilesService } from "../../../../services/files.service";
-import { DataService } from "../../../../shared/data.service";
-import { subWeeks, format, isAfter } from "date-fns";
-import { ToastrService } from "ngx-toastr";
+import { AutoTagCloudService } from "../../../dashboard/calls-dashboard/services/auto-tag-cloud.service";
+import { Router } from "@angular/router";
+import { FilterService } from "../../../../services/filter.service";
 
 export const colors = [
   "#c12e34",
@@ -15,10 +13,10 @@ export const colors = [
   "#005eaa",
   "#339ca8",
   "#cda819",
-  "#32a487"
+  "#32a487",
 ]; //shine
 
-const rgbToHex = rgb => {
+const rgbToHex = (rgb) => {
   let hex = Number(rgb).toString(16);
   if (hex.length < 2) {
     hex = "0" + hex;
@@ -36,220 +34,114 @@ const fullColorHex = (r, g, b) => {
 @Component({
   selector: "app-stopwords",
   templateUrl: "./stopwords.component.html",
-  styleUrls: ["./stopwords.component.scss"]
+  styleUrls: ["./stopwords.component.scss"],
 })
-export class StopwordsComponent implements OnInit {
-  datePickerFromOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("from"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-first", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
-  datePickerToOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: "MMM D[,] YYYY",
-    barTitleFormat: "MMMM YYYY",
-    dayNamesFormat: "dd",
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale,
-    barTitleIfEmpty: "Click to select a date",
-    placeholder: this.t("to"), // HTML input placeholder attribute (default: '')
-    addClass: "form-control form-control-lg form-gr-last", // Optional, value to pass on to [ngClass] on the input field
-    addStyle: { width: "100%" }, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: "my-date-picker", // ID to assign to the input field. Defaults to datepicker-<counter>
-    useEmptyBarTitle: false // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
-  };
-  colors = [
-    "#c12e34",
-    "#0098d9",
-    "#e6b600",
-    "#2b821d",
-    "#005eaa",
-    "#339ca8",
-    "#cda819",
-    "#32a487"
-  ];
-  rangeFirstFrom;
-  rangeFirstTo;
-  rangeSecondFrom;
-  rangeSecondTo;
-  firstData: any;
-  secondData: any;
-  data: any;
-  primiryColor: any;
-  isLoadingFirst: boolean = true;
-  isLoadingSecond: boolean = true;
+export class StopwordsComponent implements OnInit, OnDestroy {
+  autoTagChart: any = 0;
+  dataSub1: any;
+  hasData: boolean = false;
+  primaryColor: string;
+  height: string = '600px';
   constructor(
-    private filesService: FilesService,
-    private dataService: DataService,
-    private toastrService: ToastrService
+    private dataService: AutoTagCloudService,
+    private userData: DataService,
+    private router: Router,
+    private filterService: FilterService,
   ) {
-    const today = Date.now();
-    this.rangeFirstFrom = subWeeks(today, 1);
-    this.rangeFirstTo = today;
-    this.rangeSecondFrom = subWeeks(today, 3);
-    this.rangeSecondTo = subWeeks(today, 2);
+    this.dataSub1 = this.dataService.data.subscribe((data) => {
+      if (data && data.autotags) {
+        if (this.userData.config["colors"] && this.userData.config["colors"].secondary) {
+          this.primaryColor = this.userData.config["colors"].secondary;
+        } else {
+          this.primaryColor = "#0098d9";
+        }
+        const sortedKeywords = Object.keys(data.autotags)
+          .map((key) => {
+            return {
+              name: key,
+              value: data.autotags[key],
+            };
+          })
+          .sort((a, b) => b.value - a.value)
+          .reverse();
+        this.height = 200 + 40 * sortedKeywords.length + 'px';
+        this.autoTagChart = {
+          color: [this.primaryColor],
+          grid: {
+            left: 200,
+            right: 50,
+          },
+          legend: {
+            data: ["Categories"],
+          },
+          yAxis: {
+            type: "category",
+            data: sortedKeywords.map((i) => i.name),
+            nameLocation: 'center',
+            nameRotate: '90',
+            axisTick: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            z: 10,
+          },
+
+          xAxis: {
+            type: "value",
+            name: this.t("Hits"),
+            nameLocation: 'center',
+          },
+          series: [
+            {
+              name: "%",
+              type: "bar",
+              data: sortedKeywords.map((i) => i.value),
+              label: {
+                normal: {
+                  position: "right",
+                  show: true,
+                },
+              },
+            },
+          ],
+        };
+        this.hasData = true;
+      } else {
+        this.hasData = false;
+      }
+    });
   }
   ngOnInit() {
-    this.update();
+    this.dataService.load('audio', null, null, []);
+  }
+  ngOnDestroy() {
+    if (this.dataSub1) {
+      this.dataSub1.unsubscribe();
+    }
   }
   t(v) {
     return LanguageService.t(v);
   }
-
-  update() {
-    this.updateFirst();
-    this.updateSecond();
+  getColor(i: number): string {
+    const colors = [
+      "#c12e34",
+      "#0098d9",
+      "#e6b600",
+      "#2b821d",
+      "#005eaa",
+      "#339ca8",
+      "#cda819",
+      "#32a487",
+    ];
+    return colors[i];
   }
-
-  setData() {
-    if (this.secondData && this.firstData) {
-      this.data = {
-        grid: {
-          left: 100
-        },
-        legend: {
-          type: "scroll",
-          data: ["Range 1", "Range 2"],
-          orient: 'horizontal',
-        },
-        xAxis: {
-          type: "category",
-          name: this.t("Stopwords"),
-          axisLabel: {
-            rotate: 90
-          },
-          data: Array.from(
-            new Set([
-              ...this.firstData.map(i => i.name),
-              ...this.secondData.map(i => i.name)
-            ])
-          )
-        },
-        yAxis: {
-          type: "value",
-          name: this.t("Hits"),
-        },
-        tooltip : {
-          trigger: 'axis',
-          axisPointer : {
-              type : 'shadow'
-          }
-      },
-        series: [
-          {
-            name: "Range 1",
-            type: "bar",
-            barMaxWidth: 20,
-            color: this.colors[0],
-            data: [
-              ...this.firstData.map(i => [i.name, i.value]),
-            ],
-            tooltip: {
-              formatter: "{a} {b} {c}"
-            },
-            label: {
-              formatter: "{a} {c}",
-              normal: {
-                position: "right",
-                show: true
-              }
-            }
-          },
-          {
-            type: "bar",
-            name: "Range 2",
-            barMaxWidth: 20,
-            color: this.colors[1],
-            data: [
-              ...this.secondData.map(i => [i.name, i.value]),
-            ],
-            label: {
-              formatter: "{a} {c}",
-              normal: {
-                position: "right",
-                show: true
-              }
-            }
-          }
-        ]
-      };
-    }
+  print() {
+    window.print();
   }
-
-  updateFirst() {
-    if (isAfter(this.rangeFirstFrom, this.rangeFirstTo)) {
-      this.toastrService.error(this.t("Wrong first date range"));
-      return;
-    }
-    this.firstData = null;
-    this.isLoadingFirst = true;
-    this.filesService
-      .getTagClowd({
-        dateFrom: this.formatDate(this.rangeFirstFrom),
-        dateTo: this.formatDate(this.rangeFirstTo)
-      })
-      .subscribe(data => {
-        if (this.dataService.config["colors"].secondary) {
-          this.primiryColor = this.dataService.config["colors"].secondary;
-        } else {
-          this.primiryColor = "#0098d9";
-        }
-        const sortedKeywords = Object.keys(data.keywords)
-          .map(key => {
-            return {
-              name: key,
-              value: data.keywords[key]
-            };
-          })
-          .sort((a, b) => b.value - a.value)
-          .slice(0, 20)
-          .reverse();
-        this.firstData = sortedKeywords;
-        this.setData();
-        this.isLoadingFirst = false;
-      });
-  }
-  private formatDate(date): string {
-    return format(date, "yyyy-MM-dd");
-  }
-  updateSecond() {
-    if (isAfter(this.rangeSecondFrom, this.rangeSecondTo)) {
-      this.toastrService.error(this.t("Wrong second date range"));
-      return;
-    }
-    this.isLoadingSecond = true;
-    this.secondData = null;
-    this.filesService
-      .getTagClowd({
-        dateFrom: this.formatDate(this.rangeSecondFrom),
-        dateTo: this.formatDate(this.rangeSecondTo)
-      })
-      .subscribe(data => {
-        this.secondData = null;
-        const sortedKeywords = Object.keys(data.keywords)
-          .map(key => {
-            return {
-              name: key,
-              value: data.keywords[key]
-            };
-          })
-          .sort((a, b) => b.value - a.value)
-          .slice(0, 20)
-          .reverse();
-        this.secondData = sortedKeywords;
-        this.setData();
-        this.isLoadingSecond = false;
-      });
+  onChartEvent(event: any) {
+    this.filterService.filter.tagsContain = [{ display: event.name, value: event.name }];;
+    this.router.navigateByUrl("/user/files");
   }
 }

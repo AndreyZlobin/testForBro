@@ -155,7 +155,7 @@ export class FilesService {
   }
 
   uploadFile(params): Observable<any> {
-    return this.http.post(`${environment.api}/uploadFile`, params);
+    return this.http.post(`${environment.localapi}/audiofile/upload`, params);
   }
 
   listFileResults(params): Observable<any> {
@@ -177,10 +177,6 @@ export class FilesService {
   }
 
   getFileResultDetails(params): Observable<any> {
-    params = params || {
-      batchid: "1",
-      filename: "1.mp3"
-    };
     return this.http.post(`${environment.api}/getFileResultDetails`, params);
   }
 
@@ -203,6 +199,9 @@ export class FilesService {
 
   listTopics(): Observable<any> {
     return this.http.post(`${environment.api}/listTopics`, {});
+  }
+  listTags(): Observable<any> {
+    return this.http.post(`${environment.api}/listTags`, {});
   }
 
   getFileChecklist(params): Observable<any> {

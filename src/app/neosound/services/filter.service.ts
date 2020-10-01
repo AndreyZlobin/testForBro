@@ -55,6 +55,7 @@ export class FilterService {
     noChecklist: boolean;
     commentsOnly: boolean;
     noComments: boolean;
+    tagsCondition: string;
   } = {
     uploadDate: null,
     angerfrom: null,
@@ -96,7 +97,8 @@ export class FilterService {
     checklistOnly: null,
     noChecklist: null,
     commentsOnly: null,
-    noComments: null
+    noComments: null,
+    tagsCondition: 'or',
   };
   constructor(private filesService: FilesService) {}
 
@@ -183,7 +185,8 @@ export class FilterService {
         : null,
       noChecklist: this.filter.noChecklist ? this.filter.noChecklist : null,
       commentsOnly: this.filter.commentsOnly ? this.filter.commentsOnly : null,
-      noComments: this.filter.noComments ? this.filter.noComments : null
+      noComments: this.filter.noComments ? this.filter.noComments : null,
+      tagsCondition: this.filter.tagsCondition ? this.filter.tagsCondition : 'or',
     };
     if (this.filter.keywordsContain && this.filter.keywordsContain.length) {
       params["keywordsContain"] = this.filter.keywordsContain
@@ -303,7 +306,9 @@ export class FilterService {
           batchid: batchid,
           filename: filename
         })
-        .subscribe();
+        .subscribe(v => {
+          this.fileStore[index].proccessing = false;
+        });
     }
   }
   public resetFilter() {
@@ -348,7 +353,8 @@ export class FilterService {
       checklistOnly: null,
       noChecklist: null,
       commentsOnly: null,
-      noComments: null
+      noComments: null,
+      tagsCondition: 'or',
     };
     this.updateFileList();
   }

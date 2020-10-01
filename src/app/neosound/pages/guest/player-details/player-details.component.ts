@@ -49,5 +49,8 @@ export class PlayerDetailsComponent {
   public goToRegion(time: any) {
     this.player && this.player.seekTo(time);
   }
+  public print() {
+    window.print();
+  }
 
 }

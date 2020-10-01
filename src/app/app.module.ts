@@ -264,6 +264,7 @@ import { AgentCallsByDayComponent } from './neosound/pages/dashboard/calls-dashb
     AssessmentAvgscoreByAgentQuestionBarComponent,
     AssessmentAvgscoreByAgentQuestionBarStackedComponent,
     VideoPlayerComponent, 
+    VideoPlayerComponent,
     VideoDetailsComponent,
     HitsAutotagsComponent,
     AutotagsByDayComponent,

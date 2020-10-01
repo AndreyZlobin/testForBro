@@ -3,7 +3,7 @@ import {
   OnInit,
   OnDestroy,
   EventEmitter,
-  Output
+  Output,
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { DashboardFileStatsService } from "../../services/file-stats.service";
@@ -11,32 +11,48 @@ import { DataService } from "../../../../../shared";
 
 @Component({
   selector: "ngx-average-sentiments",
-  templateUrl: "./average-sentiments.component.html"
+  templateUrl: "./average-sentiments.component.html",
 })
 export class AverageSentimentsComponent implements OnInit, OnDestroy {
   @Output() onClickBatch = new EventEmitter<any>();
   @Output() onClickTrend = new EventEmitter<any>();
-  textColors = {
-    "Positive-Positive": "text-success",
-    "Positive-Negative": "text-danger",
-    "Positive-Neutral": "text-info",
-    "Negative-Positive": "text-success",
-    "Negative-Negative": "text-danger",
-    "Negative-Neutral": "text-info",
-    "Neutral-Positive": "text-success",
-    "Neutral-Negative": "text-danger",
-    "Neutral-Neutral": "text-info"
-  };
-  maxSentiment = {
-    "Positive-Positive": 0,
-    "Positive-Negative": 0,
-    "Positive-Neutral": 0,
-    "Negative-Positive": 0,
-    "Negative-Negative": 0,
-    "Negative-Neutral": 0,
-    "Neutral-Positive": 0,
-    "Neutral-Negative": 0,
-    "Neutral-Neutral": 0
+  option = {
+    animation: true,
+    tooltip: {
+      position: "top",
+    },
+    xAxis: {
+      type: "category",
+      data: null,
+      splitArea: {
+        show: true,
+      },
+      triggerEvent: true,
+    },
+    yAxis: {
+      type: "category",
+      data: null,
+      splitArea: {
+        show: true,
+      },
+      triggerEvent: true,
+    },
+    series: null,
+    visualMap: {
+      min: 0,
+      max: 10,
+      calculable: true,
+      orient: "horizontal",
+      left: "center",
+      bottom: "0%",
+      inRange: {
+        color: ["#ffffff", "#0098d9"], //From smaller to bigger value ->
+      },
+    },
+    grid: {
+      height: "80%",
+      top: "0%",
+    },
   };
   sentiments: any = 0;
   dataSub1: any;
@@ -46,40 +62,88 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
     private dataService: DashboardFileStatsService,
     private userData: DataService
   ) {
-    this.dataSub1 = this.dataService.data.subscribe(data => {
+    this.dataSub1 = this.dataService.data.subscribe((data) => {
       if (data && data.batches) {
-        this.sentiments = Object.keys(data.batches).map((batch, index) => {
-          return {
-            name: batch,
-            "Positive-Positive":
-              data.batches[batch].sentimentTrendCount["Positive-Positive"],
-            "Positive-Negative":
-              data.batches[batch].sentimentTrendCount["Positive-Negative"],
-            "Positive-Neutral":
-              data.batches[batch].sentimentTrendCount["Positive-Neutral"],
-            "Negative-Positive":
-              data.batches[batch].sentimentTrendCount["Negative-Positive"],
-            "Negative-Negative":
-              data.batches[batch].sentimentTrendCount["Negative-Negative"],
-            "Negative-Neutral":
-              data.batches[batch].sentimentTrendCount["Negative-Neutral"],
-            "Neutral-Positive":
-              data.batches[batch].sentimentTrendCount["Neutral-Positive"],
-            "Neutral-Negative":
-              data.batches[batch].sentimentTrendCount["Neutral-Negative"],
-            "Neutral-Neutral":
-              data.batches[batch].sentimentTrendCount["Neutral-Neutral"]
-          };
+        const sentiments = [];
+        Object.keys(data.batches).forEach((batch, index) => {
+          sentiments.push([
+            "Positive-Positive",
+            batch,
+            data.batches[batch].sentimentTrendCount["Positive-Positive"],
+          ]);
+          sentiments.push([
+            "Positive-Negative",
+            batch,
+            data.batches[batch].sentimentTrendCount["Positive-Negative"],
+          ]);
+          sentiments.push([
+            "Positive-Neutral",
+            batch,
+            data.batches[batch].sentimentTrendCount["Positive-Neutral"],
+          ]);
+          sentiments.push([
+            "Negative-Positive",
+            batch,
+            data.batches[batch].sentimentTrendCount["Negative-Positive"],
+          ]);
+          sentiments.push([
+            "Negative-Negative",
+            batch,
+            data.batches[batch].sentimentTrendCount["Negative-Negative"],
+          ]);
+          sentiments.push([
+            "Negative-Neutral",
+            batch,
+            data.batches[batch].sentimentTrendCount["Negative-Neutral"],
+          ]);
+          sentiments.push([
+            "Neutral-Positive",
+            batch,
+            data.batches[batch].sentimentTrendCount["Neutral-Positive"],
+          ]);
+          sentiments.push([
+            "Neutral-Negative",
+            batch,
+            data.batches[batch].sentimentTrendCount["Neutral-Negative"],
+          ]);
+          sentiments.push([
+            "Neutral-Neutral",
+            batch,
+            data.batches[batch].sentimentTrendCount["Neutral-Neutral"],
+          ]);
         });
-        this.sentiments.forEach(element => {
-          Object.keys(element).map((key, index) => {
-            if (index > 0) {
-              if (element[key] > this.maxSentiment[key]) {
-                this.maxSentiment[key] = element[key];
-              }
-            }
+        const max = sentiments
+          .map((i) => i[2])
+          .reduce(function (a, b) {
+            return Math.max(a, b);
           });
-        });
+
+        this.option.yAxis.data = Object.keys(data.batches);
+        this.option.visualMap.max = max;
+        this.option.xAxis.data = [
+          "Positive-Positive",
+          "Positive-Negative",
+          "Positive-Neutral",
+          "Negative-Positive",
+          "Negative-Negative",
+          "Negative-Neutral",
+          "Neutral-Positive",
+          "Neutral-Negative",
+          "Neutral-Neutral",
+        ];
+        this.option.series = [
+          {
+            type: "heatmap",
+            data: sentiments,
+            label: {
+              show: true,
+              color: "#005eaa",
+            },
+            itemStyle: {
+              color: "#000",
+            },
+          },
+        ];
         this.hasData = true;
       } else {
         this.hasData = false;
@@ -95,31 +159,15 @@ export class AverageSentimentsComponent implements OnInit, OnDestroy {
   t(v) {
     return LanguageService.t(v);
   }
-  onChartEvent(batchId: string) {
-    this.onClickBatch.emit(batchId);
-  }
-  onValueClick(batchId: string, trend: string) {
-    this.onClickTrend.emit({ batchId: batchId, trend: trend });
-  }
-  isMax(sentiment: any, type: string) {
-    const vals = Object.values(sentiment) as any;
-    return (
-      this.maxSentiment[type] === sentiment[type] &&
-      this.maxSentiment[type] !== 0
-    );
-  }
-  isMaxValue(sentiment: any[]) {
-    return false;
-  }
-  getClass(name: string, sentiments: any[]) {
-    const className = this.textColors[name];
-    return this.isMax(sentiments, name) ? className : "";
-  }
-  getClassBatch(sentiments: any[]) {
-    const vlues = Object.values(this.maxSentiment);
-    let i = vlues.indexOf(Math.max(...vlues));
-    return this.textColors[Object.keys(this.textColors)[i]] !== 0
-      ? this.textColors[Object.keys(this.textColors)[i]]
-      : 0;
+  onChartEvent(event: any) {
+    if (event.componentType === "yAxis") {
+      this.onClickTrend.emit({ batchId: event.value});
+    }
+    if (event.componentType === "xAxis") {
+      this.onClickTrend.emit({ trend: event.value});
+    }
+    if (event.componentType === "series") {
+      this.onClickTrend.emit({ batchId: event.data[1], trend: event.data[0] });
+    }
   }
 }

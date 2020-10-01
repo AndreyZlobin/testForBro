@@ -1,5 +1,5 @@
 <div class="d-flex flex-row align-self-scratch py-2 file-info-container" *ngIf="file">
-  <div style="width: 5%;">
+  <div style="width: 5%;" class="hide-on-print">
     <button class="btn btn-link" style="cursor: pointer;" [routerLink]="'/user/files'" [tooltip]="t(' Back to List')">
       <i class="fas fa-long-arrow-alt-left"></i>
     </button>
@@ -23,7 +23,7 @@
       <span class="font-weight-bold ml-1" >{{file.topic.confidence}}%</span>
     </div>
   </div>
-  <div class="d-flex flex-column align-self-stretch justify-content-between" style="width:5%">
+  <div class="d-flex flex-column align-self-stretch justify-content-between hide-on-print" style="width:5%">
     <div class="d-flex flex-row align-items-center">
       <i tooltip="{{t('All')}}" class="fa fa-user-friends mr-auto"></i>
       <span tooltip="{{getStopwords(file)}}" class="badge badge-danger mr-4"
@@ -185,12 +185,12 @@
   </div>
 
 </div>
-<div class="d-flex flex-column" style="width: 10%;">
+<div class="d-flex flex-column hide-on-print" style="width: 10%;">
   <div class="d-inline-block text-center">
     {{fileIndex + 1}} out of {{filterService.totalcount}}
   </div>
 </div>
-<div class="d-flex flex-row justify-content-start align-items-start" style="width: 5%;">
+<div class="d-flex flex-row justify-content-start align-items-start hide-on-print" style="width: 5%;">
   <button class="btn btn-link" style="cursor: pointer;" [disabled]="filterService.hasPrevLink(fileName, batchId)"
     [routerLink]="filterService.getPrevLink(fileName, batchId)" [tooltip]="t('Previous File')">
     <i class="fas fa-chevron-left"></i>

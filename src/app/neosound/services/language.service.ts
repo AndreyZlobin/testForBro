@@ -149,6 +149,8 @@ const translationsSp = {
   'Compliance: Low to High': 'Cumplimiento: bajo a alto',
   'Compliance: High to Low': 'Cumplimiento: alto a bajo',
   'Emotion: High to Low': 'Emoción: alto a bajo',
+  'Any tag matched': 'Cualquier etiqueta coincidente',
+  'All tags matched': 'Todas las etiquetas coinciden',
 
   // file result
   'Back to List': 'Volver a la lista',
@@ -458,6 +460,8 @@ const translationsRu = {
   'Compliance: Low to High': 'Соответствие: мин - макс',
   'Compliance: High to Low': 'Соответствие: макс - мин',
   'Emotion: High to Low': 'Эмоции: макс - мин',
+  'Any tag matched': 'Любой тэг найден',
+  'All tags matched': 'Все тэги найдены',
 
   // file result
   'Back to List': 'Обратно к списку файлов',
@@ -765,6 +769,8 @@ const translationsPt = {
   'Compliance: Low to High': 'Conformidade: baixo para alto',
   'Compliance: High to Low': 'Conformidade: alto para baixo',
   'Emotion: High to Low': 'Emoção: alta para baixa',
+  'Any tag matched': 'Qualquer tag correspondente',
+  'All tags matched': 'Todas as tags correspondem',
 
   // file result
   'Back to List': 'De volta à lista',
@@ -1249,6 +1255,8 @@ const translationsGe = {
   "Filter texts with stopwords": "Texte mit Stoppwörtern filtern",
   "Filter texts with missing word": "Texte mit fehlendem Wort filtern",
   "Filter favorite texts": "Beliebte Texte filtern",
+  'Any tag matched': 'Jedes übereinstimmende Tag',
+  'All tags matched': 'Alle Tags stimmten überein',
 };
 
 

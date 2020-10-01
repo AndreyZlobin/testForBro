@@ -242,6 +242,9 @@ angular-tag-cloud > span {
     }
   }
 }
+.file-list button {
+  background: transparent;
+}
 .file-list a {
   &:active,
   &:hover,
@@ -492,5 +495,26 @@ body.nb-theme-default {
   -webkit-media-controls-panel {
     background-color: transparent !important;
     box-shadow: none !important;
+  }
+}
+.rotating {
+  animation: rotation 2s infinite linear;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@media print {
+  .hide-on-print {
+    visibility: hidden;
+    display: none;
+  }
+  .nb-theme-default nb-layout.window-mode .scrollable-container {
+    height: fit-content;
   }
 }

@@ -4,7 +4,7 @@ import { merge, map } from "rxjs/operators";
 
 @Injectable()
 export class PlayerService {
-  public time: any;
+  public time: any = 0;
   public tick$: Subject<any> = new Subject();
   public events$: any = merge(
     this.tick$.pipe(map(value => ({ name: "tick", value })))
