@@ -89,14 +89,6 @@ export class UploadService {
   }
   public onCompleteItem(queueObj: FileQueueObject, response: any): any {
     const prev = this.files[this.currentIndex];
-    if (prev) {
-      if (prev.name.endsWith(".wav") || prev.name.endsWith(".mp3")) {
-        this.filesService.processFile({
-          batchid: prev.batchId,
-          filename: prev.name
-        }).subscribe();
-      }
-    }
     this.currentIndex = this.currentIndex + 1;
     const next = this.files[this.currentIndex];
     if (this.files[this.currentIndex]) {
