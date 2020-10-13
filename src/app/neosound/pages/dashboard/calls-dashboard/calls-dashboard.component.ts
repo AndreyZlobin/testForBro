@@ -1,22 +1,14 @@
 import {
   Component,
   OnInit,
-  ViewChild,
-  ElementRef,
   Input,
   OnChanges,
   SimpleChanges
 } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { CloudData } from "angular-tag-cloud-module";
-import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
-import { DatepickerOptions } from "ng2-datepicker";
-import { FilesService } from "../../../services/files.service";
 import { FilterService } from "../../../services/filter.service";
 import { DataService } from "../../../shared";
 import { AnalyticsService } from "../../../services/analytics.service";
-import { HttpClient } from "@angular/common/http";
 import { LanguageService } from "../../../services/language.service";
 
 import { ApiCallsStatsService } from "./services/api-calls-stats.service";
@@ -25,6 +17,7 @@ import { DashboardFileStatsService } from "./services/file-stats.service";
 import { MinutesStatsService } from "./services/minutes-stats.service";
 import { TagCloudService } from "./services/tag-cloud.service";
 import { TopicCloudService } from "./services/topic-cloud.service";
+import {AutoTagCloudService} from "./services/auto-tag-cloud.service";
 
 export const colors = [
   "#c12e34",
@@ -62,6 +55,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
   @Input() dateTo: string;
   @Input() batches: string[];
   settings: any = {};
+
   constructor(
     private router: Router,
     private analyticsService: AnalyticsService,
@@ -72,12 +66,14 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     private dashboardFileStatsService: DashboardFileStatsService,
     private minutesStatsService: MinutesStatsService,
     private tagCloudService: TagCloudService,
-    private topicCloudService: TopicCloudService
+    private topicCloudService: TopicCloudService,
+    private autoTagCloudService: AutoTagCloudService
   ) {
     this.settings = JSON.parse(localStorage.getItem("settings")).dashboardcards;
   }
 
   ngOnInit() {}
+
   ngOnChanges(changes: SimpleChanges) {
     const params = {
       source: "audio"
@@ -102,6 +98,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     this.minutesStatsService.load(source, dateFrom, dateTo, batches);
     this.tagCloudService.load(source, dateFrom, dateTo, batches);
     this.topicCloudService.load(source, dateFrom, dateTo, batches);
+    this.autoTagCloudService.load(source, dateFrom, dateTo, batches);
   }
   keywordClicked(clicked: string) {
     this.analyticsService.trackEvent("user", "keywordClicked");
@@ -132,7 +129,7 @@ export class CallsDashboardComponent implements OnInit, OnChanges {
     return LanguageService.t(v);
   }
   show(name: string) {
-    return this.settings && this.settings[name] && this.settings[name].show
+    return this.settings && this.settings[name] && this.settings[name].show;
   }
 
 }

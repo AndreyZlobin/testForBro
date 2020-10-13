@@ -13,7 +13,8 @@ import { FileResultService } from "../../services/file-result.service";
 
 @Component({
   selector: "ngx-text-log",
-  templateUrl: "./text-log.component.html"
+  templateUrl: "./text-log.component.html",
+  styleUrls: ["./text-log.component.scss"]
 })
 export class TextLogComponent implements OnInit, OnDestroy {
   data: any[];
@@ -24,6 +25,7 @@ export class TextLogComponent implements OnInit, OnDestroy {
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
   @Output() goToRegion = new EventEmitter<any>();
+  @Input("height") height: string = '57vh';
   constructor(public fileResultService: FileResultService) {
     this.dataSub = this.fileResultService.fileResult.subscribe(data => {
       this.isLoading = data.isLoading;
@@ -56,6 +58,30 @@ export class TextLogComponent implements OnInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
     if (this.fileName && this.batchId) {
       this.fileResultService.getResult(this.batchId, this.fileName);
+    }
+  }
+  getFormatedTime(val: string): string {
+    const time = parseFloat(val);
+    if (time < 60) {
+      if (time < 9) {
+        return `00:0${Math.ceil(time)}`;
+      } else {
+        return `00:${Math.ceil(time)}`;
+      }
+    } else {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time - minutes * 60);
+      let formatedSeconds = "";
+      if (seconds < 10) {
+        formatedSeconds = `0${seconds}`;
+      } else {
+        formatedSeconds = `${seconds}`;
+      }
+      if (minutes < 10) {
+        return `0${minutes}:${formatedSeconds}`;
+      } else {
+        return `${minutes}:${formatedSeconds}`;
+      }
     }
   }
 }

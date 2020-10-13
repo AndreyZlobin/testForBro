@@ -1,0 +1,29 @@
+<nb-card>
+  <nb-card-body>
+    <ng-container *ngIf="filename && batchid">
+      <ngx-file-info [batchId]="batchid" [fileName]="filename"></ngx-file-info>
+    </ng-container>
+    <div class="d-flex flex-column">
+      <ngx-video-player
+        [fileName]="filename"
+        [batchId]="batchid"
+      ></ngx-video-player>
+      <div class="d-flex flex-row justify-content-between">
+        <ngx-text-log
+          height="34vh"
+          style="width: 100%;"
+          [batchId]="batchid"
+          [fileName]="filename"
+          (goToRegion)="goToRegion($event)"
+        ></ngx-text-log>
+        <div class="w-25" *ngIf="showComments">
+          <ngx-check-list
+            [batchId]="batchid"
+            [fileName]="filename"
+            height="15vh"
+          ></ngx-check-list>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

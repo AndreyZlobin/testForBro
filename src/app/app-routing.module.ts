@@ -34,12 +34,15 @@ import { CanDeactivateGuard } from "./neosound/shared/can-deactivate";
 import { AboutComponent } from "./neosound/pages/about/about.component";
 
 import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/player-details.component";
+import { VideoDetailsComponent } from "./neosound/pages/guest/video-details/video-details.component";
+
 import { AnalyticDetailsComponent } from "./neosound/pages/guest/analytic-details/analytic-details.component";
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
 import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-found.component";
 import { BatchListComponent } from "./neosound/pages/user/batch-list/batch-list.component";
 import { BatchDetailsComponent } from "./neosound/pages/user/batch-details/batch-details.component";
 import { ChartPageComponent } from "./neosound/pages/charts/chart-page/chart-page.component";
+import {AssessmentDashboardComponent} from "./neosound/pages/dashboard/assessment-dashboard/assessment-dashboard.component";
 
 const routes: Routes = [
   {
@@ -87,6 +90,11 @@ const routes: Routes = [
         component: PlayerDetailsComponent
       },
       {
+        path: "video/:batchid/:filename",
+        canActivate: [AuthGuard],
+        component: VideoDetailsComponent
+      },
+      {
         path: "analytic/:batchid/:filename",
         canActivate: [AuthGuard],
         component: AnalyticDetailsComponent
@@ -124,6 +132,11 @@ const routes: Routes = [
         path: "charts",
         canActivate: [AuthGuard],
         component: ChartPageComponent
+      },
+      {
+        path: "dashboard/assessment",
+        canActivate: [AuthGuard],
+        component: AssessmentDashboardComponent
       },
       {
         path: "",

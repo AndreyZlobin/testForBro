@@ -36,10 +36,12 @@ export class FilterService {
     pausefromAll: boolean;
     pausetoAll: boolean;
     stopOnly: boolean;
+    noStop: boolean;
     stopwordLooking: string;
-    tagsOnly: boolean;
     missingOnly: boolean;
+    noMissing: boolean;
     favoriteOnly: boolean;
+    noFavorite: boolean;
     filename: string;
     itemsn: number;
     pagen: number;
@@ -47,6 +49,13 @@ export class FilterService {
     sortorder: string;
     sentimentTrend: string;
     topics: string;
+    tagsOnly: boolean;
+    noTags: boolean;
+    checklistOnly: boolean;
+    noChecklist: boolean;
+    commentsOnly: boolean;
+    noComments: boolean;
+    tagsCondition: string;
   } = {
     uploadDate: null,
     angerfrom: null,
@@ -69,29 +78,62 @@ export class FilterService {
     angertoAll: true,
     pausefromAll: true,
     pausetoAll: true,
-    stopOnly: false,
+    stopOnly: null,
+    noStop: null,
     stopwordLooking: "Everywhere",
     sentimentTrend: null,
-    tagsOnly: false,
-    missingOnly: false,
+    missingOnly: null,
+    noMissing: null,
     favoriteOnly: false,
+    noFavorite: false,
     filename: "",
     itemsn: 100,
     pagen: 1,
     sortby: "",
     sortorder: "",
     topics: "",
+    tagsOnly: null,
+    noTags: null,
+    checklistOnly: null,
+    noChecklist: null,
+    commentsOnly: null,
+    noComments: null,
+    tagsCondition: 'or',
   };
   constructor(private filesService: FilesService) {}
 
   public getFilterParams(): any {
+    let startDate: Date = null;
+    let endDate: Date = null;
+    if (this.filter.uploadDate) {
+      if (this.filter.uploadDate[0]) {
+        startDate = new Date();
+        startDate.setUTCFullYear(this.filter.uploadDate[0].getFullYear());
+        startDate.setUTCMonth(this.filter.uploadDate[0].getMonth());
+        startDate.setUTCDate(this.filter.uploadDate[0].getDate());
+        startDate.setUTCHours(0);
+        startDate.setUTCMinutes(0);
+        startDate.setUTCSeconds(0);
+        startDate.setUTCMilliseconds(0);
+      }
+      if (this.filter.uploadDate[1]) {
+        endDate = new Date();
+        endDate.setUTCFullYear(this.filter.uploadDate[1].getFullYear());
+        endDate.setUTCMonth(this.filter.uploadDate[1].getMonth());
+        endDate.setUTCDate(this.filter.uploadDate[1].getDate());
+        endDate.setUTCHours(23);
+        endDate.setUTCMinutes(59);
+        endDate.setUTCSeconds(59);
+        endDate.setUTCMilliseconds(999);
+      }
+    }
     const params = {
       itemsn: `${this.filter.itemsn}`,
       pagen: `${this.filter.pagen}`,
       batchid: (this.filter.batchid && "" + this.filter.batchid) || "",
       filename: this.filter.filename,
-      datetimefrom: this.filter.uploadDate && this.filter.uploadDate[0] || "",
-      datetimeto: this.filter.uploadDate && this.filter.uploadDate[1] || "",
+      datetimefrom: startDate,
+      datetimeto: endDate,
       angervolfrom:
         this.filter.angerfrom == null ? "" : this.filter.angerfrom + "",
       angervolto:
@@ -127,11 +169,24 @@ export class FilterService {
           ? "10000"
           : this.filter.callto + "",
       stopOnly: this.filter.stopOnly,
-      tagsOnly: this.filter.tagsOnly,
+      noStop: this.filter.noStop,
+
       missingOnly: this.filter.missingOnly,
+      noMissing: this.filter.noMissing,
+
       favoriteOnly: this.filter.favoriteOnly,
+      noFavorite: this.filter.noFavorite,
       sortorder: this.filter.sortorder,
-      sortby: this.filter.sortby
+      sortby: this.filter.sortby,
+      tagsOnly: this.filter.tagsOnly ? this.filter.tagsOnly : null,
+      noTags: this.filter.noTags ? this.filter.noTags : null,
+      checklistOnly: this.filter.checklistOnly
+        ? this.filter.checklistOnly
+        : null,
+      noChecklist: this.filter.noChecklist ? this.filter.noChecklist : null,
+      commentsOnly: this.filter.commentsOnly ? this.filter.commentsOnly : null,
+      noComments: this.filter.noComments ? this.filter.noComments : null,
+      tagsCondition: this.filter.tagsCondition ? this.filter.tagsCondition : 'or',
     };
     if (this.filter.keywordsContain && this.filter.keywordsContain.length) {
       params["keywordsContain"] = this.filter.keywordsContain
@@ -251,7 +306,9 @@ export class FilterService {
           batchid: batchid,
           filename: filename
         })
-        .subscribe();
+        .subscribe(v => {
+          this.fileStore[index].proccessing = false;
+        });
     }
   }
   public resetFilter() {
@@ -277,19 +334,27 @@ export class FilterService {
       angertoAll: true,
       pausefromAll: true,
       pausetoAll: true,
-      stopOnly: false,
+      stopOnly: null,
+      noStop: null,
       stopwordLooking: "Everywhere",
       sentimentTrend: null,
-      tagsOnly: false,
-      missingOnly: false,
+      missingOnly: null,
+      noMissing: null,
       favoriteOnly: false,
+      noFavorite: false,
       filename: "",
       itemsn: 100,
       pagen: 1,
       sortby: "",
       sortorder: "",
       topics: "",
-
+      noTags: null,
+      tagsOnly: null,
+      checklistOnly: null,
+      noChecklist: null,
+      commentsOnly: null,
+      noComments: null,
+      tagsCondition: 'or',
     };
     this.updateFileList();
   }
@@ -356,13 +421,13 @@ export class FilterService {
 
   public setComment(index, comments) {
     if (index !== -1) {
-      this.fileStore[index].comment = [{text: comments}];
+      this.fileStore[index].comment = [{ text: comments }];
       this.filesSubject.next(this.fileStore);
     }
   }
   public setAssessment(index, value) {
     if (index !== -1) {
-      this.fileStore[index].checklist = true;
+      this.fileStore[index].checklist = value !== '-';
       this.fileStore[index].checklistScore = value;
       this.filesSubject.next(this.fileStore);
     }
@@ -375,7 +440,11 @@ export class FilterService {
       );
 
       if (index !== -1 && this.fileStore[index + 1]) {
-        return `/file/${this.fileStore[index + 1].batchid}/${
+        let type = 'file';
+        if(this.fileStore[index + 1].fileType === 'video') {
+          type = 'video';
+        }
+        return `/${type}/${this.fileStore[index + 1].batchid}/${
           this.fileStore[index + 1].filename
         }`;
       }
@@ -390,7 +459,11 @@ export class FilterService {
         file => file.filename === fileName && file.batchid === batchId
       );
       if (index !== -1 && this.fileStore[index - 1]) {
-        return `/file/${this.fileStore[index - 1].batchid}/${
+        let type = 'file';
+        if(this.fileStore[index - 1].fileType === 'video') {
+          type = 'video';
+        }
+        return `/${type}/${this.fileStore[index - 1].batchid}/${
           this.fileStore[index - 1].filename
         }`;
       }

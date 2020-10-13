@@ -5,7 +5,7 @@ import {
   ChangeDetectorRef,
   OnDestroy,
   ViewChild,
-  ElementRef
+  ElementRef,
 } from "@angular/core";
 import { FilesService } from "../../../services/files.service";
 import { FilterService } from "../../../services/filter.service";
@@ -39,20 +39,21 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   selectedTopics: string[] = [];
   selectedTopic: string = "";
   batches: string[] = [];
+  tags: string[] = [];
+  selectedTags: string[] = [];
+  selectedTag: string[] = [];
 
   constructor(
     private filesService: FilesService,
     public filterService: FilterService,
-    private cd: ChangeDetectorRef,
     private dataService: DataService,
     private modalService: BsModalService,
-    private analyticsService: AnalyticsService,
-  ) {
-  }
+    private analyticsService: AnalyticsService
+  ) {}
 
   ngOnInit() {
     this.filterService.updateFileList();
-    this.filesService.listTopics().subscribe(data => {
+    this.filesService.listTopics().subscribe((data) => {
       if (data && data.topics) {
         this.topics = data.topics;
       }
@@ -61,6 +62,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       }
     });
     this.getBatches();
+    this.getTags();
   }
   ngAfterViewInit() {}
   scrollToElement() {
@@ -72,13 +74,23 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   setStopwordLooking(value: string): void {
     this.filterService.filter.stopwordLooking = value;
   }
+
   getBatches() {
-    this.filesService.listBatches().subscribe(data => {
+    this.filesService.listBatches().subscribe((data) => {
       if (data && data.batches) {
         this.batches = data.batches;
       }
     });
   }
+
+  getTags() {
+    this.filesService.listTags().subscribe((data) => {
+      if (data && data.tags) {
+        this.tags = data.tags;
+      }
+    });
+  }
+
   setEmotionalTrend(value: string): void {
     this.filterService.filter.sentimentTrend = value;
   }
@@ -102,9 +114,15 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   getLink(item) {
-    return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
-      item.fileid
-    )}`;
+    if (item.fileType === "audio") {
+      return `/file/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
+        item.fileid
+      )}`;
+    } else {
+      return `/video/${encodeURIComponent(item.batchid)}/${encodeURIComponent(
+        item.fileid
+      )}`;
+    }
   }
 
   proccessFile(item) {
@@ -122,7 +140,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     let color = 100;
     const max = 25;
     const parsed = parseFloat(val.anger);
-    if(parsed < max) {
+    if (parsed < max) {
       color = (parsed * 100) / max;
     }
     return "hsl(" + Math.ceil(100 - color) + ", 50%, 50%)";
@@ -133,6 +151,8 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     const b = 100 * a;
     const c = b + 0;
 
+    const val = "hsl(" + c + ", 50%, 50%)";
+
     // Return a CSS HSL string
     return "hsl(" + c + ", 50%, 50%)";
   }
@@ -142,7 +162,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   abcStr(percent: string): string {
-    const val = parseFloat(percent)
+    const val = parseFloat(percent);
     return val.toFixed();
   }
 
@@ -156,6 +176,138 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     }
     result = val / 50;
     return "rgba(5, 5, 255, " + result + ")";
+  }
+
+  setTagsFilter() {
+    if (!!this.filterService.filter.tagsOnly) {
+      this.filterService.filter.tagsOnly = null;
+      this.filterService.filter.noTags = null;
+    } else {
+      this.filterService.filter.tagsOnly = true;
+      this.filterService.filter.noTags = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoTagsFilter() {
+    if (!!this.filterService.filter.noTags) {
+      this.filterService.filter.noTags = null;
+      this.filterService.filter.tagsOnly = null;
+    } else {
+      this.filterService.filter.noTags = true;
+      this.filterService.filter.tagsOnly = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setChecklistOnlyFilter() {
+    if (!!this.filterService.filter.checklistOnly) {
+      this.filterService.filter.checklistOnly = null;
+      this.filterService.filter.noChecklist = null;
+    } else {
+      this.filterService.filter.checklistOnly = true;
+      this.filterService.filter.noChecklist = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoChecklistFilter() {
+    if (!!this.filterService.filter.noChecklist) {
+      this.filterService.filter.noChecklist = null;
+      this.filterService.filter.checklistOnly = null;
+    } else {
+      this.filterService.filter.noChecklist = true;
+      this.filterService.filter.checklistOnly = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setCommentsOnlyFilter() {
+    if (!!this.filterService.filter.commentsOnly) {
+      this.filterService.filter.commentsOnly = null;
+      this.filterService.filter.noComments = null;
+    } else {
+      this.filterService.filter.commentsOnly = true;
+      this.filterService.filter.noComments = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoCommentFilter() {
+    if (!!this.filterService.filter.noComments) {
+      this.filterService.filter.noComments = null;
+      this.filterService.filter.commentsOnly = null;
+    } else {
+      this.filterService.filter.noComments = true;
+      this.filterService.filter.commentsOnly = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setStopOnlyFilter() {
+    if (!!this.filterService.filter.stopOnly) {
+      this.filterService.filter.stopOnly = null;
+      this.filterService.filter.noStop = null;
+    } else {
+      this.filterService.filter.stopOnly = true;
+      this.filterService.filter.noStop = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoStopFilter() {
+    if (!!this.filterService.filter.noStop) {
+      this.filterService.filter.noStop = null;
+      this.filterService.filter.stopOnly = null;
+    } else {
+      this.filterService.filter.noStop = true;
+      this.filterService.filter.stopOnly = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setMissedOnlyFilter() {
+    if (!!this.filterService.filter.missingOnly) {
+      this.filterService.filter.missingOnly = null;
+      this.filterService.filter.noMissing = null;
+    } else {
+      this.filterService.filter.missingOnly = true;
+      this.filterService.filter.noMissing = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoMissedFilter() {
+    if (!!this.filterService.filter.noMissing) {
+      this.filterService.filter.noMissing = null;
+      this.filterService.filter.missingOnly = null;
+    } else {
+      this.filterService.filter.noMissing = true;
+      this.filterService.filter.missingOnly = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setFavoriteOnlyFilter() {
+    if (!!this.filterService.filter.favoriteOnly) {
+      this.filterService.filter.favoriteOnly = null;
+      this.filterService.filter.noFavorite = null;
+    } else {
+      this.filterService.filter.favoriteOnly = true;
+      this.filterService.filter.noFavorite = null;
+    }
+    this.filterService.updateFileList();
+  }
+
+  setNoFavoriteFilter() {
+    if (!!this.filterService.filter.noFavorite) {
+      this.filterService.filter.noFavorite = null;
+      this.filterService.filter.favoriteOnly = null;
+    } else {
+      this.filterService.filter.noFavorite = true;
+      this.filterService.filter.favoriteOnly = null;
+    }
+    this.filterService.updateFileList();
   }
 
   getDateVal(val) {
@@ -198,14 +350,14 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.analyticsService.trackEvent("fileList", "exportCSV");
     const params = {
       ...this.filterService.getFilterParams(),
-      export: "csv"
+      export: "csv",
     };
     this.filesService.postListFilesPage(params).subscribe(
-      data =>
+      (data) =>
         // this.downloadFile(data)
         (window.location.href = data.url)
     ),
-      error => console.log("Error downloading the file."),
+      (error) => console.log("Error downloading the file."),
       () => console.info("OK");
   }
 
@@ -279,14 +431,14 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.editedFileItem = item;
     this.itemTags =
       (item.tags &&
-        item.tags.map(v => ({
+        item.tags.map((v) => ({
           value: v,
-          display: v
+          display: v,
         }))) ||
       [];
     this.hideModal();
     this.modalRef = this.modalService.show(ref, {
-      class: "modal-xl"
+      class: "modal-xl",
     });
   }
 
@@ -314,7 +466,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
 
   saveTags() {
     this.analyticsService.trackEvent("fileList", "saveTags");
-    const tags = this.itemTags.map(v => v.value);
+    const tags = this.itemTags.map((v) => v.value);
     this.filterService.setTags(this.currentTagEditIndex, tags);
     this.currentTagEditIndex = -1;
     this.hideModal();
@@ -342,7 +494,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
         c = this.itemTags;
         break;
       case "tagsContain":
-        c = this.itemTags;
+        c = this.filterService.filter.tagsContain;
         break;
     }
 
@@ -383,8 +535,55 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     this.filterService.filter.topics = this.selectedTopics.join(",");
   }
 
-  onRemoveTopic(topic: string) {
-    this.selectedTopics = this.selectedTopics.filter(t => t !== topic);
+  onSelectBatchId(event: any) {
+    this.selectedTopic = "";
+    const deduplicate = new Set([...this.selectedTopics, event.value]);
+    this.selectedTopics = Array.from(deduplicate);
     this.filterService.filter.topics = this.selectedTopics.join(",");
+  }
+
+  onRemoveTopic(topic: string) {
+    this.selectedTopics = this.selectedTopics.filter((t) => t !== topic);
+    this.filterService.filter.topics = this.selectedTopics.join(",");
+  }
+
+  tagClick(tag: string) {
+    if (this.filterService.filter.tagsContain) {
+      this.filterService.filter.tagsContain = [
+        ...this.filterService.filter.tagsContain,
+        { display: tag, value: tag },
+      ];
+    } else {
+      this.filterService.filter.tagsContain = [{ display: tag, value: tag }];
+    }
+
+    this.filterService.updateFileList();
+  }
+  autotagClick(tag: string) {
+    if (this.filterService.filter.tagsContain) {
+      this.filterService.filter.tagsContain = [
+        ...this.filterService.filter.tagsContain,
+        { display: tag, value: tag },
+      ];
+    } else {
+      this.filterService.filter.tagsContain = [{ display: tag, value: tag }];
+    }
+
+    this.filterService.updateFileList();
+  }
+
+  onSelectTag(event: any) {
+    const deduplicate = new Set([...(Array.isArray(this.selectedTags) ? this.selectedTags : [this.selectedTags]), event.value]);
+    this.selectedTags = Array.from(deduplicate);
+    this.selectedTag = Array.from(deduplicate);
+    this.filterService.filter.tagsContain = this.selectedTags.map(v => ({ display: v, value: v }));
+  }
+  onRemoveTag(topic: string) {
+    this.selectedTags = this.selectedTags.filter((t) => t !== topic);
+    this.selectedTag = this.selectedTags;
+    this.filterService.filter.tagsContain = this.selectedTags.map(v => ({ display: v, value: v }));
+  }
+  setTagCondition(con: string) {
+    this.filterService.filter.tagsCondition = con;
   }
 }

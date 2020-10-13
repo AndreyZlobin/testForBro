@@ -5,7 +5,8 @@ import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 
 @Component({
   selector: "ngx-file-info",
-  templateUrl: "./file-info.component.html"
+  templateUrl: "./file-info.component.html",
+  styleUrls: ['./file-info.component.scss']
 })
 export class FileInfoComponent implements OnChanges {
   file: any;
@@ -48,12 +49,6 @@ export class FileInfoComponent implements OnChanges {
       ? item.misswords.join(", ")
       : "";
   }
-  getOpacityLevelAnger(val) {
-    const a = val.anger / 100;
-    const b = 100 * a;
-    const c = b + 0;
-    return "hsl(" + c + ", 50%, 50%)";
-  }
   hasTrend(sentimentTrend) {
     return sentimentTrend.start && sentimentTrend.end;
   }
@@ -72,8 +67,21 @@ export class FileInfoComponent implements OnChanges {
     }
     return "fa-meh";
   }
+  getOpacityLevelAnger(val) {
+    let color = 100;
+    const max = 25;
+    const parsed = parseFloat(val.anger);
+    if(parsed < max) {
+      color = (parsed * 100) / max;
+    }
+    return "hsl(" + Math.ceil(100 - color) + ", 50%, 50%)";
+  }
+
 
   getOpacityLevelCompliance(percent) {
+    if (percent === '-') {
+      return "hsl(0, 10%, 10%)";
+    }
     const a = percent / 100;
     const b = 100 * a;
     const c = b + 0;
@@ -120,6 +128,10 @@ export class FileInfoComponent implements OnChanges {
         return `${minutes}:${formatedSeconds}`;
       }
     }
+  }
+  abcStr(percent: string): string {
+    const val = parseFloat(percent)
+    return val.toFixed();
   }
   showModal(ref, index) {
     this.currentTagEditIndex = index;

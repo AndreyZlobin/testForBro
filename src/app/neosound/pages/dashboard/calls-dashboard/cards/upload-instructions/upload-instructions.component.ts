@@ -39,4 +39,7 @@ export class UploadInstructionsComponent implements OnInit, OnDestroy {
   isRussian() {
     return this.lang.checkLanguage("ru");
   }
+  isPorto() {
+    return this.lang.checkLanguage("pt");
+  }
 }

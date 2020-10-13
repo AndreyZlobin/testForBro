@@ -21,7 +21,7 @@
               "src/assets",
               "src/favicon.ico",
               "src/favicon.png",
-			        "src/.htaccess",
+              "src/.htaccess",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
@@ -127,7 +127,7 @@
               "src/assets",
               "src/favicon.ico",
               "src/favicon.png",
-			  "src/.htaccess",
+              "src/.htaccess",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
@@ -182,5 +182,8 @@
     "@schematics/angular:directive": {
       "prefix": "ngx"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

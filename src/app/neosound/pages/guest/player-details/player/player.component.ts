@@ -21,7 +21,7 @@ export class PlayerComponent implements OnDestroy, OnChanges {
   playing: boolean = false;
   @HostListener("window:keyup", ["$event"])
   keyEvent(event: KeyboardEvent) {
-    if (event.keyCode === 32) {
+    if (event.keyCode === 32 && !(event.target as any).classList.contains('ng2-tag-input__text-input') && !(event.target as any).classList.contains('border')) {
       event.preventDefault();
       event.stopPropagation();
       this.play();

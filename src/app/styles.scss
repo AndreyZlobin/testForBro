@@ -1,3 +1,5 @@
+@import "./nb-reset.scss";
+@import "~video.js/dist/video-js.css";
 .nb-arrow-thin-left {
   display: none;
 }
@@ -240,6 +242,9 @@ angular-tag-cloud > span {
     }
   }
 }
+.file-list button {
+  background: transparent;
+}
 .file-list a {
   &:active,
   &:hover,
@@ -280,10 +285,12 @@ angular-tag-cloud > span {
 }
 
 .stopbackcolor {
-  background-color: rgb(204, 121, 169);
+  background-color: #ff5964;
+  color: white;
 }
 .missbackcolor {
   background-color: var(--color-primary);
+  color: white;
 }
 
 .left-border {
@@ -440,7 +447,7 @@ h3[contenteditable="true"],
 h4[contenteditable="true"],
 h5[contenteditable="true"],
 h6[contenteditable="true"] {
-  cursor:text;
+  cursor: text;
   &:focus {
     outline: none;
   }
@@ -451,22 +458,63 @@ h6[contenteditable="true"] {
 }
 
 app-files-list ul.dropdown-menu.show {
-  width: 220px !important;
+  // width: 220px !important;
   min-width: 220px !important;
 }
 
 .action-select > button {
-    padding: .01rem .01rem !important;
-    color: #2a2a2a !important;
-    &:after {
-      content: "";
-    }
+  padding: 0.01rem 0.01rem !important;
+  color: #2a2a2a !important;
+  &:after {
+    content: "";
+  }
 }
 
 .action-select > .dropdown-menu.show {
-  z-index: 9999 !important
+  z-index: 9999 !important;
 }
 
 .action-select .dropdown-toggle::after {
   display: none;
+}
+body.nb-theme-default {
+  .file-info-container {
+    line-height: 1;
+    .btn {
+      height: auto;
+    }
+  }
+}
+
+.badge-autotag {
+  background-color: var(--color-secondary);
+  color: #fff;
+}
+
+.video-container video {
+  -webkit-media-controls-panel {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+}
+.rotating {
+  animation: rotation 2s infinite linear;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@media print {
+  .hide-on-print {
+    visibility: hidden;
+    display: none;
+  }
+  .nb-theme-default nb-layout.window-mode .scrollable-container {
+    height: fit-content;
+  }
 }

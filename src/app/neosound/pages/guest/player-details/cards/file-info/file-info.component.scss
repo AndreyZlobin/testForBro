@@ -1,0 +1,7 @@
+:host {
+  @media print { 
+    button, .pencil-alt {
+      visibility: hidden;
+    }
+  }
+}

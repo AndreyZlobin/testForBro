@@ -33,18 +33,17 @@ export class AssessmentByAgentComponent implements OnInit, OnDestroy {
       this.primaryColor = "#0098d9";
     }
     this.dataSub1 = this.dataService.data.subscribe(data => {
-      if (data && data.totals && data.totals.checklistAvgScoreDataBatches) {
-        const sorted = data.totals.checklistAvgScoreDataBatches
-          .sort((a, b) => b - a)
-          .slice(0, 10)
-          .reverse();
-        var dataShadow = [];
-        let yMax = 0;
-        sorted.forEach(v => {
-          if (v.value > yMax) {
-            yMax = v.value;
+      if (data && data.batches) {
+        const sorted = Object.keys(data.batches).map((key) => {
+          return {
+            name: key,
+            value: data.batches[key].checklistAvgScore
           }
-        });
+        }).sort((a, b) => b.value - a.value)
+        .slice(0, 10)
+        .reverse();
+        var dataShadow = [];
+        let yMax = 100;
         for (var i = 0; i < sorted.length; i++) {
           dataShadow.push(yMax);
         }
@@ -56,7 +55,7 @@ export class AssessmentByAgentComponent implements OnInit, OnDestroy {
           yAxis: {
             type: "category",
             name: this.t("Assessment"),
-            data: data.totals.batchesnames,
+            data: sorted.map((v) => v.name),
             axisLabel: {
               inside: true,
               textStyle: {
@@ -99,7 +98,7 @@ export class AssessmentByAgentComponent implements OnInit, OnDestroy {
             {
               name: "%",
               type: "bar",
-              data: sorted,
+              data: sorted.map((v) => v.value),
               label: {
                 normal: {
                   position: "right",

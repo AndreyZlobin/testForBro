@@ -58,6 +58,7 @@ import { DashboardFileStatsService } from "./neosound/pages/dashboard/calls-dash
 import { MinutesStatsService } from "./neosound/pages/dashboard/calls-dashboard/services/minutes-stats.service";
 import { TagCloudService } from "./neosound/pages/dashboard/calls-dashboard/services/tag-cloud.service";
 import { TopicCloudService } from "./neosound/pages/dashboard/calls-dashboard/services/topic-cloud.service";
+import { ChecklistStatsService } from "./neosound/pages/dashboard/assessment-dashboard/services/checklist-stats.service";
 
 import { SignupLinkComponent } from "./neosound/pages/auth/signup-link/signup-link.component";
 import { SignupDetailedComponent } from "./neosound/pages/auth/signup-detailed/signup-detailed.component";
@@ -73,6 +74,8 @@ import { OrganizationSettingsComponent } from "./neosound/pages/admin/organisati
 import { KeywordsComponent } from "./neosound/pages/admin/organisation-settings/components/keywords/keywords.component";
 import { SensitiveDataComponent } from "./neosound/pages/admin/organisation-settings/components/sensitive-data/sensitive-data.component";
 import { CheckListComponent } from "./neosound/pages/admin/organisation-settings/components/check-list/check-list.component";
+
+import { SetupStopwordsComponent } from "./neosound/pages/admin/organisation-settings/components/stopwords/setup-stopwords.component";
 
 import { AuthGuard } from "./neosound/shared/auth-guard";
 import { CanDeactivateGuard } from "./neosound/shared/can-deactivate";
@@ -114,6 +117,9 @@ import { PlayerComponent } from "./neosound/pages/guest/player-details/player/pl
 import { PlayerDetailsComponent } from "./neosound/pages/guest/player-details/player-details.component";
 import { AnalyticDetailsComponent } from "./neosound/pages/guest/analytic-details/analytic-details.component";
 
+import { VideoDetailsComponent } from "./neosound/pages/guest/video-details/video-details.component";
+import { VideoPlayerComponent } from "./neosound/pages/guest/video-details/video-player/video-player.component";
+import { VideoFileInfoService} from './neosound/pages/guest/video-details/services/video-file-info.service'
 import { TextLogComponent } from "./neosound/pages/guest/player-details/cards/text-log/text-log.component";
 import { CheckListFormComponent } from "./neosound/pages/guest/player-details/cards/check-list/check-list.component";
 import { TextComplianceComponent } from "./neosound/pages/guest/player-details/cards/text-compliance/text-compliance.component";
@@ -150,6 +156,19 @@ import { TotalByQueriesChartPieComponent } from "./neosound/pages/charts/total-b
 import { TotalMinutesPlusBatchesChartBarComponent } from "./neosound/pages/charts/total-minutes-plus-batches-chart-bar/total-minutes-plus-batches-chart-bar.component";
 import { KeywordsRadialTreeComponent } from "./neosound/pages/charts/keywords-radial-tree/keywords-radial-tree.component";
 import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.component";
+import { AssessmentDashboardComponent } from './neosound/pages/dashboard/assessment-dashboard/assessment-dashboard.component';
+import { AssessmentNcallsByQuestionComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-ncalls-by-question/assessment-ncalls-by-question.component';
+import { AssessmentNcallsAndNpositiveByQuestionComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-ncalls-and-npositive-by-question/assessment-ncalls-and-npositive-by-question.component';
+import { AssessmentAvgscoreByAgentComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent/assessment-avgscore-by-agent.component';
+import { AssessmentReachedStagesBarComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-reached-stages-bar/assessment-reached-stages-bar.component';
+import { AssessmentReachedStagesBarStackedComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-reached-stages-bar-stacked/assessment-reached-stages-bar-stacked.component';
+import { AssessmentAvgscoreByAgentQuestionBarComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent-question-bar/assessment-avgscore-by-agent-question-bar.component';
+import { AssessmentAvgscoreByAgentQuestionBarStackedComponent } from './neosound/pages/dashboard/assessment-dashboard/cards/assessment-avgscore-by-agent-question-bar-stacked/assessment-avgscore-by-agent-question-bar-stacked.component';
+import {AutoTagCloudService} from "./neosound/pages/dashboard/calls-dashboard/services/auto-tag-cloud.service";
+import { HitsAutotagsComponent } from './neosound/pages/dashboard/calls-dashboard/cards/hits-autotags/hits-autotags.component';
+import { AutotagsByDayComponent } from './neosound/pages/dashboard/calls-dashboard/cards/autotags-by-day/autotags-by-day.component';
+import { HitsBatchesComponent } from './neosound/pages/dashboard/calls-dashboard/cards/hits-batches/hits-batches.component';
+import { AgentCallsByDayComponent } from './neosound/pages/dashboard/calls-dashboard/cards/agent-calls-by-day/agent-calls-by-day.component';
 
 @NgModule({
   declarations: [
@@ -192,6 +211,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     KeywordsComponent,
     SensitiveDataComponent,
     CheckListComponent,
+    SetupStopwordsComponent,
     AboutComponent,
     PlayerDetailsComponent,
     AnalyticDetailsComponent,
@@ -234,7 +254,22 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     TextsDashboardComponent,
     FileInfoComponent,
     TagifyComponent,
-    MinutesSecondsPipe
+    MinutesSecondsPipe,
+    AssessmentDashboardComponent,
+    AssessmentNcallsByQuestionComponent,
+    AssessmentNcallsAndNpositiveByQuestionComponent,
+    AssessmentAvgscoreByAgentComponent,
+    AssessmentReachedStagesBarComponent,
+    AssessmentReachedStagesBarStackedComponent,
+    AssessmentAvgscoreByAgentQuestionBarComponent,
+    AssessmentAvgscoreByAgentQuestionBarStackedComponent,
+    VideoPlayerComponent, 
+    VideoPlayerComponent,
+    VideoDetailsComponent,
+    HitsAutotagsComponent,
+    AutotagsByDayComponent,
+    HitsBatchesComponent,
+    AgentCallsByDayComponent,
   ],
   imports: [
     BrowserModule,
@@ -281,6 +316,7 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     MinutesStatsService,
     TagCloudService,
     TopicCloudService,
+    ChecklistStatsService,
     FilePeeksService,
     FileResultService,
     UploadService,
@@ -290,6 +326,8 @@ import { TagifyComponent } from "./neosound/components/tagify/angular-tagify.com
     AnalyticsService,
     MediaRecorderService,
     WaveSurferService,
+    VideoFileInfoService,
+    AutoTagCloudService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestsHttpInterceptor,

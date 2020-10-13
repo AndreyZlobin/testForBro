@@ -12,7 +12,7 @@ import { DashboardFileStatsService } from "../../services/file-stats.service";
 
 @Component({
   selector: "ngx-performance-by-agent",
-  templateUrl: "./performance-by-agent.component.html"
+  templateUrl: "./performance-by-agent.component.html",
 })
 export class PerformanceByAgentComponent implements OnInit, OnDestroy {
   @Output() onClick = new EventEmitter<string>();
@@ -23,10 +23,8 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
   dataSub2: any;
   dataSub3: any;
   hasData: boolean = false;
-  constructor(
-    private dataService: DashboardFileStatsService,
-  ) {
-    this.dataSub1 = this.dataService.data.subscribe(data => {
+  constructor(private dataService: DashboardFileStatsService) {
+    this.dataSub1 = this.dataService.data.subscribe((data) => {
       if (data && data.batches) {
         this.options = this.getOptions(data);
         this.hasData = true;
@@ -58,8 +56,9 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
     "#005eaa",
     "#339ca8",
     "#cda819",
-    "#32a487"
+    "#32a487",
   ];
+
   getOptions(data: any): any {
     let options = {};
     const batches = Object.keys(data.batches);
@@ -72,38 +71,25 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
         .sort((a, b) => data.batches[b].allCallsN - data.batches[a].allCallsN)
         .slice(0, 6)
         .reverse()
-        .forEach(batchName => {
+        .forEach((batchName) => {
           all.push(data.batches[batchName].allCallsN);
           anger.push(data.batches[batchName].angerCallsN);
           silence.push(data.batches[batchName].silentCallsN);
         });
-      const chartData = [
-        {
-          name: this.t("emotional"),
-          type: "bar",
-          data: anger
-        },
-        {
-          name: this.t("silence"),
-          type: "bar",
-          data: silence
-        },
-        {
-          name: this.t("all"),
-          type: "bar",
-          data: all
-        }
-      ];
+      let minX = 100;
       let maxX = 0;
+      let minY = 100;
       let maxY = 0;
       let maxR = 0;
       let minR = 1;
       const buble = batches.map((batchName, index) => {
-        if (maxX < data.batches[batchName].silentCallsN) {
-          maxX = data.batches[batchName].silentCallsN;
+        const silentP = Math.ceil(data.batches[batchName].silentCallsN * 100 / data.batches[batchName].allCallsN);
+        const emoP = Math.ceil(data.batches[batchName].angerCallsN * 100 / data.batches[batchName].allCallsN);
+        if (maxX < silentP) {
+          maxX = silentP;
         }
-        if (maxY < data.batches[batchName].angerCallsN) {
-          maxY = data.batches[batchName].angerCallsN;
+        if (maxY < emoP) {
+          maxY = emoP;
         }
         if (maxR < data.batches[batchName].allCallsN) {
           maxR = data.batches[batchName].allCallsN;
@@ -111,26 +97,32 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
         if (data.batches[batchName].allCallsN < minR) {
           minR = data.batches[batchName].allCallsN;
         }
+        if (silentP < minX) {
+          minX = silentP;
+        }
+        if (emoP < minY) {
+          minY = emoP;
+        }
         return {
           name: batchName,
           data: [
             [
               (data.batches[batchName].silentCallsN /
                 data.batches[batchName].allCallsN) *
-                100,
+              100,
               (data.batches[batchName].angerCallsN /
                 data.batches[batchName].allCallsN) *
-                100,
+              100,
               data.batches[batchName].allCallsN,
               batchName,
               data.batches[batchName].silentCallsN,
-              data.batches[batchName].angerCallsN
-            ]
+              data.batches[batchName].angerCallsN,
+            ],
           ],
           type: "scatter",
-          symbolSize: data => {
+          symbolSize: (data) => {
             return this.getRadius(data[2], minR, maxR);
-          }
+          },
         };
       });
 
@@ -146,50 +138,58 @@ export class PerformanceByAgentComponent implements OnInit, OnDestroy {
           orient: "horizontal",
           left: 10,
           bottom: 10,
-          data: batches
+          data: batches,
         },
         xAxis: {
           splitLine: {
             lineStyle: {
               type: "none",
-              opacity: 0
-            }
+              opacity: 0,
+            },
           },
           type: "value",
-          name: this.t("Silent Calls, %"),
+          name: this.t("Silent calls, %"),
           nameLocation: "middle",
           nameGap: 30,
-          axisLabel: {
-            formatter: "{value}"
-          },
-          min: 0,
-          max: Math.ceil((maxX / maxR) * 140)
+          // axisLabel: {
+          //   formatter: "{value}"
+          // },
+          min: Math.max(0, minX - Math.ceil(10 * maxX / 100)),
+          max: maxX + Math.ceil(10 * maxX / 100),
         },
         yAxis: {
           splitLine: {
             lineStyle: {
               type: "none",
-              opacity: 0
-            }
+              opacity: 0,
+            },
           },
           scale: true,
           type: "value",
           nameLocation: "middle",
           nameGap: 30,
-          name: this.t("Emotional Calls, %"),
-          axisLabel: {
-            formatter: "{value}"
-          },
-          min: 0,
-          max: Math.ceil((maxY / maxR) * 140)
+          name: this.t("Emotional calls, %"),
+          // axisLabel: {
+          //   formatter: "{value}"
+          // },
+          min: Math.max(0, minY - Math.ceil(10 * maxY / 100)),
+          max: maxY + Math.ceil(10 * maxY / 100),
         },
         tooltip: {
           show: true,
-          formatter: function(param) {
-            return `${param.data[3]}<br>Calls: ${param.data[2]}<br> Silent: ${param.data[4]}<br> Emotional: ${param.data[5]}`;
-          }
+          formatter: function (param) {
+            return (
+              `${param.data[3]}<br>` +
+              LanguageService.t("Calls") +
+              `: ${param.data[2]}<br>` +
+              LanguageService.t("Silent") +
+              `: ${param.data[4]}<br>` +
+              LanguageService.t("Emotional") +
+              `: ${param.data[5]}`
+            );
+          },
         },
-        series: buble
+        series: buble,
       };
     }
     return options;

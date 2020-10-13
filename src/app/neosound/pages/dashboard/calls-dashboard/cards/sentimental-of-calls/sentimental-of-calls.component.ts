@@ -124,7 +124,7 @@ export class SentimentalOfCallsComponent implements OnInit, OnDestroy {
         }
       },
       legend: {
-        data: ["Positive", "Negative", "Neutral", "n/a"]
+        data: [this.t("Positive"), this.t("Negative"), this.t("Neutral"), this.t("n/a")]
       },
       yAxis: {
         type: "category",
