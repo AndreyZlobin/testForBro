@@ -202,7 +202,13 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
         this.uploaded = true;
         this.successMessage = "Successfully uploaded to the server.";
         if (this.modalType !== "text") {
-          this.filterService.updateFileList();
+          this.filesService.processFile(this.getFileParams()).subscribe(
+            v => {
+              this.proccessed = true;
+              this.filterService.updateFileList();
+            },
+            e => (this.errorMessage = e.error.message)
+          );
         } else {
           this.textFilterService.updateFileList();
         }
