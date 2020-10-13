@@ -1,12 +1,37 @@
 <div class="row my-2">
-  <div class="col-12" style="height: 40vh; width: 200px;">
-    <video
-      #target
-      class="video-js vjs-big-play-centered w-50 mx-auto"
-      controls
-      playsinline
-      preload="none"
-    ></video>
+  <div class="col-6">
+    <div class="outsideWrapper">
+      <div class="insideWrapper">
+        <video
+          #target
+          class="video-js vjs-big-play-centered"
+          controls
+          playsinline
+          preload="none"
+        ></video>
+        <canvas #canvas class="coveringCanvas" (click)="play()"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-6" style="max-height: 34vh; overflow-y: auto; color: #fff;">
+    <table
+      class="table"
+      *ngIf="videoFileInfoService.fileInfoStore.detectionLog"
+    >
+      <ng-container
+        *ngFor="let log of videoFileInfoService.fileInfoStore.detectionLog"
+      >
+        <tr [style.background-color]="log.color">
+          <td>
+            {{ getFormatedTime(log.startTime) }} -
+            {{ getFormatedTime(log.endTime) }}
+          </td>
+          <td>{{ log.name }}</td>
+          <td>{{ log.type }} detected</td>
+          <td>{{ log.name }}</td>
+        </tr>
+      </ng-container>
+    </table>
   </div>
   <div
     *ngIf="loading"

@@ -1,5 +1,5 @@
 @import "./nb-reset.scss";
-// @import "~video.js/dist/video-js.css";
+@import "~video.js/dist/video-js.css";
 .nb-arrow-thin-left {
   display: none;
 }
@@ -491,6 +491,12 @@ body.nb-theme-default {
   color: #fff;
 }
 
+.video-container video {
+  -webkit-media-controls-panel {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+}
 .rotating {
   animation: rotation 2s infinite linear;
 }

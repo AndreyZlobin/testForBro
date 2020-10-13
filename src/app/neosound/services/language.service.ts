@@ -259,7 +259,7 @@ const translationsSp = {
   'Sentiment words': 'Palabras de sentimiento',
   'Settings': 'Configuración',
   'Names dictionary': 'Diccionario de nombres',
-  'Enable reduction Dictionary names': 'Permitir reducción de nombres de diccionario',
+  'Enable redaction Dictionary names': 'Permitir reducción de nombres de diccionario',
   'stopword': 'palabra de prohibida',
   'stopwords': 'palabras prohibidas',
   'Input stopwords separated by comma or add stopwords by uploading CSV':
@@ -568,7 +568,7 @@ const translationsRu = {
   'Sentiment words': 'Слова Сентиментов',
   'Settings': 'Настройка',
   'Names dictionary': 'Словарь имен',
-  'Enable reduction Dictionary names': 'Включить скрытие имен из словаря',
+  'Enable redaction Dictionary names': 'Включить скрытие имен из словаря',
   'stopword': 'стоп-слово',
   'stopwords': 'стоп-слова',
   'Input stopwords separated by comma or add stopwords by uploading CSV':
@@ -879,7 +879,7 @@ const translationsPt = {
   'Sentiment words': 'Palavras de sentimento',
   'Settings': 'Configuração',
   'Names dictionary': 'Dicionário de nomes',
-  'Enable reduction Dictionary names': 'Permitir redução de nomes de dicionário',
+  'Enable redaction Dictionary names': 'Permitir redução de nomes de dicionário',
   'stopword': 'palavra proibida',
   'stopwords': 'palavras proibidas',
   'Input stopwords separated by comma or add stopwords by uploading CSV':
@@ -1195,7 +1195,7 @@ const translationsGe = {
   "Sentiment words": "Stimmungsvolle Worte",
   Settings: "Einstellungen",
   "Names dictionary": "Namens-Wörterbuch",
-  "Enable reduction Dictionary names": "Reduktion aktivieren Wörterbuch-Namen",
+  "Enable redaction Dictionary names": "Reduktion aktivieren Wörterbuch-Namen",
   stopword: "Stoppwörter",
   stopwords: "Stoppwörter",
   "Input stopwords separated by comma or add stopwords by uploading CSV":
