@@ -6,6 +6,12 @@
     cursor: pointer;
   }
 }
+
+.nb-card-body__fixed {
+  max-height: 80vh;
+  overflow: hidden;
+}
+
 .circle-i {
   width: 10px;
   height: 10px;
