@@ -1,9 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { IFilterData } from './../../shared/data.service';
+import { UtilsService } from './../../shared/utils.service';
+import { takeUntil, tap } from 'rxjs/operators';
+import { AutoTagCloudService } from './calls-dashboard/services/auto-tag-cloud.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { FilesService } from "../../services/files.service";
 import { DataService } from "../../shared";
 import { LanguageService } from "../../services/language.service";
 import * as moment from "moment";
+import { Subject } from 'rxjs';
 
 export const colors = [
   "#c12e34",
@@ -36,29 +41,48 @@ const fullColorHex = (r, g, b) => {
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   selectedValue;
   modalType: string = "calls";
   type: string = "calls";
   modalRef: BsModalRef;
   batchesCalls: string[] = [];
   batchesTexts: string[] = [];
-  public batches: string[] = [];
-  public settingsCalls = { whitelist: []};
-  public settingsTexts = { whitelist: []};
-  public selectedBatches: string[] = [];
-  public dateFrom: any;
-  public dateTo: any;
-  public dateModel: any = [];
-  public loading: boolean = true;
+  protected readonly _unsubscribe$: Subject<void> = new Subject<void>();
+  protected batches: string[] = [];
+  protected settingsCalls = { whitelist: []};
+  protected settingsTexts = { whitelist: []};
+  protected selectedBatches: string[] = [];
+  protected dateFrom: any;
+  protected dateTo: any;
+  protected dateModel: any = [];
+  protected loading: boolean = true;
   constructor(
-    private filesService: FilesService,
-    public dataService: DataService,
-    private modalService: BsModalService
-  ) {}
+    protected filesService: FilesService,
+    protected dataService: DataService,
+    protected modalService: BsModalService,
+    protected autoTagCloudService: AutoTagCloudService,
+    protected utils: UtilsService,
+  ) {
+    this.dataService.filterData$.pipe(
+      tap((filterData: IFilterData) => {
+        this.selectedBatches = filterData.batches;
+        this.dateFrom = filterData.dateFrom;
+        this.dateTo = filterData.dateTo;
+        this.dateModel = filterData.dateModel;
+        this.dataService.loadData(filterData);
+      }),
+      takeUntil(this._unsubscribe$),
+    ).subscribe();
+  }
+
   ngOnInit() {
     this.listCallsBatches();
     this.listTextBatches();
+  }
+
+  ngOnDestroy(): void {
+    this.utils.stopSubscriptions(this._unsubscribe$);
   }
 
   listCallsBatches() {
@@ -78,7 +102,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
   updateData() {
     this.hideModal();
 
@@ -97,6 +120,16 @@ export class DashboardComponent implements OnInit {
     } else {
       this.dateTo = null;
     }
+
+    const payload = {
+      batches: this.batches,
+      dateFrom: this.dateFrom,
+      dateTo: this.dateTo,
+      dateModel: this.dateModel,
+    };
+
+    this.dataService.filterData = payload;
+
     setTimeout(() => {
       this.loading = false;
     }, 10);

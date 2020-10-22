@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { tap, takeUntil } from 'rxjs/operators';
+import { UtilsService } from './../../../../shared/utils.service';
+import { FilesService } from './../../../../services/files.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { DashboardComponent } from './../../dashboard.component';
+import { Component, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { DataService } from "../../../../shared";
 import { LanguageService } from "../../../../services/language.service";
 import { AutoTagCloudService } from "../../../dashboard/calls-dashboard/services/auto-tag-cloud.service";
@@ -36,22 +41,40 @@ const fullColorHex = (r, g, b) => {
   templateUrl: "./stopwords.component.html",
   styleUrls: ["./stopwords.component.scss"],
 })
-export class StopwordsComponent implements OnInit, OnDestroy {
+export class StopwordsComponent extends DashboardComponent implements OnInit, OnDestroy {
+
   autoTagChart: any = 0;
   dataSub1: any;
   hasData: boolean = false;
   primaryColor: string;
   height: string = '600px';
   constructor(
-    private dataService: AutoTagCloudService,
-    private userData: DataService,
-    private router: Router,
-    private filterService: FilterService,
+    protected autoTagCloudService: AutoTagCloudService,
+    protected dataService: DataService,
+    protected router: Router,
+    protected filterService: FilterService,
+    protected modalService: BsModalService,
+    protected filesService: FilesService,
+    protected utils: UtilsService,
   ) {
-    this.dataSub1 = this.dataService.data.subscribe((data) => {
+    super(
+      filesService,
+      dataService,
+      modalService,
+      autoTagCloudService,
+      utils,
+    );
+    this.dataService.filterData$.pipe(
+      tap((filterData) => {
+        this.dateModel = filterData.dateModel;
+        this.dataService.loadData(filterData);
+      }),
+      takeUntil(this._unsubscribe$),
+    ).subscribe();
+    this.dataSub1 = this.autoTagCloudService.data.subscribe((data) => {
       if (data && data.autotags) {
-        if (this.userData.config["colors"] && this.userData.config["colors"].secondary) {
-          this.primaryColor = this.userData.config["colors"].secondary;
+        if (this.dataService.config["colors"] && this.dataService.config["colors"].secondary) {
+          this.primaryColor = this.dataService.config["colors"].secondary;
         } else {
           this.primaryColor = "#0098d9";
         }
@@ -113,9 +136,12 @@ export class StopwordsComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   ngOnInit() {
-    this.dataService.load('audio', null, null, []);
+    this.listCallsBatches();
+    this.listTextBatches();
   }
+
   ngOnDestroy() {
     if (this.dataSub1) {
       this.dataSub1.unsubscribe();
@@ -143,5 +169,9 @@ export class StopwordsComponent implements OnInit, OnDestroy {
   onChartEvent(event: any) {
     this.filterService.filter.tagsContain = [{ display: event.name, value: event.name }];;
     this.router.navigateByUrl("/user/files");
+  }
+
+  updateData() {
+    super.updateData();
   }
 }

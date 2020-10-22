@@ -1,23 +1,16 @@
+import { UtilsService } from './../../../shared/utils.service';
+import { DataModule } from './../../../../@core/data/data.module';
 import {
   Component,
   OnInit,
   Input,
-  OnChanges,
-  SimpleChanges
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { FilterService } from "../../../services/filter.service";
 import { DataService } from "../../../shared";
 import { AnalyticsService } from "../../../services/analytics.service";
 import { LanguageService } from "../../../services/language.service";
-
-import { ApiCallsStatsService } from "./services/api-calls-stats.service";
-import { ChartDataService } from "./services/chart-data.service";
-import { DashboardFileStatsService } from "./services/file-stats.service";
-import { MinutesStatsService } from "./services/minutes-stats.service";
-import { TagCloudService } from "./services/tag-cloud.service";
-import { TopicCloudService } from "./services/topic-cloud.service";
-import {AutoTagCloudService} from "./services/auto-tag-cloud.service";
+import { Subject } from 'rxjs';
 
 export const colors = [
   "#c12e34",
@@ -50,56 +43,29 @@ const fullColorHex = (r, g, b) => {
   templateUrl: "./calls-dashboard.component.html",
   styleUrls: ["./calls-dashboard.component.scss"]
 })
-export class CallsDashboardComponent implements OnInit, OnChanges {
+export class CallsDashboardComponent implements OnInit {
   @Input() dateFrom: string;
   @Input() dateTo: string;
   @Input() batches: string[];
   settings: any = {};
+  private readonly _unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
     private analyticsService: AnalyticsService,
     public dataService: DataService,
     private filterService: FilterService,
-    private apiCallsStatsService: ApiCallsStatsService,
-    private chartDataService: ChartDataService,
-    private dashboardFileStatsService: DashboardFileStatsService,
-    private minutesStatsService: MinutesStatsService,
-    private tagCloudService: TagCloudService,
-    private topicCloudService: TopicCloudService,
-    private autoTagCloudService: AutoTagCloudService
+    private utils: UtilsService,
   ) {
     this.settings = JSON.parse(localStorage.getItem("settings")).dashboardcards;
   }
 
   ngOnInit() {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    const params = {
-      source: "audio"
-    };
-    if (changes.dateFrom.currentValue) {
-      params["dateFrom"] = changes.dateFrom.currentValue;
-    }
-    if (changes.dateFrom.currentValue) {
-      params["dateTo"] = changes.dateTo.currentValue;
-    }
-    if (changes.batches.currentValue) {
-      params["batches"] = changes.batches.currentValue;
-    }
-    this.loadData(params["dateFrom"], params["dateTo"], params["batches"]);
+  ngOnDestroy(): void {
+    this.utils.stopSubscriptions(this._unsubscribe$);
   }
 
-  loadData(dateFrom, dateTo, batches) {
-    const source = "audio";
-    this.apiCallsStatsService.load(source, dateFrom, dateTo, batches);
-    this.chartDataService.load(source, dateFrom, dateTo, batches);
-    this.dashboardFileStatsService.load(source, dateFrom, dateTo, batches);
-    this.minutesStatsService.load(source, dateFrom, dateTo, batches);
-    this.tagCloudService.load(source, dateFrom, dateTo, batches);
-    this.topicCloudService.load(source, dateFrom, dateTo, batches);
-    this.autoTagCloudService.load(source, dateFrom, dateTo, batches);
-  }
   keywordClicked(clicked: string) {
     this.analyticsService.trackEvent("user", "keywordClicked");
     this.filterService.filter.keywordsContain = [
