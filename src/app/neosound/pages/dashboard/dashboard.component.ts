@@ -136,6 +136,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
   reset() {
     this.batches = [];
+    this.selectedBatches = [];
+    this.dateFrom = null;
+    this.dateTo = null;
     this.dateModel = null;
   }
 

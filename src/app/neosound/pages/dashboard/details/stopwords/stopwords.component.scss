@@ -13,10 +13,16 @@
   padding-top: 0 !important;
   margin-left: 20px;
 }
+.py-3.control {
+  min-width: 172px;
+}
 .list-group-item {
   padding: 3px 10px 3px 10px;
   font-size: 13px;
 }
-ul.list-group {
-  padding-left: 0!important;
+.card-header {
+  margin-bottom: 20px;
+}
+.card-body {
+  margin-left: -100px;
 }

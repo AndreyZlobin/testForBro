@@ -174,4 +174,9 @@ export class StopwordsComponent extends DashboardComponent implements OnInit, On
   updateData() {
     super.updateData();
   }
+
+  resetFilter() {
+    super.reset();
+    super.updateData();
+  }
 }
