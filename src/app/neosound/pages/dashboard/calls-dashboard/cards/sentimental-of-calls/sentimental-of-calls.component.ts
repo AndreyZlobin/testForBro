@@ -111,7 +111,7 @@ export class SentimentalOfCallsComponent implements OnInit, OnDestroy {
       }
     ];
     return {
-      color: ["#c12e34", "#e6b600", "#0098d9", "#2b821d"],
+      color: ["#e6b600", "#c12e34", "#0098d9", "#2b821d"],
       grid: {
         show: false,
         left:  "2%",
