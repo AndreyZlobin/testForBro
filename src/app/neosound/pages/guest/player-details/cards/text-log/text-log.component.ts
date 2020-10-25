@@ -25,7 +25,7 @@ export class TextLogComponent implements OnInit, OnDestroy {
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
   @Output() goToRegion = new EventEmitter<any>();
-  @Input("height") height: string = '57vh';
+  @Input("height") height: string = 'auto';
   constructor(public fileResultService: FileResultService) {
     this.dataSub = this.fileResultService.fileResult.subscribe(data => {
       this.isLoading = data.isLoading;

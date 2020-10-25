@@ -64,8 +64,12 @@ a:not([href]):not([tabindex]) {
   nb-layout-column {
   padding: 0.75rem 2.25rem 0.75rem;
 }
+.nb-theme-default nb-layout .layout nb-layout-header.fixed ~ .layout-container {
+
+}
 .nb-theme-default nb-card-body {
-  min-height: calc(100vh - 147px);
+  // fix extra scroll
+  // min-height: calc(100vh - 147px);
 }
 .nb-theme-default {
   .player-details {
