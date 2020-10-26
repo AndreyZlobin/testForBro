@@ -121,7 +121,7 @@ export class SentimentalCallsByDayComponent implements OnInit, OnDestroy {
           smooth: true,
           label: {
             normal: {
-              show: true,
+              show: false,
               position: "top"
             }
           }

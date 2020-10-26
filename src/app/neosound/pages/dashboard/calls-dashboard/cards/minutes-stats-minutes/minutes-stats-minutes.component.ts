@@ -65,7 +65,7 @@ export class MinutesStatsMinutesComponent implements OnInit, OnDestroy {
             data: v,
             label: {
               normal: {
-                show: true,
+                show: false,
                 position: 'top'
               }
             }

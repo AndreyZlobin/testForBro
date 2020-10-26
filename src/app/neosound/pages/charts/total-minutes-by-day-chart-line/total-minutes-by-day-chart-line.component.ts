@@ -81,7 +81,7 @@ export class TotalMinutesByDayChartLineComponent implements OnInit {
             data: v,
             label: {
               normal: {
-                show: true,
+                show: false,
                 position: 'top'
               }
             }
