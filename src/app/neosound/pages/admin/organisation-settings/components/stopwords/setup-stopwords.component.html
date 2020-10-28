@@ -3,7 +3,7 @@
     <div class="mr-4">
       <button
         class="btn btn-primary mt-2 ml-2"
-        style="cursor: pointer; padding: 0.5rem 0.75rem;"
+        style="cursor: pointer; padding: 0.5rem 0.75rem"
         (click)="save()"
         [disabled]="!hasChanges"
       >
@@ -12,8 +12,8 @@
     </div>
   </div>
 </div>
-<div style="overflow-y: auto; overflow-x: hidden;">
-  <div style="height: 80vh; margin-right: 1.5em;">
+<div style="overflow-y: auto; overflow-x: hidden">
+  <div style="height: 80vh; margin-right: 1.5em">
     <div class="loader" *ngIf="isLoading">{{ t("Loading...") }}</div>
     <div *ngIf="rules && !isLoading">
       <div class="row mb-2" *ngFor="let rule of rules; let i = index">
@@ -21,16 +21,49 @@
           <input
             [(ngModel)]="rules[i].result"
             [ngModelOptions]="{ standalone: true }"
+            (change)="changeControls()"
             type="text"
-            class=""
             placeholder="{{ t('Tag') }}"
             class="form-control form-control-lg mt-2"
           />
+          <input
+            [(ngModel)]="rules[i].duration"
+            [ngModelOptions]="{ standalone: true }"
+            (change)="changeControls()"
+            type="number"
+            max="10000"
+            placeholder="{{ t('Duration') }}"
+            class="form-control form-control-lg mt-2"
+          />
+          <input
+            list="colorList"
+            [(ngModel)]="rules[i].color"
+            (change)="changeControls()"
+            type="color"
+            placeholder="{{ t('Color') }}"
+            class="form-control form-control-lg color-picker mt-2"
+          />
+          <datalist id="colorList">
+            <option value="#e6b600"></option>
+            <option value="#c12e34"></option>
+            <option value="#0098d9"></option>
+            <option value="#2b821d"></option>
+          </datalist>
+
+          <div class="mt-2">
+            <button
+              class="btn btn-secondary mt-2"
+              style="cursor: pointer; padding: 0.5rem 0.75rem"
+              (click)="resetToDefaultRule(i)"
+            >
+              {{ t("Default") }}
+            </button>
+          </div>
         </div>
         <div class="col-10">
           <div class="border my-2">
-            <div style="overflow-y: auto;">
-              <div style="height: 15vh;">
+            <div style="overflow-y: auto">
+              <div style="height: 15vh">
                 <tag-input
                   [(ngModel)]="rules[i].keywords"
                   [editable]="true"
@@ -51,7 +84,7 @@
         <div class="col-12 d-flex justify-content-end">
           <button
             class="btn btn-secondary mt-2"
-            style="cursor: pointer; padding: 0.5rem 0.75rem;"
+            style="cursor: pointer; padding: 0.5rem 0.75rem"
             (click)="removeRule(i)"
           >
             {{ t("Remove rule") }}
@@ -64,7 +97,7 @@
         <div class="ml-auto">
           <button
             class="btn btn-primary mt-2"
-            style="cursor: pointer; padding: 0.5rem 0.75rem;"
+            style="cursor: pointer; padding: 0.5rem 0.75rem"
             (click)="addRule()"
           >
             {{ t("Add Rule") }}
