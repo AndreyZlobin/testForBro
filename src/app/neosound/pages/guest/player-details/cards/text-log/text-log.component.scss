@@ -21,37 +21,37 @@
   // }
   @media screen and (max-height: 1880px) {
     .wrapper {
-      height: 61vh;
+      max-height: 70vh;
     }  
   }
   @media screen and (max-height: 1080px) {
     .wrapper {
-      height: 61vh;
+      max-height: 61vh;
     }  
   }
   @media screen and (max-height: 980px) {
     .wrapper {
-      height: 57vh;
+      max-height: 57vh;
     }  
   }
   @media screen and (max-height: 920px) {
     .wrapper {
-      height: 53vh;
+      max-height: 46vh;
     }  
   }
   @media screen and (max-height: 768px) {
     .wrapper {
-      height: 42vh;
+      max-height: 42vh;
     }  
   }
   @media screen and (max-height: 700px) {
     .wrapper {
-      height: 31vh;
+      max-height: 31vh;
     }  
   }
   @media screen and (max-height: 544px) {
     .wrapper {
-      height: 24vh;
+      max-height: 24vh;
     }  
   }
 }
