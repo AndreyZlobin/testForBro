@@ -573,15 +573,26 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   onSelectTag(event: any) {
-    const deduplicate = new Set([...(Array.isArray(this.selectedTags) ? this.selectedTags : [this.selectedTags]), event.value]);
+    const deduplicate = new Set([
+      ...(Array.isArray(this.selectedTags)
+        ? this.selectedTags
+        : [this.selectedTags]),
+      event.value,
+    ]);
     this.selectedTags = Array.from(deduplicate);
     this.selectedTag = Array.from(deduplicate);
-    this.filterService.filter.tagsContain = this.selectedTags.map(v => ({ display: v, value: v }));
+    this.filterService.filter.tagsContain = this.selectedTags.map((v) => ({
+      display: v,
+      value: v,
+    }));
   }
-  onRemoveTag(topic: string) {
-    this.selectedTags = this.selectedTags.filter((t) => t !== topic);
+  onRemoveTag(topic: any) {
+    this.selectedTags = this.selectedTags.filter((t) => t !== topic.value);
     this.selectedTag = this.selectedTags;
-    this.filterService.filter.tagsContain = this.selectedTags.map(v => ({ display: v, value: v }));
+    this.filterService.filter.tagsContain = this.selectedTags.map((v) => ({
+      display: v,
+      value: v,
+    }));
   }
   setTagCondition(con: string) {
     this.filterService.filter.tagsCondition = con;

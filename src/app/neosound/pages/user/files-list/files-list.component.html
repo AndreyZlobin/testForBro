@@ -228,6 +228,13 @@
                 (onAdd)="onSelectTag($event)"
                 (onRemove)="onRemoveTag($event)"
               >
+              <tag-input-dropdown
+                  [appendToBody]="true"
+                  [showDropdownIfEmpty]="true"
+                  [autocompleteItems]="tags"
+                  [identifyBy]="'id'"
+                  [displayBy]="'title'">
+              </tag-input-dropdown>
               </tag-input>
             </div>
             <div class="col-12">
