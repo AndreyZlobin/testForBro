@@ -504,6 +504,7 @@ body.nb-theme-default {
 .rotating {
   animation: rotation 2s infinite linear;
 }
+
 @keyframes rotation {
   from {
     transform: rotate(0deg);
@@ -521,4 +522,15 @@ body.nb-theme-default {
   .nb-theme-default nb-layout.window-mode .scrollable-container {
     height: fit-content;
   }
+}
+
+nb-layout-column.pseudo {
+  position: fixed;
+  width: 100%;
+}
+
+nb-layout-footer.pseudo {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }

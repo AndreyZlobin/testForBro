@@ -31,3 +31,14 @@
 .grey {
   background-color: #dee2e6;
 }
+
+.scrollable-container {
+  position: fixed;
+  width: 100%;
+}
+
+:host-context(.fix-footer) {
+    position: fixed!important;
+    width: 100%;
+    bottom: 0;
+  }

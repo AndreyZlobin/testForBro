@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { LanguageService } from "../../../services/language.service";
 import { PlayerComponent } from "./player/player.component";
@@ -6,7 +6,7 @@ import { PlayerComponent } from "./player/player.component";
 @Component({
   selector: "ngx-player-details",
   templateUrl: "./player-details.component.html",
-  styleUrls: ["./player-details.component.scss"]
+  styleUrls: ["./player-details.component.scss"],
 })
 export class PlayerDetailsComponent {
   @ViewChild(PlayerComponent)
