@@ -40,7 +40,7 @@
 		}
     },
   "colors": {
-      "primary": "rgb(53, 167, 255)",
-      "secondary": "rgb(53, 167, 255)"
+      "primary": "#0098d9",
+      "secondary": "#0098d9"
   }
 }

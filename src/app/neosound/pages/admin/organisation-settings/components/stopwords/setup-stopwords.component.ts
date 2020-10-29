@@ -1,3 +1,4 @@
+import { AppStoreService } from './../../../../../shared/app.store';
 import {
   Component,
   Input,
@@ -16,6 +17,8 @@ import { LanguageService } from "../../../../../services/language.service";
   styleUrls: ["./setup-stopwords.component.scss"],
 })
 export class SetupStopwordsComponent implements OnInit {
+  private _config: any;
+
   public isLoading: boolean = true;
   public hasChanges: boolean = false;
 
@@ -27,10 +30,20 @@ export class SetupStopwordsComponent implements OnInit {
   public rules: any[] = [];
   constructor(
     private organizationSettingsService: OrganizationSettingsService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private _appStore: AppStoreService,
   ) {}
 
+  set config(value: any) {
+    this._config = value;
+  }
+
+  get config(): any {
+    return this._config;
+  }
+
   ngOnInit() {
+    this.config = this._appStore.config;
     this.organizationSettingsService
       .getStopwordsSettings()
       .subscribe((data) => {
@@ -83,12 +96,12 @@ export class SetupStopwordsComponent implements OnInit {
   addRule() {
     this.hasChanges = true;
     this.changed.emit({ changed: this.hasChanges });
-    this.rules.push({ result: "", keywords: [], duration: "", color: "black" });
+    this.rules.push({ result: "", keywords: [], duration: "", color: this.config.colors['primary'] });
   }
 
   resetToDefaultRule(i) {
     this.rules[i].duration = "";
-    this.rules[i].color = "";
+    this.rules[i].color = this.config.colors['primary'];
     this.hasChanges = true;
   }
 

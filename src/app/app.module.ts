@@ -1,6 +1,7 @@
+import { AppStoreService } from './neosound/shared/app.store';
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CoreModule } from "./@core/core.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -170,6 +171,12 @@ import { AutotagsByDayComponent } from './neosound/pages/dashboard/calls-dashboa
 import { HitsBatchesComponent } from './neosound/pages/dashboard/calls-dashboard/cards/hits-batches/hits-batches.component';
 import { AgentCallsByDayComponent } from './neosound/pages/dashboard/calls-dashboard/cards/agent-calls-by-day/agent-calls-by-day.component';
 
+export function appConfig(app: AppStoreService) {
+  return (): Promise<any> => { 
+    return app.fetchConfig();
+  }
+}
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -331,10 +338,17 @@ import { AgentCallsByDayComponent } from './neosound/pages/dashboard/calls-dashb
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestsHttpInterceptor,
-      multi: true
+      multi: true,
+    },
+    AppStoreService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appConfig,
+      deps: [AppStoreService],
+      multi: true,
     },
     LanguageService,
-    DataService
+    DataService,
   ]
 })
 export class AppModule {}

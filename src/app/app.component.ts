@@ -1,39 +1,35 @@
+import { AppStoreService } from "./neosound/shared/app.store";
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import { Component, OnInit } from '@angular/core';
-import { AnalyticsService } from './neosound/services/analytics.service';
-import { HttpClient } from '@angular/common/http';
-import { DataService } from './neosound/shared';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'ngx-app',
-  template: '<router-outlet></router-outlet>',
+  selector: "ngx-app",
+  template: "<router-outlet></router-outlet>",
 })
 export class AppComponent implements OnInit {
+  appConfig: any;
 
-  constructor(
-    private analytics: AnalyticsService,
-    private http: HttpClient,
-    private dataService: DataService) {
-      this.http.get('assets/config/config.json').subscribe((data: any) => {
-        this.dataService.config = data;
-        if (data.title) {
-          document.title = data.title;
-        }
-        const colorMap = {
-          'primary': '--color-primary',
-          'secondary': '--color-secondary',
-        };
-        Object.keys(colorMap).forEach(key => {
-          document.documentElement.style.setProperty(colorMap[key], data.colors[key]);
-        });
-      });
-  }
+  constructor(private _appStore: AppStoreService) {}
 
   ngOnInit(): void {
+    this.appConfig = this._appStore.config;
 
+    if (this.appConfig.title) {
+      document.title = this.appConfig.title;
+    }
+    const colorMap = {
+      primary: "--color-primary",
+      secondary: "--color-secondary",
+    };
+    Object.keys(colorMap).forEach((key) => {
+      document.documentElement.style.setProperty(
+        colorMap[key],
+        this.appConfig.colors[key]
+      );
+    });
   }
 }

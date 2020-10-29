@@ -60,6 +60,10 @@ export class DataService {
         this.autoTagCloudService.load(source, dateFrom, dateTo, batches);
       }
 
+    loadConfig() {
+        return this.http.get<any>('assets/config/config.json');
+    }
+
     set filterData(val: IFilterData) {
         this._filterData.next(val);
     }
