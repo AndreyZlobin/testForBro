@@ -8,6 +8,7 @@ import {
 import { LanguageService } from "../../../../../services/language.service";
 import { FileResultService } from "../../services/file-result.service";
 import { ToastrService } from "ngx-toastr";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "ngx-full-text",
@@ -21,7 +22,8 @@ export class FullTextComponent implements OnInit, OnDestroy {
   @Input("fileName") fileName: string;
   constructor(
     private fileResultService: FileResultService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private sanitizer: DomSanitizer,
   ) {
     this.dataSub = this.fileResultService.fileResult.subscribe(data => {
       this.isLoading = data.isLoading;
@@ -41,6 +43,9 @@ export class FullTextComponent implements OnInit, OnDestroy {
   }
   t(v) {
     return LanguageService.t(v);
+  }
+  parseHTML(data: any) {
+    return this.sanitizer.bypassSecurityTrustHtml(data);
   }
   copyToClipboard(text: string): void {
     const selBox = document.createElement("textarea");

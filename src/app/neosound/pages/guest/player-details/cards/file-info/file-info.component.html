@@ -170,8 +170,9 @@
           >
           <span
             class="badge badge-autotag mr-1"
+            [ngStyle]="{'background-color' : tag.color }"
             *ngFor="let tag of file.autotags"
-            >{{ tag }}</span
+            >{{ tag.name }}</span
           >
       </div>
       <div class="mr-auto">

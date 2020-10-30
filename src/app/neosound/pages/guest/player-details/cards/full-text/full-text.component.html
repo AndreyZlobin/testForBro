@@ -3,7 +3,7 @@
     style="position: absolute; right: 20px;bottom: 20px; opacity: .5;">
     <i class="fa fa-copy"></i>
   </button>
-  <span [innerHTML]=data></span>
+  <span [innerHTML]="parseHTML(data)"></span>
 </div>
 <ng-template #loading>
   loading...

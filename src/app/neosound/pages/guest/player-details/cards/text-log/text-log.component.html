@@ -19,7 +19,7 @@
               {{ item[5] }}
             </span>
           </td>
-          <td class="col-8"><span [innerHTML]="t(item[2])"></span></td>
+          <td class="col-8"><span [innerHTML]="t(parseHTML(item[2]))"></span></td>
           <td class="col-1">
             <span *ngIf="item[3]">
               {{ item[3] | currency: "%":"symbol":"1.2-2" }}

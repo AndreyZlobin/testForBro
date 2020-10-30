@@ -1041,12 +1041,14 @@
                       >
                     </div>
                     <div>
+                      
                       <span
                         class="badge badge-autotag mr-1"
                         *ngFor="let tag of item.autotags"
+                        [ngStyle]="{'background-color' : tag.color }"
                         (click)="autotagClick(tag)"
                         style="cursor: pointer;"
-                        >{{ tag }}</span
+                        >{{ tag.name }}</span
                       >
                     </div>
                     <div class="mr-auto">

@@ -6,15 +6,16 @@ import {
   OnDestroy,
   Output,
   OnInit,
-  EventEmitter
+  EventEmitter,
 } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 import { LanguageService } from "../../../../../services/language.service";
 import { FileResultService } from "../../services/file-result.service";
 
 @Component({
   selector: "ngx-text-log",
   templateUrl: "./text-log.component.html",
-  styleUrls: ["./text-log.component.scss"]
+  styleUrls: ["./text-log.component.scss"],
 })
 export class TextLogComponent implements OnInit, OnDestroy {
   data: any[];
@@ -25,11 +26,14 @@ export class TextLogComponent implements OnInit, OnDestroy {
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
   @Output() goToRegion = new EventEmitter<any>();
-  @Input("height") height: string = 'auto';
-  constructor(public fileResultService: FileResultService) {
-    this.dataSub = this.fileResultService.fileResult.subscribe(data => {
+  @Input("height") height: string = "auto";
+  constructor(
+    public fileResultService: FileResultService,
+    private sanitizer: DomSanitizer
+  ) {
+    this.dataSub = this.fileResultService.fileResult.subscribe((data) => {
       this.isLoading = data.isLoading;
-      if(!data.isLoading) {
+      if (!data.isLoading) {
         this.data = data.emotions;
         this.greySpeaker = data.greySpeaker;
       } else {
@@ -37,8 +41,7 @@ export class TextLogComponent implements OnInit, OnDestroy {
       }
     });
   }
-  ngOnInit() {
-  }
+  ngOnInit() {}
   ngOnDestroy() {
     if (this.dataSub) {
       this.dataSub.unsubscribe();
@@ -46,6 +49,9 @@ export class TextLogComponent implements OnInit, OnDestroy {
   }
   t(v) {
     return LanguageService.t(v);
+  }
+  parseHTML(data: any) {
+    return this.sanitizer.bypassSecurityTrustHtml(data);
   }
   getDateVal(val) {
     const d = new Date(1, 1, 1);
