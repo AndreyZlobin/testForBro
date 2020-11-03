@@ -1,6 +1,7 @@
 :host {
   .wrapper {
     overflow-y: auto;
+    overflow-x: hidden;
     height: auto;
     @media print {
       overflow-y: auto;
