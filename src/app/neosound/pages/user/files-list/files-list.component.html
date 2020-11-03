@@ -1148,7 +1148,17 @@
       [separatorKeys]="[',']"
       [separatorKeyCodes]="[13]"
       (onBlur)="onItemAdd($event, 'itemTags')"
-    ></tag-input>
+    >
+      <tag-input-dropdown
+        [appendToBody]="true"
+        [showDropdownIfEmpty]="true"
+        [autocompleteItems]="tags"
+        [identifyBy]="'id'"
+        [displayBy]="'title'"
+        [zIndex]="99999"
+      >
+      </tag-input-dropdown>
+    </tag-input>
     <div class="text-right">
       <button class="btn btn-primary mr-3" (click)="saveTags()">
         {{ t("Save") }}

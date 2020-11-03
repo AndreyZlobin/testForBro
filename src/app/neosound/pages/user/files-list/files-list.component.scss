@@ -63,6 +63,16 @@ td {
     white-space: nowrap;
 }
 
+ng2-dropdown-menu { 
+  z-index: 9999!important; 
+  .ng2-dropdown-menu { 
+    z-index: 9999!important; 
+    ng2-menu-item { 
+      z-index: 9999!important; 
+    } 
+  } 
+}
+
 // .filter-wrap {
 //     overflow: auto;
 //     height: calc(100vh - 89px);

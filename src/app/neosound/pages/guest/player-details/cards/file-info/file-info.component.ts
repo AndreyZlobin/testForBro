@@ -1,4 +1,5 @@
-import { Component, Input, OnChanges } from "@angular/core";
+import { FilesService } from './../../../../../services/files.service';
+import { Component, Input, OnChanges, OnInit } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { FilterService } from "../../../../../services/filter.service";
 import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
@@ -8,7 +9,7 @@ import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
   templateUrl: "./file-info.component.html",
   styleUrls: ['./file-info.component.scss']
 })
-export class FileInfoComponent implements OnChanges {
+export class FileInfoComponent implements OnChanges, OnInit {
   file: any;
   currentTagEditIndex;
   editedFileItem;
@@ -17,10 +18,15 @@ export class FileInfoComponent implements OnChanges {
   fileIndex: number = -1;
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
+  tags: any;
   constructor(
     public filterService: FilterService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private filesService: FilesService,
   ) {}
+  ngOnInit() {
+    this.getTags();
+  }
   ngOnChanges(a:any) {
     this.file = this.filterService.getFile(this.batchId, this.fileName);
     this.filterService.files.subscribe(() => {
@@ -145,6 +151,14 @@ export class FileInfoComponent implements OnChanges {
     this.hideModal();
     this.modalRef = this.modalService.show(ref, {
       class: "modal-xl"
+    });
+  }
+
+  getTags() {
+    this.filesService.listTags().subscribe((data) => {
+      if (data && data.tags) {
+        this.tags = data.tags;
+      }
     });
   }
 
