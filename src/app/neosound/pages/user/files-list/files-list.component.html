@@ -230,9 +230,10 @@
               >
               <tag-input-dropdown
                   [appendToBody]="true"
-                  [showDropdownIfEmpty]="true"
+                  [showDropdownIfEmpty]="false"
                   [autocompleteItems]="tags"
                   [identifyBy]="'id'"
+                  [keepOpen]="false"
                   [displayBy]="'title'">
               </tag-input-dropdown>
               </tag-input>
@@ -1036,8 +1037,8 @@
                         class="badge badge-secondary mr-1"
                         *ngFor="let tag of item.tags"
                         style="cursor: pointer;"
-                        (click)="tagClick(tag)"
-                        >{{ tag }}</span
+                        (click)="tagClick(tag.name)"
+                        >{{ tag.name }}</span
                       >
                     </div>
                     <div>
@@ -1046,7 +1047,7 @@
                         class="badge badge-autotag mr-1"
                         *ngFor="let tag of item.autotags"
                         [ngStyle]="{'background-color' : tag.color }"
-                        (click)="autotagClick(tag)"
+                        (click)="autotagClick(tag.name)"
                         style="cursor: pointer;"
                         >{{ tag.name }}</span
                       >
@@ -1151,10 +1152,11 @@
     >
       <tag-input-dropdown
         [appendToBody]="true"
-        [showDropdownIfEmpty]="true"
+        [showDropdownIfEmpty]="false"
         [autocompleteItems]="tags"
         [identifyBy]="'id'"
         [displayBy]="'title'"
+        [keepOpen]="false"
         [zIndex]="99999"
       >
       </tag-input-dropdown>
