@@ -25,15 +25,32 @@
             </div>
             <div class="col-12 pt-3">
               <div class="mb-2">{{ t("Agent Id") }}</div>
-              <input
-                [(ngModel)]="filterService.filter.batchid"
-                [ngModelOptions]="{ standalone: true }"
-                type="text"
-                step="0.01"
-                class="form-control form-control-lg"
-                style="padding: 5px 10px; border: 1px solid #dfe3e9;"
-                placeholder=""
-              />
+              <tag-input
+                [(ngModel)]="filterService.filter.batchesContain"
+                [editable]="true"
+                theme="minimal"
+                placeholder="{{ t('Agent Id') }}"
+                secondaryPlaceholder="{{ t('Agent Id') }}"
+                [separatorKeys]="[',']"
+                [separatorKeyCodes]="[13]"
+                [typeahead]="bathes"
+                [typeaheadMinLength]="0"
+                [typeaheadLatinize]="false"
+                [typeaheadSelectFirstItem]="false"
+                [typeaheadScrollable]="true"
+                [typeaheadOptionsLimit]="10"
+                (onAdd)="onSelectBatchId($event)"
+                (onRemove)="onRemoveBatch($event)"
+              >
+                <tag-input-dropdown
+                    [appendToBody]="true"
+                    [showDropdownIfEmpty]="false"
+                    [autocompleteItems]="batches"
+                    [identifyBy]="'id'"
+                    [keepOpen]="false"
+                    [displayBy]="'title'">
+                </tag-input-dropdown>
+              </tag-input>
             </div>
             <div class="col-12 pt-3">
               <div class="mb-2">{{ t("Uploaded") }}</div>

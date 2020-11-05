@@ -42,6 +42,7 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   tags: string[] = [];
   selectedTags: string[] = [];
   selectedTag: string[] = [];
+  selectedBatches: string[] = [];
 
   constructor(
     private filesService: FilesService,
@@ -420,8 +421,20 @@ export class FilesListComponent implements OnInit, AfterViewInit {
     );
   }
 
-  filterByBatch(batchId: string): void {
-    this.filterService.filter.batchid = batchId;
+  filterByBatch(batch: string): void {
+    // this.filterService.filter.batchid = batchId;
+
+    if (this.filterService.filter.batchesContain) {
+      this.filterService.filter.batchesContain = [
+        ...this.filterService.filter.batchesContain,
+        { display: batch, value: batch },
+      ];
+    } else {
+      this.filterService.filter.batchesContain = [
+        { display: batch, value: batch },
+      ];
+    }
+
     this.filterService.updateFileList();
   }
 
@@ -536,10 +549,19 @@ export class FilesListComponent implements OnInit, AfterViewInit {
   }
 
   onSelectBatchId(event: any) {
-    this.selectedTopic = "";
-    const deduplicate = new Set([...this.selectedTopics, event.value]);
-    this.selectedTopics = Array.from(deduplicate);
-    this.filterService.filter.topics = this.selectedTopics.join(",");
+    const deduplicate = new Set([
+      ...(Array.isArray(this.selectedBatches)
+        ? this.selectedBatches
+        : [this.selectedBatches]),
+      event.value,
+    ]);
+    this.selectedBatches = Array.from(deduplicate);
+    this.filterService.filter.batchesContain = this.selectedBatches.map(
+      (v) => ({
+        display: v,
+        value: v,
+      })
+    );
   }
 
   onRemoveTopic(topic: string) {
@@ -593,6 +615,17 @@ export class FilesListComponent implements OnInit, AfterViewInit {
       display: v,
       value: v,
     }));
+  }
+  onRemoveBatch(batch: any) {
+    this.selectedBatches = this.selectedBatches.filter(
+      (t) => t !== batch.value
+    );
+    this.filterService.filter.batchesContain = this.selectedBatches.map(
+      (v) => ({
+        display: v,
+        value: v,
+      })
+    );
   }
   setTagCondition(con: string) {
     this.filterService.filter.tagsCondition = con;

@@ -20,6 +20,7 @@ export class FilterService {
     keywordsContain: any;
     keywordsNotContain: any;
     tagsContain: any;
+    batchesContain: any;
     pauseAvgFrom;
     pauseAvgTo;
     pauseDurFrom;
@@ -63,6 +64,7 @@ export class FilterService {
     keywordsContain: null,
     keywordsNotContain: null,
     tagsContain: null,
+    batchesContain: null,
     pauseAvgFrom: null,
     pauseAvgTo: null,
     pauseDurFrom: null,
@@ -228,6 +230,16 @@ export class FilterService {
         )
         .join(",");
     }
+    if (this.filter.batchesContain && this.filter.batchesContain.length) {
+      params["batchesContain"] = this.filter.batchesContain
+        .map(v =>
+          v.value
+            .split(",")
+            .map(v => v.trim())
+            .join(",")
+        )
+        .join(",");
+    }
     Object.keys(params).forEach(
       key =>
         (params[key] === "" ||
@@ -319,6 +331,7 @@ export class FilterService {
       keywordsContain: [],
       keywordsNotContain: [],
       tagsContain: [],
+      batchesContain: [],
       pauseAvgFrom: null,
       pauseAvgTo: null,
       pauseDurFrom: null,
