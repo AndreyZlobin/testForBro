@@ -61,7 +61,7 @@ export class FilesService {
   }
   getFileStats(params): Observable<any> {
     params = params || {};
-    return this.http.post(`${environment.api}/fileStats`, params);
+    return this.http.post(`${environment.localapi}/dashboard/fileStats`, params);
   }
   getTextStats(params): Observable<any> {
     params = params || {};
@@ -75,19 +75,19 @@ export class FilesService {
 
   getApiCallsStats(params): Observable<any> {
     params = params || {};
-    return this.http.post(`${environment.api}/apiCallsStats`, params);
+    return this.http.post(`${environment.localapi}/dashboard/apiCallsStats`, params);
   }
   getMinutesStats(params): Observable<any> {
     params = params || {};
-    return this.http.post(`${environment.api}/minutesStats`, params);
+    return this.http.post(`${environment.localapi}/dashboard/minutesStats`, params);
   }
   getTagClowd(params): Observable<any> {
     params = params || {};
-    return this.http.post(`${environment.api}/tagCloud`, params);
+    return this.http.post(`${environment.localapi}/dashboard/tagCloud`, params);
   }
   getTopicCloud(params): Observable<any> {
     params = params || {};
-    return this.http.post(`${environment.api}/topicCloud`, params);
+    return this.http.post(`${environment.localapi}/dashboard/topicCloud`, params);
   }
   getTextStopwords(params): Observable<any> {
     params = params || {};
@@ -99,7 +99,7 @@ export class FilesService {
   }
   getAutoTagCloud(params): Observable<any> {
     params = params || {};
-    return this.http.post(`${environment.api}/autoTagCloud`, params);
+    return this.http.post(`${environment.localapi}/dashboard/autoTagCloud`, params);
   }
 
 
