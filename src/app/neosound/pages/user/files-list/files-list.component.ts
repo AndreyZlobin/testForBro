@@ -1,3 +1,5 @@
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import {
   Component,
   OnInit,
@@ -11,7 +13,6 @@ import { FilesService } from "../../../services/files.service";
 import { FilterService } from "../../../services/filter.service";
 import { AnalyticsService } from "../../../services/analytics.service";
 import { DatepickerOptions } from "ng2-datepicker";
-import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import { LanguageService } from "../../../services/language.service";
 import { Subscription } from "rxjs";
 import { DataService } from "../../../shared";
@@ -22,7 +23,7 @@ import { DataService } from "../../../shared";
   styleUrls: ["./files-list.component.scss"],
 })
 export class FilesListComponent implements OnInit, AfterViewInit {
-  @ViewChild("scroll") scrollTo: ElementRef;
+  @ViewChild("scroll", {static: false}) scrollTo: ElementRef;
   trends = ["fa-angry text-danger", "fa-grin text-success", "fa-meh text-info"];
   filterName: string;
   errorMessage = "";

@@ -1,13 +1,18 @@
 <nb-layout [center]="'center-column'">
-	<nb-layout-header fixed>
-		<ngx-header [position]="'normal'"></ngx-header>
-	</nb-layout-header>
-	<nb-layout-column [class.pseudo]="isFixedPosition" class="main-content">
-		<div class="alert alert-info" *ngIf="!isChrome()" style="background-color: #fffaf3;">We support only Chrome
-			browser at the moment</div>
-		<router-outlet></router-outlet>
-	</nb-layout-column>
-	<nb-layout-footer [class.pseudo]="isFixedPosition" fixed>
-		<ngx-footer></ngx-footer>
-	</nb-layout-footer>
+  <nb-layout-header fixed>
+    <ngx-header [position]="'normal'"></ngx-header>
+  </nb-layout-header>
+  <nb-layout-column [class.pseudo]="isFixedPosition" class="main-content">
+    <div
+      class="alert alert-info"
+      *ngIf="!isChrome()"
+      style="background-color: #fffaf3"
+    >
+      We support only Chrome browser at the moment
+    </div>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+  <nb-layout-footer [class.pseudo]="isFixedPosition" fixed>
+    <ngx-footer></ngx-footer>
+  </nb-layout-footer>
 </nb-layout>

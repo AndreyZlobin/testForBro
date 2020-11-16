@@ -1,10 +1,12 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import decode from 'jwt-decode';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import 'rxjs/add/operator/map';
+
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -46,7 +48,7 @@ export class UsersService {
   loginUser(params): Observable<any> {
     return this.http.post(`${environment.api}/loginUser`,
       params
-    ).map((user: any) => {
+    ).pipe(map((user: any) => {
       user.time = new Date().getTime();
       localStorage.setItem('user', JSON.stringify(user));
       const helper = new JwtHelperService();
@@ -59,7 +61,7 @@ export class UsersService {
         localStorage.removeItem('user');
         this.router.navigateByUrl('/auth/login');
       }, 2 * 24 * 60 * 60 * 1000);
-    });
+    }));
     // .flatMap((response: any) => {
     //   return Observable.of(response);
     // });

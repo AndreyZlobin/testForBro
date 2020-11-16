@@ -141,6 +141,7 @@ import { FilePeeksService } from "./neosound/pages/guest/player-details/services
 
 import { ApiPageComponent } from "./neosound/pages/user/api-page/api-page.component";
 import { NgxEchartsModule } from "ngx-echarts";
+import * as echarts from 'echarts';
 import { PageNotFoundComponent } from "./neosound/pages/page-not-found/page-not-found.component";
 import { LanguageService } from "./neosound/services/language.service";
 import { NgxPaginationModule } from "ngx-pagination";
@@ -170,6 +171,7 @@ import { HitsAutotagsComponent } from './neosound/pages/dashboard/calls-dashboar
 import { AutotagsByDayComponent } from './neosound/pages/dashboard/calls-dashboard/cards/autotags-by-day/autotags-by-day.component';
 import { HitsBatchesComponent } from './neosound/pages/dashboard/calls-dashboard/cards/hits-batches/hits-batches.component';
 import { AgentCallsByDayComponent } from './neosound/pages/dashboard/calls-dashboard/cards/agent-calls-by-day/agent-calls-by-day.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 export function appConfig(app: AppStoreService) {
   return (): Promise<any> => { 
@@ -287,7 +289,7 @@ export function appConfig(app: AppStoreService) {
     FormsModule,
     ReactiveFormsModule,
     NbInputModule,
-    NgxEchartsModule,
+    NgxEchartsModule.forRoot({ echarts }),
     TagCloudModule,
     DragulaModule.forRoot(),
     BsDropdownModule.forRoot(),
@@ -296,7 +298,7 @@ export function appConfig(app: AppStoreService) {
     TypeaheadModule.forRoot(),
     ButtonsModule.forRoot(),
 
-    NgbModule.forRoot(),
+    NgbModule,
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
 
@@ -305,7 +307,8 @@ export function appConfig(app: AppStoreService) {
     NgDatepickerModule,
     NgxPaginationModule,
     TagInputModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    FontAwesomeModule,
   ],
   bootstrap: [AppComponent],
   providers: [

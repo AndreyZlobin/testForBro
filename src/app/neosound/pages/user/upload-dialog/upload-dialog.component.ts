@@ -1,3 +1,5 @@
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import {
   Component,
   OnInit,
@@ -13,7 +15,6 @@ import { UsersService } from "../../../services/users.service";
 import { FilesService } from "../../../services/files.service";
 import { MediaRecorderService } from "../../../services/media-recorder.service";
 import { Router } from "@angular/router";
-import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { timer, Subscription } from "rxjs";
 import { UploadEvent, UploadFile } from "ngx-file-drop";
 import { LanguageService } from "../../../services/language.service";
@@ -67,8 +68,8 @@ export class UploadDialogComponent implements OnInit, OnDestroy {
   selectedBatchId: string;
 
   fileNames: string[] = [];
-  @ViewChild("templateModal") templateModal: ElementRef;
-  @ViewChild("confirmModal") confirmModal: ElementRef;
+  @ViewChild("templateModal", {static: false}) templateModal: ElementRef;
+  @ViewChild("confirmModal", {static: false}) confirmModal: ElementRef;
   @Input() set showDialog(visible) {
     if (visible) {
       setTimeout(() => this.showModal(this.templateModal, "record"), 0);

@@ -33,8 +33,8 @@ export class VideoPlayerComponent implements OnDestroy, OnChanges {
       this.play();
     }
   }
-  @ViewChild("target") target: ElementRef;
-  @ViewChild("canvas") canvas: ElementRef;
+  @ViewChild("target", {static: false}) target: ElementRef;
+  @ViewChild("canvas", {static: false}) canvas: ElementRef;
   loading: boolean = true;
   playing: boolean = false;
   @Input() fileName: string;

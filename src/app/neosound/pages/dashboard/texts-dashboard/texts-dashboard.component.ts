@@ -1,3 +1,4 @@
+import { BsModalService } from 'ngx-bootstrap/modal';
 import {
   Component,
   OnInit,
@@ -7,7 +8,6 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { CloudData } from "angular-tag-cloud-module";
-import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import { DatepickerOptions } from "ng2-datepicker";
 import { FilesService } from "../../../services/files.service";
 import { FilterService } from "../../../services/filter.service";

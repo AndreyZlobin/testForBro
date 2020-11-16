@@ -44,7 +44,7 @@ export class TagifyComponent implements AfterViewInit, OnChanges {
 
   constructor(private tagifyService: TagifyService) {}
 
-  @ViewChild("tagifyInputRef") tagifyInputRef: any;
+  @ViewChild("tagifyInputRef", {static: false}) tagifyInputRef: any;
 
   private tagify;
 

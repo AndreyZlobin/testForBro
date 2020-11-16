@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import 'rxjs/add/operator/map';
+
 
 const translationsSp = {
   'Error:': 'Error:',

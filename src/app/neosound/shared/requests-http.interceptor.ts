@@ -1,3 +1,5 @@
+
+import {tap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -9,8 +11,8 @@ import {
   HttpHeaders,
   HttpResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
+import { Observable } from 'rxjs';
+
 
 import { UsersService } from '../services/users.service';
 import { ToastrService } from 'ngx-toastr';
@@ -40,7 +42,7 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
       : request;
 // console.log(newRequest);
     return next
-      .handle(newRequest).do((event: HttpEvent<any>) => {
+      .handle(newRequest).pipe(tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           // do stuff with response if you want
         }
@@ -61,6 +63,6 @@ export class RequestsHttpInterceptor implements HttpInterceptor {
             timeOut: 3000,
           });
         }
-      });
+      }));
   }
 }

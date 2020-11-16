@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FilesService } from '../../../services/files.service';
 import { DatepickerOptions } from 'ng2-datepicker';
-import { frLocale } from 'ngx-bootstrap';
 import { LanguageService } from '../../../services/language.service';
+import { frLocale } from 'ngx-bootstrap/chronos';
 
 @Component({
   selector: 'app-batch-list',

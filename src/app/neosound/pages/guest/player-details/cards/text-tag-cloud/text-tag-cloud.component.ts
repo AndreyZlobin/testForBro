@@ -29,7 +29,7 @@ export const colors = [
   templateUrl: "./text-tag-cloud.component.html"
 })
 export class TextTagCloudComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild("texttagcloud") canvas: ElementRef;
+  @ViewChild("texttagcloud", {static: false}) canvas: ElementRef;
   popularWords: any;
   dataSub: any;
   public zoomOPtions = {

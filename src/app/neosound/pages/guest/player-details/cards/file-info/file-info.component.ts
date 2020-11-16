@@ -1,8 +1,8 @@
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilesService } from './../../../../../services/files.service';
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { FilterService } from "../../../../../services/filter.service";
-import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 
 @Component({
   selector: "ngx-file-info",

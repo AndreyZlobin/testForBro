@@ -1,13 +1,13 @@
+
+import {filter} from 'rxjs/operators';
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { FilterService } from "../../../services/filter.service";
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { Subscription } from "rxjs";
 import { LanguageService } from "../../../services/language.service";
-import { frLocale, BsModalRef, BsModalService } from "ngx-bootstrap";
 import { FileResultService } from "../player-details/services/file-result.service";
 import { FileInfoService } from "../player-details/services/file-info.service";
 import { FilePeeksService } from "../player-details/services/file-peeks.service";
-import "rxjs/add/operator/filter";
 
 export const colors = [
   "#c12e34",
@@ -41,8 +41,8 @@ export class AnalyticDetailsComponent {
     public fileInfoService: FileInfoService,
     public filePeeksService: FilePeeksService
   ) {
-    router.events
-      .filter(event => event instanceof NavigationEnd)
+    router.events.pipe(
+      filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         if (event.url.startsWith("/analytic/")) {
           this.currentView = null;

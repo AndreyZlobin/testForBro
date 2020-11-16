@@ -1,3 +1,5 @@
+
+import {filter} from 'rxjs/operators';
 import { Component, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { LanguageService } from "../../../services/language.service";
@@ -9,14 +11,14 @@ import { PlayerComponent } from "./player/player.component";
   styleUrls: ["./player-details.component.scss"],
 })
 export class PlayerDetailsComponent {
-  @ViewChild(PlayerComponent)
+  @ViewChild(PlayerComponent, {static: false})
   player: PlayerComponent;
   filename: string = "";
   batchid: string = "";
   showComments: boolean = false;
   constructor(private router: Router, private route: ActivatedRoute) {
-    router.events
-      .filter(event => event instanceof NavigationEnd)
+    router.events.pipe(
+      filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         if (event.url.startsWith("/file/")) {
           const batchid = decodeURIComponent(

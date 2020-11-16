@@ -18,7 +18,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit 
   @Input("fileName") fileName: string;
   @Input("height") height: string = '37vh';
   file: any;
-  @ViewChild('commentTemplate') commentTemplate: ElementRef;
+  @ViewChild('commentTemplate', {static: false}) commentTemplate: ElementRef;
   commentValue = '';
 
   constructor(

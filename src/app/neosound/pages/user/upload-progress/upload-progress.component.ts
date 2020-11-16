@@ -1,3 +1,4 @@
+import { BsModalService } from 'ngx-bootstrap/modal';
 import {
   Component,
   OnInit,
@@ -14,7 +15,6 @@ import { FilesService } from "../../../services/files.service";
 import { UploadService } from "../../../services/upload.service";
 import { AnalyticsService } from "../../../services/analytics.service";
 import { Router } from "@angular/router";
-import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { timer, Subscription } from "rxjs";
 import { UploadEvent, UploadFile } from "ngx-file-drop";
 import { LanguageService } from "../../../services/language.service";

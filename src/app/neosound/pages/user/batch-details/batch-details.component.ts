@@ -5,7 +5,7 @@ import {
 import { FilesService } from "../../../services/files.service";
 import { LanguageService } from "../../../services/language.service";
 import { DatepickerOptions } from "ng2-datepicker";
-import { frLocale } from 'ngx-bootstrap';
+import { frLocale } from "ngx-bootstrap/chronos";
 
 @Component({
   selector: "app-batch-details",

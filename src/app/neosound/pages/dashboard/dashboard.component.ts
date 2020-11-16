@@ -3,12 +3,12 @@ import { UtilsService } from './../../shared/utils.service';
 import { takeUntil, tap } from 'rxjs/operators';
 import { AutoTagCloudService } from './calls-dashboard/services/auto-tag-cloud.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { FilesService } from "../../services/files.service";
 import { DataService } from "../../shared";
 import { LanguageService } from "../../services/language.service";
 import * as moment from "moment";
 import { Subject } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 export const colors = [
   "#c12e34",

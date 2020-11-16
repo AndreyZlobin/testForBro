@@ -1,5 +1,5 @@
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import {Component, OnInit} from '@angular/core';
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {FilesService} from "../../../services/files.service";
 import * as moment from "moment";
 import {LanguageService} from "../../../services/language.service";

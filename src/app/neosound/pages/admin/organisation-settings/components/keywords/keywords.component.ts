@@ -30,7 +30,7 @@ export class KeywordsComponent implements OnChanges {
   @Output() changed = new EventEmitter<any>();
   @Output() launch = new EventEmitter<any>();
 
-  @ViewChild('cvsUpload') cvsUpload: ElementRef;
+  @ViewChild('cvsUpload', {static: false}) cvsUpload: ElementRef;
   modalRef: BsModalRef;
 
   public isLoading: boolean = true;
