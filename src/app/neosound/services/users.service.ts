@@ -46,14 +46,14 @@ export class UsersService {
   }
 
   loginUser(params): Observable<any> {
-    return this.http.post(`${environment.api}/loginUser`,
+    return this.http.post(`${environment.localapi}/uiLogin`,
       params
     ).pipe(map((user: any) => {
       user.time = new Date().getTime();
       localStorage.setItem('user', JSON.stringify(user));
       const helper = new JwtHelperService();
       const token = helper.decodeToken(user.token);
-      token && localStorage.setItem('apikey', JSON.stringify(token.apikey));
+      token && localStorage.setItem('apikey', JSON.stringify(token.jti));
       const { settings } = user;
       settings && localStorage.setItem('settings', JSON.stringify(settings));
       setTimeout(() => {
