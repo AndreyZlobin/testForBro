@@ -1,13 +1,25 @@
-import {Component, Input, OnDestroy, OnInit, SimpleChanges, ViewChild, TemplateRef, AfterViewInit, ElementRef, ChangeDetectorRef} from "@angular/core";
-import {LanguageService} from "../../../../../services/language.service";
-import {FilesService} from "../../../../../services/files.service";
-import {FilterService} from "../../../../../services/filter.service";
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  TemplateRef,
+  AfterViewInit,
+  ElementRef,
+  ChangeDetectorRef,
+} from "@angular/core";
+import { LanguageService } from "../../../../../services/language.service";
+import { FilesService } from "../../../../../services/files.service";
+import { FilterService } from "../../../../../services/filter.service";
 
 @Component({
   selector: "ngx-check-list",
-  templateUrl: "./check-list.component.html"
+  templateUrl: "./check-list.component.html",
 })
-export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CheckListFormComponent
+  implements OnInit, OnDestroy, AfterViewInit {
   data: any[];
   dataSub: any;
   isLoading: boolean = true;
@@ -16,25 +28,30 @@ export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit 
 
   @Input("batchId") batchId: string;
   @Input("fileName") fileName: string;
-  @Input("height") height: string = '37vh';
+  @Input("height") height: string = "37vh";
   file: any;
-  @ViewChild('commentTemplate', {static: false}) commentTemplate: ElementRef;
-  commentValue = '';
+  @ViewChild("commentTemplate", { static: true }) commentTemplate: ElementRef;
+  commentValue = "";
 
   constructor(
     public filesService: FilesService,
     public filterService: FilterService,
-    private cd: ChangeDetectorRef,
+    private cd: ChangeDetectorRef
   ) {}
   ngOnInit() {}
   ngAfterViewInit() {
     setTimeout(() => {
-      this.commentTemplate && this.commentTemplate.nativeElement.addEventListener('blur', () => {
-        this.saveComment();
-      })
-      this.commentTemplate && this.commentTemplate.nativeElement.addEventListener('keyup', () => {
-        this.commentValue = this.commentTemplate.nativeElement.innerHTML.replace(/\n/g, '<br />');
-      });
+      this.commentTemplate &&
+        this.commentTemplate.nativeElement.addEventListener("blur", () => {
+          this.saveComment();
+        });
+      this.commentTemplate &&
+        this.commentTemplate.nativeElement.addEventListener("keyup", () => {
+          this.commentValue = this.commentTemplate.nativeElement.innerHTML.replace(
+            /\n/g,
+            "<br />"
+          );
+        });
     }, 0);
   }
   ngOnDestroy() {
@@ -58,9 +75,9 @@ export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit 
       this.filesService
         .getFileChecklist({
           batchid: this.batchId,
-          filename: this.fileName
+          filename: this.fileName,
         })
-        .subscribe(data => {
+        .subscribe((data) => {
           this.isLoading = false;
           if (data && data.result) {
             this.data = data.result;
@@ -102,7 +119,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit 
       .updateFileChecklist({
         batchid: this.batchId,
         filename: this.fileName,
-        checklist: this.data
+        checklist: this.data,
       })
       .subscribe();
     const index = this.filterService.getIndex(this.batchId, this.fileName);
@@ -110,9 +127,14 @@ export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit 
   }
   getAssessment(data: any) {
     if (data) {
-      const yes = data.filter(i => 's' in i && (i.s[0] === "Yes" || i.s[0] === "yes" || i.s[0] === "YES"));
-      const answered_count = data.filter(i => 's' in i && i.s.length).length;
-      return answered_count === 0 ? '-' : Math.round((yes.length / answered_count) * 100);
+      const yes = data.filter(
+        (i) =>
+          "s" in i && (i.s[0] === "Yes" || i.s[0] === "yes" || i.s[0] === "YES")
+      );
+      const answered_count = data.filter((i) => "s" in i && i.s.length).length;
+      return answered_count === 0
+        ? "-"
+        : Math.round((yes.length / answered_count) * 100);
     }
     return 0;
   }
@@ -123,15 +145,15 @@ export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit 
       .updateFileComment({
         fileid: {
           batchid: this.batchId,
-          fileid: this.fileName
+          fileid: this.fileName,
         },
         fileinfo: {
           comment: [
             {
-              text: this.commentValue
-            }
-          ]
-        }
+              text: this.commentValue,
+            },
+          ],
+        },
       })
       .subscribe();
   }
@@ -143,7 +165,7 @@ export class CheckListFormComponent implements OnInit, OnDestroy, AfterViewInit 
   }
   reset() {
     this.data = null;
-    this.filesService.resetFileChecklist().subscribe(res => {
+    this.filesService.resetFileChecklist().subscribe((res) => {
       if (res && res.result) {
         const index = this.filterService.getIndex(this.batchId, this.fileName);
         this.data = res.result;
