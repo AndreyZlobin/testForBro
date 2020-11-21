@@ -5,21 +5,23 @@
         <tr
           class="d-flex"
           (click)="emitEvent(item[0])"
-          style="cursor: pointer;"
+          style="cursor: pointer"
           interval
           [timeInterval]="[item[0], item[1], item[4]]"
           [ngClass]="{ grey: item[5] && greySpeaker && item[5] == greySpeaker }"
         >
-        <td class="col-1">
-          {{ getFormatedTime(item[0]) }} -
-          {{ getFormatedTime(item[1]) }}
-        </td>
+          <td class="col-1">
+            {{ getFormatedTime(item[0]) }} -
+            {{ getFormatedTime(item[1]) }}
+          </td>
           <td class="col-1">
             <span *ngIf="item[5]">
               {{ item[5] }}
             </span>
           </td>
-          <td class="col-8"><span [innerHTML]="t(parseHTML(item[2]))"></span></td>
+          <td class="col-8">
+            <span [innerHTML]="t(parseHTML(item[2]))"></span>
+          </td>
           <td class="col-1">
             <span *ngIf="item[3]">
               {{ item[3] | currency: "%":"symbol":"1.2-2" }}

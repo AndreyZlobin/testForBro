@@ -4,7 +4,7 @@
   display: none;
 }
 
-a:not([href]):not([tabindex]) {
+a:not([href]) {
   color: inherit;
   cursor: pointer;
   &:hover {
@@ -179,6 +179,14 @@ angular-tag-cloud > span {
   text-align: right;
 }
 
+.nb-theme-default {
+  font-family: Roboto;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #a4abb3;
+  // min-height: 100vh;
+}
+
 .nb-theme-default .text-primary {
   color: var(--color-secondary) !important;
 }
@@ -233,17 +241,20 @@ angular-tag-cloud > span {
   }
 }
 .nb-theme-default a {
-  color: var(--color-secondary);
+  color: #2a2a2a;
   &:active,
   &:focus,
   &:hover {
-    color: var(--color-secondary);
+    color: #2a2a2a;
     opacity: 0.8;
     outline: none;
     outline-color: transparent;
     &:disabled {
       opacity: 0.3;
     }
+  }
+  &.active {
+    color: var(--color-secondary);
   }
 }
 .file-list button {
@@ -503,6 +514,34 @@ body.nb-theme-default {
 }
 .rotating {
   animation: rotation 2s infinite linear;
+}
+
+.btn-link.btn-secondary {
+  color: #fff!important;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.nb-theme-default .socials {
+  font-size: 16px;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 20px rgba(0,0,0,0.1); 
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 20px rgba(0,0,0,0.1); 
 }
 
 @keyframes rotation {

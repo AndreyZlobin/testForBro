@@ -32,13 +32,23 @@
   background-color: #dee2e6;
 }
 
-.scrollable-container {
-  position: fixed;
-  width: 100%;
-}
+// .scrollable-container {
+//   position: fixed;
+//   width: 100%;
+// }
 
 :host-context(.fix-footer) {
-    position: fixed!important;
-    width: 100%;
-    bottom: 0;
-  }
+  position: fixed !important;
+  width: 100%;
+  bottom: 0;
+}
+
+.mt-file-log {
+  max-height: 70vh;
+}
+
+.player-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

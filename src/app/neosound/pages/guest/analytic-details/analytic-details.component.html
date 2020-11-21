@@ -1,5 +1,5 @@
-<nb-card>
-  <nb-card-body>
+<div>
+  <div>
     <ng-container *ngIf="filename && batchid">
       <ngx-file-info [batchId]="batchid" [fileName]="filename"></ngx-file-info>
     </ng-container>
@@ -75,5 +75,5 @@
     <ng-template #loading>
       {{ t("Loading...") }}
     </ng-template>
-  </nb-card-body>
-</nb-card>
+  </div>
+</div>

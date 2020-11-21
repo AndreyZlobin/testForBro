@@ -3,7 +3,7 @@ import {
   Input,
   OnInit,
   SimpleChanges,
-  OnDestroy
+  OnDestroy,
 } from "@angular/core";
 import { LanguageService } from "../../../../../services/language.service";
 import { DashboardFileStatsService } from "../../services/file-stats.service";
@@ -13,7 +13,7 @@ import { ApiCallsStatsService } from "../../services/api-calls-stats.service";
 @Component({
   selector: "ngx-processed-calls",
   templateUrl: "./processed-calls.component.html",
-  styleUrls: ["./processed-calls.component.scss"]
+  styleUrls: ["./processed-calls.component.scss"],
 })
 export class ProcessedCallsComponent implements OnInit, OnDestroy {
   allcallscount: any = 0;
@@ -30,7 +30,7 @@ export class ProcessedCallsComponent implements OnInit, OnDestroy {
     private minutesStatsService: MinutesStatsService,
     private apiCallsStatsService: ApiCallsStatsService
   ) {
-    this.dataSub1 = this.dataService.data.subscribe(data => {
+    this.dataSub1 = this.dataService.data.subscribe((data) => {
       if (data && data.totals) {
         this.allcallscount = data.totals.allcallscount;
         this.angercallscount = data.totals.angercallscount;
@@ -38,13 +38,13 @@ export class ProcessedCallsComponent implements OnInit, OnDestroy {
         this.hasData = true;
       }
     });
-    this.dataSub2 = this.minutesStatsService.data.subscribe(data => {
+    this.dataSub2 = this.minutesStatsService.data.subscribe((data) => {
       if (data) {
         this.totalMinutes = Math.round(data.totalMinutes);
         this.hasData = true;
       }
     });
-    this.dataSub3 = this.apiCallsStatsService.data.subscribe(data => {
+    this.dataSub3 = this.apiCallsStatsService.data.subscribe((data) => {
       if (data) {
         this.apiCallsCount = data.apiCallsCount;
         this.hasData = true;
@@ -75,7 +75,7 @@ export class ProcessedCallsComponent implements OnInit, OnDestroy {
       "#005eaa",
       "#339ca8",
       "#cda819",
-      "#32a487"
+      "#32a487",
     ];
     return colors[i];
   }

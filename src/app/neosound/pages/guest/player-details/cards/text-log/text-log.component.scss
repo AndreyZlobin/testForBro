@@ -20,39 +20,49 @@
   //     height: auto;
   //   }  
   // }
+
+  // .wrapper {
+  //   max-height: auto;
+  //   max-height: 500px;
+  // }
+  
   @media screen and (max-height: 1880px) {
     .wrapper {
-      max-height: 70vh;
+      max-height: 74vh;
     }  
   }
   @media screen and (max-height: 1080px) {
     .wrapper {
-      max-height: 61vh;
+      max-height: 64vh;
     }  
   }
   @media screen and (max-height: 980px) {
     .wrapper {
-      max-height: 57vh;
+      max-height: 60vh;
     }  
   }
   @media screen and (max-height: 920px) {
     .wrapper {
-      max-height: 46vh;
+      max-height: 49vh;
     }  
   }
   @media screen and (max-height: 768px) {
     .wrapper {
-      max-height: 42vh;
+      max-height: 43vh;
     }  
   }
   @media screen and (max-height: 700px) {
     .wrapper {
-      max-height: 31vh;
+      max-height: 29vh;
     }  
   }
   @media screen and (max-height: 544px) {
     .wrapper {
-      max-height: 24vh;
+      max-height: 23vh;
     }  
   }
+}
+
+html {
+  overflow: hidden;
 }
