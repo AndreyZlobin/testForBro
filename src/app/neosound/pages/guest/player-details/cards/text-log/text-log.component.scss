@@ -1,8 +1,6 @@
 :host {
   .wrapper {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: auto;
+    height: 100%;
     @media print {
       overflow-y: auto;
       & > div {
@@ -26,41 +24,41 @@
   //   max-height: 500px;
   // }
   
-  @media screen and (max-height: 1880px) {
-    .wrapper {
-      max-height: 74vh;
-    }  
-  }
-  @media screen and (max-height: 1080px) {
-    .wrapper {
-      max-height: 64vh;
-    }  
-  }
-  @media screen and (max-height: 980px) {
-    .wrapper {
-      max-height: 60vh;
-    }  
-  }
-  @media screen and (max-height: 920px) {
-    .wrapper {
-      max-height: 49vh;
-    }  
-  }
-  @media screen and (max-height: 768px) {
-    .wrapper {
-      max-height: 43vh;
-    }  
-  }
-  @media screen and (max-height: 700px) {
-    .wrapper {
-      max-height: 29vh;
-    }  
-  }
-  @media screen and (max-height: 544px) {
-    .wrapper {
-      max-height: 23vh;
-    }  
-  }
+  // @media screen and (max-height: 1880px) {
+  //   .wrapper {
+  //     max-height: 74vh;
+  //   }  
+  // }
+  // @media screen and (max-height: 1080px) {
+  //   .wrapper {
+  //     max-height: 64vh;
+  //   }  
+  // }
+  // @media screen and (max-height: 980px) {
+  //   .wrapper {
+  //     max-height: 60vh;
+  //   }  
+  // }
+  // @media screen and (max-height: 920px) {
+  //   .wrapper {
+  //     max-height: 49vh;
+  //   }  
+  // }
+  // @media screen and (max-height: 768px) {
+  //   .wrapper {
+  //     max-height: 43vh;
+  //   }  
+  // }
+  // @media screen and (max-height: 700px) {
+  //   .wrapper {
+  //     max-height: 29vh;
+  //   }  
+  // }
+  // @media screen and (max-height: 544px) {
+  //   .wrapper {
+  //     max-height: 23vh;
+  //   }  
+  // }
 }
 
 html {

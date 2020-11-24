@@ -52,3 +52,16 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.table {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.player-inner {
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+  z-index: 100;
+}

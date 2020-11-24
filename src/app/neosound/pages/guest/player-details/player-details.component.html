@@ -1,5 +1,6 @@
 <div>
   <div class="player-wrapper" *ngIf="filename && batchid">
+    <div class="player-inner">
       <ngx-file-info [batchId]="batchid" [fileName]="filename"></ngx-file-info>
 
       <div class="tabset hide-on-print">
@@ -19,24 +20,24 @@
           [batchId]="batchid"
         ></ngx-player>
       </div>
-
-      <div class="mt-file-log">
-        <div class="d-flex flex-row justify-content-between">
-          <ngx-text-log
-            style="width: 100%"
+    </div>
+    <div class="mt-file-log">
+      <div class="d-flex flex-row justify-content-between">
+        <ngx-text-log
+          style="width: 100%; margin-top: 200px"
+          [batchId]="batchid"
+          [fileName]="filename"
+          (goToRegion)="goToRegion($event)"
+        >
+        </ngx-text-log>
+        <div class="w-25" *ngIf="showComments">
+          <ngx-check-list
             [batchId]="batchid"
             [fileName]="filename"
-            (goToRegion)="goToRegion($event)"
-          >
-          </ngx-text-log>
-          <div class="w-25" *ngIf="showComments">
-            <ngx-check-list
-              [batchId]="batchid"
-              [fileName]="filename"
-            ></ngx-check-list>
-          </div>
+          ></ngx-check-list>
         </div>
       </div>
+    </div>
   </div>
 </div>
 <div
